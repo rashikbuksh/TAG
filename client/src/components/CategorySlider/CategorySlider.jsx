@@ -64,13 +64,13 @@ const CategorySlider = () => {
 															single.url
 														}
 													>
-														<ReactSVG
+														{/* <ReactSVG
 															src={
 																import.meta.env
 																	.VITE_API_PUBLIC_URL +
 																single.image
 															}
-														/>
+														/> */}
 													</Link>
 												</div>
 												<div className="category-item__title">

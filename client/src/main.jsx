@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import "swiper/swiper-bundle.min.css";
 import App from "./App";
 import "./assets/scss/style.scss";
+import "./index.css";
 import PersistProvider from "./store/providers/persist-provider";
 import { setProducts } from "./store/slices/product-slice";
 import { store } from "./store/store";

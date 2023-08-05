@@ -66,10 +66,8 @@ const AllProducts = ({ limit }) => {
 										>
 											<PostUi
 												key={single.id}
-												wishlistItem={wishlistItem}
 												single={single}
-											></PostUi>
-
+											/>
 											<div className="grid-product space-mb--20">
 												<div className="grid-product__image">
 													<Link
@@ -101,7 +99,7 @@ const AllProducts = ({ limit }) => {
 															)
 														}
 													>
-														<ReactSVG src="assets/img/icons/heart-dark.svg" />
+														{/* <ReactSVG src="assets/img/icons/heart-dark.svg" /> */}
 													</button>
 												</div>
 												<div className="grid-product__content">
