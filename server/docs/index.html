@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Server Documentation</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <section class="bg-gray-100 py-8">
+            <div class="container mx-auto px-2 pt-4 pb-12 text-gray-800">
+                <h1
+                    class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800"
+                >
+                    Server Documentation
+                </h1>
+                <div class="flex justify-between items-center mt-8">
+                    <div
+                        class="my-2 text-xl font-bold leading-tight text-gray-800"
+                    >
+                        <ol class="list-decimal">
+                            <li
+                                class="text-2xl font-bold leading-tight text-gray-800"
+                            >
+                                Config => (app, db) -> index
+                            </li>
+                            <li
+                                class="text-2xl font-bold leading-tight text-gray-800"
+                            >
+                                Api => [all files]
+                            </li>
+                            <li
+                                class="text-2xl font-bold leading-tight text-gray-800"
+                            >
+                                CRUD => (create, read, update, delete) -> index
+                            </li>
+                        </ol>
+                    </div>
+                    <span class="text-2xl font-bold leading-tight text-red-500">
+                        CRUD <= (Api , Config)
+                    </span>
+                </div>
+                <div class="w-full mb-4">
+                    <div
+                        class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"
+                    ></div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container mx-auto mt-8">
+                <h1
+                    class="text-5xl font-bold leading-tight text-center text-gray-800"
+                >
+                    <span class="text-red-500">Can not get param with "/"</span>
+                </h1>
+                <div class="w-full mb-4">
+                    <div
+                        class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"
+                    ></div>
+                </div>
+                <div class="flex flex-wrap divide-x-4">
+                    <div class="w-full lg:w-1/2 p-6">
+                        <h3
+                            class="text-3xl text-gray-800 font-bold leading-none mb-3"
+                        >
+                            Description
+                        </h3>
+                        <blockquote
+                            class="text-xl italic font-semibold text-gray-900"
+                        >
+                            <svg
+                                aria-hidden="true"
+                                class="w-10 h-10 text-gray-400 dark:text-gray-600"
+                                viewBox="0 0 24 27"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"
+                                    fill="currentColor"
+                                />
+                            </svg>
+                            <p>
+                                If any parameter contains "/", then add "(*)"
+                                after the parameter name. For example, in the
+                                following route:
+                                "/change/job-entry/:order_number(*)" the
+                                parameter "order_number" represents a value like
+                                "Anik-13/3/2023-Paharika-Srilanka"
+                            </p>
+                        </blockquote>
+                    </div>
+                    <div class="w-full lg:w-1/2 p-6">
+                        <h3
+                            class="text-3xl text-gray-800 font-bold leading-none mb-3"
+                        >
+                            Changes
+                        </h3>
+                        <blockquote
+                            class="text-xl italic font-semibold text-gray-900"
+                        >
+                            <p>Put "(*)" after the parameter name.</p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
