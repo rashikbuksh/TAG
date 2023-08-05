@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { lazy, Suspense } from "react";
 import {
 	Outlet,
@@ -13,6 +14,7 @@ import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopperProduct from "./pages/shopperProduct/shopperProduct";
+import ShopkeeperProfileCV from "./components/ShopkeeperProfileCV/ShopkeeperProfileCV";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -111,6 +113,14 @@ function App() {
 									"/addcategory"
 								}
 								element={<AddCatagoryForm></AddCatagoryForm>}
+							/>
+								{/* TODO: Delete This After Work done  */}
+							<Route
+								path={
+									
+									"/testComponents"
+								}
+								element={<ShopkeeperProfileCV></ShopkeeperProfileCV>}
 							/>
 							<Route
 								path={
