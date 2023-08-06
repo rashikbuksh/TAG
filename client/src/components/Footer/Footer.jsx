@@ -1,4 +1,5 @@
 import React from "react";
+import { FaRegBell, FaRegNewspaper } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 
@@ -21,6 +22,15 @@ const Footer = () => {
 					</div>
 				</Link>
 				<Link
+					to={import.meta.env.VITE_API_PUBLIC_URL + "/newsfeed"}
+					className="footer-nav-single"
+				>
+					<div className="menu-wrapper">
+					<FaRegNewspaper className="text-2xl"></FaRegNewspaper>
+						<span>News</span>
+					</div>
+				</Link>
+				<Link
 					to={import.meta.env.VITE_API_PUBLIC_URL + "/chat"}
 					className="footer-nav-single"
 				>
@@ -35,17 +45,12 @@ const Footer = () => {
 					</div>
 				</Link>
 				<Link
-					to={import.meta.env.VITE_API_PUBLIC_URL + "/cart"}
+					to={import.meta.env.VITE_API_PUBLIC_URL + "/notification"}
 					className="footer-nav-single"
 				>
 					<div className="menu-wrapper">
-						<ReactSVG
-							src={
-								import.meta.env.VITE_API_PUBLIC_URL +
-								"/assets/img/icons/cart.svg"
-							}
-						/>
-						<span>Cart</span>
+						<FaRegBell className="text-2xl"> </FaRegBell>
+						<span>Notification</span>
 					</div>
 				</Link>
 				<Link

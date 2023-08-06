@@ -14,7 +14,8 @@ import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopperProduct from "./pages/shopperProduct/shopperProduct";
-import ShopkeeperProfileCV from "./components/ShopkeeperProfileCV/ShopkeeperProfileCV";
+import NewsFeed from "./pages/NewsFeed/NewsFeed";
+import TestComponents from "./components/TestComponents/TestComponents";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -120,7 +121,7 @@ function App() {
 									
 									"/testComponents"
 								}
-								element={<ShopkeeperProfileCV></ShopkeeperProfileCV>}
+								element={<TestComponents></TestComponents>}
 							/>
 							<Route
 								path={
@@ -128,6 +129,13 @@ function App() {
 									"/ShopperProduct"
 								}
 								element={<ShopperProduct></ShopperProduct>}
+							/>
+							<Route
+								path={
+									
+									"/newsfeed"
+								}
+								element={<NewsFeed></NewsFeed>}
 							/>
 							<Route
 								path={

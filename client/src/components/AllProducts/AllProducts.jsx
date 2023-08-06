@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { getDiscountPrice, getProducts } from "../../helpers/product";
-import PostUi from "../../pages/PostUi/PostUi";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
+import ProductCart from "../ProductCart/ProductCart";
 
 const AllProducts = ({ limit }) => {
 	const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -40,6 +40,7 @@ const AllProducts = ({ limit }) => {
 			});
 	}, []);
 
+	console.log("login product",prods);
 	if (!prods?.length) return <p>No products found</p>;
 
 	return (
@@ -55,19 +56,18 @@ const AllProducts = ({ limit }) => {
 						<div className="all-products-wrapper space-mb-m--20">
 							<div className="row">
 								{prods.map((single) => {
+									
 									const wishlistItem = wishlistItems.find(
 										(wishlistItem) =>
 											wishlistItem.id === single.id
-									);
+							);
 									return (
+										//?this is product cart style
+										// <ProductCart productName={single.name} key={Math.random()}> </ProductCart>
 										<div
 											className="col-12 col-md-6"
 											key={single.id}
 										>
-											<PostUi
-												key={single.id}
-												single={single}
-											/>
 											<div className="grid-product space-mb--20">
 												<div className="grid-product__image">
 													<Link
