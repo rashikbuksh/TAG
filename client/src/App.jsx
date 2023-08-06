@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import {
 	Outlet,
 	Route,
@@ -16,6 +16,8 @@ import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopperProduct from "./pages/shopperProduct/shopperProduct";
 import NewsFeed from "./pages/NewsFeed/NewsFeed";
 import TestComponents from "./components/TestComponents/TestComponents";
+import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
+import ShopkeepersProduct from "./components/ShopkeepersProduct/ShopkeepersProduct";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -136,6 +138,20 @@ function App() {
 									"/newsfeed"
 								}
 								element={<NewsFeed></NewsFeed>}
+							/>
+							<Route
+								path={
+									
+									"/shopkeeperDashboard"
+								}
+								element={<ShopKeeperDashBoard></ShopKeeperDashBoard>}
+							/>
+							<Route
+								path={
+									
+									"/shopkeeperProduct"
+								}
+								element={<ShopkeepersProduct></ShopkeepersProduct>}
 							/>
 							<Route
 								path={
