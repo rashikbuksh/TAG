@@ -7,7 +7,6 @@ import { ShopProducts } from "../../components";
 import {
 	getIndividualCategories,
 	getIndividualColors,
-	getSortedProducts,
 	setActiveSort,
 	toggleShopTopFilter,
 } from "../../helpers/product";
@@ -34,7 +33,7 @@ const Shop = () => {
 			});
 
 		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/category/getcategoryonProduct`
+			`${import.meta.env.VITE_APP_API_URL}/category/get/category`
 		).then((response) => {
 			setCategory(response.data);
 		});
@@ -42,20 +41,14 @@ const Shop = () => {
 
 	const [sortType, setSortType] = useState("");
 	const [sortValue, setSortValue] = useState("");
-	const [finalSortedProducts, setFinalSortedProducts] = useState([]);
 
-	const uniqueCategories = getIndividualCategories(category);
-
-	const getSortParams = (sortType, sortValue) => {
-		setSortType(sortType);
-		setSortValue(sortValue);
-	};
-
-	useEffect(() => {
-		let sortedProducts = getSortedProducts(products, sortType, sortValue);
-		console.log(sortedProducts);
-		setFinalSortedProducts(sortedProducts);
-	}, [products, sortType, sortValue]);
+	const [filterCategory, setFilterCategory] = useState(null);
+	const filteredProduct =
+		filterCategory === null
+			? products
+			: products.filter((product) => {
+					return product.category_id === filterCategory;
+			  });
 
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
@@ -103,14 +96,13 @@ const Shop = () => {
 										Categories
 									</h4>
 									<div className="shop-filter-block__content">
-										{uniqueCategories ? (
+										{category ? (
 											<ul className="shop-filter-block__category">
 												<li>
 													<button
 														onClick={(e) => {
-															getSortParams(
-																"category",
-																""
+															setFilterCategory(
+																null
 															);
 															setActiveSort(e);
 														}}
@@ -118,7 +110,7 @@ const Shop = () => {
 														All
 													</button>
 												</li>
-												{uniqueCategories.map(
+												{category.map(
 													(category, key) => {
 														return (
 															<li key={key}>
@@ -126,17 +118,16 @@ const Shop = () => {
 																	onClick={(
 																		e
 																	) => {
-																		getSortParams(
-																			"category",
-																			category.product_id
-																		);
 																		setActiveSort(
 																			e
+																		);
+																		setFilterCategory(
+																			category.category_id
 																		);
 																	}}
 																>
 																	{
-																		category.name
+																		category.category_name
 																	}
 																</button>
 															</li>
@@ -156,9 +147,7 @@ const Shop = () => {
 			</div>
 
 			{/* shop products */}
-			{finalSortedProducts && (
-				<ShopProducts products={finalSortedProducts} />
-			)}
+			{filteredProduct && <ShopProducts products={filteredProduct} />}
 		</div>
 	);
 };

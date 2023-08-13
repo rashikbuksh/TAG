@@ -25,14 +25,6 @@ const ShopProducts = ({ products }) => {
 		setListActivate(true);
 	};
 
-	useEffect(() => {
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/category/getcategoryonProduct`
-		).then((response) => {
-			setCategory(response.data);
-		});
-	}, []);
-
 	return (
 		<div className="shop-products-area">
 			{/* shop layout switcher */}

@@ -13,8 +13,12 @@ const read = [
 		query: `SELECT id,name FROM category`,
 	},
 	{
-		uri: "/category/getcategoryonProduct",
-		query: `SELECT c.id,c.name, p.id as product_id FROM category c, product p WHERE c.id = p.category_id GROUP BY c.id`,
+		uri: "/category/get/category",
+		query: `
+			SELECT DISTINCT p.category_id as category_id, c.name as category_name
+			FROM product p
+			JOIN category c ON p.category_id = c.id;
+		`,
 	},
 ];
 
