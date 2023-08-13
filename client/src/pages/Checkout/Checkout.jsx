@@ -42,8 +42,8 @@ const Checkout = () => {
 			orderedItem += cartItems[i].id;
 			discountedItem += cartItems[i].discount;
 			if (cartItems[i + 1] != null) {
-				orderedItem += ";";
-				discountedItem += ";";
+				orderedItem += ",";
+				discountedItem += ",";
 			}
 			i++;
 		}
@@ -70,7 +70,7 @@ const Checkout = () => {
 			.then((response) => {
 				console.log(response.data);
 				alert("Order Placed Successfully");
-				settingState();
+				//settingState();
 				navigate("/home");
 			})
 			.catch((error) => {

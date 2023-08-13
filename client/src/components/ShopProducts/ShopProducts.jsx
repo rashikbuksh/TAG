@@ -1,5 +1,6 @@
+import Axios from "axios";
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
@@ -12,6 +13,8 @@ const ShopProducts = ({ products }) => {
 	const [listActivate, setListActivate] = useState(false);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 
+	const [category, setCategory] = useState([]);
+
 	const setGridActive = () => {
 		setGridActivate(true);
 		setListActivate(false);
@@ -21,6 +24,14 @@ const ShopProducts = ({ products }) => {
 		setGridActivate(false);
 		setListActivate(true);
 	};
+
+	useEffect(() => {
+		Axios.get(
+			`${import.meta.env.VITE_APP_API_URL}/category/getcategoryonProduct`
+		).then((response) => {
+			setCategory(response.data);
+		});
+	}, []);
 
 	return (
 		<div className="shop-products-area">
@@ -77,7 +88,7 @@ const ShopProducts = ({ products }) => {
 														`/product/${single.id}`
 													}
 												>
-													<img
+													{/* <img
 														src={
 															import.meta.env
 																.VITE_API_PUBLIC_URL +
@@ -85,7 +96,7 @@ const ShopProducts = ({ products }) => {
 														}
 														className="img-fluid"
 														alt=""
-													/>
+													/> */}
 												</Link>
 												<button
 													className={`icon ${
@@ -121,8 +132,8 @@ const ShopProducts = ({ products }) => {
 														{single.name}
 													</Link>
 												</h3>
-												<span className="category">
-													{single.category.map(
+												{/* <span className="category">
+													{single.map(
 														(item, index, arr) => {
 															return (
 																item +
@@ -133,7 +144,7 @@ const ShopProducts = ({ products }) => {
 															);
 														}
 													)}
-												</span>
+												</span> */}
 												<div className="price">
 													{single.discount &&
 													single.discount > 0 ? (
@@ -192,7 +203,7 @@ const ShopProducts = ({ products }) => {
 											`/product/${single.id}`
 										}
 									>
-										<img
+										{/* <img
 											src={
 												import.meta.env
 													.VITE_API_PUBLIC_URL +
@@ -200,7 +211,7 @@ const ShopProducts = ({ products }) => {
 											}
 											className="img-fluid"
 											alt=""
-										/>
+										/> */}
 									</Link>
 								</div>
 								<div className="list-product__content">
@@ -215,18 +226,16 @@ const ShopProducts = ({ products }) => {
 											{single.name}
 										</Link>
 									</h3>
-									<span className="category">
-										{single.category.map(
-											(item, index, arr) => {
-												return (
-													item +
-													(index !== arr.length - 1
-														? ", "
-														: "")
-												);
-											}
-										)}
-									</span>
+									{/* <span className="category">
+										{single.map((item, index, arr) => {
+											return (
+												item +
+												(index !== arr.length - 1
+													? ", "
+													: "")
+											);
+										})}
+									</span> */}
 									<div className="price">
 										{single.discount &&
 										single.discount > 0 ? (

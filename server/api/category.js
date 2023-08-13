@@ -12,6 +12,10 @@ const read = [
 		uri: "/category/getcategory",
 		query: `SELECT id,name FROM category`,
 	},
+	{
+		uri: "/category/getcategoryonProduct",
+		query: `SELECT c.id,c.name, p.id as product_id FROM category c, product p WHERE c.id = p.category_id GROUP BY c.id`,
+	},
 ];
 
 // Export modules

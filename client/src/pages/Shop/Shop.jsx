@@ -16,6 +16,7 @@ const Shop = () => {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [category, setCategory] = useState([]);
 
 	useEffect(() => {
 		Axios.get(
@@ -31,14 +32,19 @@ const Shop = () => {
 				setError(error.message);
 				setLoading(false);
 			});
+
+		Axios.get(
+			`${import.meta.env.VITE_APP_API_URL}/category/getcategoryonProduct`
+		).then((response) => {
+			setCategory(response.data);
+		});
 	}, []);
 
 	const [sortType, setSortType] = useState("");
 	const [sortValue, setSortValue] = useState("");
 	const [finalSortedProducts, setFinalSortedProducts] = useState([]);
 
-	const uniqueCategories = getIndividualCategories(products);
-	const uniqueColors = getIndividualColors(products);
+	const uniqueCategories = getIndividualCategories(category);
 
 	const getSortParams = (sortType, sortValue) => {
 		setSortType(sortType);
@@ -47,6 +53,7 @@ const Shop = () => {
 
 	useEffect(() => {
 		let sortedProducts = getSortedProducts(products, sortType, sortValue);
+		console.log(sortedProducts);
 		setFinalSortedProducts(sortedProducts);
 	}, [products, sortType, sortValue]);
 
@@ -91,54 +98,6 @@ const Shop = () => {
 					<div className="container space-mt--15 space-mb--50">
 						<div className="row">
 							<div className="col-12">
-								<div className="shop-filter-block space-mb--25">
-									<h4 className="shop-filter-block__title space-mb--15">
-										Colors
-									</h4>
-									<div className="shop-filter-block__content">
-										{uniqueColors ? (
-											<ul className="shop-filter-block__color">
-												{uniqueColors.map(
-													(color, key) => {
-														return (
-															<li key={key}>
-																<button
-																	className={`${color}`}
-																	onClick={(
-																		e
-																	) => {
-																		getSortParams(
-																			"color",
-																			color
-																		);
-																		setActiveSort(
-																			e
-																		);
-																	}}
-																></button>
-															</li>
-														);
-													}
-												)}
-												<li>
-													<button
-														onClick={(e) => {
-															getSortParams(
-																"color",
-																""
-															);
-															setActiveSort(e);
-														}}
-													>
-														X
-													</button>
-												</li>
-											</ul>
-										) : (
-											"No colors found"
-										)}
-									</div>
-								</div>
 								<div className="shop-filter-block">
 									<h4 className="shop-filter-block__title space-mb--15">
 										Categories
@@ -169,14 +128,16 @@ const Shop = () => {
 																	) => {
 																		getSortParams(
 																			"category",
-																			category
+																			category.product_id
 																		);
 																		setActiveSort(
 																			e
 																		);
 																	}}
 																>
-																	{category}
+																	{
+																		category.name
+																	}
 																</button>
 															</li>
 														);

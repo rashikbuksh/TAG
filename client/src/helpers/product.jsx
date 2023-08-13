@@ -64,12 +64,7 @@ export const getIndividualCategories = (products) => {
 	let productCategories = [];
 	products &&
 		products.map((product) => {
-			return (
-				product.category &&
-				product.category.map((single) => {
-					return productCategories.push(single);
-				})
-			);
+			return productCategories.push(product);
 		});
 	const individualProductCategories =
 		getIndividualItemArray(productCategories);
@@ -94,25 +89,23 @@ export const getIndividualColors = (products) => {
 
 //get products based on filter
 export const getSortedProducts = (products, sortType, sortValue) => {
+	// console.log(products, sortType, sortValue);
 	if (products && sortType && sortValue) {
 		if (sortType === "category") {
-			return products.filter(
-				(product) =>
-					product.category.filter((single) => single === sortValue)[0]
-			);
+			products.filter((product) => {
+				console.log(product ? product.product_id == sortValue : null);
+				let bool = product ? product.product_id == sortValue : null;
+				if (bool) {
+					console.log(product);
+					return product;
+				}
+			});
+		} else {
+			return products;
 		}
-
-		if (sortType === "color") {
-			return products.filter(
-				(product) =>
-					product.variation &&
-					product.variation.filter(
-						(single) => single.color === sortValue
-					)[0]
-			);
-		}
+	} else {
+		return products;
 	}
-	return products;
 };
 
 export const setActiveSort = (e) => {

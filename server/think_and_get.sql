@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2023 at 11:21 PM
+-- Generation Time: Aug 05, 2023 at 05:13 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -43,7 +43,8 @@ INSERT INTO `category` (`id`, `name`, `url`) VALUES
 (3, 'gg 2', 'https://www.google.com'),
 (12, 'gg 3', 'https://www.google.com'),
 (13, 'Shoe', 'https://www.google.com'),
-(14, 'Bag', 'https://www.google.com');
+(14, 'Bag', 'https://www.google.com'),
+(15, 'oil', 'https://www.google.com');
 
 -- --------------------------------------------------------
 
@@ -78,7 +79,8 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (2, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashikbuksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
 (3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545111', 'rashik@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'customer'),
 (6, 'Rashik Buksh', NULL, NULL, NULL, 'rbr', 'rafsan123', '01709305072', 'rbr@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', NULL, NULL, NULL, NULL, 'customer'),
-(7, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'shopper');
+(10, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashik@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper'),
+(11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper');
 
 -- --------------------------------------------------------
 
@@ -109,23 +111,6 @@ CREATE TABLE `notification` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order`
---
-
-CREATE TABLE `order` (
-  `id` int(11) NOT NULL,
-  `product_title` varchar(255) DEFAULT NULL,
-  `product_category` varchar(255) DEFAULT NULL,
-  `product_image` varchar(255) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
-  `discount` int(11) DEFAULT NULL,
-  `order_status` int(11) DEFAULT NULL,
-  `customer_profile_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `product`
 --
 
@@ -144,8 +129,34 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `sku`, `name`, `image`, `short_description`, `full_description`, `category_id`) VALUES
-(1, NULL, 'gg product', 'Welcome Scan.jpg', '10', '10', 3),
-(11, NULL, 'gg 8', '1689276807795__Welcome Scan.jpg', '10', '1010', 1);
+(1, NULL, 'gg product', 'WelcomeScan.jpg', '10', '10', 3),
+(11, NULL, 'gg 8', '1689276807795__Welcome Scan.jpg', '10', '1010', 1),
+(12, NULL, 'Vanity Bag', '1690478518635__Welcome Scan.jpg', 'Bag', 'Bag', 14);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_order`
+--
+
+CREATE TABLE `product_order` (
+  `id` int(11) NOT NULL,
+  `product_id` varchar(255) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `discount` varchar(255) DEFAULT NULL,
+  `order_status` varchar(255) DEFAULT NULL,
+  `customer_profile_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_order`
+--
+
+INSERT INTO `product_order` (`id`, `product_id`, `price`, `discount`, `order_status`, `customer_profile_id`) VALUES
+(4, '1,2', 1039, '10,5', 'pending', 3),
+(8, '2', 2850, '5', 'pending', 3),
+(9, '3,1', 489, '0,10', 'pending', 6),
+(10, '3,1', 489, '0,10', 'pending', 3);
 
 -- --------------------------------------------------------
 
@@ -170,8 +181,9 @@ CREATE TABLE `shopper_product` (
 --
 
 INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`) VALUES
-(1, 'gg product', 99, 10, 100, 0, 0, 0, 1),
-(2, 'gg 8', 1000, 5, 50, 0, 0, 0, 11);
+(1, 'gg product', 99, 10, 100, 1, 2, 3, 1),
+(2, 'gg 8', 1000, 5, 50, 0, 0, 0, 11),
+(3, 'Vanity Bag', 200, 0, 100, 0, 0, 0, 12);
 
 --
 -- Indexes for dumped tables
@@ -202,18 +214,18 @@ ALTER TABLE `notification`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `order`
---
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_profile_id` (`customer_profile_id`);
-
---
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
   ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `product_order`
+--
+ALTER TABLE `product_order`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_profile_id` (`customer_profile_id`);
 
 --
 -- Indexes for table `shopper_product`
@@ -230,13 +242,13 @@ ALTER TABLE `shopper_product`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `hero_slider`
@@ -251,38 +263,38 @@ ALTER TABLE `notification`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `order`
---
-ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `product_order`
+--
+ALTER TABLE `product_order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `order`
---
-ALTER TABLE `order`
-  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`customer_profile_id`) REFERENCES `customer_profile` (`id`);
-
---
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+
+--
+-- Constraints for table `product_order`
+--
+ALTER TABLE `product_order`
+  ADD CONSTRAINT `product_order_ibfk_1` FOREIGN KEY (`customer_profile_id`) REFERENCES `customer_profile` (`id`);
 
 --
 -- Constraints for table `shopper_product`
