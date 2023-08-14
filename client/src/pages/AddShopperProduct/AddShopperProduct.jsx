@@ -13,6 +13,8 @@ const ShopperProduct = () => {
 		product_id: yup.string().required("Product ID is required"),
 	});
 
+	const user_id = localStorage.getItem("user-id");
+
 	const form = useForm({
 		defaultValues: {
 			name: "",
@@ -57,7 +59,8 @@ const ShopperProduct = () => {
 				price: data.price,
 				discount: data.discount,
 				product_count: data.product_count,
-				product_id: data.product_id,
+				product_id: Number(data.product_id),
+				shopper_id: Number(user_id),
 			}
 		).then((response) => {
 			if (response.data.message === data.name + " added successfully") {

@@ -8,16 +8,16 @@ import {
 } from "react-router-dom";
 
 import { Preloader } from "./components";
+import ShopkeepersProduct from "./components/ShopkeepersProduct/ShopkeepersProduct";
+import TestComponents from "./components/TestComponents/TestComponents";
 import ScrollToTop from "./helpers/scroll-top";
 import { DefaultLayout } from "./layouts";
 import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
-import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
-import ShopperProduct from "./pages/shopperProduct/shopperProduct";
+import AddShopperProduct from "./pages/AddShopperProduct/AddShopperProduct";
 import NewsFeed from "./pages/NewsFeed/NewsFeed";
-import TestComponents from "./components/TestComponents/TestComponents";
+import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
-import ShopkeepersProduct from "./components/ShopkeepersProduct/ShopkeepersProduct";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -43,29 +43,10 @@ function App() {
 			<ScrollToTop>
 				<Suspense fallback={<Preloader />}>
 					<Routes>
-						<Route
-							path={ "/"}
-							element={<Welcome />}
-						/>
-						<Route
-							path={
-								 "/welcome"
-							}
-							element={<Welcome />}
-						/>
-						<Route
-							path={
-								
-								"/register"
-							}
-							element={<Register />}
-						/>
-						<Route
-							path={
-								 "/login"
-							}
-							element={<Login />}
-						/>
+						<Route path={"/"} element={<Welcome />} />
+						<Route path={"/welcome"} element={<Welcome />} />
+						<Route path={"/register"} element={<Register />} />
+						<Route path={"/login"} element={<Login />} />
 						<Route
 							element={
 								<DefaultLayout>
@@ -74,156 +55,69 @@ function App() {
 								</DefaultLayout>
 							}
 						>
+							<Route path={"/home"} element={<Home />} />
+							<Route path={"/shop"} element={<Shop />} />
 							<Route
-								path={
-									
-									"/home"
-								}
-								element={<Home />}
-							/>
-							<Route
-								path={
-									
-									"/shop"
-								}
-								element={<Shop />}
-							/>
-							<Route
-								path={
-									
-									"/product/:id"
-								}
+								path={"/product/:id"}
 								element={<Product />}
 							/>
+							<Route path={"/chat"} element={<Chat />} />
+							<Route path={"/cart"} element={<Cart />} />
+							{/* TODO: Delete This After Work done  */}
 							<Route
-								path={
-									
-									"/chat"
-								}
-								element={<Chat />}
-							/>
-							<Route
-								path={
-									
-									"/cart"
-								}
-								element={<Cart />}
+								path={"/addcategory"}
+								element={<AddCatagoryForm></AddCatagoryForm>}
 							/>
 							{/* TODO: Delete This After Work done  */}
 							<Route
-								path={
-									
-									"/addcategory"
-								}
-								element={<AddCatagoryForm></AddCatagoryForm>}
-							/>
-								{/* TODO: Delete This After Work done  */}
-							<Route
-								path={
-									
-									"/testComponents"
-								}
+								path={"/testComponents"}
 								element={<TestComponents></TestComponents>}
 							/>
 							<Route
-								path={
-									
-									"/ShopperProduct"
+								path={"/addshopperproduct"}
+								element={
+									<AddShopperProduct></AddShopperProduct>
 								}
-								element={<ShopperProduct></ShopperProduct>}
 							/>
 							<Route
-								path={
-									
-									"/newsfeed"
-								}
+								path={"/newsfeed"}
 								element={<NewsFeed></NewsFeed>}
 							/>
 							<Route
-								path={
-									
-									"/shopkeeperDashboard"
+								path={"/shopkeeperDashboard"}
+								element={
+									<ShopKeeperDashBoard></ShopKeeperDashBoard>
 								}
-								element={<ShopKeeperDashBoard></ShopKeeperDashBoard>}
 							/>
 							<Route
-								path={
-									
-									"/shopkeeperProduct"
+								path={"/shopkeeperProduct"}
+								element={
+									<ShopkeepersProduct></ShopkeepersProduct>
 								}
-								element={<ShopkeepersProduct></ShopkeepersProduct>}
 							/>
 							<Route
-								path={
-									
-									"/registershopper"
-								}
+								path={"/registershopper"}
 								element={<RegisterShopper></RegisterShopper>}
 							/>
 							<Route
-								path={
-									
-									"/addproduct"
-								}
+								path={"/addproduct"}
 								element={<AddProductForm></AddProductForm>}
 							/>
 							{/* TODO: need DELETE OR REMOVE EXTRA THIS CODE  */}
+							<Route path={"/wishlist"} element={<Wishlist />} />
+							<Route path={"/checkout"} element={<Checkout />} />
+							<Route path={"/search"} element={<Search />} />
+							<Route path={"/profile"} element={<Profile />} />
 							<Route
-								path={
-									
-									"/wishlist"
-								}
-								element={<Wishlist />}
-							/>
-							<Route
-								path={
-									
-									"/checkout"
-								}
-								element={<Checkout />}
-							/>
-							<Route
-								path={
-									
-									"/search"
-								}
-								element={<Search />}
-							/>
-							<Route
-								path={
-									
-									"/profile"
-								}
-								element={<Profile />}
-							/>
-							<Route
-								path={
-									
-									"/edit-profile"
-								}
+								path={"/edit-profile"}
 								element={<EditProfile />}
 							/>
 							<Route
-								path={
-									
-									"/notification"
-								}
+								path={"/notification"}
 								element={<Notification />}
 							/>
-							<Route
-								path={
-									
-									"/contact"
-								}
-								element={<Contact />}
-							/>
-							<Route
-								path={
-									
-									"/order"
-								}
-								element={<Order />}
-							/>
+							<Route path={"/contact"} element={<Contact />} />
+							<Route path={"/order"} element={<Order />} />
 							<Route path="*" element={<NotFound />} />
 						</Route>
 					</Routes>

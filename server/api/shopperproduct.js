@@ -1,8 +1,15 @@
 const add = [
 	{
 		uri: "/shopperproduct/addshopperproduct",
-		query: `INSERT INTO shopper_product( name, price, discount, product_count, product_id) VALUES (?, ?, ?, ?, ?)`,
-		body: ["name", "price", "discount", "product_count", "product_id"],
+		query: `INSERT INTO shopper_product( name, price, discount, product_count, product_id, shopper_id) VALUES (?, ?, ?, ?, ?, ?)`,
+		body: [
+			"name",
+			"price",
+			"discount",
+			"product_count",
+			"product_id",
+			"shopper_id",
+		],
 		msg: "name",
 	},
 ];
@@ -10,7 +17,7 @@ const add = [
 const read = [
 	{
 		uri: "/shopperproduct/getshopperproduct",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id  FROM shopper_product sp, product p WHERE sp.product_id = p.id`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image FROM shopper_product sp, product p WHERE sp.product_id = p.id`,
 	},
 	{
 		uri: "/shopperproduct/getshopperproduct/:id",
@@ -20,6 +27,11 @@ const read = [
 	{
 		uri: "/shopperproduct/getshopperproductName/:id",
 		query: `SELECT name FROM shopper_product WHERE id in (?)`,
+		param: ["id"],
+	},
+	{
+		uri: "/shopperproduct/getshopperproductOfShopkeeper/:id",
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image FROM shopper_product sp, product p WHERE sp.product_id = p.id and shopper_id = ?`,
 		param: ["id"],
 	},
 ];
