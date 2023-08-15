@@ -16,6 +16,7 @@ import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
 import AddShopperProduct from "./pages/AddShopperProduct/AddShopperProduct";
 import NewsFeed from "./pages/NewsFeed/NewsFeed";
+import OrderSingle from "./pages/OrderSingle/OrderSingle";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 
@@ -118,6 +119,10 @@ function App() {
 							/>
 							<Route path={"/contact"} element={<Contact />} />
 							<Route path={"/order"} element={<Order />} />
+							<Route
+								path={"/order/:id"}
+								element={<OrderSingle />}
+							/>
 							<Route path="*" element={<NotFound />} />
 						</Route>
 					</Routes>

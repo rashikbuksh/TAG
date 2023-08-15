@@ -7,7 +7,7 @@ import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
 import { getDiscountPrice } from "../../helpers/product";
 import useFetch from "../../hooks/use-fetch";
 
-const Order = () => {
+const OrderSingle = () => {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -109,4 +109,4 @@ const Order = () => {
 	);
 };
 
-export default Order;
+export default OrderSingle;
