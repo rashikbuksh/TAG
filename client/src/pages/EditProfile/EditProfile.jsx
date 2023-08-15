@@ -120,9 +120,10 @@ const EditProfile = () => {
 											{errors.shipping_address?.message}
 										</p>
 									</div>
+									{/* button not showing.. dummy button added */}
 									<button
 										type="submit"
-										className="edit-profile-form__button"
+										className="btn btn-outline btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg"
 									>
 										Update
 									</button>

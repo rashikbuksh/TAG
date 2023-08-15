@@ -269,9 +269,10 @@ const Checkout = () => {
 												</div>
 											</div>
 										</div>
+										{/* button not showing.. dummy button */}
 										<button
 											type="submit"
-											className="checkout-form__button"
+											className="btn btn-outline btn-primary btn-lg sm:btn-sm md:btn-md lg:btn-lg"
 										>
 											Place Order
 										</button>
