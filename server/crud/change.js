@@ -4,7 +4,9 @@ const { change: JobEntry } = require("../api/job_entry");
 
 const { change: Profile } = require("../api/profile");
 
-const CHANGE_DATA = [...JobEntry, ...Profile];
+const { change: ShopperProduct } = require("../api/shopperproduct");
+
+const CHANGE_DATA = [...JobEntry, ...Profile, ...ShopperProduct];
 
 CHANGE_DATA.forEach(({ uri, query, body, param, msg }) => {
 	app.post(uri, (req, res) => {

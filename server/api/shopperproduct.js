@@ -36,8 +36,18 @@ const read = [
 	},
 ];
 
+const change = [
+	{
+		uri: "/product/updateProductCount",
+		query: `UPDATE shopper_product SET product_count = ? WHERE id = ?`,
+		body: ["product_count", "id"],
+		msg: "id",
+	},
+];
+
 // Export modules
 module.exports = Object.freeze({
 	add,
 	read,
+	change,
 });

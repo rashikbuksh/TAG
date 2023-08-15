@@ -69,7 +69,7 @@ const ShopkeepersProduct = () => {
 					</div>
 				</div>
 				<div className="  my-10 gap-10 grid grid-cols-1 lg:grid-cols-2">
-					{products.map((product) => (
+					{prods.map((product) => (
 						<ShopkeeperProductcart
 							key={Math.random()}
 							product={product}
