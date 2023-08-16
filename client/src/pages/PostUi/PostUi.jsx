@@ -56,7 +56,6 @@ const PostUi = ({ postData }) => {
 		});
 	}, []);
 
-	const { profileImageUrl } = postData;
 	const currentDate = new Date(date);
 	const formattedTime = currentDate.toLocaleTimeString([], {
 		hour: "numeric",
@@ -119,6 +118,9 @@ const PostUi = ({ postData }) => {
 							key={shopperproduct.id}
 							productImage={shopperproduct.image}
 							productName={shopperproduct.name}
+							shopperProduct_id={shopperproduct.id}
+							shopperProductPrice={shopperproduct.price}
+							shopperProductDiscount={shopperproduct.discount}
 						/>
 					))}
 
