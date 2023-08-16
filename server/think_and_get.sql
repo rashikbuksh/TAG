@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2023 at 05:13 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Aug 16, 2023 at 07:25 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -98,6 +98,37 @@ CREATE TABLE `hero_slider` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `news`
+--
+
+CREATE TABLE `news` (
+  `id` int(11) NOT NULL,
+  `shopper_product_id` int(11) NOT NULL,
+  `shop_id` int(11) NOT NULL,
+  `date` varchar(255) NOT NULL,
+  `discount` varchar(255) NOT NULL,
+  `duration` varchar(255) NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `like_count` int(11) NOT NULL DEFAULT 0,
+  `comment_count` int(11) NOT NULL DEFAULT 0,
+  `share_count` int(11) NOT NULL DEFAULT 0,
+  `rating` double NOT NULL DEFAULT 0,
+  `category` varchar(255) NOT NULL,
+  `post_content` varchar(255) NOT NULL,
+  `post_img` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `duration`, `location`, `like_count`, `comment_count`, `share_count`, `rating`, `category`, `post_content`, `post_img`) VALUES
+(2, 14, 3, '2023-08-16T00:57:01.662Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
+(3, 15, 3, '2023-08-16T00:59:00.797Z', '5', '', '', 0, 0, 0, 3.55, 'regular', '', '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `notification`
 --
 
@@ -131,7 +162,8 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`id`, `sku`, `name`, `image`, `short_description`, `full_description`, `category_id`) VALUES
 (1, NULL, 'gg product', 'WelcomeScan.jpg', '10', '10', 3),
 (11, NULL, 'gg 8', '1689276807795__Welcome Scan.jpg', '10', '1010', 1),
-(12, NULL, 'Vanity Bag', '1690478518635__Welcome Scan.jpg', 'Bag', 'Bag', 14);
+(12, NULL, 'Vanity Bag', '1690478518635__Welcome Scan.jpg', 'Bag', 'Bag', 14),
+(13, NULL, 'sugar', '1691920308947__Welcome Scan.jpg', '10', '10', 1);
 
 -- --------------------------------------------------------
 
@@ -156,7 +188,8 @@ INSERT INTO `product_order` (`id`, `product_id`, `price`, `discount`, `order_sta
 (4, '1,2', 1039, '10,5', 'pending', 3),
 (8, '2', 2850, '5', 'pending', 3),
 (9, '3,1', 489, '0,10', 'pending', 6),
-(10, '3,1', 489, '0,10', 'pending', 3);
+(10, '3,1', 489, '0,10', 'pending', 3),
+(15, '1,2', 1039, '10,5', 'pending', 3);
 
 -- --------------------------------------------------------
 
@@ -173,17 +206,22 @@ CREATE TABLE `shopper_product` (
   `sale_count` int(11) DEFAULT 0,
   `wishlist_count` int(11) DEFAULT 0,
   `rating_count` int(11) DEFAULT 0,
-  `product_id` int(11) NOT NULL
+  `product_id` int(11) NOT NULL,
+  `shopper_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `shopper_product`
 --
 
-INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`) VALUES
-(1, 'gg product', 99, 10, 100, 1, 2, 3, 1),
-(2, 'gg 8', 1000, 5, 50, 0, 0, 0, 11),
-(3, 'Vanity Bag', 200, 0, 100, 0, 0, 0, 12);
+INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`, `shopper_id`) VALUES
+(1, 'gg product', 99, 10, 100, 1, 2, 3, 1, 11),
+(2, 'gg 8', 1000, 5, 50, 0, 0, 0, 11, 10),
+(3, 'Vanity Bag', 200, 0, 100, 0, 0, 0, 12, 10),
+(4, 'sugar', 10, 0, 100, 0, 0, 0, 13, 11),
+(8, 'Vanity Bag', 100, 2, 25, 0, 0, 0, 12, 3),
+(14, 'sugar', 25, 0, 100, 0, 0, 0, 13, 3),
+(15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3);
 
 --
 -- Indexes for dumped tables
@@ -206,6 +244,14 @@ ALTER TABLE `customer_profile`
 --
 ALTER TABLE `hero_slider`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `shopper_product_id` (`shopper_product_id`),
+  ADD KEY `shop_id` (`shop_id`);
 
 --
 -- Indexes for table `notification`
@@ -232,7 +278,8 @@ ALTER TABLE `product_order`
 --
 ALTER TABLE `shopper_product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `shopper_id` (`shopper_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -257,6 +304,12 @@ ALTER TABLE `hero_slider`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `news`
+--
+ALTER TABLE `news`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
@@ -266,23 +319,30 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `news`
+--
+ALTER TABLE `news`
+  ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`shopper_product_id`) REFERENCES `shopper_product` (`id`),
+  ADD CONSTRAINT `news_ibfk_2` FOREIGN KEY (`shop_id`) REFERENCES `customer_profile` (`id`);
 
 --
 -- Constraints for table `product`
@@ -300,7 +360,8 @@ ALTER TABLE `product_order`
 -- Constraints for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
-  ADD CONSTRAINT `shopper_product_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `shopper_product_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `shopper_product_ibfk_2` FOREIGN KEY (`shopper_id`) REFERENCES `customer_profile` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

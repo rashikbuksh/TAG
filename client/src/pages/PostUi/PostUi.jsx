@@ -45,13 +45,11 @@ const PostUi = ({ postData }) => {
 				import.meta.env.VITE_APP_API_URL
 			}/shopperproduct/getshopperproduct/${shopper_product_id}}`
 		).then((res) => {
-			console.log(res.data);
 			setShopperProduct(res.data);
 		});
 		Axios.get(
 			`${import.meta.env.VITE_APP_API_URL}/auth/getUserInfo/${shop_id}}`
 		).then((res) => {
-			console.log(res.data);
 			setShopperInfo(res.data);
 		});
 	}, []);
@@ -80,7 +78,7 @@ const PostUi = ({ postData }) => {
 								<Link
 									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
-										`/product/${shopper_product_id}`
+										`/shopkeeperProfileCV/${shop_id}`
 									}
 								>
 									{shopperInfo.map((shopperinfo) => (

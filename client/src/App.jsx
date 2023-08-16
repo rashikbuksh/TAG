@@ -125,7 +125,7 @@ function App() {
 								element={<OrderSingle />}
 							/>
 							<Route
-								path={"/shopkeeperProfileCV"}
+								path={"/shopkeeperProfileCV/:id"}
 								element={
 									<ShopkeeperProfileCV></ShopkeeperProfileCV>
 								}
