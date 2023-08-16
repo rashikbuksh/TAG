@@ -5,6 +5,12 @@ const read = [
 		param: ["email", "password"],
 		msg: "email or password is incorrect",
 	},
+	{
+		uri: "/auth/getUserInfo/:id",
+		query: `SELECT image, name, user_name from customer_profile where id = ?`,
+		param: ["id"],
+		msg: "email or password is incorrect",
+	},
 ];
 
 const add = [

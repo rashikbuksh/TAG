@@ -16,8 +16,16 @@ const add = [
 		msg: "shopper_product_id",
 	},
 ];
+const read = [
+	{
+		uri: "/news/getnews",
+		query: `SELECT * FROM news ORDER BY date desc`,
+		msg: "news",
+	},
+];
 
 // Export modules
 module.exports = Object.freeze({
 	add,
+	read,
 });
