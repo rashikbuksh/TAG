@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
 const ShopperProduct = () => {
@@ -39,6 +40,8 @@ const ShopperProduct = () => {
 		});
 	}, []);
 
+	const navigate = useNavigate();
+
 	const selectedProduct = (e) => {
 		console.log(e.target.value);
 		var product = e.target.value.split("__");
@@ -48,7 +51,7 @@ const ShopperProduct = () => {
 
 	const onSubmit = async (data) => {
 		console.log("FormData", data);
-		console.log(errors);
+		let shopperProduct_ID = null;
 
 		await Axios.post(
 			`${
@@ -65,6 +68,36 @@ const ShopperProduct = () => {
 		).then((response) => {
 			if (response.data.message === data.name + " added successfully") {
 				alert("Product Added Successful");
+			}
+		});
+
+		await Axios.get(
+			`${import.meta.env.VITE_APP_API_URL}/shopperproduct/getLastProduct`
+		).then((response) => {
+			shopperProduct_ID = response.data[0].id;
+			console.log("shopperProduct_ID", shopperProduct_ID);
+		});
+
+		let today = new Date();
+		today = today.toISOString();
+
+		await Axios.post(`${import.meta.env.VITE_APP_API_URL}/news/addnews`, {
+			shopper_product_id: Number(shopperProduct_ID),
+			shop_id: user_id,
+			date: today,
+			discount: data.discount,
+			duration: "",
+			location: "",
+			category: "regular",
+			post_content: "",
+			post_img: "",
+		}).then((response) => {
+			if (
+				response.data.message ===
+				shopperProduct_ID + " added successfully"
+			) {
+				// navigate to homepage
+				navigate("/home");
 			}
 		});
 	};

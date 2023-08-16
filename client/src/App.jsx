@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import { Preloader } from "./components";
+import ShopkeeperProfileCV from "./components/ShopkeeperProfileCV/ShopkeeperProfileCV";
 import ShopkeepersProduct from "./components/ShopkeepersProduct/ShopkeepersProduct";
 import TestComponents from "./components/TestComponents/TestComponents";
 import ScrollToTop from "./helpers/scroll-top";
@@ -122,6 +123,12 @@ function App() {
 							<Route
 								path={"/order/:id"}
 								element={<OrderSingle />}
+							/>
+							<Route
+								path={"/shopkeeperProfileCV"}
+								element={
+									<ShopkeeperProfileCV></ShopkeeperProfileCV>
+								}
 							/>
 							<Route path="*" element={<NotFound />} />
 						</Route>

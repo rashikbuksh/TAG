@@ -34,6 +34,10 @@ const read = [
 		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image FROM shopper_product sp, product p WHERE sp.product_id = p.id and shopper_id = ?`,
 		param: ["id"],
 	},
+	{
+		uri: "/shopperproduct/getLastProduct",
+		query: `SELECT * FROM shopper_product ORDER BY id DESC LIMIT 1`,
+	},
 ];
 
 const change = [

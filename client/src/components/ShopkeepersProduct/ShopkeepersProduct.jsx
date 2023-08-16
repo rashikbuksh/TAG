@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { FaArrowAltCircleLeft, FaPlusCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import ShopkeeperProductcart from "./ShopkeeperProductcart";
 const ShopkeepersProduct = () => {
 	const products = [
@@ -48,7 +49,10 @@ const ShopkeepersProduct = () => {
 			<div className="h-32"></div>
 			<div className="lg:w-[70%] mx-auto lg:border lg:border-gray-100 lg:p-4 p-2">
 				<div className="flex">
-					<FaArrowAltCircleLeft className="text-4xl"></FaArrowAltCircleLeft>
+					<Link to={`${import.meta.env.VITE_API_PUBLIC_URL}/home`}>
+						<FaArrowAltCircleLeft className="text-4xl"></FaArrowAltCircleLeft>
+					</Link>
+
 					<h1 className="text-2xl flex-grow text-center font-extrabold">
 						{" "}
 						My Product
@@ -56,7 +60,13 @@ const ShopkeepersProduct = () => {
 				</div>
 				<div className="divider"></div>
 				<div className="flex items-center justify-between gap-10">
-					<FaPlusCircle className="text-4xl"></FaPlusCircle>
+					<Link
+						to={`${
+							import.meta.env.VITE_API_PUBLIC_URL
+						}/addshopperproduct`}
+					>
+						<FaPlusCircle className="text-4xl"></FaPlusCircle>
+					</Link>
 					<input
 						type="text"
 						placeholder="Search Product"
