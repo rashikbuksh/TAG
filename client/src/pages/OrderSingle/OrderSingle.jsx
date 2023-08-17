@@ -1,112 +1,81 @@
-import Axios from "axios";
-import React, { Fragment, useEffect, useState } from "react";
-import { get, set } from "react-hook-form";
-import { FaRedo, FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
-import { getDiscountPrice } from "../../helpers/product";
-import useFetch from "../../hooks/use-fetch";
-
+/* eslint-disable no-mixed-spaces-and-tabs */
+import { FaArrowLeft, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 const OrderSingle = () => {
-	const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const products = [
+    {
+      product_name: "Widget A",
+      product_weight: "500g",
+      product_quantity: 10,
+      product_price: 19.99,
+    },
+    {
+      product_name: "Gadget B",
+      product_weight: "1kg",
+      product_quantity: 5,
+      product_price: 49.99,
+    },
+    {
+      product_name: "Accessory C",
+      product_weight: "200g",
+      product_quantity: 15,
+      product_price: 9.99,
+    },
+    {
+      product_name: "Accessory C",
+      product_weight: "200g",
+      product_quantity: 15,
+      product_price: 39.99,
+    },
+  ];
+  const totalPrice = products.reduce(
+    (accumulator, product) =>
+      accumulator + product.product_quantity * product.product_price,
+    0
+  );
+  const goBack = () => {
+    navigate(-1); // Navigate back by -1 step
+  };
+  return (
+    <div className=" md:w-[50%] mx-auto my-32 px-2">
+      <div className="flex items-center ">
+      <FaArrowLeft onClick={goBack} style={{ cursor: "pointer" }} />
 
-	// get userid from local storage
-	const customer_profile_id = localStorage.getItem("user-id");
-	const [productInfo, setProductInfo] = useState([]);
+      <h2 className="text-2xl text-center flex-grow">Order</h2>
 
-	useEffect(() => {
-		// get order from database
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/order/getorder/${customer_profile_id}`
-		)
-			.then((response) => {
-				setData(response.data);
-				setLoading(false);
-			})
-			.catch((error) => {
-				setError(error.message);
-				setLoading(false);
-			});
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproduct`
-		)
-			.then((response) => {
-				setProductInfo(response.data);
-				setLoading(false);
-			})
-			.catch((error) => {
-				setError(error.message);
-				setLoading(false);
-			});
-	}, [customer_profile_id]);
-
-	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
-			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
-			<div className="order-product-area">
-				{data?.map((single) => {
-					console.log(productInfo);
-					return (
-						<div
-							className="cart-product border-bottom--medium"
-							key={single.id}
-						>
-							<div className="cart-product__image">
-								<img
-									src={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										single.productImage
-									}
-									className="img-fluid"
-									alt=""
-								/>
-							</div>
-							<div className="cart-product__content">
-								<Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										`/order/${single.id}`
-									}
-								>
-									{" "}
-									Order Number #{single.id}{" "}
-								</Link>
-								<span className="category">
-									{single.productCategory}
-								</span>
-								<div className="price">
-									{
-										<span className="discounted-price">{`$${single.price}`}</span>
-									}
-								</div>
-							</div>
-							<div className="cart-product__status">
-								<p>
-									<span>
-										{single.order_status === "completed" ? (
-											<FaRegCheckCircle />
-										) : single.order_status ===
-										  "cancelled" ? (
-											<FaRegTimesCircle />
-										) : (
-											<FaRedo />
-										)}
-									</span>{" "}
-									{single.order_status}
-								</p>
-							</div>
-						</div>
-					);
-				})}
-			</div>
-		</div>
-	);
+      </div>
+      <div className="divider"></div>
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <tbody className="divide-y divide-gray-200">
+            {products.map((product) => (
+              <tr key={Math.random()} className="odd:bg-gray-50">
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  {product.product_name}
+                </td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                  {product.product_weight}
+                </td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                  <span className="flex items-center gap-3">
+                    {" "}
+                    <FaTimes></FaTimes> {product.product_quantity}
+                  </span>
+                </td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                  {Math.floor(product.product_quantity * product.product_price)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="my-12 text-right">
+          <p className="text-xl font-bold ">Total Price = {Math.floor(totalPrice)}</p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default OrderSingle;
