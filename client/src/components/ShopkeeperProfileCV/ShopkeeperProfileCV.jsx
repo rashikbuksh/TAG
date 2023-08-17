@@ -79,12 +79,12 @@ const ShopkeeperProfileCV = () => {
 	}, []);
 
 	return (
-		<div className="mt-32">
-			<div className="w-[70%] mx-auto">
+		<div className="mt-28">
+			<div className="lg:w-[70%] mx-auto px-4">
 				<div className="w-[100%] mx-auto my-3  border border-gray-50 ">
 					{shopkeeperInfo.map((shopkeeper) => {
 						return (
-							<div className="flex justify-between items-center p-4 ">
+							<div key={Math.random()} className="flex justify-between items-center p-4 ">
 								<h1
 									title="shop id"
 									className="text-base font-semibold"
@@ -99,7 +99,7 @@ const ShopkeeperProfileCV = () => {
 								</h1>
 								<div>
 									<Rating
-										style={{ maxWidth: 150 }}
+										style={{ maxWidth: 100 }}
 										readOnly
 										orientation="horizontal"
 										value={shopkeeper.review_count}
@@ -109,20 +109,20 @@ const ShopkeeperProfileCV = () => {
 						);
 					})}
 					<div className="divider  p-4"></div>
-					<div className="flex px-24  justify-between items-center my-12 ">
-						<div className=" flex flex-col items-center justify-center">
+					<div className="flex lg:px-24  justify-around items-center my-12 ">
+						<div className=" flex flex-col items-center justify-between">
 							<div>
-								<FaRegMessage className="text-6xl text-blue-400 "></FaRegMessage>
+								<FaRegMessage className=" text-3xl lg:text-6xl text-blue-400 "></FaRegMessage>
 							</div>
 						</div>
 						<div className="flex flex-col items-center justify-center">
 							<div className="border rounded-full p-7 avatar online">
-								<FaCartShopping className="text-5xl text-blue-400 "></FaCartShopping>
+								<FaCartShopping className="text-3xl lg:text-6xl text-blue-400 "></FaCartShopping>
 							</div>
 						</div>
 						<div className=" flex flex-col items-center justify-center">
 							<div>
-								<FaLocationDot className="text-6xl text-blue-400 "></FaLocationDot>
+								<FaLocationDot className="text-3xl lg:text-6xl text-blue-400 "></FaLocationDot>
 							</div>
 						</div>
 					</div>
@@ -149,10 +149,11 @@ const ShopkeeperProfileCV = () => {
 							</div>
 						</div>
 					</div>
-					<div className="grid grid-cols-3 gap-10 my-10 ">
+					<div className="grid md:grid-cols-3 gap-10 my-10 px-2 ">
 						{shopperProduct.map((product) => {
 							return (
-								<Link
+								<Link 
+								key={Math.random()}
 									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
 										`/product/${product.id}`
@@ -163,7 +164,7 @@ const ShopkeeperProfileCV = () => {
 										className=" relative border border-gray-50 mx-auto "
 									>
 										<img
-											className="h-[200px] w-[200px]"
+											className=""
 											src={`${
 												import.meta.env.VITE_APP_IMG_URL
 											}/${product.image}`}
