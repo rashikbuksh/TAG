@@ -67,7 +67,7 @@ const Product = () => {
 			<div className="product-image-slider-wrapper space-pb--30 space-mb--30">
 				{prods.map((single) => {
 					return (
-						<div className="product-image-single swiper-slide">
+						<div key={Math.random()} className="product-image-single swiper-slide">
 							<img
 								src={`${
 									import.meta.env.VITE_APP_IMG_URL
@@ -82,7 +82,7 @@ const Product = () => {
 			{/*====================  End of product image slider  ====================*/}
 			{prods.map((prods) => {
 				return (
-					<div className="product-content-header-area border-bottom--thick space-pb--30">
+					<div key={Math.random()} className="product-content-header-area border-bottom--thick space-pb--30">
 						<div className="container">
 							<div className="row">
 								<div className="col-12">
@@ -191,14 +191,15 @@ const Product = () => {
 						: "ADD TO WISHLIST"}
 				</button>
 				{productStock && productStock > 0 ? (
-					prods.map((prods) => {
+					prods.map((prod) => {
 						return (
 							<button
+							key={prod.id}
 								className="cart"
 								onClick={() =>
 									dispatch(
 										addToCart({
-											...prods,
+											...prod,
 											quantity: quantityCount,
 										})
 									)

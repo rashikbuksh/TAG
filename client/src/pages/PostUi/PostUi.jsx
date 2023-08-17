@@ -19,7 +19,7 @@ import MainProduct from "../../components/ProductCart/MainProduct";
 const PostUi = ({ postData }) => {
 	console.log(postData);
 
-	const [shopperProduct, setShopperProduct] = useState([]);
+	const [shopperProducts, setShopperProduct] = useState([]);
 	const [shopperInfo, setShopperInfo] = useState([]);
 
 	const {
@@ -68,7 +68,7 @@ const PostUi = ({ postData }) => {
 					<div className="flex items-center justify-between">
 						<div className="flex gap-3 items-center">
 							{shopperInfo.map((shopperinfo) => (
-								<img
+								<img key={Math.random()}
 									className="w-10 h-10 rounded-full"
 									src={shopperinfo.image}
 									alt=""
@@ -82,7 +82,7 @@ const PostUi = ({ postData }) => {
 									}
 								>
 									{shopperInfo.map((shopperinfo) => (
-										<div className="flex">
+										<div key={Math.random()} className="flex">
 											<h4 className="text-lg font-semibold">
 												{shopperinfo.name}
 											</h4>
@@ -110,21 +110,16 @@ const PostUi = ({ postData }) => {
 						</div>
 					</div>
 				</div>
-				{shopperProduct &&
-					shopperProduct.map((shopperproduct) => (
-						<MainProduct
-							key={shopperproduct.id}
-							productImage={shopperproduct.image}
-							productName={shopperproduct.name}
-							shopperProduct_id={shopperproduct.id}
-							shopperProductPrice={shopperproduct.price}
-							shopperProductDiscount={shopperproduct.discount}
+				{shopperProducts &&
+					shopperProducts.map((shopperproduct) => (
+						<MainProduct key={shopperproduct.id}
+						shopperProduct={shopperproduct}
 						/>
 					))}
 
 				<div className="px-4 py-2">
 					<div className="mb-4">
-						{shopperProduct ? (
+						{shopperProducts ? (
 							""
 						) : (
 							<>
