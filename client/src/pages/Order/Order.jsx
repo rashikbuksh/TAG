@@ -9,15 +9,11 @@ import useFetch from "../../hooks/use-fetch";
 
 const Order = () => {
 	const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
 
 	// get userid from local storage
 	const customer_profile_id = localStorage.getItem("user-id");
-	const [productInfo, setProductInfo] = useState([]);
 
 	useEffect(() => {
-		// get order from database
 		Axios.get(
 			`${
 				import.meta.env.VITE_APP_API_URL
@@ -25,24 +21,9 @@ const Order = () => {
 		)
 			.then((response) => {
 				setData(response.data);
-				setLoading(false);
 			})
 			.catch((error) => {
-				setError(error.message);
-				setLoading(false);
-			});
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproduct`
-		)
-			.then((response) => {
-				setProductInfo(response.data);
-				setLoading(false);
-			})
-			.catch((error) => {
-				setError(error.message);
-				setLoading(false);
+				alert(error);
 			});
 	}, [customer_profile_id]);
 
@@ -51,7 +32,6 @@ const Order = () => {
 			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
 			<div className="order-product-area">
 				{data?.map((single) => {
-					console.log(productInfo);
 					return (
 						<div
 							className="cart-product border-bottom--medium"

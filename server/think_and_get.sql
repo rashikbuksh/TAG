@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2023 at 07:25 PM
+-- Generation Time: Aug 17, 2023 at 10:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -174,6 +174,8 @@ INSERT INTO `product` (`id`, `sku`, `name`, `image`, `short_description`, `full_
 CREATE TABLE `product_order` (
   `id` int(11) NOT NULL,
   `product_id` varchar(255) DEFAULT NULL,
+  `quantity` varchar(255) DEFAULT NULL,
+  `weight` varchar(255) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `discount` varchar(255) DEFAULT NULL,
   `order_status` varchar(255) DEFAULT NULL,
@@ -184,12 +186,13 @@ CREATE TABLE `product_order` (
 -- Dumping data for table `product_order`
 --
 
-INSERT INTO `product_order` (`id`, `product_id`, `price`, `discount`, `order_status`, `customer_profile_id`) VALUES
-(4, '1,2', 1039, '10,5', 'pending', 3),
-(8, '2', 2850, '5', 'pending', 3),
-(9, '3,1', 489, '0,10', 'pending', 6),
-(10, '3,1', 489, '0,10', 'pending', 3),
-(15, '1,2', 1039, '10,5', 'pending', 3);
+INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, `discount`, `order_status`, `customer_profile_id`) VALUES
+(4, '1,2', '', '', 1039, '10,5', 'pending', 3),
+(8, '2', '', '', 2850, '5', 'pending', 3),
+(9, '3,1', '', '', 489, '0,10', 'pending', 6),
+(10, '3,1', '', '', 489, '0,10', 'pending', 3),
+(15, '1,2', '', '', 1039, '10,5', 'pending', 3),
+(16, '1,2', '1,1', NULL, 1039, '10,5', 'pending', 3);
 
 -- --------------------------------------------------------
 
@@ -325,7 +328,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `shopper_product`

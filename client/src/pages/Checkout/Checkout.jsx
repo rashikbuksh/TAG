@@ -35,19 +35,25 @@ const Checkout = () => {
 
 	var orderedItem = "";
 	var discountedItem = "";
+	var quantityItem = "";
+	var weightItem = "";
 
 	function getItemID() {
 		let i = 0;
 		while (cartItems[i] != null) {
 			orderedItem += cartItems[i].id;
 			discountedItem += cartItems[i].discount;
+			quantityItem += cartItems[i].quantity;
+			weightItem += cartItems[i].weight;
 			if (cartItems[i + 1] != null) {
 				orderedItem += ",";
 				discountedItem += ",";
+				quantityItem += ",";
+				weightItem += ",";
 			}
 			i++;
 		}
-		console.log(orderedItem);
+		console.log(orderedItem, discountedItem, quantityItem);
 	}
 	const settingState = (state) => {
 		dispatch({
@@ -59,9 +65,14 @@ const Checkout = () => {
 
 	const handleSubmit = () => {
 		console.log(cartItems);
+		if (weightItem == "") {
+			weightItem = "0";
+		}
 		getItemID();
 		Axios.post(`${import.meta.env.VITE_APP_API_URL}/order/add_order`, {
 			product_id: orderedItem,
+			quantity: quantityItem,
+			weight: weightItem,
 			price: Number(cartTotalPrice),
 			discount: discountedItem,
 			order_status: "pending",
@@ -69,9 +80,6 @@ const Checkout = () => {
 		})
 			.then((response) => {
 				console.log(response.data);
-				alert("Order Placed Successfully");
-				//settingState();
-				navigate("/home");
 			})
 			.catch((error) => {
 				alert(error);
@@ -86,8 +94,6 @@ const Checkout = () => {
 				"space-pt--70 space-pb--120"
 			)}
 		>
-			<Breadcrumb pageTitle="Checkout" prevUrl="/home" />
-
 			{cartItems && cartItems.length > 0 ? (
 				<div className="checkout-body space-mt--30">
 					<div className="container">
