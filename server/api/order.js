@@ -21,6 +21,12 @@ const read = [
 		param: ["customer_profile_id"],
 		msg: "product_id",
 	},
+	{
+		uri: "/order/getorder_by_id/:id",
+		query: `SELECT * FROM product_order WHERE id = ?`,
+		param: ["id"],
+		msg: "product_id",
+	},
 ];
 
 // Export modules
