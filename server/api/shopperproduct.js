@@ -17,7 +17,7 @@ const add = [
 const read = [
 	{
 		uri: "/shopperproduct/getshopperproduct",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image FROM shopper_product sp, product p WHERE sp.product_id = p.id`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id FROM shopper_product sp, product p WHERE sp.product_id = p.id`,
 	},
 	{
 		uri: "/shopperproduct/getshopperproduct/:id",

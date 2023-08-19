@@ -40,105 +40,103 @@ const AllProducts = ({ limit }) => {
 			});
 	}, []);
 
-	console.log("login product",prods);
 	if (!prods?.length) return <p>No products found</p>;
 
 	return (
-
-			<div className=" w-[80%] mx-auto">
-			
+		<div className=" w-[80%] mx-auto">
+			<div className="">
 				<div className="">
+					<h2 className="text-xl my-10">All Products</h2>
+					{/* featured products */}
 					<div className="">
-						<h2 className="text-xl my-10">
-							All Products
-						</h2>
-						{/* featured products */}
-						<div className="">
-							<div className="grid lg:grid-cols-4 gap-10">
-								{prods.map((single) => {
-									console.log(single);
-									
-									const wishlistItem = wishlistItems.find(
-										(wishlistItem) =>
-											wishlistItem.id === single.id
-							);
-									return (
-										//?this is product cart style
-										<ProductCart product={single} key={Math.random()}> </ProductCart>
-										// <div
-										// 	className="col-12 col-md-6"
-										// 	key={single.id}
-										// >
-										// 	<div className="grid-product space-mb--20">
-										// 		<div className="grid-product__image">
-										// 			<Link
-										// 				to={
-										// 					import.meta.env
-										// 						.VITE_API_PUBLIC_URL +
-										// 					`/product/${single.id}`
-										// 				}
-										// 			>
-										// 				{" "}
-										// 				click to view
-										// 			</Link>
-										// 			<button
-										// 				className={`icon ${
-										// 					wishlistItem !==
-										// 					undefined
-										// 						? "active"
-										// 						: ""
-										// 				}`}
-										// 				disabled={
-										// 					wishlistItem !==
-										// 					undefined
-										// 				}
-										// 				onClick={() =>
-										// 					dispatch(
-										// 						addToWishlist(
-										// 							single
-										// 						)
-										// 					)
-										// 				}
-										// 			>
-										// 				{/* <ReactSVG src="assets/img/icons/heart-dark.svg" /> */}
-										// 			</button>
-										// 		</div>
-										// 		<div className="grid-product__content">
-										// 			<h3 className="title">
-										// 				<Link
-										// 					to={
-										// 						import.meta.env
-										// 							.VITE_API_PUBLIC_URL +
-										// 						`/product/${single.id}`
-										// 					}
-										// 				>
-										// 					{single.name}
-										// 				</Link>
-										// 			</h3>
-										// 			<div className="price">
-										// 				{single.discount &&
-										// 				single.discount > 0 ? (
-										// 					<Fragment>
-										// 						<span className="main-price me-1">{`$${single.price}`}</span>
-										// 						<span className="discounted-price">{`$${getDiscountPrice(
-										// 							single.price,
-										// 							single.discount
-										// 						)}`}</span>
-										// 					</Fragment>
-										// 				) : (
-										// 					<span className="discounted-price">{`$${single.price}`}</span>
-										// 				)}
-										// 			</div>
-										// 		</div>
-										// 	</div>
-										// </div>
-									);
-								})}
-							</div>
+						<div className="grid lg:grid-cols-4 gap-10">
+							{prods.map((single) => {
+								const wishlistItem = wishlistItems.find(
+									(wishlistItem) =>
+										wishlistItem.id === single.id
+								);
+								return (
+									//?this is product cart style
+									<ProductCart
+										product={single}
+										key={single.id}
+									>
+										{" "}
+									</ProductCart>
+									// <div
+									// 	className="col-12 col-md-6"
+									// 	key={single.id}
+									// >
+									// 	<div className="grid-product space-mb--20">
+									// 		<div className="grid-product__image">
+									// 			<Link
+									// 				to={
+									// 					import.meta.env
+									// 						.VITE_API_PUBLIC_URL +
+									// 					`/product/${single.id}`
+									// 				}
+									// 			>
+									// 				{" "}
+									// 				click to view
+									// 			</Link>
+									// 			<button
+									// 				className={`icon ${
+									// 					wishlistItem !==
+									// 					undefined
+									// 						? "active"
+									// 						: ""
+									// 				}`}
+									// 				disabled={
+									// 					wishlistItem !==
+									// 					undefined
+									// 				}
+									// 				onClick={() =>
+									// 					dispatch(
+									// 						addToWishlist(
+									// 							single
+									// 						)
+									// 					)
+									// 				}
+									// 			>
+									// 				{/* <ReactSVG src="assets/img/icons/heart-dark.svg" /> */}
+									// 			</button>
+									// 		</div>
+									// 		<div className="grid-product__content">
+									// 			<h3 className="title">
+									// 				<Link
+									// 					to={
+									// 						import.meta.env
+									// 							.VITE_API_PUBLIC_URL +
+									// 						`/product/${single.id}`
+									// 					}
+									// 				>
+									// 					{single.name}
+									// 				</Link>
+									// 			</h3>
+									// 			<div className="price">
+									// 				{single.discount &&
+									// 				single.discount > 0 ? (
+									// 					<Fragment>
+									// 						<span className="main-price me-1">{`$${single.price}`}</span>
+									// 						<span className="discounted-price">{`$${getDiscountPrice(
+									// 							single.price,
+									// 							single.discount
+									// 						)}`}</span>
+									// 					</Fragment>
+									// 				) : (
+									// 					<span className="discounted-price">{`$${single.price}`}</span>
+									// 				)}
+									// 			</div>
+									// 		</div>
+									// 	</div>
+									// </div>
+								);
+							})}
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 	);
 };
 
