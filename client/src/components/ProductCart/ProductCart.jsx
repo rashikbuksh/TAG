@@ -20,16 +20,23 @@ const ProductCart = ({ product }) => {
 	}, []);
 
 	return (
-		<div className=" w-[300px] border border-gray-100 mx-auto rounded-md">
-			{shopper.map((shopper) => (
-				<div className="">
+		<div className="w-[300px] border border-gray-100 mx-auto rounded-md">
+			{shopper.map((shopper, key) => (
+				<div key={shopper_id} className="">
 					<div className="flex items-center justify-between">
 						<div className="flex gap-3 items-center px-2 py-2">
-							<img
-								className="w-10 h-10 rounded-full"
-								src={shopper.image}
-								alt=""
-							/>
+							<Link
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									`/shopkeeperProfileCV/${shopper_id}`
+								}
+							>
+								<img
+									className="w-10 h-10 rounded-full"
+									src={shopper.image}
+									alt=""
+								/>
+							</Link>
 							<div>
 								<Link
 									to={
