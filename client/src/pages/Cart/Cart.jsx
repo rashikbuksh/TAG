@@ -12,12 +12,8 @@ import {
 
 const Cart = () => {
 	let cartTotalPrice = 0;
-
-	const [quantityCount] = useState(1);
 	const dispatch = useDispatch();
 	const { cartItems } = useSelector((state) => state.cart);
-
-	console.log(cartItems);
 
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">

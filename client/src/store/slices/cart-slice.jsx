@@ -114,13 +114,26 @@ const cartSlice = createSlice({
 		},
 		increaseQuantity(state, action) {
 			const product = action.payload;
-			console.log("Product", product.cartItem.id);
+			console.log("Product", product);
 			state.cartItems = state.cartItems.map((item) =>
 				item.id == product.cartItem.id
 					? { ...item, quantity: item.quantity + 1 }
 					: item
 			);
 			cogoToast.warn("Item Incremented From Cart", {
+				position: "bottom-left",
+			});
+			console.log("state.cartItems: ", state.cartItems);
+		},
+		increaseQuantityofProd(state, action) {
+			const product = action.payload;
+			console.log("Product", product);
+			state.cartItems = state.cartItems.map((item) =>
+				item.id == product.id
+					? { ...item, quantity: item.quantity + 1 }
+					: item
+			);
+			cogoToast.warn("Item Incremented in Cart", {
 				position: "bottom-left",
 			});
 			console.log("state.cartItems: ", state.cartItems);
@@ -137,5 +150,6 @@ export const {
 	decreaseQuantity,
 	deleteAllFromCart,
 	increaseQuantity,
+	increaseQuantityofProd,
 } = cartSlice.actions;
 export default cartSlice.reducer;

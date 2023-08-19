@@ -4,10 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import Swiper, { SwiperSlide } from "../../components/swiper";
-import { addToCart } from "../../store/slices/cart-slice";
+import {
+	addToCart,
+	increaseQuantityofProd,
+} from "../../store/slices/cart-slice";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 
 import {
+	checkIfInCart,
 	getDiscountPrice,
 	getProductCartQuantity,
 } from "../../helpers/product";
@@ -17,7 +21,6 @@ const Product = () => {
 	const dispatch = useDispatch();
 
 	const [productStock, setProductStock] = useState(0);
-	const [quantityCount, setQuantityCount] = useState(1);
 
 	const [prods, setProds] = useState([]);
 
@@ -47,8 +50,6 @@ const Product = () => {
 
 	const productCartQty = getProductCartQuantity(cartItems, prods);
 
-	console.log(cartItems);
-
 	useEffect(() => {
 		Axios.get(
 			`${
@@ -67,7 +68,10 @@ const Product = () => {
 			<div className="product-image-slider-wrapper space-pb--30 space-mb--30">
 				{prods.map((single) => {
 					return (
-						<div key={Math.random()} className="product-image-single swiper-slide">
+						<div
+							key={Math.random()}
+							className="product-image-single swiper-slide"
+						>
 							<img
 								src={`${
 									import.meta.env.VITE_APP_IMG_URL
@@ -82,7 +86,10 @@ const Product = () => {
 			{/*====================  End of product image slider  ====================*/}
 			{prods.map((prods) => {
 				return (
-					<div key={Math.random()} className="product-content-header-area border-bottom--thick space-pb--30">
+					<div
+						key={Math.random()}
+						className="product-content-header-area border-bottom--thick space-pb--30"
+					>
 						<div className="container">
 							<div className="row">
 								<div className="col-12">
@@ -194,16 +201,15 @@ const Product = () => {
 					prods.map((prod) => {
 						return (
 							<button
-							key={prod.id}
+								key={prod.id}
 								className="cart"
-								onClick={() =>
-									dispatch(
-										addToCart({
-											...prod,
-											quantity: quantityCount,
-										})
-									)
-								}
+								onClick={() => {
+									if (checkIfInCart(cartItems, prod)) {
+										dispatch(increaseQuantityofProd(prod));
+									} else {
+										dispatch(addToCart(prod));
+									}
+								}}
 								disabled={productCartQty >= productStock}
 							>
 								{productCartQty >= productStock

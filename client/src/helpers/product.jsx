@@ -124,3 +124,12 @@ export const cartItemStock = (item) => {
 		return item.stock;
 	}
 };
+
+export const checkIfInCart = (cartItems, product) => {
+	const _product = cartItems.find((item) => item.id === product.id);
+	if (_product == undefined) {
+		return false;
+	} else {
+		return true;
+	}
+};
