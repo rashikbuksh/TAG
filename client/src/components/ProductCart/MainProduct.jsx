@@ -4,15 +4,23 @@ import { FaRegMessage } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
+	checkIfInCart,
 	getDiscountPrice,
 	getProductCartQuantity,
 } from "../../helpers/product";
-import { addToCart } from "../../store/slices/cart-slice";
+import {
+	addToCart,
+	increaseQuantityofProd,
+} from "../../store/slices/cart-slice";
+
+import { useSelector } from "react-redux";
 
 const MainProduct = ({ shopperProduct, product }) => {
 	const prod = product || shopperProduct;
 	const { name, price, image, id, discount } = prod;
 	const dispatch = useDispatch();
+
+	const cartItems = useSelector((state) => state.cart.cartItems);
 	return (
 		<div>
 			<div className="divider m-0"></div>
@@ -64,13 +72,13 @@ const MainProduct = ({ shopperProduct, product }) => {
 				</div>
 			</div>
 			<button
-				onClick={() =>
-					dispatch(
-						addToCart({
-							...prod,
-						})
-					)
-				}
+				onClick={() => {
+					if (checkIfInCart(cartItems, prod)) {
+						dispatch(increaseQuantityofProd(prod));
+					} else {
+						dispatch(addToCart(prod));
+					}
+				}}
 				className=" btn  btn-block rounded-none btn-success"
 			>
 				Add To Cart{" "}
