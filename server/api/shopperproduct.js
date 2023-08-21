@@ -17,7 +17,7 @@ const add = [
 const read = [
 	{
 		uri: "/shopperproduct/getshopperproduct",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id FROM shopper_product sp, product p WHERE sp.product_id = p.id`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count FROM shopper_product sp, product p WHERE sp.product_id = p.id`,
 	},
 	{
 		uri: "/shopperproduct/getshopperproduct/:id",
@@ -37,6 +37,15 @@ const read = [
 	{
 		uri: "/shopperproduct/getLastProduct",
 		query: `SELECT * FROM shopper_product ORDER BY id DESC LIMIT 1`,
+	},
+	{
+		uri: "/shopperproduct/getshopperproductBasedOnSaleCount",
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC LIMIT 2`,
+	},
+	{
+		uri: "/shopkeeperproduct/getshopkeeperproductCount/:id",
+		query: `SELECT COUNT(*) as count FROM shopper_product WHERE shopper_id = ?`,
+		param: ["id"],
 	},
 ];
 

@@ -28,6 +28,7 @@ const Register = () => {
 	};
 	const registerSchema = yup.object().shape({
 		name: yup.string().required("Name is required"),
+		phone: yup.string().required("Phone Number is required").max(11),
 		emailAddress: yup
 			.string()
 			.email("Please enter valid email address")
@@ -49,6 +50,7 @@ const Register = () => {
 		console.log(data);
 		Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/registershopper`, {
 			name: data.name,
+			phone: data.phone,
 			email: data.emailAddress,
 			password: data.password,
 			access: "shopper",
@@ -97,6 +99,21 @@ const Register = () => {
 										/>
 										<p className="text-danger">
 											{errors.name?.message}
+										</p>
+									</div>
+									<div className="auth-form__single-field space-mb--30">
+										<label htmlFor="phone">
+											Phone Number
+										</label>
+										<input
+											type="text"
+											name="phone"
+											id="phone"
+											placeholder="Enter Phone Number"
+											{...register("phone")}
+										/>
+										<p className="text-danger">
+											{errors.phone?.message}
 										</p>
 									</div>
 									<div className="auth-form__single-field space-mb--30">

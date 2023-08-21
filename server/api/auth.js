@@ -9,7 +9,7 @@ const read = [
 		uri: "/auth/getUserInfo/:id",
 		query: `SELECT image, name, user_name, review_count from customer_profile where id = ?`,
 		param: ["id"],
-		msg: "email or password is incorrect",
+		msg: "id is incorrect",
 	},
 ];
 
@@ -22,8 +22,15 @@ const add = [
 	},
 	{
 		uri: "/auth/registershopper",
-		query: `INSERT INTO customer_profile (name, email, password, shipping_address, access) VALUES (?, ?, ?, ?, ?)`,
-		body: ["name", "email", "password", "shipping_address", "access"],
+		query: `INSERT INTO customer_profile (name, phone, email, password, shipping_address, access) VALUES (?, ?, ?, ?, ?, ?)`,
+		body: [
+			"name",
+			"phone",
+			"email",
+			"password",
+			"shipping_address",
+			"access",
+		],
 		msg: "name",
 	},
 ];

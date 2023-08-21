@@ -33,15 +33,16 @@ const Login = () => {
 				data?.emailAddress
 			}/${data?.password}`
 		).then((response) => {
-			console.log(response.data);
-			// redirect to home page
-			console.log(response.data[0]?.id);
 			if (response.data[0]?.id === undefined) {
 				alert("Invalid Credentials");
 				window.location.href = "/login";
 			} else {
 				localStorage.setItem("user-id", response.data[0]?.id);
-				window.location.href = "/home";
+				if (response.data[0]?.access === "shopper") {
+					window.location.href = "/shopkeeperDashboard";
+				} else {
+					window.location.href = "/home";
+				}
 			}
 		});
 	};
