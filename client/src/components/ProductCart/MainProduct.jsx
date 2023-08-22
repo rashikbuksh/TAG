@@ -83,7 +83,8 @@ const MainProduct = ({ shopperProduct, product }) => {
                   type="number"
                   id="Quantity"
                   value={quantity}
-                  className="h-10 w-16 rounded border border-gray-200 text-center "
+				  disabled
+                  className="h-10 w-16 rounded border border-gray-200 text-center bg-white "
                 />
 
                 <button
