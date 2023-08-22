@@ -40,7 +40,7 @@ const read = [
 	},
 	{
 		uri: "/shopperproduct/getshopperproductBasedOnSaleCount",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC LIMIT 2`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC LIMIT 4`,
 	},
 	{
 		uri: "/shopkeeperproduct/getshopkeeperproductCount/:id",

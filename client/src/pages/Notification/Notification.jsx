@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { FaBell } from "react-icons/fa";
 import { ReactSVG } from "react-svg";
 import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
 import useFetch from "../../hooks/use-fetch";
@@ -29,12 +30,7 @@ const Notification = () => {
 						<div className="notification-item__time">
 							{" "}
 							<span>
-								<ReactSVG
-									src={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"assets/img/icons/notification.svg"
-									}
-								/>
+								<FaBell></FaBell>
 							</span>{" "}
 							{single.notificationTime}
 						</div>
