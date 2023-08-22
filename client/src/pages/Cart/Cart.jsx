@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from "react";
+import Axios from "axios";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
@@ -14,6 +15,17 @@ const Cart = () => {
 	let cartTotalPrice = 0;
 	const dispatch = useDispatch();
 	const { cartItems } = useSelector((state) => state.cart);
+	const [shopper, setShopper] = useState([]);
+	var shopperInfo = [];
+
+	useEffect(() => {
+		Axios.get(
+			import.meta.env.VITE_APP_API_URL + "/auth/getShopperInfo"
+		).then((res) => {
+			console.log("res.data: ", res.data);
+			setShopper(res.data);
+		});
+	}, []);
 
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
@@ -26,6 +38,11 @@ const Cart = () => {
 								cartItem.price,
 								cartItem.discount
 							);
+							shopperInfo = shopper.filter(
+								(shopper) => shopper.id == cartItem.shopper_id
+							);
+
+							console.log("shopperInfo: ", shopperInfo);
 
 							discountedPrice != null
 								? (cartTotalPrice +=
@@ -37,6 +54,51 @@ const Cart = () => {
 									className="cart-product border-bottom--medium"
 									key={key}
 								>
+									<div>
+										{shopperInfo.map((shopper, key) => (
+											<div key={shopper.id} className="">
+												<div className="flex items-center justify-between">
+													<div className="flex gap-3 items-center px-2 py-2">
+														<Link
+															to={
+																import.meta.env
+																	.VITE_API_PUBLIC_URL +
+																`/shopkeeperProfileCV/${shopper.id}`
+															}
+														>
+															<img
+																className="w-10 h-10 rounded-full"
+																src={
+																	import.meta
+																		.env
+																		.VITE_APP_IMG_URL +
+																	shopper.image
+																}
+																alt=""
+															/>
+														</Link>
+													</div>
+													<div>
+														<Link
+															to={
+																import.meta.env
+																	.VITE_API_PUBLIC_URL +
+																`/shopkeeperProfileCV/${shopper.id}`
+															}
+														>
+															<div className="flex">
+																<h4 className="text-lg font-semibold">
+																	{
+																		shopper.name
+																	}
+																</h4>
+															</div>
+														</Link>
+													</div>
+												</div>
+											</div>
+										))}
+									</div>
 									<div className="cart-product__image">
 										<Link
 											to={
@@ -48,7 +110,8 @@ const Cart = () => {
 											<img
 												src={
 													import.meta.env
-														.VITE_API_PUBLIC_URL +
+														.VITE_APP_IMG_URL +
+													"/" +
 													cartItem.image
 												}
 												className="img-fluid"
@@ -68,19 +131,6 @@ const Cart = () => {
 												{cartItem.name}
 											</Link>
 										</h3>
-										{/* <span className="category">
-                                            {cartItem.category.map(
-                                                (item, index, arr) => {
-                                                    return (
-                                                        item +
-                                                        (index !==
-                                                        arr.length - 1
-                                                            ? ", "
-                                                            : "")
-                                                    );
-                                                }
-                                            )}
-                                        </span> */}
 										<div className="price">
 											{cartItem.discount &&
 											cartItem.discount > 0 ? (
