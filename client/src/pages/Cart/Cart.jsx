@@ -22,7 +22,6 @@ const Cart = () => {
 		Axios.get(
 			import.meta.env.VITE_APP_API_URL + "/auth/getShopperInfo"
 		).then((res) => {
-			console.log("res.data: ", res.data);
 			setShopper(res.data);
 		});
 	}, []);
@@ -41,8 +40,6 @@ const Cart = () => {
 							shopperInfo = shopper.filter(
 								(shopper) => shopper.id == cartItem.shopper_id
 							);
-
-							console.log("shopperInfo: ", shopperInfo);
 
 							discountedPrice != null
 								? (cartTotalPrice +=
@@ -72,7 +69,8 @@ const Cart = () => {
 																	import.meta
 																		.env
 																		.VITE_APP_IMG_URL +
-																	shopper.image
+																	"/" +
+																	shopper?.image
 																}
 																alt=""
 															/>
