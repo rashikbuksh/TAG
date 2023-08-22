@@ -179,7 +179,25 @@ const ShopProducts = ({ products }) => {
 							(wishlistItem) => wishlistItem.id === single.id
 						)[0];
 						return (
-							// <div
+							<div className="mb-10" key={single.id}>
+							<ProductCart product={single} key={single.id}>
+								{" "}
+							</ProductCart>
+							</div>
+						);
+					})}
+			</div>
+		</div>
+	);
+};
+
+ShopProducts.propTypes = {
+	products: PropTypes.array,
+};
+
+export default ShopProducts;
+
+// <div
 							// 	className="list-product border-bottom--medium"
 							// 	key={single.id}
 							// >
@@ -252,20 +270,3 @@ const ShopProducts = ({ products }) => {
 							// 		<p>{single.shortDescription}</p>
 							// 	</div>
 							// </div>
-							<div className="mb-10" key={single.id}>
-							<ProductCart product={single} key={single.id}>
-								{" "}
-							</ProductCart>
-							</div>
-						);
-					})}
-			</div>
-		</div>
-	);
-};
-
-ShopProducts.propTypes = {
-	products: PropTypes.array,
-};
-
-export default ShopProducts;

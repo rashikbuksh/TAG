@@ -91,12 +91,14 @@ const MainProduct = ({ shopperProduct, product }) => {
 									<FaMinus className="text-black" />
 								</button>
 
-								<input
-									type="number"
-									id="Quantity"
-									value={quantity}
-									className="h-10 w-16 rounded border border-gray-200 text-center "
-								/>
+
+                <input
+                  type="number"
+                  id="Quantity"
+                  value={quantity}
+				  disabled
+                  className="h-10 w-16 rounded border border-gray-200 text-center bg-white "
+                />
 
 								<button
 									type="button"
