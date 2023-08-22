@@ -11,6 +11,10 @@ const read = [
 		param: ["id"],
 		msg: "id is incorrect",
 	},
+	{
+		uri: "/auth/getShopperInfo",
+		query: `SELECT id, image, name, user_name, review_count from customer_profile where access = "shopper"`,
+	},
 ];
 
 const add = [
