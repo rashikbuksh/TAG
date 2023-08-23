@@ -9,6 +9,7 @@ const { read: Product } = require("../api/product");
 const { read: ShopperProduct } = require("../api/shopperproduct");
 const { read: Order } = require("../api/order");
 const { read: News } = require("../api/news");
+const { read: Notification } = require("../api/notification");
 
 const GET_DATA = [
 	...JobEntry,
@@ -19,6 +20,7 @@ const GET_DATA = [
 	...ShopperProduct,
 	...Order,
 	...News,
+	...Notification,
 ];
 
 GET_DATA.forEach(({ uri, query, param }) => {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 17, 2023 at 10:10 PM
+-- Generation Time: Aug 23, 2023 at 05:04 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -80,7 +80,8 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545111', 'rashik@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'customer'),
 (6, 'Rashik Buksh', NULL, NULL, NULL, 'rbr', 'rafsan123', '01709305072', 'rbr@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', NULL, NULL, NULL, NULL, 'customer'),
 (10, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashik@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper'),
-(11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper');
+(11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper'),
+(15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545111', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper');
 
 -- --------------------------------------------------------
 
@@ -124,7 +125,8 @@ CREATE TABLE `news` (
 
 INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `duration`, `location`, `like_count`, `comment_count`, `share_count`, `rating`, `category`, `post_content`, `post_img`) VALUES
 (2, 14, 3, '2023-08-16T00:57:01.662Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
-(3, 15, 3, '2023-08-16T00:59:00.797Z', '5', '', '', 0, 0, 0, 3.55, 'regular', '', '');
+(3, 15, 3, '2023-08-16T00:59:00.797Z', '5', '', '', 0, 0, 0, 3.55, 'regular', '', ''),
+(5, 17, 15, '2023-08-21T13:08:10.048Z', '0', '', '', 0, 0, 0, 0, 'regular', '', '');
 
 -- --------------------------------------------------------
 
@@ -135,8 +137,11 @@ INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `
 CREATE TABLE `notification` (
   `id` int(11) NOT NULL,
   `notification_content` varchar(255) DEFAULT NULL,
-  `notification_time` date DEFAULT NULL,
-  `unread` int(11) DEFAULT NULL
+  `notification_time` varchar(255) DEFAULT NULL,
+  `unread` int(11) DEFAULT NULL,
+  `ordered_product` varchar(255) NOT NULL,
+  `ordered_from` int(11) NOT NULL,
+  `ordered_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -187,12 +192,13 @@ CREATE TABLE `product_order` (
 --
 
 INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, `discount`, `order_status`, `customer_profile_id`) VALUES
-(4, '1,2', '', '', 1039, '10,5', 'pending', 3),
-(8, '2', '', '', 2850, '5', 'pending', 3),
-(9, '3,1', '', '', 489, '0,10', 'pending', 6),
-(10, '3,1', '', '', 489, '0,10', 'pending', 3),
-(15, '1,2', '', '', 1039, '10,5', 'pending', 3),
-(16, '1,2', '1,1', NULL, 1039, '10,5', 'pending', 3);
+(4, '1,2', '1,1', '', 1039, '10,5', 'pending', 3),
+(8, '2', '3', '', 2850, '5', 'pending', 3),
+(9, '3,1', '2,1', '', 489, '0,10', 'pending', 6),
+(10, '3,1', '2,1', '', 489, '0,10', 'pending', 3),
+(15, '1,2', '1,1', '', 1039, '10,5', 'pending', 3),
+(16, '1,2', '1,1', NULL, 1039, '10,5', 'pending', 3),
+(17, '1', '1', '0undefined', 89, '10', 'pending', 3);
 
 -- --------------------------------------------------------
 
@@ -218,13 +224,14 @@ CREATE TABLE `shopper_product` (
 --
 
 INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`, `shopper_id`) VALUES
-(1, 'gg product', 99, 10, 100, 1, 2, 3, 1, 11),
-(2, 'gg 8', 1000, 5, 50, 0, 0, 0, 11, 10),
+(1, 'gg product', 99, 10, 100, 10, 2, 3, 1, 11),
+(2, 'gg 8', 1000, 5, 50, 2, 0, 0, 11, 10),
 (3, 'Vanity Bag', 200, 0, 100, 0, 0, 0, 12, 10),
 (4, 'sugar', 10, 0, 100, 0, 0, 0, 13, 11),
 (8, 'Vanity Bag', 100, 2, 25, 0, 0, 0, 12, 3),
-(14, 'sugar', 25, 0, 100, 0, 0, 0, 13, 3),
-(15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3);
+(14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3),
+(15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3),
+(17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15);
 
 --
 -- Indexes for dumped tables
@@ -260,7 +267,9 @@ ALTER TABLE `news`
 -- Indexes for table `notification`
 --
 ALTER TABLE `notification`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ordered_from` (`ordered_from`),
+  ADD KEY `ordered_by` (`ordered_by`);
 
 --
 -- Indexes for table `product`
@@ -298,7 +307,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `hero_slider`
@@ -310,7 +319,7 @@ ALTER TABLE `hero_slider`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `notification`
@@ -328,13 +337,13 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
@@ -346,6 +355,13 @@ ALTER TABLE `shopper_product`
 ALTER TABLE `news`
   ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`shopper_product_id`) REFERENCES `shopper_product` (`id`),
   ADD CONSTRAINT `news_ibfk_2` FOREIGN KEY (`shop_id`) REFERENCES `customer_profile` (`id`);
+
+--
+-- Constraints for table `notification`
+--
+ALTER TABLE `notification`
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`ordered_from`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`ordered_by`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product`
