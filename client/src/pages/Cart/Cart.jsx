@@ -44,7 +44,10 @@ const Cart = () => {
 					{cartItems && cartItems.length >= 1 ? (
 						<Fragment>
 							<div className="cart-product-area">
-								<div className="border border-gray-100 mx-3 px-3 py-2">
+								<div
+									className="border border-gray-100 mx-3 px-3 py-2"
+									key={cartItems.id}
+								>
 									{cartItems.map((cartItem, key) => {
 										const discountedPrice =
 											getDiscountPrice(
@@ -96,7 +99,11 @@ const Cart = () => {
 																	// 	"current_id"
 																	// );
 																	return (
-																		<div>
+																		<div
+																			key={
+																				shopper.id
+																			}
+																		>
 																			<div
 																				key={
 																					shopper.id
