@@ -3,6 +3,9 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Preloader from "../Preloader/Preloader";
 import Swiper, { SwiperSlide } from "../swiper";
 
+import Axios from "axios";
+import React, { useEffect, useState } from "react";
+
 const params = {
 	loop: true,
 	speed: 1000,
@@ -16,24 +19,35 @@ const params = {
 const HeroSlider = () => {
 	const { data, isLoading, errorMessage } = useFetch("hero-slider.json");
 
-	if (isLoading) return <Preloader />;
-	if (errorMessage) return <ErrorMessage errorMessage={errorMessage} />;
+	const [sliderData, setSliderData] = useState([]);
+
+	useEffect(() => {
+		Axios.get(import.meta.env.VITE_APP_API_URL + "/heroslider/getslider")
+			.then((res) => {
+				console.log(res.data);
+				setSliderData(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 	return (
 		<div className="hero-slider bg-color--grey space-y--10">
 			<div className="container">
 				<div className="row row-10">
 					<div className="col-12">
 						<div className="hero-slider-wrapper">
-							{!!data.length && (
+							{!!sliderData.length && (
 								<Swiper options={params}>
-									{data.map((single) => (
+									{sliderData.map((single) => (
 										<SwiperSlide key={single.id}>
 											<div
 												className="hero-slider-item d-flex bg-img"
 												style={{
 													backgroundImage: `url(${
 														import.meta.env
-															.VITE_API_PUBLIC_URL +
+															.VITE_APP_IMG_URL +
+														"/heroslider/" +
 														single.image
 													})`,
 												}}

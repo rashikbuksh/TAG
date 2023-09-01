@@ -38,6 +38,7 @@ const EditProfile = lazy(() => import("./pages/EditProfile"));
 const Notification = lazy(() => import("./pages/Notification"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Order = lazy(() => import("./pages/Order"));
+const HeroSlider = lazy(() => import("./pages/hero-slider/HeroSlider"));
 
 function App() {
 	return (
@@ -129,6 +130,10 @@ function App() {
 								element={
 									<ShopkeeperProfileCV></ShopkeeperProfileCV>
 								}
+							/>
+							<Route
+								path={"/addheroslider"}
+								element={<HeroSlider />}
 							/>
 							<Route path="*" element={<NotFound />} />
 						</Route>

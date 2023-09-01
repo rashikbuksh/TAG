@@ -1,18 +1,15 @@
-import React from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Axios from "axios";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 const HeroSlider = () => {
 	const addHeroSliderScema = yup.object({
-		id: yup
-			.number("Id must be number")
-			.transform((value) => (isNaN(value) ? undefined : value))
-			.required("Category ID required"),
-		title: yup.string().required("Category name required"),
-		subTitle: yup.string().required("Category name required"),
+		title: yup.string().required("Title required"),
+		subtitle: yup.string().required("Sub Title required"),
 		image: yup
 			.mixed()
-			.required("Category Picture is required")
+			.required("Picture is required")
 			.test("fileFormat", "Invalid file format", (value) => {
 				if (value && value.length) {
 					const file = value[0];
@@ -23,9 +20,8 @@ const HeroSlider = () => {
 	});
 	const form = useForm({
 		defaultValues: {
-			id: "",
 			title: "",
-			subTitle: "",
+			subtitle: "",
 			image: "",
 		},
 		resolver: yupResolver(addHeroSliderScema),
@@ -34,9 +30,44 @@ const HeroSlider = () => {
 	const { register, handleSubmit, formState } = form;
 	const { errors } = formState;
 
-	const onSubmit = (data) => {
-		console.log("FormData", data);
-		console.log(errors);
+	const [file, setFile] = useState(null);
+
+	const onSubmit = async (data) => {
+		const formData = new FormData();
+		formData.append("uploadFiles", file);
+
+		var ImageName = null;
+		console.log(new Date());
+		if (file === null) {
+			ImageName = null;
+		} else {
+			await Axios.post(
+				`${
+					import.meta.env.VITE_APP_API_URL
+				}/imageUpload/heroSliderImageUpload`,
+				formData,
+				{
+					headers: {
+						"Content-Type": "multipart/form-data;",
+					},
+				}
+			).then((response) => {
+				console.log(response.data);
+				if (response.data.msg === "File Uploaded") {
+					ImageName = response.data.productImage;
+				}
+			});
+		}
+		Axios.post(`${import.meta.env.VITE_APP_API_URL}/heroslider/addslider`, {
+			title: data.title,
+			subtitle: data.subtitle,
+			image: ImageName,
+		}).then((response) => {
+			console.log(response.data);
+			if (response.data.message == title + " Added Successful") {
+				alert("Slider Added Successful");
+			}
+		});
 	};
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 mt-3">
@@ -62,19 +93,6 @@ const HeroSlider = () => {
 							<div className="auth-form">
 								<form onSubmit={handleSubmit(onSubmit)}>
 									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="id">Id</label>
-										<input
-											{...register("id")}
-											type="number"
-											name="id"
-											id="id"
-											placeholder="Id"
-										/>
-										<p className="text-danger">
-											{errors.id?.message}
-										</p>
-									</div>
-									<div className="auth-form__single-field space-mb--30">
 										<label htmlFor="title">Title</label>
 										<input
 											{...register("title")}
@@ -88,18 +106,18 @@ const HeroSlider = () => {
 										</p>
 									</div>
 									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="subTitle">
-											SubTitle
+										<label htmlFor="subtitle">
+											subtitle
 										</label>
 										<input
-											{...register("subTitle")}
+											{...register("subtitle")}
 											type="text"
-											name="subTitle"
-											id="subTitle"
-											placeholder="Enter subTitle"
+											name="subtitle"
+											id="subtitle"
+											placeholder="Enter subtitle"
 										/>
 										<p className="text-danger">
-											{errors.subTitle?.message}
+											{errors.subtitle?.message}
 										</p>
 									</div>
 									<div className="auth-form__single-field space-mb--30">
@@ -112,13 +130,16 @@ const HeroSlider = () => {
 											name="image"
 											id="image"
 											placeholder="Enter image"
+											onChange={(e) => {
+												setFile(e.target.files[0]);
+											}}
 										/>
 										<p className="text-danger">
 											{errors.category_picture?.message}
 										</p>
 									</div>
 									<button className="auth-form__button">
-										Hero Slider
+										Add Hero Slider
 									</button>
 								</form>
 							</div>
