@@ -38,8 +38,6 @@ ADD_DATA.forEach(({ uri, query, body, msg }) => {
 			bodyArr.push(req?.body[val]);
 		});
 
-		console.log(req?.body);
-
 		ExecuteQuery(
 			res,
 			query,

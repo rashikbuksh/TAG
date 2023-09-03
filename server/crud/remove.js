@@ -12,7 +12,6 @@ REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
         param?.forEach((val) => {
             paramArr.push(req?.params[val]);
         });
-        console.log("uri ",uri);
 
         ExecuteQuery(
             res,

@@ -3,15 +3,17 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
 import { ReactSVG } from "react-svg";
+import { Link } from "react-router-dom";
 import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
 import useFetch from "../../hooks/use-fetch";
 
 const Notification = () => {
 	const [notification, setNotification] = useState([]);
 
+	const userid = localStorage.getItem("user-id");
+
 	useEffect(() => {
-		Axios.get(
-			import.meta.env.VITE_APP_API_URL + "/notification/getnotification"
+		Axios.get(`${import.meta.env.VITE_APP_API_URL}/notification/getnotification/${userid}`
 		).then((res) => {
 			setNotification(res.data);
 		});
@@ -29,20 +31,36 @@ const Notification = () => {
 						)}
 						key={single.id}
 					>
+						<Link
+							to={import.meta.env.VITE_API_PUBLIC_URL+`/shopkeeperProfileCV/${single.not_from}`}>
 						<div
 							dangerouslySetInnerHTML={{
-								__html: single.notificationContent,
+								__html: single.notification_content,
 							}}
 						/>
+						</Link>
 						<div className="notification-item__time">
 							{" "}
 							<span>
 								<FaBell></FaBell>
 							</span>{" "}
-							{single.notificationTime}
+							{single.notification_time}
 						</div>
 					</div>
 				))}
+				{
+					notification.length === 0 && (
+						<div className="notification-item">
+							<div className="notification-item__time">
+								{" "}
+								<span>
+									<FaBell></FaBell>
+								</span>{" "}
+								No Notification
+							</div>
+						</div>
+					)
+				}
 			</div>
 		</div>
 	);
