@@ -24,7 +24,6 @@ const HeroSlider = () => {
 	useEffect(() => {
 		Axios.get(import.meta.env.VITE_APP_API_URL + "/heroslider/getslider")
 			.then((res) => {
-				console.log(res.data);
 				setSliderData(res.data);
 			})
 			.catch((err) => {

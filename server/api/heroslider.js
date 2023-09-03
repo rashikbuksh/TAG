@@ -14,8 +14,17 @@ const read = [
 	},
 ];
 
+const remove = [
+	{
+		uri: "/heroslider/deleteslider/:id",
+		query: `DELETE FROM hero_slider WHERE id = ?`,
+		param: ["id"],
+	},
+];
+
 // Export modules
 module.exports = Object.freeze({
 	read,
 	add,
+	remove,
 });

@@ -2,7 +2,9 @@ const { app, ExecuteQuery } = require("../config");
 
 const { remove: JobEntry } = require("../api/job_entry");
 
-const REMOVE_DATA = [...JobEntry];
+const { remove: HeroSlider} = require("../api/heroslider");
+
+const REMOVE_DATA = [...JobEntry, ...HeroSlider];
 
 REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
     app.delete(uri, (req, res) => {
@@ -10,6 +12,7 @@ REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
         param?.forEach((val) => {
             paramArr.push(req?.params[val]);
         });
+        console.log("uri ",uri);
 
         ExecuteQuery(
             res,

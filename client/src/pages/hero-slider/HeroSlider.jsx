@@ -1,9 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 const HeroSlider = () => {
+	const [sliderData, setSliderData] = useState([]);
 	const addHeroSliderScema = yup.object({
 		title: yup.string().required("Title required"),
 		subtitle: yup.string().required("Sub Title required"),
@@ -69,6 +70,29 @@ const HeroSlider = () => {
 			}
 		});
 	};
+
+	useEffect(() => {
+		Axios.get(`${import.meta.env.VITE_APP_API_URL}/heroslider/getslider`)
+			.then((res) => {
+				setSliderData(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
+
+	async function deleteSlider(id) {
+		console.log(id);
+		await Axios.post(
+			`${import.meta.env.VITE_APP_API_URL}/heroslider/deleteslider/${id}`
+		).then((response) => {
+			console.log(response.data);
+			if (response.data.message == id + " Deleted Successful") {
+				alert("Slider Deleted Successful");
+			}
+		});
+	}
+
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 mt-3">
 			{/* auth page header */}
@@ -148,6 +172,40 @@ const HeroSlider = () => {
 				</div>
 			</div>
 			{/* auth page footer */}
+			<div className="divider"></div>
+			<div className="auth-page-body">
+				<div className="container">
+					<div className="row">
+						<div className="col-12">
+							{/* Auth form */}
+							<div className="auth-form">
+							{!!sliderData.length && sliderData.map((single) => (
+								
+								<div key={single.id}>
+									<button className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 ml-auto flex justify-end" onClick={() => deleteSlider(single.id)}>
+											Delete
+										</button>
+									<div className="auth-form__single-field space-mb--30">
+										{single.title}
+									</div>
+									<div className="auth-form__single-field space-mb--30">
+										{single.subtitle}
+									</div>
+									<div className="auth-form__single-field space-mb--30">
+									<img
+										src={`${import.meta.env.VITE_APP_IMG_URL}/heroslider/${single.image}`}
+											className="w-[200px]"
+											alt="No Image"
+									/>
+									</div>
+								</div>
+							)
+							)}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };
