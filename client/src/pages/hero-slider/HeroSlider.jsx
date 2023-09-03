@@ -83,7 +83,7 @@ const HeroSlider = () => {
 
 	async function deleteSlider(id) {
 		console.log(id);
-		await Axios.post(
+		await Axios.delete(
 			`${import.meta.env.VITE_APP_API_URL}/heroslider/deleteslider/${id}`
 		).then((response) => {
 			console.log(response.data);
@@ -182,7 +182,8 @@ const HeroSlider = () => {
 							{!!sliderData.length && sliderData.map((single) => (
 								
 								<div key={single.id}>
-									<button className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 ml-auto flex justify-end" onClick={() => deleteSlider(single.id)}>
+									<button className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 ml-auto flex justify-end" 
+									onClick={() => deleteSlider(single.id)}>
 											Delete
 										</button>
 									<div className="auth-form__single-field space-mb--30">
