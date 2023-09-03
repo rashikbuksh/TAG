@@ -26,62 +26,77 @@ const Cart = () => {
         setShopper(res.data);
       }
     );
-    console.log(cartItems);
-    cartItems.sort((a, b) => {
-      return a.shopper_id - b.shopper_id;
-    });
   }, []);
-  // console.log(shopper, "shopper");
-  // console.log(cartItems, "cartItems");
+  console.log(shopper, "shopper");
+  console.log(cartItems, "cartItems");
   var current_id;
 
   return (
     <div className="my-32">
       <h1 className="text-3xl font-bold text-center">Cart</h1>
       <div className="divider"></div>
-      {/* reapitable component  */}
+      {shopper
+	  	&& shopper.map((shopper, key) => {
+			return (
       <div className="w-[90%] mx-auto border p-3">
-        {/* Shop info components  */}
+        {cartItems && cartItems.map((cartItem, key) => {
+			if(cartItem.shopper_id == shopper.id){
+			return (
+				
         <div className="my-4">
           <div className="flex items-center gap-6">
-            <h3 className="text-base">{"#Shop id"}</h3>
-            <h3 className="text-xl font-bold">{"Shop Name"}</h3>
+            <h3 className="text-base">
+			<Link
+				to={
+					import.meta.env.VITE_API_PUBLIC_URL +
+					`/shopkeeperProfileCV/${shopper.id}`
+				}>{" "}
+					{shopper.id}
+			</Link></h3>
+            <h3 className="text-xl font-bold">{shopper.name}</h3>
           </div>
           <div>
             <div className="border p-2 flex justify-between items-center">
               <div>
-                <h1 className="text-base font-bold">{"product name"}</h1>
+                <h1 className="text-base font-bold">
+				<Link
+				to={
+					import.meta.env.VITE_API_PUBLIC_URL +
+					`/product/${cartItem.id}`
+				}>{" "}
+					{cartItem.name}
+			</Link></h1>
                 <div className="">
-                  <h2 className="text-xs">{"product Weight"}</h2>
+                  <h2 className="text-xs">{cartItem.weight}</h2>
                   <div className="cart-product__counter">
                     <div className="cart-plus-minus">
                       <button
                         className="dec qtybutton"
-                        // onClick={() => dispatch(decreaseQuantity(cartItem))}
+                        onClick={() => dispatch(decreaseQuantity(cartItem))}
                       >
                         -
                       </button>
                       <input
                         className="cart-plus-minus-box"
                         type="text"
-                        // value={cartItem.quantity}
+                        value={cartItem.quantity}
                         readOnly
                       />
                       <button
                         className="inc qtybutton"
-                        // onClick={() =>
-                        //   dispatch(
-                        //     increaseQuantity({
-                        //       cartItem,
-                        //       quantity: cartItem.quantity,
-                        //     })
-                        //   )
-                        // }
-                        // disabled={
-                        //   cartItem !== undefined &&
-                        //   cartItem.quantity &&
-                        //   cartItem.quantity >= cartItemStock(cartItem)
-                        // }
+                        onClick={() =>
+                          dispatch(
+                            increaseQuantity({
+                              cartItem,
+                              quantity: cartItem.quantity,
+                            })
+                          )
+                        }
+                        disabled={
+                          cartItem !== undefined &&
+                          cartItem.quantity &&
+                          cartItem.quantity >= cartItemStock(cartItem)
+                        }
                       >
                         +
                       </button>
@@ -100,7 +115,22 @@ const Cart = () => {
             </div>
           </div>
         </div>
+		)
+	}
+	else{
+		return (
+			<div>
+
+			</div>
+		)
+	}
+	})
+	}
       </div>
+	  )
+	})
+	}
+	  {}
       <div></div>
     </div>
   );
