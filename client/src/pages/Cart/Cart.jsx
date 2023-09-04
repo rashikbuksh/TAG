@@ -14,11 +14,10 @@ import {
 } from "../../store/slices/cart-slice";
 
 const Cart = () => {
-  let cartTotalPrice = 0;
+  
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const [shoppers, setShoppers] = useState([]); // Maintain an array of shoppers
-  var shopperInfo = [];
 
   // Initialize a separate buy state for each shop
   const [buyStates, setBuyStates] = useState({});
@@ -53,8 +52,9 @@ const Cart = () => {
     <div className="my-32">
       <h1 className="text-3xl font-bold text-center">Cart</h1>
       <div className="divider"></div>
-      {shoppers &&
+      {shoppers ? (
         shoppers.map((shopper) => {
+			let cartTotalPrice = 0;
           return (
             <div key={shopper.id} className="w-[90%] mx-auto border p-3">
               {cartItems &&
@@ -131,15 +131,24 @@ const Cart = () => {
                             </div>
 
                             <div>
-                              <h2 className="text-xs">{"500 X 3"}</h2>
+                              <h2 className="text-xs">{getDiscountPrice(cartItem.price,cartItem.discount)} X {cartItem.quantity}</h2>
                             </div>
 
                             <div>
-                              <h2 className="text-xs">{"250"}</h2>
+                              <h2 className="text-xs">{getDiscountPrice(cartItem.price,cartItem.discount)*cartItem.quantity}</h2>
+							<input type="hidden" value={cartTotalPrice += getDiscountPrice(cartItem.price,cartItem.discount)*cartItem.quantity} />
                             </div>
                           </div>
                         </div>
-                        <div className="border flex justify-between p-1 items-center">
+                        
+                      </div>
+                    );
+                  } else {
+                    return <div key={Math.random()}></div>;
+                  }
+				  
+                })}
+				<div className="flex justify-between p-1 items-center">
                           {buyStates[shopper.id] ? (
                             <div className="flex gap-3">
                               <button
@@ -161,17 +170,16 @@ const Cart = () => {
                             </button>
                           )}
 
-                          <div>{5455}</div>
+                          <div>{cartTotalPrice}</div>
                         </div>
-                      </div>
-                    );
-                  } else {
-                    return <div key={Math.random()}></div>;
-                  }
-                })}
             </div>
+			
           );
-        })}
+		  
+        }
+		)) : (
+			<div > No items in cart
+				</div>)}
     </div>
   );
 };

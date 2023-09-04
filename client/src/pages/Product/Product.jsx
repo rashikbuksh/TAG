@@ -1,7 +1,7 @@
 import Axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import Swiper, { SwiperSlide } from "../../components/swiper";
 import {
@@ -27,6 +27,8 @@ const Product = () => {
 	const [productImageId, setProductImageId] = useState(0);
 
 	const [productImageName, setProductImageName] = useState();
+
+	const [shopperName, setShopperName] = useState("");
 
 	useEffect(() => {
 		Axios.get(
@@ -62,6 +64,15 @@ const Product = () => {
 			.catch((error) => {});
 	}, [productImageId]);
 
+	const getShopperName = (shopperId) => {
+		Axios.get(
+			`${import.meta.env.VITE_APP_API_URL}/auth/getUserInfo/${shopperId}`
+		).then((response) => {
+				setShopperName(response.data[0]?.name);
+			})
+			.catch((error) => {});
+	};
+
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			{/*====================  product image slider ====================*/}
@@ -95,6 +106,16 @@ const Product = () => {
 								<div className="col-12">
 									<div className="product-content-header">
 										<div className="product-content-header__main-info">
+											{getShopperName(prods.shopper_id)}
+											<Link
+													to={
+														import.meta.env
+															.VITE_API_PUBLIC_URL +
+														`/shopkeeperProfileCV/${prods.shopper_id}`
+													}
+												>
+											<p className="font-bold text-xl">#{prods.shopper_id} {shopperName}</p>
+											</Link>
 											<h3 className="title">
 												{prods.name}
 											</h3>
