@@ -15,7 +15,7 @@ const NewsFeed = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, []);
+	}, [posts]);
 
 	return (
 		<div className="mt-32">
