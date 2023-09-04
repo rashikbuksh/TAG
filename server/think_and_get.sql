@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2023 at 05:04 PM
+-- Generation Time: Sep 04, 2023 at 04:13 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -77,7 +77,7 @@ CREATE TABLE `customer_profile` (
 INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_name`, `password`, `phone`, `email`, `shipping_address`, `total_order`, `to_be_shipped`, `review_count`, `offer`, `access`) VALUES
 (1, 'hasib', '[value-3]', '[value-4]', '[value-5]', 'hasibarrafiulfahim', 'hasib1234', '[value-8]', 'hasibarrafiulfahim@gmail.com', '[value-10]', 0, 0, 0, '[value-14]', 'customer'),
 (2, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashikbuksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
-(3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545111', 'rashik@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'customer'),
+(3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545111', 'rashik@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'shopper'),
 (6, 'Rashik Buksh', NULL, NULL, NULL, 'rbr', 'rafsan123', '01709305072', 'rbr@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', NULL, NULL, NULL, NULL, 'customer'),
 (10, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashik@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper'),
 (11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper'),
@@ -96,6 +96,13 @@ CREATE TABLE `hero_slider` (
   `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `hero_slider`
+--
+
+INSERT INTO `hero_slider` (`id`, `title`, `subtitle`, `image`) VALUES
+(3, 'Leo', 'Leo', '1693821528877__2D1A8929.JPG');
+
 -- --------------------------------------------------------
 
 --
@@ -104,17 +111,17 @@ CREATE TABLE `hero_slider` (
 
 CREATE TABLE `news` (
   `id` int(11) NOT NULL,
-  `shopper_product_id` int(11) NOT NULL,
+  `shopper_product_id` int(11) DEFAULT NULL,
   `shop_id` int(11) NOT NULL,
   `date` varchar(255) NOT NULL,
-  `discount` varchar(255) NOT NULL,
-  `duration` varchar(255) NOT NULL,
-  `location` varchar(255) NOT NULL,
-  `like_count` int(11) NOT NULL DEFAULT 0,
-  `comment_count` int(11) NOT NULL DEFAULT 0,
-  `share_count` int(11) NOT NULL DEFAULT 0,
-  `rating` double NOT NULL DEFAULT 0,
-  `category` varchar(255) NOT NULL,
+  `discount` varchar(255) DEFAULT NULL,
+  `duration` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `like_count` int(11) DEFAULT 0,
+  `comment_count` int(11) DEFAULT 0,
+  `share_count` int(11) DEFAULT 0,
+  `rating` double DEFAULT 0,
+  `category` varchar(255) DEFAULT NULL,
   `post_content` varchar(255) NOT NULL,
   `post_img` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -126,7 +133,9 @@ CREATE TABLE `news` (
 INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `duration`, `location`, `like_count`, `comment_count`, `share_count`, `rating`, `category`, `post_content`, `post_img`) VALUES
 (2, 14, 3, '2023-08-16T00:57:01.662Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
 (3, 15, 3, '2023-08-16T00:59:00.797Z', '5', '', '', 0, 0, 0, 3.55, 'regular', '', ''),
-(5, 17, 15, '2023-08-21T13:08:10.048Z', '0', '', '', 0, 0, 0, 0, 'regular', '', '');
+(5, 17, 15, '2023-08-21T13:08:10.048Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
+(7, NULL, 3, '2023-08-28T14:34:37.854Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'ggwp', '1693233277825__pjimage-2-1024x683.jpg'),
+(8, NULL, 3, '2023-09-04T10:02:04.081Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'LEO', '1693821723899___D1A5127.JPG');
 
 -- --------------------------------------------------------
 
@@ -138,11 +147,17 @@ CREATE TABLE `notification` (
   `id` int(11) NOT NULL,
   `notification_content` varchar(255) DEFAULT NULL,
   `notification_time` varchar(255) DEFAULT NULL,
-  `unread` int(11) DEFAULT NULL,
-  `ordered_product` varchar(255) NOT NULL,
-  `ordered_from` int(11) NOT NULL,
-  `ordered_by` int(11) NOT NULL
+  `not_from` int(11) NOT NULL,
+  `not_to` int(11) NOT NULL,
+  `status` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`id`, `notification_content`, `notification_time`, `not_from`, `not_to`, `status`) VALUES
+(1, 'Not asdasdasdsd', '12-12-12', 3, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -268,8 +283,8 @@ ALTER TABLE `news`
 --
 ALTER TABLE `notification`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `ordered_from` (`ordered_from`),
-  ADD KEY `ordered_by` (`ordered_by`);
+  ADD KEY `ordered_from` (`not_from`),
+  ADD KEY `ordered_by` (`not_to`);
 
 --
 -- Indexes for table `product`
@@ -313,19 +328,19 @@ ALTER TABLE `customer_profile`
 -- AUTO_INCREMENT for table `hero_slider`
 --
 ALTER TABLE `hero_slider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -360,8 +375,8 @@ ALTER TABLE `news`
 -- Constraints for table `notification`
 --
 ALTER TABLE `notification`
-  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`ordered_from`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`ordered_by`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`not_from`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`not_to`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product`
