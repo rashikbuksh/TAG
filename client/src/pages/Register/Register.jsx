@@ -1,7 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
+import Cookies from "js-cookie";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import * as yup from "yup";
@@ -27,7 +28,8 @@ const Register = () => {
 	const { errors } = formState;
 
 	const onSubmit = (data) => {
-		api.post(`/auth/register`, {
+		console.log(data);
+		Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, {
 			name: data.name,
 			email: data.emailAddress,
 			password: data.password,

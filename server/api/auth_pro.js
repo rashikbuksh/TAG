@@ -22,6 +22,7 @@ const CreateToken = (user, time = "24h") => {
 	};
 
 	const token = sign(payload, PRIVATE_KEY, { expiresIn: time });
+	console.log("CreateToken: ", token);
 
 	if (!token)
 		return {
@@ -42,20 +43,27 @@ const VerifyToken = (req, res, next) => {
 
 	console.log("VerifyToken: ", authorization);
 
-	if (typeof authorization !== "undefined") {
-		verify(authorization, PRIVATE_KEY, (err, user) => {
-			if (err) return res.status(403).json({ error: "Forbidden" });
-
-			req.user = user;
-			next();
-		});
-	} else if (
-		req?.originalUrl === "/auth/verify_login" &&
-		req?.method === "POST"
+	if (
+		req?.originalUrl == "/auth/register" ||
+		req?.originalUrl == "/auth/registershopper"
 	) {
 		next();
 	} else {
-		res.status(401).json({ error: "Unauthorized" });
+		if (typeof authorization !== "undefined") {
+			verify(authorization, PRIVATE_KEY, (err, user) => {
+				if (err) return res.status(403).json({ error: "Forbidden" });
+
+				req.user = user;
+				next();
+			});
+		} else if (
+			req?.originalUrl === "/auth/verify_login" &&
+			req?.method === "POST"
+		) {
+			next();
+		} else {
+			res.status(401).json({ error: "Unauthorized" });
+		}
 	}
 };
 

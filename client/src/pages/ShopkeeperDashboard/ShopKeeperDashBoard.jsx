@@ -29,29 +29,27 @@ const ShopKeeperDashBoard = () => {
 	const [productCount, setProductCount] = useState(0);
 
 	useEffect(() => {
-		api.get(
-			`/auth/getUserInfo/${id}`
-		).then((res) => {
+		api.get(`/auth/getUserInfo/${id}`).then((res) => {
 			console.log(res.data);
 			setShopkeeper(res.data);
 		});
 		// get product count
-		api.get(
-			`/shopkeeperproduct/getshopkeeperproductCount/${id}`
-		).then((res) => {
-			console.log(res.data[0].count);
-			setProductCount(res.data[0].count);
-		});
+		api.get(`/shopkeeperproduct/getshopkeeperproductCount/${id}`).then(
+			(res) => {
+				console.log(res.data[0].count);
+				setProductCount(res.data[0].count);
+			}
+		);
 	}, []);
 
 	return (
 		<>
 			<div className="h-32 "></div>
-			<div className="md:w-[50%] mx-auto bg-gray-100 p-4 rounded-lg">
+			<div className="mx-auto rounded-lg bg-gray-100 p-4 md:w-[50%]">
 				<div className="flex items-center justify-between">
-					<div className=" flex items-center gap-2 flex-col justify-center ">
+					<div className=" flex flex-col items-center justify-center gap-2 ">
 						<div>
-							<p className="font-bold text-sm lg:text-xl">
+							<p className="text-sm font-bold lg:text-xl">
 								Activity
 							</p>
 						</div>
@@ -188,58 +186,64 @@ const ShopKeeperDashBoard = () => {
 				</div>
 				{shopkeeper.map((shopkeeper) => (
 					<div className="my-10">
-						<div className="flex items-center justify-center flex-col">
+						<div className="flex flex-col items-center justify-center">
 							<img
 								className="h-[200px] w-[200px] rounded-full"
 								src="https://img.freepik.com/free-vector/people-standing-store-queue_23-2148594615.jpg?w=1380&t=st=1691338675~exp=1691339275~hmac=f00912cda4fe496dab3007a5dd750d515926e3fcd71d77d27ff693258b4c5a1f"
 								alt=""
 							/>
-							<h1 className="text-2xl lg:text-4xl font-bold my-3">
+							<h1 className="my-3 text-2xl font-bold lg:text-4xl">
 								{shopkeeper.name}
 							</h1>
-							<p className="flex items-center gap-2 text-sm lg:text-xl text-black">
+							<p className="flex items-center gap-2 text-sm text-black lg:text-xl">
 								<FaMapPin></FaMapPin> {locatiion}
 							</p>
 						</div>
 						<div className="divider"></div>
 						<div className="flex gap-10">
-							<div className="h-[100px] lg:h-[200px] w-[500px] rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 flex items-center justify-center flex-col gap-2">
-								<h1 className="text-2xl lg:text-4xl font-extrabold text-white">
-									My Product
+							<div className="flex h-[100px] w-[500px] flex-col items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 lg:h-[200px]">
+								<h1 className="text-2xl font-extrabold text-white lg:text-4xl">
+									<Link
+										to={`${
+											import.meta.env.VITE_API_PUBLIC_URL
+										}/shopkeeperProduct`}
+									>
+										My Product
+									</Link>
 								</h1>
-								<p className="font-semibold text-sm lg:text-xl">
+								<p className="text-sm font-semibold lg:text-xl">
 									Toral Product : {productCount}
 								</p>
 							</div>
-							<div className=" h-[100px] lg:h-[200px] w-[500px] rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 flex items-center justify-center flex-col gap-2">
-								<h1 className="text-2xl lg:text-4xl font-extrabold text-white">
+							<div className=" flex h-[100px] w-[500px] flex-col items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 lg:h-[200px]">
+								<h1 className="text-2xl font-extrabold text-white lg:text-4xl">
 									Notification
 								</h1>
-								<p className="font-semibold text-sm lg:text-xl">
+								<p className="text-sm font-semibold lg:text-xl">
 									3
 								</p>
 							</div>
 						</div>
-						<div className="flex gap-10 my-10">
-							<div className="h-[100px] lg:h-[200px] w-[500px] rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 flex items-center justify-center flex-col gap-2">
-								<h1 className="text-2xl lg:text-4xl font-extrabold text-white">
+						<div className="my-10 flex gap-10">
+							<div className="flex h-[100px] w-[500px] flex-col items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 lg:h-[200px]">
+								<h1 className="text-2xl font-extrabold text-white lg:text-4xl">
 									News
 								</h1>
 							</div>
-							<div className="h-[100px] lg:h-[200px] w-[500px] rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 flex items-center justify-center flex-col gap-2">
-								<h1 className="text-2xl lg:text-4xl font-extrabold text-white">
+							<div className="flex h-[100px] w-[500px] flex-col items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 lg:h-[200px]">
+								<h1 className="text-2xl font-extrabold text-white lg:text-4xl">
 									Order History
 								</h1>
 							</div>
 						</div>
-						<div className="flex gap-10 my-10">
-							<div className="h-[100px] lg:h-[200px] w-[500px] rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 flex items-center justify-center flex-col gap-2">
-								<h1 className="text-2xl lg:text-4xl font-extrabold text-white text-center">
+						<div className="my-10 flex gap-10">
+							<div className="flex h-[100px] w-[500px] flex-col items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 lg:h-[200px]">
+								<h1 className="text-center text-2xl font-extrabold text-white lg:text-4xl">
 									Add Social Media
 								</h1>
 							</div>
-							<div className="h-[100px] lg:h-[200px] w-[500px] rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 flex items-center justify-center flex-col gap-2">
-								<h1 className="text-2xl lg:text-4xl font-extrabold text-white">
+							<div className="flex h-[100px] w-[500px] flex-col items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 lg:h-[200px]">
+								<h1 className="text-2xl font-extrabold text-white lg:text-4xl">
 									My Account
 								</h1>
 							</div>

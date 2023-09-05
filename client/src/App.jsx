@@ -1,5 +1,10 @@
 import React, { Suspense, lazy } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+	Outlet,
+	Route,
+	BrowserRouter as Router,
+	Routes,
+} from "react-router-dom";
 import AuthProvider from "./context/auth";
 import ProtectedRoutes from "./routes";
 
@@ -8,6 +13,7 @@ import Header from "./components/Header";
 import Offcanvas from "./components/Header/Offcanvas";
 import ShopkeeperProfileCV from "./components/ShopkeeperProfileCV/ShopkeeperProfileCV";
 import ShopkeepersProduct from "./components/ShopkeepersProduct/ShopkeepersProduct";
+import { DefaultLayout } from "./layouts";
 import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
 import AddShopperProduct from "./pages/AddShopperProduct/AddShopperProduct";

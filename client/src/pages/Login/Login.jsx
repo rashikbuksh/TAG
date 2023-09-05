@@ -121,8 +121,8 @@ const Login = () => {
 										</p>
 									</div>
 									<div className="auth-form__single-field space-mb--40">
-										<p className="auth-form__info-text">
-											Sign up as a Customer?{" "}
+										<p className="auth-form__info-text text-base">
+											Sign up as a Customer? <br />
 											<Link
 												to={
 													import.meta.env
@@ -133,8 +133,9 @@ const Login = () => {
 												Sign up Now
 											</Link>
 										</p>
-										<p className="auth-form__info-text">
-											Sign up as a Shopper?{" "}
+										<div className="divider"></div>
+										<p className="auth-form__info-text text-base">
+											Sign up as a Shopper? <br />
 											<Link
 												to={
 													import.meta.env

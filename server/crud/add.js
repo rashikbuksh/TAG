@@ -51,6 +51,7 @@ ADD_DATA.forEach(({ uri, query, body, msg }) => {
 });
 
 app.post("/auth/register", async (req, res) => {
+	console.log("register: ", req?.body);
 	const { name, email, password, access } = req?.body;
 	const hashPassword = await HashPass(password);
 
