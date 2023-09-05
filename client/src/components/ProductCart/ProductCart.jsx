@@ -4,6 +4,7 @@ import "@smastrom/react-rating/style.css";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { api } from "../../lib/api";
 import MainProduct from "./MainProduct";
 
 const ProductCart = ({ product }) => {
@@ -12,19 +13,17 @@ const ProductCart = ({ product }) => {
 	const [shopper, setShopper] = useState([]);
 
 	useEffect(() => {
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/auth/getUserInfo/${shopper_id}`
-		).then((res) => {
+		api.get(`/auth/getUserInfo/${shopper_id}`).then((res) => {
 			setShopper(res.data);
 		});
 	}, []);
 
 	return (
-		<div className="w-[300px] border border-gray-100 mx-auto rounded-md">
+		<div className="mx-auto w-[300px] rounded-md border border-gray-100">
 			{shopper.map((shopper, key) => (
 				<div key={shopper_id} className="">
 					<div className="flex items-center justify-between">
-						<div className="flex gap-3 items-center px-2 py-2">
+						<div className="flex items-center gap-3 px-2 py-2">
 							<Link
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
@@ -32,7 +31,7 @@ const ProductCart = ({ product }) => {
 								}
 							>
 								<img
-									className="w-10 h-10 rounded-full"
+									className="h-10 w-10 rounded-full"
 									src={shopper.image}
 									alt=""
 								/>

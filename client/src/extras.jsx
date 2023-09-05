@@ -53,8 +53,7 @@ function App() {
 						<Route
 							element={
 								<DefaultLayout>
-									{" "}
-									<Outlet />{" "}
+									<Outlet />
 								</DefaultLayout>
 							}
 						>

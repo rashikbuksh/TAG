@@ -15,6 +15,7 @@ import {
 	getDiscountPrice,
 	getProductCartQuantity,
 } from "../../helpers/product";
+import { api } from "../../lib/api";
 
 const Product = () => {
 	let { id } = useParams();
@@ -31,11 +32,7 @@ const Product = () => {
 	const [shopperName, setShopperName] = useState("");
 
 	useEffect(() => {
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproduct/${id}`
-		)
+		api.get(`/shopperproduct/getshopperproduct/${id}`)
 			.then((response) => {
 				setProds(response.data);
 				setProductStock(response.data[0]?.product_count);
@@ -53,11 +50,7 @@ const Product = () => {
 	const productCartQty = getProductCartQuantity(cartItems, prods);
 
 	useEffect(() => {
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/product/getproductimage/${productImageId}`
-		)
+		api.get(`/product/getproductimage/${productImageId}`)
 			.then((response) => {
 				setProductImageName(response.data[0]?.image);
 			})
@@ -65,9 +58,8 @@ const Product = () => {
 	}, [productImageId]);
 
 	const getShopperName = (shopperId) => {
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/auth/getUserInfo/${shopperId}`
-		).then((response) => {
+		api.get(`/auth/getUserInfo/${shopperId}`)
+			.then((response) => {
 				setShopperName(response.data[0]?.name);
 			})
 			.catch((error) => {});
@@ -108,13 +100,16 @@ const Product = () => {
 										<div className="product-content-header__main-info">
 											{getShopperName(prods.shopper_id)}
 											<Link
-													to={
-														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														`/shopkeeperProfileCV/${prods.shopper_id}`
-													}
-												>
-											<p className="font-bold text-xl">#{prods.shopper_id} {shopperName}</p>
+												to={
+													import.meta.env
+														.VITE_API_PUBLIC_URL +
+													`/shopkeeperProfileCV/${prods.shopper_id}`
+												}
+											>
+												<p className="text-xl font-bold">
+													#{prods.shopper_id}{" "}
+													{shopperName}
+												</p>
 											</Link>
 											<h3 className="title">
 												{prods.name}

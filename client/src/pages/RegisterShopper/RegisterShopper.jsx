@@ -6,6 +6,7 @@ import { set, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import * as yup from "yup";
+import { api } from "../../lib/api";
 
 const Register = () => {
 	const getUserLocation = () => {
@@ -48,7 +49,7 @@ const Register = () => {
 
 	const onSubmit = (data) => {
 		console.log(data);
-		Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/registershopper`, {
+		api.post(`/auth/registershopper`, {
 			name: data.name,
 			phone: data.phone,
 			email: data.emailAddress,
@@ -198,7 +199,7 @@ const Register = () => {
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<span className="auth-page-separator text-center space-mt--20 space-mb--20">
+							<span className="auth-page-separator space-mt--20 space-mb--20 text-center">
 								- OR -
 							</span>
 							<div className="auth-page-social-login">

@@ -4,6 +4,7 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import { FaCartShopping, FaLocationDot, FaRegMessage } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
+import { api } from "../../lib/api";
 
 const ShopkeeperProfileCV = () => {
 	// get id from url
@@ -61,13 +62,13 @@ const ShopkeeperProfileCV = () => {
 	];
 
 	useEffect(() => {
-		Axios.get(`${import.meta.env.VITE_APP_API_URL}/auth/getUserInfo/${id}`)
+		api.get(`/auth/getUserInfo/${id}`)
 			.then((res) => {
 				setShopkeeperInfo(res.data);
 			})
 			.catch((err) => {});
 
-		Axios.get(
+		api.get(
 			`${
 				import.meta.env.VITE_APP_API_URL
 			}/shopperproduct/getshopperproductOfShopkeeper/${id}`
@@ -80,11 +81,14 @@ const ShopkeeperProfileCV = () => {
 
 	return (
 		<div className="mt-28">
-			<div className="lg:w-[70%] mx-auto px-4">
-				<div className="w-[100%] mx-auto my-3  border border-gray-50 ">
+			<div className="mx-auto px-4 lg:w-[70%]">
+				<div className="mx-auto my-3 w-[100%]  border border-gray-50 ">
 					{shopkeeperInfo.map((shopkeeper) => {
 						return (
-							<div key={Math.random()} className="flex justify-between items-center p-4 ">
+							<div
+								key={Math.random()}
+								className="flex items-center justify-between p-4 "
+							>
 								<h1
 									title="shop id"
 									className="text-base font-semibold"
@@ -109,25 +113,25 @@ const ShopkeeperProfileCV = () => {
 						);
 					})}
 					<div className="divider  p-4"></div>
-					<div className="flex lg:px-24  justify-around items-center my-12 ">
+					<div className="my-12 flex  items-center justify-around lg:px-24 ">
 						<div className=" flex flex-col items-center justify-between">
 							<div>
-								<FaRegMessage className=" text-3xl lg:text-6xl text-blue-400 "></FaRegMessage>
+								<FaRegMessage className=" text-3xl text-blue-400 lg:text-6xl "></FaRegMessage>
 							</div>
 						</div>
 						<div className="flex flex-col items-center justify-center">
-							<div className="border rounded-full p-7 avatar online">
-								<FaCartShopping className="text-3xl lg:text-6xl text-blue-400 "></FaCartShopping>
+							<div className="avatar online rounded-full border p-7">
+								<FaCartShopping className="text-3xl text-blue-400 lg:text-6xl "></FaCartShopping>
 							</div>
 						</div>
 						<div className=" flex flex-col items-center justify-center">
 							<div>
-								<FaLocationDot className="text-3xl lg:text-6xl text-blue-400 "></FaLocationDot>
+								<FaLocationDot className="text-3xl text-blue-400 lg:text-6xl "></FaLocationDot>
 							</div>
 						</div>
 					</div>
-					<div className="flex items-center justify-start border-y border-gray-300 my-3 py-2 px-4">
-						<select className="select select-bordered w-full outline-none max-w-xs">
+					<div className="my-3 flex items-center justify-start border-y border-gray-300 px-4 py-2">
+						<select className="select select-bordered w-full max-w-xs outline-none">
 							<option disabled selected>
 								Category
 							</option>
@@ -139,7 +143,7 @@ const ShopkeeperProfileCV = () => {
 						<div className="">
 							{/* header search */}
 							<div className="header-search">
-								<form className="flex items-center flex-row-reverse">
+								<form className="flex flex-row-reverse items-center">
 									<input
 										type="text"
 										placeholder="Type here"
@@ -149,11 +153,11 @@ const ShopkeeperProfileCV = () => {
 							</div>
 						</div>
 					</div>
-					<div className="grid md:grid-cols-3 gap-10 my-10 px-2 ">
+					<div className="my-10 grid gap-10 px-2 md:grid-cols-3 ">
 						{shopperProduct.map((product) => {
 							return (
-								<Link 
-								key={Math.random()}
+								<Link
+									key={Math.random()}
 									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
 										`/product/${product.id}`
@@ -161,7 +165,7 @@ const ShopkeeperProfileCV = () => {
 								>
 									<div
 										key={product.id}
-										className=" relative border border-gray-50 mx-auto "
+										className=" relative mx-auto border border-gray-50 "
 									>
 										<img
 											className=""
@@ -170,7 +174,7 @@ const ShopkeeperProfileCV = () => {
 											}/${product.image}`}
 											alt=""
 										/>
-										<div className=" absolute top-2 right-0 badge badge-warning gap-2">
+										<div className=" badge badge-warning absolute right-0 top-2 gap-2">
 											{product.name}
 										</div>
 									</div>
@@ -178,14 +182,14 @@ const ShopkeeperProfileCV = () => {
 							);
 						})}
 					</div>
-					<div className="flex items-center justify-center my-2">
+					<div className="my-2 flex items-center justify-center">
 						<div className="join ">
-							<button className="join-item btn btn-sm">1</button>
-							<button className="join-item btn btn-sm btn-active">
+							<button className="btn join-item btn-sm">1</button>
+							<button className="btn join-item btn-active btn-sm">
 								2
 							</button>
-							<button className="join-item btn btn-sm">3</button>
-							<button className="join-item btn btn-sm">4</button>
+							<button className="btn join-item btn-sm">3</button>
+							<button className="btn join-item btn-sm">4</button>
 						</div>
 					</div>
 					<div></div>

@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { Breadcrumb } from "../../components";
 import { getDiscountPrice } from "../../helpers/product";
+import { api } from "../../lib/api";
 
 const Checkout = () => {
 	const navigate = useNavigate();
@@ -26,9 +27,7 @@ const Checkout = () => {
 
 	//get user data
 	useEffect(() => {
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/profile/get_profile/${id}`
-		).then((response) => {
+		api.get(`/profile/get_profile/${id}`).then((response) => {
 			setUserdata(response.data[0]);
 		});
 	}, []);
@@ -69,7 +68,7 @@ const Checkout = () => {
 			weightItem = "0";
 		}
 		getItemID();
-		Axios.post(`${import.meta.env.VITE_APP_API_URL}/order/add_order`, {
+		api.post(`/order/add_order`, {
 			product_id: orderedItem,
 			quantity: quantityItem,
 			weight: weightItem,
@@ -278,7 +277,7 @@ const Checkout = () => {
 										{/* button not showing.. dummy button */}
 										<button
 											type="submit"
-											className="btn btn-outline btn-primary btn-lg sm:btn-sm md:btn-md lg:btn-lg"
+											className="btn btn-primary btn-outline btn-lg sm:btn-sm md:btn-md lg:btn-lg"
 										>
 											Place Order
 										</button>

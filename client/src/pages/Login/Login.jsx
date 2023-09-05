@@ -1,20 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import { useAuth } from "../../context/auth";
 import * as yup from "yup";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auth";
 
 const Login = () => {
 	const navigate = useNavigate();
 	const { user, login, signed } = useAuth();
 	console.log("user", user);
 	console.log("signed", signed);
-	console.log("Login", Login);
+	console.log("Login", login);
 	const loginSchema = yup.object().shape({
 		email: yup
 			.string()
@@ -38,6 +36,7 @@ const Login = () => {
 
 	useEffect(() => {
 		if (signed) {
+			localStorage.setItem("user-id", user?.id);
 			navigate(NAVIGATE_TO[user?.access]);
 		}
 	}, [signed, user, navigate]);
@@ -87,7 +86,10 @@ const Login = () => {
 						<div className="col-12">
 							{/* Auth form */}
 							<div className="auth-form">
-								<form onSubmit={handleSubmit(onSubmit)} id="authForm">
+								<form
+									onSubmit={handleSubmit(onSubmit)}
+									id="authForm"
+								>
 									<div className="auth-form__single-field space-mb--30">
 										<label htmlFor="email">
 											Email Address
@@ -162,7 +164,7 @@ const Login = () => {
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<span className="auth-page-separator text-center space-mt--20 space-mb--20">
+							<span className="auth-page-separator space-mt--20 space-mb--20 text-center">
 								- OR -
 							</span>
 							<div className="auth-page-social-login">

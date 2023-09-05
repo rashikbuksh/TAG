@@ -1,8 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { api } from "../../lib/api";
 
 const AddProductForm = () => {
 	const [categoryNames, setCategoryNames] = useState([]);
@@ -18,9 +20,7 @@ const AddProductForm = () => {
 	};
 
 	useEffect(() => {
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/category/getcategory`
-		).then((response) => {
+		api.get(`/category/getcategory`).then((response) => {
 			setCategoryNames(response.data);
 		});
 	}, []);
@@ -73,6 +73,7 @@ const AddProductForm = () => {
 			{
 				headers: {
 					"Content-Type": "multipart/form-data;",
+					Authorization: Cookies?.get("auth"),
 				},
 			}
 		).then((response) => {
@@ -82,7 +83,7 @@ const AddProductForm = () => {
 			}
 		});
 
-		Axios.post(`${import.meta.env.VITE_APP_API_URL}/product/addproduct`, {
+		api.post(`/product/addproduct`, {
 			name: data.name,
 			image: ImageName,
 			short_description: data.short_description,

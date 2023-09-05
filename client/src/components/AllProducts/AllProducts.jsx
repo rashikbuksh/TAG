@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { getDiscountPrice, getProducts } from "../../helpers/product";
+import { api } from "../../lib/api";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 import ProductCart from "../ProductCart/ProductCart";
 
@@ -24,11 +25,7 @@ const AllProducts = ({ limit }) => {
 	}
 
 	useEffect(() => {
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproduct`
-		)
+		api.get(`/shopperproduct/getshopperproduct`)
 			.then((response) => {
 				setProds(response.data);
 				setLoading(false);
@@ -43,13 +40,13 @@ const AllProducts = ({ limit }) => {
 	if (!prods?.length) return <p>No products found</p>;
 
 	return (
-		<div className=" w-[80%] mx-auto">
+		<div className=" mx-auto w-[80%]">
 			<div className="">
 				<div className="">
-					<h2 className="text-xl my-10">All Products</h2>
+					<h2 className="my-10 text-xl">All Products</h2>
 					{/* featured products */}
 					<div className="">
-						<div className="grid lg:grid-cols-4 gap-10">
+						<div className="grid gap-10 lg:grid-cols-4">
 							{prods.map((single) => {
 								const wishlistItem = wishlistItems.find(
 									(wishlistItem) =>

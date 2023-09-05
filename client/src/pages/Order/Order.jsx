@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
 import { getDiscountPrice } from "../../helpers/product";
 import useFetch from "../../hooks/use-fetch";
+import { api } from "../../lib/api";
 
 const Order = () => {
 	const [data, setData] = useState([]);
@@ -14,11 +15,7 @@ const Order = () => {
 	const customer_profile_id = localStorage.getItem("user-id");
 
 	useEffect(() => {
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/order/getorder/${customer_profile_id}`
-		)
+		api.get(`/order/getorder/${customer_profile_id}`)
 			.then((response) => {
 				setData(response.data);
 			})

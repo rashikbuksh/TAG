@@ -15,6 +15,7 @@ import {
 import { Link } from "react-router-dom";
 
 import MainProduct from "../../components/ProductCart/MainProduct";
+import { api } from "../../lib/api";
 
 const PostUi = ({ postData }) => {
 	const [shopperProducts, setShopperProduct] = useState([]);
@@ -40,18 +41,14 @@ const PostUi = ({ postData }) => {
 	useEffect(() => {
 		if (shopper_product_id == null) {
 		} else {
-			Axios.get(
-				`${
-					import.meta.env.VITE_APP_API_URL
-				}/shopperproduct/getshopperproduct/${shopper_product_id}}`
+			api.get(
+				`/shopperproduct/getshopperproduct/${shopper_product_id}}`
 			).then((res) => {
 				setShopperProduct(res.data);
 			});
 		}
 
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/auth/getUserInfo/${shop_id}}`
-		).then((res) => {
+		api.get(`/auth/getUserInfo/${shop_id}}`).then((res) => {
 			setShopperInfo(res.data);
 		});
 	}, []);
@@ -65,14 +62,14 @@ const PostUi = ({ postData }) => {
 
 	return (
 		<div className="space-mb--20">
-			<div className="bg-white border rounded-lg">
+			<div className="rounded-lg border bg-white">
 				<div className="p-4">
 					<div className="flex items-center justify-between">
-						<div className="flex gap-3 items-center">
+						<div className="flex items-center gap-3">
 							{shopperInfo.map((shopperinfo) => (
 								<img
 									key={Math.random()}
-									className="w-10 h-10 rounded-full"
+									className="h-10 w-10 rounded-full"
 									src={shopperinfo.image}
 									alt=""
 								/>
@@ -92,7 +89,7 @@ const PostUi = ({ postData }) => {
 											<h4 className="text-lg font-semibold">
 												{shopperinfo.name}
 											</h4>
-											<p className="text-gray-500 ml-1">
+											<p className="ml-1 text-gray-500">
 												{shopperinfo.user_name}
 											</p>
 										</div>
@@ -131,7 +128,7 @@ const PostUi = ({ postData }) => {
 								<p className="text-sm">{post_content}</p>
 								{post_img && (
 									<img
-										className="w-full h-64 object-cover mt-2"
+										className="mt-2 h-64 w-full object-cover"
 										src={`${
 											import.meta.env.VITE_APP_IMG_URL
 										}/newsimage/${post_img}`}
@@ -169,7 +166,7 @@ const PostUi = ({ postData }) => {
 							<div className="text-xs">
 								<p className="text-sm">{like_count} Likes</p>
 							</div>
-							<FaHeart className="text-red-500 text-lg" />
+							<FaHeart className="text-lg text-red-500" />
 						</div>
 						<div className="flex flex-col items-center justify-center">
 							<div className="text-xs">

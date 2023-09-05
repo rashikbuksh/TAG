@@ -4,17 +4,11 @@ const { PRIVATE_KEY, SALT } = require("../config/secret");
 
 const HashPass = async (password) => {
 	const salt = await genSalt(Number(SALT));
-	console.log("salt: ", salt);
 	const hashPassword = await hash(password.toString(), parseInt(salt));
-	console.log("hashPassword: ", hashPassword);
 	return hashPassword;
 };
 
 const ComparePass = async (password, hashPassword) => {
-	console.log("ComparePass: ", password, hashPassword);
-	if(password == hashPassword){
-		return true;
-	}
 	return await compare(password, hashPassword);
 };
 
@@ -35,7 +29,7 @@ const CreateToken = (user, time = "24h") => {
 			error: "Error signing token",
 			raw: err,
 		};
-		
+
 	user.token = token;
 	return {
 		success: true,
@@ -56,7 +50,8 @@ const VerifyToken = (req, res, next) => {
 			next();
 		});
 	} else if (
-		(req?.originalUrl === "/auth/verify_login" && req?.method === "POST")
+		req?.originalUrl === "/auth/verify_login" &&
+		req?.method === "POST"
 	) {
 		next();
 	} else {

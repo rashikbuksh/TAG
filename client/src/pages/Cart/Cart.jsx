@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { Breadcrumb } from "../../components";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
+import { api } from "../../lib/api";
 import {
   addToCart,
   decreaseQuantity,
@@ -23,7 +24,7 @@ const Cart = () => {
   const [buyStates, setBuyStates] = useState({});
 
   useEffect(() => {
-    Axios.get(import.meta.env.VITE_APP_API_URL + "/auth/getShopperInfo").then(
+    api.get("/auth/getShopperInfo").then(
       (res) => {
         setShoppers(res.data);
         // Initialize the buy states with default values (false for each shop)

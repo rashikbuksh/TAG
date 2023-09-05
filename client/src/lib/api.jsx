@@ -4,6 +4,9 @@ import { API } from "./secret";
 
 export const api = axios.create({
 	baseURL: API,
+	headers: {
+		"Content-Type": "application/json",
+	},
 });
 
 api.interceptors.request.use(

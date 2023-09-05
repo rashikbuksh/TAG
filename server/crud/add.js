@@ -1,4 +1,6 @@
 const { app, ExecuteQuery } = require("../config");
+const { db } = require("../config");
+const { HashPass } = require("../api/auth_pro");
 
 const { add: JobEntry } = require("../api/job_entry");
 
@@ -46,4 +48,31 @@ ADD_DATA.forEach(({ uri, query, body, msg }) => {
 			`${req?.body[msg]} added successfully`
 		);
 	});
+});
+
+app.post("/auth/register", async (req, res) => {
+	const { name, email, password, access } = req?.body;
+	const hashPassword = await HashPass(password);
+
+	ExecuteQuery(
+		res,
+		`INSERT INTO customer_profile (name, email, password, access) VALUES (?, ?, ?, ?)`,
+		[name, email, hashPassword, access],
+		"add",
+		`${name} added successfully`
+	);
+});
+
+app.post("/auth/registershopper", async (req, res) => {
+	const { name, phone, email, password, shipping_address, access } =
+		req?.body;
+	const hashPassword = await HashPass(password);
+
+	ExecuteQuery(
+		res,
+		`INSERT INTO customer_profile (name, phone, email, password, shipping_address, access) VALUES (?, ?, ?, ?, ?, ?)`,
+		[name, phone, email, hashPassword, shipping_address, access],
+		"add",
+		`${name} added successfully`
+	);
 });

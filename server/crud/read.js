@@ -82,7 +82,7 @@ app.post("/auth/verify_login", (req, res) => {
 						return res.status(200).json({
 							status: 200,
 							type: "delete",
-							message: "THIS Email/Password combination incorrect",
+							message: "Email/Password combination incorrect",
 						});
 					}
 

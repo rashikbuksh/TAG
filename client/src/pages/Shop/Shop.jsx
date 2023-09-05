@@ -10,6 +10,7 @@ import {
 	setActiveSort,
 	toggleShopTopFilter,
 } from "../../helpers/product";
+import { api } from "../../lib/api";
 
 const Shop = () => {
 	const [products, setProducts] = useState([]);
@@ -18,11 +19,7 @@ const Shop = () => {
 	const [category, setCategory] = useState([]);
 
 	useEffect(() => {
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproduct`
-		)
+		api.get(`/shopperproduct/getshopperproduct`)
 			.then((response) => {
 				setProducts(response.data);
 				setLoading(false);
@@ -32,9 +29,7 @@ const Shop = () => {
 				setLoading(false);
 			});
 
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/category/get/category`
-		).then((response) => {
+		api.get(`/category/get/category`).then((response) => {
 			setCategory(response.data);
 		});
 	}, []);
@@ -53,7 +48,7 @@ const Shop = () => {
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			<div className="shop-header bg-color--grey">
-				<div className="container space-y--15">
+				<div className="space-y--15 container">
 					<div className="row align-items-center">
 						<div className="col-3">
 							<Link
@@ -88,7 +83,7 @@ const Shop = () => {
 					</div>
 				</div>
 				<div className="shop-filter" id="shop-filter-menu">
-					<div className="container space-mt--15 space-mb--50">
+					<div className="space-mt--15 space-mb--50 container">
 						<div className="row">
 							<div className="col-12">
 								<div className="shop-filter-block">

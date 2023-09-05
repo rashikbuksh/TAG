@@ -3,6 +3,7 @@ import Axios from "axios";
 import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";
+import { api } from "../../lib/api";
 
 const ShopkeeperProductcart = ({ product }) => {
 	const { id, name, price, discount, product_count, product_id, image } =
@@ -24,13 +25,10 @@ const ShopkeeperProductcart = ({ product }) => {
 	};
 
 	const updateProductCount = () => {
-		Axios.post(
-			`${import.meta.env.VITE_APP_API_URL}/product/updateProductCount`,
-			{
-				id: id,
-				product_count: quantity,
-			}
-		).then((res) => {
+		api.post(`/product/updateProductCount`, {
+			id: id,
+			product_count: quantity,
+		}).then((res) => {
 			console.log("res", res);
 			if (res.data.status === 200) {
 				alert("Product Count Updated Successfully");
@@ -40,11 +38,11 @@ const ShopkeeperProductcart = ({ product }) => {
 
 	return (
 		<div className="">
-			<div className="h-[450px] lg:w-[600px] border border-black p-4 mx-4 lg:mx-0">
+			<div className="mx-4 h-[450px] border border-black p-4 lg:mx-0 lg:w-[600px]">
 				<div className="flex items-center justify-between">
 					<input
 						type="checkbox"
-						className="checkbox checkbox-success"
+						className="checkbox-success checkbox"
 					/>
 					<h1 className="text-xl font-bold">{name || ""}</h1>
 					<div className="dropdown dropdown-end">
@@ -53,7 +51,7 @@ const ShopkeeperProductcart = ({ product }) => {
 						</label>
 						<ul
 							tabIndex={0}
-							className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+							className="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
 						>
 							<li>
 								<a>Edit</a>
@@ -68,7 +66,7 @@ const ShopkeeperProductcart = ({ product }) => {
 					</div>
 				</div>
 				<div className="divider"></div>
-				<div className="flex items-center justify-center flex-col gap-3">
+				<div className="flex flex-col items-center justify-center gap-3">
 					<img
 						className="h-[200px] w-[200px]"
 						src={`${import.meta.env.VITE_APP_IMG_URL}/${image}`}
@@ -80,7 +78,7 @@ const ShopkeeperProductcart = ({ product }) => {
 							<button
 								type="button"
 								onClick={decreaseQuantity}
-								className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+								className="h-10 w-10 leading-10 text-gray-600 transition hover:opacity-75"
 							>
 								<FaMinus />
 							</button>
@@ -89,13 +87,13 @@ const ShopkeeperProductcart = ({ product }) => {
 								type="number"
 								id="Quantity"
 								value={quantity}
-								className="h-10 w-16 rounded border border-gray-200 text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+								className="h-10 w-16 rounded border border-gray-200 text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
 							/>
 
 							<button
 								type="button"
 								onClick={increaseQuantity}
-								className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+								className="h-10 w-10 leading-10 text-gray-600 transition hover:opacity-75"
 							>
 								<FaPlus />
 							</button>
@@ -108,7 +106,7 @@ const ShopkeeperProductcart = ({ product }) => {
 							</button>
 						</div>
 					</div>
-					<p className="font-bold text-xl text-center">
+					<p className="text-center text-xl font-bold">
 						Price {price} Taka
 					</p>
 				</div>

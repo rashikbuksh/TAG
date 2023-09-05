@@ -4,6 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Breadcrumb } from "../../components";
+import { api } from "../../lib/api";
 
 const EditProfile = () => {
 	const id = localStorage.getItem("user-id");
@@ -27,15 +28,12 @@ const EditProfile = () => {
 	const { errors } = formState;
 
 	const onSubmit = async (data) => {
-		Axios.post(
-			`${import.meta.env.VITE_APP_API_URL}/profile/edit_profile/${id}`,
-			{
-				name: data.name,
-				user_name: data.user_name,
-				phone: data.phone,
-				shipping_address: data.shipping_address,
-			}
-		).then((response) => {
+		api.post(`/profile/edit_profile/${id}`, {
+			name: data.name,
+			user_name: data.user_name,
+			phone: data.phone,
+			shipping_address: data.shipping_address,
+		}).then((response) => {
 			console.log(response.data);
 			if (response.data.message == id + " updated successfully") {
 				alert("Profile Updated Successfully");
@@ -123,7 +121,7 @@ const EditProfile = () => {
 									{/* button not showing.. dummy button added */}
 									<button
 										type="submit"
-										className="btn btn-outline btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+										className="btn btn-primary btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg"
 									>
 										Update
 									</button>

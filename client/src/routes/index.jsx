@@ -10,11 +10,9 @@ export default function ProtectedRoutes() {
 
 	if (!signed) return <Navigate to="/login" replace={true} />;
 
-	const haveAccess =
-		user?.access &&
-		PROTECTED_ROUTES?.find((route) =>
-			route?.assigned.includes(user.access)
-		);
+	const haveAccess = PROTECTED_ROUTES?.find((route) =>
+		route?.access.includes(user?.access)
+	);
 
 	return haveAccess ? (
 		<Outlet />

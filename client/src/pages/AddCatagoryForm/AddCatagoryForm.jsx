@@ -3,6 +3,7 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { api } from "../../lib/api";
 
 const AddcategoryForm = () => {
 	const addcategoryScema = yup.object({
@@ -24,7 +25,7 @@ const AddcategoryForm = () => {
 	const { errors } = formState;
 
 	const onSubmit = async (data) => {
-		Axios.post(`${import.meta.env.VITE_APP_API_URL}/category/addcategory`, {
+		api.post(`/category/addcategory`, {
 			name: data.category_name,
 			url: data.category_url,
 		}).then((response) => {

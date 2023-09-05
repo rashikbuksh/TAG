@@ -1,8 +1,8 @@
+import Axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { PROTECTED_ROUTES } from "../App";
 import { useCookie } from "../hooks";
 import { api } from "../lib/api";
-import Axios from "axios";
 
 const AuthContext = createContext({});
 
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
 				email: data.email,
 				password: data.password,
 			});
-			console.log("res", res);
+			console.log("response", res);
 			const { token, user: loginUser } = res?.data;
 
 			updateAuthCookie(token || "");
@@ -38,8 +38,9 @@ const AuthProvider = ({ children }) => {
 
 			if (token && loginUser) {
 				const go = PROTECTED_ROUTES.find((route) =>
-					route?.assigned?.includes(loginUser?.access)
+					route?.access?.includes(loginUser?.access)
 				);
+				localStorage.setItem("user-id", loginUser?.id);
 				window.location.href = go?.path;
 			}
 		} catch (error) {

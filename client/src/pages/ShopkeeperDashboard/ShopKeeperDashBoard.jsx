@@ -6,6 +6,7 @@ import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+import { api } from "../../lib/api";
 const ShopKeeperDashBoard = () => {
 	const shopname = "Rafi Edu Store";
 	const locatiion = "New Market City Complex, Dhaka 1205";
@@ -28,17 +29,15 @@ const ShopKeeperDashBoard = () => {
 	const [productCount, setProductCount] = useState(0);
 
 	useEffect(() => {
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/auth/getUserInfo/${id}`
+		api.get(
+			`/auth/getUserInfo/${id}`
 		).then((res) => {
 			console.log(res.data);
 			setShopkeeper(res.data);
 		});
 		// get product count
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopkeeperproduct/getshopkeeperproductCount/${id}`
+		api.get(
+			`/shopkeeperproduct/getshopkeeperproductCount/${id}`
 		).then((res) => {
 			console.log(res.data[0].count);
 			setProductCount(res.data[0].count);

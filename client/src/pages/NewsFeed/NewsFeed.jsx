@@ -1,13 +1,14 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import NewsFeedInput from "../../components/NewsFeedInput/NewsFeedInput";
+import { api } from "../../lib/api";
 import PostUi from "../PostUi/PostUi";
 import TagNewsUi from "../PostUi/TagNewsUi";
 
 const NewsFeed = () => {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
-		Axios.get(import.meta.env.VITE_APP_API_URL + "/news/getnews")
+		api.get("/news/getnews")
 			.then((res) => {
 				// console.log(res.data);
 				setPosts(res.data);
@@ -19,8 +20,8 @@ const NewsFeed = () => {
 
 	return (
 		<div className="mt-32">
-			<div className="w-[90%] mx-auto">
-				<h1 className="text-2xl font-bold text-center">News</h1>
+			<div className="mx-auto w-[90%]">
+				<h1 className="text-center text-2xl font-bold">News</h1>
 				<div className="divider"></div>
 				<div className="lg:grid lg:grid-cols-12 ">
 					<div className="lg:col-span-3"></div>

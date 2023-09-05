@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { api } from "../../lib/api";
 
 const ShopperProduct = () => {
 	const ShopperProductSchema = yup.object({
@@ -33,9 +34,7 @@ const ShopperProduct = () => {
 	const [productNames, setProductNames] = useState([]);
 
 	useEffect(() => {
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/product/getproduct`
-		).then((response) => {
+		api.get(`/product/getproduct`).then((response) => {
 			setProductNames(response.data);
 		});
 	}, []);
@@ -53,27 +52,25 @@ const ShopperProduct = () => {
 		console.log("FormData", data);
 		let shopperProduct_ID = null;
 
-		await Axios.post(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/addshopperproduct`,
-			{
+		await api
+			.post(`/shopperproduct/addshopperproduct`, {
 				name: data.name,
 				price: data.price,
 				discount: data.discount,
 				product_count: data.product_count,
 				product_id: Number(data.product_id),
 				shopper_id: Number(user_id),
-			}
-		).then((response) => {
-			if (response.data.message === data.name + " added successfully") {
-				alert("Product Added Successful");
-			}
-		});
+			})
+			.then((response) => {
+				if (
+					response.data.message ===
+					data.name + " added successfully"
+				) {
+					alert("Product Added Successful");
+				}
+			});
 
-		await Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/shopperproduct/getLastProduct`
-		).then((response) => {
+		await api.get(`/shopperproduct/getLastProduct`).then((response) => {
 			shopperProduct_ID = response.data[0].id;
 			console.log("shopperProduct_ID", shopperProduct_ID);
 		});
@@ -81,25 +78,27 @@ const ShopperProduct = () => {
 		let today = new Date();
 		today = today.toISOString();
 
-		await Axios.post(`${import.meta.env.VITE_APP_API_URL}/news/addnews`, {
-			shopper_product_id: Number(shopperProduct_ID),
-			shop_id: user_id,
-			date: today,
-			discount: data.discount,
-			duration: "",
-			location: "",
-			category: "regular",
-			post_content: "",
-			post_img: "",
-		}).then((response) => {
-			if (
-				response.data.message ===
-				shopperProduct_ID + " added successfully"
-			) {
-				// navigate to homepage
-				navigate("/home");
-			}
-		});
+		await api
+			.post(`/news/addnews`, {
+				shopper_product_id: Number(shopperProduct_ID),
+				shop_id: user_id,
+				date: today,
+				discount: data.discount,
+				duration: "",
+				location: "",
+				category: "regular",
+				post_content: "",
+				post_img: "",
+			})
+			.then((response) => {
+				if (
+					response.data.message ===
+					shopperProduct_ID + " added successfully"
+				) {
+					// navigate to homepage
+					navigate("/home");
+				}
+			});
 	};
 
 	return (

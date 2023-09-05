@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
@@ -25,7 +26,11 @@ const CategorySlider = () => {
 	const [errorMessage, setErrorMessage] = useState(null);
 
 	useEffect(() => {
-		fetch(`${import.meta.env.VITE_APP_API_URL}/category/getcategory`)
+		fetch(`${import.meta.env.VITE_APP_API_URL}/category/getcategory`, {
+			headers: {
+				Authorization: Cookies?.get("auth"),
+			},
+		})
 			.then((response) => response.json())
 			.then((data) => {
 				setData(data);

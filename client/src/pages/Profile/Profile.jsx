@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { ErrorMessage, Preloader } from "../../components";
 import useFetch from "../../hooks/use-fetch";
+import { api } from "../../lib/api";
 
 const Profile = () => {
 	const { data, isLoading, errorMessage } = useFetch("profile.json");
@@ -14,9 +15,7 @@ const Profile = () => {
 
 	//get user data
 	useEffect(() => {
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/profile/get_profile/${id}`
-		).then((response) => {
+		api.get(`/profile/get_profile/${id}`).then((response) => {
 			console.log(response.data);
 			setUserdata(response.data[0]);
 		});

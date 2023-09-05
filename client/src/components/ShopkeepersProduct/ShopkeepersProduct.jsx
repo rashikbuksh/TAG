@@ -2,6 +2,7 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import { FaArrowAltCircleLeft, FaPlusCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { api } from "../../lib/api";
 import ShopkeeperProductcart from "./ShopkeeperProductcart";
 const ShopkeepersProduct = () => {
 	const products = [
@@ -30,11 +31,7 @@ const ShopkeepersProduct = () => {
 	const [prods, setProds] = useState([]);
 
 	useEffect(() => {
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproductOfShopkeeper/${id}`
-		)
+		api.get(`/shopperproduct/getshopperproductOfShopkeeper/${id}`)
 			.then((response) => {
 				setProds(response.data);
 				console.log(response.data);
@@ -47,13 +44,13 @@ const ShopkeepersProduct = () => {
 	return (
 		<div>
 			<div className="h-32"></div>
-			<div className="lg:w-[70%] mx-auto lg:border lg:border-gray-100 lg:p-4 p-2">
+			<div className="mx-auto p-2 lg:w-[70%] lg:border lg:border-gray-100 lg:p-4">
 				<div className="flex">
 					<Link to={`${import.meta.env.VITE_API_PUBLIC_URL}/home`}>
 						<FaArrowAltCircleLeft className="text-4xl"></FaArrowAltCircleLeft>
 					</Link>
 
-					<h1 className="text-2xl flex-grow text-center font-extrabold">
+					<h1 className="flex-grow text-center text-2xl font-extrabold">
 						{" "}
 						My Product
 					</h1>
@@ -70,7 +67,7 @@ const ShopkeepersProduct = () => {
 					<input
 						type="text"
 						placeholder="Search Product"
-						className="input input-bordered input-md w-full rounded-full max-w-xs"
+						className="input input-bordered input-md w-full max-w-xs rounded-full"
 					/>
 					<div>
 						<span className="lg:text-xl">Share</span>{" "}
@@ -78,7 +75,7 @@ const ShopkeepersProduct = () => {
 						<span className="lg:text-xl">Delete</span>
 					</div>
 				</div>
-				<div className="  my-10 gap-10 grid grid-cols-1 lg:grid-cols-2">
+				<div className="  my-10 grid grid-cols-1 gap-10 lg:grid-cols-2">
 					{prods.map((product) => (
 						<ShopkeeperProductcart
 							key={Math.random()}

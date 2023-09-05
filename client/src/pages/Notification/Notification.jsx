@@ -6,6 +6,7 @@ import { ReactSVG } from "react-svg";
 import { Link } from "react-router-dom";
 import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
 import useFetch from "../../hooks/use-fetch";
+import { api } from "../../lib/api";
 
 const Notification = () => {
 	const [notification, setNotification] = useState([]);
@@ -13,7 +14,7 @@ const Notification = () => {
 	const userid = localStorage.getItem("user-id");
 
 	useEffect(() => {
-		Axios.get(`${import.meta.env.VITE_APP_API_URL}/notification/getnotification/${userid}`
+		api.get(`/notification/getnotification/${userid}`
 		).then((res) => {
 			setNotification(res.data);
 		});

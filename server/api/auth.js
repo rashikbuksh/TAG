@@ -18,25 +18,25 @@ const read = [
 ];
 
 const add = [
-	{
-		uri: "/auth/register",
-		query: `INSERT INTO customer_profile (name, email, password, access) VALUES (?, ?, ?, ?)`,
-		body: ["name", "email", "password", "access"],
-		msg: "name",
-	},
-	{
-		uri: "/auth/registershopper",
-		query: `INSERT INTO customer_profile (name, phone, email, password, shipping_address, access) VALUES (?, ?, ?, ?, ?, ?)`,
-		body: [
-			"name",
-			"phone",
-			"email",
-			"password",
-			"shipping_address",
-			"access",
-		],
-		msg: "name",
-	},
+	// {
+	// 	uri: "/auth/register",
+	// 	query: `INSERT INTO customer_profile (name, email, password, access) VALUES (?, ?, ?, ?)`,
+	// 	body: ["name", "email", "password", "access"],
+	// 	msg: "name",
+	// },
+	// {
+	// 	uri: "/auth/registershopper",
+	// 	query: `INSERT INTO customer_profile (name, phone, email, password, shipping_address, access) VALUES (?, ?, ?, ?, ?, ?)`,
+	// 	body: [
+	// 		"name",
+	// 		"phone",
+	// 		"email",
+	// 		"password",
+	// 		"shipping_address",
+	// 		"access",
+	// 	],
+	// 	msg: "name",
+	// },
 ];
 
 // Export modules

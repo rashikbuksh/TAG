@@ -1,4 +1,5 @@
 import useFetch from "../../hooks/use-fetch";
+import { api } from "../../lib/api";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Preloader from "../Preloader/Preloader";
 import Swiper, { SwiperSlide } from "../swiper";
@@ -22,7 +23,7 @@ const HeroSlider = () => {
 	const [sliderData, setSliderData] = useState([]);
 
 	useEffect(() => {
-		Axios.get(import.meta.env.VITE_APP_API_URL + "/heroslider/getslider")
+		api.get("/heroslider/getslider")
 			.then((res) => {
 				setSliderData(res.data);
 			})

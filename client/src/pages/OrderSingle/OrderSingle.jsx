@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getDiscountPrice } from "../../helpers/product";
+import { api } from "../../lib/api";
 const OrderSingle = () => {
 	const navigate = useNavigate();
 
@@ -27,19 +28,13 @@ const OrderSingle = () => {
 	};
 
 	useEffect(() => {
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/order/getorder_by_id/${id}`
-		).then((res) => {
+		api.get(`/order/getorder_by_id/${id}`).then((res) => {
 			setData(res.data);
 			setProductIds(res.data[0]?.product_id.split(","));
 			setProductQuantity(res.data[0]?.quantity.split(","));
 			console.log(res.data);
 		});
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproduct`
-		).then((res) => {
+		api.get(`/shopperproduct/getshopperproduct`).then((res) => {
 			setAllProducts(res.data);
 			console.log(res.data);
 		});
@@ -59,10 +54,10 @@ const OrderSingle = () => {
 	};
 
 	return (
-		<div className=" md:w-[50%] mx-auto my-32 px-2">
+		<div className=" mx-auto my-32 px-2 md:w-[50%]">
 			<div className="flex items-center ">
 				<FaArrowLeft onClick={goBack} style={{ cursor: "pointer" }} />
-				<h2 className="text-2xl text-center flex-grow">
+				<h2 className="flex-grow text-center text-2xl">
 					Order Details
 				</h2>
 			</div>

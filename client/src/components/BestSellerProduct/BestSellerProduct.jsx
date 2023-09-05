@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { getDiscountPrice, getProducts } from "../../helpers/product";
+import { api } from "../../lib/api";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 
 const BestSellerProduct = ({ limit, type }) => {
@@ -17,13 +18,11 @@ const BestSellerProduct = ({ limit, type }) => {
 
 	// get product
 	useEffect(() => {
-		Axios.get(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproductBasedOnSaleCount`
-		).then((res) => {
-			setShopperProduct(res.data);
-		});
+		api.get(`/shopperproduct/getshopperproductBasedOnSaleCount`).then(
+			(res) => {
+				setShopperProduct(res.data);
+			}
+		);
 	}, [dispatch]);
 
 	if (!prods?.length) return <p>No products found</p>;
@@ -56,7 +55,7 @@ const BestSellerProduct = ({ limit, type }) => {
 						</h2>
 						{/* featured products */}
 						<div className="featured-product-wrapper space-mb-m--15">
-							<ul className="grid gap-4 mt-8 grid-cols-2 lg:grid-cols-4">
+							<ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
 								{shopperProducts.map((single) => {
 									const wishlistItem = wishlistItems.find(
 										(wishlistItem) =>
@@ -81,7 +80,7 @@ const BestSellerProduct = ({ limit, type }) => {
 												/>
 											</Link>
 
-											<div className="relative pt-3 bg-white flex items-center justify-between">
+											<div className="relative flex items-center justify-between bg-white pt-3">
 												<h3 className="text-xl font-bold text-gray-700 group-hover:underline group-hover:underline-offset-4">
 													{" "}
 													{single.name}{" "}
