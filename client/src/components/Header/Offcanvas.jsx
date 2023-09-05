@@ -1,62 +1,56 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+import Axios from "axios";
 
-class Offcanvas extends Component {
-	componentDidMount() {
-		const offcanvasNavigations = document.querySelectorAll(
-			".offcanvas-navigation > li"
+function Offcanvas(props) {
+	const user = localStorage.getItem("user-id");
+	const [userInfo, setUserInfo] = useState([]);
+  useEffect(() => {
+    const offcanvasNavigations = document.querySelectorAll(
+      ".offcanvas-navigation > li"
+    );
+    offcanvasNavigations.forEach((single) => {
+      single.addEventListener("click", () => {
+        props.activeStatus(false);
+      });
+    });
+	if (user) {
+		Axios.get(`${import.meta.env.VITE_APP_API_URL}/auth/getUserInfo/${user}`)
+			.then((res) => {
+				setUserInfo(res.data);
+			}
 		);
-		offcanvasNavigations.forEach((single) => {
-			single.addEventListener("click", () => {
-				this.props.activeStatus(false);
-			});
-		});
 	}
+  }, [props]);
 
-	render() {
-		return (
-			<div
-				className={`offcanvas-menu ${this.props.show ? "active" : ""}`}
-			>
-				<div className="profile-card text-center">
-					<div className="profile-card__image space-mb--10">
-						<img
-							src={
-								import.meta.env.VITE_API_PUBLIC_URL +
-								"/assets/img/profile.jpg"
-							}
-							className="img-fluid"
-							alt=""
-						/>
-					</div>
-					<div className="profile-card__content">
-						<p className="name">
-							Don Normane <span className="id">ID MD 4350</span>
-						</p>
-					</div>
-				</div>
-				<div className="offcanvas-navigation-wrapper space-mt--40">
-					<ul className="offcanvas-navigation">
-						<li>
-							<span className="icon">
-								<ReactSVG
-									src={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"/assets/img/icons/profile.svg"
-									}
-								/>
-							</span>
-							<Link
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/login"
-								}
-							>
-								Login / Sign up
-							</Link>
-						</li>
-						<li>
+  return (
+    <div key={Math.random()} className={`offcanvas-menu ${props.show ? "active" : ""}`}>
+		{userInfo.map((item) => (
+      <div className="profile-card text-center">
+        <div className="profile-card__image space-mb--10">
+          <img
+            src={
+				item.image
+				  ? `${import.meta.env.VITE_APP_IMG_URL}/user/${item.image}`
+				  : `${import.meta.env.VITE_API_PUBLIC_URL + "/assets/img/profile.jpg"}`
+			  }
+            className="img-fluid"
+            alt=""
+          />
+        </div>
+        <div className="profile-card__content">
+          <p className="name text-lg">
+		  {item.name ? item.name : "Guest"} <span className="id"> ID:  {user ? user : "Guest"}</span>
+          </p>
+        </div>
+      </div>
+		))
+	  }
+      <div className="offcanvas-navigation-wrapper space-mt--40">
+        <ul className="offcanvas-navigation">
+          
+          <li>
 							<span className="icon">
 								<ReactSVG
 									src={
@@ -200,11 +194,25 @@ class Offcanvas extends Component {
 								Contact Us
 							</Link>
 						</li>
-					</ul>
-				</div>
-			</div>
-		);
-	}
+						<li>
+            <span className="icon">
+              <ReactSVG
+                src={
+					import.meta.env.VITE_API_PUBLIC_URL +
+					"/assets/img/icons/profile.svg"
+				  }
+              />
+            </span>
+			<Link
+              to={import.meta.env.VITE_API_PUBLIC_URL + "/login"}
+            >
+              Login / Sign up
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
 }
 
 export default Offcanvas;

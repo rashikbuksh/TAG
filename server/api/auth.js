@@ -1,10 +1,10 @@
 const read = [
-	{
-		uri: "/auth/verify_login/:email/:password",
-		query: `SELECT * from customer_profile where email = ? and password = ?`,
-		param: ["email", "password"],
-		msg: "email or password is incorrect",
-	},
+	// {
+	// 	uri: "/auth/verify_login",
+	// 	query: `SELECT * from customer_profile where email = ? and password = ?`,
+	// 	body: ["email", "password"],
+	// 	msg: "email or password is incorrect",
+	// },
 	{
 		uri: "/auth/getUserInfo/:id",
 		query: `SELECT image, name, user_name, review_count from customer_profile where id = ?`,

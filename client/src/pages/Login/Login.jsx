@@ -4,11 +4,19 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+import { useAuth } from "../../context/auth";
 import * as yup from "yup";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+	const navigate = useNavigate();
+	const { user, login, signed } = useAuth();
+	console.log("user", user);
+	console.log("signed", signed);
+	console.log("Login", Login);
 	const loginSchema = yup.object().shape({
-		emailAddress: yup
+		email: yup
 			.string()
 			.email("Please enter valid email address")
 			.required("Email address is required"),
@@ -24,27 +32,35 @@ const Login = () => {
 
 	const { errors } = formState;
 
-	const onSubmit = (data) => {
-		// console.log(data.emailAddress);
-		// console.log(data.password);
-		// console.log(import.meta.env.VITE_APP_API_URL);
-		Axios.get(
-			`${import.meta.env.VITE_APP_API_URL}/auth/verify_login/${
-				data?.emailAddress
-			}/${data?.password}`
-		).then((response) => {
-			if (response.data[0]?.id === undefined) {
-				alert("Invalid Credentials");
-				window.location.href = "/login";
-			} else {
-				localStorage.setItem("user-id", response.data[0]?.id);
-				if (response.data[0]?.access === "shopper") {
-					window.location.href = "/shopkeeperDashboard";
-				} else {
-					window.location.href = "/home";
-				}
-			}
-		});
+	const NAVIGATE_TO = {
+		admin: "/user",
+	};
+
+	useEffect(() => {
+		if (signed) {
+			navigate(NAVIGATE_TO[user?.access]);
+		}
+	}, [signed, user, navigate]);
+
+	const onSubmit = async (data) => {
+		await login(data);
+		// Axios.post(
+		// 	`${import.meta.env.VITE_APP_API_URL}/auth/verify_login`,{
+		// 		data
+		// 	}
+		// ).then((response) => {
+		// 	if (response.data[0]?.id === undefined) {
+		// 		alert("Invalid Credentials");
+		// 		window.location.href = "/login";
+		// 	} else {
+		// 		localStorage.setItem("user-id", response.data[0]?.id);
+		// 		if (response.data[0]?.access === "shopper") {
+		// 			window.location.href = "/shopkeeperDashboard";
+		// 		} else {
+		// 			window.location.href = "/home";
+		// 		}
+		// 	}
+		// });
 	};
 
 	return (
@@ -71,20 +87,20 @@ const Login = () => {
 						<div className="col-12">
 							{/* Auth form */}
 							<div className="auth-form">
-								<form onSubmit={handleSubmit(onSubmit)}>
+								<form onSubmit={handleSubmit(onSubmit)} id="authForm">
 									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="emailAddress">
+										<label htmlFor="email">
 											Email Address
 										</label>
 										<input
 											type="text"
-											id="emailAddress"
+											id="email"
 											className="w-full rounded-sm border-none border-transparent pl-2 outline-none focus:border-transparent focus:ring-0"
-											name="emailAddress"
-											{...register("emailAddress")}
+											name="email"
+											{...register("email")}
 										/>
 										<p className="text-danger">
-											{errors.emailAddress?.message}
+											{errors.email?.message}
 										</p>
 									</div>
 									<div className="auth-form__single-field space-mb--30">
@@ -131,6 +147,7 @@ const Login = () => {
 									<button
 										type="submit"
 										className="auth-form__button"
+										form="authForm"
 									>
 										Login
 									</button>

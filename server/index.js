@@ -1,6 +1,6 @@
 const crud = require("./crud");
 
-const { app } = require("./config/app");
+const { app, ExecuteQuery } = require("./config");
 
 const multer = require("multer");
 
