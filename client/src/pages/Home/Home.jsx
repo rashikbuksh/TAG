@@ -5,6 +5,7 @@ import {
 	CategorySlider,
 	HeroSlider,
 } from "../../components";
+import HotNews from "../../components/HotNews/HotNews";
 
 const Home = () => {
 	return (
@@ -12,7 +13,8 @@ const Home = () => {
 			{/* hero slider */}
 			<HeroSlider />
 			{/* category slider */}
-			<CategorySlider />
+			{/* <CategorySlider /> */}
+			<HotNews></HotNews>
 			{/* best seller products */}
 			<BestSellerProduct limit={2} type="bestSeller" />
 			{/* all products */}
