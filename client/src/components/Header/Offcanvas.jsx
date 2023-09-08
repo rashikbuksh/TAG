@@ -24,12 +24,9 @@ function Offcanvas(props) {
 	}, [props]);
 
 	return (
-		<div
-			key={Math.random()}
-			className={`offcanvas-menu ${props.show ? "active" : ""}`}
-		>
+		<div className={`offcanvas-menu ${props.show ? "active" : ""}`}>
 			{userInfo.map((item) => (
-				<div className="profile-card text-center">
+				<div key={user} className="profile-card text-center">
 					<div className="profile-card__image space-mb--10">
 						<img
 							src={
