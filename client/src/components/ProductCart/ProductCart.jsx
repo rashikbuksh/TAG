@@ -19,7 +19,7 @@ const ProductCart = ({ product }) => {
 	}, []);
 
 	return (
-		<div className="mx-auto w-[300px] rounded-md border border-gray-100">
+		<div className="mx-auto rounded-md border border-gray-100">
 			{shopper.map((shopper, key) => (
 				<div key={shopper_id} className="">
 					<div className="flex items-center justify-between">
@@ -31,7 +31,7 @@ const ProductCart = ({ product }) => {
 								}
 							>
 								<img
-									className="h-10 w-10 rounded-full"
+									className="h-6 w-6 rounded-full"
 									src={shopper.image}
 									alt=""
 								/>
@@ -44,7 +44,7 @@ const ProductCart = ({ product }) => {
 									}
 								>
 									<div className="flex">
-										<h4 className="text-lg font-semibold">
+										<h4 className="text-sm font-semibold">
 											{shopper.name}
 										</h4>
 									</div>
@@ -53,7 +53,7 @@ const ProductCart = ({ product }) => {
 						</div>
 						<div className="">
 							<Rating
-								style={{ maxWidth: 75 }}
+								style={{ maxWidth: 55 }}
 								readOnly
 								orientation="horizontal"
 								value={shopper.review_count}

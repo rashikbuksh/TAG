@@ -8,6 +8,8 @@ import { getDiscountPrice, getProducts } from "../../helpers/product";
 import { api } from "../../lib/api";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 import ProductCart from "../ProductCart/ProductCart";
+import ProductSlider from "../ProductSlider/ProductSlider";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const AllProducts = ({ limit }) => {
 	const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -40,12 +42,41 @@ const AllProducts = ({ limit }) => {
 	if (!prods?.length) return <p>No products found</p>;
 
 	return (
-		<div className=" mx-auto w-[80%]">
+		<div className=" mx-auto w-[95%]">
 			<div className="">
-				<div className="">
-					<h2 className="my-10 text-xl">All Products</h2>
-					{/* featured products */}
-					<div className="">
+				<div className=" my-10">
+					{/* Popular Product  */}
+					<div className="my-10 flex justify-between items-center  mb-2">
+						<div>
+							<p className="text-xl font-bold">Popular Product</p>
+						</div>
+						<div className="border border-gray-100 px-2 py-2 rounded-full">
+						<FaArrowRight className="text-3xl "></FaArrowRight>
+						</div>
+						
+					</div>
+					<ProductSlider products={prods} ></ProductSlider>
+					<div className=" my-10 flex justify-between items-center  mb-2">
+						<div>
+							<p className="text-xl font-bold">Verified Product</p>
+						</div>
+						<div className="border border-gray-100 px-2 py-2 rounded-full">
+						<FaArrowRight className="text-3xl "></FaArrowRight>
+						</div>
+						
+					</div>
+					<ProductSlider products={prods} ></ProductSlider>
+					<div className= " my-10 flex justify-between items-center  mb-2">
+						<div>
+							<p className="text-xl font-bold">Products</p>
+						</div>
+						<div className="border border-gray-100 px-2 py-2 rounded-full">
+						<FaArrowRight className="text-3xl "></FaArrowRight>
+						</div>
+						
+					</div>
+					<ProductSlider products={prods} ></ProductSlider>
+					{/* <div className="">
 						<div className="grid gap-10 lg:grid-cols-4">
 							{prods.map((single) => {
 								const wishlistItem = wishlistItems.find(
@@ -60,77 +91,10 @@ const AllProducts = ({ limit }) => {
 									>
 										{" "}
 									</ProductCart>
-									// <div
-									// 	className="col-12 col-md-6"
-									// 	key={single.id}
-									// >
-									// 	<div className="grid-product space-mb--20">
-									// 		<div className="grid-product__image">
-									// 			<Link
-									// 				to={
-									// 					import.meta.env
-									// 						.VITE_API_PUBLIC_URL +
-									// 					`/product/${single.id}`
-									// 				}
-									// 			>
-									// 				{" "}
-									// 				click to view
-									// 			</Link>
-									// 			<button
-									// 				className={`icon ${
-									// 					wishlistItem !==
-									// 					undefined
-									// 						? "active"
-									// 						: ""
-									// 				}`}
-									// 				disabled={
-									// 					wishlistItem !==
-									// 					undefined
-									// 				}
-									// 				onClick={() =>
-									// 					dispatch(
-									// 						addToWishlist(
-									// 							single
-									// 						)
-									// 					)
-									// 				}
-									// 			>
-									// 				{/* <ReactSVG src="assets/img/icons/heart-dark.svg" /> */}
-									// 			</button>
-									// 		</div>
-									// 		<div className="grid-product__content">
-									// 			<h3 className="title">
-									// 				<Link
-									// 					to={
-									// 						import.meta.env
-									// 							.VITE_API_PUBLIC_URL +
-									// 						`/product/${single.id}`
-									// 					}
-									// 				>
-									// 					{single.name}
-									// 				</Link>
-									// 			</h3>
-									// 			<div className="price">
-									// 				{single.discount &&
-									// 				single.discount > 0 ? (
-									// 					<Fragment>
-									// 						<span className="main-price me-1">{`$${single.price}`}</span>
-									// 						<span className="discounted-price">{`$${getDiscountPrice(
-									// 							single.price,
-									// 							single.discount
-									// 						)}`}</span>
-									// 					</Fragment>
-									// 				) : (
-									// 					<span className="discounted-price">{`$${single.price}`}</span>
-									// 				)}
-									// 			</div>
-									// 		</div>
-									// 	</div>
-									// </div>
 								);
 							})}
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>
