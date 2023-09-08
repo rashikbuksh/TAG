@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2023 at 04:13 PM
+-- Generation Time: Sep 08, 2023 at 01:54 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -44,7 +44,8 @@ INSERT INTO `category` (`id`, `name`, `url`) VALUES
 (12, 'gg 3', 'https://www.google.com'),
 (13, 'Shoe', 'https://www.google.com'),
 (14, 'Bag', 'https://www.google.com'),
-(15, 'oil', 'https://www.google.com');
+(15, 'oil', 'https://www.google.com'),
+(16, 'Cha Pata', 'https://www.google.com');
 
 -- --------------------------------------------------------
 
@@ -79,9 +80,12 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (2, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashikbuksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
 (3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545111', 'rashik@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'shopper'),
 (6, 'Rashik Buksh', NULL, NULL, NULL, 'rbr', 'rafsan123', '01709305072', 'rbr@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', NULL, NULL, NULL, NULL, 'customer'),
-(10, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashik@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper'),
 (11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper'),
-(15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545111', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper');
+(15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545112', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper'),
+(16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
+(17, 'anikU', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684545113', 'anik123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper'),
+(18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
+(19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer');
 
 -- --------------------------------------------------------
 
@@ -101,7 +105,8 @@ CREATE TABLE `hero_slider` (
 --
 
 INSERT INTO `hero_slider` (`id`, `title`, `subtitle`, `image`) VALUES
-(3, 'Leo', 'Leo', '1693821528877__2D1A8929.JPG');
+(3, 'Leo', 'Leo', '1693821528877__2D1A8929.JPG'),
+(4, 'Ishan Tea', 'Cha Pata From Sylhet', '1693929901663__20230807_154229.jpg');
 
 -- --------------------------------------------------------
 
@@ -131,11 +136,12 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `duration`, `location`, `like_count`, `comment_count`, `share_count`, `rating`, `category`, `post_content`, `post_img`) VALUES
-(2, 14, 3, '2023-08-16T00:57:01.662Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
-(3, 15, 3, '2023-08-16T00:59:00.797Z', '5', '', '', 0, 0, 0, 3.55, 'regular', '', ''),
-(5, 17, 15, '2023-08-21T13:08:10.048Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
 (7, NULL, 3, '2023-08-28T14:34:37.854Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'ggwp', '1693233277825__pjimage-2-1024x683.jpg'),
-(8, NULL, 3, '2023-09-04T10:02:04.081Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'LEO', '1693821723899___D1A5127.JPG');
+(8, NULL, 3, '2023-09-04T10:02:04.081Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'LEO', '1693821723899___D1A5127.JPG'),
+(10, NULL, 17, '2023-09-05T16:44:03.716Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'NEW PRODUCT IN TOWN', '1693932243669__20230807_154229.jpg'),
+(13, 22, 17, '2023-09-08T11:06:36.919Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
+(14, 23, 17, '2023-09-08T11:08:16.425Z', '10', '', '', 0, 0, 0, 0, 'regular', '', ''),
+(15, 24, 17, '2023-09-08T11:09:09.030Z', '5', '', '', 0, 0, 0, 0, 'regular', '', '');
 
 -- --------------------------------------------------------
 
@@ -183,7 +189,8 @@ INSERT INTO `product` (`id`, `sku`, `name`, `image`, `short_description`, `full_
 (1, NULL, 'gg product', 'WelcomeScan.jpg', '10', '10', 3),
 (11, NULL, 'gg 8', '1689276807795__Welcome Scan.jpg', '10', '1010', 1),
 (12, NULL, 'Vanity Bag', '1690478518635__Welcome Scan.jpg', 'Bag', 'Bag', 14),
-(13, NULL, 'sugar', '1691920308947__Welcome Scan.jpg', '10', '10', 1);
+(13, NULL, 'sugar', '1691920308947__Welcome Scan.jpg', '10', '10', 1),
+(14, NULL, 'Ishan Tea', '1693931993449__20230807_154229.jpg', 'Cha pata', 'Cha pata From Sylhet', 16);
 
 -- --------------------------------------------------------
 
@@ -213,7 +220,7 @@ INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, 
 (10, '3,1', '2,1', '', 489, '0,10', 'pending', 3),
 (15, '1,2', '1,1', '', 1039, '10,5', 'pending', 3),
 (16, '1,2', '1,1', NULL, 1039, '10,5', 'pending', 3),
-(17, '1', '1', '0undefined', 89, '10', 'pending', 3);
+(17, '1', '1', '0', 89, '10', 'pending', 3);
 
 -- --------------------------------------------------------
 
@@ -231,22 +238,25 @@ CREATE TABLE `shopper_product` (
   `wishlist_count` int(11) DEFAULT 0,
   `rating_count` int(11) DEFAULT 0,
   `product_id` int(11) NOT NULL,
-  `shopper_id` int(11) NOT NULL
+  `shopper_id` int(11) NOT NULL,
+  `view` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `shopper_product`
 --
 
-INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`, `shopper_id`) VALUES
-(1, 'gg product', 99, 10, 100, 10, 2, 3, 1, 11),
-(2, 'gg 8', 1000, 5, 50, 2, 0, 0, 11, 10),
-(3, 'Vanity Bag', 200, 0, 100, 0, 0, 0, 12, 10),
-(4, 'sugar', 10, 0, 100, 0, 0, 0, 13, 11),
-(8, 'Vanity Bag', 100, 2, 25, 0, 0, 0, 12, 3),
-(14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3),
-(15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3),
-(17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15);
+INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`, `shopper_id`, `view`) VALUES
+(1, 'gg product', 99, 10, 100, 10, 2, 3, 1, 11, 1),
+(4, 'sugar', 10, 0, 100, 11, 0, 0, 13, 11, 4),
+(8, 'Vanity Bag', 100, 2, 25, 0, 0, 0, 12, 3, 0),
+(14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3, 0),
+(15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3, 0),
+(17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15, 0),
+(18, 'Ishan Tea', 75, 0, 10, 0, 0, 0, 14, 17, 1),
+(22, 'Vanity Bag', 130, 0, 25, 0, 0, 0, 12, 17, 0),
+(23, 'gg product', 200, 10, 100, 0, 0, 0, 1, 17, 0),
+(24, 'sugar', 160, 5, 100, 0, 0, 0, 13, 17, 0);
 
 --
 -- Indexes for dumped tables
@@ -262,7 +272,8 @@ ALTER TABLE `category`
 -- Indexes for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `phone` (`phone`);
 
 --
 -- Indexes for table `hero_slider`
@@ -316,25 +327,25 @@ ALTER TABLE `shopper_product`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `hero_slider`
 --
 ALTER TABLE `hero_slider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `notification`
@@ -346,7 +357,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `product_order`
@@ -358,7 +369,7 @@ ALTER TABLE `product_order`
 -- AUTO_INCREMENT for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables
