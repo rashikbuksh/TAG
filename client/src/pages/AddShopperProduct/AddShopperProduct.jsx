@@ -79,7 +79,7 @@ const ShopperProduct = () => {
 		today = today.toISOString();
 
 		await api
-			.post(`/news/addnews`, {
+			.post(`/news/addproductnews`, {
 				shopper_product_id: Number(shopperProduct_ID),
 				shop_id: user_id,
 				date: today,
@@ -91,10 +91,8 @@ const ShopperProduct = () => {
 				post_img: "",
 			})
 			.then((response) => {
-				if (
-					response.data.message ===
-					shopperProduct_ID + " added successfully"
-				) {
+				console.log(response.data.message);
+				if (response.data.message === user_id + " added successfully") {
 					// navigate to homepage
 					navigate("/home");
 				}

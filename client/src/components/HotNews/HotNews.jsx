@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { api } from "../../lib/api";
 import PostUi from "../../pages/PostUi/PostUi";
@@ -39,11 +40,16 @@ const HotNews = () => {
 					{shuffledPosts.map((postData, index) => (
 						<SwiperSlide key={index}>
 							{postData.category === "regular" ? (
-								<div className="bg-gray-200 w-44 h-12 rounded p-1">
-									<p>{postData.post_content || "This is hot news"}</p>
-								</div>
+								<Link to={`/newsfeed`}>
+									<div className="h-12 w-44 rounded bg-gray-200 p-1">
+										<p>
+											{postData.post_content ||
+												"New Product Added"}
+										</p>
+									</div>
+								</Link>
 							) : (
-								<p>TAg Data</p>
+								<p>Tag Data</p>
 							)}
 						</SwiperSlide>
 					))}

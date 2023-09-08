@@ -41,8 +41,6 @@ const CreateToken = (user, time = "24h") => {
 const VerifyToken = (req, res, next) => {
 	const { authorization } = req?.headers;
 
-	console.log("VerifyToken: ", authorization);
-
 	if (
 		req?.originalUrl == "/auth/register" ||
 		req?.originalUrl == "/auth/registershopper"
