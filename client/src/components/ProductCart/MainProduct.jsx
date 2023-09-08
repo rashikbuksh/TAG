@@ -24,7 +24,7 @@ import { useSelector } from "react-redux";
 
 const MainProduct = ({ shopperProduct, product }) => {
 	const prod = product || shopperProduct;
-	const { name, price, image, id, discount } = prod;
+	const { name, price, image, id, discount, view } = prod;
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);
 	const [display, setDisplay] = useState(0);
@@ -53,16 +53,16 @@ const MainProduct = ({ shopperProduct, product }) => {
 	return (
 		<div>
 			<div className="divider m-0"></div>
-			<div className=" flex justify-between items-end px-2">
+			<div className=" flex items-end justify-between px-2">
 				<Link
 					to={import.meta.env.VITE_API_PUBLIC_URL + `/product/${id}`}
 				>
 					<h1 className="text-xl font-bold">{name}</h1>
 				</Link>
-					<div className="flex gap-2">
-						<FaEye></FaEye>
-						<p className="text-xs">98</p>
-					</div>
+				<div className="flex gap-2">
+					<FaEye></FaEye>
+					<p className="text-xs">{view}</p>
+				</div>
 			</div>
 			<div
 				className="relative flex flex-col items-center justify-center"

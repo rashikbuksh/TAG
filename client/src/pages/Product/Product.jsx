@@ -10,6 +10,7 @@ import {
 } from "../../store/slices/cart-slice";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 
+import { FaEye } from "react-icons/fa6";
 import {
 	checkIfInCart,
 	getDiscountPrice,
@@ -32,6 +33,7 @@ const Product = () => {
 	const [shopperName, setShopperName] = useState("");
 
 	useEffect(() => {
+		api.post(`/shopperproduct/increaseView/${id}`);
 		api.get(`/shopperproduct/getshopperproduct/${id}`)
 			.then((response) => {
 				setProds(response.data);
@@ -137,13 +139,8 @@ const Product = () => {
 											</div>
 										</div>
 										<div className="product-content-header__wishlist-info text-center">
-											<ReactSVG
-												src={
-													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/assets/img/icons/heart-dark.svg"
-												}
-											/>
+											<FaEye></FaEye>
+											{prods.view}
 											<span className="count">
 												{prods.wishlist_count}
 											</span>

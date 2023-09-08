@@ -17,11 +17,11 @@ const add = [
 const read = [
 	{
 		uri: "/shopperproduct/getshopperproduct",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count FROM shopper_product sp, product p WHERE sp.product_id = p.id`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id`,
 	},
 	{
 		uri: "/shopperproduct/getshopperproduct/:id",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, shopper_id FROM shopper_product sp, product p WHERE sp.product_id = p.id and sp.id = ?`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, shopper_id, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id and sp.id = ?`,
 		param: ["id"],
 	},
 	{
@@ -31,7 +31,7 @@ const read = [
 	},
 	{
 		uri: "/shopperproduct/getshopperproductOfShopkeeper/:id",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image FROM shopper_product sp, product p WHERE sp.product_id = p.id and shopper_id = ?`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id and shopper_id = ?`,
 		param: ["id"],
 	},
 	{
@@ -40,12 +40,16 @@ const read = [
 	},
 	{
 		uri: "/shopperproduct/getshopperproductBasedOnSaleCount",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC LIMIT 4`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC LIMIT 4`,
 	},
 	{
 		uri: "/shopkeeperproduct/getshopkeeperproductCount/:id",
 		query: `SELECT COUNT(*) as count FROM shopper_product WHERE shopper_id = ?`,
 		param: ["id"],
+	},
+	{
+		uri: "/shopperproduct/getPopularShopperProduct",
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC LIMIT 5`,
 	},
 ];
 
@@ -55,6 +59,11 @@ const change = [
 		query: `UPDATE shopper_product SET product_count = ? WHERE id = ?`,
 		body: ["product_count", "id"],
 		msg: "id",
+	},
+	{
+		uri: "/shopperproduct/increaseView/:id",
+		query: "UPDATE shopper_product SET view = view + 1 where id = ?",
+		param: ["id"],
 	},
 ];
 

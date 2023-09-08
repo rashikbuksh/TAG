@@ -1,6 +1,7 @@
 import Axios from "axios";
 import PropTypes from "prop-types";
 import { Fragment, default as React, useEffect, useState } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
@@ -9,11 +10,11 @@ import { api } from "../../lib/api";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 import ProductCart from "../ProductCart/ProductCart";
 import ProductSlider from "../ProductSlider/ProductSlider";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const AllProducts = ({ limit }) => {
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 	const [prods, setProds] = useState([]);
+	const [popularProducts, setPopularProducts] = useState([]);
 	const dispatch = useDispatch();
 
 	const [loading, setLoading] = useState(true);
@@ -37,6 +38,16 @@ const AllProducts = ({ limit }) => {
 				setLoading(false);
 				alert(error);
 			});
+		api.get(`/shopperproduct/getPopularShopperProduct`)
+			.then((response) => {
+				setPopularProducts(response.data);
+				setLoading(false);
+			})
+			.catch((error) => {
+				setError(error.message);
+				setLoading(false);
+				alert(error);
+			});
 	}, []);
 
 	if (!prods?.length) return <p>No products found</p>;
@@ -46,36 +57,35 @@ const AllProducts = ({ limit }) => {
 			<div className="">
 				<div className=" my-10">
 					{/* Popular Product  */}
-					<div className="my-10 flex justify-between items-center  mb-2">
+					<div className="my-10 mb-2 flex items-center  justify-between">
 						<div>
 							<p className="text-xl font-bold">Popular Product</p>
 						</div>
-						<div className="border border-gray-100 px-2 py-2 rounded-full">
-						<FaArrowRight className="text-3xl "></FaArrowRight>
+						<div className="rounded-full border border-gray-100 px-2 py-2">
+							<FaArrowRight className="text-3xl "></FaArrowRight>
 						</div>
-						
 					</div>
-					<ProductSlider products={prods} ></ProductSlider>
-					<div className=" my-10 flex justify-between items-center  mb-2">
+					<ProductSlider products={popularProducts}></ProductSlider>
+					<div className=" my-10 mb-2 flex items-center  justify-between">
 						<div>
-							<p className="text-xl font-bold">Verified Product</p>
+							<p className="text-xl font-bold">
+								Verified Product
+							</p>
 						</div>
-						<div className="border border-gray-100 px-2 py-2 rounded-full">
-						<FaArrowRight className="text-3xl "></FaArrowRight>
+						<div className="rounded-full border border-gray-100 px-2 py-2">
+							<FaArrowRight className="text-3xl "></FaArrowRight>
 						</div>
-						
 					</div>
-					<ProductSlider products={prods} ></ProductSlider>
-					<div className= " my-10 flex justify-between items-center  mb-2">
+					<ProductSlider products={prods}></ProductSlider>
+					<div className=" my-10 mb-2 flex items-center  justify-between">
 						<div>
 							<p className="text-xl font-bold">Products</p>
 						</div>
-						<div className="border border-gray-100 px-2 py-2 rounded-full">
-						<FaArrowRight className="text-3xl "></FaArrowRight>
+						<div className="rounded-full border border-gray-100 px-2 py-2">
+							<FaArrowRight className="text-3xl "></FaArrowRight>
 						</div>
-						
 					</div>
-					<ProductSlider products={prods} ></ProductSlider>
+					<ProductSlider products={prods}></ProductSlider>
 					{/* <div className="">
 						<div className="grid gap-10 lg:grid-cols-4">
 							{prods.map((single) => {
