@@ -18,6 +18,7 @@ function Offcanvas(props) {
 		});
 		if (user) {
 			api.get(`/auth/getUserInfo/${user}`).then((res) => {
+				console.log(res.data);
 				setUserInfo(res.data);
 			});
 		}
@@ -66,13 +67,29 @@ function Offcanvas(props) {
 								}
 							/>
 						</span>
-						<Link
-							to={
-								import.meta.env.VITE_API_PUBLIC_URL + "/profile"
-							}
-						>
-							My Profile
-						</Link>
+						{userInfo.map((item) =>
+							item.access == "shopper" ? (
+								<Link
+									key={user}
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										`/shopkeeperProfileCV/${user}`
+									}
+								>
+									Shop Profile
+								</Link>
+							) : (
+								<Link
+									key={user}
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										`/profile`
+									}
+								>
+									Profile
+								</Link>
+							)
+						)}
 					</li>
 					<li>
 						<span className="icon">

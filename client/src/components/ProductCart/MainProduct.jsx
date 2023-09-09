@@ -1,4 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
+import { useState } from "react";
 import {
 	FaCross,
 	FaMapMarkerAlt,
@@ -7,27 +8,29 @@ import {
 	FaWindowClose,
 } from "react-icons/fa";
 import { FaEye, FaRegMessage } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auth";
 import {
 	checkIfInCart,
 	getDiscountPrice,
 	getProductCartQuantity,
 } from "../../helpers/product";
+import { api } from "../../lib/api";
 import {
 	addToCart,
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
 
-import { useState } from "react";
-import { useSelector } from "react-redux";
-
 const MainProduct = ({ shopperProduct, product }) => {
+	const navigate = useNavigate();
 	const prod = product || shopperProduct;
 	const { name, price, image, id, discount, view } = prod;
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);
 	const [display, setDisplay] = useState(0);
+
+	const { user } = useAuth();
 	const handleMouseEnter = () => {
 		setDisplay(1); // Set the quantity to 1 when hovering
 	};
@@ -49,16 +52,23 @@ const MainProduct = ({ shopperProduct, product }) => {
 			setQuantity(quantity - 1);
 		}
 	};
+	const navigateProductPage = (id) => {
+		api.post(`/shopperproduct/increaseView/${id}`);
+		navigate(`/product/${id}`);
+	};
 	const cartItems = useSelector((state) => state.cart.cartItems);
 	return (
 		<div>
 			<div className="divider m-0"></div>
 			<div className=" flex items-end justify-between px-2">
-				<Link
-					to={import.meta.env.VITE_API_PUBLIC_URL + `/product/${id}`}
+				<button
+					type="button"
+					onClick={() => {
+						navigateProductPage(id);
+					}}
 				>
 					<h1 className="text-xl font-bold">{name}</h1>
-				</Link>
+				</button>
 				<div className="flex gap-2">
 					<FaEye></FaEye>
 					<p className="text-xs">{view}</p>

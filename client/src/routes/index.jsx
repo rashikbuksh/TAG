@@ -10,9 +10,15 @@ export default function ProtectedRoutes() {
 
 	if (!signed) return <Navigate to="/login" replace={true} />;
 
-	const haveAccess = PROTECTED_ROUTES?.find((route) =>
-		route?.access.includes(user?.access)
+	console.log("user in router", user);
+	console.log(window.location.pathname);
+	console.log("protected", PROTECTED_ROUTES);
+
+	const checkPath = PROTECTED_ROUTES?.find(
+		(route) => route?.path === window.location.pathname
 	);
+
+	const haveAccess = checkPath?.access?.includes(user?.access);
 
 	return haveAccess ? (
 		<Outlet />

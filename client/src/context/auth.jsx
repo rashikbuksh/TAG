@@ -36,6 +36,8 @@ const AuthProvider = ({ children }) => {
 			updateAuthCookie(token || "");
 			updateUserCookie(JSON.stringify(loginUser) || "");
 
+			console.log("loginUser", loginUser);
+
 			if (token && loginUser) {
 				const go = PROTECTED_ROUTES.find((route) =>
 					route?.access?.includes(loginUser?.access)

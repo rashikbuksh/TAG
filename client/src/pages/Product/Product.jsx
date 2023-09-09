@@ -26,19 +26,13 @@ const Product = () => {
 
 	const [prods, setProds] = useState([]);
 
-	const [productImageId, setProductImageId] = useState(0);
-
-	const [productImageName, setProductImageName] = useState();
-
 	const [shopperName, setShopperName] = useState("");
 
 	useEffect(() => {
-		api.post(`/shopperproduct/increaseView/${id}`);
 		api.get(`/shopperproduct/getshopperproduct/${id}`)
 			.then((response) => {
 				setProds(response.data);
 				setProductStock(response.data[0]?.product_count);
-				setProductImageId(response.data[0]?.product_id);
 			})
 			.catch((error) => {
 				alert(error);
@@ -50,14 +44,6 @@ const Product = () => {
 	const wishlistItem = wishlistItems.find((item) => item.id === id);
 
 	const productCartQty = getProductCartQuantity(cartItems, prods);
-
-	useEffect(() => {
-		api.get(`/product/getproductimage/${productImageId}`)
-			.then((response) => {
-				setProductImageName(response.data[0]?.image);
-			})
-			.catch((error) => {});
-	}, [productImageId]);
 
 	const getShopperName = (shopperId) => {
 		api.get(`/auth/getUserInfo/${shopperId}`)
@@ -78,9 +64,9 @@ const Product = () => {
 							className="product-image-single swiper-slide"
 						>
 							<img
-								src={`${
-									import.meta.env.VITE_APP_IMG_URL
-								}/${productImageName}`}
+								src={`${import.meta.env.VITE_APP_IMG_URL}/${
+									single.image
+								}`}
 								className="img-fluid"
 								alt="Product"
 							/>

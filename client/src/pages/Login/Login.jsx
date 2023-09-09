@@ -10,9 +10,6 @@ import { useAuth } from "../../context/auth";
 const Login = () => {
 	const navigate = useNavigate();
 	const { user, login, signed } = useAuth();
-	console.log("user", user);
-	console.log("signed", signed);
-	console.log("Login", login);
 	const loginSchema = yup.object().shape({
 		email: yup
 			.string()
