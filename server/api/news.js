@@ -29,9 +29,24 @@ const read = [
 		msg: "news",
 	},
 ];
+const change = [
+	{
+		uri: "/news/increaseLikeCount/:id",
+		query: `UPDATE news SET like_count = like_count + 1 WHERE id = ?`,
+		param: ["id"],
+		msg: "news",
+	},
+	{
+		uri: "/news/decreaseLikeCount/:id",
+		query: `UPDATE news SET like_count = like_count - 1 WHERE id = ?`,
+		param: ["id"],
+		msg: "news",
+	},
+];
 
 // Export modules
 module.exports = Object.freeze({
 	add,
 	read,
+	change,
 });

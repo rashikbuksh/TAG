@@ -14,10 +14,12 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+import { set } from "react-hook-form";
 import MainProduct from "../../components/ProductCart/MainProduct";
 import { api } from "../../lib/api";
 
 const PostUi = ({ postData }) => {
+	const userid = localStorage.getItem("user-id");
 	const [shopperProducts, setShopperProduct] = useState([]);
 	const [shopperInfo, setShopperInfo] = useState([]);
 
@@ -59,6 +61,24 @@ const PostUi = ({ postData }) => {
 		minute: "2-digit",
 	});
 	const formattedDate = currentDate.toLocaleDateString();
+
+	// check if post is liked by user
+	const [isLiked, setIsLiked] = useState(false);
+	const [likeId, setLikeId] = useState(null);
+	const [newsid, setNewsid] = useState([]);
+
+	useEffect(() => {
+		api.get(`/newslike/getlike/${userid}`).then((res) => {
+			if (res.data.length > 0) {
+				setNewsid(res.data);
+				console.log(res.data[0].news_id);
+				setIsLiked(true);
+				setLikeId(res.data[0].id);
+			} else {
+				setIsLiked(false);
+			}
+		});
+	}, [newsid]);
 
 	return (
 		<div className="space-mb--20">
@@ -166,7 +186,41 @@ const PostUi = ({ postData }) => {
 							<div className="text-xs">
 								<p className="text-sm">{like_count} Likes</p>
 							</div>
-							<FaHeart className="text-lg text-red-500" />
+							{newsid.find((news) => news.news_id == id) &&
+							isLiked ? (
+								<button
+									onClick={() => {
+										api.delete(
+											`/newslike/deletelike/${likeId}`
+										).then((res) => {
+											setIsLiked(false);
+											api.post(
+												`/news/decreaseLikeCount/${id}`
+											);
+										});
+									}}
+								>
+									<FaHeart className="text-lg text-red-500" />
+								</button>
+							) : (
+								<button
+									onClick={() => {
+										api.post("/newslike/addLike", {
+											news_id: id,
+											liked_by: Number(userid),
+										}).then((res) => {
+											setIsLiked(true);
+											setLikeId(res.data.id);
+											api.post(
+												`/news/increaseLikeCount/${id}`
+											);
+											window.location.reload();
+										});
+									}}
+								>
+									<FaHeart className="text-black-500 text-lg" />
+								</button>
+							)}
 						</div>
 						<div className="flex flex-col items-center justify-center">
 							<div className="text-xs">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2023 at 01:54 PM
+-- Generation Time: Sep 13, 2023 at 02:03 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -141,7 +141,19 @@ INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `
 (10, NULL, 17, '2023-09-05T16:44:03.716Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'NEW PRODUCT IN TOWN', '1693932243669__20230807_154229.jpg'),
 (13, 22, 17, '2023-09-08T11:06:36.919Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
 (14, 23, 17, '2023-09-08T11:08:16.425Z', '10', '', '', 0, 0, 0, 0, 'regular', '', ''),
-(15, 24, 17, '2023-09-08T11:09:09.030Z', '5', '', '', 0, 0, 0, 0, 'regular', '', '');
+(15, 24, 17, '2023-09-08T11:09:09.030Z', '5', '', '', 1, 0, 0, 0, 'regular', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news_like`
+--
+
+CREATE TABLE `news_like` (
+  `id` int(11) NOT NULL,
+  `news_id` int(11) NOT NULL,
+  `liked_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -247,8 +259,8 @@ CREATE TABLE `shopper_product` (
 --
 
 INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`, `shopper_id`, `view`) VALUES
-(1, 'gg product', 99, 10, 100, 10, 2, 3, 1, 11, 1),
-(4, 'sugar', 10, 0, 100, 11, 0, 0, 13, 11, 4),
+(1, 'gg product', 99, 10, 100, 10, 2, 3, 1, 11, 3),
+(4, 'sugar', 10, 0, 100, 11, 0, 0, 13, 11, 24),
 (8, 'Vanity Bag', 100, 2, 25, 0, 0, 0, 12, 3, 0),
 (14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3, 0),
 (15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3, 0),
@@ -288,6 +300,14 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`id`),
   ADD KEY `shopper_product_id` (`shopper_product_id`),
   ADD KEY `shop_id` (`shop_id`);
+
+--
+-- Indexes for table `news_like`
+--
+ALTER TABLE `news_like`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `liked_by` (`liked_by`),
+  ADD KEY `news_id` (`news_id`) USING BTREE;
 
 --
 -- Indexes for table `notification`
@@ -348,6 +368,12 @@ ALTER TABLE `news`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT for table `news_like`
+--
+ALTER TABLE `news_like`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
@@ -381,6 +407,13 @@ ALTER TABLE `shopper_product`
 ALTER TABLE `news`
   ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`shopper_product_id`) REFERENCES `shopper_product` (`id`),
   ADD CONSTRAINT `news_ibfk_2` FOREIGN KEY (`shop_id`) REFERENCES `customer_profile` (`id`);
+
+--
+-- Constraints for table `news_like`
+--
+ALTER TABLE `news_like`
+  ADD CONSTRAINT `news_like_ibfk_1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`),
+  ADD CONSTRAINT `news_like_ibfk_3` FOREIGN KEY (`liked_by`) REFERENCES `customer_profile` (`id`);
 
 --
 -- Constraints for table `notification`

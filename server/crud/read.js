@@ -13,6 +13,7 @@ const { read: Order } = require("../api/order");
 const { read: News } = require("../api/news");
 const { read: Notification } = require("../api/notification");
 const { read: Heroslider } = require("../api/heroslider");
+const { read: Newslike } = require("../api/newslike");
 
 const GET_DATA = [
 	...JobEntry,
@@ -25,6 +26,7 @@ const GET_DATA = [
 	...News,
 	...Notification,
 	...Heroslider,
+	...Newslike,
 ];
 
 GET_DATA.forEach(({ uri, query, param }) => {
@@ -44,9 +46,8 @@ GET_DATA.forEach(({ uri, query, param }) => {
 });
 
 app.post("/auth/verify_login", (req, res) => {
-
 	console.log(req?.body.email, req?.body.password);
-	
+
 	const { email, password } = req?.body;
 
 	db.getConnection((err, connection) => {

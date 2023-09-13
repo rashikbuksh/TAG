@@ -20,6 +20,8 @@ const { add: Notification } = require("../api/notification");
 
 const { add: Heroslider } = require("../api/heroslider");
 
+const { add: Newslike } = require("../api/newslike");
+
 const ADD_DATA = [
 	...JobEntry,
 	...Auth,
@@ -30,6 +32,7 @@ const ADD_DATA = [
 	...News,
 	...Notification,
 	...Heroslider,
+	...Newslike,
 ];
 
 ADD_DATA.forEach(({ uri, query, body, msg }) => {
