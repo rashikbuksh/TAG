@@ -11,7 +11,7 @@ const Welcome = () => {
 							<img
 								src={
 									import.meta.env.VITE_API_PUBLIC_URL +
-									"/assets/img/logo.png"
+									"/assets/img/Tag-logo-blue-get_100_100.png"
 								}
 								className="img-fluid"
 								alt=""

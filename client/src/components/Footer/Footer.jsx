@@ -26,7 +26,7 @@ const Footer = () => {
 					className="footer-nav-single"
 				>
 					<div className="menu-wrapper">
-					<FaRegNewspaper className="text-2xl"></FaRegNewspaper>
+						<FaRegNewspaper className="text-2xl"></FaRegNewspaper>
 						<span>News</span>
 					</div>
 				</Link>

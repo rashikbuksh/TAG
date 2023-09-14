@@ -18,7 +18,6 @@ function Offcanvas(props) {
 		});
 		if (user) {
 			api.get(`/auth/getUserInfo/${user}`).then((res) => {
-				console.log(res.data);
 				setUserInfo(res.data);
 			});
 		}
@@ -73,7 +72,7 @@ function Offcanvas(props) {
 									key={user}
 									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
-										`/shopkeeperProfileCV/${user}`
+										`/shopkeeperDashboard`
 									}
 								>
 									Shop Profile

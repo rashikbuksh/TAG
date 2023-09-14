@@ -71,14 +71,13 @@ const PostUi = ({ postData }) => {
 		api.get(`/newslike/getlike/${userid}`).then((res) => {
 			if (res.data.length > 0) {
 				setNewsid(res.data);
-				console.log(res.data[0].news_id);
 				setIsLiked(true);
 				setLikeId(res.data[0].id);
 			} else {
 				setIsLiked(false);
 			}
 		});
-	}, [newsid]);
+	}, []);
 
 	return (
 		<div className="space-mb--20">
@@ -96,16 +95,12 @@ const PostUi = ({ postData }) => {
 							))}
 							<div>
 								<Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										`/shopkeeperProfileCV/${shop_id}`
-									}
+									to={`${
+										import.meta.env.VITE_API_PUBLIC_URL
+									}/shopkeeperProfileCV/${shop_id}`}
 								>
 									{shopperInfo.map((shopperinfo) => (
-										<div
-											key={Math.random()}
-											className="flex"
-										>
+										<div key={shop_id} className="flex">
 											<h4 className="text-lg font-semibold">
 												{shopperinfo.name}
 											</h4>
@@ -197,6 +192,7 @@ const PostUi = ({ postData }) => {
 											api.post(
 												`/news/decreaseLikeCount/${id}`
 											);
+											window.location.reload();
 										});
 									}}
 								>

@@ -11,55 +11,10 @@ const ShopkeeperProfileCV = () => {
 	const { id } = useParams();
 	const [shopperProduct, setShopperProduct] = useState([]);
 	const [shopkeeperInfo, setShopkeeperInfo] = useState([]);
+	const [category, setCategory] = useState([]);
+	const [selectedCategoryProduct, setSelectedCategoryProduct] = useState([]);
 
-	const storeid = "#5454r";
-	const shopname = "Rafi Store";
-	const ratingValue = 3;
 	const options = ["bag", "rice", "vevarage"];
-	const products = [
-		{
-			id: 1,
-			name: "Product 1",
-			price: 19.99,
-			description: "This is the first product.",
-			image: "https://images.unsplash.com/photo-1624821622383-f213ad4c0403?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-		},
-		{
-			id: 2,
-			name: "Product 2",
-			price: 29.99,
-			description: "This is the second product.",
-			image: "https://plus.unsplash.com/premium_photo-1684923611409-dc83b23b73e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-		},
-		{
-			id: 3,
-			name: "Product 3",
-			price: 9.99,
-			description: "This is the third product.",
-			image: "https://plus.unsplash.com/premium_photo-1674406481284-43eba097a291?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-		},
-		{
-			id: 4,
-			name: "Product 4",
-			price: 39.99,
-			description: "This is the fourth product.",
-			image: "https://plus.unsplash.com/premium_photo-1684923611409-dc83b23b73e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-		},
-		{
-			id: 5,
-			name: "Product 5",
-			price: 49.99,
-			description: "This is the fifth product.",
-			image: "https://images.unsplash.com/photo-1624821622383-f213ad4c0403?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-		},
-		{
-			id: 6,
-			name: "Product 6",
-			price: 15.99,
-			description: "This is the sixth product.",
-			image: "https://plus.unsplash.com/premium_photo-1684923611409-dc83b23b73e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-		},
-	];
 
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
@@ -75,9 +30,30 @@ const ShopkeeperProfileCV = () => {
 		)
 			.then((res) => {
 				setShopperProduct(res.data);
+				setSelectedCategoryProduct(res.data);
 			})
 			.catch((err) => {});
+		api.get(`/category/get/category`).then((response) => {
+			console.log(response.data);
+			setCategory(response.data);
+		});
 	}, []);
+
+	const selectedCategory = (e) => {
+		const selectedCategoryId = parseInt(e.target.value); // Convert the value to an integer if needed
+		if (selectedCategoryId === 0) {
+			// If "Category" is selected, show all products
+			setSelectedCategoryProduct(shopperProduct);
+		} else {
+			// Filter products based on the selected category
+			const filteredProducts = shopperProduct.filter((product) => {
+				return product.category_id === selectedCategoryId;
+			});
+			setSelectedCategoryProduct(filteredProducts);
+		}
+	};
+
+	console.log(selectedCategoryProduct);
 
 	return (
 		<div className="mt-28">
@@ -131,12 +107,17 @@ const ShopkeeperProfileCV = () => {
 						</div>
 					</div>
 					<div className="my-3 flex items-center justify-start border-y border-gray-300 px-4 py-2">
-						<select className="select select-bordered w-full max-w-xs outline-none">
-							<option disabled selected>
+						<select
+							className="select select-bordered w-full max-w-xs outline-none"
+							onChange={selectedCategory}
+						>
+							<option value="0" selected>
 								Category
 							</option>
-							{options.map((option, index) => (
-								<option key={index}>{option}</option>
+							{category.map((option, index) => (
+								<option key={index} value={option.category_id}>
+									{option.category_name}
+								</option>
 							))}
 						</select>
 						<div className="divider divider-horizontal divide-black"></div>
@@ -154,7 +135,14 @@ const ShopkeeperProfileCV = () => {
 						</div>
 					</div>
 					<div className="my-10 grid gap-10 px-2 md:grid-cols-3 ">
-						{shopperProduct.map((product) => {
+						{selectedCategoryProduct.length === 0 && (
+							<div className="flex items-center justify-center">
+								<h1 className="text-2xl font-semibold">
+									No Product Found
+								</h1>
+							</div>
+						)}
+						{selectedCategoryProduct.map((product) => {
 							return (
 								<Link
 									key={Math.random()}

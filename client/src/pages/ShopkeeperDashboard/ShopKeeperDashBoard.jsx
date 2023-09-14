@@ -6,7 +6,9 @@ import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+import Timekeeper from "react-timekeeper";
 import { api } from "../../lib/api";
+
 const ShopKeeperDashBoard = () => {
 	const shopname = "Rafi Edu Store";
 	const locatiion = "New Market City Complex, Dhaka 1205";
@@ -27,6 +29,21 @@ const ShopKeeperDashBoard = () => {
 
 	const [shopkeeper, setShopkeeper] = useState([]);
 	const [productCount, setProductCount] = useState(0);
+
+	// clock
+	const date = new Date();
+	// get time
+	const [time, setTime] = useState(
+		date.toLocaleTimeString([], {
+			hour: "numeric",
+			minute: "2-digit",
+		})
+	);
+	console.log(time);
+	const onChange = (timeValue) => {
+		setTime(timeValue.formatted12);
+		console.log(timeValue.formatted12);
+	};
 
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`).then((res) => {
@@ -53,10 +70,14 @@ const ShopKeeperDashBoard = () => {
 								Activity
 							</p>
 						</div>
-						<input
-							type="checkbox"
-							className="toggle toggle-accent"
-						/>
+						<div className="flex items-center gap-3">
+							<input
+								type="checkbox"
+								className="toggle toggle-accent"
+							/>
+
+							<Timekeeper time={time} onChange={onChange} />
+						</div>
 					</div>
 					<div>
 						<button onClick={toggleDrawer}>
