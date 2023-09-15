@@ -17,6 +17,8 @@ import { Link } from "react-router-dom";
 import { set } from "react-hook-form";
 import MainProduct from "../../components/ProductCart/MainProduct";
 import { api } from "../../lib/api";
+import Modal from "../../components/Modal/Modal";
+import CommentModal from "./CommentModal";
 
 const PostUi = ({ postData }) => {
 	const userid = localStorage.getItem("user-id");
@@ -77,7 +79,19 @@ const PostUi = ({ postData }) => {
 				setIsLiked(false);
 			}
 		});
-	}, []);
+	}, [likeId]);
+
+	let [isOpen, setIsOpen] = useState(false)
+	let [commentId, setcommentId] = useState("")
+
+	function openModal(id) {
+		if (id==0) {
+			return
+		}
+		setcommentId(id)
+        setIsOpen(true)
+
+      }
 
 	return (
 		<div className="space-mb--20">
@@ -192,7 +206,7 @@ const PostUi = ({ postData }) => {
 											api.post(
 												`/news/decreaseLikeCount/${id}`
 											);
-											window.location.reload();
+											// window.location.reload();
 										});
 									}}
 								>
@@ -205,12 +219,13 @@ const PostUi = ({ postData }) => {
 											news_id: id,
 											liked_by: Number(userid),
 										}).then((res) => {
+											console.log(res, "res");
 											setIsLiked(true);
 											setLikeId(res.data.id);
 											api.post(
 												`/news/increaseLikeCount/${id}`
 											);
-											window.location.reload();
+											// window.location.reload();
 										});
 									}}
 								>
@@ -224,8 +239,13 @@ const PostUi = ({ postData }) => {
 									{comment_count} comments
 								</p>
 							</div>
-							<FaRegComment className="text-lg" />
+							<button type="button" onClick={()=>openModal(id)}>
+								<FaRegComment className="text-lg" />
+							</button>
 						</div>
+						<CommentModal isOpen={isOpen} setIsOpen={setIsOpen} title={"comments"} id={commentId} setcommentId={setcommentId}> 
+						Hi 
+						</CommentModal>
 						<div className="flex flex-col items-center justify-center">
 							<div className="text-xs">
 								<p className="text-sm">{share_count} share</p>
