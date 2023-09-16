@@ -41,172 +41,190 @@ const Cart = () => {
 	var total = 0;
 
 	return (
-		<div className="full-height my-32 overflow-scroll">
-			<h1 className="text-center text-3xl font-bold">Cart</h1>
-			<div className="divider"></div>
-			{cartItems && cartItems.length > 0 ? (
-				shoppers.map((shopper) => (
-					<div key={shopper.id}>
-						{cartItems.some(
-							(cartItem) => cartItem.shopper_id === shopper.id
-						) && (
-							<Link to={`../shopkeeperProfileCV/${shopper.id}`}>
-								<h2 className="mt-4 text-xl font-bold">
-									{shopper.name}'s Cart
-								</h2>
-							</Link>
-						)}
-						{cartItems.map((cartItem) => {
-							let cartTotalPrice = 0;
-							if (cartItem.shopper_id === shopper.id) {
-								return (
-									<div
-										key={cartItem.id}
-										className="mx-auto w-[90%] border p-3"
-									>
-										<div>
-											<div className="flex items-center justify-between border p-2">
-												<div>
-													<h1 className="text-base font-bold">
-														<Link
-															to={
-																import.meta.env
-																	.VITE_API_PUBLIC_URL +
-																`/product/${cartItem.id}`
-															}
-														>
-															{cartItem.name}
-														</Link>
-													</h1>
-													<div className="">
-														<h2 className="text-xs">
-															{cartItem.weight}
-														</h2>
-														<div className="cart-product__counter">
-															<div className="cart-plus-minus">
-																<button
-																	className="dec qtybutton"
-																	onClick={() =>
-																		dispatch(
-																			decreaseQuantity(
+		<>
+			<div className="my-28 h-full overflow-scroll">
+				<h1 className="text-center text-3xl font-bold">Cart</h1>
+				<div className="divider"></div>
+				{cartItems && cartItems.length > 0 ? (
+					shoppers.map((shopper) => (
+						<div className="" key={shopper.id}>
+							{cartItems.some(
+								(cartItem) => cartItem.shopper_id === shopper.id
+							) && (
+								<Link
+									to={`../shopkeeperProfileCV/${shopper.id}`}
+								>
+									<h2 className="ml-5 mt-4 text-xl font-bold">
+										{shopper.name}'s Cart
+									</h2>
+								</Link>
+							)}
+							{cartItems.map((cartItem) => {
+								let cartTotalPrice = 0;
+								if (cartItem.shopper_id === shopper.id) {
+									return (
+										<div
+											key={cartItem.id}
+											className="mx-auto w-[90%] border p-3"
+										>
+											<div>
+												<div className="flex items-center justify-between border p-2">
+													<div>
+														<h1 className="text-base font-bold">
+															<Link
+																to={
+																	import.meta
+																		.env
+																		.VITE_API_PUBLIC_URL +
+																	`/product/${cartItem.id}`
+																}
+															>
+																{cartItem.name}
+															</Link>
+														</h1>
+														<div className="">
+															<h2 className="text-xs">
+																{
+																	cartItem.weight
+																}
+															</h2>
+															<div className="cart-product__counter">
+																<div className="cart-plus-minus">
+																	<button
+																		className="dec qtybutton"
+																		onClick={() =>
+																			dispatch(
+																				decreaseQuantity(
+																					cartItem
+																				)
+																			)
+																		}
+																	>
+																		-
+																	</button>
+																	<input
+																		className="cart-plus-minus-box"
+																		type="text"
+																		value={
+																			cartItem.quantity
+																		}
+																		readOnly
+																	/>
+																	<button
+																		className="inc qtybutton"
+																		onClick={() =>
+																			dispatch(
+																				increaseQuantity(
+																					{
+																						cartItem,
+																						quantity:
+																							cartItem.quantity,
+																					}
+																				)
+																			)
+																		}
+																		disabled={
+																			cartItem.quantity >=
+																			cartItemStock(
 																				cartItem
 																			)
-																		)
-																	}
-																>
-																	-
-																</button>
-																<input
-																	className="cart-plus-minus-box"
-																	type="text"
-																	value={
-																		cartItem.quantity
-																	}
-																	readOnly
-																/>
-																<button
-																	className="inc qtybutton"
-																	onClick={() =>
-																		dispatch(
-																			increaseQuantity(
-																				{
-																					cartItem,
-																					quantity:
-																						cartItem.quantity,
-																				}
-																			)
-																		)
-																	}
-																	disabled={
-																		cartItem.quantity >=
-																		cartItemStock(
-																			cartItem
-																		)
-																	}
-																>
-																	+
-																</button>
+																		}
+																	>
+																		+
+																	</button>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
 
-												<div>
-													<h2 className="text-xs">
-														{getDiscountPrice(
-															cartItem.price,
-															cartItem.discount
-														)}{" "}
-														X {cartItem.quantity}
-													</h2>
-												</div>
+													<div>
+														<h2 className="text-xs">
+															{getDiscountPrice(
+																cartItem.price,
+																cartItem.discount
+															)}{" "}
+															X{" "}
+															{cartItem.quantity}
+														</h2>
+													</div>
 
-												<div>
-													<h2 className="text-xs">
-														{getDiscountPrice(
-															cartItem.price,
-															cartItem.discount
-														) * cartItem.quantity}
-													</h2>
-													<input
-														type="hidden"
-														value={
-															(total +=
-																getDiscountPrice(
+													<div>
+														<h2 className="text-xs">
+															{getDiscountPrice(
+																parseFloat(
 																	cartItem.price,
 																	cartItem.discount
 																) *
-																cartItem.quantity)
-														}
-													/>
+																	cartItem.quantity.toFixed(
+																		2
+																	)
+															)}
+														</h2>
+														<input
+															type="hidden"
+															value={
+																(total +=
+																	getDiscountPrice(
+																		cartItem.price,
+																		cartItem.discount
+																	) *
+																	cartItem.quantity)
+															}
+														/>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								);
-							}
-							return null;
-						})}
-						{cartItems.some(
-							(cartItem) => cartItem.shopper_id === shopper.id
-						) && (
-							<div>
-								<h2>Total: {total}</h2>
-								<div className="flex gap-3">
-									{buyStates[shopper.id] ? (
-										<>
+									);
+								}
+								return null;
+							})}
+							{cartItems.some(
+								(cartItem) => cartItem.shopper_id === shopper.id
+							) && (
+								<div className="mx-4 my-1 flex items-center justify-between  p-1">
+									<div className="flex gap-3">
+										{buyStates[shopper.id] ? (
+											<>
+												<button
+													onClick={() =>
+														handleBuyClick(
+															shopper.id
+														)
+													}
+													className="bg-red-400 px-3 py-1"
+												>
+													Cancel
+												</button>{" "}
+												<div className="border px-3 py-1">
+													2 minutes remaining
+												</div>
+											</>
+										) : (
 											<button
 												onClick={() =>
 													handleBuyClick(shopper.id)
 												}
-												className="bg-red-400 px-3 py-1"
+												className="bg-green-400 px-3 py-1"
 											>
-												Cancel
-											</button>{" "}
-											<div className="border px-3 py-1">
-												2 minutes remaining
-											</div>
-										</>
-									) : (
-										<button
-											onClick={() =>
-												handleBuyClick(shopper.id)
-											}
-											className="bg-green-400 px-3 py-1"
-										>
-											Buy
-										</button>
-									)}
+												Buy
+											</button>
+										)}
+									</div>
+									<h2 className="text-xl font-bold">
+										Total: {parseFloat(total).toFixed(2)}
+									</h2>
 								</div>
-							</div>
-						)}
-						<input type="hidden" value={(total = 0)} />
-					</div>
-				))
-			) : (
-				<div>No items in cart</div>
-			)}
-		</div>
+							)}
+							<input type="hidden" value={(total = 0)} />
+						</div>
+					))
+				) : (
+					<div>No items in cart</div>
+				)}
+			</div>
+			<div className="h-44"></div>
+		</>
 	);
 };
 

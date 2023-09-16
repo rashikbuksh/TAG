@@ -24,12 +24,12 @@ function Header() {
 
 	return (
 		<header>
-			<div className="header-wrapper border-bottom">
-				<div className="space-y--15 container">
-					<div className="row align-items-center">
-						<div className="col-auto">
+			<div className="py-3 px-2">
+				<div className="">
+					<div className="flex justify-between items-center">
+						<div className=" ">
 							{/* header logo */}
-							<div className="header-logo">
+							<div className="">
 								<Link
 									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
@@ -48,7 +48,7 @@ function Header() {
 								</Link>
 							</div>
 						</div>
-						<div className="col d-flex justify-content-center">
+						<div className="">
 							{/* header search */}
 							<div className="header-search">
 								<form>
@@ -67,7 +67,7 @@ function Header() {
 								</form>
 							</div>
 						</div>
-						<div className="col-auto">
+						<div className="">
 							{/* header menu trigger */}
 							<button
 								className="header-menu-trigger"
