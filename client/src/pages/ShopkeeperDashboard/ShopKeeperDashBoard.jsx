@@ -134,7 +134,7 @@ const ShopKeeperDashBoard = () => {
 
 	return (
 		<>
-			<div className="h-32 "></div>
+			<div className="h-20 "></div>
 			<div className="mx-auto rounded-lg bg-gray-100 p-4 md:w-[50%]">
 				<div className="flex items-center justify-between">
 					<div className=" flex flex-col items-center justify-center gap-2 ">
@@ -357,7 +357,7 @@ const ShopKeeperDashBoard = () => {
 					</div>
 				))}
 			</div>
-			<div className="h-44 "></div>
+			<div className=""></div>
 		</>
 	);
 };
