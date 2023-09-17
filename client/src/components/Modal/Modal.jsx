@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 const Modal = ({ isOpen, setIsOpen, title, children, setcommentId }) => {
 	function closeModal() {
 		setIsOpen(false);
-		setcommentId(0);
+		setcommentId?.(0);
 	}
 
 	return (

@@ -1,18 +1,28 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
-import { FaFontAwesomeFlag, FaHome } from "react-icons/fa";
-import { FaBars, FaFileContract, FaMapPin } from "react-icons/fa6";
+import {
+	FaBars,
+	FaFileContract,
+	FaFontAwesomeFlag,
+	FaHome,
+	FaMapPin,
+} from "react-icons/fa";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import Timekeeper from "react-timekeeper";
 import { api } from "../../lib/api";
+import Modal from "../../components/Modal/Modal";
 
 const ShopKeeperDashBoard = () => {
 	const shopname = "Rafi Edu Store";
 	const locatiion = "New Market City Complex, Dhaka 1205";
 	const [isOpen, setIsOpen] = useState(false);
+	const [isClockOpen, setIsClockOpen] = useState(false);
+	const [selectedTime, setSelectedTime] = useState("");
+	const [timeDifference, setTimeDifference] = useState("");
+
 	const toggleDrawer = () => {
 		setIsOpen((prevState) => !prevState);
 	};
@@ -32,32 +42,95 @@ const ShopKeeperDashBoard = () => {
 
 	// clock
 	const date = new Date();
-	// get time
 	const [time, setTime] = useState(
 		date.toLocaleTimeString([], {
 			hour: "numeric",
 			minute: "2-digit",
 		})
 	);
-	console.log(time);
+
 	const onChange = (timeValue) => {
 		setTime(timeValue.formatted12);
-		console.log(timeValue.formatted12);
 	};
 
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`).then((res) => {
-			console.log(res.data);
 			setShopkeeper(res.data);
 		});
+
 		// get product count
 		api.get(`/shopkeeperproduct/getshopkeeperproductCount/${id}`).then(
 			(res) => {
-				console.log(res.data[0].count);
 				setProductCount(res.data[0].count);
 			}
 		);
-	}, []);
+	}, [id]);
+
+	const handleOpenClockModal = () => {
+		setIsClockOpen(true);
+	};
+
+	const handleTimeChange = (timeValue) => {
+		try {
+			const selectedDate = new Date();
+			const formattedTime = timeValue.formatted12;
+
+			const [hours, minutes, period] = formattedTime.split(/[: ]/);
+			let selectedHours = parseInt(hours, 10);
+			const selectedMinutes = parseInt(minutes, 10);
+
+			// Adjust hours for PM time
+			if (period === "PM" && selectedHours !== 12) {
+				selectedHours += 12;
+			}
+
+			// Convert 12 AM to 00 hours in 24-hour format
+			if (period === "AM" && selectedHours === 12) {
+				selectedHours = 0;
+			}
+
+			selectedDate.setHours(selectedHours, selectedMinutes, 0, 0);
+
+			// Format selectedDate in 24-hour format
+			const formattedSelectedTime = selectedDate.toLocaleTimeString(
+				"en-US",
+				{
+					hour: "2-digit",
+					minute: "2-digit",
+					hour12: false,
+				}
+			);
+
+			const currentDate = new Date();
+
+			// Format the entire date in "Bangladesh Standard Time"
+			const options = {
+				timeZoneName: "short",
+				timeZone: "Asia/Dhaka",
+			};
+
+			const formattedCurrentDate = currentDate.toLocaleString(
+				"en-US",
+				options
+			);
+
+			// Calculate the time difference in milliseconds
+			const timeDiff = currentDate - selectedDate;
+			const minutesDiff = Math.floor(timeDiff / 60000);
+
+			if (minutesDiff >= 0) {
+				setSelectedTime(formattedSelectedTime);
+				setTimeDifference(`${minutesDiff} minutes after`);
+			} else {
+				setSelectedTime("");
+				setTimeDifference("Please select a future time");
+			}
+		} catch (error) {
+			console.error("Error parsing time:", error.message);
+			setSelectedTime("");
+			setTimeDifference("Invalid time format");
+		}
+	};
 
 	return (
 		<>
@@ -75,8 +148,30 @@ const ShopKeeperDashBoard = () => {
 								type="checkbox"
 								className="toggle toggle-accent"
 							/>
-
-							<Timekeeper time={time} onChange={onChange} />
+							<button onClick={handleOpenClockModal}>
+								Set Time
+							</button>
+							<Modal
+								isOpen={isClockOpen}
+								setIsOpen={setIsClockOpen}
+								title={"Set Time"}
+							>
+								<div className="mx-auto my-5 flex items-center justify-center">
+									<Timekeeper
+										time={time}
+										onChange={handleTimeChange}
+									/>
+								</div>
+								<div className="my-3 flex flex-col items-center justify-center">
+									<p className="text-xl font-bold ">
+										{selectedTime}
+									</p>
+									<p>{timeDifference}</p>
+									<button className="bg-blue-500 px-4 py-1 text-white">
+										Set
+									</button>
+								</div>
+							</Modal>
 						</div>
 					</div>
 					<div>
@@ -99,19 +194,17 @@ const ShopKeeperDashBoard = () => {
 										<li>
 											<span className="icon">
 												<ReactSVG
-													src={
+													src={`${
 														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														"/assets/img/icons/profile.svg"
-													}
+															.VITE_API_PUBLIC_URL
+													}/assets/img/icons/profile.svg`}
 												/>
 											</span>
 											<Link
-												to={
+												to={`${
 													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/login"
-												}
+														.VITE_API_PUBLIC_URL
+												}/login`}
 											>
 												Login / Sign up
 											</Link>
@@ -121,11 +214,10 @@ const ShopKeeperDashBoard = () => {
 												<FaHome></FaHome>
 											</span>
 											<Link
-												to={
+												to={`${
 													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/home"
-												}
+														.VITE_API_PUBLIC_URL
+												}/home`}
 											>
 												Home
 											</Link>
@@ -133,34 +225,30 @@ const ShopKeeperDashBoard = () => {
 										<li>
 											<span className="icon">
 												<ReactSVG
-													src={
+													src={`${
 														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														"/assets/img/icons/profile.svg"
-													}
+															.VITE_API_PUBLIC_URL
+													}/assets/img/icons/profile.svg`}
 												/>
 											</span>
 											<Link
-												to={
+												to={`${
 													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/contact"
-												}
+														.VITE_API_PUBLIC_URL
+												}/contact`}
 											>
 												Contact Us
 											</Link>
 										</li>
-
 										<li>
 											<span className="icon">
 												<FaFileContract></FaFileContract>
 											</span>
 											<Link
-												to={
+												to={`${
 													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/wishlist"
-												}
+														.VITE_API_PUBLIC_URL
+												}/wishlist`}
 											>
 												Terms and Condition
 											</Link>
@@ -170,11 +258,10 @@ const ShopKeeperDashBoard = () => {
 												<FaFontAwesomeFlag></FaFontAwesomeFlag>
 											</span>
 											<Link
-												to={
+												to={`${
 													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/edit-profile"
-												}
+														.VITE_API_PUBLIC_URL
+												}/edit-profile`}
 											>
 												Report
 											</Link>
@@ -182,19 +269,17 @@ const ShopKeeperDashBoard = () => {
 										<li>
 											<span className="icon">
 												<ReactSVG
-													src={
+													src={`${
 														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														"/assets/img/icons/gear-two.svg"
-													}
+															.VITE_API_PUBLIC_URL
+													}/assets/img/icons/gear-two.svg`}
 												/>
 											</span>
 											<Link
-												to={
+												to={`${
 													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/edit-profile"
-												}
+														.VITE_API_PUBLIC_URL
+												}/edit-profile`}
 											>
 												Settings
 											</Link>
@@ -206,7 +291,7 @@ const ShopKeeperDashBoard = () => {
 					</div>
 				</div>
 				{shopkeeper.map((shopkeeper) => (
-					<div className="my-10">
+					<div className="my-10" key={shopkeeper.id}>
 						<div className="flex flex-col items-center justify-center">
 							<img
 								className="h-[200px] w-[200px] rounded-full"
@@ -233,7 +318,7 @@ const ShopKeeperDashBoard = () => {
 									</Link>
 								</h1>
 								<p className="text-sm font-semibold lg:text-xl">
-									Toral Product : {productCount}
+									Total Product : {productCount}
 								</p>
 							</div>
 							<div className=" flex h-[100px] w-[500px] flex-col items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-500 to-purple-400 lg:h-[200px]">
