@@ -19,7 +19,7 @@ const NewsFeed = () => {
 	}, [posts]);
 
 	return (
-		<div className="mt-32">
+		<div className="mt-20">
 			<div className="mx-auto w-[90%]">
 				<h1 className="text-center text-2xl font-bold">News</h1>
 				<div className="divider"></div>
@@ -43,7 +43,7 @@ const NewsFeed = () => {
 					<div className="lg:col-span-3"></div>
 				</div>
 			</div>
-			<div className="h-32"></div>
+			<div className="h-14"></div>
 		</div>
 	);
 };

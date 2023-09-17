@@ -100,38 +100,26 @@ const ShopperProduct = () => {
 	};
 
 	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 mt-3">
-			<div className="auth-page-header space-mb--50">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							<h3 className="auth-page-header__title">Welcome</h3>
-							<p className="auth-page-header__text">
-								Add Your Product
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className="auth-page-body">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							<div className="auth-form">
+		<div className="body-wrapper  space-pt--70 space-pb--120 mt-3">
+
+				<h1 className="text-xl font-bold text-center">Add Product</h1>
+			<div className="m-1 p-3 border bg-gray-100 rounded">
+				<div className="">
 								<form onSubmit={handleSubmit(onSubmit)}>
-									<div className="auth-form__single-field space-mb--30">
+									<div className="   px-1 py-1">
 										<label htmlFor="product_id">
 											Product Name
 										</label>
 										<br />
 										<select
+										className="select w-full"
 											name="product_id"
 											id="product_id"
 											onChange={selectedProduct}
 											defaultValue={0}
 										>
 											<option value="0">
-												Select Category
+												Select Product
 											</option>
 											{productNames &&
 												productNames.map((product) => (
@@ -148,9 +136,11 @@ const ShopperProduct = () => {
 												))}
 										</select>
 									</div>
-									<div className="auth-form__single-field space-mb--30">
+									<div className="flex gap-2 items-center">
+									<div className="  px-1 py-1 my-2">
 										<label htmlFor="price">Price</label>
 										<input
+										className="input w-full"
 											{...register("price")}
 											type="number"
 											name="price"
@@ -161,11 +151,12 @@ const ShopperProduct = () => {
 											{errors.price?.message}
 										</p>
 									</div>
-									<div className="auth-form__single-field space-mb--30">
+									<div className="  px-1 py-1 my-2">
 										<label htmlFor="discount">
 											Discount
 										</label>
 										<input
+										className="input w-full"
 											{...register("discount")}
 											type="number"
 											name="discount"
@@ -176,11 +167,13 @@ const ShopperProduct = () => {
 											{errors.discount?.message}
 										</p>
 									</div>
-									<div className="auth-form__single-field space-mb--30">
+									</div>
+									<div className="  px-1 py-1 my-2">
 										<label htmlFor="product_count">
 											Product Count
 										</label>
 										<input
+												className="input w-full"
 											{...register("product_count")}
 											type="number"
 											name="product_count"
@@ -193,7 +186,7 @@ const ShopperProduct = () => {
 									</div>
 									<button
 										type="submit"
-										className="auth-form__button"
+										className="btn btn-block btn-accent "
 									>
 										Add Shopper Product
 									</button>
@@ -201,9 +194,6 @@ const ShopperProduct = () => {
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
 	);
 };
 

@@ -56,7 +56,7 @@ const ShopkeeperProfileCV = () => {
 	console.log(selectedCategoryProduct);
 
 	return (
-		<div className="mt-28">
+		<div className="mt-24">
 			<div className="mx-auto px-4 lg:w-[70%]">
 				<div className="mx-auto my-3 w-[100%]  border border-gray-50 ">
 					{shopkeeperInfo.map((shopkeeper) => {
@@ -183,7 +183,7 @@ const ShopkeeperProfileCV = () => {
 					<div></div>
 				</div>
 			</div>
-			<div className="h-96"></div>
+			<div className="h-14"></div>
 		</div>
 	);
 };
