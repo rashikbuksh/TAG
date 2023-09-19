@@ -13,7 +13,6 @@ const ComparePass = async (password, hashPassword) => {
 };
 
 const CreateToken = (user, time = "24h") => {
-	console.log("CreateToken: ", user);
 	const payload = {
 		id: user?.id,
 		name: user?.name,
@@ -22,7 +21,6 @@ const CreateToken = (user, time = "24h") => {
 	};
 
 	const token = sign(payload, PRIVATE_KEY, { expiresIn: time });
-	console.log("CreateToken: ", token);
 
 	if (!token)
 		return {

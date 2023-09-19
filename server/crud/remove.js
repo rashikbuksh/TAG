@@ -6,7 +6,9 @@ const { remove: HeroSlider } = require("../api/heroslider");
 
 const { remove: Newslike } = require("../api/newslike");
 
-const REMOVE_DATA = [...JobEntry, ...HeroSlider, ...Newslike];
+const { remove: Newscomment } = require("../api/newscomment");
+
+const REMOVE_DATA = [...JobEntry, ...HeroSlider, ...Newslike, ...Newscomment];
 
 REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
 	app.delete(uri, (req, res) => {

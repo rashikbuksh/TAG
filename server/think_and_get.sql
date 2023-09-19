@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 13, 2023 at 02:03 PM
+-- Generation Time: Sep 19, 2023 at 06:04 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -85,7 +85,8 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
 (17, 'anikU', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684545113', 'anik123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper'),
 (18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
-(19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer');
+(19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
+(20, 'TAG@admin.com', NULL, NULL, NULL, NULL, '$2b$10$1R4tRAPwHpmV6EnGtAStUeJZY8aj0Dt9NR.B2fjgNiXSYkmH5rm46', NULL, 'tag@admin.com', NULL, NULL, NULL, NULL, NULL, 'customer');
 
 -- --------------------------------------------------------
 
@@ -138,10 +139,38 @@ CREATE TABLE `news` (
 INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `duration`, `location`, `like_count`, `comment_count`, `share_count`, `rating`, `category`, `post_content`, `post_img`) VALUES
 (7, NULL, 3, '2023-08-28T14:34:37.854Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'ggwp', '1693233277825__pjimage-2-1024x683.jpg'),
 (8, NULL, 3, '2023-09-04T10:02:04.081Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'LEO', '1693821723899___D1A5127.JPG'),
-(10, NULL, 17, '2023-09-05T16:44:03.716Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'NEW PRODUCT IN TOWN', '1693932243669__20230807_154229.jpg'),
-(13, 22, 17, '2023-09-08T11:06:36.919Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
-(14, 23, 17, '2023-09-08T11:08:16.425Z', '10', '', '', 0, 0, 0, 0, 'regular', '', ''),
-(15, 24, 17, '2023-09-08T11:09:09.030Z', '5', '', '', 1, 0, 0, 0, 'regular', '', '');
+(10, NULL, 17, '2023-09-05T16:44:03.716Z', NULL, NULL, NULL, 2, 0, 0, 0, 'regular', 'NEW PRODUCT IN TOWN', '1693932243669__20230807_154229.jpg'),
+(13, 22, 17, '2023-09-08T11:06:36.919Z', '0', '', '', 2, 1, 0, 0, 'regular', '', ''),
+(14, 23, 17, '2023-09-08T11:08:16.425Z', '10', '', '', 2, 2, 0, 0, 'regular', '', ''),
+(15, 24, 17, '2023-09-08T11:09:09.030Z', '5', '', '', 2, 4, 0, 0, 'regular', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news_comment`
+--
+
+CREATE TABLE `news_comment` (
+  `id` int(11) NOT NULL,
+  `news_id` int(11) NOT NULL,
+  `commented_by` int(11) NOT NULL,
+  `comment` varchar(255) NOT NULL,
+  `news_time` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `news_comment`
+--
+
+INSERT INTO `news_comment` (`id`, `news_id`, `commented_by`, `comment`, `news_time`) VALUES
+(1, 10, 20, 'GG', '[value-5]'),
+(2, 15, 20, 'Excellent', '9/19/2023, 9:18:42 PM'),
+(3, 15, 20, 'Nice', '9/19/2023, 9:21:25 PM'),
+(4, 14, 20, 'Nice', '9/19/2023, 9:21:37 PM'),
+(5, 14, 20, 'Excellent', '9/19/2023, 9:25:36 PM'),
+(6, 15, 20, 'Interested', '9/19/2023, 9:25:47 PM'),
+(15, 13, 20, 'Excellent', '9/19/2023, 9:43:03 PM'),
+(19, 15, 17, 'Excellent', '9/19/2023, 10:01:17 PM');
 
 -- --------------------------------------------------------
 
@@ -154,6 +183,20 @@ CREATE TABLE `news_like` (
   `news_id` int(11) NOT NULL,
   `liked_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `news_like`
+--
+
+INSERT INTO `news_like` (`id`, `news_id`, `liked_by`) VALUES
+(21, 15, 16),
+(22, 14, 16),
+(23, 13, 16),
+(24, 10, 16),
+(25, 10, 20),
+(26, 13, 20),
+(27, 14, 20),
+(28, 15, 20);
 
 -- --------------------------------------------------------
 
@@ -263,12 +306,12 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (4, 'sugar', 10, 0, 100, 11, 0, 0, 13, 11, 24),
 (8, 'Vanity Bag', 100, 2, 25, 0, 0, 0, 12, 3, 0),
 (14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3, 0),
-(15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3, 0),
+(15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3, 1),
 (17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15, 0),
 (18, 'Ishan Tea', 75, 0, 10, 0, 0, 0, 14, 17, 1),
-(22, 'Vanity Bag', 130, 0, 25, 0, 0, 0, 12, 17, 0),
-(23, 'gg product', 200, 10, 100, 0, 0, 0, 1, 17, 0),
-(24, 'sugar', 160, 5, 100, 0, 0, 0, 13, 17, 0);
+(22, 'Vanity Bag', 130, 0, 25, 0, 0, 0, 12, 17, 2),
+(23, 'gg product', 200, 10, 100, 0, 0, 0, 1, 17, 2),
+(24, 'sugar', 160, 5, 100, 0, 0, 0, 13, 17, 5);
 
 --
 -- Indexes for dumped tables
@@ -300,6 +343,14 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`id`),
   ADD KEY `shopper_product_id` (`shopper_product_id`),
   ADD KEY `shop_id` (`shop_id`);
+
+--
+-- Indexes for table `news_comment`
+--
+ALTER TABLE `news_comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `news_id` (`news_id`),
+  ADD KEY `commented_by` (`commented_by`);
 
 --
 -- Indexes for table `news_like`
@@ -353,7 +404,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `hero_slider`
@@ -368,10 +419,16 @@ ALTER TABLE `news`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT for table `news_comment`
+--
+ALTER TABLE `news_comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
 -- AUTO_INCREMENT for table `news_like`
 --
 ALTER TABLE `news_like`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `notification`
@@ -407,6 +464,14 @@ ALTER TABLE `shopper_product`
 ALTER TABLE `news`
   ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`shopper_product_id`) REFERENCES `shopper_product` (`id`),
   ADD CONSTRAINT `news_ibfk_2` FOREIGN KEY (`shop_id`) REFERENCES `customer_profile` (`id`);
+
+--
+-- Constraints for table `news_comment`
+--
+ALTER TABLE `news_comment`
+  ADD CONSTRAINT `news_comment_ibfk_1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`),
+  ADD CONSTRAINT `news_comment_ibfk_2` FOREIGN KEY (`commented_by`) REFERENCES `customer_profile` (`id`),
+  ADD CONSTRAINT `news_comment_ibfk_3` FOREIGN KEY (`commented_by`) REFERENCES `customer_profile` (`id`);
 
 --
 -- Constraints for table `news_like`
