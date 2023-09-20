@@ -58,13 +58,13 @@ ADD_DATA.forEach(({ uri, query, body, msg }) => {
 
 app.post("/auth/register", async (req, res) => {
 	console.log("register: ", req?.body);
-	const { name, email, password, access } = req?.body;
+	const { name, email, phone, password, access } = req?.body;
 	const hashPassword = await HashPass(password);
 
 	ExecuteQuery(
 		res,
-		`INSERT INTO customer_profile (name, email, password, access) VALUES (?, ?, ?, ?)`,
-		[name, email, hashPassword, access],
+		`INSERT INTO customer_profile (name, email, phone, password, access) VALUES (?, ?, ?, ?, ?)`,
+		[name, email, phone, hashPassword, access],
 		"add",
 		`${name} added successfully`
 	);

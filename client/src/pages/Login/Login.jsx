@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
+import Cookies from "js-cookie";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,7 +29,7 @@ const Login = () => {
 	const { errors } = formState;
 
 	const NAVIGATE_TO = {
-		admin: "/user",
+		admin: "/login",
 	};
 
 	useEffect(() => {

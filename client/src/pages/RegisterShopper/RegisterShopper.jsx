@@ -56,13 +56,24 @@ const Register = () => {
 			password: data.password,
 			access: "shopper",
 			shipping_address: data.shipping_address,
-		}).then((response) => {
-			console.log(response.data);
-			if (response.data.message === data.name + " added successfully") {
-				alert("Registration Successful");
-				window.location.href = "/login";
-			}
-		});
+		})
+			.then((response) => {
+				console.log(response.data.message); // Log the entire response for debugging
+				if (
+					response.data.message ===
+					data.name + " added successfully"
+				) {
+					alert("Registration Successful");
+					window.location.href = "/login";
+				}
+			})
+			.catch((error) => {
+				if (
+					error.response.data.message == "Error executing the query"
+				) {
+					alert("Email or Phone Number already exists");
+				}
+			});
 	};
 
 	return (

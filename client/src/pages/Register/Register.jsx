@@ -19,6 +19,7 @@ const Register = () => {
 			.string()
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
+		phone: yup.string().required("Phone Number is required").max(11),
 	});
 
 	const { register, handleSubmit, formState } = useForm({
@@ -32,15 +33,27 @@ const Register = () => {
 		Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, {
 			name: data.name,
 			email: data.emailAddress,
+			phone: data.phone,
 			password: data.password,
 			access: "customer",
-		}).then((response) => {
-			console.log(response.data);
-			if (response.data.message === data.name + " added successfully") {
-				alert("Registration Successful");
-				window.location.href = "/login";
-			}
-		});
+		})
+			.then((response) => {
+				console.log(response.data.message); // Log the entire response for debugging
+				if (
+					response.data.message ===
+					data.name + " added successfully"
+				) {
+					alert("Registration Successful");
+					window.location.href = "/login";
+				}
+			})
+			.catch((error) => {
+				if (
+					error.response.data.message == "Error executing the query"
+				) {
+					alert("Email or Phone Number already exists");
+				}
+			});
 	};
 
 	return (
@@ -93,6 +106,21 @@ const Register = () => {
 										/>
 										<p className="text-danger">
 											{errors.emailAddress?.message}
+										</p>
+									</div>
+									<div className="auth-form__single-field space-mb--30">
+										<label htmlFor="phone">
+											Phone Number
+										</label>
+										<input
+											type="text"
+											name="phone"
+											id="phone"
+											placeholder="Enter Phone Number"
+											{...register("phone")}
+										/>
+										<p className="text-danger">
+											{errors.phone?.message}
 										</p>
 									</div>
 									<div className="auth-form__single-field space-mb--30">

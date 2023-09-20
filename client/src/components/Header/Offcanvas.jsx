@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
@@ -22,6 +23,13 @@ function Offcanvas(props) {
 			});
 		}
 	}, [props]);
+
+	const logout = () => {
+		localStorage.removeItem("user-id");
+		Cookies.remove("user");
+		Cookies.remove("auth");
+		window.location.href = "/login";
+	};
 
 	return (
 		<div className={`offcanvas-menu ${props.show ? "active" : ""}`}>
@@ -191,11 +199,11 @@ function Offcanvas(props) {
 					</li>
 					<li>
 						<span className="icon">
-							<ReactSVG
-								src={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/assets/img/icons/profile.svg"
-								}
+							<img
+								width="24"
+								height="24"
+								src="https://img.icons8.com/material-outlined/24/add-contact-to-company.png"
+								alt="add-contact-to-company"
 							/>
 						</span>
 						<Link
@@ -206,20 +214,38 @@ function Offcanvas(props) {
 							Contact Us
 						</Link>
 					</li>
+					{userInfo.map((item) =>
+						item.access == "admin" ? (
+							<li>
+								<span className="icon">
+									<img
+										width="50"
+										height="50"
+										src="https://img.icons8.com/ios-filled/50/administrator-male--v1.png"
+										alt="administrator-male--v1"
+									/>
+								</span>
+								<Link
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/admin"
+									}
+								>
+									Admin Page
+								</Link>
+							</li>
+						) : null
+					)}
 					<li>
 						<span className="icon">
-							<ReactSVG
-								src={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/assets/img/icons/profile.svg"
-								}
+							<img
+								width="24"
+								height="24"
+								src="https://img.icons8.com/material-outlined/24/exit.png"
+								alt="exit"
 							/>
 						</span>
-						<Link
-							to={import.meta.env.VITE_API_PUBLIC_URL + "/login"}
-						>
-							Login / Sign up
-						</Link>
+						<button onClick={logout}>Logout</button>
 					</li>
 				</ul>
 			</div>
