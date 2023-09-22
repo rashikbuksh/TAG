@@ -78,7 +78,7 @@ const ShopkeepersProduct = () => {
 				<div className="  my-10 grid grid-cols-1 gap-10 lg:grid-cols-2">
 					{prods.map((product) => (
 						<ShopkeeperProductcart
-							key={Math.random()}
+							key={product.id}
 							product={product}
 						></ShopkeeperProductcart>
 					))}

@@ -65,6 +65,19 @@ const change = [
 		query: "UPDATE shopper_product SET view = view + 1 where id = ?",
 		param: ["id"],
 	},
+	{
+		uri: "/shopperproduct/updateProductPrice",
+		query: `UPDATE shopper_product SET price = ? WHERE id = ?`,
+		body: ["price", "id"],
+	},
+];
+
+const remove = [
+	{
+		uri: "/shopperproduct/deleteshopperproduct/:id(*)",
+		query: `DELETE FROM shopper_product WHERE id = ?`,
+		param: ["id"],
+	},
 ];
 
 // Export modules
@@ -72,4 +85,5 @@ module.exports = Object.freeze({
 	add,
 	read,
 	change,
+	remove,
 });

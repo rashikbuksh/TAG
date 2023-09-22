@@ -12,7 +12,6 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 		"cool",
 		"Not Interested",
 		"Bad",
-		"Not Good",
 	];
 
 	const userID = localStorage.getItem("user-id");
@@ -152,6 +151,7 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 								className="h-10 w-full rounded border p-2 focus:outline-none focus:ring-1 focus:ring-gray-300"
 								name="comment"
 								placeholder=""
+								disabled
 								value={selectedComment} // Display the selected comment in the input field
 								onChange={(e) =>
 									setSelectedComment(e.target.value)
