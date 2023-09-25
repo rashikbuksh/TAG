@@ -42,7 +42,7 @@ const Cart = () => {
 
 	return (
 		<>
-			<div className="my-28 h-full overflow-scroll">
+			<div className="my-24 h-full overflow-scroll">
 				<h1 className="text-center text-3xl font-bold">Cart</h1>
 				<div className="divider"></div>
 				{cartItems && cartItems.length > 0 ? (
@@ -223,7 +223,7 @@ const Cart = () => {
 					<div>No items in cart</div>
 				)}
 			</div>
-			<div className="h-44"></div>
+			<div className="h-14"></div>
 		</>
 	);
 };
