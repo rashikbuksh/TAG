@@ -141,16 +141,10 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 				<div className="">
 					<form onSubmit={handleSubmitComment} className="w-full p-2">
 						<div className="mb-2">
-							<label
-								htmlFor="comment"
-								className="text-lg text-gray-600"
-							>
-								Add a comment
-							</label>
 							<input
 								className="h-10 w-full rounded border p-2 focus:outline-none focus:ring-1 focus:ring-gray-300"
 								name="comment"
-								placeholder=""
+								placeholder="Add a comment"
 								disabled
 								value={selectedComment} // Display the selected comment in the input field
 								onChange={(e) =>

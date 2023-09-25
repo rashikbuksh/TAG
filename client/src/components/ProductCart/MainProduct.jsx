@@ -21,6 +21,7 @@ import {
 	addToCart,
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
+import MessageModal from "../MessageModal/MessageModal";
 
 const MainProduct = ({ shopperProduct, product }) => {
 	const navigate = useNavigate();
@@ -29,8 +30,10 @@ const MainProduct = ({ shopperProduct, product }) => {
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);
 	const [display, setDisplay] = useState(0);
+	const [isOpen, setIsOpen] = useState(false);
 
 	const { user } = useAuth();
+	console.log(user,"mainproduct");
 	const handleMouseEnter = () => {
 		setDisplay(1); // Set the quantity to 1 when hovering
 	};
@@ -52,6 +55,9 @@ const MainProduct = ({ shopperProduct, product }) => {
 			setQuantity(quantity - 1);
 		}
 	};
+	const handelOpenMessageModal = () => {
+		setIsOpen(!isOpen);
+	};
 	const navigateProductPage = (id) => {
 		api.post(`/shopperproduct/increaseView/${id}`);
 		navigate(`/product/${id}`);
@@ -69,10 +75,13 @@ const MainProduct = ({ shopperProduct, product }) => {
 				>
 					<h1 className="text-xl font-bold">{name}</h1>
 				</button>
-				<div className="flex gap-2">
-					<FaEye></FaEye>
-					<p className="text-xs">{view}</p>
-				</div>
+				{
+					user.access==="shopper"||"admin" &&
+					<div className="flex gap-2">
+						<FaEye></FaEye>
+						<p className="text-xs">{view}</p>
+					</div>
+				}
 			</div>
 			<div
 				className="relative flex flex-col items-center justify-center"
@@ -136,7 +145,15 @@ const MainProduct = ({ shopperProduct, product }) => {
 			</div>
 			<div className="my-1 flex items-center justify-between border-b border-gray-100 py-2">
 				<div className="mx-auto flex items-center">
-					<FaRegMessage className="text-xl" />
+					<FaRegMessage
+						onClick={handelOpenMessageModal}
+						className="text-xl"
+					/>
+					<MessageModal
+						isOpen={isOpen}
+						setIsOpen={setIsOpen}
+						title={""}
+					></MessageModal>
 				</div>
 				<div className="mx-auto flex items-center">
 					<div className="flex items-center gap-2">

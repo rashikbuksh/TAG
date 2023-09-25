@@ -60,10 +60,10 @@ const ProductCart = ({ product }) => {
 							/>
 						</div>
 					</div>
+					<MainProduct product={product} shoperName={shopper.name}></MainProduct>
 				</div>
 			))}
 
-			<MainProduct product={product}></MainProduct>
 		</div>
 	);
 };

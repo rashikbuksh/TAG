@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { api } from "../../lib/api";
+import { validateFieldsNatively } from "@hookform/resolvers";
 
 const ShopperProduct = () => {
 	const ShopperProductSchema = yup.object({
@@ -41,11 +42,17 @@ const ShopperProduct = () => {
 
 	const navigate = useNavigate();
 
-	const selectedProduct = (e) => {
-		var product = e.target.value.split("__");
-		form.setValue("product_id", product[0]);
-		form.setValue("name", product[1]);
-	};
+	// const selectedProduct = (e) => {
+	// 	var product = e.target.value.split("__");
+	// 	form.setValue("product_id", product[0]);
+	// 	form.setValue("name", product[1]);
+
+	// 	// Extract the product ID from the selected value
+	// 	const productId = product[0];
+
+	// 	// Call handelGetImage with the product ID
+	// 	handelGetImage(productId);
+	// };
 
 	const onSubmit = async (data) => {
 		console.log("FormData", data);
@@ -98,12 +105,34 @@ const ShopperProduct = () => {
 			});
 	};
 
-	const [productImage, setProductImage] = useState();
-
-	const selectedProductImage = (e) => {
-		console.log(e.target.value.name);
-		setProductImage(e.target.value.image);
+	const setproductvalue = (e) => {
+		console.log(e.target.value);
+		handelGetImage(e.target.value);
 	};
+
+	const [prods, setProds] = useState();
+	const [productImage, setProductImage] = useState();
+	const handelGetImage = (productId) => {
+		setProductImage("");
+		console.log(productId, "pro");
+		if (productId == 0) {
+			return;
+		} else {
+			api.get(`/product/getproductimage/${productId}`)
+				.then((response) => {
+					setProds(response.data);
+					console.log(response.data);
+					setProductImage(prods[0]?.image);
+				})
+				.catch((error) => {
+					setProductImage("");
+					alert(error);
+				});
+		}
+
+		// Perform the desired action using the product ID
+	};
+	console.log(productImage, "productImage");
 
 	return (
 		<div className="body-wrapper  space-pt--70 space-pb--120 mt-3">
@@ -118,7 +147,7 @@ const ShopperProduct = () => {
 								className="select w-full"
 								name="product_id"
 								id="product_id"
-								onChange={selectedProduct}
+								onChange={setproductvalue}
 								defaultValue={0}
 							>
 								<option value="0">Select Product</option>
@@ -126,16 +155,21 @@ const ShopperProduct = () => {
 									productNames.map((product) => (
 										<option
 											key={product.id}
-											value={
-												product.id + "__" + product.name
-											}
-											onChange={selectedProductImage}
+											value={product.id}
 										>
-											{product.name}
+											{product.name}, {product.id}
 										</option>
 									))}
 							</select>
 						</div>
+						{productImage && (
+							<img
+								src={`${
+									import.meta.env.VITE_APP_IMG_URL
+								}/${productImage}`}
+								alt="Selected Product"
+							/>
+						)}
 						<div className="flex items-center gap-2">
 							<div className="  my-2 px-1 py-1">
 								<label htmlFor="price">Price</label>
@@ -187,11 +221,6 @@ const ShopperProduct = () => {
 							Add Shopper Product
 						</button>
 					</form>
-					<img
-						src={`${
-							import.meta.env.VITE_APP_IMG_URL
-						}/${productImage}`}
-					/>
 				</div>
 			</div>
 		</div>
