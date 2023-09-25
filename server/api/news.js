@@ -42,6 +42,18 @@ const change = [
 		param: ["id"],
 		msg: "news",
 	},
+	{
+		uri: "/news/increaseCommentCount/:id",
+		query: `UPDATE news SET comment_count = comment_count + 1 WHERE id = ?`,
+		param: ["id"],
+		msg: "news",
+	},
+	{
+		uri: "/news/decreaseCommentCount/:id",
+		query: `UPDATE news SET comment_count = comment_count - 1 WHERE id = ?`,
+		param: ["id"],
+		msg: "news",
+	},
 ];
 
 // Export modules

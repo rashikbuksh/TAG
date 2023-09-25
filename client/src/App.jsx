@@ -40,6 +40,7 @@ const Notification = lazy(() => import("./pages/Notification"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Order = lazy(() => import("./pages/Order"));
 const HeroSlider = lazy(() => import("./pages/hero-slider/HeroSlider"));
+const AdminPage = lazy(() => import("./pages/AdminPage/Admin"));
 
 const PROTECTED_ROUTES = [
 	{
@@ -194,6 +195,13 @@ const PROTECTED_ROUTES = [
 		name: "HeroSlider",
 		path: "/addheroslider",
 		element: HeroSlider,
+		access: ["admin"],
+	},
+	{
+		id: 27,
+		name: "AdminPage",
+		path: "/admin",
+		element: AdminPage,
 		access: ["admin"],
 	},
 ];

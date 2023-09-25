@@ -15,9 +15,9 @@ import {
 import { Link } from "react-router-dom";
 
 import { set } from "react-hook-form";
+import Modal from "../../components/Modal/Modal";
 import MainProduct from "../../components/ProductCart/MainProduct";
 import { api } from "../../lib/api";
-import Modal from "../../components/Modal/Modal";
 import CommentModal from "./CommentModal";
 
 const PostUi = ({ postData }) => {
@@ -81,17 +81,16 @@ const PostUi = ({ postData }) => {
 		});
 	}, [likeId]);
 
-	let [isOpen, setIsOpen] = useState(false)
-	let [commentId, setcommentId] = useState("")
+	let [isOpen, setIsOpen] = useState(false);
+	let [commentId, setcommentId] = useState("");
 
 	function openModal(id) {
-		if (id==0) {
-			return
+		if (id == 0) {
+			return;
 		}
-		setcommentId(id)
-        setIsOpen(true)
-
-      }
+		setcommentId(id);
+		setIsOpen(true);
+	}
 
 	return (
 		<div className="space-mb--20">
@@ -239,12 +238,18 @@ const PostUi = ({ postData }) => {
 									{comment_count} comments
 								</p>
 							</div>
-							<button type="button" onClick={()=>openModal(id)}>
+							<button type="button" onClick={() => openModal(id)}>
 								<FaRegComment className="text-lg" />
 							</button>
 						</div>
-						<CommentModal isOpen={isOpen} setIsOpen={setIsOpen} title={"comments"} id={commentId} setcommentId={setcommentId}> 
-						Hi 
+						<CommentModal
+							isOpen={isOpen}
+							setIsOpen={setIsOpen}
+							title={"comments"}
+							id={id}
+							setcommentId={setcommentId}
+						>
+							Hi
 						</CommentModal>
 						<div className="flex flex-col items-center justify-center">
 							<div className="text-xs">

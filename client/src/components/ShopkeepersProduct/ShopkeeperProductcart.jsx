@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import Axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";
 import { api } from "../../lib/api";
@@ -36,6 +36,68 @@ const ShopkeeperProductcart = ({ product }) => {
 		});
 	};
 
+	const [isEditingPrice, setIsEditingPrice] = useState(false);
+	const [newPrice, setNewPrice] = useState(price);
+
+	const handleEditClick = () => {
+		setIsEditingPrice(true);
+	};
+
+	const handlePriceChange = (e) => {
+		setNewPrice(e.target.value);
+	};
+
+	const handlePriceUpdate = () => {
+		// Send a request to update the price in your API
+		// You can use `newPrice` for the updated price value
+		// After the price is updated, you can set isEditingPrice to false
+		// and update the product's price in your component state
+
+		api.post("/shopperproduct/updateProductPrice", {
+			id: id,
+			price: newPrice,
+		}).then((res) => {
+			console.log("res", res);
+			if (res.data.status === 200) {
+				alert("Product Price Updated Successfully");
+			}
+		});
+
+		setIsEditingPrice(false);
+	};
+
+	const handleCancelPriceUpdate = () => {
+		setIsEditingPrice(false);
+	};
+
+	const handleDeleteClick = () => {
+		const isConfirmed = window.confirm(
+			"Are you sure you want to delete this product?"
+		);
+		if (isConfirmed) {
+			api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
+				.then((res) => {
+					console.log("res", res);
+					if (res.data.status === 200) {
+						alert("Product Deleted Successfully");
+						window.location.reload();
+						// You may also want to update your UI to remove the deleted product from the list
+						// Assuming you have a function to remove the product from the list, you can call it here.
+					} else {
+						alert(
+							"Failed to delete the product. Please try again."
+						);
+					}
+				})
+				.catch((error) => {
+					console.error("Error deleting product:", error);
+					alert(
+						"An error occurred while deleting the product. Please try again."
+					);
+				});
+		}
+	};
+
 	return (
 		<div className="">
 			<div className="mx-4 h-[450px] border border-black p-4 lg:mx-0 lg:w-[600px]">
@@ -54,10 +116,12 @@ const ShopkeeperProductcart = ({ product }) => {
 							className="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
 						>
 							<li>
-								<a>Edit</a>
+								<button onClick={handleEditClick}>Edit</button>
 							</li>
 							<li>
-								<a>Delete</a>
+								<button onClick={handleDeleteClick}>
+									Delete
+								</button>
 							</li>
 							<li>
 								<a>Share</a>
@@ -106,9 +170,42 @@ const ShopkeeperProductcart = ({ product }) => {
 							</button>
 						</div>
 					</div>
-					<p className="text-center text-xl font-bold">
-						Price {price} Taka
-					</p>
+					<div>
+						{isEditingPrice ? (
+							<>
+								<input
+									className="text-center text-xl font-bold"
+									style={{
+										width: "90px",
+										borderRadius: "5px",
+										border: "1px solid #ccc",
+										marginBottom: "10px",
+									}}
+									type="number"
+									value={newPrice}
+									onChange={handlePriceChange}
+								/>
+								<button
+									type="button"
+									onClick={handlePriceUpdate}
+									className="focus:shadow-outline hover:bg-indigo-800btn btn-primary m-2 h-8 rounded-lg bg-indigo-700 px-4 text-sm text-indigo-100  transition-colors duration-150"
+								>
+									Update
+								</button>
+								<button
+									type="button"
+									onClick={handleCancelPriceUpdate}
+									className="focus:shadow-outline hover:bg-indigo-800btn btn-primary m-2 h-8 rounded-lg bg-indigo-700 px-4 text-sm text-indigo-100  transition-colors duration-150"
+								>
+									Cancel
+								</button>
+							</>
+						) : (
+							<p className="text-center text-xl font-bold">
+								Price {newPrice} Taka{" "}
+							</p>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>

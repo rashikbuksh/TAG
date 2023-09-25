@@ -15,6 +15,10 @@ const read = [
 		uri: "/auth/getShopperInfo",
 		query: `SELECT id, image, name, user_name, review_count from customer_profile where access = "shopper"`,
 	},
+	{
+		uri: "/auth/getALLUserInfo",
+		query: `SELECT id, image, name, user_name, access from customer_profile`,
+	},
 ];
 
 const add = [

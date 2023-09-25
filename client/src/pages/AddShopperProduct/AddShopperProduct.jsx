@@ -42,7 +42,6 @@ const ShopperProduct = () => {
 	const navigate = useNavigate();
 
 	const selectedProduct = (e) => {
-		console.log(e.target.value);
 		var product = e.target.value.split("__");
 		form.setValue("product_id", product[0]);
 		form.setValue("name", product[1]);
@@ -99,101 +98,103 @@ const ShopperProduct = () => {
 			});
 	};
 
+	const [productImage, setProductImage] = useState();
+
+	const selectedProductImage = (e) => {
+		console.log(e.target.value.name);
+		setProductImage(e.target.value.image);
+	};
+
 	return (
 		<div className="body-wrapper  space-pt--70 space-pb--120 mt-3">
-
-				<h1 className="text-xl font-bold text-center">Add Product</h1>
-			<div className="m-1 p-3 border bg-gray-100 rounded">
+			<h1 className="text-center text-xl font-bold">Add Product</h1>
+			<div className="m-1 rounded border bg-gray-100 p-3">
 				<div className="">
-								<form onSubmit={handleSubmit(onSubmit)}>
-									<div className="   px-1 py-1">
-										<label htmlFor="product_id">
-											Product Name
-										</label>
-										<br />
-										<select
-										className="select w-full"
-											name="product_id"
-											id="product_id"
-											onChange={selectedProduct}
-											defaultValue={0}
+					<form onSubmit={handleSubmit(onSubmit)}>
+						<div className="   px-1 py-1">
+							<label htmlFor="product_id">Product Name</label>
+							<br />
+							<select
+								className="select w-full"
+								name="product_id"
+								id="product_id"
+								onChange={selectedProduct}
+								defaultValue={0}
+							>
+								<option value="0">Select Product</option>
+								{productNames &&
+									productNames.map((product) => (
+										<option
+											key={product.id}
+											value={
+												product.id + "__" + product.name
+											}
+											onChange={selectedProductImage}
 										>
-											<option value="0">
-												Select Product
-											</option>
-											{productNames &&
-												productNames.map((product) => (
-													<option
-														key={product.id}
-														value={
-															product.id +
-															"__" +
-															product.name
-														}
-													>
-														{product.name}
-													</option>
-												))}
-										</select>
-									</div>
-									<div className="flex gap-2 items-center">
-									<div className="  px-1 py-1 my-2">
-										<label htmlFor="price">Price</label>
-										<input
-										className="input w-full"
-											{...register("price")}
-											type="number"
-											name="price"
-											id="price"
-											placeholder="Enter Price"
-										/>
-										<p className="text-danger">
-											{errors.price?.message}
-										</p>
-									</div>
-									<div className="  px-1 py-1 my-2">
-										<label htmlFor="discount">
-											Discount
-										</label>
-										<input
-										className="input w-full"
-											{...register("discount")}
-											type="number"
-											name="discount"
-											id="discount"
-											placeholder="Enter Discount"
-										/>
-										<p className="text-danger">
-											{errors.discount?.message}
-										</p>
-									</div>
-									</div>
-									<div className="  px-1 py-1 my-2">
-										<label htmlFor="product_count">
-											Product Count
-										</label>
-										<input
-												className="input w-full"
-											{...register("product_count")}
-											type="number"
-											name="product_count"
-											id="product_count"
-											placeholder="Enter Product Count"
-										/>
-										<p className="text-danger">
-											{errors.product_count?.message}
-										</p>
-									</div>
-									<button
-										type="submit"
-										className="btn btn-block btn-accent "
-									>
-										Add Shopper Product
-									</button>
-								</form>
+											{product.name}
+										</option>
+									))}
+							</select>
+						</div>
+						<div className="flex items-center gap-2">
+							<div className="  my-2 px-1 py-1">
+								<label htmlFor="price">Price</label>
+								<input
+									className="input w-full"
+									{...register("price")}
+									type="number"
+									name="price"
+									id="price"
+									placeholder="Enter Price"
+								/>
+								<p className="text-danger">
+									{errors.price?.message}
+								</p>
+							</div>
+							<div className="  my-2 px-1 py-1">
+								<label htmlFor="discount">Discount</label>
+								<input
+									className="input w-full"
+									{...register("discount")}
+									type="number"
+									name="discount"
+									id="discount"
+									placeholder="Enter Discount"
+								/>
+								<p className="text-danger">
+									{errors.discount?.message}
+								</p>
 							</div>
 						</div>
-					</div>
+						<div className="  my-2 px-1 py-1">
+							<label htmlFor="product_count">Product Count</label>
+							<input
+								className="input w-full"
+								{...register("product_count")}
+								type="number"
+								name="product_count"
+								id="product_count"
+								placeholder="Enter Product Count"
+							/>
+							<p className="text-danger">
+								{errors.product_count?.message}
+							</p>
+						</div>
+						<button
+							type="submit"
+							className="btn btn-accent btn-block "
+						>
+							Add Shopper Product
+						</button>
+					</form>
+					<img
+						src={`${
+							import.meta.env.VITE_APP_IMG_URL
+						}/${productImage}`}
+					/>
+				</div>
+			</div>
+		</div>
 	);
 };
 

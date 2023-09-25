@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 13, 2023 at 02:03 PM
+-- Generation Time: Sep 22, 2023 at 08:25 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -78,14 +78,16 @@ CREATE TABLE `customer_profile` (
 INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_name`, `password`, `phone`, `email`, `shipping_address`, `total_order`, `to_be_shipped`, `review_count`, `offer`, `access`) VALUES
 (1, 'hasib', '[value-3]', '[value-4]', '[value-5]', 'hasibarrafiulfahim', 'hasib1234', '[value-8]', 'hasibarrafiulfahim@gmail.com', '[value-10]', 0, 0, 0, '[value-14]', 'customer'),
 (2, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashikbuksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
-(3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545111', 'rashik@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'shopper'),
+(3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545118', 'rashik1@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'shopper'),
 (6, 'Rashik Buksh', NULL, NULL, NULL, 'rbr', 'rafsan123', '01709305072', 'rbr@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', NULL, NULL, NULL, NULL, 'customer'),
 (11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper'),
 (15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545112', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper'),
 (16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
 (17, 'anikU', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684545113', 'anik123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper'),
 (18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
-(19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer');
+(19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer'),
+(20, 'TAG@admin.com', NULL, NULL, NULL, NULL, '$2b$10$1R4tRAPwHpmV6EnGtAStUeJZY8aj0Dt9NR.B2fjgNiXSYkmH5rm46', NULL, 'tag@admin.com', NULL, NULL, NULL, NULL, NULL, 'admin'),
+(36, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$sAtGIF2DZL.hB8LTMCQ7ZOp2Zdzln6WmbhK7pCrFhEKz46bH/6AF.', '01684545111', 'rashik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer');
 
 -- --------------------------------------------------------
 
@@ -136,12 +138,28 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `duration`, `location`, `like_count`, `comment_count`, `share_count`, `rating`, `category`, `post_content`, `post_img`) VALUES
-(7, NULL, 3, '2023-08-28T14:34:37.854Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'ggwp', '1693233277825__pjimage-2-1024x683.jpg'),
-(8, NULL, 3, '2023-09-04T10:02:04.081Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'LEO', '1693821723899___D1A5127.JPG'),
-(10, NULL, 17, '2023-09-05T16:44:03.716Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'NEW PRODUCT IN TOWN', '1693932243669__20230807_154229.jpg'),
-(13, 22, 17, '2023-09-08T11:06:36.919Z', '0', '', '', 0, 0, 0, 0, 'regular', '', ''),
-(14, 23, 17, '2023-09-08T11:08:16.425Z', '10', '', '', 0, 0, 0, 0, 'regular', '', ''),
-(15, 24, 17, '2023-09-08T11:09:09.030Z', '5', '', '', 1, 0, 0, 0, 'regular', '', '');
+(16, 18, 17, '[value-4]', '[value-5]', '[value-6]', '[value-7]', 1, 1, 0, 0, 'regular', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news_comment`
+--
+
+CREATE TABLE `news_comment` (
+  `id` int(11) NOT NULL,
+  `news_id` int(11) NOT NULL,
+  `commented_by` int(11) NOT NULL,
+  `comment` varchar(255) NOT NULL,
+  `news_time` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `news_comment`
+--
+
+INSERT INTO `news_comment` (`id`, `news_id`, `commented_by`, `comment`, `news_time`) VALUES
+(28, 16, 17, 'Excellent', '9/22/2023, 11:56:27 PM');
 
 -- --------------------------------------------------------
 
@@ -154,6 +172,13 @@ CREATE TABLE `news_like` (
   `news_id` int(11) NOT NULL,
   `liked_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `news_like`
+--
+
+INSERT INTO `news_like` (`id`, `news_id`, `liked_by`) VALUES
+(31, 16, 17);
 
 -- --------------------------------------------------------
 
@@ -260,15 +285,12 @@ CREATE TABLE `shopper_product` (
 
 INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`, `shopper_id`, `view`) VALUES
 (1, 'gg product', 99, 10, 100, 10, 2, 3, 1, 11, 3),
-(4, 'sugar', 10, 0, 100, 11, 0, 0, 13, 11, 24),
+(4, 'sugar', 10, 0, 100, 11, 0, 0, 13, 11, 25),
 (8, 'Vanity Bag', 100, 2, 25, 0, 0, 0, 12, 3, 0),
 (14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3, 0),
-(15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3, 0),
-(17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15, 0),
-(18, 'Ishan Tea', 75, 0, 10, 0, 0, 0, 14, 17, 1),
-(22, 'Vanity Bag', 130, 0, 25, 0, 0, 0, 12, 17, 0),
-(23, 'gg product', 200, 10, 100, 0, 0, 0, 1, 17, 0),
-(24, 'sugar', 160, 5, 100, 0, 0, 0, 13, 17, 0);
+(15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3, 1),
+(17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15, 1),
+(18, 'Ishan Tea', 80, 0, 10, 0, 0, 0, 14, 17, 3);
 
 --
 -- Indexes for dumped tables
@@ -298,8 +320,16 @@ ALTER TABLE `hero_slider`
 --
 ALTER TABLE `news`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `shopper_product_id` (`shopper_product_id`),
-  ADD KEY `shop_id` (`shop_id`);
+  ADD KEY `shop_id` (`shop_id`),
+  ADD KEY `fk_shopper_product_id` (`shopper_product_id`);
+
+--
+-- Indexes for table `news_comment`
+--
+ALTER TABLE `news_comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `news_id` (`news_id`),
+  ADD KEY `commented_by` (`commented_by`);
 
 --
 -- Indexes for table `news_like`
@@ -353,7 +383,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `hero_slider`
@@ -365,13 +395,19 @@ ALTER TABLE `hero_slider`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `news_comment`
+--
+ALTER TABLE `news_comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `news_like`
 --
 ALTER TABLE `news_like`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `notification`
@@ -405,8 +441,17 @@ ALTER TABLE `shopper_product`
 -- Constraints for table `news`
 --
 ALTER TABLE `news`
+  ADD CONSTRAINT `fk_shopper_product_id` FOREIGN KEY (`shopper_product_id`) REFERENCES `shopper_product` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`shopper_product_id`) REFERENCES `shopper_product` (`id`),
   ADD CONSTRAINT `news_ibfk_2` FOREIGN KEY (`shop_id`) REFERENCES `customer_profile` (`id`);
+
+--
+-- Constraints for table `news_comment`
+--
+ALTER TABLE `news_comment`
+  ADD CONSTRAINT `news_comment_ibfk_1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`),
+  ADD CONSTRAINT `news_comment_ibfk_2` FOREIGN KEY (`commented_by`) REFERENCES `customer_profile` (`id`),
+  ADD CONSTRAINT `news_comment_ibfk_3` FOREIGN KEY (`commented_by`) REFERENCES `customer_profile` (`id`);
 
 --
 -- Constraints for table `news_like`

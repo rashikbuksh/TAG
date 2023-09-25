@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { get } from "react-hook-form";
+import { FaTrash } from "react-icons/fa6";
 import Modal from "../../components/Modal/Modal";
+import { api } from "../../lib/api";
 
 const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 	const FixedComments = [
@@ -9,8 +12,9 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 		"cool",
 		"Not Interested",
 		"Bad",
-		"Not Good",
 	];
+
+	const userID = localStorage.getItem("user-id");
 
 	const [selectedComment, setSelectedComment] = useState(""); // State to store the selected comment
 
@@ -24,8 +28,34 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 		event.preventDefault();
 		// Here, you can use the selectedComment state to submit the comment
 		// For example, you can send it to a server or update the UI as needed
+		const date = new Date().toLocaleString();
+		api.post(`/newscomment/addcomment`, {
+			comment: selectedComment,
+			news_id: id,
+			commented_by: userID,
+			news_time: date,
+		}).then((res) => {
+			console.log(res.data);
+		});
+		api.post(`/news/increaseCommentCount/${id}`).then((res) => {
+			console.log(res.data);
+		});
 		console.log("Submitted Comment:", selectedComment);
+		setSelectedComment(""); // Reset the selected comment state
 	};
+
+	const [newsComment, setNewsComment] = useState([]);
+	const [userInfo, setUserInfo] = useState([]);
+	const [commentUser, setCommentUser] = useState([]); // State to store the selected comment
+
+	useEffect(() => {
+		api.get(`/newscomment/getnewscomment`).then((res) => {
+			setNewsComment(res.data);
+		});
+		api.get(`/auth/getALLUserInfo`).then((res) => {
+			setUserInfo(res.data);
+		});
+	}, [newsComment]);
 
 	return (
 		<Modal
@@ -38,60 +68,65 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 				{/* reuseble components  */}
 				<div className="h-52  overflow-y-auto">
 					<div className="my-1 flex w-full  flex-col justify-center rounded-xl bg-gray-200 ">
-						<div className="ml-2 mt-2  flex items-center gap-3">
-							<img
-								src="https://images.unsplash.com/photo-1557296387-5358ad7997bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1957&q=80"
-								className="h-8 w-8 rounded-full"
-								alt=""
-							/>
-							<div>
-								<p className="text-base font-bold">User Name</p>
-								<p className="text-xs font-bold">15 hrs ago</p>
-							</div>
-						</div>
-						<div>
-							<p className="mb-3 ml-3 mt-2">
-								This is excelent product
-							</p>
-						</div>
-					</div>
-					<div className="my-1 flex w-full  flex-col justify-center rounded-xl bg-gray-200 ">
-						<div className="ml-2 mt-2  flex items-center gap-3 ">
-							<img
-								src="https://images.unsplash.com/photo-1557296387-5358ad7997bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1957&q=80"
-								className="h-8 w-8 rounded-full"
-								alt=""
-							/>
-							<div>
-								<p className="text-base font-bold">User Name</p>
-								<p className="text-xs font-bold">15 hrs ago</p>
-							</div>
-						</div>
-						<div>
-							<p className="mb-3 ml-3 mt-2">
-								This is excelent product
-							</p>
-						</div>
-					</div>
-					<div className="my-1 flex w-full  flex-col justify-center rounded-xl bg-gray-200 ">
-						<div className="ml-2 mt-2  flex items-center gap-3">
-							<img
-								src="https://images.unsplash.com/photo-1557296387-5358ad7997bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1957&q=80"
-								className="h-8 w-8 rounded-full"
-								alt=""
-							/>
-							<div>
-								<p className="text-base font-bold">User Name</p>
-								<p className="text-xs font-bold">15 hrs ago</p>
-							</div>
-						</div>
-						<div>
-							<p className="mb-3 ml-3 mt-2">
-								This is excelent product
-							</p>
-						</div>
+						{newsComment.map((comment) => {
+							return comment.news_id === id && userInfo ? (
+								<div key={comment.id}>
+									{userInfo.map((user) => {
+										return user.id ==
+											comment.commented_by ? (
+											<div
+												key={user.id}
+												className="ml-2 mt-2  flex items-center gap-3"
+											>
+												<img
+													src={`${
+														import.meta.env
+															.VITE_APP_IMG_URL
+													}/${user.image}`}
+													className="h-8 w-8 rounded-full"
+													alt=""
+												/>
+
+												<div>
+													<p className="text-base font-bold">
+														{user.name}
+													</p>
+
+													<p className="text-xs font-bold">
+														{comment.news_time}
+													</p>
+												</div>
+												{comment.commented_by ==
+													userID && (
+													<div className="flex justify-end">
+														<button
+															onClick={() => {
+																api.delete(
+																	`/newscomment/deletecomment/${comment.id}`
+																);
+																api.post(
+																	`/news/decreaseCommentCount/${id}`
+																);
+															}}
+														>
+															<FaTrash />
+														</button>
+													</div>
+												)}
+											</div>
+										) : null;
+									})}
+									<div>
+										<p className="mb-3 ml-3 mt-2">
+											{comment.comment}
+										</p>
+									</div>
+								</div>
+							) : null;
+						})}
 					</div>
 				</div>
+
 				<div className="mt-3 flex flex-wrap gap-1">
 					{FixedComments.map((fixcom, index) => (
 						<div
@@ -116,6 +151,7 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 								className="h-10 w-full rounded border p-2 focus:outline-none focus:ring-1 focus:ring-gray-300"
 								name="comment"
 								placeholder=""
+								disabled
 								value={selectedComment} // Display the selected comment in the input field
 								onChange={(e) =>
 									setSelectedComment(e.target.value)

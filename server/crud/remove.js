@@ -1,12 +1,18 @@
 const { app, ExecuteQuery } = require("../config");
 
 const { remove: JobEntry } = require("../api/job_entry");
-
 const { remove: HeroSlider } = require("../api/heroslider");
-
 const { remove: Newslike } = require("../api/newslike");
+const { remove: Newscomment } = require("../api/newscomment");
+const { remove: ShopperProduct } = require("../api/shopperproduct");
 
-const REMOVE_DATA = [...JobEntry, ...HeroSlider, ...Newslike];
+const REMOVE_DATA = [
+	...JobEntry,
+	...HeroSlider,
+	...Newslike,
+	...Newscomment,
+	...ShopperProduct,
+];
 
 REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
 	app.delete(uri, (req, res) => {
@@ -14,6 +20,7 @@ REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
 		param?.forEach((val) => {
 			paramArr.push(req?.params[val]);
 		});
+		console.log(uri, paramArr);
 
 		ExecuteQuery(
 			res,
