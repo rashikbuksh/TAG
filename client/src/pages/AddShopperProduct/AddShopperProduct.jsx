@@ -1,3 +1,4 @@
+import { validateFieldsNatively } from "@hookform/resolvers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -5,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { api } from "../../lib/api";
-import { validateFieldsNatively } from "@hookform/resolvers";
 
 const ShopperProduct = () => {
 	const ShopperProductSchema = yup.object({
@@ -104,35 +104,14 @@ const ShopperProduct = () => {
 				}
 			});
 	};
+	const [productImage, setProductImage] = useState();
 
 	const setproductvalue = (e) => {
-		console.log(e.target.value);
-		handelGetImage(e.target.value);
+		var product = e.target.value.split("||--");
+		form.setValue("product_id", product[0]);
+		form.setValue("name", product[1]);
+		setProductImage(product[2]);
 	};
-
-	const [prods, setProds] = useState();
-	const [productImage, setProductImage] = useState();
-	const handelGetImage = (productId) => {
-		setProductImage("");
-		console.log(productId, "pro");
-		if (productId == 0) {
-			return;
-		} else {
-			api.get(`/product/getproductimage/${productId}`)
-				.then((response) => {
-					setProds(response.data);
-					console.log(response.data);
-					setProductImage(prods[0]?.image);
-				})
-				.catch((error) => {
-					setProductImage("");
-					alert(error);
-				});
-		}
-
-		// Perform the desired action using the product ID
-	};
-	console.log(productImage, "productImage");
 
 	return (
 		<div className="body-wrapper  space-pt--70 space-pb--120 mt-3">
@@ -155,9 +134,15 @@ const ShopperProduct = () => {
 									productNames.map((product) => (
 										<option
 											key={product.id}
-											value={product.id}
+											value={
+												product.id +
+												"||--" +
+												product.name +
+												"||--" +
+												product.image
+											}
 										>
-											{product.name}, {product.id}
+											{product.name}
 										</option>
 									))}
 							</select>

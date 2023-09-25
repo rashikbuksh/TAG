@@ -56,9 +56,19 @@ const change = [
 	},
 ];
 
+const remove = [
+	{
+		uri: "/news/deletenews/:id",
+		query: `DELETE FROM news WHERE shopper_product_id = ?`,
+		param: ["id"],
+		msg: "news",
+	},
+];
+
 // Export modules
 module.exports = Object.freeze({
 	add,
 	read,
 	change,
+	remove,
 });

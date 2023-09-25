@@ -33,7 +33,6 @@ const MainProduct = ({ shopperProduct, product }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const { user } = useAuth();
-	console.log(user,"mainproduct");
 	const handleMouseEnter = () => {
 		setDisplay(1); // Set the quantity to 1 when hovering
 	};
@@ -75,13 +74,18 @@ const MainProduct = ({ shopperProduct, product }) => {
 				>
 					<h1 className="text-xl font-bold">{name}</h1>
 				</button>
-				{
-					user.access==="shopper"||"admin" &&
+				{user.access === "admin" && (
 					<div className="flex gap-2">
 						<FaEye></FaEye>
 						<p className="text-xs">{view}</p>
 					</div>
-				}
+				)}
+				{user.access === "shopper" && (
+					<div className="flex gap-2">
+						<FaEye></FaEye>
+						<p className="text-xs">{view}</p>
+					</div>
+				)}
 			</div>
 			<div
 				className="relative flex flex-col items-center justify-center"

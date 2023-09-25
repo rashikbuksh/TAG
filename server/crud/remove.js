@@ -5,6 +5,7 @@ const { remove: HeroSlider } = require("../api/heroslider");
 const { remove: Newslike } = require("../api/newslike");
 const { remove: Newscomment } = require("../api/newscomment");
 const { remove: ShopperProduct } = require("../api/shopperproduct");
+const { remove: News } = require("../api/news");
 
 const REMOVE_DATA = [
 	...JobEntry,
@@ -12,6 +13,7 @@ const REMOVE_DATA = [
 	...Newslike,
 	...Newscomment,
 	...ShopperProduct,
+	...News,
 ];
 
 REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
