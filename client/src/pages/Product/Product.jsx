@@ -17,15 +17,18 @@ import {
 	getProductCartQuantity,
 } from "../../helpers/product";
 import { api } from "../../lib/api";
+import { useAuth } from "../../context/auth";
 
 const Product = () => {
+	const { user } = useAuth();
 	let { id } = useParams();
 	const dispatch = useDispatch();
 
 	const [productStock, setProductStock] = useState(0);
-
+	
 	const [prods, setProds] = useState([]);
-
+	
+	console.log(prods,"productStock");
 	const [shopperName, setShopperName] = useState("");
 
 	useEffect(() => {
@@ -124,13 +127,16 @@ const Product = () => {
 												</Fragment>
 											</div>
 										</div>
-										<div className="product-content-header__wishlist-info text-center">
-											<FaEye></FaEye>
-											{prods.view}
-											<span className="count">
-												{prods.wishlist_count}
-											</span>
-										</div>
+										{user.access === "shopper" ||
+											("admin" && (
+												<div className="product-content-header__wishlist-info text-center">
+													<FaEye></FaEye>
+													{prods.view}
+													<span className="count">
+														{prods.wishlist_count}
+													</span>
+												</div>
+											))}
 									</div>
 								</div>
 							</div>

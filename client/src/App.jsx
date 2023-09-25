@@ -21,6 +21,7 @@ import NewsFeed from "./pages/NewsFeed/NewsFeed";
 import OrderSingle from "./pages/OrderSingle/OrderSingle";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
+import IndividualMessagePage from "./components/IndividualMessagePage/IndividualMessagePage";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -148,6 +149,7 @@ const PROTECTED_ROUTES = [
 		element: ShopkeeperProfileCV,
 		access: ["admin", "customer", "shopper"],
 	},
+	
 	{
 		id: 19,
 		name: "AddCatagoryForm",
@@ -203,6 +205,13 @@ const PROTECTED_ROUTES = [
 		path: "/admin",
 		element: AdminPage,
 		access: ["admin"],
+	},
+	{
+		id: 28,
+		name: "IndividualMessagePage",
+		path: "/individualMessagePage",
+		element: IndividualMessagePage,
+		access: ["admin", "customer", "shopper"],
 	},
 ];
 
