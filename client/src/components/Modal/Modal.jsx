@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { FaX } from "react-icons/fa6";
 
 const Modal = ({ isOpen, setIsOpen, title, children, setcommentId }) => {
 	function closeModal() {
@@ -52,7 +53,7 @@ const Modal = ({ isOpen, setIsOpen, title, children, setcommentId }) => {
 										<div className="flex items-center justify-between">
                                             <p className="font-bold">{title}</p>
 
-                                            <button onClick={closeModal} className="bg-gray-400 px-2 py-1 rounded-full">X</button>
+                                            <button onClick={closeModal} className="bg-gray-400 p-1 rounded-full"><FaX></FaX></button>
                                         
                                         </div>
 									</Dialog.Title>
