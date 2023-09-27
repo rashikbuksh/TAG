@@ -22,6 +22,7 @@ import {
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
 import MessageModal from "../MessageModal/MessageModal";
+import LocationModal from "../LocationModal/LocationModal";
 
 const MainProduct = ({ shopperProduct, product }) => {
 	const navigate = useNavigate();
@@ -31,6 +32,7 @@ const MainProduct = ({ shopperProduct, product }) => {
 	const [quantity, setQuantity] = useState(0);
 	const [display, setDisplay] = useState(0);
 	const [isOpen, setIsOpen] = useState(false);
+	const [isLocatioonOpen, setIsLocatioonOpen] = useState(false);
 
 	const { user } = useAuth();
 	console.log(user,"mainproduct");
@@ -57,6 +59,9 @@ const MainProduct = ({ shopperProduct, product }) => {
 	};
 	const handelOpenMessageModal = () => {
 		setIsOpen(!isOpen);
+	};
+	const handelOpenLocationModal = () => {
+		setIsLocatioonOpen(!isOpen);
 	};
 	const navigateProductPage = (id) => {
 		api.post(`/shopperproduct/increaseView/${id}`);
@@ -171,7 +176,8 @@ const MainProduct = ({ shopperProduct, product }) => {
 					</div>
 				</div>
 				<div className="mx-auto flex items-center">
-					<FaMapMarkerAlt className="text-xl" />
+					<FaMapMarkerAlt onClick={handelOpenLocationModal} className="text-xl" />
+					<LocationModal isOpen={isLocatioonOpen} setIsOpen={setIsLocatioonOpen} title={"Location"}></LocationModal>
 				</div>
 			</div>
 
