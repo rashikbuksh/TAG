@@ -1,116 +1,111 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import Axios from "axios";
-import { useEffect, useState } from "react";
-import { FaArrowLeft, FaTimes } from "react-icons/fa";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { get, set } from "react-hook-form";
+import { FaRedo, FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
 import { getDiscountPrice } from "../../helpers/product";
+import useFetch from "../../hooks/use-fetch";
 import { api } from "../../lib/api";
+
 const OrderShopper = () => {
-	const navigate = useNavigate();
-	const userID = localStorage.getItem("user-id");
 	const [data, setData] = useState([]);
-	const [productIds, setProductIds] = useState([]);
-	const [productQuantity, setProductQuantity] = useState([]);
-	const [allProducts, setAllProducts] = useState([]);
-	const [matchProducts, setMatchProducts] = useState([]);
 
-	const goBack = () => {
-		navigate(-1); // Navigate back by -1 step
-	};
+	// get userid from local storage
+	const shopper_id = localStorage.getItem("user-id");
 
 	useEffect(() => {
-		api.get(`/order/getallorder`).then((res) => {
-			setData(res.data);
-			console.log("data ", res.data);
-		});
-		api.get(`/shopperproduct/getshopperproductOfShopkeeper/${userID}`).then(
-			(res) => {
-				setAllProducts(res.data);
-				console.log(res.data);
-			}
-		);
-	}, []);
+		api.get(`/order/getordershopper/${shopper_id}`)
+			.then((response) => {
+				setData(response.data);
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	}, [shopper_id, data]);
 
-	useEffect(() => {
-		matchedProducts();
-	}, [allProducts]);
+	const handleStatusChange = (id, selectId) => {
+		console.log("order_id: ", id);
+		const order_status = document.getElementById(selectId).value; // Use selectId to find the correct element
+		console.log("order_status: ", order_status);
 
-	const matchedProducts = () => {
-		const ALLProductIds = data.map((order) => order.product_id);
-		const matchedProds = ALLProductIds.map((order) => {
-			const matchedProduct = allProducts.find((product) =>
-				order.includes(product.id)
-			);
-
-			return matchedProduct;
-		});
-
-		console.log("matchedProds", matchedProds);
-		setMatchProducts(
-			matchedProds.filter((product) => product !== undefined)
-		);
+		api.post(`/order/updateorderstatus/${id}`, {
+			order_status: order_status,
+		})
+			.then((response) => {
+				alert(response.data.message);
+			})
+			.catch((error) => {
+				alert(error);
+			});
 	};
 
 	return (
-		<div className=" mx-auto my-32 px-2 md:w-[50%]">
-			<div className="flex items-center ">
-				<FaArrowLeft onClick={goBack} style={{ cursor: "pointer" }} />
-				<h2 className="flex-grow text-center text-2xl">
-					Order Details
-				</h2>
-			</div>
-			<div className="divider">#{data[0]?.id}</div>
-			<div className="overflow-x-auto">
-				<table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-					<tbody className="divide-y divide-gray-200">
-						{matchProducts &&
-							matchProducts.map((product) => (
-								<tr key={product.id} className="odd:bg-gray-50">
-									<td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-										<Link
-											to={
-												import.meta.env
-													.VITE_API_PUBLIC_URL +
-												"/product/" +
-												product.id
-											}
-										>
-											{product.name}
-										</Link>
-									</td>
-									<td className="whitespace-nowrap px-4 py-2 text-gray-700">
-										{product.weight}
-									</td>
-									<td className="whitespace-nowrap px-4 py-2 text-gray-700">
-										<span className="flex items-center gap-3">
-											{" "}
-											<FaTimes></FaTimes>{" "}
-											{
-												productQuantity[
-													productIds.indexOf(
-														product.id.toString()
-													)
-												]
-											}
-										</span>
-									</td>
-									<td className="whitespace-nowrap px-4 py-2 text-gray-700">
-										{Math.floor(
-											productQuantity[
-												productIds.indexOf(
-													product.id.toString()
-												)
-											] *
-												getDiscountPrice(
-													product.price,
-													product.discount
-												)
-										)}
-									</td>
-								</tr>
-							))}
-					</tbody>
-				</table>
+		<div className="body-wrapper space-pt--70 space-pb--120">
+			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
+			<div className="order-product-area">
+				{data?.map((single) => {
+					const selectId = `prod_status_${single.id}`; // Generate a unique id for each select element
+					return (
+						<div
+							className="cart-product border-bottom--medium"
+							key={single.id}
+						>
+							<div className="cart-product__image">
+								<img
+									src={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										single.productImage
+									}
+									className="img-fluid"
+									alt=""
+								/>
+							</div>
+							<div className="cart-product__content">
+								<Link
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										`/order/${single.id}`
+									}
+								>
+									{" "}
+									Order Number #{single.id}{" "}
+								</Link>
+								<span className="category">
+									{single.productCategory}
+								</span>
+								<div className="price">
+									{
+										<span className="discounted-price">{`$${single.price}`}</span>
+									}
+								</div>
+							</div>
+							<div className="cart-product__status">
+								<select
+									id={selectId} // Use the unique id for this select element
+									className="mb-6 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+									onChange={() =>
+										handleStatusChange(single.id, selectId)
+									} // Pass the selectId as an argument
+									value={single.order_status}
+								>
+									<option value="pending">
+										<FaRedo /> Pending
+									</option>
+									<option value="completed">
+										<FaRegCheckCircle /> Completed
+									</option>
+									<option value="cancelled">
+										<FaRegTimesCircle /> Cancelled
+									</option>
+									<option value="other">
+										<FaRedo /> Other
+									</option>
+								</select>
+							</div>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);

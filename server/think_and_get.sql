@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2023 at 08:25 PM
+-- Generation Time: Sep 28, 2023 at 11:54 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -138,7 +138,7 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `duration`, `location`, `like_count`, `comment_count`, `share_count`, `rating`, `category`, `post_content`, `post_img`) VALUES
-(16, 18, 17, '[value-4]', '[value-5]', '[value-6]', '[value-7]', 1, 1, 0, 0, 'regular', '', '');
+(19, 26, 17, '2023-09-25T16:13:09.029Z', '2', '', '', 1, 1, 0, 0, 'regular', '', '');
 
 -- --------------------------------------------------------
 
@@ -159,7 +159,7 @@ CREATE TABLE `news_comment` (
 --
 
 INSERT INTO `news_comment` (`id`, `news_id`, `commented_by`, `comment`, `news_time`) VALUES
-(28, 16, 17, 'Excellent', '9/22/2023, 11:56:27 PM');
+(31, 19, 17, 'Excellent', '9/25/2023, 10:15:10 PM');
 
 -- --------------------------------------------------------
 
@@ -178,7 +178,7 @@ CREATE TABLE `news_like` (
 --
 
 INSERT INTO `news_like` (`id`, `news_id`, `liked_by`) VALUES
-(31, 16, 17);
+(32, 19, 17);
 
 -- --------------------------------------------------------
 
@@ -243,21 +243,19 @@ CREATE TABLE `product_order` (
   `price` int(11) DEFAULT NULL,
   `discount` varchar(255) DEFAULT NULL,
   `order_status` varchar(255) DEFAULT NULL,
-  `customer_profile_id` int(11) NOT NULL
+  `customer_profile_id` int(11) NOT NULL,
+  `shopper_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_order`
 --
 
-INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, `discount`, `order_status`, `customer_profile_id`) VALUES
-(4, '1,2', '1,1', '', 1039, '10,5', 'pending', 3),
-(8, '2', '3', '', 2850, '5', 'pending', 3),
-(9, '3,1', '2,1', '', 489, '0,10', 'pending', 6),
-(10, '3,1', '2,1', '', 489, '0,10', 'pending', 3),
-(15, '1,2', '1,1', '', 1039, '10,5', 'pending', 3),
-(16, '1,2', '1,1', NULL, 1039, '10,5', 'pending', 3),
-(17, '1', '1', '0', 89, '10', 'pending', 3);
+INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, `discount`, `order_status`, `customer_profile_id`, `shopper_id`) VALUES
+(19, '14,15', '2,1', '0', NULL, '0,5', 'pending', 16, 3),
+(20, '1,4', '7,9', '0', NULL, '10,0', 'pending', 16, 11),
+(21, '26', '1', '0', 100, '2', 'cancelled', 16, 17),
+(22, '26', '2', '0', 200, '2', 'other', 16, 17);
 
 -- --------------------------------------------------------
 
@@ -290,7 +288,7 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3, 0),
 (15, 'Vanity Bag', 499, 5, 100, 0, 0, 0, 12, 3, 1),
 (17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15, 1),
-(18, 'Ishan Tea', 80, 0, 10, 0, 0, 0, 14, 17, 3);
+(26, 'Ishan Tea', 100, 2, 100, 0, 0, 0, 14, 17, 0);
 
 --
 -- Indexes for dumped tables
@@ -359,7 +357,8 @@ ALTER TABLE `product`
 --
 ALTER TABLE `product_order`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_profile_id` (`customer_profile_id`);
+  ADD KEY `customer_profile_id` (`customer_profile_id`),
+  ADD KEY `shopper_id` (`shopper_id`);
 
 --
 -- Indexes for table `shopper_product`
@@ -395,19 +394,19 @@ ALTER TABLE `hero_slider`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `news_comment`
 --
 ALTER TABLE `news_comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `news_like`
 --
 ALTER TABLE `news_like`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `notification`
@@ -425,13 +424,13 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables
@@ -476,7 +475,8 @@ ALTER TABLE `product`
 -- Constraints for table `product_order`
 --
 ALTER TABLE `product_order`
-  ADD CONSTRAINT `product_order_ibfk_1` FOREIGN KEY (`customer_profile_id`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `product_order_ibfk_1` FOREIGN KEY (`customer_profile_id`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_order_ibfk_2` FOREIGN KEY (`shopper_id`) REFERENCES `customer_profile` (`id`);
 
 --
 -- Constraints for table `shopper_product`

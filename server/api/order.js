@@ -23,6 +23,12 @@ const read = [
 		msg: "product_id",
 	},
 	{
+		uri: "/order/getordershopper/:shopper_id",
+		query: `SELECT * FROM product_order WHERE shopper_id = ?`,
+		param: ["shopper_id"],
+		msg: "product_id",
+	},
+	{
 		uri: "/order/getorder_by_id/:id",
 		query: `SELECT * FROM product_order WHERE id = ?`,
 		param: ["id"],
@@ -35,8 +41,19 @@ const read = [
 	},
 ];
 
+const change = [
+	{
+		uri: "/order/updateorderstatus/:id",
+		query: `UPDATE product_order SET order_status = ? WHERE id = ?`,
+		body: ["order_status"],
+		param: ["id"],
+		msg: "id",
+	},
+];
+
 // Export modules
 module.exports = Object.freeze({
 	add,
 	read,
+	change,
 });

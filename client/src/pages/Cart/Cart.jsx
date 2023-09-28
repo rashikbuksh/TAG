@@ -118,7 +118,7 @@ const Cart = () => {
 				discount: discount,
 				customer_profile_id: userID,
 				shopper_id: shopperId,
-				total: total,
+				price: total,
 				order_status: "pending",
 				weight: 0,
 			}).then((res) => {

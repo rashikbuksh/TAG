@@ -140,11 +140,29 @@ function Offcanvas(props) {
 								}
 							/>
 						</span>
-						<Link
-							to={import.meta.env.VITE_API_PUBLIC_URL + "/order"}
-						>
-							My Order
-						</Link>
+						{userInfo.map((item) =>
+							item.access == "shopper" ? (
+								<Link
+									key={user}
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										`/orderShopper`
+									}
+								>
+									Order From Store
+								</Link>
+							) : (
+								<Link
+									key={user}
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										`/order`
+									}
+								>
+									My Orders
+								</Link>
+							)
+						)}
 					</li>
 					<li>
 						<span className="icon">
