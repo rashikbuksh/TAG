@@ -1,23 +1,25 @@
-import Axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Breadcrumb } from "../../components";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
 import {
 	addToCart,
 	decreaseQuantity,
+	deleteFromCart,
 	increaseQuantity,
 } from "../../store/slices/cart-slice";
 
 const Cart = () => {
 	const dispatch = useDispatch();
+
+	const userID = localStorage.getItem("user-id");
 	const { cartItems } = useSelector((state) => state.cart);
 	const [shoppers, setShoppers] = useState([]); // Maintain an array of shoppers
-
-	// Initialize a separate buy state for each shop
-	const [buyStates, setBuyStates] = useState({});
+	const [buyStates, setBuyStates] = useState({}); // Initialize a separate buy state for each shop
+	const [totals, setTotals] = useState({}); // Store totals for each shopper
+	const [productQuantities, setProductQuantities] = useState({});
+	const [productDiscounts, setProductDiscounts] = useState({});
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -37,8 +39,116 @@ const Cart = () => {
 			...prevBuyStates,
 			[shopperId]: !prevBuyStates[shopperId],
 		}));
+
+		const discounts = {};
+		cartItems.forEach((cartItem) => {
+			if (cartItem.shopper_id === shopperId) {
+				discounts[cartItem.id] = cartItem.discount;
+			}
+		});
+
+		// Store the discounts in state
+		setProductDiscounts({
+			...productDiscounts,
+			[shopperId]: discounts,
+		});
+
+		const quantities = {};
+		cartItems.forEach((cartItem) => {
+			if (cartItem.shopper_id === shopperId) {
+				quantities[cartItem.id] = cartItem.quantity;
+			}
+		});
+
+		// Store the quantities in state
+		setProductQuantities({
+			...productQuantities,
+			[shopperId]: quantities,
+		});
 	};
-	var total = 0;
+
+	useEffect(() => {
+		// Calculate and set totals when cartItems or buyStates change
+		const calculatedTotals = {};
+		shoppers.forEach((shopper) => {
+			const shopperTotal = cartItems.reduce((total, cartItem) => {
+				if (cartItem.shopper_id === shopper.id) {
+					return (
+						total +
+						getDiscountPrice(cartItem.price, cartItem.discount) *
+							cartItem.quantity
+					);
+				}
+				return total;
+			}, 0);
+			calculatedTotals[shopper.id] = parseFloat(shopperTotal).toFixed(2);
+		});
+		setTotals(calculatedTotals);
+	}, [cartItems, buyStates]);
+
+	const addOrder = (shopperId) => {
+		const productIds = cartItems
+			.filter((cartItem) => cartItem.shopper_id === shopperId)
+			.map((cartItem) => cartItem.id);
+
+		const quantities = productQuantities[shopperId];
+		const discounts = productDiscounts[shopperId];
+
+		const discount = Object.values(discounts).join(",");
+		const productid = Object.keys(quantities).join(",");
+		const quantity = Object.values(quantities).join(",");
+
+		let total = 0;
+		productIds.forEach((productId) => {
+			const cartItem = cartItems.find((item) => item.id === productId);
+			if (cartItem) {
+				const quantity = quantities[productId] || 0;
+				const discount = discounts[productId] || 0;
+				const price = cartItem.price;
+				total += getDiscountPrice(price, discount) * quantity;
+			}
+		});
+		const wantobuy = window.confirm("Are you sure you want to buy?");
+		if (!wantobuy) {
+			return;
+		} else {
+			api.post("/order/add_order", {
+				product_id: productid,
+				quantity: quantity,
+				discount: discount,
+				customer_profile_id: userID,
+				shopper_id: shopperId,
+				total: total,
+				order_status: "pending",
+				weight: 0,
+			}).then((res) => {
+				console.log("res", res);
+				if (res.data.status === 200) {
+					alert("Order Added Successfully");
+				}
+			});
+			// remove the items from the cart
+			productIds.forEach((productId) => {
+				cartItems.forEach((cartItem) => {
+					if (cartItem.id === productId) {
+						dispatch(deleteFromCart(cartItem, shopperId));
+					}
+				});
+			});
+		}
+		setTotals((prevTotals) => ({
+			...prevTotals,
+			[shopperId]: 0,
+		}));
+		setProductQuantities({
+			...productQuantities,
+			[shopperId]: {},
+		});
+		setProductDiscounts({
+			...productDiscounts,
+			[shopperId]: {},
+		});
+	};
 
 	return (
 		<>
@@ -55,7 +165,7 @@ const Cart = () => {
 									to={`../shopkeeperProfileCV/${shopper.id}`}
 								>
 									<h2 className="ml-5 mt-4 text-xl font-bold">
-										{shopper.name}'s Cart
+										{shopper.name} Store Cart
 									</h2>
 								</Link>
 							)}
@@ -163,13 +273,10 @@ const Cart = () => {
 														<input
 															type="hidden"
 															value={
-																(total +=
-																	getDiscountPrice(
-																		cartItem.price,
-																		cartItem.discount
-																	) *
-																	cartItem.quantity)
-															}
+																totals[
+																	shopper.id
+																] || 0
+															} // Use the calculated total for the shopper
 														/>
 													</div>
 												</div>
@@ -199,6 +306,14 @@ const Cart = () => {
 												<div className="border px-3 py-1">
 													2 minutes remaining
 												</div>
+												<button
+													onClick={() =>
+														addOrder(shopper.id)
+													}
+													className="bg-green-400 px-3 py-1"
+												>
+													Buy
+												</button>{" "}
 											</>
 										) : (
 											<button
@@ -212,11 +327,13 @@ const Cart = () => {
 										)}
 									</div>
 									<h2 className="text-xl font-bold">
-										Total: {parseFloat(total).toFixed(2)}
+										Total:{" "}
+										{parseFloat(totals[shopper.id]).toFixed(
+											2
+										)}
 									</h2>
 								</div>
 							)}
-							<input type="hidden" value={(total = 0)} />
 						</div>
 					))
 				) : (

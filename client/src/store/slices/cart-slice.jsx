@@ -85,8 +85,9 @@ const cartSlice = createSlice({
 			cogoToast.success("Added To Cart", { position: "bottom-left" });
 		},
 		deleteFromCart(state, action) {
+			const product = action.payload;
 			state.cartItems = state.cartItems.filter(
-				(item) => item.cartItemId !== action.payload
+				(item) => item.cartItemId !== product.cartItemId
 			);
 			cogoToast.error("Removed From Cart", { position: "bottom-left" });
 		},

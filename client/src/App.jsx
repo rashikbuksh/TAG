@@ -11,6 +11,7 @@ import ProtectedRoutes from "./routes";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Offcanvas from "./components/Header/Offcanvas";
+import IndividualMessagePage from "./components/IndividualMessagePage/IndividualMessagePage";
 import ShopkeeperProfileCV from "./components/ShopkeeperProfileCV/ShopkeeperProfileCV";
 import ShopkeepersProduct from "./components/ShopkeepersProduct/ShopkeepersProduct";
 import { DefaultLayout } from "./layouts";
@@ -18,10 +19,9 @@ import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
 import AddShopperProduct from "./pages/AddShopperProduct/AddShopperProduct";
 import NewsFeed from "./pages/NewsFeed/NewsFeed";
-import OrderSingle from "./pages/OrderSingle/OrderSingle";
+import OrderShopper from "./pages/OrderShopper/OrderShopper";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
-import IndividualMessagePage from "./components/IndividualMessagePage/IndividualMessagePage";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -137,10 +137,10 @@ const PROTECTED_ROUTES = [
 	},
 	{
 		id: 17,
-		name: "Order Single",
-		path: "/order/:id",
-		element: OrderSingle,
-		access: ["admin", "customer", "shopper"],
+		name: "Order Shopper",
+		path: "/order_shopper",
+		element: OrderShopper,
+		access: ["admin", "shopper"],
 	},
 	{
 		id: 18,
@@ -149,7 +149,7 @@ const PROTECTED_ROUTES = [
 		element: ShopkeeperProfileCV,
 		access: ["admin", "customer", "shopper"],
 	},
-	
+
 	{
 		id: 19,
 		name: "AddCatagoryForm",

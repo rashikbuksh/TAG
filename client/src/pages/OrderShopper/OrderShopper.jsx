@@ -5,52 +5,50 @@ import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
-const OrderSingle = () => {
+const OrderShopper = () => {
 	const navigate = useNavigate();
-
-	const id = useParams().id;
+	const userID = localStorage.getItem("user-id");
 	const [data, setData] = useState([]);
 	const [productIds, setProductIds] = useState([]);
 	const [productQuantity, setProductQuantity] = useState([]);
 	const [allProducts, setAllProducts] = useState([]);
 	const [matchProducts, setMatchProducts] = useState([]);
 
-	const products = [
-		{
-			name: "Widget A",
-			weight: "500g",
-			quantity: 10,
-			price: 19.99,
-		},
-	];
 	const goBack = () => {
 		navigate(-1); // Navigate back by -1 step
 	};
 
 	useEffect(() => {
-		api.get(`/order/getorder_by_id/${id}`).then((res) => {
+		api.get(`/order/getallorder`).then((res) => {
 			setData(res.data);
-			setProductIds(res.data[0]?.product_id.split(","));
-			setProductQuantity(res.data[0]?.quantity.split(","));
-			console.log(res.data);
+			console.log("data ", res.data);
 		});
-		api.get(`/shopperproduct/getshopperproduct`).then((res) => {
-			setAllProducts(res.data);
-			console.log(res.data);
-		});
-	}, [id]);
+		api.get(`/shopperproduct/getshopperproductOfShopkeeper/${userID}`).then(
+			(res) => {
+				setAllProducts(res.data);
+				console.log(res.data);
+			}
+		);
+	}, []);
 
 	useEffect(() => {
 		matchedProducts();
 	}, [allProducts]);
 
 	const matchedProducts = () => {
-		var prods = allProducts.filter((product) =>
-			productIds.includes(product.id.toString())
+		const ALLProductIds = data.map((order) => order.product_id);
+		const matchedProds = ALLProductIds.map((order) => {
+			const matchedProduct = allProducts.find((product) =>
+				order.includes(product.id)
+			);
+
+			return matchedProduct;
+		});
+
+		console.log("matchedProds", matchedProds);
+		setMatchProducts(
+			matchedProds.filter((product) => product !== undefined)
 		);
-		console.log(prods);
-		setMatchProducts(prods);
-		return prods;
 	};
 
 	return (
@@ -113,14 +111,9 @@ const OrderSingle = () => {
 							))}
 					</tbody>
 				</table>
-				<div className="my-12 text-right">
-					<p className="text-xl font-bold ">
-						Total Price: {data[0]?.price}
-					</p>
-				</div>
 			</div>
 		</div>
 	);
 };
 
-export default OrderSingle;
+export default OrderShopper;
