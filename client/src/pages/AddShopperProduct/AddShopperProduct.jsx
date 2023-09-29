@@ -147,14 +147,17 @@ const ShopperProduct = () => {
 									))}
 							</select>
 						</div>
+						<div className="flex items-center justify-center my-2 ">
 						{productImage && (
 							<img
+							className="w-56  border-2 border-black"
 								src={`${
 									import.meta.env.VITE_APP_IMG_URL
 								}/${productImage}`}
 								alt="Selected Product"
 							/>
 						)}
+						</div>
 						<div className="flex items-center gap-2">
 							<div className="  my-2 px-1 py-1">
 								<label htmlFor="price">Price</label>

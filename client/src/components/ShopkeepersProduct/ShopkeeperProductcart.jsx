@@ -165,7 +165,7 @@ const ShopkeeperProductcart = ({ product }) => {
 							<button
 								type="button"
 								onClick={updateProductCount}
-								className="btn btn-primary"
+								className="bg-blue-200 px-2 py-1 text-black rounded-md"
 							>
 								Confirm
 							</button>
@@ -173,7 +173,8 @@ const ShopkeeperProductcart = ({ product }) => {
 					</div>
 					<div>
 						{isEditingPrice ? (
-							<>
+							<div className="flex items-center justify-center gap-3">
+								<label className="text-xs">Change Price</label>
 								<input
 									className="text-center text-xl font-bold"
 									style={{
@@ -189,18 +190,18 @@ const ShopkeeperProductcart = ({ product }) => {
 								<button
 									type="button"
 									onClick={handlePriceUpdate}
-									className="focus:shadow-outline hover:bg-indigo-800btn btn-primary m-2 h-8 rounded-lg bg-indigo-700 px-4 text-sm text-indigo-100  transition-colors duration-150"
+									className="bg-blue-200 px-2  text-black rounded-md"
 								>
 									Update
 								</button>
 								<button
 									type="button"
 									onClick={handleCancelPriceUpdate}
-									className="focus:shadow-outline hover:bg-indigo-800btn btn-primary m-2 h-8 rounded-lg bg-indigo-700 px-4 text-sm text-indigo-100  transition-colors duration-150"
+									className="bg-blue-200 px-2  text-black rounded-md"
 								>
 									Cancel
 								</button>
-							</>
+							</div>
 						) : (
 							<p className="text-center text-xl font-bold">
 								Price {newPrice} Taka{" "}
