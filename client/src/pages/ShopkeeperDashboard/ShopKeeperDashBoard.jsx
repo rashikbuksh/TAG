@@ -131,6 +131,7 @@ const ShopKeeperDashBoard = () => {
 			setTimeDifference("Invalid time format");
 		}
 	};
+	const days=["M","T","W","T","F","S","S"]
 
 	return (
 		<>
@@ -156,17 +157,24 @@ const ShopKeeperDashBoard = () => {
 								setIsOpen={setIsClockOpen}
 								title={"Set Time"}
 							>
-								<div className="mx-auto my-5 flex items-center justify-center">
+								
+								<div className="mx-auto my-5 flex flex-col items-center justify-center">
+								<div className="flex flex-grow items-center gap-7 mb-4">
+									{
+										days.map((day,index)=> <div className="border-1 border-blue-500 h-5 w-5 flex items-center justify-center text-black  rounded-full font-bold " key={index}>{day}</div>)
+									}
+									</div>
 									<Timekeeper
 										time={time}
 										onChange={handleTimeChange}
 									/>
 								</div>
+									
 								<div className="my-3 flex flex-col items-center justify-center">
 									<p className="text-xl font-bold ">
 										{selectedTime}
 									</p>
-									<p>{timeDifference}</p>
+									{/* <p>{timeDifference}</p> */}
 									<button className="bg-blue-500 px-4 py-1 text-white">
 										Set
 									</button>
