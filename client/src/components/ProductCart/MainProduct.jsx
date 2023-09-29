@@ -21,8 +21,8 @@ import {
 	addToCart,
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
-import MessageModal from "../MessageModal/MessageModal";
 import LocationModal from "../LocationModal/LocationModal";
+import MessageModal from "../MessageModal/MessageModal";
 
 const MainProduct = ({ shopperProduct, product }) => {
 	const navigate = useNavigate();
@@ -98,7 +98,7 @@ const MainProduct = ({ shopperProduct, product }) => {
 				onMouseLeave={handleMouseLeave}
 			>
 				<img
-					className={`my-1 rounded  object-contain px-1 ${
+					className={`my-1 h-[200px] w-[300px] rounded object-contain px-1 ${
 						quantity > 0
 							? "transition-transform hover:scale-90"
 							: ""
@@ -180,8 +180,15 @@ const MainProduct = ({ shopperProduct, product }) => {
 					</div>
 				</div>
 				<div className="mx-auto flex items-center">
-					<FaMapMarkerAlt onClick={handelOpenLocationModal} className="text-xl" />
-					<LocationModal isOpen={isLocatioonOpen} setIsOpen={setIsLocatioonOpen} title={"Location"}></LocationModal>
+					<FaMapMarkerAlt
+						onClick={handelOpenLocationModal}
+						className="text-xl"
+					/>
+					<LocationModal
+						isOpen={isLocatioonOpen}
+						setIsOpen={setIsLocatioonOpen}
+						title={"Location"}
+					></LocationModal>
 				</div>
 			</div>
 
