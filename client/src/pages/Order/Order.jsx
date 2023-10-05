@@ -7,9 +7,18 @@ import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
 import { getDiscountPrice } from "../../helpers/product";
 import useFetch from "../../hooks/use-fetch";
 import { api } from "../../lib/api";
+import OrderModal from "./OrderModal/OrderModal";
 
 const Order = () => {
 	const [data, setData] = useState([]);
+	const [isOpen,setIsOpen]=useState(false)
+	const [order_Id,set_Order_id]=useState("")
+
+	const handelOpenModal=(id)=>{
+		set_Order_id(id)
+		setIsOpen(!isOpen)
+
+	}
 
 	// get userid from local storage
 	const customer_profile_id = localStorage.getItem("user-id");
@@ -44,16 +53,8 @@ const Order = () => {
 									alt=""
 								/>
 							</div>
-							<div className="cart-product__content">
-								<Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										`/order/${single.id}`
-									}
-								>
-									{" "}
+							<div onClick={()=>handelOpenModal(single.id)} className="cart-product__content">
 									Order Number #{single.id}{" "}
-								</Link>
 								<span className="category">
 									{single.productCategory}
 								</span>
@@ -63,6 +64,7 @@ const Order = () => {
 									}
 								</div>
 							</div>
+							<OrderModal isOpen={isOpen} setIsOpen={setIsOpen} order_Id={order_Id}></OrderModal>
 							<div className="cart-product__status">
 								<p>
 									<span>

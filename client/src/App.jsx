@@ -245,13 +245,14 @@ const PUBLIC_ROUTES = [
 function App() {
 	const isLoginPage = window.location.pathname === "/login";
 	const isWelcomePage = window.location.pathname === "/";
+	const isadminPage = window.location.pathname === "/admin";
 	return (
 		// show header and footer
 
 		<Router>
-			{!isLoginPage && !isWelcomePage && <Header />}
-			{!isLoginPage && !isWelcomePage && <Offcanvas />}
-			{!isLoginPage && !isWelcomePage && <Footer />}
+			{!isLoginPage && !isWelcomePage && !isadminPage && <Header />}
+			{!isLoginPage && !isWelcomePage && !isadminPage && <Offcanvas />}
+			{!isLoginPage && !isWelcomePage && !isadminPage && <Footer />}
 			<AuthProvider>
 				<Routes>
 					<Route element={<ProtectedRoutes />}>
