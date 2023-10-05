@@ -29,7 +29,7 @@ const IndividualMessagePage = () => {
 				<div className="  h-80 overflow-scroll">
 					<div className="flex items-center justify-end gap-1 my-5">
 						<div className="message">
-							<p className="text-sm">
+							<p className="text-sm chat-bubble">
 								Hi, I am interested to by this product
 							</p>
 						</div>
@@ -46,14 +46,14 @@ const IndividualMessagePage = () => {
 								alt=""
 							/>
 						<div className="message">
-							<p className="text-sm">
+							<p className="text-sm chat-bubble">
 								Ok , apni order confirm kore dukane asen ami kajta kore diboo
 							</p>
 						</div>
 					</div>
 					<div className="flex items-center justify-end gap-1 my-5">
 						<div className="message">
-							<p className="text-sm">
+							<p className="text-sm chat-bubble">
 								Hi, I am interested to by this product
 							</p>
 						</div>
@@ -70,14 +70,14 @@ const IndividualMessagePage = () => {
 								alt=""
 							/>
 						<div className="message">
-							<p className="text-sm">
+							<p className="text-sm chat-bubble">
 								Ok , apni order confirm kore dukane asen ami kajta kore diboo
 							</p>
 						</div>
 					</div>
 					<div className="flex items-center justify-end gap-1 my-5">
 						<div className="message">
-							<p className="text-sm">
+							<p className="text-sm chat-bubble">
 								Hi, I am interested to by this product
 							</p>
 						</div>
@@ -94,14 +94,14 @@ const IndividualMessagePage = () => {
 								alt=""
 							/>
 						<div className="message">
-							<p className="text-sm">
+							<p className="text-sm chat-bubble">
 								Ok , apni order confirm kore dukane asen ami kajta kore diboo
 							</p>
 						</div>
 					</div>
 					<div className="flex items-center justify-end gap-1 my-5">
 						<div className="message">
-							<p className="text-sm">
+							<p className="text-sm chat-bubble">
 								Hi, I am interested to by this product
 							</p>
 						</div>
@@ -113,12 +113,12 @@ const IndividualMessagePage = () => {
 					</div>
 					<div className="flex items-center  gap-1 my-5">
                     <img
-								className="h-8 w-8 rounded-full"
+								className="h-8 w-8 rounded-full "
 								src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80"
 								alt=""
 							/>
 						<div className="message">
-							<p className="text-sm">
+							<p className="text-sm chat-bubble">
 								Ok , apni order confirm kore dukane asen ami kajta kore diboo
 							</p>
 						</div>
