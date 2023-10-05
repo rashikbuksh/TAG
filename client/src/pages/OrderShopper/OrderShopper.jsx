@@ -7,9 +7,24 @@ import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
 import { getDiscountPrice } from "../../helpers/product";
 import useFetch from "../../hooks/use-fetch";
 import { api } from "../../lib/api";
+import OrderModal from "./OrderModal";
+
 
 const OrderShopper = () => {
 	const [data, setData] = useState([]);
+	const [isOpen,setIsOpen]=useState(false)
+	const [order_Id,set_Order_id]=useState("")
+	const [order_status,set_order_status]=useState("")
+	const [orderData,setOrderData]=useState(null)
+
+
+	const handelOpenModal=(single)=>{
+		setOrderData(single);
+		set_order_status(single.order_status)
+		set_Order_id(single.id)
+		setIsOpen(!isOpen)
+	}
+
 
 	// get userid from local storage
 	const shopper_id = localStorage.getItem("user-id");
@@ -24,28 +39,13 @@ const OrderShopper = () => {
 			});
 	}, [shopper_id, data]);
 
-	const handleStatusChange = (id, selectId) => {
-		console.log("order_id: ", id);
-		const order_status = document.getElementById(selectId).value; // Use selectId to find the correct element
-		console.log("order_status: ", order_status);
 
-		api.post(`/order/updateorderstatus/${id}`, {
-			order_status: order_status,
-		})
-			.then((response) => {
-				alert(response.data.message);
-			})
-			.catch((error) => {
-				alert(error);
-			});
-	};
 
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
 			<div className="order-product-area">
-				{data?.map((single) => {
-					const selectId = `prod_status_${single.id}`; // Generate a unique id for each select element
+				{data?.map((single) => { // Generate a unique id for each select element
 					return (
 						<div
 							className="cart-product border-bottom--medium"
@@ -61,16 +61,11 @@ const OrderShopper = () => {
 									alt=""
 								/>
 							</div>
-							<div className="cart-product__content">
-								<Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										`/order/${single.id}`
-									}
-								>
+							<div onClick={()=>handelOpenModal(single)} className="cart-product__content">
+							
 									{" "}
 									Order Number #{single.id}{" "}
-								</Link>
+								
 								<span className="category">
 									{single.productCategory}
 								</span>
@@ -80,33 +75,13 @@ const OrderShopper = () => {
 									}
 								</div>
 							</div>
-							<div className="cart-product__status">
-								<select
-									id={selectId} // Use the unique id for this select element
-									className="mb-6 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-									onChange={() =>
-										handleStatusChange(single.id, selectId)
-									} // Pass the selectId as an argument
-									value={single.order_status}
-								>
-									<option value="pending">
-										<FaRedo /> Pending
-									</option>
-									<option value="completed">
-										<FaRegCheckCircle /> Completed
-									</option>
-									<option value="cancelled">
-										<FaRegTimesCircle /> Cancelled
-									</option>
-									<option value="other">
-										<FaRedo /> Other
-									</option>
-								</select>
-							</div>
+							
+							
 						</div>
 					);
 				})}
 			</div>
+			<OrderModal isOpen={isOpen} setIsOpen={setIsOpen} order_Id={order_Id} order_status={order_status} orderData={orderData}></OrderModal>
 		</div>
 	);
 };
