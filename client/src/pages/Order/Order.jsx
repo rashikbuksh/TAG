@@ -64,18 +64,17 @@ const Order = () => {
 									}
 								</div>
 							</div>
-							<OrderModal isOpen={isOpen} setIsOpen={setIsOpen} order_Id={order_Id}></OrderModal>
 							<div className="cart-product__status">
 								<p>
 									<span>
 										{single.order_status === "completed" ? (
 											<FaRegCheckCircle />
-										) : single.order_status ===
-										  "cancelled" ? (
-											<FaRegTimesCircle />
-										) : (
-											<FaRedo />
-										)}
+											) : single.order_status ===
+											"cancelled" ? (
+												<FaRegTimesCircle />
+												) : (
+													<FaRedo />
+													)}
 									</span>{" "}
 									{single.order_status}
 								</p>
@@ -84,6 +83,7 @@ const Order = () => {
 					);
 				})}
 			</div>
+				<OrderModal isOpen={isOpen} setIsOpen={setIsOpen} order_Id={order_Id}></OrderModal>
 		</div>
 	);
 };

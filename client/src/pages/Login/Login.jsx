@@ -1,16 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
 import Cookies from "js-cookie";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import * as yup from "yup";
 import { useAuth } from "../../context/auth";
+import Modal from "../../components/Modal/Modal";
 
 const Login = () => {
 	const navigate = useNavigate();
 	const { user, login, signed } = useAuth();
+	const [isOpen, setIsOpen] = useState(false);
 	const loginSchema = yup.object().shape({
 		email: yup
 			.string()
@@ -42,9 +44,8 @@ const Login = () => {
 	const onSubmit = async (data) => {
 		await login(data);
 
-		if (user.access==="admin") {
+		if (user.access === "admin") {
 			window.location.href = "/admin";
-			
 		}
 		// Axios.post(
 		// 	`${import.meta.env.VITE_APP_API_URL}/auth/verify_login`,{
@@ -65,6 +66,9 @@ const Login = () => {
 		// });
 	};
 
+	const handelOPenLoginMOdal = () => {
+		setIsOpen(!isOpen);
+	};
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
 			{/* auth page header */}
@@ -123,33 +127,49 @@ const Login = () => {
 											{errors.password?.message}
 										</p>
 									</div>
-									<div className="auth-form__single-field space-mb--40">
-										<p className="auth-form__info-text text-base">
-											Sign up as a Customer? <br />
-											<Link
-												to={
-													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/register"
-												}
-											>
-												Sign up Now
-											</Link>
-										</p>
-										<div className="divider"></div>
-										<p className="auth-form__info-text text-base">
-											Sign up as a Shopper? <br />
-											<Link
-												to={
-													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/registershopper"
-												}
-											>
-												Sign up Now
-											</Link>
+									<div className="my-5">
+										<p className="auth-form__info-text">{`You don't have any account?`}</p>
+										<p
+											onClick={handelOPenLoginMOdal}
+											className="cursor-pointer text-green-600 font-bold"
+										>
+											Sign up Now
 										</p>
 									</div>
+
+									<Modal
+										isOpen={isOpen}
+										setIsOpen={setIsOpen}
+									>
+										<div className="auth-form__single-field space-mb--40 p-5 border m-2 rounded-md">
+											<p className="auth-form__info-text text-base">
+												Sign up as a Customer? <br />
+												<Link className="text-green-600 font-bold"
+													to={
+														import.meta.env
+															.VITE_API_PUBLIC_URL +
+														"/register"
+													}
+												>
+													Sign up Now
+												</Link>
+											</p>
+											<div className="divider"></div>
+											<p className="auth-form__info-text text-base">
+												Sign up as a Shopper? <br />
+												<Link className="text-green-600 font-bold"
+													to={
+														import.meta.env
+															.VITE_API_PUBLIC_URL +
+														"/registershopper"
+													}
+												>
+													Sign up Now
+												</Link>
+											</p>
+										</div>
+									</Modal>
+
 									<button
 										type="submit"
 										className="auth-form__button"
