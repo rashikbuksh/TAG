@@ -37,6 +37,7 @@
 		"react-timekeeper": "^2.2.1",
 		"redux": "^4.2.0",
 		"redux-persist": "^6.0.0",
+		"sweetalert2": "^11.7.31",
 		"swiper": "^8.4.7",
 		"uuid": "^7.0.2",
 		"yup": "^1.2.0"

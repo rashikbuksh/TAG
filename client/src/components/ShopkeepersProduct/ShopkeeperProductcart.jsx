@@ -98,6 +98,10 @@ const ShopkeeperProductcart = ({ product }) => {
 				});
 		}
 	};
+	const handleNotAvailable=()=>{
+		setQuantity(0)
+		updateProductCount()
+	}
 
 	return (
 		<div className="">
@@ -126,6 +130,9 @@ const ShopkeeperProductcart = ({ product }) => {
 							</li>
 							<li>
 								<a>Share</a>
+							</li>
+							<li>
+								<button onClick={handleNotAvailable}>Not Available</button>
 							</li>
 						</ul>
 					</div>
