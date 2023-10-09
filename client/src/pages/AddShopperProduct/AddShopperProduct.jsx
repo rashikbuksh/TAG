@@ -2,9 +2,10 @@ import { validateFieldsNatively } from "@hookform/resolvers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
 
 const ShopperProduct = () => {
@@ -57,6 +58,9 @@ const ShopperProduct = () => {
 	const onSubmit = async (data) => {
 		console.log("FormData", data);
 		let shopperProduct_ID = null;
+		let shopper_product_name = null;
+		let shopper_product_price = null;
+		let shopper_product_discount = null;
 
 		await api
 			.post(`/shopperproduct/addshopperproduct`, {
@@ -78,7 +82,9 @@ const ShopperProduct = () => {
 
 		await api.get(`/shopperproduct/getLastProduct`).then((response) => {
 			shopperProduct_ID = response.data[0].id;
-			console.log("shopperProduct_ID", shopperProduct_ID);
+			shopper_product_name = response.data[0].name;
+			shopper_product_price = response.data[0].price;
+			shopper_product_discount = response.data[0].discount;
 		});
 
 		let today = new Date();
@@ -93,7 +99,13 @@ const ShopperProduct = () => {
 				duration: "",
 				location: "",
 				category: "regular",
-				post_content: "",
+				post_content:
+					shopper_product_name +
+					" Starting From TK." +
+					getDiscountPrice(
+						shopper_product_price,
+						shopper_product_discount
+					),
 				post_img: "",
 			})
 			.then((response) => {
@@ -147,16 +159,16 @@ const ShopperProduct = () => {
 									))}
 							</select>
 						</div>
-						<div className="flex items-center justify-center my-2 ">
-						{productImage && (
-							<img
-							className="w-56  border-2 border-black"
-								src={`${
-									import.meta.env.VITE_APP_IMG_URL
-								}/${productImage}`}
-								alt="Selected Product"
-							/>
-						)}
+						<div className="my-2 flex items-center justify-center ">
+							{productImage && (
+								<img
+									className="w-56  border-2 border-black"
+									src={`${
+										import.meta.env.VITE_APP_IMG_URL
+									}/${productImage}`}
+									alt="Selected Product"
+								/>
+							)}
 						</div>
 						<div className="flex items-center gap-2">
 							<div className="  my-2 px-1 py-1">
