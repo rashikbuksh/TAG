@@ -13,9 +13,10 @@ const Order = () => {
 	const [data, setData] = useState([]);
 	const [isOpen,setIsOpen]=useState(false)
 	const [order_Id,set_Order_id]=useState("")
-
-	const handelOpenModal=(id)=>{
-		set_Order_id(id)
+	const [totalPrice,setTotalPrice]=useState(null)
+	const handelOpenModal=(single)=>{
+		setTotalPrice(single.price)
+		set_Order_id(single.id)
 		setIsOpen(!isOpen)
 
 	}
@@ -53,7 +54,7 @@ const Order = () => {
 									alt=""
 								/>
 							</div>
-							<div onClick={()=>handelOpenModal(single.id)} className="cart-product__content">
+							<div onClick={()=>handelOpenModal(single)} className="cart-product__content">
 									Order Number #{single.id}{" "}
 								<span className="category">
 									{single.productCategory}
@@ -83,7 +84,7 @@ const Order = () => {
 					);
 				})}
 			</div>
-				<OrderModal isOpen={isOpen} setIsOpen={setIsOpen} order_Id={order_Id}></OrderModal>
+				<OrderModal isOpen={isOpen} setIsOpen={setIsOpen} order_Id={order_Id} totalPrice={totalPrice}></OrderModal>
 		</div>
 	);
 };
