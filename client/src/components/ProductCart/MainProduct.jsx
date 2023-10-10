@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { useState } from "react";
 import {
+	FaCheckCircle,
 	FaCross,
 	FaMapMarkerAlt,
 	FaMinus,
@@ -27,7 +28,8 @@ import MessageModal from "../MessageModal/MessageModal";
 const MainProduct = ({ shopperProduct, product }) => {
 	const navigate = useNavigate();
 	const prod = product || shopperProduct;
-	const { name, price, image, id, discount, view } = prod;
+	// console.log(prod,"prod in mainProduct");
+	const { name, price, image, id, discount, view, isVerified } = prod;
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);
 	const [display, setDisplay] = useState(0);
@@ -77,8 +79,15 @@ const MainProduct = ({ shopperProduct, product }) => {
 						navigateProductPage(id);
 					}}
 				>
+					<div className="flex items-center gap-3">
 					<h1 className="text-xl font-bold">{name}</h1>
+					{
+					isVerified==="verified" ? <FaCheckCircle className="text-blue-400"></FaCheckCircle>:""
+				}
+					</div>
+					
 				</button>
+				
 				{user.access === "admin" && (
 					<div className="flex gap-2">
 						<FaEye></FaEye>

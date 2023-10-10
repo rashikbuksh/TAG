@@ -60,6 +60,7 @@ const AddProductForm = () => {
 	};
 
 	const onSubmit = async (data) => {
+		// console.log(data.product_varification);
 		const formData = new FormData();
 		formData.append("uploadFiles", Image);
 
@@ -89,6 +90,7 @@ const AddProductForm = () => {
 			short_description: data.short_description,
 			full_description: data.full_description,
 			category_id: Number(data.category_id),
+			isVerified: data.product_varification,
 		}).then((response) => {
 			if (response.data.message === data.name + " added successfully") {
 				alert("Product Added Successful");
@@ -104,7 +106,7 @@ const AddProductForm = () => {
 						<div className="col-12">
 							<h3 className="auth-page-header__title">Welcome</h3>
 							<p className="auth-page-header__text">
-								Add Your Category
+								Add Product
 							</p>
 						</div>
 					</div>
@@ -177,7 +179,7 @@ const AddProductForm = () => {
 										</p>
 									</div>
 
-									<div className="auth-form__single-field space-mb--30">
+									<div className="auth-form__single-field space-mb--30 ">
 										<label htmlFor="short_description">
 											Short Description
 										</label>
@@ -204,6 +206,32 @@ const AddProductForm = () => {
 											id="full_description"
 											placeholder="Enter Full Description"
 										/>
+										<p className="text-danger">
+											{errors.full_description?.message}
+										</p>
+									</div>
+
+								
+									<div className="auth-form__single-field space-mb--30 my-4">
+										<label htmlFor="Product_verification">
+											Product Verification
+										</label>
+										<select
+											{...register(
+												"product_varification"
+											)}
+											className="select select-bordered w-full max-w-xs"
+										>
+											<option disabled selected>
+												Select One
+											</option>
+											<option value={"verified"}>
+												Verified
+											</option>
+											<option value={"notVerified"}>
+												Not Verified
+											</option>
+										</select>
 										<p className="text-danger">
 											{errors.full_description?.message}
 										</p>

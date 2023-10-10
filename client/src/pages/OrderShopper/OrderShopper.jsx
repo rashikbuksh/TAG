@@ -9,13 +9,8 @@ const OrderShopper = () => {
   const [order_Id, setOrder_Id] = useState("");
   const [order_status, setOrder_status] = useState("");
   const [orderData, setOrderData] = useState(null);
+  const [totalPrice,setTotalPrice]=useState(null)
 
-  const handleOpenModal = (single) => {
-    setOrderData(single);
-    setOrder_status(single.order_status);
-    setOrder_Id(single.id);
-    setIsOpen(true);
-  };
   // Get user ID from local storage
   const shopper_id = localStorage.getItem("user-id");
 
@@ -24,11 +19,20 @@ const OrderShopper = () => {
       .get(`/order/getordershopper/${shopper_id}`)
       .then((response) => {
         setData(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
   }, [shopper_id]);
+
+  const handleOpenModal = (single) => {
+    setOrderData(single);
+    setOrder_status(single.order_status);
+    setOrder_Id(single.id);
+    setTotalPrice(single.price)
+    setIsOpen(true); // Moved setIsOpen here
+  };
 
   return (
     <div className="body-wrapper space-pt--70 space-pb--120">
@@ -44,9 +48,7 @@ const OrderShopper = () => {
               />
             </div>
             <div onClick={() => handleOpenModal(single)} className="cart-product__content">
-              {" "}
-              Order Number #{single.id}{" "}
-              <span className="category">{single.productCategory}</span>
+              Order Number #{single.id} <span className="category">{single.productCategory}</span>
               <div className="price">
                 <span className="discounted-price">{`$${single.price}`}</span>
               </div>
@@ -60,6 +62,7 @@ const OrderShopper = () => {
         order_Id={order_Id}
         order_status={order_status}
         orderData={orderData}
+        totalPrice={totalPrice}
       />
     </div>
   );

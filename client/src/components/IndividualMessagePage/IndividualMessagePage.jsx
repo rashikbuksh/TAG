@@ -26,7 +26,7 @@ const IndividualMessagePage = () => {
 					</div>
 					<div className="divider my-0"></div>
 				</div>
-				<div className="  h-80 overflow-scroll">
+				<div className="  h-44 overflow-scroll">
 					<div className="flex items-center justify-end gap-1 my-5">
 						<div className="message">
 							<p className="text-sm chat-bubble">
