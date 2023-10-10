@@ -50,6 +50,9 @@ const AllProducts = ({ limit }) => {
 			});
 	}, []);
 
+	const isVerifiedProduct=prods.filter(product=>product.isVerified==="verified")
+	console.log(isVerifiedProduct);
+
 	if (!prods?.length) return <p>No products found</p>;
 
 	return (
@@ -76,7 +79,7 @@ const AllProducts = ({ limit }) => {
 							<FaArrowRight className="text-3xl "></FaArrowRight>
 						</div>
 					</div>
-					<ProductSlider products={prods}></ProductSlider>
+					<ProductSlider products={isVerifiedProduct}></ProductSlider>
 					<div className=" my-10 mb-2 flex items-center  justify-between">
 						<div>
 							<p className="text-xl font-bold">Products</p>

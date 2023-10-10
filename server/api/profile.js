@@ -6,6 +6,13 @@ const change = [
 		param: ["id"],
 		msg: "id",
 	},
+	{
+		uri: "/profile/edit_active_status/:id",
+		query: `UPDATE customer_profile SET active_status = ? WHERE id = ?`,
+		body: ["active_status"],
+		param: ["id"],
+		msg: "id",
+	  },
 ];
 
 const read = [

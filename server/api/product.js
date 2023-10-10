@@ -1,13 +1,14 @@
 const add = [
 	{
 		uri: "/product/addproduct",
-		query: `INSERT INTO product( name, image, short_description, full_description, category_id) VALUES (?, ?, ?, ?, ?)`,
+		query: `INSERT INTO product( name, image, short_description, full_description, category_id,isVerified) VALUES (?, ?, ?, ?, ?,?)`,
 		body: [
 			"name",
 			"image",
 			"short_description",
 			"full_description",
 			"category_id",
+			"isVerified"
 		],
 		msg: "name",
 	},
@@ -24,9 +25,18 @@ const read = [
 		param: ["productimageid"],
 	},
 ];
+const change = [
+	{
+		uri: "/product/update_varification/:id",
+		query: `UPDATE product SET isVerified = ? WHERE id = ?`,
+		body:["isVerified"],
+		param: ["id"],
+	},
+];
 
 // Export modules
 module.exports = Object.freeze({
 	add,
 	read,
+	change
 });
