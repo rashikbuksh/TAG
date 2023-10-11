@@ -12,12 +12,13 @@ const Sidebar = () => {
     <h2 className="tracki text-sm font-semibold uppercase text-gray-400">
       Hi, {user.name}
     </h2>
+    <Link to="/home">Home</Link>
     <h2 className="tracki text-sm font-semibold uppercase text-gray-400">
       Pages
     </h2>
     <div className="flex flex-col space-y-4">
-      <Link to="/home">Home</Link>
-      <Link to="/newsfeed">News</Link>
+      <Link to="/admin/stat">Stat</Link>
+     
       <Link to="/allAdminProduct">All Products</Link>
       <Link to="/tagShopkeeper">Tag Shopkeepers</Link>
       <Link to="/tagUser">Tag Users</Link>
@@ -34,13 +35,13 @@ const Sidebar = () => {
       {/* <Link to="/header">Delete Product</Link> this done in all product */}
       {/* <Link to="/page-title">Verified Product</Link> this done in all product*/}
       <Link to="/bestsellProduct">Add Best Sell Product</Link>
-      <Link to="/statusUpdate">Active and Deactive Product</Link>
+      <Link to="/admin/stat">Active and Deactive Product</Link>
       <Link to="/allnews">All News </Link>
-      <Link to="/ShoperProduct">Add Shopper Product</Link>
+      <Link to="/admin/stat">Add Shopper Product</Link>
       {/* <Link to="/footer">Delete Shopper Product </Link> this done in shoper product  */}
-      <Link to="/seeShoperActivitiy">Contorl Shopper Activitiy </Link>
-      <Link to="/allOrderHistory">Order History</Link>
-      <Link to="/messageShoper">Sent Message Shopper</Link>
+      <Link to="/admin/stat">Contorl Shopper Activitiy </Link>
+      <Link to="/admin/stat">Order History</Link>
+      <Link to="/admin/stat">Sent Message Shopper</Link>
     </div>
   </div>
   <div className="space-y-2">

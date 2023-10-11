@@ -19,7 +19,7 @@ const AdminShopkeeperProduct = () => {
     console.log(shoperProduct);
     return (
         <>
-        <p className='text-3xl font-bold px-10 py-3'>Shoper Product For Shopper Id {id}</p>
+        <p className='text-3xl font-bold px-10 py-3'> Shoper Product For Shopper Id {id}</p>
 			<div className="mx-auto  w-1/2 p-6">
 				<label className="sr-only">Search</label>
 
