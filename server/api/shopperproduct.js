@@ -25,6 +25,11 @@ const read = [
 		param: ["id"],
 	},
 	{
+		uri: "/shopperproduct/getshopperproductAdmin/:id",
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, shopper_id, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id and sp.shopper_id = ?`,
+		param: ["id"],
+	},
+	{
 		uri: "/shopperproduct/getshopperproductName/:id",
 		query: `SELECT name FROM shopper_product WHERE id in (?)`,
 		param: ["id"],
@@ -41,6 +46,10 @@ const read = [
 	{
 		uri: "/shopperproduct/getshopperproductBasedOnSaleCount",
 		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC LIMIT 4`,
+	},
+	{
+		uri: "/shopperproduct/getAllshopperproductBasedOnSaleCount",
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC `,
 	},
 	{
 		uri: "/shopkeeperproduct/getshopkeeperproductCount/:id",

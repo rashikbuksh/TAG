@@ -98,27 +98,24 @@ const AddProductForm = () => {
 		});
 	};
 	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 mt-3">
+		<div className=" auth-page-header mt-3 rounded-md my-24">
 			{/* auth page header */}
-			<div className="auth-page-header space-mb--50">
+			<div className="auth-page-header space-mb--50 w-full">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<h3 className="auth-page-header__title">Welcome</h3>
-							<p className="auth-page-header__text">
-								Add Product
-							</p>
+							<h3 className="auth-page-header__title">Add Product</h3>
 						</div>
 					</div>
 				</div>
 			</div>
 			{/* auth page body */}
-			<div className="auth-page-body">
+			<div className="auth-page-body rounded-md">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
 							{/* Auth form */}
-							<div className="auth-form">
+							<div className="auth-form rounded-md">
 								<form onSubmit={handleSubmit(onSubmit)}>
 									<div className="auth-form__single-field space-mb--30">
 										<label htmlFor="name">Name</label>
@@ -144,6 +141,7 @@ const AddProductForm = () => {
 											id="category"
 											onChange={changedCategory}
 											defaultValue={0}
+											className="select select-bordered w-full max-w-xs"
 										>
 											<option value="0">
 												Select Category

@@ -22,6 +22,13 @@ import NewsFeed from "./pages/NewsFeed/NewsFeed";
 import OrderShopper from "./pages/OrderShopper/OrderShopper";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
+import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
+import AdminStats from "./AdminComponents/AdminStats/AdminStats";
+import TagUser from "./components/TagUser/TagUser";
+import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
+import BestSellProduct from "./AdminComponents/BestSellProduct/BestSellProduct";
+import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
+import Allnews from "./AllNews/Allnews";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -42,6 +49,9 @@ const Contact = lazy(() => import("./pages/Contact"));
 const Order = lazy(() => import("./pages/Order"));
 const HeroSlider = lazy(() => import("./pages/hero-slider/HeroSlider"));
 const AdminPage = lazy(() => import("./pages/AdminPage/Admin"));
+const AllProductAdmin = lazy(() =>
+	import("./AdminComponents/AllProduct/AllProductAdmin")
+);
 
 const PROTECTED_ROUTES = [
 	{
@@ -150,20 +160,20 @@ const PROTECTED_ROUTES = [
 		access: ["admin", "customer", "shopper"],
 	},
 
-	{
-		id: 19,
-		name: "AddCatagoryForm",
-		path: "/addcategory",
-		element: AddCatagoryForm,
-		access: ["admin"],
-	},
-	{
-		id: 20,
-		name: "AddProductForm",
-		path: "/addproduct",
-		element: AddProductForm,
-		access: ["admin"],
-	},
+	// {
+	// 	id: 19,
+	// 	name: "AddCatagoryForm",
+	// 	path: "/addcategory",
+	// 	element: AddCatagoryForm,
+	// 	access: ["admin"],
+	// },
+	// {
+	// 	id: 20,
+	// 	name: "AddProductForm",
+	// 	path: "/addproduct",
+	// 	element: AddProductForm,
+	// 	access: ["admin"],
+	// },
 	{
 		id: 21,
 		name: "AddShopperProduct",
@@ -192,20 +202,20 @@ const PROTECTED_ROUTES = [
 		element: ShopkeepersProduct,
 		access: ["admin", "shopper"],
 	},
-	{
-		id: 26,
-		name: "HeroSlider",
-		path: "/addheroslider",
-		element: HeroSlider,
-		access: ["admin"],
-	},
-	{
-		id: 27,
-		name: "AdminPage",
-		path: "/admin",
-		element: AdminPage,
-		access: ["admin"],
-	},
+	// {
+	// 	id: 26,
+	// 	name: "HeroSlider",
+	// 	path: "/addheroslider",
+	// 	element: HeroSlider,
+	// 	access: ["admin"],
+	// },
+	// {
+	// 	id: 27,
+	// 	name: "AdminPage",
+	// 	path: "/admin",
+	// 	element: AdminPage,
+	// 	access: ["admin"],
+	// },
 	{
 		id: 28,
 		name: "IndividualMessagePage",
@@ -241,18 +251,95 @@ const PUBLIC_ROUTES = [
 		element: NotFound,
 	},
 ];
+const ADMIN_ROUTES = [
+	{
+		id: 27,
+		name: "Admin Stats",
+		path: "/admin/stat",
+		element: AdminStats,
+		access: ["admin"],
+	},
+	{
+		id: 1,
+		name: "AddCatagoryForm",
+		path: "/addcategory",
+		element: AddCatagoryForm,
+		access: ["admin"],
+	},
+	{
+		id: 2,
+		name: "AddProductForm",
+		path: "/addproduct",
+		element: AddProductForm,
+		access: ["admin"],
+	},
+	{
+		id: 3,
+		name: "TagUser",
+		path: "/tagUser",
+		element: TagUser,
+		access: ["admin"],
+	},
+	{
+		id: 4,
+		name: "TagUser",
+		path: "/tagShopkeeper",
+		element: TagShopKeeper,
+		access: ["admin"],
+	},
+	{
+		id: 5,
+		name: "TagShoer",
+		path: "/tagShopkeeper",
+		element: TagShopKeeper,
+		access: ["admin"],
+	},
+	{
+		id: 6,
+		name: "AllAdminProduct",
+		path: "/allAdminProduct",
+		element: AllProductAdmin,
+		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id: 7,
+		name: "HeroSlider",
+		path: "/addheroslider",
+		element: HeroSlider,
+		access: ["admin"],
+	},
+	{
+		id: 8,
+		name: "Best Sell",
+		path: "/bestsellProduct",
+		element: BestSellProduct,
+		access: ["admin"],
+	},
+	{
+		id: 8,
+		name: "ShopKeepoper Product",
+		path: "/shopkeeperProduct/:id",
+		element: AdminShopkeeperProduct,
+		access: ["admin"],
+	},
+	{
+		id: 9,
+		name: "All Newa",
+		path: "/allnews",
+		element: Allnews,
+		access: ["admin"],
+	},
+];
 
 function App() {
-	const isLoginPage = window.location.pathname === "/login";
-	const isWelcomePage = window.location.pathname === "/";
-	const isadminPage = window.location.pathname === "/admin";
+	const isadminPage = "admin"
 	return (
 		// show header and footer
 
 		<Router>
-			{!isLoginPage && !isWelcomePage && !isadminPage && <Header />}
-			{!isLoginPage && !isWelcomePage && !isadminPage && <Offcanvas />}
-			{!isLoginPage && !isWelcomePage && !isadminPage && <Footer />}
+			{!isadminPage && <Header />}
+			{!isadminPage && <Offcanvas />}
+			{!isadminPage && <Footer />}
 			<AuthProvider>
 				<Routes>
 					<Route element={<ProtectedRoutes />}>
@@ -268,6 +355,20 @@ function App() {
 							/>
 						))}
 					</Route>
+					<Route element={<AdminProtactedRoutes />}>
+						{ADMIN_ROUTES?.map((route) => (
+							<Route
+								key={route?.path}
+								path={route?.path}
+								element={
+									<Suspense fallback={<div>Loading...</div>}>
+										<route.element />
+									</Suspense>
+								}
+							/>
+						))}
+					</Route>
+
 					{PUBLIC_ROUTES?.map((route) => (
 						<Route
 							key={route?.path}
@@ -286,4 +387,4 @@ function App() {
 }
 
 export default App;
-export { PROTECTED_ROUTES };
+export { PROTECTED_ROUTES, ADMIN_ROUTES };

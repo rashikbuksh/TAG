@@ -70,7 +70,7 @@ const MainProduct = ({ shopperProduct, product }) => {
 	};
 	const cartItems = useSelector((state) => state.cart.cartItems);
 	return (
-		<div>
+		<div className="z-0">
 			<div className="divider m-0"></div>
 			<div className=" flex items-end justify-between px-2">
 				<button
@@ -80,14 +80,15 @@ const MainProduct = ({ shopperProduct, product }) => {
 					}}
 				>
 					<div className="flex items-center gap-3">
-					<h1 className="text-xl font-bold">{name}</h1>
-					{
-					isVerified==="verified" ? <FaCheckCircle className="text-blue-400"></FaCheckCircle>:""
-				}
+						<h1 className="text-xl font-bold">{name}</h1>
+						{isVerified === "verified" ? (
+							<FaCheckCircle className="text-blue-400"></FaCheckCircle>
+						) : (
+							""
+						)}
 					</div>
-					
 				</button>
-				
+
 				{user.access === "admin" && (
 					<div className="flex gap-2">
 						<FaEye></FaEye>
@@ -107,7 +108,7 @@ const MainProduct = ({ shopperProduct, product }) => {
 				onMouseLeave={handleMouseLeave}
 			>
 				<img
-					className={`my-1 h-[200px] w-[300px] rounded object-contain px-1 ${
+					className={`my-1 h-[200px] w-[300px]  rounded object-contain px-1 ${
 						quantity > 0
 							? "transition-transform hover:scale-90"
 							: ""
@@ -200,20 +201,51 @@ const MainProduct = ({ shopperProduct, product }) => {
 					></LocationModal>
 				</div>
 			</div>
-
-			<button
-				onClick={() => {
-					prod.quantity = quantity;
-					if (checkIfInCart(cartItems, prod)) {
-						dispatch(increaseQuantityofProd(prod));
-					} else {
-						dispatch(addToCart(prod));
-					}
-				}}
-				className=" btn  btn-success btn-block rounded-none"
-			>
-				Add To Cart{" "}
-			</button>
+			{user.access === "admin" ? (
+				<button
+					disabled
+					onClick={() => {
+						prod.quantity = quantity;
+						if (checkIfInCart(cartItems, prod)) {
+							dispatch(increaseQuantityofProd(prod));
+						} else {
+							dispatch(addToCart(prod));
+						}
+					}}
+					className=" btn  btn-success btn-block rounded-none"
+				>
+					Add To Cart{" "}
+				</button>
+			) : user.access === "shopper" ? (
+				<button
+					disabled
+					onClick={() => {
+						prod.quantity = quantity;
+						if (checkIfInCart(cartItems, prod)) {
+							dispatch(increaseQuantityofProd(prod));
+						} else {
+							dispatch(addToCart(prod));
+						}
+					}}
+					className=" btn  btn-success btn-block rounded-none"
+				>
+					Add To Cart{" "}
+				</button>
+			) : (
+				<button
+					onClick={() => {
+						prod.quantity = quantity;
+						if (checkIfInCart(cartItems, prod)) {
+							dispatch(increaseQuantityofProd(prod));
+						} else {
+							dispatch(addToCart(prod));
+						}
+					}}
+					className=" btn  btn-success btn-block rounded-none"
+				>
+					Add To Cart{" "}
+				</button>
+			)}
 		</div>
 	);
 };

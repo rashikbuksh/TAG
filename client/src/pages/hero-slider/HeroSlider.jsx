@@ -95,15 +95,15 @@ const HeroSlider = () => {
 	}
 
 	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 mt-3">
+		<div className="  space-pt--70 space-pb--120 mt-3">
 			{/* auth page header */}
-			<div className="auth-page-header space-mb--50">
+			<div className=" space-mb--50">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<h3 className="auth-page-header__title">Welcome</h3>
+							<h3 className="auth-page-header__title">Add Slider Image</h3>
 							<p className="auth-page-header__text">
-								Add Your Category
+								
 							</p>
 						</div>
 					</div>
@@ -174,6 +174,7 @@ const HeroSlider = () => {
 			</div>
 			{/* auth page footer */}
 			<div className="divider"></div>
+			<h2 className="text-3xl m-4">All Slider Photo </h2>
 			<div className="auth-page-body">
 				<div className="container">
 					<div className="row">

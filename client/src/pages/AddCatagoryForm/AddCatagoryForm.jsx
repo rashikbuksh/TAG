@@ -39,23 +39,23 @@ const AddcategoryForm = () => {
 		});
 	};
 	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 mt-3">
+		<div className="  space-pt--70 space-pb--120 mt-3 rounded-md">
 			{/* auth page header */}
-			<div className="auth-page-header space-mb--50">
+			<div className=" space-mb--50">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<h3 className="auth-page-header__title">Welcome</h3>
+							<h3 className="auth-page-header__title">Add Category</h3>
 							<p className="auth-page-header__text">
-								Add Your Category
+								Add Product Category
 							</p>
 						</div>
 					</div>
 				</div>
 			</div>
 			{/* auth page body */}
-			<div className="auth-page-body">
-				<div className="container">
+			<div className="auth-page-body mb-44 rounded-md">
+				<div className="container rounded-md">
 					<div className="row">
 						<div className="col-12">
 							{/* Auth form */}

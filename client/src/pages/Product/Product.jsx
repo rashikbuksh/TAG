@@ -28,6 +28,7 @@ const Product = () => {
 	
 	const [prods, setProds] = useState([]);
 	
+	
 	console.log(prods,"productStock");
 	const [shopperName, setShopperName] = useState("");
 
@@ -41,7 +42,7 @@ const Product = () => {
 				alert(error);
 			});
 	}, [id]);
-
+	console.log(prods ,"loggged productjs");
 	const { cartItems } = useSelector((state) => state.cart);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 	const wishlistItem = wishlistItems.find((item) => item.id === id);
