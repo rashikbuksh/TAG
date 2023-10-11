@@ -21,7 +21,7 @@ const Modal = ({ isOpen, setIsOpen, title, children, setcommentId }) => {
           </div> */}
 
 			<Transition appear show={isOpen} as={Fragment}>
-				<Dialog as="div" className="relative z-10 h-[70vh]" onClose={closeModal}>
+				<Dialog as="div" className="relative z-10 h-[70vh] w-full" onClose={closeModal}>
 					<Transition.Child
 						as={Fragment}
 						enter="ease-out duration-300"

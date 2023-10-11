@@ -20,6 +20,15 @@ const read = [
 		query: `SELECT id,name,image FROM product`,
 	},
 	{
+		uri: "/product/getallproduct",
+		query: `SELECT * FROM product`,
+	},
+	{
+		uri: "/product/getSearchedValue/:searchValue",
+		query: `SELECT * FROM product, WHERE name LIKE  ? `,
+		param:[`% searchValue %`]
+	},
+	{
 		uri: "/product/getproductimage/:productimageid",
 		query: `SELECT image FROM product WHERE id = ?`,
 		param: ["productimageid"],
@@ -30,6 +39,12 @@ const change = [
 		uri: "/product/update_varification/:id",
 		query: `UPDATE product SET isVerified = ? WHERE id = ?`,
 		body:["isVerified"],
+		param: ["id"],
+	},
+	{
+		uri: "/product/update_product/:id",
+		query: `UPDATE product SET name=?, short_description=?,full_description=? WHERE id = ?`,
+		body:["name","short_description","full_description",],
 		param: ["id"],
 	},
 ];

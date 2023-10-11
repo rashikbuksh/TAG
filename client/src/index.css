@@ -13,3 +13,7 @@
 	overflow-x: hidden;
 	transition: all 200ms linear; */
 }
+
+.actionbtn{
+	@apply inline-block border-2 border-current px-8 py-3 text-sm font-bold uppercase tracking-widest text-black group-active:text-opacity-75
+}

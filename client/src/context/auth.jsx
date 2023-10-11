@@ -43,7 +43,13 @@ const AuthProvider = ({ children }) => {
 					route?.access?.includes(loginUser?.access)
 				);
 				localStorage.setItem("user-id", loginUser?.id);
-				window.location.href = go?.path;
+				if (loginUser.access === "admin") {
+					window.location.href = "/admin/stat";
+				}
+				else{
+
+					window.location.href = go?.path;
+				}
 			}
 		} catch (error) {
 			alert(error);

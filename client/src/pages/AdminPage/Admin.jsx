@@ -1,22 +1,18 @@
+import { Outlet } from "react-router-dom";
 import AdminHeader from "../../AdminComponents/AdminHeader/AdminHeader";
 import AdminStats from "../../AdminComponents/AdminStats/AdminStats";
 import ProductChart from "../../AdminComponents/ProductChart/ProductChart";
 import Sidebar from "../../AdminComponents/Sidebar/Sidebar";
 
 const Admin = () => {
+	
 	return (
 		<div className=" bg-blue-100 ">
 			<AdminHeader></AdminHeader>
-			<div className="flex">
+			<div className="flex it">
 				<Sidebar></Sidebar>
-				<div>
-					<div className=" mx-10">
-
-					<AdminStats></AdminStats>
-					</div>
-					<div>
-						<ProductChart></ProductChart>
-					</div>
+				<div className=" h-[100vh] overflow-x-auto overflow-y-auto w-full py-24 mx-auto">
+					<Outlet></Outlet>
 
 				</div>
 			</div>

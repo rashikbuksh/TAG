@@ -234,7 +234,7 @@ function Offcanvas(props) {
 					</li>
 					{userInfo.map((item) =>
 						item.access == "admin" ? (
-							<li>
+							<li key={item.id}>
 								<span className="icon">
 									<img
 										width="50"
@@ -246,7 +246,7 @@ function Offcanvas(props) {
 								<Link
 									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
-										"/admin"
+										"/admin/stat"
 									}
 								>
 									Admin Page

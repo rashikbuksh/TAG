@@ -41,12 +41,10 @@ const Login = () => {
 		}
 	}, [signed, user, navigate]);
 
-	const onSubmit = async (data) => {
-		await login(data);
+	const onSubmit =  (data) => {
+		login(data);
 
-		if (user.access === "admin") {
-			window.location.href = "/admin";
-		}
+		
 		// Axios.post(
 		// 	`${import.meta.env.VITE_APP_API_URL}/auth/verify_login`,{
 		// 		data

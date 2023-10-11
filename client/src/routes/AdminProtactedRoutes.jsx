@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { PROTECTED_ROUTES } from "../App";
+import { ADMIN_ROUTES } from "../App";
 import { useAuth } from "../context/auth";
-import { Footer, Header } from "../components";
-import Offcanvas from "../components/Header/Offcanvas";
+import Admin from "../pages/AdminPage/Admin";
 
-export default function ProtectedRoutes() {
+
+export default function AdminProtactedRoutes() {
 	const { signed, loading, user } = useAuth();
 
 	if (loading)
@@ -14,21 +14,16 @@ export default function ProtectedRoutes() {
 
 	console.log("user in router", user);
 	console.log(window.location.pathname);
-	console.log("protected", PROTECTED_ROUTES);
+	console.log("ADMIN_ROUTES", ADMIN_ROUTES);
 
-	const checkPath = PROTECTED_ROUTES?.find(
+	const checkPath = ADMIN_ROUTES?.find(
 		(route) => route?.path === window.location.pathname
 	);
 
 	const haveAccess = checkPath?.access?.includes(user?.access);
 
 	return haveAccess ? (
-		<>
-		<Header />
-		<Offcanvas />
-		<Footer />
-		<Outlet />
-		</>
+		<Admin></Admin>
 	) : (
 		<Navigate to="/no-access" replace={true} />
 	);
