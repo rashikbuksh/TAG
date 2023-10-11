@@ -13,7 +13,7 @@ const read = [
   },
   {
     uri: "/auth/getShopperInfo",
-    query: `SELECT id, image, name, user_name, review_count from customer_profile where access = "shopper"`,
+    query: `SELECT id, image, name, user_name,phone,email,access, review_count from customer_profile where access = "shopper"`,
   },
   {
     uri: "/auth/getALLUserInfo",

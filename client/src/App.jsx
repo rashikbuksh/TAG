@@ -25,6 +25,10 @@ import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import AdminStats from "./AdminComponents/AdminStats/AdminStats";
 import TagUser from "./components/TagUser/TagUser";
+import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
+import BestSellProduct from "./AdminComponents/BestSellProduct/BestSellProduct";
+import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
+import Allnews from "./AllNews/Allnews";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -270,24 +274,59 @@ const ADMIN_ROUTES = [
 		access: ["admin"],
 	},
 	{
-		id: 2,
+		id: 3,
 		name: "TagUser",
 		path: "/tagUser",
 		element: TagUser,
 		access: ["admin"],
 	},
 	{
-		id: 29,
+		id: 4,
+		name: "TagUser",
+		path: "/tagShopkeeper",
+		element: TagShopKeeper,
+		access: ["admin"],
+	},
+	{
+		id: 5,
+		name: "TagShoer",
+		path: "/tagShopkeeper",
+		element: TagShopKeeper,
+		access: ["admin"],
+	},
+	{
+		id: 6,
 		name: "AllAdminProduct",
 		path: "/allAdminProduct",
 		element: AllProductAdmin,
 		access: ["admin", "customer", "shopper"],
 	},
 	{
-		id: 26,
+		id: 7,
 		name: "HeroSlider",
 		path: "/addheroslider",
 		element: HeroSlider,
+		access: ["admin"],
+	},
+	{
+		id: 8,
+		name: "Best Sell",
+		path: "/bestsellProduct",
+		element: BestSellProduct,
+		access: ["admin"],
+	},
+	{
+		id: 8,
+		name: "ShopKeepoper Product",
+		path: "/shopkeeperProduct/:id",
+		element: AdminShopkeeperProduct,
+		access: ["admin"],
+	},
+	{
+		id: 9,
+		name: "All Newa",
+		path: "/allnews",
+		element: Allnews,
 		access: ["admin"],
 	},
 ];

@@ -19,7 +19,7 @@ const Sidebar = () => {
       <Link to="/home">Home</Link>
       <Link to="/newsfeed">News</Link>
       <Link to="/allAdminProduct">All Products</Link>
-      <Link to="/showShopkeeper">Tag Shopkeepers</Link>
+      <Link to="/tagShopkeeper">Tag Shopkeepers</Link>
       <Link to="/tagUser">Tag Users</Link>
     </div>
   </div>
@@ -33,9 +33,9 @@ const Sidebar = () => {
       <Link to="/addheroslider">Add SliderImage</Link>
       {/* <Link to="/header">Delete Product</Link> this done in all product */}
       {/* <Link to="/page-title">Verified Product</Link> this done in all product*/}
-      <Link to="/bestSellProduct">Add Best Sell Product</Link>
+      <Link to="/bestsellProduct">Add Best Sell Product</Link>
       <Link to="/statusUpdate">Active and Deactive Product</Link>
-      <Link to="/allNewsFeedpost">All News </Link>
+      <Link to="/allnews">All News </Link>
       <Link to="/ShoperProduct">Add Shopper Product</Link>
       {/* <Link to="/footer">Delete Shopper Product </Link> this done in shoper product  */}
       <Link to="/seeShoperActivitiy">Contorl Shopper Activitiy </Link>
