@@ -31,6 +31,7 @@ import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/Adm
 import Allnews from "./AllNews/Allnews";
 import TagOrderHistory from "./AdminComponents/TagOrderHistory/TagOrderHistory";
 import TagUserOrderHistory from "./AdminComponents/TagOrderHistory/TagUserOrderHistory";
+import LoadingPage from "./components/LodingPage/LoadingPage";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -348,7 +349,7 @@ const ADMIN_ROUTES = [
 ];
 
 function App() {
-	const isadminPage = "admin"
+	const isadminPage = "admin";
 	return (
 		// show header and footer
 
@@ -364,7 +365,9 @@ function App() {
 								key={route?.path}
 								path={route?.path}
 								element={
-									<Suspense fallback={<div>Loading...</div>}>
+									<Suspense
+										fallback={<LoadingPage></LoadingPage>}
+									>
 										<route.element />
 									</Suspense>
 								}
@@ -377,7 +380,7 @@ function App() {
 								key={route?.path}
 								path={route?.path}
 								element={
-									<Suspense fallback={<div>Loading...</div>}>
+									<Suspense fallback={<div><LoadingPage></LoadingPage></div>}>
 										<route.element />
 									</Suspense>
 								}
@@ -390,7 +393,7 @@ function App() {
 							key={route?.path}
 							path={route?.path}
 							element={
-								<Suspense fallback={<div>Loading...</div>}>
+								<Suspense fallback={<div><LoadingPage></LoadingPage></div>}>
 									<route.element />
 								</Suspense>
 							}

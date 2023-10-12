@@ -156,7 +156,7 @@ const PostUi = ({ postData }) => {
 								<p className="text-sm">{post_content}</p>
 								{post_img && (
 									<img
-										className="mt-2 h-64 w-full object-cover"
+										className="mt-2  lg:w-1/2 mx-auto h-1/2 object-cover"
 										src={`${
 											import.meta.env.VITE_APP_IMG_URL
 										}/newsimage/${post_img}`}

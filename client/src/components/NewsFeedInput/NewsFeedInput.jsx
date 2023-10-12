@@ -1,16 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
+import React, { useState } from "react";
+import { FaFileImage, FaCamera } from "react-icons/fa";
+import Modal from "../Modal/Modal";
 import Axios from "axios";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import { FaFileImage } from "react-icons/fa";
-import { FaCamera } from "react-icons/fa6";
 import { api } from "../../lib/api";
 
-const NewsFeedInput = () => {
+const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 	const [cameraError, setCameraError] = useState(null);
 	const [content, setContent] = useState("");
 	const [file, setFile] = useState(null);
+	const [isPosting, setIsPosting] = useState(false);
+	const [postError, setPostError] = useState(null);
 
 	const userID = localStorage.getItem("user-id");
 
@@ -33,74 +33,74 @@ const NewsFeedInput = () => {
 	};
 
 	const handlePostClick = async () => {
-		const formData = new FormData();
-		formData.append("uploadFiles", file);
+		if (isPosting) {
+			return; // Prevent multiple clicks while posting
+		}
 
-		var ImageName = null;
-		console.log(new Date());
-		if (file === null) {
-			ImageName = null;
-		} else {
-			await Axios.post(
-				`${
-					import.meta.env.VITE_APP_API_URL
-				}/imageUpload/newsImageUpload`,
-				formData,
-				{
-					headers: {
-						"Content-Type": "multipart/form-data;",
-						Authorization: Cookies?.get("auth"),
-					},
-				}
-			).then((response) => {
-				console.log(response.data);
+		setPostError(null);
+		setIsPosting(true);
+
+		let ImageName = "";
+
+		if (file) {
+			const formData = new FormData();
+			formData.append("uploadFiles", file);
+
+			try {
+				const response = await Axios.post(
+					`${
+						import.meta.env.VITE_APP_API_URL
+					}/imageUpload/newsImageUpload`,
+					formData,
+					{
+						headers: {
+							"Content-Type": "multipart/form-data;",
+							Authorization: Cookies?.get("auth"),
+						},
+					}
+				);
+
 				if (response.data.msg === "File Uploaded") {
 					ImageName = response.data.productImage;
 				}
-			});
-		}
-		api.post(`/news/addnews`, {
-			shop_id: userID,
-			date: new Date(),
-			post_content: content,
-			post_img: ImageName,
-			category: "regular",
-		}).then((response) => {
-			if (response.data.message == userID + " Added Successful") {
-				setContent("");
-				alert("News Feed Added Successful");
+			} catch (error) {
+				console.error("Error uploading image:", error);
+				setPostError("Error uploading image. Please try again.");
+				setIsPosting(false);
+				return;
 			}
-		});
-	};
-	return (
-		<div>
-			<div className="flex items-center rounded-lg border border-gray-200 p-4">
-				<div
-					onClick={() => window.openNewsInput.showModal()}
-					className="flex-grow"
-				>
-					<div className="w-full border-none bg-transparent placeholder-gray-500 focus:outline-none" />
-					{content || "write Post"}
-				</div>
-			</div>
-			<div className="flex justify-end">
-				<button
-					className="my-2 inline-block rounded border border-current px-8 py-3 text-sm font-medium text-indigo-600 transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:text-indigo-500"
-					onClick={handlePostClick} // Call the function when the button is clicked
-				>
-					Post
-				</button>
-			</div>
-			{cameraError && <p className="mt-2 text-red-500">{cameraError}</p>}
-			<div className="divider"></div>
+		}
 
-			<dialog id="openNewsInput" className="modal">
-				<form method="dialog" className="modal-box">
-					<button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
-						✕
-					</button>
+		try {
+			const response = await api.post(`/news/addnews`, {
+				shop_id: userID,
+				date: new Date(),
+				post_content: content,
+				post_img: ImageName,
+				category: "regular",
+			});
+			console.log(response.data.message,userID + " added successfully");
+
+			if (response.data.message == `${userID} added successfully`) {
+				setContent("");
+				setFile(null); // Reset the selected image
+				setIsPosting(false);
+				alert("News Feed Added Successfully");
+				setIsOpen(!isOpen);
+			}
+		} catch (error) {
+			console.error("Error posting news:", error);
+			setPostError("Error posting news. Please try again.");
+			setIsPosting(false);
+		}
+	};
+
+	return (
+		<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+			<div>
+				<form className="px-2 py-3">
 					<h1 className="text-xl">Write Your Post</h1>
-					<div className="my-3 flex justify-between">
+					<div className="justify between my-3 flex">
 						<div className="mr-4">
 							<FaCamera
 								className="cursor-pointer text-2xl text-blue-400"
@@ -124,27 +124,45 @@ const NewsFeedInput = () => {
 							/>
 						</div>
 					</div>
-					<div className=" rounded-md border-2 border-gray-200">
+					<div className="rounded-md border-2 border-gray-200">
 						<label className="sr-only">Message</label>
-
 						<textarea
 							className="w-full rounded-lg border-gray-200 p-3 text-sm"
 							placeholder="Message"
 							rows="8"
 							id="message"
-							value={content} // Set the textarea value from the state
-							onChange={(e) => setContent(e.target.value)} // Update the state when the textarea changes
+							value={content}
+							onChange={(e) => setContent(e.target.value)}
 						></textarea>
 					</div>
+					{/* Show the selected image as a preview */}
+					{file && (
+						<div className="my-3">
+							<img
+							className="w-1/2 mx-auto"
+								src={URL.createObjectURL(file)}
+								alt="Selected Image"
+								style={{ maxWidth: "100%" }}
+							/>
+						</div>
+					)}
+					{postError && (
+						<div className="my-3 text-red-500">{postError}</div>
+					)}
 					<button
-						className="btn btn-block my-2 bg-blue-500 hover:bg-blue-400"
-						onClick={handlePostClick} // Call the function when the button is clicked
+						className={`btn btn-block my-2 ${
+							isPosting
+								? "cursor-not-allowed bg-gray-400"
+								: "hover-bg-blue-400 bg-blue-500"
+						}`}
+						onClick={handlePostClick}
+						disabled={isPosting}
 					>
-						Post
+						{isPosting ? "Posting..." : "Post"}
 					</button>
 				</form>
-			</dialog>
-		</div>
+			</div>
+		</Modal>
 	);
 };
 
