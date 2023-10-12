@@ -21,7 +21,7 @@ const read = [
   },
   {
     uri: "/auth/getALLUserInfoForadmin",
-    query: `SELECT id, image, name,phone,email, user_name, access  from customer_profile`,
+    query: `SELECT id, image, name,phone,email, user_name, access  from customer_profile where access = "customer"`,
   },
 ];
 

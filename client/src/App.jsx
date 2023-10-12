@@ -29,6 +29,8 @@ import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
 import BestSellProduct from "./AdminComponents/BestSellProduct/BestSellProduct";
 import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
 import Allnews from "./AllNews/Allnews";
+import TagOrderHistory from "./AdminComponents/TagOrderHistory/TagOrderHistory";
+import TagUserOrderHistory from "./AdminComponents/TagOrderHistory/TagUserOrderHistory";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -316,14 +318,28 @@ const ADMIN_ROUTES = [
 		access: ["admin"],
 	},
 	{
-		id: 8,
+		id: 10,
 		name: "ShopKeepoper Product",
 		path: "/shopkeeperProduct/:id",
 		element: AdminShopkeeperProduct,
 		access: ["admin"],
 	},
 	{
-		id: 9,
+		id: 10,
+		name: "Order History",
+		path: "/tagorderhistory/:id",
+		element: TagOrderHistory,
+		access: ["admin"],
+	},
+	{
+		id: 12,
+		name: "Order History",
+		path: "/taguserorderhistory/:id",
+		element: TagUserOrderHistory,
+		access: ["admin"],
+	},
+	{
+		id: 11,
 		name: "All Newa",
 		path: "/allnews",
 		element: Allnews,

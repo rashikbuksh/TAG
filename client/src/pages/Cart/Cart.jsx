@@ -108,6 +108,7 @@ const Cart = () => {
 				total += getDiscountPrice(price, discount) * quantity;
 			}
 		});
+		console.log(total);
 		const wantobuy = window.confirm("Are you sure you want to buy?");
 		if (!wantobuy) {
 			return;
@@ -260,15 +261,13 @@ const Cart = () => {
 
 													<div>
 														<h2 className="text-xs">
-															{getDiscountPrice(
-																parseFloat(
+															{parseFloat(
+																getDiscountPrice(
 																	cartItem.price,
 																	cartItem.discount
 																) *
-																	cartItem.quantity.toFixed(
-																		2
-																	)
-															)}
+																	cartItem.quantity
+															).toFixed(2)}
 														</h2>
 														<input
 															type="hidden"

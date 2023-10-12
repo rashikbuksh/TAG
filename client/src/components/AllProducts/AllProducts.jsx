@@ -51,9 +51,11 @@ const AllProducts = ({ limit }) => {
 	}, []);
 
 	const isVerifiedProduct=prods.filter(product=>product.isVerified==="verified")
-	console.log(isVerifiedProduct);
+	console.log(isVerifiedProduct,"isVerifiedProduct");
 
 	if (!prods?.length) return <p>No products found</p>;
+
+	console.log(prods,"Product for check varify");
 
 	return (
 		<div className=" mx-auto w-[95%]">
