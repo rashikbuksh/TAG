@@ -108,7 +108,8 @@ const Cart = () => {
 				total += getDiscountPrice(price, discount) * quantity;
 			}
 		});
-		console.log(total);
+
+		var last_order_id = 0;
 		const wantobuy = window.confirm("Are you sure you want to buy?");
 		if (!wantobuy) {
 			return;
@@ -124,10 +125,32 @@ const Cart = () => {
 				weight: 0,
 			}).then((res) => {
 				console.log("res", res);
-				if (res.data.status === 200) {
-					alert("Order Added Successfully");
+				if (res.data.status === 201) {
+					api.get("/order/getLastOrder").then((res) => {
+						last_order_id = res.data[0].id;
+						console.log("last_order_id", last_order_id);
+						api.post("/notification/addnotification", {
+							notification_content:
+								"You have a new order. Order Number is #" +
+								last_order_id +
+								".",
+							notification_time: new Date()
+								.toISOString()
+								.slice(0, 19)
+								.replace("T", " "), // 2021-08-10 12:00:00
+							not_from: shopperId,
+							not_to: userID,
+							status: 0,
+						}).then((res) => {
+							console.log("res", res);
+							if (res.data.status === 201) {
+								alert("Notification Added Successfully");
+							}
+						});
+					});
 				}
 			});
+
 			// remove the items from the cart
 			productIds.forEach((productId) => {
 				cartItems.forEach((cartItem) => {
