@@ -46,7 +46,8 @@ const read = [
 		sp.price as product_Price,
 		po.*,
 		po.price as totalPrice,
-		SUBSTRING_INDEX(SUBSTRING_INDEX(po.quantity, ',', FIND_IN_SET(sp.id, po.product_id)), ',', -1) AS product_quantity
+		SUBSTRING_INDEX(SUBSTRING_INDEX(po.quantity, ',', FIND_IN_SET(sp.id, po.product_id)), ',', -1) AS product_quantity,
+		SUBSTRING_INDEX(SUBSTRING_INDEX(po.discount, ',', FIND_IN_SET(sp.id, po.product_id)), ',', -1) AS product_discounted_price
 	FROM
 		shopper_product sp
 	JOIN

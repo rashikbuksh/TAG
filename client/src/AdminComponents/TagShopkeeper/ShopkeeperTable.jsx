@@ -45,6 +45,8 @@ const ShopkeeperTable = ({tagShopkeeper}) => {
 <td>
     <Link  to={`/shopkeeperProduct/${tagShopkeeper.id}`}>
     <button className='btn btn-sm btn-accent'>See Product</button></Link>
+    <Link  to={`/tagorderhistory/${tagShopkeeper.id}`}>
+    <button className='btn btn-sm btn-accent ml-3'>Order History</button></Link>
 </td>
         </tr>
     </>

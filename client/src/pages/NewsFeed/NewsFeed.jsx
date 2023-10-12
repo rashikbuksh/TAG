@@ -7,6 +7,7 @@ import TagNewsUi from "../PostUi/TagNewsUi";
 
 const NewsFeed = () => {
 	const [posts, setPosts] = useState([]);
+	const [isOpen,setIsOpen]=useState(false)
 	useEffect(() => {
 		api.get("/news/getnews")
 			.then((res) => {
@@ -17,7 +18,9 @@ const NewsFeed = () => {
 				console.log(err);
 			});
 	}, [posts]);
-
+const handelNewsInput=()=>{
+	setIsOpen(!isOpen)
+}
 	return (
 		<div className="mt-20">
 			<div className="mx-auto w-[90%]">
@@ -26,7 +29,12 @@ const NewsFeed = () => {
 				<div className="lg:grid lg:grid-cols-12 ">
 					<div className="lg:col-span-3"></div>
 					<div className="lg:col-span-6">
-						<NewsFeedInput></NewsFeedInput>
+
+					<div onClick={handelNewsInput} className="w-full bg-white border rounded p-4 shadow-md mb-4" >
+					{"write Post"}
+					</div>
+				
+						<NewsFeedInput isOpen={isOpen} setIsOpen={setIsOpen}></NewsFeedInput>
 						<div>
 							{posts.map((postData, index) =>
 								postData.category === "regular" ? (
@@ -43,7 +51,7 @@ const NewsFeed = () => {
 					<div className="lg:col-span-3"></div>
 				</div>
 			</div>
-			<div className="h-14"></div>
+			<div className="h-24"></div>
 		</div>
 	);
 };

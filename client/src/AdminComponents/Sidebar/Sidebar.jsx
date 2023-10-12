@@ -35,13 +35,13 @@ const Sidebar = () => {
       {/* <Link to="/header">Delete Product</Link> this done in all product */}
       {/* <Link to="/page-title">Verified Product</Link> this done in all product*/}
       <Link to="/bestsellProduct">Add Best Sell Product</Link>
-      <Link to="/admin/stat">Active and Deactive Product</Link>
+      {/* <Link to="/admin/stat">Active and Deactive Product</Link> */}
       <Link to="/allnews">All News </Link>
-      <Link to="/admin/stat">Add Shopper Product</Link>
+      {/* <Link to="/admin/stat">Add Shopper Product</Link> */}
       {/* <Link to="/footer">Delete Shopper Product </Link> this done in shoper product  */}
-      <Link to="/admin/stat">Contorl Shopper Activitiy </Link>
-      <Link to="/admin/stat">Order History</Link>
-      <Link to="/admin/stat">Sent Message Shopper</Link>
+      {/* <Link to="/admin/stat">Contorl Shopper Activitiy </Link> */}
+      {/* <Link to="/admin/stat">Order History</Link> */}
+      {/* <Link to="/admin/stat">Sent Message Shopper</Link> */}
     </div>
   </div>
   <div className="space-y-2">
