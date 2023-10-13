@@ -20,6 +20,7 @@ const Register = () => {
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
 		phone: yup.string().required("Phone Number is required").max(11),
+		refer_code: yup.string(),
 	});
 
 	const { register, handleSubmit, formState } = useForm({
@@ -30,6 +31,7 @@ const Register = () => {
 
 	const onSubmit = (data) => {
 		console.log(data);
+
 		Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, {
 			name: data.name,
 			email: data.emailAddress,
@@ -38,13 +40,12 @@ const Register = () => {
 			access: "customer",
 		})
 			.then((response) => {
-				console.log(response.data.message); // Log the entire response for debugging
+				console.log(response.data); // Log the entire response for debugging
 				if (
 					response.data.message ===
 					data.name + " added successfully"
 				) {
 					alert("Registration Successful");
-					window.location.href = "/login";
 				}
 			})
 			.catch((error) => {
@@ -54,6 +55,13 @@ const Register = () => {
 					alert("Email or Phone Number already exists");
 				}
 			});
+		if (refer_code != null) {
+			Axios.get(`${import.meta.env.VITE_APP_API_URL}/auth/getUserID`, {
+				phone: data.phone,
+			}).then((res) => {
+				console.log(res.data[0].id);
+			});
+		}
 	};
 
 	return (
@@ -137,6 +145,18 @@ const Register = () => {
 										<p className="text-danger">
 											{errors.password?.message}
 										</p>
+									</div>
+									<div className="auth-form__single-field space-mb--30">
+										<label htmlFor="refer_code">
+											Refer Code {"(Optional)"}
+										</label>
+										<input
+											type="text"
+											name="refer_code"
+											id="refer_code"
+											placeholder="Enter Refer Code"
+											{...register("refer_code")}
+										/>
 									</div>
 									<div className="auth-form__single-field space-mb--40">
 										<p className="auth-form__info-text">

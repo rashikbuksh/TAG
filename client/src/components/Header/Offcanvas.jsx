@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+import ReferCodeGenerator from "../../helpers/ReferCodeGenerator";
 import { api } from "../../lib/api";
 
 function Offcanvas(props) {
@@ -230,6 +231,16 @@ function Offcanvas(props) {
 							}
 						>
 							Contact Us
+						</Link>
+					</li>
+					<li>
+						<Link
+							to={
+								import.meta.env.VITE_API_PUBLIC_URL +
+								"/referPage"
+							}
+						>
+							Refer
 						</Link>
 					</li>
 					{userInfo.map((item) =>

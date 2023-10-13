@@ -41,7 +41,8 @@ const VerifyToken = (req, res, next) => {
 
 	if (
 		req?.originalUrl == "/auth/register" ||
-		req?.originalUrl == "/auth/registershopper"
+		req?.originalUrl == "/auth/registershopper" ||
+		req?.originalUrl == "/auth/getUserID"
 	) {
 		next();
 	} else {

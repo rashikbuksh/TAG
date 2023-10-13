@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2023 at 02:38 PM
+-- Generation Time: Oct 13, 2023 at 07:18 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -69,26 +69,28 @@ CREATE TABLE `customer_profile` (
   `review_count` int(11) DEFAULT NULL,
   `offer` varchar(255) DEFAULT NULL,
   `access` varchar(255) NOT NULL,
-  `active_status` tinyint(1) DEFAULT NULL
+  `active_status` tinyint(1) DEFAULT NULL,
+  `refer_code` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer_profile`
 --
 
-INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_name`, `password`, `phone`, `email`, `shipping_address`, `total_order`, `to_be_shipped`, `review_count`, `offer`, `access`, `active_status`) VALUES
-(1, 'hasib', '[value-3]', '[value-4]', '[value-5]', 'hasibarrafiulfahim', 'hasib1234', '[value-8]', 'hasibarrafiulfahim@gmail.com', '[value-10]', 0, 0, 0, '[value-14]', 'customer', 0),
-(2, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashikbuksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL),
-(3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545118', 'rashik1@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'shopper', NULL),
-(6, 'Rashik Buksh', NULL, NULL, NULL, 'rbr', 'rafsan123', '01709305072', 'rbr@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', NULL, NULL, NULL, NULL, 'customer', NULL),
-(11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper', NULL),
-(15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545112', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper', NULL),
-(16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL),
-(17, 'anikU', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684545113', 'anik123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper', 1),
-(18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL),
-(19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL),
-(20, 'TAG@admin.com', NULL, NULL, NULL, NULL, '$2b$10$1R4tRAPwHpmV6EnGtAStUeJZY8aj0Dt9NR.B2fjgNiXSYkmH5rm46', NULL, 'tag@admin.com', NULL, NULL, NULL, NULL, NULL, 'admin', NULL),
-(36, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$sAtGIF2DZL.hB8LTMCQ7ZOp2Zdzln6WmbhK7pCrFhEKz46bH/6AF.', '01684545111', 'rashik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL);
+INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_name`, `password`, `phone`, `email`, `shipping_address`, `total_order`, `to_be_shipped`, `review_count`, `offer`, `access`, `active_status`, `refer_code`) VALUES
+(1, 'hasib', '[value-3]', '[value-4]', '[value-5]', 'hasibarrafiulfahim', 'hasib1234', '[value-8]', 'hasibarrafiulfahim@gmail.com', '[value-10]', 0, 0, 0, '[value-14]', 'customer', 0, ''),
+(2, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashikbuksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, ''),
+(3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545118', 'rashik1@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'shopper', NULL, ''),
+(6, 'Rashik Buksh', NULL, NULL, NULL, 'rbr', 'rafsan123', '01709305072', 'rbr@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', NULL, NULL, NULL, NULL, 'customer', NULL, ''),
+(11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper', NULL, ''),
+(15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545112', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper', NULL, ''),
+(16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, ''),
+(17, 'anikU', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684545113', 'anik123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper', 1, '9ikaktaf3rp'),
+(18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, ''),
+(19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, ''),
+(20, 'TAG@admin.com', NULL, NULL, NULL, NULL, '$2b$10$1R4tRAPwHpmV6EnGtAStUeJZY8aj0Dt9NR.B2fjgNiXSYkmH5rm46', NULL, 'tag@admin.com', NULL, NULL, NULL, NULL, NULL, 'admin', NULL, ''),
+(36, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$sAtGIF2DZL.hB8LTMCQ7ZOp2Zdzln6WmbhK7pCrFhEKz46bH/6AF.', '01684545111', 'rashik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, ''),
+(48, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$p.NA9WD2M7T/HFzL1kX.wee8biKelsaoe7qNWl/zXHfeHHG2GVErq', '01684545121', 'anik1234567@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, 'kmigen4lv1');
 
 -- --------------------------------------------------------
 
@@ -144,7 +146,11 @@ INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `
 (21, 28, 17, '2023-10-10T13:36:49.895Z', '77', '', '', 1, 0, 0, 0, 'regular', 'Vanity Bag Starting From TK.8.05', ''),
 (22, 29, 17, '2023-10-10T14:58:58.255Z', '2', '', '', 0, 1, 0, 0, 'regular', 'Potato Chips  Starting From TK.34.30', ''),
 (23, 30, 17, '2023-10-10T15:32:38.534Z', '3', '', '', 0, 0, 0, 0, 'regular', '7 up Normal Starting From TK.41.71', ''),
-(24, 31, 17, '2023-10-10T15:33:13.701Z', '40', '', '', 0, 0, 0, 0, 'regular', '7 up Verified Starting From TK.84.00', '');
+(24, 31, 17, '2023-10-10T15:33:13.701Z', '40', '', '', 0, 3, 0, 0, 'regular', '7 up Verified Starting From TK.84.00', ''),
+(25, NULL, 20, '2023-10-13T16:46:31.768Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'Admin Post', '1697215591745__20230807_154229.jpg'),
+(26, 32, 17, '2023-10-13T17:13:43.052Z', '10', '', '', 0, 0, 0, 0, 'regular', '7 up Verified Starting From TK.180.90', ''),
+(27, 33, 17, '2023-10-13T17:14:21.853Z', '10', '', '', 0, 0, 0, 0, 'regular', '7 up Normal Starting From TK.180.00', ''),
+(28, 34, 17, '2023-10-13T17:14:48.018Z', '0', '', '', 0, 0, 0, 0, 'regular', 'Potato Chips  Starting From TK.10', '');
 
 -- --------------------------------------------------------
 
@@ -168,7 +174,10 @@ INSERT INTO `news_comment` (`id`, `news_id`, `commented_by`, `comment`, `news_ti
 (31, 19, 17, 'Excellent', '9/25/2023, 10:15:10 PM'),
 (36, 20, 17, 'Not Interested', '10/10/2023, 7:39:13 PM'),
 (37, 20, 17, 'Nice', '10/10/2023, 7:39:15 PM'),
-(38, 22, 20, 'Excellent', '10/11/2023, 5:25:11 PM');
+(38, 22, 20, 'Excellent', '10/11/2023, 5:25:11 PM'),
+(39, 24, 17, 'Excellent', '10/13/2023, 8:41:08 PM'),
+(40, 24, 17, 'Nice', '10/13/2023, 8:41:24 PM'),
+(41, 24, 17, 'cool', '10/13/2023, 8:42:14 PM');
 
 -- --------------------------------------------------------
 
@@ -211,7 +220,9 @@ CREATE TABLE `notification` (
 --
 
 INSERT INTO `notification` (`id`, `notification_content`, `notification_time`, `not_from`, `not_to`, `status`) VALUES
-(1, 'Not asdasdasdsd', '12-12-12', 3, 3, 0);
+(1, 'Not asdasdasdsd', '12-12-12', 3, 3, 0),
+(2, 'You have a new order. Order Number is #29.', '2023-10-12 19:40:12', 3, 17, 0),
+(3, 'You have a new order. Order Number is #30.', '2023-10-13 16:59:57', 17, 16, 0);
 
 -- --------------------------------------------------------
 
@@ -235,7 +246,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `sku`, `name`, `image`, `short_description`, `full_description`, `category_id`, `isVerified`) VALUES
-(1, NULL, 'gg product', 'WelcomeScan.jpg', '10', '10 update', 3, NULL),
+(1, NULL, 'gg product', 'WelcomeScan.jpg', '10', '10 update', 3, 'verified'),
 (11, NULL, 'Alo Potato', '1689276807795__Welcome Scan.jpg', '10', '1010 updated', 1, NULL),
 (12, NULL, 'Vanity Bag', '1690478518635__Welcome Scan.jpg', 'Bag', 'Bag', 14, NULL),
 (13, NULL, 'sugar update', '1691920308947__Welcome Scan.jpg', '10', '10', 1, NULL),
@@ -279,7 +290,21 @@ INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, 
 (25, '8,14,15', '3,25,1', '0', 1393, '2,0,5', 'pending', 36, 3, NULL),
 (26, '1,4', '16,7', '0', 1496, '10,0', 'pending', 36, 11, NULL),
 (27, '17', '1', '0', 26, '0', 'pending', 36, 15, NULL),
-(28, '27', '1', '0', 33, '3', 'pending', 36, 17, NULL);
+(28, '27', '1', '0', 33, '3', 'pending', 36, 17, NULL),
+(29, '14', '2', '0', 50, '0', 'pending', 17, 3, NULL),
+(30, '26,29,31', '1,1,1', '0', 216, '2,2,40', 'pending', 16, 17, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `refer`
+--
+
+CREATE TABLE `refer` (
+  `id` int(11) NOT NULL,
+  `referred_by` int(11) NOT NULL,
+  `referred_to` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -317,7 +342,10 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (28, 'Vanity Bag', 35, 77, 67, 0, 0, 0, 12, 17, 0),
 (29, 'Potato Chips ', 35, 2, 434, 0, 0, 0, 17, 17, 0),
 (30, '7 up Normal', 43, 3, 1000, 0, 0, 0, 18, 17, 0),
-(31, '7 up Verified', 140, 40, 54, 0, 0, 0, 19, 17, 1);
+(31, '7 up Verified', 140, 40, 54, 0, 0, 0, 19, 17, 1),
+(32, '7 up Verified', 201, 10, 100, 0, 0, 0, 19, 17, 0),
+(33, '7 up Normal', 200, 10, 10, 0, 0, 0, 18, 17, 0),
+(34, 'Potato Chips ', 10, 0, 100, 0, 0, 0, 17, 17, 0);
 
 --
 -- Indexes for dumped tables
@@ -390,6 +418,12 @@ ALTER TABLE `product_order`
   ADD KEY `shopper_id` (`shopper_id`);
 
 --
+-- Indexes for table `refer`
+--
+ALTER TABLE `refer`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
@@ -411,7 +445,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `hero_slider`
@@ -423,13 +457,13 @@ ALTER TABLE `hero_slider`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `news_comment`
 --
 ALTER TABLE `news_comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `news_like`
@@ -441,7 +475,7 @@ ALTER TABLE `news_like`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -453,13 +487,19 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `refer`
+--
+ALTER TABLE `refer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Constraints for dumped tables

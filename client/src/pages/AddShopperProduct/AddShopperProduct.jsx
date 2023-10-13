@@ -112,7 +112,8 @@ const ShopperProduct = () => {
 				console.log(response.data.message);
 				if (response.data.message === user_id + " added successfully") {
 					// navigate to homepage
-					navigate("/home");
+					form.reset();
+					window.location.reload();
 				}
 			});
 	};

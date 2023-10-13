@@ -8,12 +8,22 @@ import {
 import AuthProvider from "./context/auth";
 import ProtectedRoutes from "./routes";
 
+import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
+import AdminStats from "./AdminComponents/AdminStats/AdminStats";
+import BestSellProduct from "./AdminComponents/BestSellProduct/BestSellProduct";
+import TagOrderHistory from "./AdminComponents/TagOrderHistory/TagOrderHistory";
+import TagUserOrderHistory from "./AdminComponents/TagOrderHistory/TagUserOrderHistory";
+import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
+import Allnews from "./AllNews/Allnews";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Offcanvas from "./components/Header/Offcanvas";
 import IndividualMessagePage from "./components/IndividualMessagePage/IndividualMessagePage";
+import LoadingPage from "./components/LodingPage/LoadingPage";
 import ShopkeeperProfileCV from "./components/ShopkeeperProfileCV/ShopkeeperProfileCV";
 import ShopkeepersProduct from "./components/ShopkeepersProduct/ShopkeepersProduct";
+import TagUser from "./components/TagUser/TagUser";
+import ReferCodeGenerator from "./helpers/ReferCodeGenerator";
 import { DefaultLayout } from "./layouts";
 import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
@@ -23,15 +33,6 @@ import OrderShopper from "./pages/OrderShopper/OrderShopper";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
-import AdminStats from "./AdminComponents/AdminStats/AdminStats";
-import TagUser from "./components/TagUser/TagUser";
-import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
-import BestSellProduct from "./AdminComponents/BestSellProduct/BestSellProduct";
-import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
-import Allnews from "./AllNews/Allnews";
-import TagOrderHistory from "./AdminComponents/TagOrderHistory/TagOrderHistory";
-import TagUserOrderHistory from "./AdminComponents/TagOrderHistory/TagUserOrderHistory";
-import LoadingPage from "./components/LodingPage/LoadingPage";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -226,6 +227,13 @@ const PROTECTED_ROUTES = [
 		element: IndividualMessagePage,
 		access: ["admin", "customer", "shopper"],
 	},
+	{
+		id: 29,
+		name: "Refer Page",
+		path: "/referPage",
+		element: ReferCodeGenerator,
+		access: ["admin", "customer", "shopper"],
+	},
 ];
 
 const PUBLIC_ROUTES = [
@@ -380,7 +388,13 @@ function App() {
 								key={route?.path}
 								path={route?.path}
 								element={
-									<Suspense fallback={<div><LoadingPage></LoadingPage></div>}>
+									<Suspense
+										fallback={
+											<div>
+												<LoadingPage></LoadingPage>
+											</div>
+										}
+									>
 										<route.element />
 									</Suspense>
 								}
@@ -393,7 +407,13 @@ function App() {
 							key={route?.path}
 							path={route?.path}
 							element={
-								<Suspense fallback={<div><LoadingPage></LoadingPage></div>}>
+								<Suspense
+									fallback={
+										<div>
+											<LoadingPage></LoadingPage>
+										</div>
+									}
+								>
 									<route.element />
 								</Suspense>
 							}
@@ -406,4 +426,4 @@ function App() {
 }
 
 export default App;
-export { PROTECTED_ROUTES, ADMIN_ROUTES };
+export { ADMIN_ROUTES, PROTECTED_ROUTES };
