@@ -44,7 +44,7 @@ const Notification = () => {
 						<Link
 							to={import.meta.env.VITE_API_PUBLIC_URL + `/order`}
 						>
-							<div
+							<div className={`${notification[0].id===single.id?"text-red-600":""}`}
 								dangerouslySetInnerHTML={{
 									__html: single.notification_content,
 								}}
