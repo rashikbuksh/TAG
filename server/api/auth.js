@@ -28,11 +28,11 @@ const read = [
 		query: `SELECT refer_code from customer_profile where id = ?`,
 		param: ["id"],
 	},
-	{
-		uri: "/auth/getUserID",
-		query: `SELECT id from customer_profile where phone=?`,
-		body: ["phone"],
-	},
+	// {
+	// 	uri: "/auth/getUserID",
+	// 	query: `SELECT id from customer_profile where phone=?`,
+	// 	body: ["phone"],
+	// },
 ];
 
 const add = [

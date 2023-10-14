@@ -29,8 +29,6 @@ const ReferCodeGenerator = () => {
 		api.post(`/auth/addReferCode`, {
 			refer_code: referCode,
 			id: id,
-		}).then((res) => {
-			console.log(res.data);
 		});
 	};
 
