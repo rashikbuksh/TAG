@@ -37,6 +37,7 @@ const ShopperProduct = () => {
 
 	useEffect(() => {
 		api.get(`/product/getproduct`).then((response) => {
+			console.log(response, "40");
 			setProductNames(response.data);
 		});
 	}, []);
@@ -118,12 +119,24 @@ const ShopperProduct = () => {
 			});
 	};
 	const [productImage, setProductImage] = useState();
+	const [productPrice, setProductPrice] = useState(null);
+	const [productquantity, setProductquantity] = useState();
+
+	// const findProductPrice=(id)=>{
+
+	// 	const price=productNames.find(product.id===id)
+	// }
+	console.log(productPrice, productquantity);
 
 	const setproductvalue = (e) => {
+		console.log(e);
 		var product = e.target.value.split("||--");
+		console.log(product, "prod frm");
 		form.setValue("product_id", product[0]);
 		form.setValue("name", product[1]);
 		setProductImage(product[2]);
+		setProductPrice(product[3]);
+		setProductquantity(product[4]);
 	};
 
 	return (
@@ -152,7 +165,11 @@ const ShopperProduct = () => {
 												"||--" +
 												product.name +
 												"||--" +
-												product.image
+												product.image +
+												"||--" +
+												product.price +
+												"||--" +
+												product.quantity
 											}
 										>
 											{product.name}
@@ -172,7 +189,7 @@ const ShopperProduct = () => {
 							)}
 						</div>
 						<div className="flex items-center gap-2">
-							<div className="  my-2 px-1 py-1">
+							<div className="my-2 px-1 py-1">
 								<label htmlFor="price">Price</label>
 								<input
 									className="input w-full"
@@ -180,7 +197,18 @@ const ShopperProduct = () => {
 									type="number"
 									name="price"
 									id="price"
-									placeholder="Enter Price"
+									max={
+										productPrice &&
+										parseFloat(productPrice) > 0
+											? parseFloat(productPrice)
+											: null
+									}
+									placeholder={
+										productPrice !== "null" &&
+										productPrice !== "0" && productPrice !== null
+											? productPrice
+											: "Enter Price"
+									}
 								/>
 								<p className="text-danger">
 									{errors.price?.message}
@@ -202,14 +230,14 @@ const ShopperProduct = () => {
 							</div>
 						</div>
 						<div className="  my-2 px-1 py-1">
-							<label htmlFor="product_count">Product Count</label>
+							<label htmlFor="product_count">Product Quantity</label>
 							<input
 								className="input w-full"
 								{...register("product_count")}
 								type="number"
 								name="product_count"
 								id="product_count"
-								placeholder="Enter Product Count"
+								placeholder="Enter Product Quantity"
 							/>
 							<p className="text-danger">
 								{errors.product_count?.message}

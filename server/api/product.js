@@ -19,7 +19,7 @@ const add = [
 const read = [
   {
     uri: "/product/getproduct",
-    query: `SELECT id,name,image FROM product`,
+    query: `SELECT id,name,image,price,quantity FROM product`,
   },
   {
     uri: "/product/getallproduct",
