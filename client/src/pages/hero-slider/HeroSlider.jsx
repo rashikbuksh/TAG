@@ -155,6 +155,7 @@ const HeroSlider = () => {
 											name="image"
 											id="image"
 											placeholder="Enter image"
+											className="file-input file-input-bordered file-input-success w-full "
 											onChange={(e) => {
 												setFile(e.target.files[0]);
 											}}

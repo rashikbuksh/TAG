@@ -8,8 +8,6 @@ import { api } from "../../lib/api";
 
 const AddProductForm = () => {
 	const [categoryNames, setCategoryNames] = useState([]);
-
-	// file upload
 	const [Image, setImage] = useState(null);
 
 	const handleImage = (e) => {
@@ -25,10 +23,10 @@ const AddProductForm = () => {
 		});
 	}, []);
 
-	const addProductScema = yup.object({
+	const addProductSchema = yup.object({
 		name: yup.string().required("Name required"),
-		short_description: yup.string().required("short_description required"),
-		full_description: yup.string().required("full_description required"),
+		short_description: yup.string().required("Short description required"),
+		full_description: yup.string().required("Full description required"),
 		image: yup
 			.mixed()
 			.required("Category Picture is required")
@@ -39,7 +37,41 @@ const AddProductForm = () => {
 				}
 				return false;
 			}),
+		product_varification: yup
+			.string()
+			.required("Product Verification required"),
+		price: yup
+			.string() // Ensure that the input is a string
+			.when(["product_varification"], (product_varification, schema) => {
+				return product_varification == "verified"
+					? schema.required("Price is required")
+							.test(
+								"is-number",
+								"Price must be a number",
+								(value) => {
+									if (!value) return false; // Check if the value is empty
+									return !isNaN(Number(value)); // Check if the value can be converted to a number
+								}
+							)
+					: schema;
+			}),
+		quantity: yup
+			.string() // Ensure that the input is a string
+			.when(["product_varification"], (product_varification, schema) => {
+				return product_varification == "verified"
+					? schema.required("Quantity is required")
+							.test(
+								"is-number",
+								"Quantity must be a number",
+								(value) => {
+									if (!value) return false; // Check if the value is empty
+									return !isNaN(Number(value)); // Check if the value can be converted to a number
+								}
+							)
+					: schema;
+			}),
 	});
+
 	const form = useForm({
 		defaultValues: {
 			name: "",
@@ -47,20 +79,21 @@ const AddProductForm = () => {
 			short_description: "",
 			full_description: "",
 			category_id: "",
+			product_varification: "",
+			price: "",
+			quantity: "",
 		},
-		resolver: yupResolver(addProductScema),
+		resolver: yupResolver(addProductSchema),
 	});
 
 	const { register, handleSubmit, formState } = form;
 	const { errors } = formState;
 
 	const changedCategory = (e) => {
-		console.log(e.target.value);
 		form.setValue("category_id", e.target.value);
 	};
 
 	const onSubmit = async (data) => {
-		// console.log(data.product_varification);
 		const formData = new FormData();
 		formData.append("uploadFiles", Image);
 
@@ -78,7 +111,6 @@ const AddProductForm = () => {
 				},
 			}
 		).then((response) => {
-			console.log(response.data);
 			if (response.data.msg === "File Uploaded") {
 				ImageName = response.data.productImage;
 			}
@@ -91,30 +123,33 @@ const AddProductForm = () => {
 			full_description: data.full_description,
 			category_id: Number(data.category_id),
 			isVerified: data.product_varification,
+			price: data.price,
+			quantity: data.quantity,
 		}).then((response) => {
 			if (response.data.message === data.name + " added successfully") {
-				alert("Product Added Successful");
+				form.reset()
+				alert("Product Added Successfully");
 			}
 		});
 	};
+
 	return (
-		<div className=" auth-page-header mt-3 rounded-md my-24">
-			{/* auth page header */}
+		<div className=" auth-page-header my-24 mt-3 rounded-md">
 			<div className="auth-page-header space-mb--50 w-full">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<h3 className="auth-page-header__title">Add Product</h3>
+							<h3 className="auth-page-header__title">
+								Add Product
+							</h3>
 						</div>
 					</div>
 				</div>
 			</div>
-			{/* auth page body */}
 			<div className="auth-page-body rounded-md">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							{/* Auth form */}
 							<div className="auth-form rounded-md">
 								<form onSubmit={handleSubmit(onSubmit)}>
 									<div className="auth-form__single-field space-mb--30">
@@ -170,6 +205,7 @@ const AddProductForm = () => {
 											name="image"
 											id="image"
 											accept="image/*"
+											className="file-input file-input-bordered file-input-success w-full "
 											onChange={handleImage}
 										/>
 										<p className="text-danger">
@@ -177,7 +213,7 @@ const AddProductForm = () => {
 										</p>
 									</div>
 
-									<div className="auth-form__single-field space-mb--30 ">
+									<div className="auth-form__single-field space-mb--30">
 										<label htmlFor="short_description">
 											Short Description
 										</label>
@@ -209,31 +245,73 @@ const AddProductForm = () => {
 										</p>
 									</div>
 
-								
 									<div className="auth-form__single-field space-mb--30 my-4">
-										<label htmlFor="Product_verification">
+										<label htmlFor="product_varification">
 											Product Verification
 										</label>
+
+										<br />
 										<select
 											{...register(
 												"product_varification"
 											)}
-											className="select select-bordered w-full max-w-xs"
+											className="select select-bordered w-full "
+											placeholder="Enter Full Varification"
 										>
 											<option disabled selected>
 												Select One
 											</option>
-											<option value={"verified"}>
+											<option value="verified">
 												Verified
 											</option>
-											<option value={"notVerified"}>
+											<option value="notVerified">
 												Not Verified
 											</option>
 										</select>
 										<p className="text-danger">
-											{errors.full_description?.message}
+											{
+												errors.product_varification
+													?.message
+											}
 										</p>
 									</div>
+
+									{form.watch("product_varification") ===
+										"verified" && (
+										<>
+											<div className="auth-form__single-field space-mb--30">
+												<label htmlFor="price">
+													Price
+												</label>
+												<input
+													{...register("price")}
+													type="number"
+													name="price"
+													id="price"
+													placeholder="Enter Price"
+												/>
+												<p className="text-danger">
+													{errors.price?.message}
+												</p>
+											</div>
+
+											<div className="auth-form__single-field space-mb--30">
+												<label htmlFor="quantity">
+													Quantity
+												</label>
+												<input
+													{...register("quantity")}
+													type="number"
+													name="quantity"
+													id="quantity"
+													placeholder="Enter Quantity"
+												/>
+												<p className="text-danger">
+													{errors.quantity?.message}
+												</p>
+											</div>
+										</>
+									)}
 
 									<button className="auth-form__button">
 										Add Product
@@ -244,8 +322,8 @@ const AddProductForm = () => {
 					</div>
 				</div>
 			</div>
-			{/* auth page footer */}
 		</div>
 	);
 };
+
 export default AddProductForm;
