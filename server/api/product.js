@@ -1,57 +1,59 @@
 const add = [
-	{
-		uri: "/product/addproduct",
-		query: `INSERT INTO product( name, image, short_description, full_description, category_id,isVerified) VALUES (?, ?, ?, ?, ?,?)`,
-		body: [
-			"name",
-			"image",
-			"short_description",
-			"full_description",
-			"category_id",
-			"isVerified"
-		],
-		msg: "name",
-	},
+  {
+    uri: "/product/addproduct",
+    query: `INSERT INTO product( name, image, short_description, full_description, category_id,isVerified,price,quantity) VALUES (?, ?, ?, ?, ?,?,?,?)`,
+    body: [
+      "name",
+      "image",
+      "short_description",
+      "full_description",
+      "category_id",
+      "isVerified",
+      "price",
+      "quantity",
+    ],
+    msg: "name",
+  },
 ];
 
 const read = [
-	{
-		uri: "/product/getproduct",
-		query: `SELECT id,name,image FROM product`,
-	},
-	{
-		uri: "/product/getallproduct",
-		query: `SELECT * FROM product`,
-	},
-	{
-		uri: "/product/getSearchedValue/:searchValue",
-		query: `SELECT * FROM product, WHERE name LIKE  ? `,
-		param:[`% searchValue %`]
-	},
-	{
-		uri: "/product/getproductimage/:productimageid",
-		query: `SELECT image FROM product WHERE id = ?`,
-		param: ["productimageid"],
-	},
+  {
+    uri: "/product/getproduct",
+    query: `SELECT id,name,image FROM product`,
+  },
+  {
+    uri: "/product/getallproduct",
+    query: `SELECT * FROM product`,
+  },
+  {
+    uri: "/product/getSearchedValue/:searchValue",
+    query: `SELECT * FROM product, WHERE name LIKE  ? `,
+    param: [`% searchValue %`],
+  },
+  {
+    uri: "/product/getproductimage/:productimageid",
+    query: `SELECT image FROM product WHERE id = ?`,
+    param: ["productimageid"],
+  },
 ];
 const change = [
-	{
-		uri: "/product/update_varification/:id",
-		query: `UPDATE product SET isVerified = ? WHERE id = ?`,
-		body:["isVerified"],
-		param: ["id"],
-	},
-	{
-		uri: "/product/update_product/:id",
-		query: `UPDATE product SET name=?, short_description=?,full_description=? WHERE id = ?`,
-		body:["name","short_description","full_description",],
-		param: ["id"],
-	},
+  {
+    uri: "/product/update_varification/:id",
+    query: `UPDATE product SET isVerified = ? WHERE id = ?`,
+    body: ["isVerified"],
+    param: ["id"],
+  },
+  {
+    uri: "/product/update_product/:id",
+    query: `UPDATE product SET name=?, short_description=?,full_description=? WHERE id = ?`,
+    body: ["name", "short_description", "full_description"],
+    param: ["id"],
+  },
 ];
 
 // Export modules
 module.exports = Object.freeze({
-	add,
-	read,
-	change
+  add,
+  read,
+  change,
 });
