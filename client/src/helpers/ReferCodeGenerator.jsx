@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaClipboardCheck } from "react-icons/fa";
 import { api } from "../lib/api";
+import { useAuth } from "../context/auth";
 
 const ReferCodeGenerator = () => {
 	const [copySuccess, setCopySuccess] = useState(null);
@@ -33,25 +34,36 @@ const ReferCodeGenerator = () => {
 	};
 
 	useEffect(() => {
-		api.get(`/auth/getRefer/${id}}`).then((res) => {
+		api.get(`/auth/getRefer/${id}`).then((res) => {
 			console.log(res.data[0].refer_code);
 			setReferCode(res.data[0].refer_code);
 		});
 	}, []);
+
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120 my-24">
-			<button
-				onClick={() => generateReferCode()}
-				className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-			>
-				Generate Refer Code
-			</button>
-			<br />
-			<br />
-			<br />
-			<p>
-				{referCode} <FaClipboardCheck onClick={copyToClipboard} />
-			</p>
+		<div className="container mx-auto mt-24">
+			<div className="mx-auto max-w-3xl rounded bg-white p-8 shadow-lg">
+				<button
+					disabled={referCode}
+					onClick={() => generateReferCode()}
+					className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+				>
+					Generate Refer Code
+				</button>
+				<br />
+				<br />
+				<div className="text-lg flex justify-between items-center">
+					<span> {referCode} </span>
+
+					<FaClipboardCheck
+						onClick={copyToClipboard}
+						className="ml-2 cursor-pointer text-3xl text-blue-500"
+					/>
+				</div>
+				{copySuccess && (
+					<p className="mt-2 text-green-500">{copySuccess}</p>
+				)}
+			</div>
 		</div>
 	);
 };

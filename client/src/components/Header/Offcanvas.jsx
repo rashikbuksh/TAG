@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import ReferCodeGenerator from "../../helpers/ReferCodeGenerator";
 import { api } from "../../lib/api";
+import { FaUserPlus } from "react-icons/fa";
 
 function Offcanvas(props) {
 	const user = localStorage.getItem("user-id");
@@ -234,6 +235,9 @@ function Offcanvas(props) {
 						</Link>
 					</li>
 					<li>
+					<span className="icon">
+							<FaUserPlus className="text-xl"></FaUserPlus>
+						</span>
 						<Link
 							to={
 								import.meta.env.VITE_API_PUBLIC_URL +
