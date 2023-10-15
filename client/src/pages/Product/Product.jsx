@@ -25,11 +25,10 @@ const Product = () => {
 	const dispatch = useDispatch();
 
 	const [productStock, setProductStock] = useState(0);
-	
+
 	const [prods, setProds] = useState([]);
-	
-	
-	console.log(prods,"productStock");
+
+	console.log(prods, "productStock");
 	const [shopperName, setShopperName] = useState("");
 
 	useEffect(() => {
@@ -42,7 +41,7 @@ const Product = () => {
 				alert(error);
 			});
 	}, [id]);
-	console.log(prods ,"loggged productjs");
+	console.log(prods, "loggged productjs");
 	const { cartItems } = useSelector((state) => state.cart);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 	const wishlistItem = wishlistItems.find((item) => item.id === id);
@@ -142,6 +141,59 @@ const Product = () => {
 								</div>
 							</div>
 						</div>
+						<div className="shop-product-button">
+							{user.access === "admin" ? (
+								<button
+									disabled
+									onClick={() => {
+										prods.quantity = 0;
+										if (checkIfInCart(cartItems, prods)) {
+											dispatch(
+												increaseQuantityofProd(prods)
+											);
+										} else {
+											dispatch(addToCart(prods));
+										}
+									}}
+									className=" btn  btn-success btn-block rounded-none"
+								>
+									Add To Cart{" "}
+								</button>
+							) : user.access === "shopper" ? (
+								<button
+									disabled
+									onClick={() => {
+										prods.quantity = 0;
+										if (checkIfInCart(cartItems, prods)) {
+											dispatch(
+												increaseQuantityofProd(prods)
+											);
+										} else {
+											dispatch(addToCart(prods));
+										}
+									}}
+									className=" btn  btn-success btn-block rounded-none"
+								>
+									Add To Cart{" "}
+								</button>
+							) : (
+								<button
+									onClick={() => {
+										prods.quantity = 0;
+										if (checkIfInCart(cartItems, prods)) {
+											dispatch(
+												increaseQuantityofProd(prods)
+											);
+										} else {
+											dispatch(addToCart(prods));
+										}
+									}}
+									className=" btn  btn-success btn-block rounded-none"
+								>
+									Add To Cart{" "}
+								</button>
+							)}
+						</div>
 					</div>
 				);
 			})}
@@ -193,43 +245,7 @@ const Product = () => {
 				</div>
 			</div>
 			{/* shop product button */}
-			<div className="shop-product-button">
-				<button
-					className="wishlist"
-					disabled={wishlistItem !== undefined}
-					onClick={() => dispatch(addToWishlist(prods))}
-				>
-					{wishlistItem !== undefined
-						? "ADDED TO WISHLIST"
-						: "ADD TO WISHLIST"}
-				</button>
-				{productStock && productStock > 0 ? (
-					prods.map((prod) => {
-						return (
-							<button
-								key={prod.id}
-								className="cart"
-								onClick={() => {
-									if (checkIfInCart(cartItems, prod)) {
-										dispatch(increaseQuantityofProd(prod));
-									} else {
-										dispatch(addToCart(prod));
-									}
-								}}
-								disabled={productCartQty >= productStock}
-							>
-								{productCartQty >= productStock
-									? "STOCK END"
-									: "ADD TO CART"}
-							</button>
-						);
-					})
-				) : (
-					<button className="cart" disabled>
-						OUT OF STOCK
-					</button>
-				)}
-			</div>
+
 			{/*====================  End of product content  ====================*/}
 		</div>
 	);

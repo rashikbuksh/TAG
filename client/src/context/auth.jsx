@@ -9,6 +9,7 @@ const AuthContext = createContext({});
 const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [loginError,setLoginError]=useState("")
 
 	const [authCookie, updateAuthCookie, removeAuthCookie] = useCookie("auth");
 	const [userCookie, updateUserCookie, removeUserCookie] = useCookie("user");
@@ -31,6 +32,12 @@ const AuthProvider = ({ children }) => {
 				password: data.password,
 			});
 			console.log("response", res);
+			console.log(res.data.message);
+			if (res.data.message) {
+
+				setLoginError(res.data.message)
+			}
+
 			const { token, user: loginUser } = res?.data;
 
 			updateAuthCookie(token || "");
@@ -45,6 +52,9 @@ const AuthProvider = ({ children }) => {
 				localStorage.setItem("user-id", loginUser?.id);
 				if (loginUser.access === "admin") {
 					window.location.href = "/admin/stat";
+				}
+				if (loginUser.access === "shopper") {
+					window.location.href = "/shopkeeperDashboard";
 				}
 				else{
 
@@ -64,7 +74,7 @@ const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ signed: !!user, user, loading, login, Logout }}
+			value={{ signed: !!user, user, loading, login, Logout,loginError }}
 			// value={{ signed: true, user, loading, Login, Logout }}
 		>
 			{children}

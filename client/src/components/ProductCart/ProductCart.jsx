@@ -8,7 +8,7 @@ import { api } from "../../lib/api";
 import MainProduct from "./MainProduct";
 
 const ProductCart = ({ product }) => {
-	console.log(product,"productCart");
+	// console.log(product,"productCart");
 	const shopper_id = product.shopper_id;
 
 	const [shopper, setShopper] = useState([]);

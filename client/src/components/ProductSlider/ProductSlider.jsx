@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCart from "../ProductCart/ProductCart";
 
 const ProductSlider = ({ products }) => {
-  console.log(products, "products");
+  // console.log(products, "products");
 
   return (
     <div>

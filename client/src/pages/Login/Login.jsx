@@ -8,10 +8,11 @@ import { ReactSVG } from "react-svg";
 import * as yup from "yup";
 import { useAuth } from "../../context/auth";
 import Modal from "../../components/Modal/Modal";
+import { api } from "../../lib/api";
 
 const Login = () => {
 	const navigate = useNavigate();
-	const { user, login, signed } = useAuth();
+	const { user, login, signed, loginError } = useAuth();
 	const [isOpen, setIsOpen] = useState(false);
 	const loginSchema = yup.object().shape({
 		email: yup
@@ -41,32 +42,15 @@ const Login = () => {
 		}
 	}, [signed, user, navigate]);
 
-	const onSubmit =  (data) => {
+	const onSubmit = (data) => {
 		login(data);
-
 		
-		// Axios.post(
-		// 	`${import.meta.env.VITE_APP_API_URL}/auth/verify_login`,{
-		// 		data
-		// 	}
-		// ).then((response) => {
-		// 	if (response.data[0]?.id === undefined) {
-		// 		alert("Invalid Credentials");
-		// 		window.location.href = "/login";
-		// 	} else {
-		// 		localStorage.setItem("user-id", response.data[0]?.id);
-		// 		if (response.data[0]?.access === "shopper") {
-		// 			window.location.href = "/shopkeeperDashboard";
-		// 		} else {
-		// 			window.location.href = "/home";
-		// 		}
-		// 	}
-		// });
 	};
 
 	const handelOPenLoginMOdal = () => {
 		setIsOpen(!isOpen);
 	};
+	
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
 			{/* auth page header */}
@@ -125,11 +109,18 @@ const Login = () => {
 											{errors.password?.message}
 										</p>
 									</div>
+									{loginError && (
+										<div>
+											<p className="text-error">
+												{loginError}
+											</p>
+										</div>
+									)}
 									<div className="my-5">
 										<p className="auth-form__info-text">{`You don't have any account?`}</p>
 										<p
 											onClick={handelOPenLoginMOdal}
-											className="cursor-pointer text-green-600 font-bold"
+											className="cursor-pointer font-bold text-green-600"
 										>
 											Sign up Now
 										</p>
@@ -139,10 +130,11 @@ const Login = () => {
 										isOpen={isOpen}
 										setIsOpen={setIsOpen}
 									>
-										<div className="auth-form__single-field space-mb--40 p-5 border m-2 rounded-md">
+										<div className="auth-form__single-field space-mb--40 m-2 rounded-md border p-5">
 											<p className="auth-form__info-text text-base">
 												Sign up as a Customer? <br />
-												<Link className="text-green-600 font-bold"
+												<Link
+													className="font-bold text-green-600"
 													to={
 														import.meta.env
 															.VITE_API_PUBLIC_URL +
@@ -155,7 +147,8 @@ const Login = () => {
 											<div className="divider"></div>
 											<p className="auth-form__info-text text-base">
 												Sign up as a Shopper? <br />
-												<Link className="text-green-600 font-bold"
+												<Link
+													className="font-bold text-green-600"
 													to={
 														import.meta.env
 															.VITE_API_PUBLIC_URL +
