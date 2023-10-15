@@ -26,11 +26,6 @@ const read = [
     query: `SELECT * FROM product`,
   },
   {
-    uri: "/product/getSearchedValue/:searchValue",
-    query: `SELECT * FROM product, WHERE name LIKE  ? `,
-    param: [`% searchValue %`],
-  },
-  {
     uri: "/product/getproductimage/:productimageid",
     query: `SELECT image FROM product WHERE id = ?`,
     param: ["productimageid"],

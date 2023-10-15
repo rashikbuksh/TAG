@@ -114,3 +114,14 @@ app.post("/auth/verify_login", (req, res) => {
 		);
 	});
 });
+
+app.post("/auth/getUserID", (req, res) => {
+
+	const { phone } = req?.body;
+	console.log("phone", phone);
+
+	const query = `SELECT id from customer_profile where phone=?`;
+
+	ExecuteQuery(res, query, [phone]);
+	return res;
+});

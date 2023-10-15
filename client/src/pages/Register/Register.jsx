@@ -40,12 +40,22 @@ const Register = () => {
 			access: "customer",
 		})
 			.then((response) => {
-				console.log(response.data); // Log the entire response for debugging
+				console.log(response);
 				if (
 					response.data.message ===
-					data.name + " added successfully"
+					data.phone
 				) {
 					alert("Registration Successful");
+					if (data.refer_code != null) {
+						const phone = data.phone;
+						console.log("phone", phone);
+						console.log("refer code", data.refer_code);
+						Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/getUserID`,
+						{phone: phone},
+						).then((response) => {
+							console.log(response.data[0].id);
+						});
+					}
 				}
 			})
 			.catch((error) => {
@@ -55,13 +65,7 @@ const Register = () => {
 					alert("Email or Phone Number already exists");
 				}
 			});
-		if (refer_code != null) {
-			Axios.get(`${import.meta.env.VITE_APP_API_URL}/auth/getUserID`, {
-				phone: data.phone,
-			}).then((res) => {
-				console.log(res.data[0].id);
-			});
-		}
+		
 	};
 
 	return (

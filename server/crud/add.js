@@ -66,7 +66,7 @@ app.post("/auth/register", async (req, res) => {
 		`INSERT INTO customer_profile (name, email, phone, password, access) VALUES (?, ?, ?, ?, ?)`,
 		[name, email, phone, hashPassword, access],
 		"add",
-		`${name} added successfully`
+		`${phone}`
 	);
 });
 
