@@ -21,7 +21,11 @@ const Modal = ({ isOpen, setIsOpen, title, children, setcommentId }) => {
           </div> */}
 
 			<Transition appear show={isOpen} as={Fragment}>
-				<Dialog as="div" className="relative z-10 h-[70vh] w-full" onClose={closeModal}>
+				<Dialog
+					as="div"
+					className="relative z-10 h-[70vh] w-full"
+					onClose={closeModal}
+				>
 					<Transition.Child
 						as={Fragment}
 						enter="ease-out duration-300"
@@ -45,17 +49,25 @@ const Modal = ({ isOpen, setIsOpen, title, children, setcommentId }) => {
 								leaveFrom="opacity-100 scale-100"
 								leaveTo="opacity-0 scale-95"
 							>
-								<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-3 px-2 text-left align-middle shadow-xl transition-all">
+								<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white px-2 py-3 text-left align-middle shadow-xl transition-all">
 									<Dialog.Title
 										as="h3"
 										className="text-lg font-medium leading-6 text-gray-900"
 									>
-										<div className="flex items-center justify-between">
-                                            <p className="font-bold">{title}</p>
+										<div className={`flex items-center ${title?"justify-between":"justify-end"} `}>
+											{title && (
+												<p className="p-2 font-bold">
+													{title}
+												</p>
+											)}
 
-                                            <button onClick={closeModal} className="bg-gray-400 p-1 rounded-full"><FaX></FaX></button>
-                                        
-                                        </div>
+											<button
+												onClick={closeModal}
+												className="rounded-full bg-gray-400 p-1"
+											>
+												<FaX></FaX>
+											</button>
+										</div>
 									</Dialog.Title>
 									{children}
 								</Dialog.Panel>

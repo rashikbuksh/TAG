@@ -6,6 +6,7 @@ const { remove: Newslike } = require("../api/newslike");
 const { remove: Newscomment } = require("../api/newscomment");
 const { remove: ShopperProduct } = require("../api/shopperproduct");
 const { remove: News } = require("../api/news");
+const { remove: user } = require("../api/auth");
 
 const REMOVE_DATA = [
 	...JobEntry,
@@ -14,6 +15,7 @@ const REMOVE_DATA = [
 	...Newscomment,
 	...ShopperProduct,
 	...News,
+	...user
 ];
 
 REMOVE_DATA.forEach(({ uri, query, param, msg }) => {

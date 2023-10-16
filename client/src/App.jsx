@@ -33,6 +33,8 @@ import OrderShopper from "./pages/OrderShopper/OrderShopper";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
+import MakeModarator from "./AdminComponents/MakeModarator/MakeModarator";
+import ManageModarator from "./AdminComponents/ManageModarator/ManageModarator";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -275,7 +277,7 @@ const ADMIN_ROUTES = [
 		name: "AddCatagoryForm",
 		path: "/addcategory",
 		element: AddCatagoryForm,
-		access: ["admin"],
+		access: ["admin",],
 	},
 	{
 		id: 2,
@@ -352,6 +354,27 @@ const ADMIN_ROUTES = [
 		name: "All Newa",
 		path: "/allnews",
 		element: Allnews,
+		access: ["admin"],
+	},
+	{
+		id: 11,
+		name: "All Newa",
+		path: "/allnews",
+		element: Allnews,
+		access: ["admin"],
+	},
+	// {
+	// 	id: 12,
+	// 	name: "Make Modarator",
+	// 	path: "/makemodarator",
+	// 	element: MakeModarator,
+	// 	access: ["admin"],
+	// },
+	{
+		id: 12,
+		name: "Make Modarator",
+		path: "/manageModarator",
+		element: ManageModarator,
 		access: ["admin"],
 	},
 ];

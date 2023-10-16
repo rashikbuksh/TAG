@@ -321,18 +321,18 @@ const Cart = () => {
 															shopper.id
 														)
 													}
-													className="bg-red-400 px-3 py-1"
+													className=" btn btn-xs btn-error"
 												>
 													Cancel
 												</button>{" "}
-												<div className="border px-3 py-1">
+												<div className="border p-1 text-xs">
 													2 minutes remaining
 												</div>
 												<button
 													onClick={() =>
 														addOrder(shopper.id)
 													}
-													className="bg-green-400 px-3 py-1"
+													className="btn btn-xs btn-success"
 												>
 													Buy
 												</button>{" "}
@@ -342,7 +342,7 @@ const Cart = () => {
 												onClick={() =>
 													handleBuyClick(shopper.id)
 												}
-												className="bg-green-400 px-3 py-1"
+												className="btn btn-xs btn-success"
 											>
 												Buy
 											</button>

@@ -24,6 +24,10 @@ const read = [
 		query: `SELECT id, image, name,phone,email, user_name, access  from customer_profile where access = "customer"`,
 	},
 	{
+		uri: "/auth/getALLModaratorInfoForadmin",
+		query: `SELECT id, image, name,phone,email, user_name, access  from customer_profile where access = "modarator"`,
+	},
+	{
 		uri: "/auth/getRefer/:id",
 		query: `SELECT refer_code from customer_profile where id = ?`,
 		param: ["id"],
@@ -37,7 +41,7 @@ const read = [
 
 const add = [
 	// {
-	// 	uri: "/auth/register",
+	// 	uri: "/auth/modaratorRegister",
 	// 	query: `INSERT INTO customer_profile (name, email, password, access) VALUES (?, ?, ?, ?)`,
 	// 	body: ["name", "email", "password", "access"],
 	// 	msg: "name",
@@ -65,10 +69,18 @@ const change = [
 		msg: "id",
 	},
 ];
+const remove = [
+	{
+		uri: "/auth/deleteModarator/:id",
+		query: `DELETE FROM customer_profile WHERE id = ?`,
+		param: ["id"],
+	},
+];
 
 // Export modules
 module.exports = Object.freeze({
 	read,
 	add,
 	change,
+	remove
 });
