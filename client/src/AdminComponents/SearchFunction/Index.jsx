@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 
 const SearchFunction = ({ arr, setFilteredArr }) => {
 	const [trimmedValue, setTrimmedValue] = useState("");
@@ -46,7 +46,6 @@ const SearchFunction = ({ arr, setFilteredArr }) => {
 // Prop validation
 SearchFunction.propTypes = {
 	arr: PropTypes.array.isRequired,
-	filteredArr: PropTypes.array.isRequired,
 	setFilteredArr: PropTypes.func.isRequired,
 };
 

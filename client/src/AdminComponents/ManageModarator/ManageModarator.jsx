@@ -17,7 +17,6 @@ const ManageModarator = () => {
 				alert(error);
 			});
 	}, [tagModarator]);
-	console.log(tagModarator);
     const handelOpenModal=()=>{
         setIsOpen(!isOpen)
         

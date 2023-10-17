@@ -11,6 +11,8 @@ import ProtectedRoutes from "./routes";
 import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
 import AdminStats from "./AdminComponents/AdminStats/AdminStats";
 import BestSellProduct from "./AdminComponents/BestSellProduct/BestSellProduct";
+import MakeModarator from "./AdminComponents/MakeModarator/MakeModarator";
+import ManageModarator from "./AdminComponents/ManageModarator/ManageModarator";
 import TagOrderHistory from "./AdminComponents/TagOrderHistory/TagOrderHistory";
 import TagUserOrderHistory from "./AdminComponents/TagOrderHistory/TagUserOrderHistory";
 import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
@@ -33,8 +35,7 @@ import OrderShopper from "./pages/OrderShopper/OrderShopper";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
-import MakeModarator from "./AdminComponents/MakeModarator/MakeModarator";
-import ManageModarator from "./AdminComponents/ManageModarator/ManageModarator";
+import ModProtactedRoutes from "./routes/ModProtactedRoutes";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -65,7 +66,7 @@ const PROTECTED_ROUTES = [
 		name: "Home",
 		path: "/home",
 		element: Home,
-		access: ["admin", "customer", "shopper"],
+		access: ["admin", "customer", "shopper", "modarator"],
 	},
 	{
 		id: 5,
@@ -281,7 +282,7 @@ const ADMIN_ROUTES = [
 		name: "AddCatagoryForm",
 		path: "/addcategory",
 		element: AddCatagoryForm,
-		access: ["admin",],
+		access: ["admin"],
 	},
 	{
 		id: 2,
@@ -316,7 +317,7 @@ const ADMIN_ROUTES = [
 		name: "AllAdminProduct",
 		path: "/allAdminProduct",
 		element: AllProductAdmin,
-		access: ["admin", "customer", "shopper"],
+		access: ["admin"],
 	},
 	{
 		id: 7,
@@ -383,6 +384,30 @@ const ADMIN_ROUTES = [
 	},
 ];
 
+const MOD_ROUTES = [
+	{
+		id: 27,
+		name: "Admin Stats",
+		path: "/admin/stat",
+		element: AdminStats,
+		access: ["modarator"],
+	},
+	{
+		id: 1,
+		name: "AddCatagoryForm",
+		path: "/addcategory",
+		element: AddCatagoryForm,
+		access: ["modarator"],
+	},
+	{
+		id: 2,
+		name: "AddProductForm",
+		path: "/addproduct",
+		element: AddProductForm,
+		access: ["modarator"],
+	},
+];
+
 function App() {
 	const isadminPage = "admin";
 	return (
@@ -429,6 +454,26 @@ function App() {
 						))}
 					</Route>
 
+					<Route element={<ModProtactedRoutes />}>
+						{MOD_ROUTES?.map((route) => (
+							<Route
+								key={route?.path}
+								path={route?.path}
+								element={
+									<Suspense
+										fallback={
+											<div>
+												<LoadingPage></LoadingPage>
+											</div>
+										}
+									>
+										<route.element />
+									</Suspense>
+								}
+							/>
+						))}
+					</Route>
+
 					{PUBLIC_ROUTES?.map((route) => (
 						<Route
 							key={route?.path}
@@ -453,4 +498,4 @@ function App() {
 }
 
 export default App;
-export { ADMIN_ROUTES, PROTECTED_ROUTES };
+export { ADMIN_ROUTES, MOD_ROUTES, PROTECTED_ROUTES };
