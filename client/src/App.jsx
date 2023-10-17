@@ -35,7 +35,6 @@ import OrderShopper from "./pages/OrderShopper/OrderShopper";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
-import ModProtactedRoutes from "./routes/ModProtactedRoutes";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -384,30 +383,6 @@ const ADMIN_ROUTES = [
 	},
 ];
 
-const MOD_ROUTES = [
-	{
-		id: 27,
-		name: "Admin Stats",
-		path: "/admin/stat",
-		element: AdminStats,
-		access: ["modarator"],
-	},
-	{
-		id: 1,
-		name: "AddCatagoryForm",
-		path: "/addcategory",
-		element: AddCatagoryForm,
-		access: ["modarator"],
-	},
-	{
-		id: 2,
-		name: "AddProductForm",
-		path: "/addproduct",
-		element: AddProductForm,
-		access: ["modarator"],
-	},
-];
-
 function App() {
 	const isadminPage = "admin";
 	return (
@@ -454,26 +429,6 @@ function App() {
 						))}
 					</Route>
 
-					<Route element={<ModProtactedRoutes />}>
-						{MOD_ROUTES?.map((route) => (
-							<Route
-								key={route?.path}
-								path={route?.path}
-								element={
-									<Suspense
-										fallback={
-											<div>
-												<LoadingPage></LoadingPage>
-											</div>
-										}
-									>
-										<route.element />
-									</Suspense>
-								}
-							/>
-						))}
-					</Route>
-
 					{PUBLIC_ROUTES?.map((route) => (
 						<Route
 							key={route?.path}
@@ -498,4 +453,4 @@ function App() {
 }
 
 export default App;
-export { ADMIN_ROUTES, MOD_ROUTES, PROTECTED_ROUTES };
+export { ADMIN_ROUTES, PROTECTED_ROUTES };
