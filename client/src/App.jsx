@@ -248,6 +248,10 @@ const PUBLIC_ROUTES = [
 		element: Register,
 	},
 	{
+		path: "/register/:id",
+		element: Register,
+	},
+	{
 		path: "/registershopper",
 		element: RegisterShopper,
 	},

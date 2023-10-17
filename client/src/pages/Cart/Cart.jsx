@@ -20,6 +20,7 @@ const Cart = () => {
 	const [totals, setTotals] = useState({}); // Store totals for each shopper
 	const [productQuantities, setProductQuantities] = useState({});
 	const [productDiscounts, setProductDiscounts] = useState({});
+	
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -87,6 +88,7 @@ const Cart = () => {
 	}, [cartItems, buyStates]);
 
 	const addOrder = (shopperId) => {
+		
 		const productIds = cartItems
 			.filter((cartItem) => cartItem.shopper_id === shopperId)
 			.map((cartItem) => cartItem.id);

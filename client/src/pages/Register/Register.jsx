@@ -3,12 +3,16 @@ import Axios from "axios";
 import Cookies from "js-cookie";
 import React from "react";
 import { get, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import * as yup from "yup";
 import { api } from "../../lib/api";
 
 const Register = () => {
+	const navigate=useNavigate()
+	const {id}=useParams()
+	
+	console.log(id);
 	const registerSchema = yup.object().shape({
 		name: yup.string().required("Name is required"),
 		emailAddress: yup
@@ -45,17 +49,12 @@ const Register = () => {
 					response.data.message ===
 					data.phone
 				) {
-					alert("Registration Successful");
-					if (data.refer_code != null) {
-						const phone = data.phone;
-						console.log("phone", phone);
-						console.log("refer code", data.refer_code);
-						Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/getUserID`,
-						{phone: phone},
-						).then((response) => {
-							console.log(response.data[0].id);
-						});
+					navigate("/login")
+					if (id) {
+						localStorage.setItem('ref_c',id)
 					}
+					
+					alert("Registration Successful");
 				}
 			})
 			.catch((error) => {
