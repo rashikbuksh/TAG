@@ -4,7 +4,7 @@ import IndividualMessagePage from '../IndividualMessagePage/IndividualMessagePag
 
 const MessageModal = ({isOpen,setIsOpen,title}) => {
     return (
-        <Modal isOpen={isOpen} setIsOpen={setIsOpen} title={title}>
+        <Modal isOpen={isOpen} setIsOpen={setIsOpen} title={"Page Under Construction"}>
             <IndividualMessagePage></IndividualMessagePage>
         </Modal>
     );

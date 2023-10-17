@@ -9,9 +9,9 @@ const ReferCodeGenerator = () => {
 
 	const id = localStorage.getItem("user-id");
 
-	const copyToClipboard = () => {
+	const copyToClipboard = (reffer) => {
 		navigator.clipboard
-			.writeText(referCode)
+			.writeText(reffer)
 			.then(() => {
 				setCopySuccess("Copied to clipboard!");
 				addReferCode();
@@ -52,14 +52,32 @@ const ReferCodeGenerator = () => {
 				</button>
 				<br />
 				<br />
-				<div className="text-lg flex justify-between items-center">
+				<div className="flex items-center justify-between text-lg">
 					<span> {referCode} </span>
 
 					<FaClipboardCheck
-						onClick={copyToClipboard}
+						onClick={() => copyToClipboard(referCode)}
 						className="ml-2 cursor-pointer text-3xl text-blue-500"
 					/>
 				</div>
+				{referCode && (
+					<div className="my-10">
+						your Refer Link 
+						<p
+							onClick={() =>
+								copyToClipboard(
+									`${
+										import.meta.env.VITE_API_PUBLIC_URL
+									}/register/${referCode}`
+								)
+							}
+							className="link-info link"
+						>{`${
+							import.meta.env.VITE_API_PUBLIC_URL
+						}/register/${referCode}`}</p>
+					</div>
+				)}
+
 				{copySuccess && (
 					<p className="mt-2 text-green-500">{copySuccess}</p>
 				)}
