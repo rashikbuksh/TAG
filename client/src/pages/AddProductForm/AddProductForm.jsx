@@ -44,7 +44,8 @@ const AddProductForm = () => {
 			.string() // Ensure that the input is a string
 			.when(["product_varification"], (product_varification, schema) => {
 				return product_varification == "verified"
-					? schema.required("Price is required")
+					? schema
+							.required("Price is required")
 							.test(
 								"is-number",
 								"Price must be a number",
@@ -59,7 +60,8 @@ const AddProductForm = () => {
 			.string() // Ensure that the input is a string
 			.when(["product_varification"], (product_varification, schema) => {
 				return product_varification == "verified"
-					? schema.required("Quantity is required")
+					? schema
+							.required("Quantity is required")
 							.test(
 								"is-number",
 								"Quantity must be a number",
@@ -127,7 +129,7 @@ const AddProductForm = () => {
 			quantity: data.quantity,
 		}).then((response) => {
 			if (response.data.message === data.name + " added successfully") {
-				form.reset()
+				form.reset();
 				alert("Product Added Successfully");
 			}
 		});
@@ -174,8 +176,8 @@ const AddProductForm = () => {
 										<select
 											name="category"
 											id="category"
+											defaultValue={"0"}
 											onChange={changedCategory}
-											defaultValue={0}
 											className="select select-bordered w-full max-w-xs"
 										>
 											<option value="0">
@@ -255,12 +257,11 @@ const AddProductForm = () => {
 											{...register(
 												"product_varification"
 											)}
+											defaultValue={"notVerified"}
 											className="select select-bordered w-full "
 											placeholder="Enter Full Varification"
 										>
-											<option disabled selected>
-												Select One
-											</option>
+											<option disabled>Select One</option>
 											<option value="verified">
 												Verified
 											</option>
