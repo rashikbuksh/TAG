@@ -20,7 +20,6 @@ const Cart = () => {
 	const [totals, setTotals] = useState({}); // Store totals for each shopper
 	const [productQuantities, setProductQuantities] = useState({});
 	const [productDiscounts, setProductDiscounts] = useState({});
-	
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -88,7 +87,6 @@ const Cart = () => {
 	}, [cartItems, buyStates]);
 
 	const addOrder = (shopperId) => {
-		
 		const productIds = cartItems
 			.filter((cartItem) => cartItem.shopper_id === shopperId)
 			.map((cartItem) => cartItem.id);
@@ -196,6 +194,8 @@ const Cart = () => {
 								</Link>
 							)}
 							{cartItems.map((cartItem) => {
+								console.log(cartItem);
+
 								let cartTotalPrice = 0;
 								if (cartItem.shopper_id === shopper.id) {
 									return (
@@ -205,6 +205,14 @@ const Cart = () => {
 										>
 											<div>
 												<div className="flex items-center justify-between border p-2">
+													<img
+														className="h-[50px] w-[50px] border-2 "
+														src={`${
+															import.meta.env
+																.VITE_APP_IMG_URL
+														}/${cartItem.image}`}
+														alt="Selected Product"
+													/>
 													<div>
 														<h1 className="text-base font-bold">
 															<Link
@@ -323,7 +331,7 @@ const Cart = () => {
 															shopper.id
 														)
 													}
-													className=" btn btn-xs btn-error"
+													className=" btn btn-error btn-xs"
 												>
 													Cancel
 												</button>{" "}
@@ -334,7 +342,7 @@ const Cart = () => {
 													onClick={() =>
 														addOrder(shopper.id)
 													}
-													className="btn btn-xs btn-success"
+													className="btn btn-success btn-xs"
 												>
 													Buy
 												</button>{" "}
@@ -344,13 +352,13 @@ const Cart = () => {
 												onClick={() =>
 													handleBuyClick(shopper.id)
 												}
-												className="btn btn-xs btn-success"
+												className="btn btn-success btn-xs"
 											>
 												Buy
 											</button>
 										)}
 									</div>
-									<h2 className="text-xl font-bold">
+									<h2 className="text-xs font-bold">
 										Total:{" "}
 										{parseFloat(totals[shopper.id]).toFixed(
 											2

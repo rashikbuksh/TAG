@@ -8,50 +8,34 @@ const Welcome = () => {
 				<div className="single-welcome-slide">
 					<div className="single-welcome-slide__head">
 						<div className="logo space-mb--15">
-							<img
+							<img 
 								src={
 									import.meta.env.VITE_API_PUBLIC_URL +
-									"/assets/img/Tag-logo-blue-get_100_100.png"
+									"/assets/img/logo.jpg"
 								}
-								className="img-fluid"
+								className="img-fluid w-1/2"
 								alt=""
 							/>
-						</div>
-						<h3 className="title">BEST SHOPPING EXPERIENCE</h3>
-					</div>
-					<div className="single-welcome-slide__body space-pt--15 space-pb--15">
-						<div className="banner-image">
-							<img
-								src={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/assets/img/welcome.png"
-								}
-								className="img-fluid"
-								alt=""
-							/>
-						</div>
-					</div>
-					<div className="single-welcome-slide__footer">
-						<p className="text space-bottom--30">
-							Most Popular Shopping website, With <br /> lots of
-							fashionable products
-						</p>
-						<Link
+							<Link
 							to={import.meta.env.VITE_API_PUBLIC_URL + "/home"}
-							className="welcome-btn"
+							className="btn btn-primary btn-xs"
 						>
 							CONTINUE
 						</Link>
+						<br />
 						<Link
 							to={import.meta.env.VITE_API_PUBLIC_URL + "/home"}
 							className="skip-btn"
 						>
 							skip
 						</Link>
+						</div>
+						
+					</div>
 					</div>
 				</div>
 			</div>
-		</div>
+
 	);
 };
 
