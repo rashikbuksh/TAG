@@ -217,20 +217,21 @@ const MainProduct = ({ shopperProduct, product }) => {
 					Add To Cart{" "}
 				</button>
 			) : user.access === "shopper" ? (
-				<button
-					disabled
-					onClick={() => {
-						prod.quantity = quantity;
-						if (checkIfInCart(cartItems, prod)) {
-							dispatch(increaseQuantityofProd(prod));
-						} else {
-							dispatch(addToCart(prod));
-						}
-					}}
-					className=" btn  btn-success btn-block rounded-none"
-				>
-					Add To Cart{" "}
-				</button>
+				// <button
+				// 	disabled
+				// 	onClick={() => {
+				// 		prod.quantity = quantity;
+				// 		if (checkIfInCart(cartItems, prod)) {
+				// 			dispatch(increaseQuantityofProd(prod));
+				// 		} else {
+				// 			dispatch(addToCart(prod));
+				// 		}
+				// 	}}
+				// 	className=" btn  btn-success btn-block rounded-none"
+				// >
+				// 	Add To Cart{" "}
+				// </button>
+				""
 			) : (
 				<button
 					onClick={() => {
