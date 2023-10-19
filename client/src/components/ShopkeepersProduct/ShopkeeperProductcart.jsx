@@ -141,7 +141,7 @@ const ShopkeeperProductcart = ({ product }) => {
 				<div className="flex flex-col items-center justify-center gap-3">
 					<img
 						className="h-[200px] w-[200px]"
-						src={`${import.meta.env.VITE_APP_IMG_URL}/${image}`}
+						src={`${import.meta.env.VITE_APP_IMG_URL}/products/${image}`}
 						alt="No Image"
 					/>
 					<div>

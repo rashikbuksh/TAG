@@ -63,7 +63,7 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
         <div className="flex items-center justify-between">
           <img
             className="h-[200px] w-full rounded object-contain"
-            src={`${import.meta.env.VITE_APP_IMG_URL}/${product.image}`}
+            src={`${import.meta.env.VITE_APP_IMG_URL}/products/${product.image}`}
             alt=""
           />
         </div>

@@ -67,7 +67,7 @@ const Product = () => {
 							className="product-image-single swiper-slide"
 						>
 							<img
-								src={`${import.meta.env.VITE_APP_IMG_URL}/${
+								src={`${import.meta.env.VITE_APP_IMG_URL}/products/${
 									single.image
 								}`}
 								className="img-fluid"

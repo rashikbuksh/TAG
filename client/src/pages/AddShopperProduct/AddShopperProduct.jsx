@@ -183,7 +183,7 @@ const ShopperProduct = () => {
 									className="w-56  border-2 border-black"
 									src={`${
 										import.meta.env.VITE_APP_IMG_URL
-									}/${productImage}`}
+									}/products/${productImage}`}
 									alt="Selected Product"
 								/>
 							)}
