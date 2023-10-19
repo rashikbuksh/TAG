@@ -124,7 +124,7 @@ const MainProduct = ({ shopperProduct, product }) => {
 							? "transition-transform hover:scale-90"
 							: ""
 					}`}
-					src={`${import.meta.env.VITE_APP_IMG_URL}/${image}`}
+					src={`${import.meta.env.VITE_APP_IMG_URL}/products/${image}`}
 					alt=""
 				/>
 				{display > 0 && (
