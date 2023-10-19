@@ -159,7 +159,7 @@ const ShopkeeperProfileCV = () => {
 											className=""
 											src={`${
 												import.meta.env.VITE_APP_IMG_URL
-											}/${product.image}`}
+											}/products/${product.image}`}
 											alt=""
 										/>
 										<div className=" badge badge-warning absolute right-0 top-2 gap-2">
