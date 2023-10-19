@@ -10,6 +10,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@googlemaps/js-api-loader": "^1.16.2",
 		"@hasanm95/cogo-toast": "https://github.com/hasanm95/cogo-toast",
 		"@headlessui/react": "^1.7.17",
 		"@hookform/resolvers": "^3.1.1",

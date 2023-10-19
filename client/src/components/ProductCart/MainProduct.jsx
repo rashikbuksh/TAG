@@ -28,8 +28,19 @@ import MessageModal from "../MessageModal/MessageModal";
 const MainProduct = ({ shopperProduct, product }) => {
 	const navigate = useNavigate();
 	const prod = product || shopperProduct;
-	// console.log(prod,"prod in mainProduct");
-	const { name, price, image, id, discount, view, isVerified } = prod;
+	console.log(prod, "prod");
+	const {
+		name,
+		price,
+		image,
+		id,
+		discount,
+		view,
+		isVerified,
+		shopper_id,
+		shipping_address,
+	} = prod;
+	// console.log(shopper_id, "shopper_id");
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);
 	const [display, setDisplay] = useState(0);
@@ -198,6 +209,8 @@ const MainProduct = ({ shopperProduct, product }) => {
 						isOpen={isLocatioonOpen}
 						setIsOpen={setIsLocatioonOpen}
 						title={"Location"}
+						shopper_id={shopper_id}
+						map_location={shipping_address}
 					></LocationModal>
 				</div>
 			</div>

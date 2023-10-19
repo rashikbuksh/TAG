@@ -50,7 +50,9 @@ const AllProducts = ({ limit }) => {
 			});
 	}, []);
 
-	const isVerifiedProduct=prods.filter(product=>product.isVerified==="verified")
+	const isVerifiedProduct = prods.filter(
+		(product) => product.isVerified === "verified"
+	);
 	// console.log(isVerifiedProduct,"isVerifiedProduct");
 
 	if (!prods?.length) return <p>No products found</p>;

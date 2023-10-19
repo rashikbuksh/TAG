@@ -61,10 +61,13 @@ const ProductCart = ({ product }) => {
 							/>
 						</div>
 					</div>
-					<MainProduct product={product} shoperName={shopper.name}></MainProduct>
+					<MainProduct
+						product={product}
+						shoperName={shopper.name}
+						shopper_id={shopper_id}
+					></MainProduct>
 				</div>
 			))}
-
 		</div>
 	);
 };
