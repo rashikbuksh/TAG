@@ -9,7 +9,7 @@ var productImage = null;
 const storage = multer.diskStorage({
 	destination: (req, file, callBack) => {
 		if (file.mimetype.substring(0, 5) == "image") {
-			callBack(null, "./uploads");
+			callBack(null, "./uploads/products");
 		}
 	},
 	filename: (req, file, callBack) => {

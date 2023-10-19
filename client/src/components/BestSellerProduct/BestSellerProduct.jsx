@@ -74,7 +74,7 @@ const BestSellerProduct = ({ limit, type }) => {
 													src={`${
 														import.meta.env
 															.VITE_APP_IMG_URL
-													}/${single.image}`}
+													}/products/${single.image}`}
 													className="object-cover transition duration-500 group-hover:scale-105"
 													alt=""
 												/>
