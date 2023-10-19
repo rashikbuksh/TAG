@@ -17,16 +17,16 @@ const add = [
 const read = [
 	{
 		uri: "/shopperproduct/getshopperproduct",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, isVerified, category_id, image, sp.shopper_id, sale_count, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, isVerified, category_id, p.image, sp.shopper_id, sale_count, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id AND cp.id = sp.shopper_id`,
 	},
 	{
 		uri: "/shopperproduct/getshopperproduct/:id",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, shopper_id, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id and sp.id = ?`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, isVerified, category_id, p.image, sp.shopper_id, sale_count, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id AND cp.id = sp.shopper_id and sp.id = ?`,
 		param: ["id"],
 	},
 	{
 		uri: "/shopperproduct/getshopperproductAdmin/:id",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, shopper_id, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id and sp.shopper_id = ?`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, isVerified, category_id, p.image, sp.shopper_id, sale_count, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id AND cp.id = sp.shopper_id and sp.shopper_id = ?`,
 		param: ["id"],
 	},
 	{
