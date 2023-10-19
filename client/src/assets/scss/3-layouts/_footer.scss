@@ -14,7 +14,8 @@
     width: 100%;
     padding: 0 40px;
 
-    border-radius: 60px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     background-color: $white;
     box-shadow: 0 2px 10px rgba($black, 0.16);
 }
@@ -55,11 +56,9 @@
 
     .menu-wrapper {
         line-height: 1;
-
         position: absolute;
         top: 50%;
         left: 50%;
-
         transform: translate(-50%, -50%);
     }
 
@@ -68,14 +67,10 @@
         z-index: -1;
         top: -5px;
         left: -5px;
-
         visibility: hidden;
-
         width: calc(100% + 10px);
         height: calc(100% + 10px);
-
         content: "";
-
         opacity: 0;
         border-radius: 50%;
         background-color: $white;
