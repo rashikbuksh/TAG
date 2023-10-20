@@ -38,7 +38,7 @@ const Product = () => {
 				setProductStock(response.data[0]?.product_count);
 			})
 			.catch((error) => {
-				alert(error);
+				// alert(error);
 			});
 	}, [id]);
 	// console.log(prods, "loggged productjs");

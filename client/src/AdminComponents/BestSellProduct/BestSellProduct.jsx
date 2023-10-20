@@ -12,7 +12,7 @@ const BestSellProduct = () => {
 				setBestSellProduct(response.data);
 			})
 			.catch((error) => {
-				alert(error);
+				// alert(error);
 			});
 	}, []);
 	// console.log(bestSellProduct);

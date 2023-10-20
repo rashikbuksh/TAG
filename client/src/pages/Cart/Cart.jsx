@@ -144,7 +144,7 @@ const Cart = () => {
 						}).then((res) => {
 							// console.log("res", res);
 							if (res.data.status === 201) {
-								alert("Notification Added Successfully");
+								// alert("Notification Added Successfully");
 							}
 						});
 					});

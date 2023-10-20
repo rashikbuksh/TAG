@@ -36,7 +36,7 @@ const Refer = () => {
 				}
 			})
 			.catch((error) => {
-				alert(error);
+				// alert(error);
 			});
 	};
 
@@ -118,7 +118,7 @@ const Refer = () => {
 			refer_status: "unreferred",
 		})
 			.then((response) => {
-				alert(response.data.message);
+				// alert(response.data.message);
 				if (response.status === 200) {
 					setIsOpen(false); // Close the modal when successful
 				}
@@ -153,7 +153,7 @@ const Refer = () => {
 							})
 								.then((response) => {
 									// console.log(response.data);
-									alert(response.data.message);
+									// alert(response.data.message);
 									if (response.status === 200) {
 										alert("Change success");
 										api.post(`/add_refer`, {

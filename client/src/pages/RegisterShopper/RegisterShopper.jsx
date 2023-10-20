@@ -101,12 +101,12 @@ const Register = () => {
 							<div className="auth-form">
 								<form onSubmit={handleSubmit(onSubmit)}>
 									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="name">Name</label>
+										<label htmlFor="name">Shop Name</label>
 										<input
 											type="text"
 											name="name"
 											id="name"
-											placeholder="Enter Full name"
+											placeholder="Enter Shop name"
 											{...register("name")}
 										/>
 										<p className="text-danger">

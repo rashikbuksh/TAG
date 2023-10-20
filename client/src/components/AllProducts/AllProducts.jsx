@@ -36,7 +36,7 @@ const AllProducts = ({ limit }) => {
 			.catch((error) => {
 				setError(error.message);
 				setLoading(false);
-				alert(error);
+				// alert(error);
 			});
 		api.get(`/shopperproduct/getPopularShopperProduct`)
 			.then((response) => {
@@ -46,7 +46,7 @@ const AllProducts = ({ limit }) => {
 			.catch((error) => {
 				setError(error.message);
 				setLoading(false);
-				alert(error);
+				// alert(error);
 			});
 	}, []);
 
