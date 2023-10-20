@@ -24,7 +24,6 @@ const Register = () => {
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
 		phone: yup.string().required("Phone Number is required").max(11),
-		refer_code: yup.string(),
 	});
 
 	const { register, handleSubmit, formState } = useForm({
@@ -144,18 +143,6 @@ const Register = () => {
 										<p className="text-danger">
 											{errors.password?.message}
 										</p>
-									</div>
-									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="refer_code">
-											Refer Code {"(Optional)"}
-										</label>
-										<input
-											type="text"
-											name="refer_code"
-											id="refer_code"
-											placeholder="Enter Refer Code"
-											{...register("refer_code")}
-										/>
 									</div>
 									<div className="auth-form__single-field space-mb--40">
 										<p className="auth-form__info-text">
