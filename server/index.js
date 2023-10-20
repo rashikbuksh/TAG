@@ -28,7 +28,7 @@ app.post(
 		if (req.files === null) {
 			return res.status(400).json({ msg: "No file uploaded" });
 		} else {
-			console.log(productImage);
+			// console.log(productImage);
 			return res.status(200).json({ msg: "File Uploaded", productImage });
 		}
 	}
@@ -56,7 +56,7 @@ app.post(
 		if (req.files === null) {
 			return res.status(400).json({ msg: "No file uploaded" });
 		} else {
-			console.log(productImage);
+			// console.log(productImage);
 			return res.status(200).json({ msg: "File Uploaded", productImage });
 		}
 	}
@@ -84,7 +84,7 @@ app.post(
 		if (req.files === null) {
 			return res.status(400).json({ msg: "No file uploaded" });
 		} else {
-			console.log(productImage);
+			// console.log(productImage);
 			return res.status(200).json({ msg: "File Uploaded", productImage });
 		}
 	}

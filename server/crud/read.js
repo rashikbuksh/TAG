@@ -17,7 +17,6 @@ const { read: Newslike } = require("../api/newslike");
 const { read: Newscomment } = require("../api/newscomment");
 const { read: refer } = require("../api/refer");
 
-
 const GET_DATA = [
 	...JobEntry,
 	...Auth,
@@ -31,7 +30,7 @@ const GET_DATA = [
 	...Heroslider,
 	...Newslike,
 	...Newscomment,
-	...refer
+	...refer,
 ];
 
 GET_DATA.forEach(({ uri, query, param }) => {
@@ -51,7 +50,7 @@ GET_DATA.forEach(({ uri, query, param }) => {
 });
 
 app.post("/auth/verify_login", (req, res) => {
-	console.log(req?.body.email, req?.body.password);
+	// console.log(req?.body.email, req?.body.password);
 
 	const { email, password } = req?.body;
 
@@ -66,8 +65,8 @@ app.post("/auth/verify_login", (req, res) => {
 			`Select * from customer_profile where email = ?`,
 			[email],
 			async (err, rows) => {
-				console.log("row", rows);
-				console.log("err", err);
+				// console.log("row", rows);
+				// console.log("err", err);
 				if (err) {
 					console.error("Error getting MySQL connection: ", err);
 					return res.status(500).json({ error: "Database error" });
@@ -82,9 +81,9 @@ app.post("/auth/verify_login", (req, res) => {
 				}
 
 				await ComparePass(password, rows[0].password).then((result) => {
-					console.log(rows[0].password, result);
+					// console.log(rows[0].password, result);
 					if (!result) {
-						console.log("result", result);
+						// console.log("result", result);
 						return res.status(200).json({
 							status: 200,
 							type: "delete",
@@ -119,9 +118,8 @@ app.post("/auth/verify_login", (req, res) => {
 });
 
 app.post("/auth/getUserID", (req, res) => {
-
 	const { phone } = req?.body;
-	console.log("phone", phone);
+	// console.log("phone", phone);
 
 	const query = `SELECT id from customer_profile where phone=?`;
 

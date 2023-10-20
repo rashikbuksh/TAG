@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { PROTECTED_ROUTES } from "../App";
-import { useAuth } from "../context/auth";
 import { Footer, Header } from "../components";
 import Offcanvas from "../components/Header/Offcanvas";
+import { useAuth } from "../context/auth";
 
 export default function ProtectedRoutes() {
 	const { signed, loading, user } = useAuth();
@@ -12,9 +12,9 @@ export default function ProtectedRoutes() {
 
 	if (!signed) return <Navigate to="/login" replace={true} />;
 
-	console.log("user in router", user);
-	console.log(window.location.pathname);
-	console.log("protected", PROTECTED_ROUTES);
+	// console.log("user in router", user);
+	// console.log(window.location.pathname);
+	// console.log("protected", PROTECTED_ROUTES);
 
 	const checkPath = PROTECTED_ROUTES?.find(
 		(route) => route?.path === window.location.pathname
@@ -24,10 +24,10 @@ export default function ProtectedRoutes() {
 
 	return haveAccess ? (
 		<>
-		<Header />
-		<Offcanvas />
-		<Footer />
-		<Outlet />
+			<Header />
+			<Offcanvas />
+			<Footer />
+			<Outlet />
 		</>
 	) : (
 		<Navigate to="/no-access" replace={true} />

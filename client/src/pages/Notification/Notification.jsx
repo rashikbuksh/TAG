@@ -19,12 +19,12 @@ const Notification = () => {
 		api.get(`/auth/getUserInfo/${userid}`).then((res) => {
 			setUser(res.data);
 			setUserAccess(res.data.access);
-			console.log(res.data);
+			// console.log(res.data);
 		});
 		api.get(`/notification/getnotification/${userid}/${userid}`).then(
 			(res) => {
 				setNotification(res.data);
-				console.log(res.data);
+				// console.log(res.data);
 			}
 		);
 	}, []);
@@ -44,7 +44,12 @@ const Notification = () => {
 						<Link
 							to={import.meta.env.VITE_API_PUBLIC_URL + `/order`}
 						>
-							<div className={`${notification[0].id===single.id?"text-red-600":""}`}
+							<div
+								className={`${
+									notification[0].id === single.id
+										? "text-red-600"
+										: ""
+								}`}
 								dangerouslySetInnerHTML={{
 									__html: single.notification_content,
 								}}

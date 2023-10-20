@@ -8,8 +8,8 @@ const TagUserOrderHistory = () => {
 	const { user } = useAuth();
 	const [orderData, setOrderData] = useState([]);
 	const { id } = useParams();
-	console.log(user);
-	console.log(id, "check id when relod");
+	// console.log(user);
+	// console.log(id, "check id when relod");
 	const customer_profile_id = id;
 	useEffect(() => {
 		if (customer_profile_id) {
@@ -22,7 +22,7 @@ const TagUserOrderHistory = () => {
 				});
 		}
 	}, [customer_profile_id]);
-	console.log(orderData);
+	// console.log(orderData);
     if (orderData.length<1) {
         return<>
         <p>No Order</p>

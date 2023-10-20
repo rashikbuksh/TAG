@@ -5,7 +5,7 @@ import ShopkeeperProductList from './ShopkeeperProductList';
 
 const AdminShopkeeperProduct = () => {
     const {id} = useParams()
-    console.log(id);
+    // console.log(id);
     const [shoperProduct, setShopperProduct]=useState([])
     useEffect(() => {
 		api.get(`/shopperproduct/getshopperproductAdmin/${id}`)
@@ -16,7 +16,7 @@ const AdminShopkeeperProduct = () => {
 				alert(error);
 			});
 	}, [id]);
-    console.log(shoperProduct);
+    // console.log(shoperProduct);
     return (
         <>
         <p className='text-3xl font-bold px-10 py-3'> Shoper Product For Shopper Id {id}</p>

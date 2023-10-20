@@ -37,7 +37,7 @@ const ShopperProduct = () => {
 
 	useEffect(() => {
 		api.get(`/product/getproduct`).then((response) => {
-			console.log(response, "40");
+			// console.log(response, "40");
 			setProductNames(response.data);
 		});
 	}, []);
@@ -57,7 +57,7 @@ const ShopperProduct = () => {
 	// };
 
 	const onSubmit = async (data) => {
-		console.log("FormData", data);
+		// console.log("FormData", data);
 		let shopperProduct_ID = null;
 		let shopper_product_name = null;
 		let shopper_product_price = null;
@@ -110,7 +110,7 @@ const ShopperProduct = () => {
 				post_img: "",
 			})
 			.then((response) => {
-				console.log(response.data.message);
+				// console.log(response.data.message);
 				if (response.data.message === user_id + " added successfully") {
 					// navigate to homepage
 					form.reset();
@@ -126,12 +126,12 @@ const ShopperProduct = () => {
 
 	// 	const price=productNames.find(product.id===id)
 	// }
-	console.log(productPrice, productquantity);
+	// console.log(productPrice, productquantity);
 
 	const setproductvalue = (e) => {
-		console.log(e);
+		// console.log(e);
 		var product = e.target.value.split("||--");
-		console.log(product, "prod frm");
+		// console.log(product, "prod frm");
 		form.setValue("product_id", product[0]);
 		form.setValue("name", product[1]);
 		setProductImage(product[2]);
@@ -205,7 +205,8 @@ const ShopperProduct = () => {
 									}
 									placeholder={
 										productPrice !== "null" &&
-										productPrice !== "0" && productPrice !== null
+										productPrice !== "0" &&
+										productPrice !== null
 											? productPrice
 											: "Enter Price"
 									}
@@ -230,7 +231,9 @@ const ShopperProduct = () => {
 							</div>
 						</div>
 						<div className="  my-2 px-1 py-1">
-							<label htmlFor="product_count">Product Quantity</label>
+							<label htmlFor="product_count">
+								Product Quantity
+							</label>
 							<input
 								className="input w-full"
 								{...register("product_count")}

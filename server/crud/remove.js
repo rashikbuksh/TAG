@@ -15,7 +15,7 @@ const REMOVE_DATA = [
 	...Newscomment,
 	...ShopperProduct,
 	...News,
-	...user
+	...user,
 ];
 
 REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
@@ -24,7 +24,7 @@ REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
 		param?.forEach((val) => {
 			paramArr.push(req?.params[val]);
 		});
-		console.log(uri, paramArr);
+		// console.log(uri, paramArr);
 
 		ExecuteQuery(
 			res,

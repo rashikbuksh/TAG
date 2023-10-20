@@ -9,7 +9,7 @@ const AuthContext = createContext({});
 const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [loginError,setLoginError]=useState("")
+	const [loginError, setLoginError] = useState("");
 
 	const [authCookie, updateAuthCookie, removeAuthCookie] = useCookie("auth");
 	const [userCookie, updateUserCookie, removeUserCookie] = useCookie("user");
@@ -31,11 +31,10 @@ const AuthProvider = ({ children }) => {
 				email: data.email,
 				password: data.password,
 			});
-			console.log("response", res);
-			console.log(res.data.message);
+			// console.log("response", res);
+			// console.log(res.data.message);
 			if (res.data.message) {
-
-				setLoginError(res.data.message)
+				setLoginError(res.data.message);
 			}
 
 			const { token, user: loginUser } = res?.data;
@@ -43,7 +42,7 @@ const AuthProvider = ({ children }) => {
 			updateAuthCookie(token || "");
 			updateUserCookie(JSON.stringify(loginUser) || "");
 
-			console.log("loginUser", loginUser);
+			// console.log("loginUser", loginUser);
 
 			if (token && loginUser) {
 				const go = PROTECTED_ROUTES.find((route) =>
@@ -52,17 +51,15 @@ const AuthProvider = ({ children }) => {
 				localStorage.setItem("user-id", loginUser?.id);
 				if (loginUser.access === "admin") {
 					window.location.href = "/admin/stat";
-				}
-				else if (loginUser.access === "shopper") {
+				} else if (loginUser.access === "shopper") {
 					window.location.href = "/shopkeeperDashboard";
-				}
-				else{
-
+				} else {
 					window.location.href = go?.path;
 				}
 			}
 		} catch (error) {
-			alert(error);
+			// alert(error);
+			// console.log(error);
 		}
 	};
 
@@ -74,7 +71,7 @@ const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ signed: !!user, user, loading, login, Logout,loginError }}
+			value={{ signed: !!user, user, loading, login, Logout, loginError }}
 			// value={{ signed: true, user, loading, Login, Logout }}
 		>
 			{children}

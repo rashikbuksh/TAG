@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaClipboardCheck } from "react-icons/fa";
-import { api } from "../lib/api";
 import { useAuth } from "../context/auth";
+import { api } from "../lib/api";
 
 const ReferCodeGenerator = () => {
 	const [copySuccess, setCopySuccess] = useState(null);
@@ -23,7 +23,7 @@ const ReferCodeGenerator = () => {
 
 	const generateReferCode = () => {
 		setReferCode(Math.random().toString(36).substring(2, 15));
-		console.log(referCode);
+		// console.log(referCode);
 	};
 
 	const addReferCode = () => {
@@ -35,7 +35,7 @@ const ReferCodeGenerator = () => {
 
 	useEffect(() => {
 		api.get(`/auth/getRefer/${id}`).then((res) => {
-			console.log(res.data[0].refer_code);
+			// console.log(res.data[0].refer_code);
 			setReferCode(res.data[0].refer_code);
 		});
 	}, []);
@@ -62,7 +62,7 @@ const ReferCodeGenerator = () => {
 				</div>
 				{referCode && (
 					<div className="my-10">
-						your Refer Link 
+						your Refer Link
 						<p
 							onClick={() =>
 								copyToClipboard(

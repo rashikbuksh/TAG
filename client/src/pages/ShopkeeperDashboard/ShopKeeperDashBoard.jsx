@@ -12,10 +12,10 @@ import "react-modern-drawer/dist/index.css";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import Timekeeper from "react-timekeeper";
-import { api } from "../../lib/api";
-import Modal from "../../components/Modal/Modal";
 import { Logger } from "sass";
+import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/auth";
+import { api } from "../../lib/api";
 
 const ShopKeeperDashBoard = () => {
 	const shopname = "Rafi Edu Store";
@@ -25,7 +25,7 @@ const ShopKeeperDashBoard = () => {
 	const [selectedTime, setSelectedTime] = useState("");
 	const [activeStatus, setActiveStatus] = useState(false);
 	// const {user}=useAuth()
-	// console.log(user);
+	// // console.log(user);
 
 	const toggleDrawer = () => {
 		setIsOpen((prevState) => !prevState);
@@ -40,18 +40,18 @@ const ShopKeeperDashBoard = () => {
 	};
 
 	const id = localStorage.getItem("user-id");
-	console.log(id);
+	// console.log(id);
 
 	const [shopkeeper, setShopkeeper] = useState([]);
 	const [productCount, setProductCount] = useState(0);
 
 	// clock
 	const date = new Date();
-	console.log(activeStatus);
+	// console.log(activeStatus);
 
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`).then((res) => {
-			console.log(res.data, "resdata");
+			// console.log(res.data, "resdata");
 			setShopkeeper(res.data[0]);
 			setActiveStatus(res.data[0].active_status === 0 ? false : true);
 		});
@@ -85,7 +85,7 @@ const ShopKeeperDashBoard = () => {
 				alert(error);
 			});
 	};
-	console.log(shopkeeper);
+	// console.log(shopkeeper);
 
 	return (
 		<>
@@ -257,7 +257,11 @@ const ShopKeeperDashBoard = () => {
 
 				<div className="my-10">
 					<div className="flex flex-col items-center justify-center">
-						<div className={`avatar ${activeStatus?"online":"offline"} `}>
+						<div
+							className={`avatar ${
+								activeStatus ? "online" : "offline"
+							} `}
+						>
 							<div className="w-24 rounded-full">
 								<img
 									className=""

@@ -3,7 +3,6 @@ import { ADMIN_ROUTES } from "../App";
 import { useAuth } from "../context/auth";
 import Admin from "../pages/AdminPage/Admin";
 
-
 export default function AdminProtactedRoutes() {
 	const { signed, loading, user } = useAuth();
 
@@ -12,9 +11,9 @@ export default function AdminProtactedRoutes() {
 
 	if (!signed) return <Navigate to="/login" replace={true} />;
 
-	console.log("user in router", user);
-	console.log(window.location.pathname);
-	console.log("ADMIN_ROUTES", ADMIN_ROUTES);
+	// console.log("user in router", user);
+	// console.log(window.location.pathname);
+	// console.log("ADMIN_ROUTES", ADMIN_ROUTES);
 
 	const checkPath = ADMIN_ROUTES?.find(
 		(route) => route?.path === window.location.pathname

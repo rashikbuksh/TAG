@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { FaFileImage, FaCamera } from "react-icons/fa";
-import Modal from "../Modal/Modal";
 import Axios from "axios";
 import Cookies from "js-cookie";
+import React, { useState } from "react";
+import { FaCamera, FaFileImage } from "react-icons/fa";
 import { api } from "../../lib/api";
+import Modal from "../Modal/Modal";
 
 const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 	const [cameraError, setCameraError] = useState(null);
@@ -79,7 +79,7 @@ const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 				post_img: ImageName,
 				category: "regular",
 			});
-			console.log(response.data.message,userID + " added successfully");
+			// console.log(response.data.message,userID + " added successfully");
 
 			if (response.data.message == `${userID} added successfully`) {
 				setContent("");
@@ -139,7 +139,7 @@ const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 					{file && (
 						<div className="my-3">
 							<img
-							className="w-1/2 mx-auto"
+								className="mx-auto w-1/2"
 								src={URL.createObjectURL(file)}
 								alt="Selected Image"
 								style={{ maxWidth: "100%" }}

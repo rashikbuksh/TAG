@@ -34,7 +34,7 @@ const EditProfile = () => {
 			phone: data.phone,
 			shipping_address: data.shipping_address,
 		}).then((response) => {
-			console.log(response.data);
+			// console.log(response.data);
 			if (response.data.message == id + " updated successfully") {
 				alert("Profile Updated Successfully");
 				window.location.href = "/home";

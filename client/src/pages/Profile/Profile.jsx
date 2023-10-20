@@ -16,10 +16,10 @@ const Profile = () => {
 	//get user data
 	useEffect(() => {
 		api.get(`/profile/get_profile/${id}`).then((response) => {
-			console.log(response.data);
+			// console.log(response.data);
 			setUserdata(response.data[0]);
 		});
-		console.log(userdata);
+		// console.log(userdata);
 	}, []);
 
 	if (isLoading) return <Preloader />;

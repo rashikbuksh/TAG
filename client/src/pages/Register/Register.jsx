@@ -9,10 +9,10 @@ import * as yup from "yup";
 import { api } from "../../lib/api";
 
 const Register = () => {
-	const navigate=useNavigate()
-	const {id}=useParams()
-	
-	console.log(id);
+	const navigate = useNavigate();
+	const { id } = useParams();
+
+	// console.log(id);
 	const registerSchema = yup.object().shape({
 		name: yup.string().required("Name is required"),
 		emailAddress: yup
@@ -34,7 +34,7 @@ const Register = () => {
 	const { errors } = formState;
 
 	const onSubmit = (data) => {
-		console.log(data);
+		// console.log(data);
 
 		Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, {
 			name: data.name,
@@ -44,16 +44,13 @@ const Register = () => {
 			access: "customer",
 		})
 			.then((response) => {
-				console.log(response);
-				if (
-					response.data.message ===
-					data.phone
-				) {
-					navigate("/login")
+				// console.log(response);
+				if (response.data.message === data.phone) {
+					navigate("/login");
 					if (id) {
-						localStorage.setItem('ref_c',id)
+						localStorage.setItem("ref_c", id);
 					}
-					
+
 					alert("Registration Successful");
 				}
 			})
@@ -64,7 +61,6 @@ const Register = () => {
 					alert("Email or Phone Number already exists");
 				}
 			});
-		
 	};
 
 	return (

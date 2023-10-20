@@ -29,7 +29,7 @@ const ShopkeeperProductcart = ({ product }) => {
 			id: id,
 			product_count: quantity,
 		}).then((res) => {
-			console.log("res", res);
+			// console.log("res", res);
 			if (res.data.status === 200) {
 				alert("Product Count Updated Successfully");
 			}
@@ -57,7 +57,7 @@ const ShopkeeperProductcart = ({ product }) => {
 			id: id,
 			price: newPrice,
 		}).then((res) => {
-			console.log("res", res);
+			// console.log("res", res);
 			if (res.data.status === 200) {
 				alert("Product Price Updated Successfully");
 			}
@@ -78,7 +78,7 @@ const ShopkeeperProductcart = ({ product }) => {
 		if (isConfirmed) {
 			api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
 				.then((res) => {
-					console.log("res", res);
+					// console.log("res", res);
 					if (res.data.status === 200) {
 						alert("Product Deleted Successfully");
 						window.location.reload();
@@ -98,10 +98,10 @@ const ShopkeeperProductcart = ({ product }) => {
 				});
 		}
 	};
-	const handleNotAvailable=()=>{
-		setQuantity(0)
-		updateProductCount()
-	}
+	const handleNotAvailable = () => {
+		setQuantity(0);
+		updateProductCount();
+	};
 
 	return (
 		<div className="">
@@ -132,7 +132,9 @@ const ShopkeeperProductcart = ({ product }) => {
 								<a>Share</a>
 							</li>
 							<li>
-								<button onClick={handleNotAvailable}>Not Available</button>
+								<button onClick={handleNotAvailable}>
+									Not Available
+								</button>
 							</li>
 						</ul>
 					</div>
@@ -141,7 +143,9 @@ const ShopkeeperProductcart = ({ product }) => {
 				<div className="flex flex-col items-center justify-center gap-3">
 					<img
 						className="h-[200px] w-[200px]"
-						src={`${import.meta.env.VITE_APP_IMG_URL}/products/${image}`}
+						src={`${
+							import.meta.env.VITE_APP_IMG_URL
+						}/products/${image}`}
 						alt="No Image"
 					/>
 					<div>
@@ -172,7 +176,7 @@ const ShopkeeperProductcart = ({ product }) => {
 							<button
 								type="button"
 								onClick={updateProductCount}
-								className="bg-blue-200 px-2 py-1 text-black rounded-md"
+								className="rounded-md bg-blue-200 px-2 py-1 text-black"
 							>
 								Confirm
 							</button>
@@ -197,14 +201,14 @@ const ShopkeeperProductcart = ({ product }) => {
 								<button
 									type="button"
 									onClick={handlePriceUpdate}
-									className="bg-blue-200 px-2  text-black rounded-md"
+									className="rounded-md bg-blue-200  px-2 text-black"
 								>
 									Update
 								</button>
 								<button
 									type="button"
 									onClick={handleCancelPriceUpdate}
-									className="bg-blue-200 px-2  text-black rounded-md"
+									className="rounded-md bg-blue-200  px-2 text-black"
 								>
 									Cancel
 								</button>

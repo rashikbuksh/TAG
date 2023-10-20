@@ -23,7 +23,7 @@ const TagOrderTable = ({ order }) => {
 				});
 		}
 	};
-    console.log(orderDetails,"tagordertable");
+    // console.log(orderDetails,"tagordertable");
     const cancel_report=orderDetails.map(d=>d.cancel_report)
 
 	return (

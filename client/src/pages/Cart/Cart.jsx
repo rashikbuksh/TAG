@@ -124,11 +124,11 @@ const Cart = () => {
 				order_status: "pending",
 				weight: 0,
 			}).then((res) => {
-				console.log("res", res);
+				// console.log("res", res);
 				if (res.data.status === 201) {
 					api.get("/order/getLastOrder").then((res) => {
 						last_order_id = res.data[0].id;
-						console.log("last_order_id", last_order_id);
+						// console.log("last_order_id", last_order_id);
 						api.post("/notification/addnotification", {
 							notification_content:
 								"You have a new order. Order Number is #" +
@@ -142,7 +142,7 @@ const Cart = () => {
 							not_to: userID,
 							status: 0,
 						}).then((res) => {
-							console.log("res", res);
+							// console.log("res", res);
 							if (res.data.status === 201) {
 								alert("Notification Added Successfully");
 							}
@@ -194,7 +194,7 @@ const Cart = () => {
 								</Link>
 							)}
 							{cartItems.map((cartItem) => {
-								console.log(cartItem);
+								// console.log(cartItem);
 
 								let cartTotalPrice = 0;
 								if (cartItem.shopper_id === shopper.id) {

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const UserTable = ({ taguser }) => {
-	console.log(taguser);
+	// console.log(taguser);
 	return (
 		<>
 			<tr>
@@ -42,7 +42,7 @@ const UserTable = ({ taguser }) => {
 				<td>{taguser.email ? taguser.email : "N/A"}</td>
 				<td>{taguser.access ? taguser.access : "N/A"}</td>
 				<td>
-                {/*  */}
+					{/*  */}
 					<Link to={`/taguserorderhistory/${taguser.id}`}>
 						<button className="btn btn-accent btn-sm ml-3">
 							Order History

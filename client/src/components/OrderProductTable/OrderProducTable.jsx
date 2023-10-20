@@ -1,7 +1,7 @@
 import { getDiscountPrice } from "../../helpers/product";
 
 const OrderProducTable = ({ Orderdproduct }) => {
-	console.log(Orderdproduct, "sadas");
+	// console.log(Orderdproduct, "sadas");
 	return (
 		<tr>
 			<td className="whitespace-nowrap px-4 py-2 text-gray-700">

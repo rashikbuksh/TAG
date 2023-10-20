@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import * as Yup from "yup";
+import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
-import Modal from "../../components/Modal/Modal";
-import * as Yup from "yup";
 
 const Refer = () => {
 	const [referStatus, setReferStatus] = useState("");
@@ -13,7 +13,7 @@ const Refer = () => {
 		referCode: "",
 	});
 	const refer_codeFromRg = localStorage.getItem("ref_c");
-	console.log(refer_codeFromRg);
+	// console.log(refer_codeFromRg);
 	const { user } = useAuth();
 	const validationSchema = Yup.object().shape({
 		referCode: Yup.string().required("Refer code is required"),
@@ -24,21 +24,21 @@ const Refer = () => {
 	const handelModalOpen = () => {
 		setIsOpen(!isOpen);
 	};
-  const handelHaveReferCodeChecked=(id)=>{
-    api.get(`/profile/check_refer_status/${id}`)
-    .then((response) => {
-      setReferStatus(response.data[0].refer_status);
-      if (
-        response.data[0].refer_status !== "referred" &&
-        response.data[0].refer_status !== "unreferred"
-      ) {
-        handelModalOpen();
-      }
-    })
-    .catch((error) => {
-      alert(error);
-    });
-  }
+	const handelHaveReferCodeChecked = (id) => {
+		api.get(`/profile/check_refer_status/${id}`)
+			.then((response) => {
+				setReferStatus(response.data[0].refer_status);
+				if (
+					response.data[0].refer_status !== "referred" &&
+					response.data[0].refer_status !== "unreferred"
+				) {
+					handelModalOpen();
+				}
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	};
 
 	useEffect(() => {
 		if (user) {
@@ -47,35 +47,36 @@ const Refer = () => {
 			if (refer_codeFromRg) {
 				api.get(`/profile/get_refer_code`)
 					.then((response) => {
-						console.log(response.data);
+						// console.log(response.data);
 						const referCodes = response.data;
 						const referredParsonId = referCodes.find(
-							(code) =>
-								code.refer_code === refer_codeFromRg
+							(code) => code.refer_code === refer_codeFromRg
 						);
-						console.log(referredParsonId);
+						// console.log(referredParsonId);
 						if (referredParsonId) {
 							api.post(`/profile/edit_refer_status/${id}`, {
 								refer_status: "referred",
 							})
 								.then((response) => {
-									console.log(response.data);
+									// console.log(response.data);
 									alert(response.data.message);
 									if (response.status === 200) {
 										alert("Change success");
-                    localStorage.removeItem("ref_c")
+										localStorage.removeItem("ref_c");
 										api.post(`/add_refer`, {
 											referred_by: referredParsonId.id,
 											referred_to: user.id,
 										})
 											.then((response) => {
-												console.log(response.data);
+												// console.log(response.data);
 												if (response.status === 200) {
 													alert(
 														"Added success to refer"
 													);
-                          localStorage.removeItem("ref_c")
-                          
+													localStorage.removeItem(
+														"ref_c"
+													);
+
 													// Close the modal when everything is successful
 												}
 											})
@@ -92,26 +93,22 @@ const Refer = () => {
 						} else {
 							setError("Enter A Valid Refer code");
 							alert("Invalid Refer code");
-              localStorage.removeItem("ref_c")
-              window.location.reload(true);
+							localStorage.removeItem("ref_c");
+							window.location.reload(true);
 							// Re-enable the button if there's an error
-              handelHaveReferCodeChecked(id)
+							handelHaveReferCodeChecked(id);
 						}
 					})
 					.catch((error) => {
-						setIsSubmitting(false); 
-            handelHaveReferCodeChecked(id)// Re-enable the button if there's an error
+						setIsSubmitting(false);
+						handelHaveReferCodeChecked(id); // Re-enable the button if there's an error
 						alert(error);
 					});
+			} else {
+				handelHaveReferCodeChecked(id);
 			}
-      else{
-        handelHaveReferCodeChecked(id)
-      }
-
-      
 		}
 	}, [user]);
-  
 
 	const handelHaveNotReferCode = () => {
 		setHaveReferCode(false);
@@ -144,18 +141,18 @@ const Refer = () => {
 			.then(() => {
 				api.get(`/profile/get_refer_code`)
 					.then((response) => {
-						console.log(response.data);
+						// console.log(response.data);
 						const referCodes = response.data;
 						const referredParsonId = referCodes.find(
 							(code) => code.refer_code === formData.referCode
 						);
-						console.log(referredParsonId);
+						// console.log(referredParsonId);
 						if (referredParsonId) {
 							api.post(`/profile/edit_refer_status/${id}`, {
 								refer_status: "referred",
 							})
 								.then((response) => {
-									console.log(response.data);
+									// console.log(response.data);
 									alert(response.data.message);
 									if (response.status === 200) {
 										alert("Change success");
@@ -164,7 +161,7 @@ const Refer = () => {
 											referred_to: user.id,
 										})
 											.then((response) => {
-												console.log(response.data);
+												// console.log(response.data);
 												if (response.status === 200) {
 													alert(
 														"Added success to refer"

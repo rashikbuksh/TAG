@@ -34,7 +34,7 @@ const ShopkeeperProfileCV = () => {
 			})
 			.catch((err) => {});
 		api.get(`/category/get/category`).then((response) => {
-			console.log(response.data);
+			// console.log(response.data);
 			setCategory(response.data);
 		});
 	}, []);
@@ -53,7 +53,7 @@ const ShopkeeperProfileCV = () => {
 		}
 	};
 
-	console.log(selectedCategoryProduct);
+	// console.log(selectedCategoryProduct);
 
 	return (
 		<div className="mt-24">

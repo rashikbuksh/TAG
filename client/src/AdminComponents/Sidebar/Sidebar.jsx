@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
 
     const {user}=useAuth()
-    console.log(user);
+    // console.log(user);
 	return (
 		<aside className="w-full  mt-24 p-6 bg-gray-900 text-gray-100 sm:w-60 h-[89vh] overflow-auto">
 			<nav className="space-y-8 text-sm">

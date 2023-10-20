@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Modal from "../../components/Modal/Modal";
 import { FaRedo, FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
-import { api } from "../../lib/api";
 import Swal from "sweetalert2";
+import Modal from "../../components/Modal/Modal";
 import OrderProducTable from "../../components/OrderProductTable/OrderProducTable";
+import { api } from "../../lib/api";
 
 const OrderModal = ({
 	isOpen,
@@ -18,7 +18,7 @@ const OrderModal = ({
 	const [isShownReport, setIsShownReport] = useState(false);
 	const [orderStatus, setOrderStatus] = useState(order_status);
 	const [products, setProducts] = useState([]);
-	console.log(order_status, "modal");
+	// console.log(order_status, "modal");
 	useEffect(() => {
 		if (order_Id) {
 			let id = order_Id;
@@ -55,7 +55,7 @@ const OrderModal = ({
 
 		// Check if the selected status is "cancelled" and call handleCancel
 	};
-	console.log(products);
+	// console.log(products);
 	const handleCancel = async (id) => {
 		const { value: report } = await Swal.fire({
 			title: "Cancel Order",
@@ -155,7 +155,7 @@ const OrderModal = ({
 				</div>
 			</div>
 			<div className="divider my-0"></div>
-			<div className=" flex justify-around items-center">
+			<div className=" flex items-center justify-around">
 				<p>Total</p>
 				<p>{totalPrice}</p>
 			</div>

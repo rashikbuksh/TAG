@@ -12,7 +12,7 @@ const DEFAULT_OPTIONS = {
 function useFetch(url, dependencies = []) {
 	return useAsync(async () => {
 		return await fetch(`${API}${url}`, {
-			...DEFAULT_OPTIONS
+			...DEFAULT_OPTIONS,
 		}).then(async (res) => {
 			if (res.ok) return res.json();
 			const json = await res.json();
@@ -42,7 +42,7 @@ async function useFetchFunc(url, setData, setLoading, setError) {
 			});
 	} catch (err) {
 		if (err.name === "AbortError") {
-			console.log("Fetch Aborted");
+			// console.log("Fetch Aborted");
 		} else {
 			setLoading(false);
 			setError(err.message);
@@ -61,4 +61,3 @@ const useFetchForRhfReset = (uri, returnId, reset) => {
 };
 
 export { useFetch, useFetchForRhfReset, useFetchFunc };
-

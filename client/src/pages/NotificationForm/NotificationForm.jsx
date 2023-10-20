@@ -1,7 +1,7 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 const NotificationForm = () => {
 	const addNotificationScema = yup.object({
 		id: yup
@@ -26,8 +26,8 @@ const NotificationForm = () => {
 	const { errors } = formState;
 
 	const onSubmit = (data) => {
-		console.log("FormData", data);
-		console.log(errors);
+		// console.log("FormData", data);
+		// console.log(errors);
 	};
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 mt-3">

@@ -47,7 +47,7 @@ const MakeModaratorModal = ({ isOpen, setIsOpen }) => {
 		{ value: "/allnews", label: "All News" },
 	];
 	const onSubmit = (data) => {
-		console.log(data);
+		// console.log(data);
 		Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, {
 			name: data.name,
 			email: data.emailAddress,
@@ -56,7 +56,7 @@ const MakeModaratorModal = ({ isOpen, setIsOpen }) => {
 			access: "modarator",
 		})
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 				if (response.data.message === data.phone) {
 					setModaratorEmail(data.email);
 					setModaratorPassword(data.password);

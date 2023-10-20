@@ -28,7 +28,7 @@ import MessageModal from "../MessageModal/MessageModal";
 const MainProduct = ({ shopperProduct, product }) => {
 	const navigate = useNavigate();
 	const prod = product || shopperProduct;
-	console.log(prod, "prod");
+	// console.log(prod, "prod");
 	const {
 		name,
 		price,
@@ -124,7 +124,9 @@ const MainProduct = ({ shopperProduct, product }) => {
 							? "transition-transform hover:scale-90"
 							: ""
 					}`}
-					src={`${import.meta.env.VITE_APP_IMG_URL}/products/${image}`}
+					src={`${
+						import.meta.env.VITE_APP_IMG_URL
+					}/products/${image}`}
 					alt=""
 				/>
 				{display > 0 && (

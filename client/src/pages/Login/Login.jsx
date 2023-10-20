@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import * as yup from "yup";
-import { useAuth } from "../../context/auth";
 import Modal from "../../components/Modal/Modal";
+import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 
 const Login = () => {
@@ -32,7 +32,7 @@ const Login = () => {
 	const { errors } = formState;
 
 	const NAVIGATE_TO = {
-		admin: "/login",
+		admin: "/home",
 	};
 
 	useEffect(() => {
@@ -44,13 +44,12 @@ const Login = () => {
 
 	const onSubmit = (data) => {
 		login(data);
-		
 	};
 
 	const handelOPenLoginMOdal = () => {
 		setIsOpen(!isOpen);
 	};
-	
+
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
 			{/* auth page header */}

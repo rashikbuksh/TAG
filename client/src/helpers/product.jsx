@@ -93,10 +93,10 @@ export const getSortedProducts = (products, sortType, sortValue) => {
 	if (products && sortType && sortValue) {
 		if (sortType === "category") {
 			products.filter((product) => {
-				console.log(product ? product.product_id == sortValue : null);
+				// console.log(product ? product.product_id == sortValue : null);
 				let bool = product ? product.product_id == sortValue : null;
 				if (bool) {
-					console.log(product);
+					// console.log(product);
 					return product;
 				}
 			});

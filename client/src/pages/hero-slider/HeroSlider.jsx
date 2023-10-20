@@ -40,7 +40,7 @@ const HeroSlider = () => {
 		formData.append("uploadFiles", file);
 
 		var ImageName = null;
-		console.log(new Date());
+		// console.log(new Date());
 		if (file === null) {
 			ImageName = null;
 		} else {
@@ -56,7 +56,7 @@ const HeroSlider = () => {
 					},
 				}
 			).then((response) => {
-				console.log(response.data);
+				// console.log(response.data);
 				if (response.data.msg === "File Uploaded") {
 					ImageName = response.data.productImage;
 				}
@@ -67,7 +67,7 @@ const HeroSlider = () => {
 			subtitle: data.subtitle,
 			image: ImageName,
 		}).then((response) => {
-			console.log(response.data);
+			// console.log(response.data);
 			if (response.data.message == title + " Added Successful") {
 				alert("Slider Added Successful");
 			}
@@ -80,14 +80,14 @@ const HeroSlider = () => {
 				setSliderData(res.data);
 			})
 			.catch((err) => {
-				console.log(err);
+				// console.log(err);
 			});
 	}, []);
 
 	async function deleteSlider(id) {
-		console.log(id);
+		// console.log(id);
 		await api.delete(`/heroslider/deleteslider/${id}`).then((response) => {
-			console.log(response.data);
+			// console.log(response.data);
 			if (response.data.message == id + " Deleted Successful") {
 				alert("Slider Deleted Successful");
 			}
@@ -101,10 +101,10 @@ const HeroSlider = () => {
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<h3 className="auth-page-header__title">Add Slider Image</h3>
-							<p className="auth-page-header__text">
-								
-							</p>
+							<h3 className="auth-page-header__title">
+								Add Slider Image
+							</h3>
+							<p className="auth-page-header__text"></p>
 						</div>
 					</div>
 				</div>
@@ -175,7 +175,7 @@ const HeroSlider = () => {
 			</div>
 			{/* auth page footer */}
 			<div className="divider"></div>
-			<h2 className="text-3xl m-4">All Slider Photo </h2>
+			<h2 className="m-4 text-3xl">All Slider Photo </h2>
 			<div className="auth-page-body">
 				<div className="container">
 					<div className="row">

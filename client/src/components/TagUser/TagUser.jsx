@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import SearchFunction from "../../AdminComponents/SearchFunction/Index";
 import { api } from "../../lib/api";
 import UserTable from "./UserTable";
-import SearchFunction from "../../AdminComponents/SearchFunction/Index";
 
 const TagUser = () => {
 	const [tagUsers, setTagUsers] = useState([]);
@@ -15,7 +15,7 @@ const TagUser = () => {
 				alert(error);
 			});
 	}, []);
-	console.log(tagUsers);
+	// console.log(tagUsers);
 	return (
 		<>
 			<p className="px-10 py-3 text-3xl font-bold">ALL User</p>

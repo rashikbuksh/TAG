@@ -11,13 +11,13 @@ import {
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 
 import { FaEye } from "react-icons/fa6";
+import { useAuth } from "../../context/auth";
 import {
 	checkIfInCart,
 	getDiscountPrice,
 	getProductCartQuantity,
 } from "../../helpers/product";
 import { api } from "../../lib/api";
-import { useAuth } from "../../context/auth";
 
 const Product = () => {
 	const { user } = useAuth();
@@ -28,7 +28,7 @@ const Product = () => {
 
 	const [prods, setProds] = useState([]);
 
-	console.log(prods, "productStock");
+	// console.log(prods, "productStock");
 	const [shopperName, setShopperName] = useState("");
 
 	useEffect(() => {
@@ -41,7 +41,7 @@ const Product = () => {
 				alert(error);
 			});
 	}, [id]);
-	console.log(prods, "loggged productjs");
+	// console.log(prods, "loggged productjs");
 	const { cartItems } = useSelector((state) => state.cart);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 	const wishlistItem = wishlistItems.find((item) => item.id === id);
@@ -67,9 +67,9 @@ const Product = () => {
 							className="product-image-single swiper-slide"
 						>
 							<img
-								src={`${import.meta.env.VITE_APP_IMG_URL}/products/${
-									single.image
-								}`}
+								src={`${
+									import.meta.env.VITE_APP_IMG_URL
+								}/products/${single.image}`}
 								className="img-fluid"
 								alt="Product"
 							/>

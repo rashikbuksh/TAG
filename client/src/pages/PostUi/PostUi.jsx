@@ -156,7 +156,7 @@ const PostUi = ({ postData }) => {
 								<p className="text-sm">{post_content}</p>
 								{post_img && (
 									<img
-										className="mt-2  lg:w-1/2 mx-auto h-1/2 object-cover"
+										className="mx-auto  mt-2 h-1/2 object-cover lg:w-1/2"
 										src={`${
 											import.meta.env.VITE_APP_IMG_URL
 										}/newsimage/${post_img}`}
@@ -218,7 +218,7 @@ const PostUi = ({ postData }) => {
 											news_id: id,
 											liked_by: Number(userid),
 										}).then((res) => {
-											console.log(res, "res");
+											// console.log(res, "res");
 											setIsLiked(true);
 											setLikeId(res.data.id);
 											api.post(
