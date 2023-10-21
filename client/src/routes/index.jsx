@@ -25,7 +25,7 @@ export default function ProtectedRoutes() {
 	return haveAccess ? (
 		<>
 			<Header />
-			<Offcanvas />
+			{/* <Offcanvas /> */}
 			<Footer />
 			<Outlet />
 		</>
