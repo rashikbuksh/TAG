@@ -33,38 +33,12 @@ const Cart = () => {
 		});
 	}, []);
 
-	const handleBuyClick = (shopperId) => {
-		// Toggle the buy state for the specific shop
-		setBuyStates((prevBuyStates) => ({
-			...prevBuyStates,
-			[shopperId]: !prevBuyStates[shopperId],
-		}));
-
-		const discounts = {};
-		cartItems.forEach((cartItem) => {
-			if (cartItem.shopper_id === shopperId) {
-				discounts[cartItem.id] = cartItem.discount;
-			}
-		});
-
-		// Store the discounts in state
-		setProductDiscounts({
-			...productDiscounts,
-			[shopperId]: discounts,
-		});
-
-		const quantities = {};
-		cartItems.forEach((cartItem) => {
-			if (cartItem.shopper_id === shopperId) {
-				quantities[cartItem.id] = cartItem.quantity;
-			}
-		});
-
-		// Store the quantities in state
-		setProductQuantities({
-			...productQuantities,
-			[shopperId]: quantities,
-		});
+	const redirectTimer = (shopperId) => {
+		console.log("call add order",shopperId);
+		setTimeout(() => {
+			addOrder(shopperId);
+			
+		}, 1500);
 	};
 
 	useEffect(() => {
@@ -84,20 +58,24 @@ const Cart = () => {
 			calculatedTotals[shopper.id] = parseFloat(shopperTotal).toFixed(2);
 		});
 		setTotals(calculatedTotals);
-	}, [cartItems, buyStates]);
+	}, [cartItems, buyStates, shoppers]);
 
 	const addOrder = (shopperId) => {
-		const productIds = cartItems
-			.filter((cartItem) => cartItem.shopper_id === shopperId)
-			.map((cartItem) => cartItem.id);
+		// Check if productDiscounts[shopperId] is defined, if not, set it as an empty object
 
-		const quantities = productQuantities[shopperId];
-		const discounts = productDiscounts[shopperId];
+		const productIds =
+			cartItems
+				.filter((cartItem) => cartItem.shopper_id === shopperId)
+				.map((cartItem) => cartItem.id) || {};
 
-		const discount = Object.values(discounts).join(",");
+		const quantities = productQuantities[shopperId] || {};
+		const discounts = productDiscounts[shopperId] || {};
+		console.log(quantities, discounts ,"72");
+
+		const discount = Object?.values(discounts).join(",");
 		const productid = Object.keys(quantities).join(",");
 		const quantity = Object.values(quantities).join(",");
-
+		
 		let total = 0;
 		productIds.forEach((productId) => {
 			const cartItem = cartItems.find((item) => item.id === productId);
@@ -108,7 +86,7 @@ const Cart = () => {
 				total += getDiscountPrice(price, discount) * quantity;
 			}
 		});
-
+		
 		var last_order_id = 0;
 		const wantobuy = window.confirm("Are you sure you want to buy?");
 		if (!wantobuy) {
@@ -124,11 +102,9 @@ const Cart = () => {
 				order_status: "pending",
 				weight: 0,
 			}).then((res) => {
-				// console.log("res", res);
 				if (res.data.status === 201) {
 					api.get("/order/getLastOrder").then((res) => {
 						last_order_id = res.data[0].id;
-						// console.log("last_order_id", last_order_id);
 						api.post("/notification/addnotification", {
 							notification_content:
 								"You have a new order. Order Number is #" +
@@ -137,12 +113,11 @@ const Cart = () => {
 							notification_time: new Date()
 								.toISOString()
 								.slice(0, 19)
-								.replace("T", " "), // 2021-08-10 12:00:00
+								.replace("T", " "),
 							not_from: shopperId,
 							not_to: userID,
 							status: 0,
 						}).then((res) => {
-							// console.log("res", res);
 							if (res.data.status === 201) {
 								// alert("Notification Added Successfully");
 							}
@@ -172,6 +147,49 @@ const Cart = () => {
 			...productDiscounts,
 			[shopperId]: {},
 		});
+		if (!productDiscounts[shopperId]) {
+			console.log(discount, productid, quantity, "all");
+			setProductDiscounts({
+				...productDiscounts,
+				[shopperId]: {},
+			});
+		}
+	};
+
+	const handleBuyClick = (shopperId) => {
+		// Toggle the buy state for the specific shop
+		setBuyStates((prevBuyStates) => ({
+			...prevBuyStates,
+			[shopperId]: !prevBuyStates[shopperId],
+		}));
+
+		const discounts = {};
+		cartItems.forEach((cartItem) => {
+			if (cartItem.shopper_id === shopperId) {
+				discounts[cartItem.id] = cartItem.discount;
+			}
+		});
+		console.log(discounts,"172 handelbydiscount");
+
+		// Store the discounts in state
+		setProductDiscounts({
+			...productDiscounts,
+			[shopperId]: discounts,
+		});
+
+		const quantities = {};
+		cartItems.forEach((cartItem) => {
+			if (cartItem.shopper_id === shopperId) {
+				quantities[cartItem.id] = cartItem.quantity;
+			}
+		});
+
+		// Store the quantities in state
+		setProductQuantities({
+			...productQuantities,
+			[shopperId]: quantities,
+		});
+		redirectTimer(shopperId);
 	};
 
 	return (
@@ -194,8 +212,6 @@ const Cart = () => {
 								</Link>
 							)}
 							{cartItems.map((cartItem) => {
-								// console.log(cartItem);
-
 								let cartTotalPrice = 0;
 								if (cartItem.shopper_id === shopper.id) {
 									return (
@@ -206,22 +222,25 @@ const Cart = () => {
 											<div>
 												<div className="flex items-center justify-between border p-2">
 													<img
-														className="h-[50px] w-[50px] border-2 "
+														className="h-[50px] w-[50px] border-2"
 														src={`${
 															import.meta.env
 																.VITE_APP_IMG_URL
-														}/${cartItem.image}`}
+														}/products/${
+															cartItem.image
+														}`}
 														alt="Selected Product"
 													/>
 													<div>
 														<h1 className="text-base font-bold">
 															<Link
-																to={
+																to={`${
 																	import.meta
 																		.env
-																		.VITE_API_PUBLIC_URL +
-																	`/product/${cartItem.id}`
-																}
+																		.VITE_API_PUBLIC_URL
+																}/product/${
+																	cartItem.id
+																}`}
 															>
 																{cartItem.name}
 															</Link>
@@ -308,7 +327,7 @@ const Cart = () => {
 																totals[
 																	shopper.id
 																] || 0
-															} // Use the calculated total for the shopper
+															}
 														/>
 													</div>
 												</div>
@@ -321,7 +340,7 @@ const Cart = () => {
 							{cartItems.some(
 								(cartItem) => cartItem.shopper_id === shopper.id
 							) && (
-								<div className="mx-4 my-1 flex items-center justify-between  p-1">
+								<div className="mx-4 my-1 flex items-center justify-between p-1">
 									<div className="flex gap-3">
 										{buyStates[shopper.id] ? (
 											<>
@@ -331,9 +350,9 @@ const Cart = () => {
 															shopper.id
 														)
 													}
-													className=" btn btn-error btn-xs"
+													className="btn btn-error btn-xs"
 												>
-													Cancel
+													Cancel1
 												</button>{" "}
 												<div className="border p-1 text-xs">
 													2 minutes remaining
@@ -344,7 +363,7 @@ const Cart = () => {
 													}
 													className="btn btn-success btn-xs"
 												>
-													Buy
+													Buy2
 												</button>{" "}
 											</>
 										) : (
@@ -354,7 +373,7 @@ const Cart = () => {
 												}
 												className="btn btn-success btn-xs"
 											>
-												Buy
+												Buy3
 											</button>
 										)}
 									</div>
