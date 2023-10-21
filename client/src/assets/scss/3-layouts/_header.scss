@@ -101,9 +101,9 @@ header {
 .offcanvas-navigation {
     overflow-y: scroll;
 
-    height: 400px;
-    margin: 0 -40px;
-    padding: 0 40px;
+    height: auto;
+    // margin: 0 -40px;
+    padding: 0 10px;
 
     li {
         display: flex;
@@ -111,10 +111,10 @@ header {
 
         padding: 15px 10px 15px 30px;
 
-        border-bottom: 2px solid $white;
+        // border-bottom: 2px solid $white;
 
         &:nth-child(1) {
-            border-top: 2px solid $white;
+            // border-top: 2px solid $white;
         }
 
         span {

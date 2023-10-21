@@ -20,24 +20,24 @@ import { api } from "../../lib/api";
 const ShopKeeperDashBoard = () => {
 	const shopname = "Rafi Edu Store";
 	const locatiion = "New Market City Complex, Dhaka 1205";
-	const [isOpen, setIsOpen] = useState(false);
+	// const [isOpen, setIsOpen] = useState(false);
 	const [isClockOpen, setIsClockOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState("");
 	const [activeStatus, setActiveStatus] = useState(false);
 	// const {user}=useAuth()
 	// // console.log(user);
 
-	const toggleDrawer = () => {
-		setIsOpen((prevState) => !prevState);
-	};
+	// const toggleDrawer = () => {
+	// 	setIsOpen((prevState) => !prevState);
+	// };
 
-	const mobileDrawerStyle = {
-		width: "60%", // Adjust this value as needed for mobile
-	};
+	// const mobileDrawerStyle = {
+	// 	width: "60%", // Adjust this value as needed for mobile
+	// };
 
-	const desktopDrawerStyle = {
-		width: "25%", // Adjust this value as needed for desktop
-	};
+	// const desktopDrawerStyle = {
+	// 	width: "25%", // Adjust this value as needed for desktop
+	// };
 
 	const id = localStorage.getItem("user-id");
 	// console.log(id);
@@ -139,10 +139,10 @@ const ShopKeeperDashBoard = () => {
 						</div>
 					</div>
 					<div>
-						<button onClick={toggleDrawer}>
+						{/* <button onClick={toggleDrawer}>
 							<FaBars className="text-3xl"></FaBars>
-						</button>
-						<Drawer
+						</button> */}
+						{/* <Drawer
 							open={isOpen}
 							onClose={toggleDrawer}
 							direction="right"
@@ -251,7 +251,7 @@ const ShopKeeperDashBoard = () => {
 									</ul>
 								</div>
 							</div>
-						</Drawer>
+						</Drawer> */}
 					</div>
 				</div>
 

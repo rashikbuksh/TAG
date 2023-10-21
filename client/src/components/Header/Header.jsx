@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
+import { FaBell } from "react-icons/fa";
 
 function Header() {
 	const [activateOffcanvas, setActivateOffcanvas] = useState(false);
 	const [activateSearch, setActivateSearch] = useState(false);
-
+	const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
 	const handleClickOffcanvas = (e) => {
 		e.preventDefault();
 		setActivateOffcanvas(!activateOffcanvas);
@@ -21,33 +22,43 @@ function Header() {
 	const getMenuActiveStatus = (status) => {
 		setActivateOffcanvas(status);
 	};
+	const toggleDrawer = () => {
+		setIsOffcanvasOpen((prevState) => !prevState);
+	};
+
+	const mobileDrawerStyle = {
+		width: "60%",
+		marginTop: "50px", // You can adjust the margin value as needed
+		borderRadius: "10px", 
+		backgroundColor: "#EFEFEF", 
+		boxShadow: "inset 0 54px 56px rgba(0, 0, 0, 0.1)",// Add border radius
+	};
+
+	const desktopDrawerStyle = {
+		width: "25%", // Adjust this value as needed for desktop
+		marginTop: "50px", // You can adjust the margin value as needed
+		borderRadius: "10px", 
+		backgroundColor: "#EFEFEF", 
+		boxShadow: "inset 0 54px 56px rgba(0, 0, 0, 0.1)",
+	};
 
 	return (
 		<header>
-			<div className="py-3 px-2">
+			<div className="px-6 py-3">
 				<div className="">
-					<div className="flex justify-between items-center">
-						<div className=" ">
-							{/* header logo */}
-							<div className="">
-								<Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"/home"
-									}
-								>
-									<img
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/Tag-logo-blue-get_50_50.png"
-										}
-										className="img-fluid"
-										alt=""
-									/>
-								</Link>
-							</div>
+					<div className="flex items-center justify-between">
+						<div className="">
+							<Offcanvas
+								isOffcanvasOpen={isOffcanvasOpen}
+								setIsOffcanvasOpen={setIsOffcanvasOpen}
+								toggleDrawer={toggleDrawer}
+								mobileDrawerStyle={mobileDrawerStyle}
+								show={activateOffcanvas}
+								desktopDrawerStyle={desktopDrawerStyle}
+								activeStatus={getMenuActiveStatus}
+							/>
 						</div>
+
 						<div className="">
 							{/* header search */}
 							<div className="header-search">
@@ -67,19 +78,20 @@ function Header() {
 								</form>
 							</div>
 						</div>
-						<div className="">
-							{/* header menu trigger */}
-							<button
-								className="header-menu-trigger"
-								onClick={(e) => handleClickOffcanvas(e)}
-							>
-								<ReactSVG
-									src={
+						<div className=" ">
+							{/* header logo */}
+							<div className="">
+								<Link
+									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
-										"/assets/img/icons/menu.svg"
+										"/notification"
 									}
-								/>
-							</button>
+								>
+									<span className="icon">
+										<FaBell className="text-3xl text-[#00AAFF]"></FaBell>
+									</span>
+								</Link>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -87,10 +99,6 @@ function Header() {
 			{/* search keywords */}
 			<SearchKeywords show={activateSearch} />
 			{/* offcanvas menu */}
-			<Offcanvas
-				show={activateOffcanvas}
-				activeStatus={getMenuActiveStatus}
-			/>
 		</header>
 	);
 }
