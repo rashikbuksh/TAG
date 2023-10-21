@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
@@ -20,6 +20,7 @@ const Cart = () => {
 	const [totals, setTotals] = useState({}); // Store totals for each shopper
 	const [productQuantities, setProductQuantities] = useState({});
 	const [productDiscounts, setProductDiscounts] = useState({});
+	const productDiscount = useRef({});
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -33,12 +34,11 @@ const Cart = () => {
 		});
 	}, []);
 
-	const redirectTimer = (shopperId) => {
-		console.log("call add order",shopperId);
+	const redirectTimer = async (shopperId) => {
+		console.log("call add order", shopperId);
 		setTimeout(() => {
 			addOrder(shopperId);
-			
-		}, 1500);
+		}, 3000);
 	};
 
 	useEffect(() => {
@@ -58,7 +58,7 @@ const Cart = () => {
 			calculatedTotals[shopper.id] = parseFloat(shopperTotal).toFixed(2);
 		});
 		setTotals(calculatedTotals);
-	}, [cartItems, buyStates, shoppers]);
+	}, [cartItems, buyStates, shoppers, productDiscounts]);
 
 	const addOrder = (shopperId) => {
 		// Check if productDiscounts[shopperId] is defined, if not, set it as an empty object
@@ -70,12 +70,11 @@ const Cart = () => {
 
 		const quantities = productQuantities[shopperId] || {};
 		const discounts = productDiscounts[shopperId] || {};
-		console.log(quantities, discounts ,"72");
 
 		const discount = Object?.values(discounts).join(",");
 		const productid = Object.keys(quantities).join(",");
 		const quantity = Object.values(quantities).join(",");
-		
+
 		let total = 0;
 		productIds.forEach((productId) => {
 			const cartItem = cartItems.find((item) => item.id === productId);
@@ -86,7 +85,7 @@ const Cart = () => {
 				total += getDiscountPrice(price, discount) * quantity;
 			}
 		});
-		
+
 		var last_order_id = 0;
 		const wantobuy = window.confirm("Are you sure you want to buy?");
 		if (!wantobuy) {
@@ -166,16 +165,18 @@ const Cart = () => {
 		const discounts = {};
 		cartItems.forEach((cartItem) => {
 			if (cartItem.shopper_id === shopperId) {
+				productDiscount[cartItem.id] = cartItem.discount;
+				console.log(cartItem.id, "discount", cartItem.discount);
 				discounts[cartItem.id] = cartItem.discount;
 			}
 		});
-		console.log(discounts,"172 handelbydiscount");
+		console.log(productDiscount, "productDiscount");
 
 		// Store the discounts in state
-		setProductDiscounts({
-			...productDiscounts,
+		setProductDiscounts((prevDiscounts) => ({
+			...prevDiscounts,
 			[shopperId]: discounts,
-		});
+		}));
 
 		const quantities = {};
 		cartItems.forEach((cartItem) => {
