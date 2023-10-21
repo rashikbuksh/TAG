@@ -262,7 +262,7 @@ function Offcanvas(props) {
 										"/edit-profile"
 									}
 								>
-									Settings
+									Edit Profile
 								</Link>
 							</li>
 							<li>

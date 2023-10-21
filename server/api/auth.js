@@ -12,6 +12,12 @@ const read = [
 		msg: "id is incorrect",
 	},
 	{
+		uri: "/auth/getUserAllInfo/:id",
+		query: `SELECT name,shipping_address,image from customer_profile where id = ?`,
+		param: ["id"],
+		msg: "id is incorrect",
+	},
+	{
 		uri: "/auth/getShopperInfo",
 		query: `SELECT id, image, name, user_name,phone,email,access, review_count from customer_profile where access = "shopper"`,
 	},

@@ -1,138 +1,133 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import Axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Breadcrumb } from "../../components";
 import { api } from "../../lib/api";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const EditProfile = () => {
-	const id = localStorage.getItem("user-id");
+  const id = localStorage.getItem("user-id");
+  const [userinfo, setUserInfo] = useState([]);
+  const [isFormDirty, setIsFormDirty] = useState(false);
+  useEffect(() => {
+    const id = localStorage.getItem("user-id");
 
-	if (id === undefined || id === null) {
-		window.location.href = "/login";
-	}
+    if (!id) {
+      // Redirect the user to the login page if user ID is not available
+      window.location.href = "/login";
+    }
+  }, []);
 
-	const editProfileSchema = yup.object().shape({
-		name: yup.string().required("Full Name is required"),
-		user_name: yup.string().required("User Name is required"),
-		phone: yup.string().required("Phone Number is required"),
-		emailAddress: yup.string().email("Please enter valid email address"),
-		shipping_address: yup.string().required("Shipping Address is required"),
-	});
+  const editProfileSchema = yup.object().shape({
+    name: yup.string(),
+    shipping_address: yup.string(),
+  });
 
-	const { register, handleSubmit, formState } = useForm({
-		resolver: yupResolver(editProfileSchema),
-	});
+  const { register, handleSubmit, formState, setValue, getValues } = useForm({
+    resolver: yupResolver(editProfileSchema),
+  });
 
-	const { errors } = formState;
+  const { errors } = formState;
 
-	const onSubmit = async (data) => {
-		api.post(`/profile/edit_profile/${id}`, {
-			name: data.name,
-			user_name: data.user_name,
-			phone: data.phone,
-			shipping_address: data.shipping_address,
-		}).then((response) => {
-			// console.log(response.data);
-			if (response.data.message == id + " updated successfully") {
-				alert("Profile Updated Successfully");
-				window.location.href = "/home";
-			}
-		});
-	};
+  useEffect(() => {
+    api.get(`/auth/getUserAllInfo/${id}`)
+      .then((res) => {
+        setUserInfo(res.data[0]);
+        setValue("name", res.data[0].name);
+        setValue("shipping_address", res.data[0].shipping_address);
+      })
+      .catch((err) => {
+        console.log(err.message, "err.message");
+      });
+  }, [id, setValue]);
 
-	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
-			<Breadcrumb pageTitle="Edit Profile" prevUrl="/home" />
-			<div className="edit-profile-body space-mt--30">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							{/* edit profile form */}
-							<div className="edit-profile-form">
-								<form onSubmit={handleSubmit(onSubmit)}>
-									<div className="edit-profile-form__single-field space-mb--30">
-										<label htmlFor="name">Full Name</label>
-										<input
-											type="text"
-											name="name"
-											id="name"
-											placeholder="Enter Full Name"
-											{...register("name")}
-										/>
-										<p>{errors.name?.message}</p>
-									</div>
-									<div className="edit-profile-form__single-field space-mb--30">
-										<label htmlFor="user_name">
-											User Name
-										</label>
-										<input
-											type="text"
-											name="user_name"
-											id="user_name"
-											placeholder="Enter User Name"
-											{...register("user_name")}
-										/>
-										<p>{errors.user_name?.message}</p>
-									</div>
-									<div className="edit-profile-form__single-field space-mb--30">
-										<label htmlFor="phone">Phone</label>
-										<input
-											type="text"
-											name="phone"
-											id="phone"
-											placeholder="Enter Phone Number"
-											{...register("phone")}
-										/>
-										<p>{errors.phone?.message}</p>
-									</div>
-									<div className="edit-profile-form__single-field space-mb--30">
-										<label htmlFor="emailAddress">
-											Email Address
-										</label>
-										<input
-											type="text"
-											name="emailAddress"
-											id="emailAddress"
-											placeholder="Enter Email Address"
-											{...register("emailAddress")}
-											disabled
-										/>
-										<p>{errors.emailAddress?.message}</p>
-									</div>
-									<div className="edit-profile-form__single-field space-mb--30">
-										<label htmlFor="shipping_address">
-											Shipping Address
-										</label>
-										<textarea
-											name="shipping_address"
-											id="shipping_address"
-											cols={30}
-											rows={5}
-											placeholder="Enter Shipping Address"
-											defaultValue={""}
-											{...register("shipping_address")}
-										/>
-										<p>
-											{errors.shipping_address?.message}
-										</p>
-									</div>
-									{/* button not showing.. dummy button added */}
-									<button
-										type="submit"
-										className="btn btn-primary btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg"
-									>
-										Update
-									</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+  const handleFormChange = () => {
+    setIsFormDirty(true);
+  };
+
+  const onSubmit = async (data) => {
+    if (isFormDirty) {
+      api.post(`/profile/edit_profile/${id}`, {
+        name: data.name,
+        shipping_address: data.shipping_address,
+      }).then((response) => {
+        if (response.data.message === id + " updated successfully") {
+          alert("Profile Updated Successfully");
+          window.location.href = "/home";
+        }
+      });
+    }
+  };
+
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const showPosition = (position) => {
+    setValue("shipping_address", `${position.coords.latitude}__${position.coords.longitude}`);
+    handleFormChange();
+  };
+
+  return (
+    <div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
+      <Breadcrumb pageTitle="Edit Profile" prevUrl="/home" />
+      <div className="edit-profile-body space-mt--30">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="edit-profile-form">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="edit-profile-form__single-field space-mb--30">
+                    <label htmlFor="name">Full Name</label>
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      placeholder="Enter Full Name"
+                      defaultValue={userinfo.name}
+                      {...register("name")}
+                      onChange={handleFormChange}
+                    />
+                    <p>{errors.name?.message}</p>
+                  </div>
+                  <div className="edit-profile-form__single-field space-mb--30">
+                    <label htmlFor="shipping_address">Shipping Address</label>
+                    <input
+                      name="shipping_address"
+                      id="shipping_address"
+                      type="text"
+                      placeholder="Enter Shipping Address"
+                      defaultValue={userinfo.shipping_address}
+                      {...register("shipping_address")}
+                      onChange={handleFormChange}
+                    />
+                    <p>{errors.shipping_address?.message}</p>
+                    <button
+                      type="button"
+                      onClick={getUserLocation}
+                    >
+                      Get Location
+                    </button>
+                  </div>
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+                    disabled={!isFormDirty}
+                  >
+                    Update
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default EditProfile;

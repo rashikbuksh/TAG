@@ -398,7 +398,7 @@ function App() {
 						{PROTECTED_ROUTES?.map((route) => (
 							<Route
 								key={route?.path}
-								path={route?.path}
+								path={`${route?.path}/*`}
 								element={
 									<Suspense
 										fallback={<LoadingPage></LoadingPage>}
@@ -413,7 +413,7 @@ function App() {
 						{ADMIN_ROUTES?.map((route) => (
 							<Route
 								key={route?.path}
-								path={route?.path}
+								path={`${route?.path}/*`}
 								element={
 									<Suspense
 										fallback={
@@ -432,7 +432,7 @@ function App() {
 					{PUBLIC_ROUTES?.map((route) => (
 						<Route
 							key={route?.path}
-							path={route?.path}
+							path={`${route?.path}/*`}
 							element={
 								<Suspense
 									fallback={
