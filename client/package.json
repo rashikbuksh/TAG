@@ -1,6 +1,6 @@
 {
 	"name": "client",
-	"homepage": "https://www.tagthinkandget.com",
+	"homepage": "https://tagthinkandget.com",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
