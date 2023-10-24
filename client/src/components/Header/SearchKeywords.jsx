@@ -14,7 +14,7 @@ const SearchKeywords = ({ show }) => {
 				<h4 className="search-keyword-header__title">Hot Keywords</h4>
 			</div>
 			<ul className="search-keywords">
-				<li>
+				{/* <li>
 					<Link to={import.meta.env.VITE_API_PUBLIC_URL + "/search"}>
 						Shoes
 					</Link>
@@ -43,7 +43,7 @@ const SearchKeywords = ({ show }) => {
 					<Link to={import.meta.env.VITE_API_PUBLIC_URL + "/search"}>
 						Travel Bag
 					</Link>
-				</li>
+				</li> */}
 			</ul>
 		</div>
 	);

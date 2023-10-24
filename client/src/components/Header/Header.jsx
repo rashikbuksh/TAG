@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { FaBell } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
-import { FaBell } from "react-icons/fa";
 
 function Header() {
 	const [activateOffcanvas, setActivateOffcanvas] = useState(false);
@@ -29,19 +29,31 @@ function Header() {
 	const mobileDrawerStyle = {
 		width: "60%",
 		marginTop: "50px", // You can adjust the margin value as needed
-		borderRadius: "10px", 
-		backgroundColor: "#EFEFEF", 
-		boxShadow: "inset 0 54px 56px rgba(0, 0, 0, 0.1)",// Add border radius
+		borderRadius: "10px",
+		backgroundColor: "#EFEFEF",
+		boxShadow: "inset 0 54px 56px rgba(0, 0, 0, 0.1)", // Add border radius
 	};
 
 	const desktopDrawerStyle = {
 		width: "25%", // Adjust this value as needed for desktop
 		marginTop: "50px", // You can adjust the margin value as needed
-		borderRadius: "10px", 
-		backgroundColor: "#EFEFEF", 
+		borderRadius: "10px",
+		backgroundColor: "#EFEFEF",
 		boxShadow: "inset 0 54px 56px rgba(0, 0, 0, 0.1)",
 	};
 
+	const [search, setSearch] = useState("");
+
+	const handleSearchProductChange = (e) => {
+		setSearch(e.target.value);
+	};
+
+	const navigate = useNavigate();
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+		navigate("/search/" + search);
+	};
 	return (
 		<header>
 			<div className="px-6 py-3">
@@ -62,19 +74,31 @@ function Header() {
 						<div className="">
 							{/* header search */}
 							<div className="header-search">
-								<form>
+								<form onSubmit={onSubmit}>
 									<input
+										onChange={(e) =>
+											handleSearchProductChange(e)
+										}
+										name="search"
 										type="text"
-										onClick={(e) => handleSearch(e)}
 										placeholder="Search anything"
 									/>
-									<ReactSVG
-										src={
+									<Link
+										to={
 											import.meta.env
 												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/search.svg"
+											"/search/" +
+											search
 										}
-									/>
+									>
+										<ReactSVG
+											src={
+												import.meta.env
+													.VITE_API_PUBLIC_URL +
+												"/assets/img/icons/search.svg"
+											}
+										/>
+									</Link>
 								</form>
 							</div>
 						</div>
