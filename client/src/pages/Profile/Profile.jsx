@@ -9,6 +9,8 @@ import { api } from "../../lib/api";
 const Profile = () => {
 	const { data, isLoading, errorMessage } = useFetch("profile.json");
 
+	const [totalOrder, setTotalOrder] = useState(0);
+
 	const id = localStorage.getItem("user-id");
 
 	const [userdata, setUserdata] = useState({});
@@ -20,7 +22,16 @@ const Profile = () => {
 			setUserdata(response.data[0]);
 		});
 		// console.log(userdata);
+		api.get(`/order/get-total-order/${id}`)
+			.then((response) => {
+				setTotalOrder(response.data[0].total_order);
+			})
+			.catch((error) => {
+				alert(error);
+			});
 	}, []);
+
+	console.log(userdata);
 
 	if (isLoading) return <Preloader />;
 	if (errorMessage) return <ErrorMessage errorMessage={errorMessage} />;
@@ -48,7 +59,7 @@ const Profile = () => {
 									<h3 className="name space-mb--15">
 										{userdata.name}
 									</h3>
-									<div className="profile-info space-mb--10">
+									{/* <div className="profile-info space-mb--10">
 										<div className="profile-info-block">
 											<div className="profile-info-block__value">
 												{data.id}
@@ -65,8 +76,8 @@ const Profile = () => {
 												Points
 											</div>
 										</div>
-									</div>
-									<div className="profile-level">
+									</div> */}
+									{/* <div className="profile-level">
 										<div className="profile-level__title">
 											{`Level ${data.level.number}`}{" "}
 										</div>
@@ -84,7 +95,7 @@ const Profile = () => {
 												aria-valuemax={100}
 											/>
 										</div>
-									</div>
+									</div> */}
 								</div>
 							</div>
 						</div>
@@ -144,7 +155,7 @@ const Profile = () => {
 											Total Order
 										</div>
 										<div className="profile-info-block__value">
-											{userdata.total_order}
+											{totalOrder}
 										</div>
 									</div>
 									<div className="profile-info-block">
@@ -170,7 +181,7 @@ const Profile = () => {
 										</div>
 									</div>
 								</div>
-								<div className="profile-info-table">
+								{/* <div className="profile-info-table">
 									<div className="profile-info-block">
 										<div className="profile-info-block__title">
 											Help Center
@@ -195,7 +206,7 @@ const Profile = () => {
 											{userdata.review_count}
 										</div>
 									</div>
-								</div>
+								</div> */}
 							</div>
 						</div>
 					</div>

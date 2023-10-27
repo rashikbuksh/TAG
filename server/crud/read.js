@@ -124,5 +124,4 @@ app.post("/auth/getUserID", (req, res) => {
 	const query = `SELECT id from customer_profile where phone=?`;
 
 	ExecuteQuery(res, query, [phone]);
-	return res;
 });

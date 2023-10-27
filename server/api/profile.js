@@ -1,8 +1,8 @@
 const change = [
 	{
 		uri: "/profile/edit_profile/:id",
-		query: `UPDATE customer_profile SET name=?, user_name=?, phone=?, shipping_address=? WHERE id = ?`,
-		body: ["name", "user_name", "phone", "shipping_address"],
+		query: `UPDATE customer_profile SET name=?, shipping_address=? WHERE id = ?`,
+		body: ["name", "shipping_address"],
 		param: ["id"],
 		msg: "id",
 	},
@@ -12,7 +12,7 @@ const change = [
 		body: ["active_status"],
 		param: ["id"],
 		msg: "id",
-	  },
+	},
 ];
 
 const read = [

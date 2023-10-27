@@ -17,7 +17,7 @@ function Offcanvas(props) {
 	const userid = localStorage.getItem("user-id");
 	const [userInfo, setUserInfo] = useState([]);
 	const { user } = useAuth();
-	console.log(user);
+	// console.log(user);
 	useEffect(() => {
 		const offcanvasNavigations = document.querySelectorAll(
 			".offcanvas-navigation > li"

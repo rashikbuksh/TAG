@@ -44,9 +44,6 @@ const Product = () => {
 	// console.log(prods, "loggged productjs");
 	const { cartItems } = useSelector((state) => state.cart);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
-	const wishlistItem = wishlistItems.find((item) => item.id === id);
-
-	const productCartQty = getProductCartQuantity(cartItems, prods);
 
 	const getShopperName = (shopperId) => {
 		api.get(`/auth/getUserInfo/${shopperId}`)

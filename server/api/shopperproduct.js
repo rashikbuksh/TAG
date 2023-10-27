@@ -60,6 +60,14 @@ const read = [
 		uri: "/shopperproduct/getPopularShopperProduct",
 		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, isVerified , product_id, category_id, image, sp.shopper_id, sale_count, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC LIMIT 5`,
 	},
+	{
+		uri: "/shopperproduct/get-searched-product/:keyword",
+		query: `SELECT sp.id, sp.name, sp.price, sp.discount, sp.product_count, isVerified, product_id, category_id, image, sp.shopper_id, sp.sale_count, sp.view
+				FROM shopper_product sp
+				JOIN product p ON sp.product_id = p.id
+				WHERE sp.name LIKE CONCAT('%', ?, '%');`,
+		param: ["keyword"],
+	},
 ];
 
 const change = [

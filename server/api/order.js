@@ -61,6 +61,11 @@ const read = [
 		uri: "/order/getLastOrder",
 		query: `SELECT id FROM product_order ORDER BY id DESC LIMIT 1`,
 	},
+	{
+		uri: "/order/get-total-order/:id",
+		query: `SELECT COUNT(*) as total_order FROM product_order WHERE customer_profile_id = ?;`,
+		param: ["id"],
+	},
 ];
 
 const change = [

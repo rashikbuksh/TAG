@@ -112,7 +112,7 @@ const PROTECTED_ROUTES = [
 	{
 		id: 11,
 		name: "Search",
-		path: "/search",
+		path: "/search/:keyword",
 		element: Search,
 		access: ["admin", "customer", "shopper"],
 	},
