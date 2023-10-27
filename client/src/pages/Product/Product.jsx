@@ -10,7 +10,7 @@ import {
 } from "../../store/slices/cart-slice";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 
-import { FaEye } from "react-icons/fa6";
+import { FaEye, FaRegMessage } from "react-icons/fa6";
 import { useAuth } from "../../context/auth";
 import {
 	checkIfInCart,
@@ -18,6 +18,8 @@ import {
 	getProductCartQuantity,
 } from "../../helpers/product";
 import { api } from "../../lib/api";
+import { StarIcon } from "../../SvgHub/Icons";
+import MessageModal from "../../components/MessageModal/MessageModal";
 
 const Product = () => {
 	const { user } = useAuth();
@@ -25,6 +27,7 @@ const Product = () => {
 	const dispatch = useDispatch();
 
 	const [productStock, setProductStock] = useState(0);
+	const [showFullDescription, setShowFullDescription] = useState(false);
 
 	const [prods, setProds] = useState([]);
 
@@ -44,7 +47,7 @@ const Product = () => {
 	// console.log(prods, "loggged productjs");
 	const { cartItems } = useSelector((state) => state.cart);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
-
+	const [isOpen, setIsOpen] = useState(false);
 	const getShopperName = (shopperId) => {
 		api.get(`/auth/getUserInfo/${shopperId}`)
 			.then((response) => {
@@ -52,22 +55,28 @@ const Product = () => {
 			})
 			.catch((error) => {});
 	};
+	const handelOpenMessageModal = () => {
+		setIsOpen(!isOpen);
+	};
 
+	const toggleDescription = () => {
+		setShowFullDescription(!showFullDescription);
+	};
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="mx-auto px-4 py-20 lg:w-[50%] ">
 			{/*====================  product image slider ====================*/}
-			<div className="product-image-slider-wrapper space-pb--30 space-mb--30">
+			<div className="">
 				{prods.map((single) => {
 					return (
 						<div
 							key={Math.random()}
-							className="product-image-single swiper-slide"
+							className=" w-full rounded bg-gray-200 p-3"
 						>
 							<img
 								src={`${
 									import.meta.env.VITE_APP_IMG_URL
 								}/products/${single.image}`}
-								className="img-fluid"
+								className="mx-auto h-[185px] w-[317px] rounded object-cover"
 								alt="Product"
 							/>
 						</div>
@@ -76,103 +85,123 @@ const Product = () => {
 			</div>
 			{/*====================  End of product image slider  ====================*/}
 			{prods.map((prods) => {
+				// console.log(prods,"in product");
 				return (
-					<div
-						key={Math.random()}
-						className="product-content-header-area border-bottom--thick space-pb--30"
-					>
-						<div className="container">
-							<div className="row">
-								<div className="col-12">
-									<div className="product-content-header">
-										<div className="product-content-header__main-info">
-											{getShopperName(prods.shopper_id)}
-											<Link
-												to={
-													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													`/shopkeeperProfileCV/${prods.shopper_id}`
-												}
-											>
-												<p className="text-xl font-bold">
-													#{prods.shopper_id}{" "}
-													{shopperName}
-												</p>
-											</Link>
-											<h3 className="title">
+					<div key={Math.random()} className="">
+						<div className="">
+							<div className="">
+								<div className="">
+									<div className="">
+										<div className="">
+											<div className="flex items-end gap-4">
+												{getShopperName(
+													prods.shopper_id
+												)}
+												<Link
+													to={
+														import.meta.env
+															.VITE_API_PUBLIC_URL +
+														`/shopkeeperProfileCV/${prods.shopper_id}`
+													}
+												>
+													<p className="primary-text mb-[6px] mt-4 text-3xl  font-bold">
+														{shopperName}
+													</p>
+												</Link>
+												<div className="mb-1">
+													<FaRegMessage
+														onClick={
+															handelOpenMessageModal
+														}
+														className="text-xl"
+													/>
+													<MessageModal
+														isOpen={isOpen}
+														setIsOpen={setIsOpen}
+														title={""}
+													></MessageModal>
+												</div>
+											</div>
+											<h3 className="my-2 text-xl font-bold">
 												{prods.name}
 											</h3>
-											<div className="price">
+											<div className="mb-[20px] flex items-center gap-2">
+												<StarIcon />
+												<p>
+													{prods.rating_count
+														? prods.rating_count
+														: "0"}{" "}
+													Reviews(5)
+												</p>
+											</div>
+											<div className="font-bold text-black">
 												{prods.discount &&
 												prods.discount > 0 ? (
 													<Fragment>
-														<span className="main-price me-1">{`$${prods.price}`}</span>
-														<span className="discounted-price">{`$${getDiscountPrice(
-															prods.price,
-															prods.discount
-														)}`}</span>
+														<s className="me-1 font-thin">
+															{" "}
+															<span className="primary-text">
+																৳{" "}
+															</span>{" "}
+															{`${prods.price}`}
+														</s>
+														<span className="text-2xl font-bold text-black">
+															{" "}
+															<span className="primary-text">
+																৳{" "}
+															</span>{" "}
+															{`${getDiscountPrice(
+																prods.price,
+																prods.discount
+															)}`}
+														</span>
 													</Fragment>
 												) : (
-													<span className="discounted-price">{`$${prods.price}`}</span>
+													<span className="text-2xl font-bold  text-black">
+														{" "}
+														<span className="primary-text">
+															৳{" "}
+														</span>{" "}
+														{`${prods.price}`}
+													</span>
 												)}
 											</div>
-											<div className="rating">
-												<Fragment>
-													<span className="rating__text">
-														{prods.rating_count}
-													</span>
-												</Fragment>
+										</div>
+										<div className="my-[24px]">
+											<p className="text-xl font-bold">
+												Description
+											</p>
+											<div className="my-2 text-lg">
+												{showFullDescription
+													? prods.full_description
+													: prods.full_description && prods.full_description.length > 40
+													? prods.full_description.substring(0, 100) + "..."
+													: prods.full_description}
+												{prods.full_description &&
+													prods.full_description
+														.length > 40 && (
+														<button
+															className="ml-2 cursor-pointer text-blue-500"
+															onClick={
+																toggleDescription
+															}
+														>
+															{showFullDescription
+																? "See Less"
+																: "See More"}
+														</button>
+													)}
 											</div>
 										</div>
-										{user.access === "shopper" ||
-											("admin" && (
-												<div className="product-content-header__wishlist-info text-center">
-													<FaEye></FaEye>
-													{prods.view}
-													<span className="count">
-														{prods.wishlist_count}
-													</span>
-												</div>
-											))}
 									</div>
 								</div>
 							</div>
 						</div>
-						<div className="shop-product-button">
+						<div className="">
 							{user.access === "admin" ? (
-								<button
-									disabled
-									onClick={() => {
-										prods.quantity = 0;
-										if (checkIfInCart(cartItems, prods)) {
-											dispatch(
-												increaseQuantityofProd(prods)
-											);
-										} else {
-											dispatch(addToCart(prods));
-										}
-									}}
-									className=" btn  btn-success btn-block rounded-none"
-								>
-									Add To Cart{" "}
-								</button>
+								""
 							) : user.access === "shopper" ? (
-								<button
-									disabled
-									onClick={() => {
-										prods.quantity = 0;
-										if (checkIfInCart(cartItems, prods)) {
-											dispatch(
-												increaseQuantityofProd(prods)
-											);
-										} else {
-											dispatch(addToCart(prods));
-										}
-									}}
-									className=" btn  btn-success btn-block rounded-none"
-								>
-									Add To Cart{" "}
-								</button>
+								""
 							) : (
 								<button
 									onClick={() => {
@@ -185,7 +214,7 @@ const Product = () => {
 											dispatch(addToCart(prods));
 										}
 									}}
-									className=" btn  btn-success btn-block rounded-none"
+									className="auth-btn"
 								>
 									Add To Cart{" "}
 								</button>
@@ -195,24 +224,24 @@ const Product = () => {
 				);
 			})}
 			{/* product content description */}
-			<div className="product-content-description border-bottom--thick space-pt--25 space-pb--25">
+			{/* <div className="product-content-description border-bottom--thick space-pt--25 space-pb--25">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							{/* <p className="space-mb--25">
+							<p className="space-mb--25">
 								{prods.shortDescription}
 							</p>
 							<h4 className="space-mb--5">Free Shipping</h4>
 							<p>
 								To Bangladesh from seller via china. Shipping{" "}
 								<br /> method online.
-							</p> */}
+							</p>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 			{/* product content safety */}
-			<div className="product-content-safety border-bottom--thick space-pt--15 space-pb--15">
+			{/* <div className="product-content-safety border-bottom--thick space-pt--15 space-pb--15">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
@@ -228,19 +257,19 @@ const Product = () => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 
 			{/* product content description */}
-			<div className="product-content-description space-pt--25 space-pb--25">
+			{/* <div className="product-content-description space-pt--25 space-pb--25">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							{/* <h4 className="space-mb--5">Specification</h4>
-							<p>{prods.fullDescription}</p> */}
+							<h4 className="space-mb--5">Specification</h4>
+							<p>{prods.fullDescription}</p>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 			{/* shop product button */}
 
 			{/*====================  End of product content  ====================*/}
