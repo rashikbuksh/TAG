@@ -291,9 +291,9 @@ const Register = () => {
 							className="absolute right-4 top-12 cursor-pointer text-blue-500"
 						>
 							{showPassword ? (
-								<FaEyeSlash className="text-2xl text-black " ></FaEyeSlash>
+								<FaEye className="text-2xl text-black " />
 							) : (
-								<FaEye className="text-2xl text-black "></FaEye>
+								<FaEyeSlash className="text-2xl text-black " />
 							)}
 						</p>
 						<p className="text-danger">
