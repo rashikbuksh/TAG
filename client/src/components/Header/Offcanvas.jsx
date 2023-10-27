@@ -67,7 +67,7 @@ function Offcanvas(props) {
 						: desktopDrawerStyle
 				}
 			>
-				<div className="py-20 ">
+				<div className="py-10 ">
 					{userInfo.map((item) => (
 						<div key={item} className="profile-card text-center">
 							<div>

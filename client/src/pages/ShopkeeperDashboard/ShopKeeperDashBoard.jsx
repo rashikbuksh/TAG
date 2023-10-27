@@ -18,8 +18,8 @@ import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 
 const ShopKeeperDashBoard = () => {
-	const shopname = "Rafi Edu Store";
-	const locatiion = "New Market City Complex, Dhaka 1205";
+	// const shopname = "Rafi Edu Store";
+	// const locatiion = "New Market City Complex, Dhaka 1205";
 	// const [isOpen, setIsOpen] = useState(false);
 	const [isClockOpen, setIsClockOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState("");
@@ -95,7 +95,7 @@ const ShopKeeperDashBoard = () => {
 					<div className=" flex flex-col items-center justify-center gap-2 ">
 						<div>
 							<p className="text-sm font-bold lg:text-xl">
-								Activity
+								Activity 
 							</p>
 						</div>
 						<div className="flex items-center gap-3">
@@ -272,10 +272,10 @@ const ShopKeeperDashBoard = () => {
 						</div>
 
 						<h1 className="my-3 text-2xl font-bold lg:text-4xl">
-							{shopkeeper.name}
+							{shopkeeper.name} 
 						</h1>
 						<p className="flex items-center gap-2 text-sm text-black lg:text-xl">
-							<FaMapPin></FaMapPin> {locatiion}
+							<FaMapPin></FaMapPin> {shopkeeper.shipping_address?shopkeeper.shipping_address:"No Adress provided"}
 						</p>
 					</div>
 					<div className="divider"></div>

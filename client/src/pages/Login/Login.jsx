@@ -9,11 +9,15 @@ import * as yup from "yup";
 import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
+import { TagLogo2, Customericon, Shopericon } from "../../SvgHub/TagLogo2";
+import { AppleIcon, FacebookIcon, GoogleIcon } from "../../SvgHub/SocialIcon";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
 	const navigate = useNavigate();
 	const { user, login, signed, loginError } = useAuth();
 	const [isOpen, setIsOpen] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 	const loginSchema = yup.object().shape({
 		email: yup
 			.string()
@@ -49,164 +53,157 @@ const Login = () => {
 	const handelOPenLoginMOdal = () => {
 		setIsOpen(!isOpen);
 	};
+	const togglePasswordVisibility = () => {
+		setShowPassword((prevShowPassword) => !prevShowPassword);
+	};
 
 	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
-			{/* auth page header */}
-			<div className="auth-page-header space-mb--50">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							<h3 className="auth-page-header__title">
-								Welcome Back
-							</h3>
-							<p className="auth-page-header__text">
-								Log in for best shopping
-							</p>
-						</div>
-					</div>
-				</div>
+		<div className="mx-auto flex flex-col justify-around px-[25px] lg:w-[50%] ">
+			<div className="mx-auto my-5 h-[80px]">
+				<TagLogo2></TagLogo2>
 			</div>
-			{/* auth page body */}
-			<div className="auth-page-body">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							{/* Auth form */}
-							<div className="auth-form">
-								<form
-									onSubmit={handleSubmit(onSubmit)}
-									id="authForm"
-								>
-									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="email">
-											Email Address
-										</label>
-										<input
-											type="text"
-											id="email"
-											className="w-full rounded-sm border-none border-transparent pl-2 outline-none focus:border-transparent focus:ring-0"
-											name="email"
-											{...register("email")}
-										/>
-										<p className="text-danger">
-											{errors.email?.message}
-										</p>
-									</div>
-									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="password">
-											Password
-										</label>
-										<input
-											type="password"
-											id="password"
-											className="w-full rounded-sm border-none border-transparent pl-2 outline-none focus:border-transparent focus:ring-0"
-											name="password"
-											{...register("password")}
-										/>
-										<p className="text-danger">
-											{errors.password?.message}
-										</p>
-									</div>
-									{loginError && (
-										<div>
-											<p className="text-error">
-												{loginError}
-											</p>
-										</div>
-									)}
-									<div className="my-5">
-										<p className="auth-form__info-text">{`You don't have any account?`}</p>
-										<p
-											onClick={handelOPenLoginMOdal}
-											className="cursor-pointer font-bold text-green-600"
-										>
-											Sign up Now
-										</p>
-									</div>
+			<div className="mb-5 w-full text-center ">
+				<p className="text-2xl font-bold">Please Login</p>
+			</div>
+			<div className="">
+				<form
+					onSubmit={handleSubmit(onSubmit)}
+					id="authForm"
+					className="space-y-5"
+				>
+					<div className="">
+						<label
+							htmlFor="email"
+							className="mb-1 px-4 text-xl font-semibold"
+						>
+							Email Address
+						</label>
+						<input
+							type="text"
+							id="email"
+							className="auth-input"
+							name="email"
+							placeholder="Enter Email"
+							{...register("email")}
+						/>
+						<p className="text-danger px-4">
+							{errors.email?.message}
+						</p>
+					</div>
+					<div className="relative">
+						<label
+							htmlFor="password"
+							className="mb-1 px-4 text-xl font-semibold"
+						>
+							{" "}
+							Password
+						</label>
+						<input
+							type={showPassword ? "text" : "password"}
+							id="password"
+							className="auth-input "
+							name="password"
+							placeholder="Enter Password"
+							{...register("password")}
+						/>
+						<p
+							onClick={togglePasswordVisibility}
+							className="absolute right-4 top-12 cursor-pointer text-blue-500"
+						>
+							{showPassword ? (
+								<FaEye className="text-2xl text-black " />
+							) : (
+								<FaEyeSlash className="text-2xl text-black " />
+							)}
+						</p>
+						<p className="text-danger px-4">
+							{errors.password?.message}
+						</p>
+					</div>
 
-									<Modal
-										isOpen={isOpen}
-										setIsOpen={setIsOpen}
-									>
-										<div className="auth-form__single-field space-mb--40 m-2 rounded-md border p-5">
-											<p className="auth-form__info-text text-base">
-												Sign up as a Customer? <br />
-												<Link
-													className="font-bold text-green-600"
-													to={
-														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														"/register"
-													}
-												>
-													Sign up Now
-												</Link>
-											</p>
-											<div className="divider"></div>
-											<p className="auth-form__info-text text-base">
-												Sign up as a Shopper? <br />
-												<Link
-													className="font-bold text-green-600"
-													to={
-														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														"/registershopper"
-													}
-												>
-													Sign up Now
-												</Link>
-											</p>
-										</div>
-									</Modal>
+					{loginError && (
+						<div>
+							<p className="text-error">{loginError}</p>
+						</div>
+					)}
 
-									<button
-										type="submit"
-										className="auth-form__button"
-										form="authForm"
-									>
-										Login
-									</button>
-								</form>
-							</div>
-						</div>
+					<div className="flex items-center justify-center gap-4">
+						<input
+							type="checkbox"
+							className="checkbox-info checkbox"
+						/>
+						<span className="text-xl font-semibold">
+							Remember me
+						</span>
 					</div>
+
+					<button type="submit" className="auth-btn" form="authForm">
+						Login
+					</button>
+				</form>
+				<span className="divider">- OR - </span>
+				<div className="mt-5 flex items-center justify-between">
+					<button className="auth-social-btn">
+						<FacebookIcon />
+					</button>
+					<button className="auth-social-btn">
+						<GoogleIcon></GoogleIcon>
+					</button>
+					<button className="auth-social-btn">
+						<AppleIcon></AppleIcon>
+					</button>
 				</div>
 			</div>
-			{/* auth page footer */}
-			<div className="auth-page-footer">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							<span className="auth-page-separator space-mt--20 space-mb--20 text-center">
-								- OR -
-							</span>
-							<div className="auth-page-social-login">
-								<button>
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/facebook.svg"
-										}
-									/>
-									Sign In with Facebook
-								</button>
-								<button>
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/google.svg"
-										}
-									/>
-									Sign In with Google
-								</button>
-							</div>
-						</div>
+			<div className="my-5 text-center">
+				<p
+					onClick={handelOPenLoginMOdal}
+					className="cursor-pointer "
+					style={{ color: "var(--greyscale-500, #9E9E9E)" }}
+				>
+					{`You don't have any account?`}{" "}
+					<span className="primary-text">Sign up Now</span>
+				</p>
+			</div>
+
+			<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+				<div className=" px-3 text-center">
+					<div className="flex  gap-4">
+						<Customericon></Customericon>
+						<p className="">
+							Sign up as a{" "}
+							<span className="primary-text">Customer?</span>{" "}
+							<br />
+							<Link
+								className="primary-text font-bold"
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									"/register"
+								}
+							>
+								Sign up Now
+							</Link>
+						</p>
+					</div>
+					<div className="divider my-0"></div>
+					<div className="flex  gap-4">
+						<Shopericon></Shopericon>
+						<p className="">
+							Sign up as a{" "}
+							<span className="primary-text">Shopper?</span>{" "}
+							<br />
+							<Link
+								className="primary-text font-bold"
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									"/registershopper"
+								}
+							>
+								Sign up Now
+							</Link>
+						</p>
 					</div>
 				</div>
-			</div>
+			</Modal>
 		</div>
 	);
 };
