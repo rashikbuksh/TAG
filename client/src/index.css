@@ -13,13 +13,29 @@
 	overflow-x: hidden;
 	transition: all 200ms linear; */
 }
+/* .authbtnShado{
+	box-shadow: 4px 8px 24px 0px rgba(159, 232, 112, 0.25);
 
-.actionbtn{
-	@apply inline-block border-2 border-current px-8 py-3 text-sm font-bold uppercase tracking-widest text-black group-active:text-opacity-75
+} */
+
+.actionbtn {
+	@apply inline-block border-2 border-current px-8 py-3 text-sm font-bold uppercase tracking-widest text-black group-active:text-opacity-75;
 }
-.primary-text{
-	@apply text-[#00AAFF]
+.auth-btn {
+	border-radius: 100px;
+	box-shadow: 4px 8px 24px 0px rgba(159, 232, 112, 0.25);
+	@apply w-full bg-[#2F5BA9] px-5 py-5 text-white;
 }
-.primary-background{
-	@apply bg-[#00AAFF]
+.primary-text {
+	@apply text-[#2F5BA9];
+}
+.primary-background {
+	@apply bg-[#2F5BA9];
+}
+.auth-input {
+	@apply h-[60px] w-full  rounded-3xl border-none border-transparent bg-[#F2F8FD] p-[20px] text-xl outline-none focus:border-transparent focus:ring-0 pr-14;
+}
+.auth-social-btn {
+
+	@apply bg-gray-100 px-8 py-4 rounded-2xl ;
 }
