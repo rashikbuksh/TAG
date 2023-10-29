@@ -8,7 +8,7 @@ import {
 	FaPlus,
 	FaWindowClose,
 } from "react-icons/fa";
-import { FaEye, FaRegMessage } from "react-icons/fa6";
+import { FaEye, FaRegMessage, FaX } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
@@ -24,8 +24,10 @@ import {
 } from "../../store/slices/cart-slice";
 import LocationModal from "../LocationModal/LocationModal";
 import MessageModal from "../MessageModal/MessageModal";
+import { AddToCartIcon1, AddToCartIcon2, MapIcon } from "../../SvgHub/Icons";
+import { Takaicon } from "../../SvgHub/SocialIcon";
 
-const MainProduct = ({ shopperProduct, product }) => {
+const MainProduct = ({ shopperProduct, product, height, width }) => {
 	const navigate = useNavigate();
 	const prod = product || shopperProduct;
 	// console.log(prod, "prod");
@@ -79,47 +81,25 @@ const MainProduct = ({ shopperProduct, product }) => {
 		api.post(`/shopperproduct/increaseView/${id}`);
 		navigate(`/product/${id}`);
 	};
+	const divStyle = {
+		borderRadius: "12px",
+		background: "#FFF",
+		boxShadow: "0px 8px 32px 0px rgba(184, 184, 184, 0.10)",
+	};
 	const cartItems = useSelector((state) => state.cart.cartItems);
 	return (
-		<div className="z-0">
-			<div className="divider m-0"></div>
-			<div className=" flex items-end justify-between px-2">
-				<button
-					type="button"
-					onClick={() => {
-						navigateProductPage(id);
-					}}
-				>
-					<div className="flex items-center gap-3">
-						<h1 className="text-xl font-bold">{name}</h1>
-						{isVerified === "verified" ? (
-							<FaCheckCircle className="text-blue-400"></FaCheckCircle>
-						) : (
-							""
-						)}
-					</div>
-				</button>
-
-				{user.access === "admin" && (
-					<div className="flex gap-2">
-						<FaEye></FaEye>
-						<p className="text-xs">{view}</p>
-					</div>
-				)}
-				{user.access === "shopper" && (
-					<div className="flex gap-2">
-						<FaEye></FaEye>
-						<p className="text-xs">{view}</p>
-					</div>
-				)}
-			</div>
+		<div className="z-0 " style={divStyle}>
 			<div
 				className="relative flex flex-col items-center justify-center"
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
 			>
 				<img
-					className={`my-1 h-[200px] w-[300px]  rounded object-contain px-1 ${
+					className={`my-1    ${
+						height ? `h-[${height}px]` : "h-fit"
+					}  ${
+						width ? `w-[${width}px]` : "w-fit"
+					}  rounded-sm object-cover  ${
 						quantity > 0
 							? "transition-transform hover:scale-90"
 							: ""
@@ -130,18 +110,27 @@ const MainProduct = ({ shopperProduct, product }) => {
 					alt=""
 				/>
 				{display > 0 && (
-					<div className="absolute  flex h-52  w-full items-center justify-center gap-2 rounded-sm bg-black bg-opacity-50">
-						<div className="relative flex flex-col items-center justify-center gap-10">
-							<h4 className="text-xl text-white">
+					<div
+						className={`absolute  flex   ${
+							height ? `h-[${height}px]` : "h-full"
+						}  ${
+							width ? `w-[${width}px]` : "w-full"
+						}  items-center justify-center gap-2 rounded-sm bg-black bg-opacity-50`}
+					>
+						<div className="relative mt-1 flex flex-col items-center justify-center gap-10">
+							<h4 className="text-base text-white">
 								Total Price:{" "}
-								{`${getDiscountPrice(price, discount)}` *
-									quantity}
+								{`${(
+									parseFloat(
+										getDiscountPrice(price, discount)
+									) * quantity
+								).toFixed(2)}`}
 							</h4>
 							<div className="flex items-center gap-1">
 								<button
 									type="button"
 									onClick={decreaseQuantity}
-									className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 leading-10  transition hover:opacity-75"
+									className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10  transition hover:opacity-75"
 								>
 									<FaMinus className="text-black" />
 								</button>
@@ -151,92 +140,131 @@ const MainProduct = ({ shopperProduct, product }) => {
 									id="Quantity"
 									value={quantity}
 									disabled
-									className="h-10 w-16 rounded border border-gray-200 bg-white text-center "
+									className="h-8 w-12 rounded border border-gray-200 bg-white text-center "
 								/>
 
 								<button
 									type="button"
 									onClick={increaseQuantity}
-									className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 leading-10   transition hover:opacity-75"
+									className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10   transition hover:opacity-75"
 								>
 									<FaPlus className="text-black" />
 								</button>
 							</div>
 						</div>
-						<div className="absolute right-2 top-2 lg:hidden">
+						<div className="absolute right-2 top-1 lg:hidden">
 							<button
 								type="button"
 								onClick={handleMouseLeave}
-								className=" flex items-center justify-center rounded-md bg-white  p-1 leading-10  transition hover:opacity-75"
+								className=" flex items-center justify-center rounded-md  p-1 leading-10  transition hover:opacity-75"
 							>
-								<FaWindowClose className="rounded-md text-2xl text-black " />
+								<FaX className="rounded-md text-xl text-pink-400 " />
 							</button>
 						</div>
 					</div>
 				)}
 			</div>
-			<div className="my-1 flex items-center justify-between border-b border-gray-100 py-2">
-				<div className="mx-auto flex items-center">
-					<FaRegMessage
-						onClick={handelOpenMessageModal}
-						className="text-xl"
-					/>
-					<MessageModal
-						isOpen={isOpen}
-						setIsOpen={setIsOpen}
-						title={""}
-					></MessageModal>
-				</div>
-				<div className="mx-auto flex items-center">
-					<div className="flex items-center gap-2">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							height="1em"
-							viewBox="0 0 384 512"
-						>
-							<path d="M36 32.2C18.4 30.1 2.4 42.5 .2 60S10.5 93.6 28 95.8l7.9 1c16 2 28 15.6 28 31.8V160H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V384c0 53 43 96 96 96h32c106 0 192-86 192-192V256c0-53-43-96-96-96H272c-17.7 0-32 14.3-32 32s14.3 32 32 32h16c17.7 0 32 14.3 32 32v32c0 70.7-57.3 128-128 128H160c-17.7 0-32-14.3-32-32V224h32c17.7 0-32-14.3 32-32s14.3-32 32-32H128V128.5c0-48.4-36.1-89.3-84.1-95.3l-7.9-1z" />
-						</svg>
-						<span className="text-xl font-semibold">{`${getDiscountPrice(
-							price,
-							discount
-						)}`}</span>
+			{/* name  */}
+			<div className="flex items-center justify-start gap-3 px-1">
+				<button
+					type="button"
+					onClick={() => {
+						navigateProductPage(id);
+					}}
+				>
+					<div className="">
+						<h1 className="max-w-[120px] flex-grow truncate text-base font-semibold">
+							{name}
+						</h1>
 					</div>
-				</div>
-				<div className="mx-auto flex items-center">
-					<FaMapMarkerAlt
-						onClick={handelOpenLocationModal}
-						className="text-xl"
-					/>
-					<LocationModal
-						isOpen={isLocatioonOpen}
-						setIsOpen={setIsLocatioonOpen}
-						title={"Location"}
-						shopper_id={shopper_id}
-						map_location={shipping_address}
-					></LocationModal>
+				</button>
+
+				<div>
+					{isVerified === "verified" ? (
+						<FaCheckCircle className=" text-blue-400"></FaCheckCircle>
+					) : (
+						""
+					)}
 				</div>
 			</div>
-			{user.access === "admin" ? (
-				""
-			) : user.access === "shopper" ? (
-				""
-			) : (
-				<button
-					onClick={() => {
-						prod.quantity = quantity;
-						if (checkIfInCart(cartItems, prod)) {
-							dispatch(increaseQuantityofProd(prod));
-						} else {
-							dispatch(addToCart(prod));
-						}
-					}}
-					className=" btn  btn-success btn-block rounded-none"
-				>
-					Add To Cart{" "}
-				</button>
-			)}
+			{/* price  */}
+			<div className="px-1">
+				<div className="flex items-center gap-2">
+					<Takaicon></Takaicon>
+					<span className="text-sm font-semibold">{`${getDiscountPrice(
+						price,
+						discount
+					)}`}</span>
+				</div>
+			</div>
+			<div className="my-2"></div>
+			<div className=" flex items-center justify-between border-b border-gray-100 ">
+				<div className=" flex items-center">
+					{user.access === "admin" ? (
+						""
+					) : user.access === "shopper" ? (
+						""
+					) : (
+						<div className=" flex items-center">
+							<button onClick={handelOpenLocationModal}>
+								<MapIcon
+									height={30}
+									width={30}
+									onClick={handelOpenLocationModal}
+								/>
+							</button>
+							<LocationModal
+								isOpen={isLocatioonOpen}
+								setIsOpen={setIsLocatioonOpen}
+								title={"Location"}
+								shopper_id={shopper_id}
+								map_location={shipping_address}
+							></LocationModal>
+						</div>
+					)}
+				</div>
+
+				<div className=" flex items-center">
+					{user.access === "admin" ? (
+						""
+					) : user.access === "shopper" ? (
+						""
+					) : (
+						<button
+							onClick={() => {
+								prod.quantity = quantity;
+								if (checkIfInCart(cartItems, prod)) {
+									dispatch(increaseQuantityofProd(prod));
+								} else {
+									dispatch(addToCart(prod));
+								}
+							}}
+							className=""
+						>
+							<AddToCartIcon2></AddToCartIcon2>
+						</button>
+					)}
+				</div>
+			</div>
 		</div>
 	);
 };
 
 export default MainProduct;
+
+// <div className=" flex items-end justify-between px-2">
+//
+
+// 				{user.access === "admin" && (
+// 					<div className="flex gap-2">
+// 						<FaEye></FaEye>
+// 						<p className="text-xs">{view}</p>
+// 					</div>
+// 				)}
+// 				{user.access === "shopper" && (
+// 					<div className="flex gap-2">
+// 						<FaEye></FaEye>
+// 						<p className="text-xs">{view}</p>
+// 					</div>
+// 				)}
+// 			</div>

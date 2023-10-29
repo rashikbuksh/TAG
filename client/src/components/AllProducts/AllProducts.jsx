@@ -10,6 +10,7 @@ import { api } from "../../lib/api";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 import ProductCart from "../ProductCart/ProductCart";
 import ProductSlider from "../ProductSlider/ProductSlider";
+import LoadingPage from "../LodingPage/LoadingPage";
 
 const AllProducts = ({ limit }) => {
 	const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -55,43 +56,93 @@ const AllProducts = ({ limit }) => {
 	);
 	// console.log(isVerifiedProduct,"isVerifiedProduct");
 
-	if (!prods?.length) return <p>No products found</p>;
+	if (!prods?.length) return <LoadingPage></LoadingPage>;
 
 	// console.log(prods,"Product for check varify");
 
 	return (
-		<div className=" mx-auto w-[95%]">
+		<div className=" mx-auto  max-w-7xl">
 			<div className="">
 				<div className=" my-10">
 					{/* Popular Product  */}
-					<div className="my-10 mb-2 flex items-center  justify-between">
-						<div>
-							<p className="text-xl font-bold">Popular Product</p>
-						</div>
-						<div className="rounded-full border border-gray-100 px-2 py-2">
-							<FaArrowRight className="text-3xl "></FaArrowRight>
-						</div>
-					</div>
+					{prods && (
+						<h2 className="section-title space-mb--20">
+							<span className="text-xl font-bold">
+								Popular Product{" "}
+							</span>
+
+							<Link className="primary-text"
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									"/shop"
+								}
+							>
+								VIEW ALL{" "}
+								<span>
+									<ReactSVG
+										src={
+											import.meta.env
+												.VITE_API_PUBLIC_URL +
+											"/assets/img/icons/arrow-right.svg"
+										}
+									/>
+								</span>
+							</Link>
+						</h2>
+					)}
+
 					<ProductSlider products={popularProducts}></ProductSlider>
-					<div className=" my-10 mb-2 flex items-center  justify-between">
-						<div>
-							<p className="text-xl font-bold">
-								Verified Product
-							</p>
-						</div>
-						<div className="rounded-full border border-gray-100 px-2 py-2">
-							<FaArrowRight className="text-3xl "></FaArrowRight>
-						</div>
-					</div>
+					<div className="my-5"></div>
+					{prods && (
+						<h2 className="section-title space-mb--20 ">
+							<span className="text-xl font-bold">
+								Verified Product{" "}
+							</span>
+
+							<Link className="primary-text"
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									"/shop"
+								}
+							>
+								VIEW ALL{" "}
+								<span>
+									<ReactSVG
+										src={
+											import.meta.env
+												.VITE_API_PUBLIC_URL +
+											"/assets/img/icons/arrow-right.svg"
+										}
+									/>
+								</span>
+							</Link>
+						</h2>
+					)}
 					<ProductSlider products={isVerifiedProduct}></ProductSlider>
-					<div className=" my-10 mb-2 flex items-center  justify-between">
-						<div>
-							<p className="text-xl font-bold">Products</p>
-						</div>
-						<div className="rounded-full border border-gray-100 px-2 py-2">
-							<FaArrowRight className="text-3xl "></FaArrowRight>
-						</div>
-					</div>
+					<div className="my-5"></div>
+					{prods && (
+						<h2 className="section-title space-mb--20">
+							<span className="text-xl font-bold">Product </span>
+
+							<Link className="primary-text"
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									"/shop"
+								}
+							>
+								VIEW ALL{" "}
+								<span>
+									<ReactSVG
+										src={
+											import.meta.env
+												.VITE_API_PUBLIC_URL +
+											"/assets/img/icons/arrow-right.svg"
+										}
+									/>
+								</span>
+							</Link>
+						</h2>
+					)}
 					<ProductSlider products={prods}></ProductSlider>
 					{/* <div className="">
 						<div className="grid gap-10 lg:grid-cols-4">

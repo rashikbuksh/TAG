@@ -63,9 +63,9 @@ const Modal = ({ isOpen, setIsOpen, title, children, setcommentId }) => {
 
 											<button
 												onClick={closeModal}
-												className="rounded-full bg-gray-400 p-1"
+												className="rounded-full  p-1 mr-2"
 											>
-												<FaX></FaX>
+												<FaX className="text-[#FF4C5E]"></FaX>
 											</button>
 										</div>
 									</Dialog.Title>

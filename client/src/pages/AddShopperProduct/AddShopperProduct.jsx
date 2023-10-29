@@ -9,6 +9,9 @@ import { getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
 
 const ShopperProduct = () => {
+	const [productImage, setProductImage] = useState();
+	const [productPrice, setProductPrice] = useState(null);
+	const [productquantity, setProductquantity] = useState();
 	const ShopperProductSchema = yup.object({
 		name: yup.string().required("Name is required"),
 		price: yup.number().required("Price is required"),
@@ -62,6 +65,7 @@ const ShopperProduct = () => {
 		let shopper_product_name = null;
 		let shopper_product_price = null;
 		let shopper_product_discount = null;
+		// let shopper_Product_Image = null;
 
 		await api
 			.post(`/shopperproduct/addshopperproduct`, {
@@ -82,6 +86,7 @@ const ShopperProduct = () => {
 			});
 
 		await api.get(`/shopperproduct/getLastProduct`).then((response) => {
+			console.log(response);
 			shopperProduct_ID = response.data[0].id;
 			shopper_product_name = response.data[0].name;
 			shopper_product_price = response.data[0].price;
@@ -90,7 +95,7 @@ const ShopperProduct = () => {
 
 		let today = new Date();
 		today = today.toISOString();
-
+		console.log(productImage);
 		await api
 			.post(`/news/addproductnews`, {
 				shopper_product_id: Number(shopperProduct_ID),
@@ -102,12 +107,12 @@ const ShopperProduct = () => {
 				category: "regular",
 				post_content:
 					shopper_product_name +
-					" Starting From TK." +
+					"TK." +
 					getDiscountPrice(
 						shopper_product_price,
 						shopper_product_discount
 					),
-				post_img: "",
+				post_img: productImage,
 			})
 			.then((response) => {
 				// console.log(response.data.message);
@@ -118,9 +123,6 @@ const ShopperProduct = () => {
 				}
 			});
 	};
-	const [productImage, setProductImage] = useState();
-	const [productPrice, setProductPrice] = useState(null);
-	const [productquantity, setProductquantity] = useState();
 
 	// const findProductPrice=(id)=>{
 

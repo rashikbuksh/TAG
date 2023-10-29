@@ -13,7 +13,7 @@ import {
 	FaShoppingCart,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import { PiShareFat } from "react-icons/pi";
 import { set } from "react-hook-form";
 import Modal from "../../components/Modal/Modal";
 import MainProduct from "../../components/ProductCart/MainProduct";
@@ -154,15 +154,18 @@ const PostUi = ({ postData }) => {
 						{shopperProducts ? (
 							<div>
 								<p className="text-sm">{post_content}</p>
-								{post_img && (
-									<img
-										className="mx-auto  mt-2 h-1/2 object-cover lg:w-1/2"
-										src={`${
-											import.meta.env.VITE_APP_IMG_URL
-										}/newsimage/${post_img}`}
-										alt=""
-									/>
-								)}
+								{shopper_product_id
+									? ""
+									: post_img && (
+											<img
+												className="mx-auto  mt-2 h-1/2 object-cover lg:w-1/2"
+												src={`${
+													import.meta.env
+														.VITE_APP_IMG_URL
+												}/newsimage/${post_img}`}
+												alt=""
+											/>
+									  )}
 							</div>
 						) : (
 							<>
@@ -255,7 +258,7 @@ const PostUi = ({ postData }) => {
 							<div className="text-xs">
 								<p className="text-sm">{share_count} share</p>
 							</div>
-							<FaShare className="text-lg" />
+							<PiShareFat className="text-lg" />
 						</div>
 					</div>
 				</div>

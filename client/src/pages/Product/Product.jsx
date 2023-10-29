@@ -44,6 +44,7 @@ const Product = () => {
 				// alert(error);
 			});
 	}, [id]);
+	console.log(prods);
 	// console.log(prods, "loggged productjs");
 	const { cartItems } = useSelector((state) => state.cart);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -70,7 +71,7 @@ const Product = () => {
 					return (
 						<div
 							key={Math.random()}
-							className=" w-full rounded bg-gray-200 p-3"
+							className=" w-full rounded  p-3"
 						>
 							<img
 								src={`${
