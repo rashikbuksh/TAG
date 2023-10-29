@@ -166,10 +166,10 @@ const Login = () => {
 			</div>
 
 			<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-				<div className=" px-3 text-center">
+				<div className="p-10">
 					<div className="flex  gap-4">
 						<Customericon></Customericon>
-						<p className="">
+						<p className="text-lg">
 							Sign up as a{" "}
 							<span className="primary-text">Customer?</span>{" "}
 							<br />
@@ -184,10 +184,10 @@ const Login = () => {
 							</Link>
 						</p>
 					</div>
-					<div className="divider my-0"></div>
+					<div className="divider"></div>
 					<div className="flex  gap-4">
 						<Shopericon></Shopericon>
-						<p className="">
+						<p className="text-lg">
 							Sign up as a{" "}
 							<span className="primary-text">Shopper?</span>{" "}
 							<br />

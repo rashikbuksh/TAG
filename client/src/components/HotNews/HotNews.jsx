@@ -25,13 +25,14 @@ const HotNews = () => {
 		const green = randomChannel().toString(16).padStart(2, "0");
 		const blue = randomChannel().toString(16).padStart(2, "0");
 		return `#${red}${green}${blue}`;
+	
 	};
-
+	const productPost = posts.filter((post) => post.shopper_product_id !== null);
 	// Shuffle and get the first 5 posts
-	const shuffledPosts = posts.sort(() => Math.random() - 0.5).slice(0, 5);
+	const shuffledPosts = productPost.sort(() => Math.random() - 0.5).slice(0, 5);
 
 	return (
-		<div className="mx-3 my-10">
+		<div className="mx-auto my-10 max-w-7xl">
 			<h1 className="my-2 text-xl">Hot News</h1>
 			<div className="">
 				<Swiper
@@ -52,15 +53,46 @@ const HotNews = () => {
 								{postData.category === "regular" ? (
 									<Link to={`/newsfeed`}>
 										<div
-											className="h-16 rounded px-3"
+											className="h-16 w-[175px] rounded-sm  px-1 flex items-center justify-center"
 											style={{
 												backgroundColor: randomColor,
 											}}
 										>
-											<p className="font-bold text-black">
-												{postData.post_content ||
-													"New Product Added"}
-											</p>
+											<div className="flex items-center justify-start gap-2">
+												<div>
+													{postData.post_img &&
+														(postData.shopper_product_id ? (
+															<img
+																className="w-[150px] h-[50px] rounded-sm"
+																src={`${
+																	import.meta
+																		.env
+																		.VITE_APP_IMG_URL
+																}/products/${
+																	postData.post_img
+																}`}
+																alt=""
+															/>
+														) : (
+															<img
+																className="h-[34px] w-[50px]"
+																src={`${
+																	import.meta
+																		.env
+																		.VITE_APP_IMG_URL
+																}/newsimage/${
+																	postData.post_img
+																}`}
+																alt=""
+															/>
+														))}
+												</div>
+
+												<p className=" text-sm font-bold text-black">
+													{postData.post_content ||
+														"New Product Added"}
+												</p>
+											</div>
 										</div>
 									</Link>
 								) : (

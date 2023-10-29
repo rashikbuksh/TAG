@@ -28,7 +28,10 @@ export default function ProtectedRoutes() {
 			<Header />
 			{/* <Offcanvas /> */}
 			<Footer />
+			<div className="p-2">
+
 			<Outlet />
+			</div>
 		</>
 	) : (
 		<Navigate to="/no-access" replace={true} />

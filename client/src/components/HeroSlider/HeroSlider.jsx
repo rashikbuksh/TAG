@@ -32,10 +32,10 @@ const HeroSlider = () => {
 			});
 	}, []);
 	return (
-		<div className="hero-slider bg-color--grey space-y--10">
-			<div className="container">
-				<div className="row row-10">
-					<div className="col-12">
+		<div className="hero-slider  space-y--10 max-w-7xl mx-auto">
+			<div className="">
+				<div className="">
+					<div className="">
 						<div className="hero-slider-wrapper">
 							{!!sliderData.length && (
 								<Swiper options={params}>
@@ -52,10 +52,11 @@ const HeroSlider = () => {
 													})`,
 												}}
 											>
-												<div className="container">
+											</div>
+											{/* <div className="container">
 													<div className="row">
 														<div className="col-12">
-															{/* hero slider content */}
+															hero slider content
 															<div className="hero-slider-content">
 																<h2
 																	className="hero-slider-content__title space-mb--10"
@@ -71,8 +72,7 @@ const HeroSlider = () => {
 															</div>
 														</div>
 													</div>
-												</div>
-											</div>
+												</div> */}
 										</SwiperSlide>
 									))}
 								</Swiper>

@@ -10,7 +10,7 @@ import ProductCart from "../ProductCart/ProductCart";
 
 const ShopProducts = ({ products }) => {
 	const dispatch = useDispatch();
-	const [gridActivate, setGridActivate] = useState(false);
+	const [gridActivate, setGridActivate] = useState(true);
 	const [listActivate, setListActivate] = useState(true);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 
@@ -63,7 +63,7 @@ const ShopProducts = ({ products }) => {
 				}`}
 			>
 				<div className="container">
-					<div className="grid lg:grid-cols-4 gap-10">
+					<div className="grid grid-cols-2 lg:grid-cols-6 gap-10">
 						{products &&
 							products.map((single) => {
 								const wishlistItem = wishlistItems.filter(
@@ -168,8 +168,9 @@ const ShopProducts = ({ products }) => {
 			</div>
 
 			{/* shop list products */}
+			<div className="flex items-center justify-center">
 			<div
-				className={`grid grid-cols-1 gap-10 ${
+				className={`grid grid-cols-1 gap-10  ${
 					listActivate ? "d-block" : "d-none"
 				}`}
 			>
@@ -186,6 +187,7 @@ const ShopProducts = ({ products }) => {
 							</div>
 						);
 					})}
+			</div>
 			</div>
 		</div>
 	);
