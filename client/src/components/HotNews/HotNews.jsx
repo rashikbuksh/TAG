@@ -53,7 +53,7 @@ const HotNews = () => {
 								{postData.category === "regular" ? (
 									<Link to={`/newsfeed`}>
 										<div
-											className="h-16 w-[175px] rounded-sm  px-1 flex items-center justify-center"
+											className="h-16 w-[175px]  rounded-xl  px-1 flex items-center justify-center"
 											style={{
 												backgroundColor: randomColor,
 											}}

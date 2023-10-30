@@ -74,3 +74,4 @@ export const MapIcon = ({ width = 17, height = 20 }) => {
 		</svg>
 	);
 };
+

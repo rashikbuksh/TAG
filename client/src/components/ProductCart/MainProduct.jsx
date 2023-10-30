@@ -95,15 +95,11 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				onMouseLeave={handleMouseLeave}
 			>
 				<img
-					className={`my-1    ${
-						height ? `h-[${height}px]` : "h-fit"
-					}  ${
-						width ? `w-[${width}px]` : "w-fit"
-					}  rounded-sm object-cover  ${
-						quantity > 0
-							? "transition-transform hover:scale-90"
-							: ""
-					}`}
+					className={`${
+							height ? `h-[${height}px]` : "h-fit"
+						}  ${
+							width ? `w-[${width}px]` : "w-fit"
+						}  object-cover my-1 `}
 					src={`${
 						import.meta.env.VITE_APP_IMG_URL
 					}/products/${image}`}
@@ -112,9 +108,9 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				{display > 0 && (
 					<div
 						className={`absolute  flex   ${
-							height ? `h-[${height}px]` : "h-full"
+							height ? `h-[150px]` : "h-full"
 						}  ${
-							width ? `w-[${width}px]` : "w-full"
+							width ? `w-[150px]` : "w-full"
 						}  items-center justify-center gap-2 rounded-sm bg-black bg-opacity-50`}
 					>
 						<div className="relative mt-1 flex flex-col items-center justify-center gap-10">
@@ -165,7 +161,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				)}
 			</div>
 			{/* name  */}
-			<div className="flex items-center justify-start gap-3 px-1">
+			<div className="flex items-center justify-start gap-3 px-2">
 				<button
 					type="button"
 					onClick={() => {
@@ -181,14 +177,14 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 
 				<div>
 					{isVerified === "verified" ? (
-						<FaCheckCircle className=" text-blue-400"></FaCheckCircle>
+						<FaCheckCircle className=" primary-text"></FaCheckCircle>
 					) : (
 						""
 					)}
 				</div>
 			</div>
 			{/* price  */}
-			<div className="px-1">
+			<div className="px-2">
 				<div className="flex items-center gap-2">
 					<Takaicon></Takaicon>
 					<span className="text-sm font-semibold">{`${getDiscountPrice(
@@ -205,7 +201,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					) : user.access === "shopper" ? (
 						""
 					) : (
-						<div className=" flex items-center">
+						<div className=" flex items-center p-1">
 							<button onClick={handelOpenLocationModal}>
 								<MapIcon
 									height={30}

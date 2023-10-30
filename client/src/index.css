@@ -31,7 +31,7 @@
 	@apply text-[#2F5BA9];
 }
 .primary-background {
-	@apply bg-[#2F5BA9];
+	@apply bg-[#1D3A67];
 }
 .auth-input {
 	@apply h-[60px] w-full  rounded-3xl border-none border-transparent bg-[#F2F8FD] p-[20px] pr-14 text-xl outline-none focus:border-transparent focus:ring-0;
