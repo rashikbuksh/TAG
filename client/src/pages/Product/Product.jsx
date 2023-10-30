@@ -20,6 +20,8 @@ import {
 import { api } from "../../lib/api";
 import { StarIcon } from "../../SvgHub/Icons";
 import MessageModal from "../../components/MessageModal/MessageModal";
+import { FaCheckCircle } from "react-icons/fa";
+import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 
 const Product = () => {
 	const { user } = useAuth();
@@ -65,6 +67,7 @@ const Product = () => {
 	};
 	return (
 		<div className="mx-auto px-4 py-20 lg:w-[50%] ">
+			<ShowCartIcon></ShowCartIcon>
 			{/*====================  product image slider ====================*/}
 			<div className="">
 				{prods.map((single) => {
@@ -77,7 +80,7 @@ const Product = () => {
 								src={`${
 									import.meta.env.VITE_APP_IMG_URL
 								}/products/${single.image}`}
-								className="mx-auto h-[185px] w-[317px] rounded object-cover"
+								className="mx-auto h-full w-[317px] rounded object-cover"
 								alt="Product"
 							/>
 						</div>
@@ -86,7 +89,7 @@ const Product = () => {
 			</div>
 			{/*====================  End of product image slider  ====================*/}
 			{prods.map((prods) => {
-				// console.log(prods,"in product");
+				console.log(prods, "in product");
 				return (
 					<div key={Math.random()} className="">
 						<div className="">
@@ -94,22 +97,23 @@ const Product = () => {
 								<div className="">
 									<div className="">
 										<div className="">
-											<div className="flex items-end gap-4">
+											<div className="flex items-center gap-5 ">
 												{getShopperName(
 													prods.shopper_id
 												)}
 												<Link
+													className=""
 													to={
 														import.meta.env
 															.VITE_API_PUBLIC_URL +
 														`/shopkeeperProfileCV/${prods.shopper_id}`
 													}
 												>
-													<p className="primary-text mb-[6px] mt-4 text-3xl  font-bold">
+													<p className="primary-text  text-3xl  font-bold">
 														{shopperName}
 													</p>
 												</Link>
-												<div className="mb-1">
+												<div className="">
 													<FaRegMessage
 														onClick={
 															handelOpenMessageModal
@@ -123,9 +127,20 @@ const Product = () => {
 													></MessageModal>
 												</div>
 											</div>
-											<h3 className="my-2 text-xl font-bold">
-												{prods.name}
-											</h3>
+											<div className="flex items-center gap-3 my-2">
+												<h3 className=" text-xl font-bold">
+													{prods.name}
+												</h3>
+												<div className="">
+													{prods.isVerified ===
+													"verified" ? (
+														<FaCheckCircle className=" primary-text"></FaCheckCircle>
+													) : (
+														""
+													)}
+												</div>
+											</div>
+
 											<div className="mb-[20px] flex items-center gap-2">
 												<StarIcon />
 												<p>
@@ -175,12 +190,17 @@ const Product = () => {
 											<div className="my-2 text-lg">
 												{showFullDescription
 													? prods.full_description
-													: prods.full_description && prods.full_description.length > 40
-													? prods.full_description.substring(0, 100) + "..."
+													: prods.full_description &&
+													  prods.full_description
+															.length > 30
+													? prods.full_description.substring(
+															0,
+															80
+													  ) + "..."
 													: prods.full_description}
 												{prods.full_description &&
 													prods.full_description
-														.length > 40 && (
+														.length > 30 && (
 														<button
 															className="ml-2 cursor-pointer text-blue-500"
 															onClick={

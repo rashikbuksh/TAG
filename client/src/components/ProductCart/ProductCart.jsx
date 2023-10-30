@@ -27,14 +27,14 @@ const ProductCart = ({ product }) => {
 
 	return (
 		<div
-			className="w-[170px]"
+			className="w-[170px] "
 			style={{ boxShadow: "0px 8px 32px 0px rgba(184, 184, 184, 0.10)" }}
 		>
 			{shopper.map((shopper) => (
 				<div key={shopper_id} className="">
 					<div
 						style={divStyle}
-						className="flex items-center gap-3 p-2 "
+						className="flex items-center gap-3 p-2  "
 					>
 						<div className="">
 							<Link
