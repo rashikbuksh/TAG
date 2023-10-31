@@ -96,9 +96,9 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 			>
 				<img
 					className={`${
-							height ? `h-[${height}px]` : "h-fit"
+							height ? `h-[${height}px]` : "h-1/2"
 						}  ${
-							width ? `w-[${width}px]` : "w-fit"
+							width ? `w-[${width}px]` : "w-1/2"
 						}  object-cover my-1 `}
 					src={`${
 						import.meta.env.VITE_APP_IMG_URL
@@ -161,15 +161,15 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				)}
 			</div>
 			{/* name  */}
-			<div className="flex items-center justify-start gap-3 px-2">
+			<div className="flex items-start justify-start gap-3 px-2 my-1">
 				<button
 					type="button"
 					onClick={() => {
 						navigateProductPage(id);
 					}}
 				>
-					<div className="">
-						<h1 className="max-w-[120px] flex-grow truncate text-base font-semibold">
+					<div className="h-10 text-left ">
+						<h1 className=" text-sm ">
 							{name}
 						</h1>
 					</div>

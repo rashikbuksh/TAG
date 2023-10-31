@@ -53,7 +53,7 @@ const HotNews = () => {
 								{postData.category === "regular" ? (
 									<Link to={`/newsfeed`}>
 										<div
-											className="h-16 w-[175px]  rounded-xl  px-1 flex items-center justify-center"
+											className="h-16 w-[190px]  rounded-xl  px-1 flex items-center justify-center"
 											style={{
 												backgroundColor: randomColor,
 											}}
@@ -63,7 +63,7 @@ const HotNews = () => {
 													{postData.post_img &&
 														(postData.shopper_product_id ? (
 															<img
-																className="w-[150px] h-[50px] rounded-sm"
+																className="w-[150px] h-[50px] rounded-lg"
 																src={`${
 																	import.meta
 																		.env
@@ -75,7 +75,7 @@ const HotNews = () => {
 															/>
 														) : (
 															<img
-																className="h-[34px] w-[50px]"
+																className="h-[34px] w-[50px] rounded-lg"
 																src={`${
 																	import.meta
 																		.env
