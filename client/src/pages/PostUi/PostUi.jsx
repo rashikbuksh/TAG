@@ -19,7 +19,7 @@ import Modal from "../../components/Modal/Modal";
 import MainProduct from "../../components/ProductCart/MainProduct";
 import { api } from "../../lib/api";
 import CommentModal from "./CommentModal";
-
+import demoProfile from "../../../public/assets/img/Tag-logo-blue-get_50_50.png";
 const PostUi = ({ postData }) => {
 	const userid = localStorage.getItem("user-id");
 	const [shopperProducts, setShopperProduct] = useState([]);
@@ -93,36 +93,51 @@ const PostUi = ({ postData }) => {
 	}
 
 	return (
-		<div className="space-mb--20">
-			<div className="rounded-lg border bg-white">
-				<div className="p-4">
-					<div className="flex items-center justify-between">
-						<div className="flex items-center gap-3">
+		<div className="my-6">
+			<div className="rounded-lg ">
+				<div className="">
+					<div className="flex items-center justify-between ">
+						<div className="mx-auto flex w-full items-center gap-3 rounded-lg border p-2 ">
 							{shopperInfo.map((shopperinfo) => (
 								<img
 									key={Math.random()}
 									className="h-10 w-10 rounded-full"
-									src={shopperinfo.image}
+									src={
+										shopperinfo.image
+											? shopperinfo.image
+											: demoProfile
+									}
 									alt=""
 								/>
 							))}
 							<div>
-								<Link
-									to={`${
-										import.meta.env.VITE_API_PUBLIC_URL
-									}/shopkeeperProfileCV/${shop_id}`}
-								>
-									{shopperInfo.map((shopperinfo) => (
-										<div key={shop_id} className="flex">
-											<h4 className="text-lg font-semibold">
-												{shopperinfo.name}
-											</h4>
-											<p className="ml-1 text-gray-500">
-												{shopperinfo.user_name}
-											</p>
-										</div>
-									))}
-								</Link>
+								<div className="flex items-center gap-3">
+									<Link
+										to={`${
+											import.meta.env.VITE_API_PUBLIC_URL
+										}/shopkeeperProfileCV/${shop_id}`}
+									>
+										{shopperInfo.map((shopperinfo) => (
+											<div key={shop_id} className="flex">
+												<h4 className="text-lg font-semibold">
+													{shopperinfo.name}
+												</h4>
+												<p className="ml-1 text-gray-500">
+													{shopperinfo.user_name}
+												</p>
+											</div>
+										))}
+									</Link>
+									<div className="">
+										<Rating
+											style={{ maxWidth: 80 }}
+											readOnly
+											orientation="horizontal"
+											value={rating}
+										/>
+									</div>
+								</div>
+
 								<p className="text-sm text-gray-500">
 									{formattedTime}{" "}
 									<span className="text-gray-400">
@@ -131,34 +146,41 @@ const PostUi = ({ postData }) => {
 								</p>
 							</div>
 						</div>
-						<div className="">
-							<Rating
-								style={{ maxWidth: 150 }}
-								readOnly
-								orientation="horizontal"
-								value={rating}
-							/>
-						</div>
 					</div>
 				</div>
-				{shopperProducts &&
-					shopperProducts.map((shopperproduct) => (
-						<MainProduct
-							key={shopperproduct.id}
-							shopperProduct={shopperproduct}
-						/>
-					))}
+				{shopper_product_id && (
+					<div className="mx-auto  mt-2 border border-top-0 rounded-lg ">
+						{shopperProducts &&
+							shopperProducts.map((shopperproduct) => (
+								<MainProduct
+									key={shopperproduct.id}
+									shopperProduct={shopperproduct}
+								/>
+							))}
+					</div>
+				)}
 
-				<div className="px-4 py-2">
-					<div className="mb-4">
+				{shopper_product_id ? (
+					""
+				) : (
+					<div className="my-1 rounded-lg border border-top-0">
 						{shopperProducts ? (
 							<div>
-								<p className="text-sm">{post_content}</p>
+								{shopper_product_id ? (
+									""
+								) : (
+									<div className="">
+										<p className="mx-4 my-3 text-base">
+											{post_content}
+										</p>
+									</div>
+								)}
+
 								{shopper_product_id
 									? ""
 									: post_img && (
 											<img
-												className="mx-auto  mt-2 h-1/2 object-cover lg:w-1/2"
+												className="mx-auto my-2  h-1/2 object-cover lg:w-1/2"
 												src={`${
 													import.meta.env
 														.VITE_APP_IMG_URL
@@ -168,98 +190,76 @@ const PostUi = ({ postData }) => {
 									  )}
 							</div>
 						) : (
-							<>
-								{" "}
-								<p className="text-sm">
-									<span className="text-primary">
-										<FaShoppingCart className="inline-block align-text-top" />
-									</span>{" "}
-									{discount}
-								</p>
-								<p className="mt-1 text-sm">
-									<span className="text-primary">
-										<FaClock className="inline-block align-text-top" />
-									</span>{" "}
-									{duration}
-								</p>
-								<p className="text-sm">
-									<span className="text-primary">
-										<FaMapMarkerAlt className="inline-block align-text-top" />
-									</span>{" "}
-									{location}
-								</p>
-							</>
+							""
 						)}
 					</div>
-					<hr className="my-2" />
-					<div className="flex justify-between">
-						<div className="flex flex-col items-center justify-center">
-							<div className="text-xs">
-								<p className="text-sm">{like_count} Likes</p>
-							</div>
-							{newsid.find((news) => news.news_id == id) &&
-							isLiked ? (
-								<button
-									onClick={() => {
-										api.delete(
-											`/newslike/deletelike/${likeId}`
-										).then((res) => {
-											setIsLiked(false);
-											api.post(
-												`/news/decreaseLikeCount/${id}`
-											);
-											// window.location.reload();
-										});
-									}}
-								>
-									<FaHeart className="text-lg text-red-500" />
-								</button>
-							) : (
-								<button
-									onClick={() => {
-										api.post("/newslike/addLike", {
-											news_id: id,
-											liked_by: Number(userid),
-										}).then((res) => {
-											// console.log(res, "res");
-											setIsLiked(true);
-											setLikeId(res.data.id);
-											api.post(
-												`/news/increaseLikeCount/${id}`
-											);
-											// window.location.reload();
-										});
-									}}
-								>
-									<FaHeart className="text-black-500 text-lg" />
-								</button>
-							)}
+				)}
+
+				<div className="my-2 flex justify-between rounded-lg border p-2">
+					<div className="flex flex-col items-center justify-center">
+						<div className="text-xs">
+							<p className="text-sm">{like_count} Likes</p>
 						</div>
-						<div className="flex flex-col items-center justify-center">
-							<div className="text-xs">
-								<p className="text-sm">
-									{comment_count} comments
-								</p>
-							</div>
-							<button type="button" onClick={() => openModal(id)}>
-								<FaRegComment className="text-lg" />
+						{newsid.find((news) => news.news_id == id) &&
+						isLiked ? (
+							<button
+								onClick={() => {
+									api.delete(
+										`/newslike/deletelike/${likeId}`
+									).then((res) => {
+										setIsLiked(false);
+										api.post(
+											`/news/decreaseLikeCount/${id}`
+										);
+										// window.location.reload();
+									});
+								}}
+							>
+								<FaHeart className="text-lg text-red-500" />
 							</button>
+						) : (
+							<button
+								onClick={() => {
+									api.post("/newslike/addLike", {
+										news_id: id,
+										liked_by: Number(userid),
+									}).then((res) => {
+										// console.log(res, "res");
+										setIsLiked(true);
+										setLikeId(res.data.id);
+										api.post(
+											`/news/increaseLikeCount/${id}`
+										);
+										// window.location.reload();
+									});
+								}}
+							>
+								<FaHeart className="text-black-500 text-lg" />
+							</button>
+						)}
+					</div>
+					<div className="flex flex-col items-center justify-center">
+						<div className="text-xs">
+							<p className="text-sm">{comment_count} comments</p>
 						</div>
-						<CommentModal
-							isOpen={isOpen}
-							setIsOpen={setIsOpen}
-							title={"comments"}
-							id={id}
-							setcommentId={setcommentId}
-						>
-							Hi
-						</CommentModal>
-						<div className="flex flex-col items-center justify-center">
-							<div className="text-xs">
-								<p className="text-sm">{share_count} share</p>
-							</div>
-							<PiShareFat className="text-lg" />
+						<button type="button" onClick={() => openModal(id)}>
+							<FaRegComment className="text-lg" />
+						</button>
+					</div>
+					<CommentModal
+						isOpen={isOpen}
+						setIsOpen={setIsOpen}
+						title={"comments"}
+						id={id}
+						setcommentId={setcommentId}
+					>
+						Hi
+					</CommentModal>
+					<div className="flex flex-col items-center justify-center">
+						<div className="text-xs">
+							<p className="text-sm">{share_count} share</p>
 						</div>
+						<PiShareFat className="text-lg" />
 					</div>
 				</div>
 			</div>

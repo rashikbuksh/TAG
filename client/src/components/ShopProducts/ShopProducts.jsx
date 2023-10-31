@@ -7,6 +7,7 @@ import { ReactSVG } from "react-svg";
 import { getDiscountPrice } from "../../helpers/product";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 import ProductCart from "../ProductCart/ProductCart";
+import ShowCartIcon from "../ShowCartIcon/ShowCartIcon";
 
 const ShopProducts = ({ products }) => {
 	const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const ShopProducts = ({ products }) => {
 	return (
 		<div className="shop-products-area">
 			{/* shop layout switcher */}
+			<ShowCartIcon></ShowCartIcon>
 			<div className="shop-layout-switcher text-end space-mt--15 space-mb--15">
 				<div className="container">
 					<button

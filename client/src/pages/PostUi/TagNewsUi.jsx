@@ -41,7 +41,7 @@ const TagNewsUi = ({ postData }) => {
               </p>
             </div>
           </div>
-          <div className="divider"></div>
+          {/* <div className="divider"></div> */}
         </div>
         <div className="px-4">
         <p className="mb-3">{PostContent}</p>

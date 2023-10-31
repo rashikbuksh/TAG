@@ -114,18 +114,19 @@ function Offcanvas(props) {
 								</span>
 								<Link to={"/home"}> Home</Link>
 							</li>
-							<li>
-								<span className="icon">
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/profile-two.svg"
-										}
-									/>
-								</span>
-								{userInfo.map((item) =>
-									item.access == "shopper" ? (
+
+							{userInfo.map((item) =>
+								item.access == "shopper" ? (
+									<li key={item.id}>
+										<span className="icon">
+											<ReactSVG
+												src={
+													import.meta.env
+														.VITE_API_PUBLIC_URL +
+													"/assets/img/icons/profile-two.svg"
+												}
+											/>
+										</span>
 										<Link
 											key={user}
 											to={
@@ -134,41 +135,14 @@ function Offcanvas(props) {
 												`/shopkeeperDashboard`
 											}
 										>
-											Shop Profile
+											DashBoard
 										</Link>
-									) : (
-										<Link
-											key={user}
-											to={
-												import.meta.env
-													.VITE_API_PUBLIC_URL +
-												`/profile`
-											}
-										>
-											Profile
-										</Link>
-									)
-								)}
-							</li>
-							<li>
-								<span className="icon">
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/notification.svg"
-										}
-									/>
-								</span>
-								<Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"/notification"
-									}
-								>
-									Notification
-								</Link>
-							</li>
+									</li>
+								) : (
+									""
+								)
+							)}
+
 							<li>
 								<span className="icon">
 									<ReactSVG
@@ -208,7 +182,7 @@ function Offcanvas(props) {
 												`/orderShopper`
 											}
 										>
-											Order From Store
+											Order
 										</Link>
 									) : (
 										<Link
@@ -246,25 +220,6 @@ function Offcanvas(props) {
 								</li>
 							)}
 
-							<li>
-								<span className="icon">
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/gear-two.svg"
-										}
-									/>
-								</span>
-								<Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"/edit-profile"
-									}
-								>
-									Edit Profile
-								</Link>
-							</li>
 							<li>
 								<span className="icon">
 									<FaUserPlus className="text-xl"></FaUserPlus>
