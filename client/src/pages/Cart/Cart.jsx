@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useStopwatch } from "react-timer-hook";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
 import {
@@ -11,6 +12,17 @@ import {
 } from "../../store/slices/cart-slice";
 
 const Cart = () => {
+	const {
+		totalSeconds,
+		seconds,
+		minutes,
+		hours,
+		days,
+		isRunning,
+		start,
+		pause,
+		reset,
+	} = useStopwatch({ autoStart: false });
 	const dispatch = useDispatch();
 
 	const userID = localStorage.getItem("user-id");
@@ -21,6 +33,9 @@ const Cart = () => {
 	const [productQuantities, setProductQuantities] = useState({});
 	const [productDiscounts, setProductDiscounts] = useState({});
 	const productDiscount = useRef({});
+	const productQuantity = useRef({});
+	const productPrice = useRef({});
+	const [clickedState, setClickedState] = useState(true);
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -35,10 +50,19 @@ const Cart = () => {
 	}, []);
 
 	const redirectTimer = async (shopperId) => {
-		console.log("call add order", shopperId);
-		setTimeout(() => {
-			addOrder(shopperId);
-		}, 3000);
+		console.log(clickedState);
+		if (clickedState === true) {
+			// Store the timeout ID in a variable
+			const timeoutId = setTimeout(() => {
+				addOrder(shopperId);
+				pause();
+			}, 12000);
+
+			// Clear the timeout when "Cancel1" is clicked
+			return () => {
+				clearTimeout(timeoutId);
+			};
+		}
 	};
 
 	useEffect(() => {
@@ -68,12 +92,26 @@ const Cart = () => {
 				.filter((cartItem) => cartItem.shopper_id === shopperId)
 				.map((cartItem) => cartItem.id) || {};
 
-		const quantities = productQuantities[shopperId] || {};
-		const discounts = productDiscounts[shopperId] || {};
+		const quantities = productQuantity || {};
+		const discounts = productDiscount || {};
+		const prices = productPrice || {};
 
-		const discount = Object?.values(discounts).join(",");
-		const productid = Object.keys(quantities).join(",");
-		const quantity = Object.values(quantities).join(",");
+		var discount = Object.entries(discounts).map(([key, value]) => {
+			return value;
+		});
+		var productid = Object.entries(quantities).map(([key, value]) => {
+			return key;
+		});
+		var quantity = Object.entries(quantities).map(([key, value]) => {
+			return value;
+		});
+		discount.pop();
+		productid.pop();
+		quantity.pop();
+
+		discount = discount.join(",");
+		productid = productid.join(",");
+		quantity = quantity.join(",");
 
 		let total = 0;
 		productIds.forEach((productId) => {
@@ -81,10 +119,12 @@ const Cart = () => {
 			if (cartItem) {
 				const quantity = quantities[productId] || 0;
 				const discount = discounts[productId] || 0;
-				const price = cartItem.price;
+				const price = prices[productId];
 				total += getDiscountPrice(price, discount) * quantity;
 			}
 		});
+
+		console.log(total, "total");
 
 		var last_order_id = 0;
 		const wantobuy = window.confirm("Are you sure you want to buy?");
@@ -156,6 +196,7 @@ const Cart = () => {
 	};
 
 	const handleBuyClick = (shopperId) => {
+		console.log(clickedState, "handle buy");
 		// Toggle the buy state for the specific shop
 		setBuyStates((prevBuyStates) => ({
 			...prevBuyStates,
@@ -166,11 +207,15 @@ const Cart = () => {
 		cartItems.forEach((cartItem) => {
 			if (cartItem.shopper_id === shopperId) {
 				productDiscount[cartItem.id] = cartItem.discount;
+				productQuantity[cartItem.id] = cartItem.quantity;
+				productPrice[cartItem.id] = cartItem.price;
 				console.log(cartItem.id, "discount", cartItem.discount);
 				discounts[cartItem.id] = cartItem.discount;
 			}
 		});
 		console.log(productDiscount, "productDiscount");
+		console.log(productQuantity, "productQuantity");
+		console.log(productPrice, "productPrice");
 
 		// Store the discounts in state
 		setProductDiscounts((prevDiscounts) => ({
@@ -190,7 +235,13 @@ const Cart = () => {
 			...productQuantities,
 			[shopperId]: quantities,
 		});
-		redirectTimer(shopperId);
+		if (clickedState == true) {
+			redirectTimer(shopperId);
+		}
+	};
+
+	const setClicked = (value) => {
+		setClickedState(value);
 	};
 
 	return (
@@ -346,17 +397,30 @@ const Cart = () => {
 										{buyStates[shopper.id] ? (
 											<>
 												<button
-													onClick={() =>
-														handleBuyClick(
-															shopper.id
-														)
-													}
+													onClick={() => {
+														setClicked(true),
+															handleBuyClick(
+																shopper.id
+															);
+													}}
 													className="btn btn-error btn-xs"
 												>
 													Cancel1
 												</button>{" "}
 												<div className="border p-1 text-xs">
-													2 minutes remaining
+													<div
+														style={{
+															fontSize: "25px",
+														}}
+													>
+														<span>{minutes}</span>m
+														<span>{seconds}</span>s
+													</div>
+													<p>
+														{isRunning
+															? "Running"
+															: "Not running"}
+													</p>
 												</div>
 												<button
 													onClick={() =>
@@ -369,9 +433,13 @@ const Cart = () => {
 											</>
 										) : (
 											<button
-												onClick={() =>
-													handleBuyClick(shopper.id)
-												}
+												onClick={() => {
+													setClicked(false),
+														handleBuyClick(
+															shopper.id
+														),
+														start();
+												}}
 												className="btn btn-success btn-xs"
 											>
 												Buy3

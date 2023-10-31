@@ -38,6 +38,7 @@
 		"react-select": "^5.7.7",
 		"react-svg": "^15.1.15",
 		"react-timekeeper": "^2.2.1",
+		"react-timer-hook": "^3.0.7",
 		"redux": "^4.2.0",
 		"redux-persist": "^6.0.0",
 		"sweetalert2": "^11.7.31",
