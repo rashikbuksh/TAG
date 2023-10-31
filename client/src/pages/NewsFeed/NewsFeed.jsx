@@ -5,6 +5,7 @@ import NewsFeedInput from "../../components/NewsFeedInput/NewsFeedInput";
 import { api } from "../../lib/api";
 import PostUi from "../PostUi/PostUi";
 import TagNewsUi from "../PostUi/TagNewsUi";
+import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 
 const NewsFeed = () => {
 	const [posts, setPosts] = useState([]);
@@ -49,8 +50,8 @@ const NewsFeed = () => {
 	return (
 		<div className="mt-20">
 			<div className="mx-auto w-[90%]">
-				<h1 className="text-center text-2xl font-bold">News</h1>
-				<div className="divider"></div>
+				<h1 className="text-center text-2xl font-bold">News Feed</h1>
+				<div className="divider my-0"></div>
 				<div className="lg:grid lg:grid-cols-12 ">
 					<div className="lg:col-span-3"></div>
 					<div className="lg:col-span-6">
@@ -60,21 +61,15 @@ const NewsFeed = () => {
 						>
 							{"Write Post"}
 						</div>
+						<ShowCartIcon></ShowCartIcon>
 						<NewsFeedInput
 							isOpen={isOpen}
 							setIsOpen={setIsOpen}
 						></NewsFeedInput>
 						<div>
-							{posts.map((postData, index) =>
-								postData.category === "regular" ? (
-									<PostUi key={index} postData={postData} />
-								) : (
-									<TagNewsUi
-										key={index}
-										postData={postData}
-									/>
-								)
-							)}
+							{posts.map((postData, index) => (
+								<PostUi key={index} postData={postData} />
+							))}
 						</div>
 					</div>
 					<div className="lg:col-span-3"></div>
