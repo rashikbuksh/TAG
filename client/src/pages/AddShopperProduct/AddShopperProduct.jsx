@@ -86,7 +86,7 @@ const ShopperProduct = () => {
 			});
 
 		await api.get(`/shopperproduct/getLastProduct`).then((response) => {
-			console.log(response);
+			// console.log(response);
 			shopperProduct_ID = response.data[0].id;
 			shopper_product_name = response.data[0].name;
 			shopper_product_price = response.data[0].price;
@@ -95,7 +95,7 @@ const ShopperProduct = () => {
 
 		let today = new Date();
 		today = today.toISOString();
-		console.log(productImage);
+		// console.log(productImage);
 		await api
 			.post(`/news/addproductnews`, {
 				shopper_product_id: Number(shopperProduct_ID),

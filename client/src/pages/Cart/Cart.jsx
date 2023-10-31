@@ -50,7 +50,7 @@ const Cart = () => {
 	}, []);
 
 	const redirectTimer = async (shopperId) => {
-		console.log(clickedState);
+		// console.log(clickedState);
 		if (clickedState === true) {
 			// Store the timeout ID in a variable
 			const timeoutId = setTimeout(() => {
@@ -124,7 +124,7 @@ const Cart = () => {
 			}
 		});
 
-		console.log(total, "total");
+		// console.log(total, "total");
 
 		var last_order_id = 0;
 		const wantobuy = window.confirm("Are you sure you want to buy?");
@@ -187,7 +187,7 @@ const Cart = () => {
 			[shopperId]: {},
 		});
 		if (!productDiscounts[shopperId]) {
-			console.log(discount, productid, quantity, "all");
+			// console.log(discount, productid, quantity, "all");
 			setProductDiscounts({
 				...productDiscounts,
 				[shopperId]: {},
@@ -196,7 +196,7 @@ const Cart = () => {
 	};
 
 	const handleBuyClick = (shopperId) => {
-		console.log(clickedState, "handle buy");
+		// console.log(clickedState, "handle buy");
 		// Toggle the buy state for the specific shop
 		setBuyStates((prevBuyStates) => ({
 			...prevBuyStates,
@@ -209,13 +209,13 @@ const Cart = () => {
 				productDiscount[cartItem.id] = cartItem.discount;
 				productQuantity[cartItem.id] = cartItem.quantity;
 				productPrice[cartItem.id] = cartItem.price;
-				console.log(cartItem.id, "discount", cartItem.discount);
+				// console.log(cartItem.id, "discount", cartItem.discount);
 				discounts[cartItem.id] = cartItem.discount;
 			}
 		});
-		console.log(productDiscount, "productDiscount");
-		console.log(productQuantity, "productQuantity");
-		console.log(productPrice, "productPrice");
+		// console.log(productDiscount, "productDiscount");
+		// console.log(productQuantity, "productQuantity");
+		// console.log(productPrice, "productPrice");
 
 		// Store the discounts in state
 		setProductDiscounts((prevDiscounts) => ({

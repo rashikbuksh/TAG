@@ -46,7 +46,7 @@ const Product = () => {
 				// alert(error);
 			});
 	}, [id]);
-	console.log(prods);
+	// console.log(prods);
 	// console.log(prods, "loggged productjs");
 	const { cartItems } = useSelector((state) => state.cart);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -89,7 +89,7 @@ const Product = () => {
 			</div>
 			{/*====================  End of product image slider  ====================*/}
 			{prods.map((prods) => {
-				console.log(prods, "in product");
+				// console.log(prods, "in product");
 				return (
 					<div key={Math.random()} className="">
 						<div className="">

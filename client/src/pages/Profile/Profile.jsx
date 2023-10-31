@@ -31,7 +31,7 @@ const Profile = () => {
 			});
 	}, []);
 
-	console.log(userdata);
+	// console.log(userdata);
 
 	if (isLoading) return <Preloader />;
 	if (errorMessage) return <ErrorMessage errorMessage={errorMessage} />;
