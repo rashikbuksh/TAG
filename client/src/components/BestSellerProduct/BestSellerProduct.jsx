@@ -83,6 +83,7 @@ const BestSellerProduct = ({ limit, type }) => {
 											className="bestsellCartShado w-full p-2"
 										>
 											<Link
+											className="flex items-center justify-center"
 												to={
 													import.meta.env
 														.VITE_API_PUBLIC_URL +

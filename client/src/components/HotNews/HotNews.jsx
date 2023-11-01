@@ -63,7 +63,7 @@ const HotNews = () => {
 													{postData.post_img &&
 														(postData.shopper_product_id ? (
 															<img
-																className="w-[150px] h-[50px] rounded-lg"
+																className="w-[50px] h-[50px] rounded-lg"
 																src={`${
 																	import.meta
 																		.env

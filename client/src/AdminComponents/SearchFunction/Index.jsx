@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
-const SearchFunction = ({ arr, setFilteredArr }) => {
+const SearchFunction = ({ arr, setFilteredArr,width }) => {
 	const [trimmedValue, setTrimmedValue] = useState("");
 
 	const handleSearchChange = (value) => {
@@ -30,7 +30,7 @@ const SearchFunction = ({ arr, setFilteredArr }) => {
 		}
 	}, [trimmedValue, arr, setFilteredArr]);
 	return (
-		<div className="mx-auto w-1/2 p-6">
+		<div className={`mx-auto ${width?"w-full":"w-1/2"}  p-6`}>
 			<label className="sr-only">Search</label>
 			<input
 				type="text"
