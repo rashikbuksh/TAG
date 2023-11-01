@@ -9,7 +9,7 @@ const ProductSlider = ({ products }) => {
 		<div>
 			<div className="">
 				<Swiper
-					slidesPerView={2.1}
+					slidesPerView={2}
 					spaceBetween={15}
 					grabCursor={true}
 					pagination={{
@@ -18,6 +18,7 @@ const ProductSlider = ({ products }) => {
 					className="mySwiper"
 					breakpoints={{
 						// When screen width is greater than or equal to 768px, show 4 slides per view
+
 						768: {
 							slidesPerView: 6,
 						},

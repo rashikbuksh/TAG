@@ -27,7 +27,7 @@ const ProductCart = ({ product }) => {
 
 	return (
 		<div
-			className="w-[170px] "
+			className=" "
 			style={{ boxShadow: "0px 8px 32px 0px rgba(184, 184, 184, 0.10)" }}
 		>
 			{shopper.map((shopper) => (
@@ -59,7 +59,7 @@ const ProductCart = ({ product }) => {
 									}
 								>
 									<div className="flex">
-										<h4 className="w-full text-base font-semibold">
+										<h4 className="w-full text-sm font-semibold">
 											{shopper.name}
 										</h4>
 									</div>
