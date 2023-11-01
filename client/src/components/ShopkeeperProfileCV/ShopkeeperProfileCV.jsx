@@ -9,7 +9,10 @@ import logo from "../../../public/assets/img/Tag-logo-blue-get_100_100.png";
 import SearchFunction from "../../AdminComponents/SearchFunction/Index";
 import { Takaicon } from "../../SvgHub/SocialIcon";
 import { checkIfInCart } from "../../helpers/product";
-import { addToCart, increaseQuantityofProd } from "../../store/slices/cart-slice";
+import {
+	addToCart,
+	increaseQuantityofProd,
+} from "../../store/slices/cart-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../context/auth";
 import { AddToCartIcon1 } from "../../SvgHub/Icons";
@@ -23,6 +26,7 @@ const ShopkeeperProfileCV = () => {
 	const [category, setCategory] = useState([]);
 	const [selectedCategoryProduct, setSelectedCategoryProduct] = useState([]);
 	const [filteredAllProducts, setFilteredProducts] = useState([]);
+	const [selectedLetter, setSelectedLetter] = useState("");
 	// const options = ["bag", "rice", "vevarage"];
 	const dispatch = useDispatch();
 	const { user } = useAuth();
@@ -67,6 +71,7 @@ const ShopkeeperProfileCV = () => {
 
 	// console.log(selectedCategoryProduct);
 	const handleSearch = (letter) => {
+		setSelectedLetter(letter);
 		console.log(letter);
 		if (letter === "#") {
 			setFilteredProducts(selectedCategoryProduct);
@@ -84,7 +89,13 @@ const ShopkeeperProfileCV = () => {
 				<div className="mx-auto my-3">
 					{shopkeeperInfo && (
 						<div className="relative flex flex-col items-center">
-							<div className={`avatar ${shopkeeperInfo.active_status?"online":"offline"} mb-2`}>
+							<div
+								className={`avatar ${
+									shopkeeperInfo.active_status
+										? "online"
+										: "offline"
+								} mb-2`}
+							>
 								<div className=" h-[100px] w-[100px] rounded-full border p-1">
 									<img src={logo} alt="" className="" />
 								</div>
@@ -111,7 +122,7 @@ const ShopkeeperProfileCV = () => {
 									value={shopkeeperInfo.review_count}
 								/>
 							</div>
-							<div className="mt-4 flex items-center gap-3 justify-center">
+							<div className="mt-4 flex items-center justify-center gap-3">
 								<FaLocationDot className="text-3xl text-blue-400 lg:text-6xl "></FaLocationDot>
 								<button className=" font-xl h-[48px] w-[140px] rounded bg-[#FF4C5E] text-white">
 									Follow
@@ -152,7 +163,15 @@ const ShopkeeperProfileCV = () => {
 								key={letter}
 								onClick={() => handleSearch(letter)}
 							>
-								{letter}
+								<span
+									className={
+										selectedLetter === letter
+											? "primary-text underline"
+											: ""
+									}
+								>
+									{letter}
+								</span>
 							</button>
 						))}
 					</div>
@@ -165,7 +184,7 @@ const ShopkeeperProfileCV = () => {
 							</div>
 						)}
 						<div className="">
-							<div className="w-[90%] lg:mx-auto grid grid-cols-2 gap-1 lg:grid-cols-4">
+							<div className="grid w-[90%] grid-cols-2 gap-1 lg:mx-auto lg:grid-cols-4">
 								{filteredAllProducts.map((single) => {
 									return (
 										<div
@@ -173,7 +192,7 @@ const ShopkeeperProfileCV = () => {
 											className="bestsellCartShado w-full p-2"
 										>
 											<Link
-											className="flex items-center justify-center"
+												className="flex items-center justify-center"
 												to={
 													import.meta.env
 														.VITE_API_PUBLIC_URL +
