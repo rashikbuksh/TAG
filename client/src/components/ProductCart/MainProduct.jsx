@@ -169,7 +169,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					}}
 				>
 					<div className="h-10 text-left ">
-						<h1 className="text-xs ">
+						<h1 className="text-sm ">
 							{name}
 						</h1>
 					</div>
