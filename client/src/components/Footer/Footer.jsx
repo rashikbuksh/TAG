@@ -26,7 +26,7 @@ const Footer = () => {
 					className="footer-nav-single"
 				>
 					<div className="menu-wrapper">
-						<FaRegNewspaper className="text-2xl"></FaRegNewspaper>
+						<FaRegNewspaper className="text-2xl text-black"></FaRegNewspaper>
 						<span>News</span>
 					</div>
 				</Link>
@@ -49,8 +49,8 @@ const Footer = () => {
 					className="footer-nav-single"
 				>
 					<div className="menu-wrapper">
-						<FaRegBell className="text-2xl"> </FaRegBell>
-						<span>Notification</span>
+						<FaRegBell className="text-xl"> </FaRegBell>
+						<span className="text-xs">Notification</span>
 					</div>
 				</Link>
 				<Link

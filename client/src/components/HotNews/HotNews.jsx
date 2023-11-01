@@ -36,7 +36,7 @@ const HotNews = () => {
 			<h1 className="my-2 text-xl">Hot News</h1>
 			<div className="">
 				<Swiper
-					slidesPerView={2}
+					slidesPerView={1.5}
 					spaceBetween={10}
 					grabCursor={true}
 					pagination={{
@@ -53,7 +53,7 @@ const HotNews = () => {
 								{postData.category === "regular" ? (
 									<Link to={`/newsfeed`}>
 										<div
-											className="h-16 w-[190px]  rounded-xl  px-1 flex items-center justify-center"
+											className="h-16 rounded-xl max-w-52  px-1 flex items-center justify-center"
 											style={{
 												backgroundColor: randomColor,
 											}}
@@ -88,7 +88,7 @@ const HotNews = () => {
 														))}
 												</div>
 
-												<p className=" text-sm font-bold text-black">
+												<p className=" text-sx  text-black">
 													{postData.post_content ||
 														"New Product Added"}
 												</p>

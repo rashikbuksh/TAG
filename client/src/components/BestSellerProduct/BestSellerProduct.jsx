@@ -75,7 +75,7 @@ const BestSellerProduct = ({ limit, type }) => {
 
 						{/* featured products */}
 						<div className="featured-product-wrapper space-mb-m--15">
-							<div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+							<div className="mt-8 grid grid-cols-2 gap-1 lg:grid-cols-4">
 								{shopperProducts.map((single) => {
 									return (
 										<div
@@ -116,10 +116,12 @@ const BestSellerProduct = ({ limit, type }) => {
 
 											<div className="flex items-center justify-between">
 												<div className="relative flex flex-col bg-white ">
-													<h3 className="max-w-[160px] truncate text-lg font-semibold text-black">
-														{" "}
-														{single.name}{" "}
-													</h3>
+													<div className="h-fit">
+														<h3 className="text-sm w-[80px]   truncate  text-black">
+															{" "}
+															{single.name}{" "}
+														</h3>
+													</div>
 
 													<div className=" flex items-center  gap-1">
 														<Takaicon></Takaicon>
@@ -130,9 +132,10 @@ const BestSellerProduct = ({ limit, type }) => {
 													</div>
 												</div>
 												<div>
-													<button 
+													<button
 														disabled={
-															user.access !=="customer"
+															user.access !==
+															"customer"
 														}
 														onClick={() => {
 															single.quantity = 0;
@@ -155,8 +158,12 @@ const BestSellerProduct = ({ limit, type }) => {
 																);
 															}
 														}}
-														className={`${user.access ===
-															"customer"?"":"btn btn-disabled bg-none p-0 bg-white border-none"}`}
+														className={`${
+															user.access ===
+															"customer"
+																? ""
+																: "btn btn-disabled border-none bg-white bg-none p-0"
+														}`}
 													>
 														<AddToCartIcon1
 															width={42}
