@@ -6,6 +6,7 @@ import { api } from "../../lib/api";
 import PostUi from "../PostUi/PostUi";
 import TagNewsUi from "../PostUi/TagNewsUi";
 import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
+import { useAuth } from "../../context/auth";
 
 const NewsFeed = () => {
 	const [posts, setPosts] = useState([]);
@@ -46,7 +47,7 @@ const NewsFeed = () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, [posts]);
-
+	const { user } = useAuth();
 	return (
 		<div className="mt-20">
 			<div className="mx-auto w-[90%]">
@@ -55,17 +56,24 @@ const NewsFeed = () => {
 				<div className="lg:grid lg:grid-cols-12 ">
 					<div className="lg:col-span-3"></div>
 					<div className="lg:col-span-6">
-						<div
-							onClick={handleNewsInput}
-							className="mb-4 w-full rounded border bg-white p-4 shadow-md"
-						>
-							{"Write Post"}
-						</div>
 						<ShowCartIcon></ShowCartIcon>
-						<NewsFeedInput
-							isOpen={isOpen}
-							setIsOpen={setIsOpen}
-						></NewsFeedInput>
+						{user.access === "customer" ? (
+							""
+						) : (
+							<>
+								<div
+									onClick={handleNewsInput}
+									className="mb-4 w-full rounded border bg-white p-4 shadow-md"
+								>
+									{"Write Post"}
+								</div>
+								<NewsFeedInput
+									isOpen={isOpen}
+									setIsOpen={setIsOpen}
+								></NewsFeedInput>
+							</>
+						)}
+
 						<div>
 							{posts.map((postData, index) => (
 								<PostUi key={index} postData={postData} />

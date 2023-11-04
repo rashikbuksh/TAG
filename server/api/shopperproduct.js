@@ -36,7 +36,7 @@ const read = [
 	},
 	{
 		uri: "/shopperproduct/getshopperproductOfShopkeeper/:id",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id and shopper_id = ?`,
+		query: `SELECT sp.id, sp.name,sp.shopper_id, sp.price, discount, product_count, product_id, category_id, image, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id and shopper_id = ?`,
 		param: ["id"],
 	},
 	{

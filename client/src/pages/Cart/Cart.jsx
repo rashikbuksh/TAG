@@ -10,6 +10,9 @@ import {
 	deleteFromCart,
 	increaseQuantity,
 } from "../../store/slices/cart-slice";
+import { FaTrash } from "react-icons/fa";
+import { Takaicon } from "../../SvgHub/SocialIcon";
+import cogoToast from "@hasanm95/cogo-toast";
 
 const Cart = () => {
 	const {
@@ -36,6 +39,7 @@ const Cart = () => {
 	const productQuantity = useRef({});
 	const productPrice = useRef({});
 	const [clickedState, setClickedState] = useState(true);
+	const timeoutIdRef = useRef(null);
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -55,11 +59,13 @@ const Cart = () => {
 			// Store the timeout ID in a variable
 			const timeoutId = setTimeout(() => {
 				addOrder(shopperId);
-				pause();
-			}, 12000);
+				pause()
+			}, 120000);
 
+			timeoutIdRef.current = timeoutId;
 			// Clear the timeout when "Cancel1" is clicked
 			return () => {
+				reset();
 				clearTimeout(timeoutId);
 			};
 		}
@@ -86,7 +92,7 @@ const Cart = () => {
 
 	const addOrder = (shopperId) => {
 		// Check if productDiscounts[shopperId] is defined, if not, set it as an empty object
-
+		
 		const productIds =
 			cartItems
 				.filter((cartItem) => cartItem.shopper_id === shopperId)
@@ -237,31 +243,78 @@ const Cart = () => {
 		});
 		if (clickedState == true) {
 			redirectTimer(shopperId);
+			cogoToast.warn("Order auto-submitted after 2 mins.If you want to cancel, click 'Cancel", {
+				position: "bottom-left",
+			});
 		}
 	};
 
 	const setClicked = (value) => {
 		setClickedState(value);
 	};
+	const handelCancel = (shopperId) => {
+		setBuyStates((prevBuyStates) => ({
+			...prevBuyStates,
+			[shopperId]: !prevBuyStates[shopperId],
+		}));
+
+		const discounts = {};
+		cartItems.forEach((cartItem) => {
+			if (cartItem.shopper_id === shopperId) {
+				productDiscount[cartItem.id] = cartItem.discount;
+				productQuantity[cartItem.id] = cartItem.quantity;
+				productPrice[cartItem.id] = cartItem.price;
+				// console.log(cartItem.id, "discount", cartItem.discount);
+				discounts[cartItem.id] = cartItem.discount;
+			}
+		});
+		// console.log(productDiscount, "productDiscount");
+		// console.log(productQuantity, "productQuantity");
+		// console.log(productPrice, "productPrice");
+
+		// Store the discounts in state
+		setProductDiscounts((prevDiscounts) => ({
+			...prevDiscounts,
+			[shopperId]: discounts,
+		}));
+
+		const quantities = {};
+		cartItems.forEach((cartItem) => {
+			if (cartItem.shopper_id === shopperId) {
+				quantities[cartItem.id] = cartItem.quantity;
+			}
+		});
+
+		// Store the quantities in state
+		setProductQuantities({
+			...productQuantities,
+			[shopperId]: quantities,
+		});
+		clearTimeout(timeoutIdRef.current);
+		reset();
+	};
 
 	return (
 		<>
-			<div className="my-24 h-full overflow-scroll">
-				<h1 className="text-center text-3xl font-bold">Cart</h1>
-				<div className="divider"></div>
+			<div className="mx-auto my-14 h-full overflow-scroll lg:w-[50%]">
+				<h1 className="text-center text-2xl font-bold">Cart</h1>
+
 				{cartItems && cartItems.length > 0 ? (
 					shoppers.map((shopper) => (
-						<div className="" key={shopper.id}>
+						<div className="mb-10" key={shopper.id}>
 							{cartItems.some(
 								(cartItem) => cartItem.shopper_id === shopper.id
 							) && (
-								<Link
-									to={`../shopkeeperProfileCV/${shopper.id}`}
-								>
-									<h2 className="ml-5 mt-4 text-xl font-bold">
-										{shopper.name} Store Cart
-									</h2>
-								</Link>
+								<>
+									<Link
+										to={`../shopkeeperProfileCV/${shopper.id}`}
+									>
+										<h2 className=" px-4 text-base font-semibold">
+											{shopper.name} Store Items
+										</h2>
+									</Link>
+									<div className="mx-auto mb-3 h-[1px] w-[90%] bg-[#EBEBEB]"></div>
+								</>
 							)}
 							{cartItems.map((cartItem) => {
 								let cartTotalPrice = 0;
@@ -269,12 +322,24 @@ const Cart = () => {
 									return (
 										<div
 											key={cartItem.id}
-											className="mx-auto w-[90%] border p-3"
+											className="mx-auto w-[100%] p-3"
 										>
 											<div>
-												<div className="flex items-center justify-between border p-2">
+												<div className="relative flex items-center justify-between bg-gray-100 p-2">
+													<button
+														onClick={() =>
+															dispatch(
+																deleteFromCart(
+																	cartItem
+																)
+															)
+														}
+														className="absolute right-2 top-2"
+													>
+														<FaTrash className="text-red-400"></FaTrash>
+													</button>
 													<img
-														className="h-[50px] w-[50px] border-2"
+														className="h-[50px] w-[50px] "
 														src={`${
 															import.meta.env
 																.VITE_APP_IMG_URL
@@ -284,19 +349,19 @@ const Cart = () => {
 														alt="Selected Product"
 													/>
 													<div>
-														<h1 className="text-base font-bold">
-															<Link
-																to={`${
-																	import.meta
-																		.env
-																		.VITE_API_PUBLIC_URL
-																}/product/${
-																	cartItem.id
-																}`}
-															>
+														<Link
+															to={`${
+																import.meta.env
+																	.VITE_API_PUBLIC_URL
+															}/product/${
+																cartItem.id
+															}`}
+														>
+															<h1 className="text-sm ">
 																{cartItem.name}
-															</Link>
-														</h1>
+															</h1>
+														</Link>
+
 														<div className="">
 															<h2 className="text-xs">
 																{
@@ -304,9 +369,9 @@ const Cart = () => {
 																}
 															</h2>
 															<div className="cart-product__counter">
-																<div className="cart-plus-minus">
+																<div className="flex items-center justify-center gap-2">
 																	<button
-																		className="dec qtybutton"
+																		className="quantity-button"
 																		onClick={() =>
 																			dispatch(
 																				decreaseQuantity(
@@ -318,7 +383,7 @@ const Cart = () => {
 																		-
 																	</button>
 																	<input
-																		className="cart-plus-minus-box"
+																		className="w-[30px] bg-gray-100 text-center"
 																		type="text"
 																		value={
 																			cartItem.quantity
@@ -326,7 +391,7 @@ const Cart = () => {
 																		readOnly
 																	/>
 																	<button
-																		className="inc qtybutton"
+																		className="quantity-button"
 																		onClick={() =>
 																			dispatch(
 																				increaseQuantity(
@@ -399,18 +464,18 @@ const Cart = () => {
 												<button
 													onClick={() => {
 														setClicked(true),
-															handleBuyClick(
+															handelCancel(
 																shopper.id
 															);
 													}}
-													className="btn btn-error btn-xs"
+													className="h-[24px] w-[48px] rounded bg-[#a92f4e] text-sm text-white"
 												>
-													Cancel1
+													Cancel
 												</button>{" "}
-												<div className="border p-1 text-xs">
+												<div className="p-1 text-xs">
 													<div
 														style={{
-															fontSize: "25px",
+															fontSize: "15px",
 														}}
 													>
 														<span>{minutes}</span>m
@@ -418,17 +483,17 @@ const Cart = () => {
 													</div>
 													<p>
 														{isRunning
-															? "Running"
-															: "Not running"}
+															? ""
+															: "Stop Timer"}
 													</p>
 												</div>
 												<button
 													onClick={() =>
 														addOrder(shopper.id)
 													}
-													className="btn btn-success btn-xs"
+													className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
 												>
-													Buy2
+													Buy
 												</button>{" "}
 											</>
 										) : (
@@ -440,14 +505,14 @@ const Cart = () => {
 														),
 														start();
 												}}
-												className="btn btn-success btn-xs"
+												className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
 											>
-												Buy3
+												Buy
 											</button>
 										)}
 									</div>
-									<h2 className="text-xs font-bold">
-										Total:{" "}
+									<h2 className="flex items-center justify-center gap-2 text-xs font-bold">
+										<Takaicon></Takaicon>
 										{parseFloat(totals[shopper.id]).toFixed(
 											2
 										)}

@@ -106,9 +106,9 @@ const cartSlice = createSlice({
 						? { ...item, quantity: item.quantity - 1 }
 						: item
 				);
-				cogoToast.warn("Item Decremented From Cart", {
-					position: "bottom-left",
-				});
+				// cogoToast.warn("Item Decremented From Cart", {
+				// 	position: "bottom-left",
+				// });
 			}
 		},
 		increaseQuantity(state, action) {
@@ -119,9 +119,9 @@ const cartSlice = createSlice({
 					? { ...item, quantity: item.quantity + 1 }
 					: item
 			);
-			cogoToast.warn("Item Incremented From Cart", {
-				position: "bottom-left",
-			});
+			// cogoToast.warn("Item Incremented From Cart", {
+			// 	position: "bottom-left",
+			// });
 			// console.log("state.cartItems: ", state.cartItems);
 		},
 		increaseQuantityofProd(state, action) {
@@ -132,9 +132,9 @@ const cartSlice = createSlice({
 					? { ...item, quantity: item.quantity + 1 }
 					: item
 			);
-			cogoToast.warn("Item Incremented in Cart", {
-				position: "bottom-left",
-			});
+			// cogoToast.warn("Item Incremented in Cart", {
+			// 	position: "bottom-left",
+			// });
 			// console.log("state.cartItems: ", state.cartItems);
 		},
 		deleteAllFromCart(state) {
