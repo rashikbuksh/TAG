@@ -186,6 +186,7 @@ const ShopkeeperProfileCV = () => {
 						<div className="">
 							<div className="grid w-[90%] grid-cols-2 gap-1 lg:mx-auto lg:grid-cols-4">
 								{filteredAllProducts.map((single) => {
+									console.log(filteredAllProducts);
 									return (
 										<div
 											key={single.id}

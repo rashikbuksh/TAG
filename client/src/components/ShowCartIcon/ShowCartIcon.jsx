@@ -17,7 +17,7 @@ const ShowCartIcon = () => {
 
 			const redirectTimer = setTimeout(() => {
 				setShowCart(false);
-			}, 3000);
+			}, 10000);
 			// Clear the timer when the component unmounts
 			return () => {
 				clearTimeout(redirectTimer);
