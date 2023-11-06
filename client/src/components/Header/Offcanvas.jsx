@@ -13,6 +13,7 @@ function Offcanvas(props) {
 		desktopDrawerStyle,
 		isOffcanvasOpen,
 		setIsOffcanvasOpen,
+		userData,
 	} = props;
 	const userid = localStorage.getItem("user-id");
 	const [userInfo, setUserInfo] = useState([]);
@@ -75,11 +76,13 @@ function Offcanvas(props) {
 									<div className="w-20 rounded-full ring  ring-offset-2 ring-offset-[#00AAFF]">
 										<img
 											src={
-												item.image
+												userData
 													? `${
 															import.meta.env
 																.VITE_APP_IMG_URL
-													  }/user/${item.image}`
+													  }/usersProfilePic/${
+															userData.profile_picture
+													  }`
 													: `${
 															import.meta.env
 																.VITE_API_PUBLIC_URL +

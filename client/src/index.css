@@ -40,5 +40,5 @@
 	@apply rounded-2xl bg-gray-100 px-8 py-4;
 }
 .quantity-button {
-	@apply w-[20px] h-[20px] primary-background  text-white flex items-center justify-center text-base rounded-full;
+	@apply w-[20px] h-[20px]   text-white flex items-center justify-center text-base rounded-full;
 }
