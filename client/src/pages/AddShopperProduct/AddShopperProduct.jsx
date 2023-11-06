@@ -106,7 +106,7 @@ const ShopperProduct = () => {
 				location: "",
 				category: "regular",
 				post_content:
-					shopper_product_name +
+					shopper_product_name + " "+
 					"TK." +
 					getDiscountPrice(
 						shopper_product_price,

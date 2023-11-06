@@ -12,7 +12,7 @@ import ShowCartIcon from "../ShowCartIcon/ShowCartIcon";
 const ShopProducts = ({ products }) => {
 	const dispatch = useDispatch();
 	const [gridActivate, setGridActivate] = useState(true);
-	const [listActivate, setListActivate] = useState(true);
+	const [listActivate, setListActivate] = useState(false);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 
 	const [category, setCategory] = useState([]);

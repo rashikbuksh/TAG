@@ -53,12 +53,12 @@ const HotNews = () => {
 								{postData.category === "regular" ? (
 									<Link to={`/newsfeed`}>
 										<div
-											className="h-16 rounded-xl max-w-52  px-1 flex items-center justify-center"
+											className="h-16 rounded-xl w-60 px-1 flex items-center justify-center"
 											style={{
 												backgroundColor: randomColor,
 											}}
 										>
-											<div className="flex items-center justify-start gap-2">
+											<div className="flex items-center  gap-2">
 												<div>
 													{postData.post_img &&
 														(postData.shopper_product_id ? (

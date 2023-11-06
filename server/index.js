@@ -89,3 +89,30 @@ app.post(
 		}
 	}
 );
+
+const storage3 = multer.diskStorage({
+	destination: (req, file, callBack) => {
+		if (file.mimetype.substring(0, 5) == "image") {
+			callBack(null, "./uploads/usersProfilePic");
+		}
+	},
+	filename: (req, file, callBack) => {
+		if (file.mimetype.substring(0, 5) == "image") {
+			profileImage = Date.now() + "__" + file.originalname;
+			callBack(null, profileImage);
+		}
+	},
+});
+const upload3 = multer({ storage: storage3 });
+app.post(
+	"/imageUpload/uploadprofileimage",
+	upload3.array("uploadFiles"),
+	(req, res) => {
+		if (req.files === null) {
+			return res.status(400).json({ msg: "No file uploaded" });
+		} else {
+			// console.log(productImage);
+			return res.status(200).json({ msg: "File Uploaded", profileImage });
+		}
+	}
+);

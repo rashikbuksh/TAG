@@ -24,7 +24,7 @@
         line-height: 1;
 
         position: absolute;
-        bottom: 20px;
+        bottom: 10px;
         left: 20px;
 
         display: inline-block;
@@ -35,8 +35,8 @@
 
             display: inline-block;
 
-            width: 15px;
-            height: 15px;
+            width: 10px;
+            height: 10px;
             margin: 0 !important;
             margin-right: 5px !important;
             padding: 0;
@@ -48,13 +48,13 @@
             background-color: $white;
 
             &-active {
-                background-color: $orange;
+                background-color: #4c81db;
             }
 
             &:hover,
             &:focus {
                 button {
-                    background-color: $orange;
+                    background-color: #2F5BA9;
                 }
             }
         }

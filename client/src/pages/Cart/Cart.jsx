@@ -371,7 +371,7 @@ const Cart = () => {
 															<div className="cart-product__counter">
 																<div className="flex items-center justify-center gap-2">
 																	<button
-																		className="quantity-button"
+																		className="quantity-button bg-[#60abe9]"
 																		onClick={() =>
 																			dispatch(
 																				decreaseQuantity(
@@ -391,7 +391,7 @@ const Cart = () => {
 																		readOnly
 																	/>
 																	<button
-																		className="quantity-button"
+																		className="quantity-button primary-background "
 																		onClick={() =>
 																			dispatch(
 																				increaseQuantity(
