@@ -209,115 +209,130 @@ const Register = () => {
 		// 		</div>
 		// 	</div>
 		// </div>
-		<div className="mx-auto flex flex-col justify-around px-[25px] lg:w-[50%] ">
-			<div className="mx-auto my-5 h-[80px]">
-				<TagLogo2></TagLogo2>
-			</div>
-			<div className="mb-4 w-full text-center ">
-				<p className="text-2xl font-bold">Create A New Account</p>
-			</div>
-			<div className="">
-				<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-					<div className=" ">
-						<label
-							htmlFor="name"
-							className="mb-1 px-4 text-xl font-semibold"
-						>
-							Name
-						</label>
-						<input
-							type="text"
-							name="name"
-							className="auth-input"
-							id="name"
-							placeholder="Enter Full name"
-							{...register("name")}
-						/>
-						<p className="text-danger">{errors.name?.message}</p>
-					</div>
-					<div className=" ">
-						<label
-							htmlFor="emailAddress"
-							className="mb-1 px-4 text-xl font-semibold"
-						>
-							Email Address
-						</label>
-						<input
-							type="text"
-							name="emailAddress"
-							className="auth-input"
-							id="emailAddress"
-							placeholder="Enter Email Address"
-							{...register("emailAddress")}
-						/>
-						<p className="text-danger">
-							{errors.emailAddress?.message}
-						</p>
-					</div>
-					<div className=" ">
-						<label
-							htmlFor="phone"
-							className="mb-1 px-4 text-xl font-semibold"
-						>
-							Phone Number
-						</label>
-						<input
-							type="text"
-							name="phone"
-							className="auth-input"
-							id="phone"
-							placeholder="Enter Phone Number"
-							{...register("phone")}
-						/>
-						<p className="text-danger">{errors.phone?.message}</p>
-					</div>
-					<div className="relative ">
-						<label
-							htmlFor="password"
-							className="mb-1 px-4 text-xl font-semibold"
-						>
-							Password
-						</label>
-						<input
-							type={showPassword ? "text" : "password"}
-							name="password"
-							id="password"
-							className="auth-input"
-							placeholder="Enter Password"
-							{...register("password")}
-						/>
-						<p
-							onClick={togglePasswordVisibility}
-							className="absolute right-4 top-12 cursor-pointer text-blue-500"
-						>
-							{showPassword ? (
-								<FaEye className="text-2xl text-black " />
-							) : (
-								<FaEyeSlash className="text-2xl text-black " />
-							)}
-						</p>
-						<p className="text-danger">
-							{errors.password?.message}
-						</p>
-					</div>
-					<button type="submit" className="auth-btn mt-4">
-						Sign Up
-					</button>
-				</form>
-				<div className="my-5 text-center">
-					<p
-						className="cursor-pointer "
-						style={{ color: "var(--greyscale-500, #9E9E9E)" }}
+		<div className="relative h-screen">
+			<div className="mx-auto flex flex-col justify-around px-[25px] lg:w-[50%] ">
+				<div className="mx-auto my-5 h-[80px]">
+					<TagLogo2></TagLogo2>
+				</div>
+				<div className="mb-4 w-full text-center ">
+					<p className="text-2xl font-bold">Create A New Account</p>
+				</div>
+				<div className="">
+					<form
+						onSubmit={handleSubmit(onSubmit)}
+						className="space-y-4"
 					>
-						Already have an account?{" "}
-						<Link
-							to={import.meta.env.VITE_API_PUBLIC_URL + "/login"}
+						<div className=" ">
+							<label
+								htmlFor="name"
+								className="mb-1 px-4 text-base font-semibold "
+							>
+								Name
+							</label>
+							<input
+								type="text"
+								name="name"
+								className="auth-input"
+								id="name"
+								placeholder="Enter Full name"
+								{...register("name")}
+							/>
+							<p className="text-danger">
+								{errors.name?.message}
+							</p>
+						</div>
+						<div className=" ">
+							<label
+								htmlFor="emailAddress"
+								className="mb-1 px-4 text-base font-semibold"
+							>
+								Email Address
+							</label>
+							<input
+								type="text"
+								name="emailAddress"
+								className="auth-input"
+								id="emailAddress"
+								placeholder="Enter Email Address"
+								{...register("emailAddress")}
+							/>
+							<p className="text-danger">
+								{errors.emailAddress?.message}
+							</p>
+						</div>
+						<div className=" ">
+							<label
+								htmlFor="phone"
+								className="mb-1 px-4 text-base font-semibold"
+							>
+								Phone Number
+							</label>
+							<input
+								type="text"
+								name="phone"
+								className="auth-input"
+								id="phone"
+								placeholder="Enter Phone Number"
+								{...register("phone")}
+							/>
+							<p className="text-danger">
+								{errors.phone?.message}
+							</p>
+						</div>
+						<div className="relative ">
+							<label
+								htmlFor="password"
+								className="mb-1 px-4 text-base font-semibold"
+							>
+								Password
+							</label>
+							<input
+								type={showPassword ? "text" : "password"}
+								name="password"
+								id="password"
+								className="auth-input"
+								placeholder="Enter Password"
+								{...register("password")}
+							/>
+							<p
+								onClick={togglePasswordVisibility}
+								className="absolute right-4 top-12 cursor-pointer text-blue-500"
+							>
+								{showPassword ? (
+									<FaEye className="text-2xl text-black " />
+								) : (
+									<FaEyeSlash className="text-2xl text-black " />
+								)}
+							</p>
+							<p className="text-danger">
+								{errors.password?.message}
+							</p>
+						</div>
+						<button type="submit" className="auth-btn mt-4">
+							Sign Up
+						</button>
+					</form>
+					<div className="my-3 text-center">
+						<p
+							className="cursor-pointer "
+							style={{ color: "var(--greyscale-500, #9E9E9E)" }}
 						>
-							<span className="primary-text">Sign in Now</span>
-						</Link>
-					</p>
+							Already have an account?{" "}
+							<Link
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									"/login"
+								}
+							>
+								<span className="primary-text">
+									Sign in Now
+								</span>
+							</Link>
+						</p>
+					</div>
 				</div>
 			</div>
+			<div className="absolute bottom-7 text-center w-full"> <p className="text-center" >By Signing up you accept the <span className="primary-text">Terms of Service</span> and <br /> <span className="primary-text">Privacy Policy</span></p></div>
 		</div>
 	);
 };

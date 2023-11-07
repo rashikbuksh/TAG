@@ -1,226 +1,32 @@
 import React from "react";
-import { FaPaperclip, FaRegPaperPlane } from "react-icons/fa";
 import { Breadcrumb } from "../../components";
 
 const Chat = () => {
-    return (
-        <div className="body-wrapper space-pt--70 space-pb--120">
-            <Breadcrumb pageTitle="Chat" prevUrl="/home" />
-            <div className="chat-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="chat-wrap">
-                                <ul className="chat-list">
-                                    <li>
-                                        <div className="chat">
-                                            <div className="body">
-                                                <div className="image">
-                                                    <img
-                                                        src={
-                                                            import.meta.env
-                                                                .VITE_API_PUBLIC_URL +
-                                                            "/assets/img/comment/comment-1.jpg"
-                                                        }
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="content">
-                                                    <div className="head">
-                                                        <h5>Roger Welch</h5>
-                                                        <span>
-                                                            Today 06.30 am
-                                                        </span>
-                                                    </div>
-                                                    <p>
-                                                        Lorem Ipsum is simply
-                                                        dummy text of the
-                                                        printing and
-                                                        typesetting.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="chat">
-                                            <div className="body">
-                                                <div className="image">
-                                                    <img
-                                                        src={
-                                                            import.meta.env
-                                                                .VITE_API_PUBLIC_URL +
-                                                            "/assets/img/comment/comment-2.jpg"
-                                                        }
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="content">
-                                                    <div className="head">
-                                                        <h5>Me</h5>
-                                                        <span>
-                                                            Today 06.30 am
-                                                        </span>
-                                                    </div>
-                                                    <p>
-                                                        Lorem Ipsum is simply
-                                                        dummy text of the
-                                                        printing and typesetting
-                                                        industry.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="chat">
-                                            <div className="body">
-                                                <div className="image">
-                                                    <img
-                                                        src={
-                                                            import.meta.env
-                                                                .VITE_API_PUBLIC_URL +
-                                                            "/assets/img/comment/comment-1.jpg"
-                                                        }
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="content">
-                                                    <div className="head">
-                                                        <h5>Roger Welch</h5>
-                                                        <span>
-                                                            Today 06.30 am
-                                                        </span>
-                                                    </div>
-                                                    <p>
-                                                        Lorem Ipsum is simply
-                                                        dummy text of the
-                                                        printing and
-                                                        typesetting.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="chat">
-                                            <div className="body">
-                                                <div className="image">
-                                                    <img
-                                                        src={
-                                                            import.meta.env
-                                                                .VITE_API_PUBLIC_URL +
-                                                            "/assets/img/comment/comment-2.jpg"
-                                                        }
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="content">
-                                                    <div className="head">
-                                                        <h5>Me</h5>
-                                                        <span>
-                                                            Today 06.30 am
-                                                        </span>
-                                                    </div>
-                                                    <p>
-                                                        Lorem Ipsum is simply
-                                                        dummy text of the
-                                                        printing and typesetting
-                                                        industry.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="chat">
-                                            <div className="body">
-                                                <div className="image">
-                                                    <img
-                                                        src={
-                                                            import.meta.env
-                                                                .VITE_API_PUBLIC_URL +
-                                                            "/assets/img/comment/comment-1.jpg"
-                                                        }
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="content">
-                                                    <div className="head">
-                                                        <h5>Roger Welch</h5>
-                                                        <span>
-                                                            Today 06.30 am
-                                                        </span>
-                                                    </div>
-                                                    <p>
-                                                        Lorem Ipsum is simply
-                                                        dummy text of the
-                                                        printing and
-                                                        typesetting.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="chat">
-                                            <div className="body">
-                                                <div className="image">
-                                                    <img
-                                                        src={
-                                                            import.meta.env
-                                                                .VITE_API_PUBLIC_URL +
-                                                            "/assets/img/comment/comment-2.jpg"
-                                                        }
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="content">
-                                                    <div className="head">
-                                                        <h5>Me</h5>
-                                                        <span>
-                                                            Today 06.30 am
-                                                        </span>
-                                                    </div>
-                                                    <p>
-                                                        Lorem Ipsum is simply
-                                                        dummy text of the
-                                                        printing and typesetting
-                                                        industry.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="chat-submission">
-                    <form>
-                        <input type="text" placeholder="Type something" />
-                        <div className="buttons">
-                            <label
-                                className="file-upload button button-box button-round button-primary"
-                                htmlFor="chat-file-upload"
-                            >
-                                <input
-                                    type="file"
-                                    id="chat-file-upload"
-                                    multiple
-                                />
-                                <FaPaperclip />
-                            </label>
-                            <button className="submit">
-                                <FaRegPaperPlane />
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    );
+	const shownMessage = [1, 2, 3, 4, 5, 6, 7];
+	return (
+		<div className="body-wrapper space-pt--70 space-pb--120">
+			<Breadcrumb pageTitle="Chat" prevUrl="/home" />
+			<div className="chat-area py-2">
+				{shownMessage.map((msg, index) => (
+					<div
+						key={index}
+						className="mt-2 flex h-[100px] w-full items-center gap-3 bg-gray-100 p-2 text-black"
+					>
+						<div className="avatar">
+							<div className="h-10 w-10 rounded-full">
+								<img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=826&t=st=1699375431~exp=1699376031~hmac=31d3ae63ebed86b90bf2a8c3b208d48fe35a8a18eafb4247650cf8254ace0cb1" />
+							</div>
+						</div>
+						<div>
+							<p className="text-base font-bold">Max Store</p>
+							<p className="text-sm">2/9/2023</p>
+							<p className="my-1">hii..</p>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	);
 };
 
 export default Chat;

@@ -58,152 +58,152 @@ const Login = () => {
 	};
 
 	return (
-		<div className="mx-auto flex flex-col justify-around px-[25px] lg:w-[50%] ">
-			<div className="mx-auto my-5 h-[80px]">
-				<TagLogo2></TagLogo2>
-			</div>
-			<div className="mb-5 w-full text-center ">
-				<p className="text-2xl font-bold">Please Login</p>
-			</div>
-			<div className="">
-				<form
-					onSubmit={handleSubmit(onSubmit)}
-					id="authForm"
-					className="space-y-5"
-				>
-					<div className="">
-						<label
-							htmlFor="email"
-							className="mb-1 px-4 text-xl font-semibold"
-						>
-							Email Address
-						</label>
-						<input
-							type="text"
-							id="email"
-							className="auth-input"
-							name="email"
-							placeholder="Enter Email"
-							{...register("email")}
-						/>
-						<p className="text-danger px-4">
-							{errors.email?.message}
-						</p>
-					</div>
-					<div className="relative">
-						<label
-							htmlFor="password"
-							className="mb-1 px-4 text-xl font-semibold"
-						>
-							{" "}
-							Password
-						</label>
-						<input
-							type={showPassword ? "text" : "password"}
-							id="password"
-							className="auth-input "
-							name="password"
-							placeholder="Enter Password"
-							{...register("password")}
-						/>
-						<p
-							onClick={togglePasswordVisibility}
-							className="absolute right-4 top-12 cursor-pointer text-blue-500"
-						>
-							{showPassword ? (
-								<FaEye className="text-2xl text-black " />
-							) : (
-								<FaEyeSlash className="text-2xl text-black " />
-							)}
-						</p>
-						<p className="text-danger px-4">
-							{errors.password?.message}
-						</p>
-					</div>
+		<div className="relative h-screen">
+			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%] ">
+				<div className="mx-auto my-5 h-[80px]">
+					<TagLogo2></TagLogo2>
+				</div>
 
-					{loginError && (
-						<div>
-							<p className="text-error">{loginError}</p>
+				<div className="mt-4">
+					<form
+						onSubmit={handleSubmit(onSubmit)}
+						id="authForm"
+						className="space-y-5"
+					>
+						<div className="">
+							<label
+								htmlFor="email"
+								className="mb-1 px-4 text-base font-semibold"
+							>
+								Email Address
+							</label>
+							<input
+								type="text"
+								id="email"
+								className="auth-input"
+								name="email"
+								placeholder="Enter Email"
+								{...register("email")}
+							/>
+							<p className="text-danger px-4">
+								{errors.email?.message}
+							</p>
 						</div>
-					)}
-
-					<div className="flex items-center justify-center gap-4">
-						<input
-							type="checkbox"
-							className="checkbox-info checkbox"
-						/>
-						<span className="text-xl font-semibold">
-							Remember me
-						</span>
-					</div>
-
-					<button type="submit" className="auth-btn" form="authForm">
-						Login
-					</button>
-				</form>
-				<span className="divider">- OR - </span>
-				<div className="mt-5 flex items-center justify-between">
-					<button className="auth-social-btn">
-						<FacebookIcon />
-					</button>
-					<button className="auth-social-btn">
-						<GoogleIcon></GoogleIcon>
-					</button>
-					<button className="auth-social-btn">
-						<AppleIcon></AppleIcon>
-					</button>
-				</div>
-			</div>
-			<div className="my-5 text-center">
-				<p
-					onClick={handelOPenLoginMOdal}
-					className="cursor-pointer "
-					style={{ color: "var(--greyscale-500, #9E9E9E)" }}
-				>
-					{`You don't have any account?`}{" "}
-					<span className="primary-text">Sign up Now</span>
-				</p>
-			</div>
-
-			<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-				<div className="p-10">
-					<div className="flex  gap-4">
-						<Customericon></Customericon>
-						<p className="text-lg">
-							Sign up as a{" "}
-							<span className="primary-text">Customer?</span>{" "}
-							<br />
-							<Link
-								className="primary-text font-bold"
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/register"
-								}
+						<div className="relative">
+							<label
+								htmlFor="password"
+								className="mb-1 px-4 text-base font-semibold"
 							>
-								Sign up Now
-							</Link>
+								{" "}
+								Password
+							</label>
+							<input
+								type={showPassword ? "text" : "password"}
+								id="password"
+								className="auth-input "
+								name="password"
+								placeholder="Enter Password"
+								{...register("password")}
+							/>
+							<p
+								onClick={togglePasswordVisibility}
+								className="absolute right-4 top-12 cursor-pointer text-blue-500"
+							>
+								{showPassword ? (
+									<FaEye className="text-2xl text-black " />
+								) : (
+									<FaEyeSlash className="text-2xl text-black " />
+								)}
+							</p>
+							<p className="text-danger px-4">
+								{errors.password?.message}
+							</p>
+						</div>
+
+						{loginError && (
+							<div>
+								<p className="text-error">{loginError}</p>
+							</div>
+						)}
+
+						<div className="flex items-center  gap-4 px-4  ">
+							<a className="link-info link">Forgot Password?</a>
+						</div>
+
+						<button
+							type="submit"
+							className="auth-btn"
+							form="authForm"
+						>
+							Login
+						</button>
+					</form>
+					<div className="my-3 text-center">
+						<p
+							onClick={handelOPenLoginMOdal}
+							className="cursor-pointer  text-base font-semibold text-black  "
+						>
+							{`Create a account?`}{" "}
+							<span className="primary-text font-bold">
+								Sign up
+							</span>
 						</p>
 					</div>
-					<div className="divider"></div>
-					<div className="flex  gap-4">
-						<Shopericon></Shopericon>
-						<p className="text-lg">
-							Sign up as a{" "}
-							<span className="primary-text">Shopper?</span>{" "}
-							<br />
-							<Link
-								className="primary-text font-bold"
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/registershopper"
-								}
-							>
-								Sign up Now
-							</Link>
-						</p>
+					<span className="divider mt-5">- OR - </span>
+					<div className="mt-2 flex items-center justify-between">
+						<button className="auth-social-btn">
+							<FacebookIcon />
+						</button>
+						<button className="auth-social-btn">
+							<GoogleIcon></GoogleIcon>
+						</button>
+						<button className="auth-social-btn">
+							<AppleIcon></AppleIcon>
+						</button>
 					</div>
 				</div>
-			</Modal>
+
+				<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+					<div className="p-10">
+						<div className="flex  gap-4">
+							<Customericon></Customericon>
+							<p className="text-lg">
+								Sign up as a{" "}
+								<span className="primary-text">Customer?</span>{" "}
+								<br />
+								<Link
+									className="primary-text font-bold"
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/register"
+									}
+								>
+									Sign up Now
+								</Link>
+							</p>
+						</div>
+						<div className="divider"></div>
+						<div className="flex  gap-4">
+							<Shopericon></Shopericon>
+							<p className="text-lg">
+								Sign up as a{" "}
+								<span className="primary-text">Shopper?</span>{" "}
+								<br />
+								<Link
+									className="primary-text font-bold"
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/registershopper"
+									}
+								>
+									Sign up Now
+								</Link>
+							</p>
+						</div>
+					</div>
+				</Modal>
+			</div>
+			<div className="absolute bottom-10 text-center w-full"> <p className="text-center" >By Signing up you accept the <span className="primary-text">Terms of Service</span> and <br /> <span className="primary-text">Privacy Policy</span></p></div>
 		</div>
 	);
 };
