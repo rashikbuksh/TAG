@@ -134,13 +134,13 @@ const Profile = () => {
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<div className="profile-header relative">
-								<div className="profile-header__image">
+							<div className="relative">
+								<div className="mx-auto mb-3 w-fit">
 									{image ? (
 										<>
 											<img
 												src={URL.createObjectURL(image)}
-												className="img-fluid"
+												className="img-fluid h-[85px] w-[85px] rounded-full"
 												alt="Profile"
 											/>
 											{image && (
@@ -163,42 +163,43 @@ const Profile = () => {
 												}/usersProfilePic/${
 													userdata.profile_picture
 												}`}
-												className="img-fluid"
+												className="h-[85px] w-[85px] rounded-full"
 												alt="Profile"
 											/>
-											<form className="absolute top-16 right-56">
-											<div className=" w-full  ">
-												<label
-													htmlFor="dropzone-file"
-													className="dark:hover-bg-bray-800 hover-bg-gray-100 dark-border-gray-600 dark-bg-gray-700 dark:hover-border-gray-500 dark-hover-bg-gray-600 flex h-[30px] w-[30px] cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50"
-												>
-													<div className="flex flex-col items-center justify-center ">
-														<svg
-															className="h-6 w-6 text-gray-500 dark:text-gray-400"
-															aria-hidden="true"
-															xmlns="http://www.w3.org/2000/svg"
-															fill="none"
-															viewBox="0 0 20 16"
-														>
-															<path
-																stroke="currentColor"
-																strokeLinecap="round"
-																strokeLinejoin="round"
-																strokeWidth="2"
-																d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-															/>
-														</svg>
-														
-													</div>
-												</label>
-												<input
-													onChange={handleImageUpload}
-													id="dropzone-file"
-													type="file"
-													className="hidden"
-												/>
-											</div>
-										</form>
+											<form className="absolute right-36 top-16">
+												<div className=" w-full  ">
+													<label
+														htmlFor="dropzone-file"
+														className="dark:hover-bg-bray-800 hover-bg-gray-100 dark-border-gray-600 dark-bg-gray-700 dark:hover-border-gray-500 dark-hover-bg-gray-600 h- flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 "
+													>
+														<div className="flex flex-col items-center justify-center ">
+															<svg
+																className="h-4 w-4 text-gray-500 dark:text-gray-400"
+																aria-hidden="true"
+																xmlns="http://www.w3.org/2000/svg"
+																fill="none"
+																viewBox="0 0 20 16"
+															>
+																<path
+																	stroke="currentColor"
+																	strokeLinecap="round"
+																	strokeLinejoin="round"
+																	strokeWidth="2"
+																	d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+																/>
+															</svg>
+														</div>
+													</label>
+													<input
+														onChange={
+															handleImageUpload
+														}
+														id="dropzone-file"
+														type="file"
+														className="hidden"
+													/>
+												</div>
+											</form>
 										</>
 									) : (
 										<form>
@@ -243,9 +244,12 @@ const Profile = () => {
 								</div>
 
 								<div className="profile-header__content space-mt--10">
-									<h3 className="name space-mb--15">
+									<h3 className="name space-mb--15 text-center ">
 										{userdata.name}
 									</h3>
+								</div>
+								<div className="profile-info-block__value text-center">
+									{userdata.phone}
 								</div>
 							</div>
 						</div>
@@ -270,20 +274,20 @@ const Profile = () => {
 									</div>
 									<div className="profile-info-block">
 										<div className="profile-info-block__title">
-											User Name
+											User Id
 										</div>
 										<div className="profile-info-block__value">
-											{userdata.user_name}
+											{userdata.id}
 										</div>
 									</div>
-									<div className="profile-info-block">
+									{/* <div className="profile-info-block">
 										<div className="profile-info-block__title">
 											Phone
 										</div>
 										<div className="profile-info-block__value">
 											{userdata.phone}
 										</div>
-									</div>
+									</div> */}
 									<div className="profile-info-block">
 										<div className="profile-info-block__title">
 											E-mail Address
