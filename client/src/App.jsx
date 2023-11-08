@@ -35,6 +35,7 @@ import OrderShopper from "./pages/OrderShopper/OrderShopper";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
+import OrderStatus from "./pages/OrderStatus/OrderStatus";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -166,13 +167,13 @@ const PROTECTED_ROUTES = [
 		access: ["admin", "customer", "shopper"],
 	},
 
-	// {
-	// 	id: 19,
-	// 	name: "AddCatagoryForm",
-	// 	path: "/addcategory",
-	// 	element: AddCatagoryForm,
-	// 	access: ["admin"],
-	// },
+	{
+		id: 19,
+		name: "orderStatus",
+		path: "/orderStatus",
+		element: OrderStatus,
+		access: ["admin","customer", "shopper"],
+	},
 	// {
 	// 	id: 20,
 	// 	name: "AddProductForm",

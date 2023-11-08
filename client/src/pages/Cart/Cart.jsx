@@ -59,7 +59,7 @@ const Cart = () => {
 			// Store the timeout ID in a variable
 			const timeoutId = setTimeout(() => {
 				addOrder(shopperId);
-				pause()
+				pause();
 			}, 120000);
 
 			timeoutIdRef.current = timeoutId;
@@ -92,7 +92,7 @@ const Cart = () => {
 
 	const addOrder = (shopperId) => {
 		// Check if productDiscounts[shopperId] is defined, if not, set it as an empty object
-		
+
 		const productIds =
 			cartItems
 				.filter((cartItem) => cartItem.shopper_id === shopperId)
@@ -243,9 +243,12 @@ const Cart = () => {
 		});
 		if (clickedState == true) {
 			redirectTimer(shopperId);
-			cogoToast.warn("Order auto-submitted after 2 mins.If you want to cancel, click 'Cancel", {
-				position: "bottom-left",
-			});
+			cogoToast.warn(
+				"Order auto-submitted after 2 mins.If you want to cancel, click 'Cancel",
+				{
+					position: "bottom-left",
+				}
+			);
 		}
 	};
 
@@ -322,10 +325,10 @@ const Cart = () => {
 									return (
 										<div
 											key={cartItem.id}
-											className="mx-auto w-[100%] p-3"
+											className="mx-auto w-[100%] p-2"
 										>
 											<div>
-												<div className="relative flex items-center justify-between bg-gray-100 p-2">
+												<div className="relative  bg-gray-100 px-2 py-3">
 													<button
 														onClick={() =>
 															dispatch(
@@ -334,21 +337,22 @@ const Cart = () => {
 																)
 															)
 														}
-														className="absolute right-2 top-2"
+														className="absolute right-4 top-3"
 													>
 														<FaTrash className="text-red-400"></FaTrash>
 													</button>
 													<img
-														className="h-[50px] w-[50px] "
-														src={`${
-															import.meta.env
-																.VITE_APP_IMG_URL
-														}/products/${
-															cartItem.image
-														}`}
-														alt="Selected Product"
-													/>
-													<div>
+															className="h-[60px] w-[60px] absolute  top-2 "
+															src={`${
+																import.meta.env
+																	.VITE_APP_IMG_URL
+															}/products/${
+																cartItem.image
+															}`}
+															alt="Selected Product"
+														/>
+													<div className="flex items-start gap-3 w-[80%] ms-auto">
+														
 														<Link
 															to={`${
 																import.meta.env
@@ -356,96 +360,103 @@ const Cart = () => {
 															}/product/${
 																cartItem.id
 															}`}
+															className="w-full"
 														>
 															<h1 className="text-sm ">
 																{cartItem.name}
 															</h1>
 														</Link>
-
-														<div className="">
-															<h2 className="text-xs">
-																{
-																	cartItem.weight
-																}
-															</h2>
-															<div className="cart-product__counter">
-																<div className="flex items-center justify-center gap-2">
-																	<button
-																		className="quantity-button bg-[#60abe9]"
-																		onClick={() =>
-																			dispatch(
-																				decreaseQuantity(
+													</div>
+													<div className="flex items-center justify-center gap-6 w-[80%] my-1 ms-auto">
+														<div>
+															<div className="">
+																<h2 className="text-xs">
+																	{
+																		cartItem.weight
+																	}
+																</h2>
+																<div className="cart-product__counter">
+																	<div className="flex items-center justify-center gap-2">
+																		<button
+																			className="quantity-button bg-[#60abe9]"
+																			onClick={() =>
+																				dispatch(
+																					decreaseQuantity(
+																						cartItem
+																					)
+																				)
+																			}
+																		>
+																			-
+																		</button>
+																		<input
+																			className="w-[30px] bg-gray-100 text-center"
+																			type="text"
+																			value={
+																				cartItem.quantity
+																			}
+																			readOnly
+																		/>
+																		<button
+																			className="quantity-button primary-background "
+																			onClick={() =>
+																				dispatch(
+																					increaseQuantity(
+																						{
+																							cartItem,
+																							quantity:
+																								cartItem.quantity,
+																						}
+																					)
+																				)
+																			}
+																			disabled={
+																				cartItem.quantity >=
+																				cartItemStock(
 																					cartItem
 																				)
-																			)
-																		}
-																	>
-																		-
-																	</button>
-																	<input
-																		className="w-[30px] bg-gray-100 text-center"
-																		type="text"
-																		value={
-																			cartItem.quantity
-																		}
-																		readOnly
-																	/>
-																	<button
-																		className="quantity-button primary-background "
-																		onClick={() =>
-																			dispatch(
-																				increaseQuantity(
-																					{
-																						cartItem,
-																						quantity:
-																							cartItem.quantity,
-																					}
-																				)
-																			)
-																		}
-																		disabled={
-																			cartItem.quantity >=
-																			cartItemStock(
-																				cartItem
-																			)
-																		}
-																	>
-																		+
-																	</button>
+																			}
+																		>
+																			+
+																		</button>
+																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
 
-													<div>
-														<h2 className="text-xs">
-															{getDiscountPrice(
-																cartItem.price,
-																cartItem.discount
-															)}{" "}
-															X{" "}
-															{cartItem.quantity}
-														</h2>
-													</div>
-
-													<div>
-														<h2 className="text-xs">
-															{parseFloat(
-																getDiscountPrice(
+														<div className="flex-grow">
+															<h2 className="text-xs">
+																{getDiscountPrice(
 																	cartItem.price,
 																	cartItem.discount
-																) *
+																)}{" "}
+																X{" "}
+																{
 																	cartItem.quantity
-															).toFixed(2)}
-														</h2>
-														<input
-															type="hidden"
-															value={
-																totals[
-																	shopper.id
-																] || 0
-															}
-														/>
+																}
+															</h2>
+														</div>
+
+														<div className="">
+															<h2 className="text-xs">
+																{parseFloat(
+																	getDiscountPrice(
+																		cartItem.price,
+																		cartItem.discount
+																	) *
+																		cartItem.quantity
+																).toFixed(2)}
+															</h2>
+															<input
+																type="hidden"
+																value={
+																	totals[
+																		shopper
+																			.id
+																	] || 0
+																}
+															/>
+														</div>
 													</div>
 												</div>
 											</div>
