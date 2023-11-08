@@ -24,10 +24,11 @@ const read = [
   },
   {
     uri: "/order/getPendingorder/:customer_profile_id",
-    query: `SELECT * FROM product_order
-	WHERE
-	order_status = 'pending'
-	AND customer_profile_id = ?`,
+    query: `SELECT po.*, cp.name as shopper_name
+	FROM product_order po
+	JOIN customer_profile cp ON po.shopper_id = cp.id
+	WHERE po.order_status = 'pending'
+	AND po.customer_profile_id = ?`,
 
     param: ["customer_profile_id"],
     msg: "product_id",
@@ -52,18 +53,21 @@ const read = [
   {
     uri: "/order/getProductbyid/:id",
     query: `SELECT
-		sp.*,
-		sp.price as product_Price,
-		po.*,
-		po.price as totalPrice,
-		SUBSTRING_INDEX(SUBSTRING_INDEX(po.quantity, ',', FIND_IN_SET(sp.id, po.product_id)), ',', -1) AS product_quantity,
-		SUBSTRING_INDEX(SUBSTRING_INDEX(po.discount, ',', FIND_IN_SET(sp.id, po.product_id)), ',', -1) AS product_discounted_price
-	FROM
-		shopper_product sp
-	JOIN
-		product_order po ON FIND_IN_SET(sp.id, po.product_id)
-	WHERE
-		FIND_IN_SET(po.id, ?) > 0;`,
+	sp.*,
+	sp.price AS product_Price,
+	po.*,
+	po.price AS totalPrice,
+	SUBSTRING_INDEX(SUBSTRING_INDEX(po.quantity, ',', FIND_IN_SET(sp.id, po.product_id)), ',', -1) AS product_quantity,
+	SUBSTRING_INDEX(SUBSTRING_INDEX(po.discount, ',', FIND_IN_SET(sp.id, po.product_id)), ',', -1) AS product_discounted_price,
+	p.image AS product_image
+FROM
+	shopper_product sp
+JOIN
+	product_order po ON FIND_IN_SET(sp.id, po.product_id)
+JOIN
+	product p ON sp.product_id = p.id
+WHERE
+	FIND_IN_SET(po.id, ?) > 0;`,
     param: ["id"],
     msg: "product_id",
   },

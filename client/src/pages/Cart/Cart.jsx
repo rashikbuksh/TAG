@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useStopwatch } from "react-timer-hook";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
@@ -89,7 +89,7 @@ const Cart = () => {
 		});
 		setTotals(calculatedTotals);
 	}, [cartItems, buyStates, shoppers, productDiscounts]);
-
+	const navigate = useNavigate();
 	const addOrder = (shopperId) => {
 		// Check if productDiscounts[shopperId] is defined, if not, set it as an empty object
 
@@ -199,6 +199,7 @@ const Cart = () => {
 				[shopperId]: {},
 			});
 		}
+		navigate("/orderStatus")
 	};
 
 	const handleBuyClick = (shopperId) => {
@@ -301,6 +302,9 @@ const Cart = () => {
 		<>
 			<div className="mx-auto my-14 h-full overflow-scroll lg:w-[50%]">
 				<h1 className="text-center text-2xl font-bold">Cart</h1>
+				<Link to={"/orderStatus"} className="mr-6 flex justify-end">
+					<p className="primary-text link">See Order Status</p>
+				</Link>
 
 				{cartItems && cartItems.length > 0 ? (
 					shoppers.map((shopper) => (
@@ -342,17 +346,16 @@ const Cart = () => {
 														<FaTrash className="text-red-400"></FaTrash>
 													</button>
 													<img
-															className="h-[60px] w-[60px] absolute  top-2 "
-															src={`${
-																import.meta.env
-																	.VITE_APP_IMG_URL
-															}/products/${
-																cartItem.image
-															}`}
-															alt="Selected Product"
-														/>
-													<div className="flex items-start gap-3 w-[80%] ms-auto">
-														
+														className="absolute top-2 h-[60px]  w-[60px] "
+														src={`${
+															import.meta.env
+																.VITE_APP_IMG_URL
+														}/products/${
+															cartItem.image
+														}`}
+														alt="Selected Product"
+													/>
+													<div className="ms-auto flex w-[80%] items-start gap-3">
 														<Link
 															to={`${
 																import.meta.env
@@ -367,7 +370,7 @@ const Cart = () => {
 															</h1>
 														</Link>
 													</div>
-													<div className="flex items-center justify-center gap-6 w-[80%] my-1 ms-auto">
+													<div className="my-1 ms-auto flex w-[80%] items-center justify-center gap-6">
 														<div>
 															<div className="">
 																<h2 className="text-xs">
