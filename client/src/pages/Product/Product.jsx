@@ -6,6 +6,8 @@ import { ReactSVG } from "react-svg";
 import Swiper, { SwiperSlide } from "../../components/swiper";
 import {
 	addToCart,
+	decreaseQuantity,
+	increaseQuantity,
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
@@ -13,6 +15,7 @@ import { addToWishlist } from "../../store/slices/wishlist-slice";
 import { FaEye, FaRegMessage } from "react-icons/fa6";
 import { useAuth } from "../../context/auth";
 import {
+	cartItemStock,
 	checkIfInCart,
 	getDiscountPrice,
 	getProductCartQuantity,
@@ -24,9 +27,45 @@ import { FaCheckCircle } from "react-icons/fa";
 import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 
 const Product = () => {
+	const { cartItems } = useSelector((state) => state.cart);
 	const { user } = useAuth();
 	let { id } = useParams();
+
 	const dispatch = useDispatch();
+	const [quantity, setQuantity] = useState(0);
+	const [cartItem, setCartItem] = useState(0);
+
+	const increasePQuantity = () => {
+		if (cartItem) {
+			dispatch(
+				increaseQuantity({
+					cartItem,
+					quantity: cartItem.quantity,
+				})
+			);
+		} else {
+			setQuantity(quantity + 1);
+		}
+	};
+
+	// Function to decrease quantity
+	const decreasePQuantity = () => {
+		dispatch(decreaseQuantity(cartItem));
+	};
+	useEffect(() => {
+		// Find the product in the cart based on the 'id' parameter
+		const productInCart = cartItems.find((item) => item.id == id);
+		console.log(productInCart);
+
+		if (productInCart) {
+			// If the product is in the cart, set the product and quantity in the state
+			setCartItem(productInCart);
+			setQuantity(productInCart.quantity);
+		} else {
+			// Handle the case when the product is not found in the cart
+			// You can set appropriate default values or show an error message.
+		}
+	}, [cartItems, id]);
 
 	const [productStock, setProductStock] = useState(0);
 	const [showFullDescription, setShowFullDescription] = useState(false);
@@ -48,7 +87,7 @@ const Product = () => {
 	}, [id]);
 	// console.log(prods);
 	// console.log(prods, "loggged productjs");
-	const { cartItems } = useSelector((state) => state.cart);
+
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 	const [isOpen, setIsOpen] = useState(false);
 	const getShopperName = (shopperId) => {
@@ -96,8 +135,38 @@ const Product = () => {
 							<div className="">
 								<div className="">
 									<div className="">
-										<div className="">
-											<div className="flex items-center gap-5 ">
+										<div className="relative">
+											<div className="cart-product__counter absolute  right-1 top-10 rounded-full bg-[#F2F8FD] px-2 py-1">
+												<div className="flex items-center justify-center gap-2">
+													<button
+														className="quantity-button bg-[#60abe9]"
+														onClick={
+															decreasePQuantity
+														}
+													>
+														-
+													</button>
+													<input
+														className="w-[30px] bg-[#F2F8FD] text-center"
+														type="text"
+														value={quantity}
+														readOnly
+													/>
+													<button
+														className="quantity-button primary-background "
+														onClick={
+															increasePQuantity
+														}
+														disabled={
+															prods.quantity >=
+															cartItemStock(prods)
+														}
+													>
+														+
+													</button>
+												</div>
+											</div>
+											<div className="flex items-center gap-3 ">
 												{getShopperName(
 													prods.shopper_id
 												)}
@@ -113,6 +182,7 @@ const Product = () => {
 														{shopperName}
 													</p>
 												</Link>
+
 												<div className="">
 													<FaRegMessage
 														onClick={
@@ -127,7 +197,7 @@ const Product = () => {
 													></MessageModal>
 												</div>
 											</div>
-											<div className="flex items-center gap-3 my-2">
+											<div className="my-2 flex items-center gap-3">
 												<h3 className=" text-xl font-bold">
 													{prods.name}
 												</h3>
@@ -223,14 +293,18 @@ const Product = () => {
 								""
 							) : user.access === "shopper" ? (
 								""
+							) : cartItem ? (
+								<button disabled className="auth-btn">
+									Already in Cart
+								</button>
 							) : (
 								<button
 									onClick={() => {
-										prods.quantity = 0;
+										prods.quantity = quantity;
 										if (checkIfInCart(cartItems, prods)) {
-											dispatch(
-												increaseQuantityofProd(prods)
-											);
+											// dispatch(
+											// 	increaseQuantityofProd(prods)
+											// );
 										} else {
 											dispatch(addToCart(prods));
 										}
