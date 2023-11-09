@@ -59,14 +59,14 @@ const ProductCart = ({ product }) => {
 									}
 								>
 									<div className="flex">
-										<h4 className="w-full text-sm font-semibold">
-											{shopper.name}
+										<h4 className="w-full text-xs font-semibold h-[30px] flex items-center ">
+											{shopper.name} 
 										</h4>
 									</div>
 								</Link>
 							</div>
 							<Rating
-								style={{ maxWidth: 80 }}
+								style={{ maxWidth: 60 }}
 								readOnly
 								orientation="horizontal"
 								value={shopper.review_count}

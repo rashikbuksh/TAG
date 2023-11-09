@@ -19,7 +19,7 @@ const OrderStatus = () => {
 			.catch((error) => {
 				alert(error);
 			});
-	}, [user.id]);
+	}, [user.id,pendingOrders]);
 
 	useEffect(() => {
 		// Make the API calls for each pending order and collect the products
@@ -44,7 +44,7 @@ const OrderStatus = () => {
             <h1 className="text-xl text-center font-semibold">Order Status</h1>
 			{pendingOrders.map((order) => (
 				<div key={order.id} className="my-10">
-					<h1 className="text-xl"> <span className="text-[10px]">#{order.shopper_id}</span> {order.shopper_name} </h1>
+					<h1 className="text-xl"> <span className="text-[10px]">#{order.shopper_id}</span> {order.shopper_name} <span className="text-sm ml-4">{order.id}</span> </h1>
 					<hr />
 					{products
 						.filter((productList) =>

@@ -83,7 +83,7 @@ const ShopkeeperProfileCV = () => {
 		}
 	};
 	return (
-		<div className="my-20">
+		<div className="mt-5">
 			<ShowCartIcon></ShowCartIcon>
 			<div className="">
 				<div className="mx-auto my-3">
@@ -122,7 +122,7 @@ const ShopkeeperProfileCV = () => {
 									value={shopkeeperInfo.review_count}
 								/>
 							</div>
-							<div className="mt-4 flex items-center justify-center gap-3">
+							<div className="mt-4 flex items-center justify-center gap-4">
 								<FaLocationDot className="text-3xl text-blue-400 lg:text-6xl "></FaLocationDot>
 								<button className=" font-xl h-[48px] w-[140px] rounded bg-[#FF4C5E] text-white">
 									Follow
@@ -132,10 +132,10 @@ const ShopkeeperProfileCV = () => {
 						</div>
 					)}
 
-					<div className="my-3 flex items-center justify-start gap-3 border-b border-gray-300 px-4 py-2">
+					<div className=" flex items-center justify-start gap-3  border-gray-300 px-4 ">
 						<select
 							defaultValue={"0"}
-							className=" w-1/3 rounded border border-gray-300 px-0.5  py-2 text-gray-700 sm:text-sm"
+							className=" w-1/3 rounded border border-gray-300 px-3  py-2 text-gray-700 sm:text-sm"
 							onChange={selectedCategory}
 						>
 							<option value="0">Category</option>
@@ -156,10 +156,10 @@ const ShopkeeperProfileCV = () => {
 							</div>
 						</div>
 					</div>
-					<div className="alphabet-list absolute right-0  z-10 ml-5  w-[30px] ">
+					<div className="alphabet-list absolute right-0 bottom-20  z-10 ml-5  w-[30px] ">
 						{alphabet.map((letter) => (
 							<button
-								className="flex flex-col items-center justify-center font-bold"
+								className="flex flex-col items-center justify-center font-bold text-[10px]"
 								key={letter}
 								onClick={() => handleSearch(letter)}
 							>
@@ -184,7 +184,7 @@ const ShopkeeperProfileCV = () => {
 							</div>
 						)}
 						<div className="">
-							<div className="grid w-[90%] grid-cols-2 gap-1 lg:mx-auto lg:grid-cols-4">
+							<div className="grid w-[90%] h-[42vh] border-t  overflow-y-auto grid-cols-2 gap-1 lg:mx-auto lg:grid-cols-4">
 								{filteredAllProducts.map((single) => {
 									console.log(filteredAllProducts);
 									return (
@@ -291,7 +291,7 @@ const ShopkeeperProfileCV = () => {
 					</div>
 				</div>
 			</div>
-			<div className="h-14"></div>
+			{/* <div className="h-20"></div> */}
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	FaCheckCircle,
 	FaCross,
@@ -20,6 +20,8 @@ import {
 import { api } from "../../lib/api";
 import {
 	addToCart,
+	decreaseQuantity,
+	increaseQuantity,
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
 import LocationModal from "../LocationModal/LocationModal";
@@ -43,6 +45,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		shipping_address,
 	} = prod;
 	// console.log(shopper_id, "shopper_id");
+	const cartItems = useSelector((state) => state.cart.cartItems);
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);
 	const [display, setDisplay] = useState(0);
@@ -61,16 +64,42 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 	// const [quantity, setQuantity] = useState(product_count);
 
 	// Function to increase quantity
-	const increaseQuantity = () => {
-		setQuantity(quantity + 1);
+
+	const [cartItem, setCartItem] = useState(0);
+
+	const increasePQuantity = () => {
+		if (cartItem) {
+			dispatch(
+				increaseQuantity({
+					cartItem,
+					quantity: cartItem.quantity,
+				})
+			);
+		} else {
+			setQuantity(quantity + 1);
+		}
 	};
 
 	// Function to decrease quantity
-	const decreaseQuantity = () => {
+	const decreasePQuantity = () => {
 		if (quantity > 0) {
-			setQuantity(quantity - 1);
+			dispatch(decreaseQuantity(cartItem));
 		}
 	};
+	useEffect(() => {
+		// Find the product in the cart based on the 'id' parameter
+		const productInCart = cartItems.find((item) => item.id == id);
+
+		if (productInCart) {
+			// If the product is in the cart, set the product and quantity in the state
+			setCartItem(productInCart);
+			setQuantity(productInCart.quantity);
+		} else {
+			// Handle the case when the product is not found in the cart
+			// You can set appropriate default values or show an error message.
+		}
+	}, [cartItems, id]);
+
 	const handelOpenMessageModal = () => {
 		setIsOpen(!isOpen);
 	};
@@ -86,7 +115,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		background: "#FFF",
 		boxShadow: "0px 8px 32px 0px rgba(184, 184, 184, 0.10)",
 	};
-	const cartItems = useSelector((state) => state.cart.cartItems);
+
 	return (
 		<div className="z-0 " style={divStyle}>
 			<div
@@ -95,73 +124,76 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				onMouseLeave={handleMouseLeave}
 			>
 				<img
-					className={`${
-							height ? `h-[${height}px]` : "h-1/2"
-						}  ${
-							width ? `w-[${width}px]` : "w-1/2"
-						}  object-cover my-1 `}
+					className={`${height ? `h-[${height}px]` : "h-1/2"}  ${
+						width ? `w-[${width}px]` : "w-1/2"
+					}  my-1 object-cover `}
 					src={`${
 						import.meta.env.VITE_APP_IMG_URL
 					}/products/${image}`}
 					alt=""
 				/>
-				{display > 0 && (
-					<div
-						className={`absolute  flex   ${
-							height ? `h-[150px]` : "h-full"
-						}  ${
-							width ? `w-[150px]` : "w-full"
-						}  items-center justify-center gap-2 rounded-sm bg-black bg-opacity-50`}
-					>
-						<div className="relative mt-1 flex flex-col items-center justify-center gap-10">
-							<h4 className="text-base text-white">
-								Total Price:{" "}
-								{`${(
-									parseFloat(
-										getDiscountPrice(price, discount)
-									) * quantity
-								).toFixed(2)}`}
-							</h4>
-							<div className="flex items-center gap-1">
-								<button
-									type="button"
-									onClick={decreaseQuantity}
-									className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10  transition hover:opacity-75"
-								>
-									<FaMinus className="text-black" />
-								</button>
-
-								<input
-									type="number"
-									id="Quantity"
-									value={quantity}
-									disabled
-									className="h-8 w-12 rounded border border-gray-200 bg-white text-center "
-								/>
-
-								<button
-									type="button"
-									onClick={increaseQuantity}
-									className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10   transition hover:opacity-75"
-								>
-									<FaPlus className="text-black" />
-								</button>
-							</div>
-						</div>
-						<div className="absolute right-2 top-1 lg:hidden">
-							<button
-								type="button"
-								onClick={handleMouseLeave}
-								className=" flex items-center justify-center rounded-md  p-1 leading-10  transition hover:opacity-75"
+				{display > 0 &&
+					user.access ==
+						"customer" &&(
+							<div
+								className={`absolute  flex   ${
+									height ? `h-[150px]` : "h-full"
+								}  ${
+									width ? `w-[150px]` : "w-full"
+								}  items-center justify-center gap-2 rounded-sm bg-black bg-opacity-50`}
 							>
-								<FaX className="rounded-md text-xl text-pink-400 " />
-							</button>
-						</div>
-					</div>
-				)}
+								<div className="relative mt-1 flex flex-col items-center justify-center gap-10">
+									<h4 className="text-base text-white">
+										Total Price:{" "}
+										{`${(
+											parseFloat(
+												getDiscountPrice(
+													price,
+													discount
+												)
+											) * quantity
+										).toFixed(2)}`}
+									</h4>
+									<div className="flex items-center gap-1">
+										<button
+											type="button"
+											onClick={decreasePQuantity}
+											className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10  transition hover:opacity-75"
+										>
+											<FaMinus className="text-black" />
+										</button>
+
+										<input
+											type="number"
+											id="Quantity"
+											value={quantity}
+											disabled
+											className="h-8 w-12 rounded border border-gray-200 bg-white text-center "
+										/>
+
+										<button
+											type="button"
+											onClick={increasePQuantity}
+											className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10   transition hover:opacity-75"
+										>
+											<FaPlus className="text-black" />
+										</button>
+									</div>
+								</div>
+								<div className="absolute right-2 top-1 lg:hidden">
+									<button
+										type="button"
+										onClick={handleMouseLeave}
+										className=" flex items-center justify-center rounded-md  p-1 leading-10  transition hover:opacity-75"
+									>
+										<FaX className="rounded-md text-xl text-pink-400 " />
+									</button>
+								</div>
+							</div>
+						)}
 			</div>
 			{/* name  */}
-			<div className="flex items-start justify-start gap-3 px-2 my-1">
+			<div className="my-1 flex items-start justify-start gap-3 px-2">
 				<button
 					type="button"
 					onClick={() => {
@@ -169,9 +201,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					}}
 				>
 					<div className="h-10 text-left ">
-						<h1 className="text-sm ">
-							{name}
-						</h1>
+						<h1 className="text-sm ">{name}</h1>
 					</div>
 				</button>
 

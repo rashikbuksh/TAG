@@ -4,10 +4,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { api } from "../../lib/api";
 import PostUi from "../../pages/PostUi/PostUi";
 import TagNewsUi from "../../pages/PostUi/TagNewsUi";
-
+import "swiper/swiper-bundle.min.css";
+import { Autoplay, Navigation, Pagination } from "swiper";
 const HotNews = () => {
 	const [posts, setPosts] = useState([]);
-
+	const params = {
+		loop: true,
+		speed: 1000,
+		autoplay: {
+			delay: 3500,
+			disableOnInteraction: false,
+		},
+		pagination: true,
+	};
 	useEffect(() => {
 		api.get("/news/getnews")
 			.then((res) => {
@@ -25,11 +34,14 @@ const HotNews = () => {
 		const green = randomChannel().toString(16).padStart(2, "0");
 		const blue = randomChannel().toString(16).padStart(2, "0");
 		return `#${red}${green}${blue}`;
-	
 	};
-	const productPost = posts.filter((post) => post.shopper_product_id !== null);
+	const productPost = posts.filter(
+		(post) => post.shopper_product_id !== null
+	);
 	// Shuffle and get the first 5 posts
-	const shuffledPosts = productPost.sort(() => Math.random() - 0.5).slice(0, 5);
+	const shuffledPosts = productPost
+		.sort(() => Math.random() - 0.5)
+		.slice(0, 5);
 
 	return (
 		<div className="mx-auto my-10 max-w-7xl">
@@ -39,8 +51,15 @@ const HotNews = () => {
 					slidesPerView={1.5}
 					spaceBetween={10}
 					grabCursor={true}
-					pagination={{
-						clickable: true,
+					// loop={true}
+					speed={1000}
+					// pagination={{
+					// 	clickable: true,
+					// }}
+					modules={[Autoplay, Pagination, Navigation]}
+					autoplay={{
+						delay: 3500,
+						disableOnInteraction: false,
 					}}
 					className="mySwiper"
 				>
@@ -53,7 +72,7 @@ const HotNews = () => {
 								{postData.category === "regular" ? (
 									<Link to={`/newsfeed`}>
 										<div
-											className="h-16 rounded-xl w-60 px-1 flex items-center justify-center"
+											className="flex h-16 w-60 items-center justify-center rounded-xl px-1"
 											style={{
 												backgroundColor: randomColor,
 											}}
@@ -63,7 +82,7 @@ const HotNews = () => {
 													{postData.post_img &&
 														(postData.shopper_product_id ? (
 															<img
-																className="w-[50px] h-[50px] rounded-lg"
+																className="h-[50px] w-[50px] rounded-lg"
 																src={`${
 																	import.meta
 																		.env

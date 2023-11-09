@@ -482,7 +482,7 @@ const Cart = () => {
 																shopper.id
 															);
 													}}
-													className="h-[24px] w-[48px] rounded bg-[#a92f4e] text-sm text-white"
+													className="h-[24px] w-[48px] rounded bg-[#a92f4e] text-xs text-white"
 												>
 													Cancel
 												</button>{" "}
