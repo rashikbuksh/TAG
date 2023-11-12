@@ -82,8 +82,12 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 
 	// Function to decrease quantity
 	const decreasePQuantity = () => {
-		if (quantity > 0) {
+		if (cartItem) {
 			dispatch(decreaseQuantity(cartItem));
+		} else {
+			if (quantity > 0) {
+				setQuantity(quantity - 1);
+			}
 		}
 	};
 	useEffect(() => {
@@ -224,7 +228,8 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				</div>
 			</div>
 			<div className="my-2"></div>
-			<div className=" flex items-center justify-between border-b border-gray-100 ">
+			<div></div>
+			<div className=" flex items-end justify-between   ">
 				<div className=" flex items-center">
 					{user.access === "admin" ? (
 						""
@@ -250,7 +255,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					)}
 				</div>
 
-				<div className=" flex items-center">
+				<div className=" flex items-end">
 					{user.access === "admin" ? (
 						""
 					) : user.access === "shopper" ? (

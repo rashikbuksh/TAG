@@ -17,12 +17,12 @@ const Profile = () => {
 	const handleImageUpload = (e) => {
 		const file = e.target.files[0];
 		if (file) {
-			console.log(file);
+			// console.log(file);
 			setImage(file);
 			// handleProfileImageUpload()
 		}
 	};
-	console.log(image);
+	// console.log(image);
 	const handleProfileImageUpload = async () => {
 		if (!image) {
 			alert("Please select an image.");
@@ -45,7 +45,7 @@ const Profile = () => {
 					},
 				}
 			);
-			console.log(response);
+			// console.log(response);
 
 			if (response.data.msg == "File Uploaded") {
 				const imageFileName = response.data.profileImage;
@@ -53,7 +53,7 @@ const Profile = () => {
 				api.post(`/profile/update_profile_image/${id}`, {
 					profile_picture: imageFileName,
 				}).then((response) => {
-					console.log(response);
+					// console.log(response);
 					if (response.data.message == `${id} updated successfully`) {
 						setImage(null);
 						alert("Profile image updated successfully");

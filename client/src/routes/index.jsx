@@ -4,6 +4,7 @@ import { Footer, Header } from "../components";
 import Offcanvas from "../components/Header/Offcanvas";
 import { useAuth } from "../context/auth";
 import LoadingPage from "../components/LodingPage/LoadingPage";
+import ShowCartIcon from "../components/ShowCartIcon/ShowCartIcon";
 
 export default function ProtectedRoutes() {
 	const { signed, loading, user } = useAuth();
@@ -25,6 +26,7 @@ export default function ProtectedRoutes() {
 
 	return haveAccess ? (
 		<>
+		<ShowCartIcon></ShowCartIcon>
 			<Header />
 			{/* <Offcanvas /> */}
 			<Footer />

@@ -209,8 +209,8 @@ const Register = () => {
 		// 		</div>
 		// 	</div>
 		// </div>
-		<div className="relative h-screen">
-			<div className="mx-auto flex flex-col justify-around px-[25px] lg:w-[50%] ">
+		<div className="relative ">
+			<div className="mx-auto flex h-screen flex-col justify-around px-[25px] lg:w-[50%]">
 				<div className="mx-auto my-5 h-[80px]">
 					<TagLogo2></TagLogo2>
 				</div>
@@ -331,8 +331,16 @@ const Register = () => {
 						</p>
 					</div>
 				</div>
+				<div className="w-full text-center">
+					{" "}
+					<p className="text-center">
+						By Signing up you accept the{" "}
+						<span className="primary-text">Terms of Service</span>{" "}
+						and <br />{" "}
+						<span className="primary-text">Privacy Policy</span>
+					</p>
+				</div>
 			</div>
-			<div className="absolute bottom-7 text-center w-full"> <p className="text-center" >By Signing up you accept the <span className="primary-text">Terms of Service</span> and <br /> <span className="primary-text">Privacy Policy</span></p></div>
 		</div>
 	);
 };

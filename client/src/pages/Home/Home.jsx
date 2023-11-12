@@ -46,7 +46,7 @@ const Home = () => {
 			<HeroSlider />
 			<Refer></Refer>
 			<HotNews></HotNews>
-			<ShowCartIcon></ShowCartIcon>
+			{/* <ShowCartIcon></ShowCartIcon> */}
 			<BestSellerProduct limit={2} type="bestSeller" />
 			<AllProducts limit={12} />
 			{showScrollButton && (

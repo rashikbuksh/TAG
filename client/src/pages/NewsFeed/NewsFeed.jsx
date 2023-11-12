@@ -56,7 +56,7 @@ const NewsFeed = () => {
 				<div className="lg:grid lg:grid-cols-12 ">
 					<div className="lg:col-span-3"></div>
 					<div className="lg:col-span-6">
-						<ShowCartIcon></ShowCartIcon>
+						{/* <ShowCartIcon></ShowCartIcon> */}
 						{user.access === "customer" ? (
 							""
 						) : (
