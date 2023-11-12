@@ -74,7 +74,8 @@ const HotNews = () => {
 										<div
 											className="flex h-16 w-60 items-center justify-center rounded-xl px-1"
 											style={{
-												backgroundColor: randomColor,
+												background:
+													"linear-gradient(95deg, rgba(200, 255, 238, 0.60) 1.25%, #E6FFD5 101.57%)",
 											}}
 										>
 											<div className="flex items-center  gap-2">

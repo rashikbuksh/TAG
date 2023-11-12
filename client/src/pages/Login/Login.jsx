@@ -58,13 +58,13 @@ const Login = () => {
 	};
 
 	return (
-		<div className="relative h-screen">
-			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%] ">
-				<div className="mx-auto my-5 h-[80px]">
+		<div className="relative ">
+			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%] h-screen ">
+				<div className="mx-auto my-5 h-[80px] ">
 					<TagLogo2></TagLogo2>
 				</div>
 
-				<div className="mt-4">
+				<div className="mt-4 flex-grow">
 					<form
 						onSubmit={handleSubmit(onSubmit)}
 						id="authForm"
@@ -118,6 +118,9 @@ const Login = () => {
 							<p className="text-danger px-4">
 								{errors.password?.message}
 							</p>
+							<div className="px-3">
+							<a className="link-info link">Forgot Password?</a>
+						</div>
 						</div>
 
 						{loginError && (
@@ -126,9 +129,7 @@ const Login = () => {
 							</div>
 						)}
 
-						<div className="flex items-center  gap-4 px-4  ">
-							<a className="link-info link">Forgot Password?</a>
-						</div>
+						
 
 						<button
 							type="submit"
@@ -150,7 +151,7 @@ const Login = () => {
 						</p>
 					</div>
 					<span className="divider mt-5">- OR - </span>
-					<div className="mt-2 flex items-center justify-between">
+					<div className="mt-5 flex items-center justify-between">
 						<button className="auth-social-btn">
 							<FacebookIcon />
 						</button>
@@ -202,8 +203,17 @@ const Login = () => {
 						</div>
 					</div>
 				</Modal>
+
+				<div className="  w-full text-center">
+					{" "}
+					<p className="text-center">
+						By Signing up you accept the{" "}
+						<span className="primary-text">Terms of Service</span>{" "}
+						and <br />{" "}
+						<span className="primary-text">Privacy Policy</span>
+					</p>
+				</div>
 			</div>
-			<div className="absolute bottom-10 text-center w-full"> <p className="text-center" >By Signing up you accept the <span className="primary-text">Terms of Service</span> and <br /> <span className="primary-text">Privacy Policy</span></p></div>
 		</div>
 	);
 };
