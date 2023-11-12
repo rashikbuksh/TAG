@@ -112,7 +112,7 @@ const Product = () => {
 	};
 	return (
 		<div className="mx-auto px-4 py-20 lg:w-[50%] ">
-			<ShowCartIcon></ShowCartIcon>
+			{/* <ShowCartIcon></ShowCartIcon> */}
 			{/*====================  product image slider ====================*/}
 			<div className="">
 				{prods.map((single) => {

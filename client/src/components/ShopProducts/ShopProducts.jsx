@@ -30,7 +30,7 @@ const ShopProducts = ({ products }) => {
 	return (
 		<div className="shop-products-area">
 			{/* shop layout switcher */}
-			<ShowCartIcon></ShowCartIcon>
+			{/* <ShowCartIcon></ShowCartIcon> */}
 			<div className="shop-layout-switcher text-end space-mt--15 space-mb--15">
 				<div className="container">
 					<button

@@ -75,7 +75,7 @@ const HotNews = () => {
 											className="flex h-16 w-60 items-center justify-center rounded-xl px-1"
 											style={{
 												background:
-													"linear-gradient(95deg, rgba(200, 255, 238, 0.60) 1.25%, #E6FFD5 101.57%)",
+													"linear-gradient(95deg, rgba(200, 255, 238, 0.60) -11.92%, #E6FFD5 113.41%)",
 											}}
 										>
 											<div className="flex items-center  gap-2">

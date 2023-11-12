@@ -84,7 +84,7 @@ const ShopkeeperProfileCV = () => {
 	};
 	return (
 		<div className="mt-5">
-			<ShowCartIcon></ShowCartIcon>
+			{/* <ShowCartIcon></ShowCartIcon> */}
 			<div className="">
 				<div className="mx-auto my-3">
 					{shopkeeperInfo && (
