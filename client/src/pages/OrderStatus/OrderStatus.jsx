@@ -4,6 +4,7 @@ import { useAuth } from "../../context/auth";
 import { Link } from "react-router-dom";
 import { Takaicon } from "../../SvgHub/SocialIcon";
 import { getDiscountPrice } from "../../helpers/product";
+import { FaDotCircle } from "react-icons/fa";
 
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
@@ -19,7 +20,7 @@ const OrderStatus = () => {
 			.catch((error) => {
 				alert(error);
 			});
-	}, [user.id,pendingOrders]);
+	}, [user.id, pendingOrders]);
 
 	useEffect(() => {
 		// Make the API calls for each pending order and collect the products
@@ -40,11 +41,23 @@ const OrderStatus = () => {
 	console.log(products);
 	console.log(pendingOrders);
 	return (
-		<div className="mt-20 px-3">
-            <h1 className="text-xl text-center font-semibold">Order Status</h1>
+		<div className="mt-20 ">
+			<h1 className="text-center text-xl font-semibold">Order Status</h1>
 			{pendingOrders.map((order) => (
 				<div key={order.id} className="my-10">
-					<h1 className="text-xl"> <span className="text-[10px]">#{order.shopper_id}</span> {order.shopper_name} <span className="text-sm ml-4">{order.id}</span> </h1>
+					<div className="flex items-center justify-between">
+						<h1 className="text-xl">
+							{" "}
+							{order.shopper_name}{" "}
+							<span className="ml-4 text-sm">
+								{" "}
+								Order no: {order.id}
+							</span>{" "}
+						</h1>
+						<div className="flex items-center gap-2">
+							<p>Status</p> <span><FaDotCircle className="text-green-500" /></span>
+						</div>
+					</div>
 					<hr />
 					{products
 						.filter((productList) =>
@@ -54,17 +67,20 @@ const OrderStatus = () => {
 						)
 						.map((productList) => (
 							<div key={productList[0].order_id}>
-								<div className="mx-auto w-[100%] p-3">
+								<div className="mx-auto w-[100%] p-2">
 									<div>
 										{productList.map((product) => (
 											<>
 												<div key={product.id}>
-													<div className="relative h-[80px] bg-gray-100 my-2 p-2">
+													<div className="relative my-2 h-[80px] bg-gray-100 p-2">
 														<img
 															className="absolute top-2 h-[60px] w-[60px]"
 															src={`${
-                                                                import.meta.env.VITE_APP_IMG_URL
-                                                            }/products/${product.product_image}`}
+																import.meta.env
+																	.VITE_APP_IMG_URL
+															}/products/${
+																product.product_image
+															}`}
 															alt="Selected Product"
 														/>
 														<div className="ms-auto h-fit w-[75%]">
@@ -114,29 +130,27 @@ const OrderStatus = () => {
 														</div>
 													</div>
 												</div>
-												
 											</>
 										))}
 									</div>
-                                    <div className="divider my-0"></div>
-												<div className="flex justify-between px-3">
-													<p className="text-base">
-														45 minutes Remaining
-													</p>
-													<p className="flex items-center gap-2 text-lg">
-														<span className="text-sm">
-															Total:
-														</span>{" "}
-														<Takaicon></Takaicon>{" "}
-														{order.price}
-													</p>
-												</div>
+									<div className="divider my-0"></div>
+									<div className="flex justify-between px-3">
+										<p className="text-base">
+											45 minutes Remaining
+										</p>
+										<p className="flex items-center gap-2 ">
+											<span className="text-sm">
+												Total:
+											</span>{" "}
+											<Takaicon></Takaicon> {order.price}
+										</p>
+									</div>
 								</div>
 							</div>
 						))}
 				</div>
 			))}
-            <div className="h-14"></div>
+			<div className="h-14"></div>
 		</div>
 	);
 };

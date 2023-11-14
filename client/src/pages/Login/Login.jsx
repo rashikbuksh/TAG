@@ -59,7 +59,7 @@ const Login = () => {
 
 	return (
 		<div className="relative ">
-			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%] h-screen ">
+			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%]  ">
 				<div className="mx-auto my-5 h-[80px] ">
 					<TagLogo2></TagLogo2>
 				</div>
@@ -151,7 +151,7 @@ const Login = () => {
 						</p>
 					</div>
 					<span className="divider mt-5">- OR - </span>
-					<div className="mt-5 flex items-center justify-between">
+					<div className="mt-2 flex items-center justify-between ">
 						<button className="auth-social-btn">
 							<FacebookIcon />
 						</button>
@@ -204,7 +204,7 @@ const Login = () => {
 					</div>
 				</Modal>
 
-				<div className="  w-full text-center">
+				<div className=" my-10  w-full text-center">
 					{" "}
 					<p className="text-center">
 						By Signing up you accept the{" "}

@@ -17,9 +17,12 @@ const Profile = () => {
 	const handleImageUpload = (e) => {
 		const file = e.target.files[0];
 		if (file) {
-			// console.log(file);
+			const allowedTypes = ["image/png", "image/jpeg"]; // Allowed file types
+			if (!allowedTypes.includes(file.type)) {
+				alert("Please select a PNG or JPG file.");
+				return;
+			}
 			setImage(file);
-			// handleProfileImageUpload()
 		}
 	};
 	// console.log(image);

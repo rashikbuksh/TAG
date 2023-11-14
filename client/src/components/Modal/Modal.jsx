@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FaX } from "react-icons/fa6";
 
-const Modal = ({ isOpen, setIsOpen, title, children, setcommentId }) => {
+const Modal = ({ isOpen, setIsOpen, title, children, setcommentId,showCross }) => {
 	function closeModal() {
 		setIsOpen(false);
 		setcommentId?.(0);
@@ -54,19 +54,28 @@ const Modal = ({ isOpen, setIsOpen, title, children, setcommentId }) => {
 										as="h3"
 										className="text-lg font-medium leading-6 text-gray-900"
 									>
-										<div className={`flex items-center ${title?"justify-between":"justify-end"} `}>
+										<div
+											className={`flex items-center ${
+												title
+													? "justify-between"
+													: "justify-end"
+											} `}
+										>
 											{title && (
 												<p className="p-2 font-bold">
 													{title}
 												</p>
 											)}
-
-											<button
-												onClick={closeModal}
-												className="rounded-full  p-1 mr-2"
-											>
-												<FaX className="text-[#FF4C5E]"></FaX>
-											</button>
+											{showCross ? (
+												""
+											) : (
+												<button
+													onClick={closeModal}
+													className="mr-2  rounded-full p-1"
+												>
+													<FaX className="text-[#FF4C5E]"></FaX>
+												</button>
+											)}
 										</div>
 									</Dialog.Title>
 									{children}
