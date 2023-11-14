@@ -119,7 +119,9 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		background: "#FFF",
 		boxShadow: "0px 8px 32px 0px rgba(184, 184, 184, 0.10)",
 	};
-
+const showQuantitypalet=()=>{
+	setDisplay(1)
+}
 	return (
 		<div className="z-0 " style={divStyle}>
 			<div
@@ -147,8 +149,8 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 								}  items-center justify-center gap-2 rounded-sm bg-black bg-opacity-50`}
 							>
 								<div className="relative mt-1 flex flex-col items-center justify-center gap-10">
-									<h4 className="text-base text-white">
-										Total Price:{" "}
+									<h4 className="text-base text-white flex items-center">
+									৳ {" "}
 										{`${(
 											parseFloat(
 												getDiscountPrice(
@@ -272,30 +274,14 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 							}}
 							className=""
 						>
-							<AddToCartIcon2></AddToCartIcon2>
+						 <span onClick={showQuantitypalet}><AddToCartIcon2></AddToCartIcon2></span>	
 						</button>
 					)}
 				</div>
+				
 			</div>
 		</div>
 	);
 };
 
 export default MainProduct;
-
-// <div className=" flex items-end justify-between px-2">
-//
-
-// 				{user.access === "admin" && (
-// 					<div className="flex gap-2">
-// 						<FaEye></FaEye>
-// 						<p className="text-xs">{view}</p>
-// 					</div>
-// 				)}
-// 				{user.access === "shopper" && (
-// 					<div className="flex gap-2">
-// 						<FaEye></FaEye>
-// 						<p className="text-xs">{view}</p>
-// 					</div>
-// 				)}
-// 			</div>

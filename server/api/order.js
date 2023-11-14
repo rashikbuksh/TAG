@@ -18,7 +18,7 @@ const add = [
 const read = [
   {
     uri: "/order/getorder/:customer_profile_id",
-    query: `SELECT * FROM product_order WHERE customer_profile_id = ?`,
+    query: `SELECT * FROM product_order WHERE customer_profile_id = ? ORDER BY id DESC`,
     param: ["customer_profile_id"],
     msg: "product_id",
   },
@@ -54,6 +54,7 @@ const read = [
     uri: "/order/getProductbyid/:id",
     query: `SELECT
 	sp.*,
+  sp.id AS pid,
 	sp.price AS product_Price,
 	po.*,
 	po.price AS totalPrice,

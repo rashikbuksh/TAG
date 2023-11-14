@@ -195,38 +195,46 @@ const Product = () => {
 														: "0"}{" "}
 													Reviews(5)
 												</p>
-												<div className="cart-product__counter absolute  right-1  rounded-full bg-[#F2F8FD] px-2 py-2">
-													<div className="flex items-center justify-center gap-2">
-														<button
-															className="quantity-button  bg-[#60abe9]"
-															onClick={
-																decreasePQuantity
-															}
-														>
-															-
-														</button>
-														<input
-															className="w-[30px] bg-[#F2F8FD] text-center"
-															type="text"
-															value={quantity}
-															readOnly
-														/>
-														<button
-															className="quantity-button primary-background "
-															onClick={
-																increasePQuantity
-															}
-															disabled={
-																prods.quantity >=
-																cartItemStock(
-																	prods
-																)
-															}
-														>
-															+
-														</button>
+
+												{user.access === "admin" ? (
+													""
+												) : user.access ===
+												  "shopper" ? (
+													""
+												) : (
+													<div className="cart-product__counter absolute  right-1  rounded-full bg-[#F2F8FD] px-2 py-2">
+														<div className="flex items-center justify-center gap-2">
+															<button
+																className="quantity-button  bg-[#60abe9]"
+																onClick={
+																	decreasePQuantity
+																}
+															>
+																-
+															</button>
+															<input
+																className="w-[30px] bg-[#F2F8FD] text-center"
+																type="text"
+																value={quantity}
+																readOnly
+															/>
+															<button
+																className="quantity-button primary-background "
+																onClick={
+																	increasePQuantity
+																}
+																disabled={
+																	prods.quantity >=
+																	cartItemStock(
+																		prods
+																	)
+																}
+															>
+																+
+															</button>
+														</div>
 													</div>
-												</div>
+												)}
 											</div>
 											<div className="font-bold text-black">
 												{prods.discount &&
