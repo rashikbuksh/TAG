@@ -22,12 +22,15 @@ const ProductCart = ({ product }) => {
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${shopper_id}`).then((res) => {
 			setShopper(res.data);
+			// console.log(res.data);
 		});
 	}, []);
 
+	// console.log(shopper, "shopper in pc");
+
 	return (
 		<div
-			className=" "
+			className="border border-[#ffffffec] rounded"
 			style={{ boxShadow: "0px 8px 32px 0px rgba(184, 184, 184, 0.10)" }}
 		>
 			{shopper.map((shopper) => (
@@ -45,7 +48,16 @@ const ProductCart = ({ product }) => {
 							>
 								<img
 									className="h-6 w-6 rounded-full"
-									src={shopper.image ? shopper.image : logo}
+									src={
+										shopper.profile_picture
+											? `${
+													import.meta.env
+														.VITE_APP_IMG_URL
+											  }/usersProfilePic/${
+													shopper.profile_picture
+											  }`
+											: logo
+									}
 									alt=""
 								/>
 							</Link>
@@ -59,8 +71,8 @@ const ProductCart = ({ product }) => {
 									}
 								>
 									<div className="flex">
-										<h4 className="w-full text-xs font-semibold h-[30px] flex items-center ">
-											{shopper.name} 
+										<h4 className="flex h-[30px] w-full items-center text-xs font-semibold ">
+											{shopper.name}
 										</h4>
 									</div>
 								</Link>

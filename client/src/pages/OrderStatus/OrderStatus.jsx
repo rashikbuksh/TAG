@@ -38,8 +38,8 @@ const OrderStatus = () => {
 			setProducts(productData);
 		});
 	}, [pendingOrders]);
-	console.log(products);
-	console.log(pendingOrders);
+	// console.log(products);
+	// console.log(pendingOrders);
 	return (
 		<div className="mt-20 ">
 			<h1 className="text-center text-xl font-semibold">Order Status</h1>
@@ -55,7 +55,10 @@ const OrderStatus = () => {
 							</span>{" "}
 						</h1>
 						<div className="flex items-center gap-2">
-							<p>Status</p> <span><FaDotCircle className="text-green-500" /></span>
+							<p>Status</p>{" "}
+							<span>
+								<FaDotCircle className="text-green-500" />
+							</span>
 						</div>
 					</div>
 					<hr />

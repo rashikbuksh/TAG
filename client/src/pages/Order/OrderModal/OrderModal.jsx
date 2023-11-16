@@ -8,7 +8,7 @@ import { Breadcrumb } from "../../../components";
 const OrderModal = () => {
 	const { id } = useParams();
 	const [products, setProducts] = useState([]);
-	console.log(id);
+	// console.log(id);
 	const [price, setPrice] = useState(null);
 	useEffect(() => {
 		if (id) {
@@ -23,7 +23,7 @@ const OrderModal = () => {
 				});
 		}
 	}, [id]);
-	console.log(products);
+	// console.log(products);
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			<Breadcrumb

@@ -8,14 +8,14 @@ import App from "./App";
 import "./assets/scss/style.scss";
 import "./index.css";
 import PersistProvider from "./store/providers/persist-provider";
-import { setProducts } from "./store/slices/product-slice";
+// import { setProducts } from "./store/slices/product-slice";
 import { store } from "./store/store";
 
 // get product data from other source and set it to redux central state
-axios
-	.get(import.meta.env.VITE_API_PUBLIC_URL + "/data/product.json")
-	.then((response) => store.dispatch(setProducts(response.data)))
-	.catch((error) => console.log(error));
+// axios
+// 	.get(import.meta.env.VITE_API_PUBLIC_URL + "/data/product.json")
+// 	.then((response) => store.dispatch(setProducts(response.data)))
+// 	.catch((error) => console.log(error));
 
 const container = document.getElementById("root");
 const root = createRoot(container);
