@@ -28,7 +28,7 @@ const read = [
 	FROM product_order po
 	JOIN customer_profile cp ON po.shopper_id = cp.id
 	WHERE po.order_status = 'pending'
-	AND po.customer_profile_id = ?`,
+	AND po.customer_profile_id = ? ORDER BY id DESC`,
 
     param: ["customer_profile_id"],
     msg: "product_id",
@@ -95,6 +95,13 @@ const change = [
     uri: "/order/cancelReport/:id",
     query: `UPDATE product_order SET cancel_report = ? WHERE id = ?`,
     body: ["cancel_report"],
+    param: ["id"],
+    msg: "id",
+  },
+  {
+    uri: "/order/ordertimeoutStatus/:id",
+    query: `UPDATE product_order SET order_status = ? , cancel_report = ? WHERE id = ?`,
+    body: ["order_status","cancel_report"],
     param: ["id"],
     msg: "id",
   },

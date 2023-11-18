@@ -9,16 +9,30 @@ import { FaDotCircle } from "react-icons/fa";
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
 	const [products, setProducts] = useState([]);
+	const [timers, setTimers] = useState({});
 	const { user } = useAuth();
-
+	const fetchUpdatedOrders = () => {
+		// Fetch updated orders from the backend
+		const customer_profile_id = user.id;
+		api.get(`/order/getPendingorder/${customer_profile_id}`)
+			.then((response) => {
+				const newPendingOrders = response.data;
+				setPendingOrders(newPendingOrders);
+			})
+			.catch((error) => {
+				// console.log(error);
+			});
+	};
 	useEffect(() => {
 		const customer_profile_id = user.id;
 		api.get(`/order/getPendingorder/${customer_profile_id}`)
 			.then((response) => {
-				setPendingOrders(response.data);
+				const newPendingOrders = response.data;
+				setPendingOrders(newPendingOrders);
 			})
 			.catch((error) => {
-				alert(error);
+				// console.log(error);
+				setPendingOrders([]);
 			});
 	}, [user.id, pendingOrders]);
 
@@ -29,7 +43,7 @@ const OrderStatus = () => {
 				.get(`/order/getProductbyid/${order.id}`)
 				.then((response) => response.data)
 				.catch((error) => {
-					console.error(error);
+					// console.error(error);
 					return [];
 				});
 		});
@@ -40,6 +54,86 @@ const OrderStatus = () => {
 	}, [pendingOrders]);
 	// console.log(products);
 	// console.log(pendingOrders);
+
+	const startTimer = (orderId) => {
+		fetchUpdatedOrders();
+		if (!timers[orderId]) {
+			let timer = 100; // 10 seconds for demonstration
+
+			const interval = setInterval(() => {
+				timer--;
+
+				if (timer >= 0) {
+					setTimers((prevTimers) => ({
+						...prevTimers,
+						[orderId]: timer,
+					}));
+				} else {
+					clearInterval(interval);
+					// Remove the timer from state when it ends
+					setTimers((prevTimers) => {
+						const updatedTimers = { ...prevTimers };
+						delete updatedTimers[orderId];
+						return updatedTimers;
+					});
+
+					// Check order status after timer ends
+					const id = orderId;
+					api.get(`/order/getorder_by_id/${id}`)
+						.then((response) => {
+							console.log(response);
+							const orderStatus = response.data[0].order_status;
+							if (orderStatus === "pending") {
+								// Update order status to canceled
+								api.post(`/order/ordertimeoutStatus/${id}`, {
+									order_status: "cancelled",
+									cancel_report: "Time Out",
+								})
+									.then(() => {
+										// Set a timeout for cancel report
+										setTimeout(() => {
+											// Perform actions for cancel report
+											console.log(
+												`Cancel report for order ID ${orderId}`
+											);
+										}, 5000); // Adjust timeout duration as needed
+									})
+									.catch((error) => {
+										console.error(
+											"Error updating status:",
+											error
+										);
+									});
+							}
+						})
+						.catch((error) => {
+							console.error(
+								"Error fetching order status:",
+								error
+							);
+						});
+				}
+			}, 1000);
+
+			// Initialize the timer in state
+			setTimers((prevTimers) => ({
+				...prevTimers,
+				[orderId]: timer,
+			}));
+		}
+	};
+	// startTimer()
+	// useEffect(() => {
+	// 	fetchUpdatedOrders();
+
+	// 	const intervalId = setInterval(() => {
+	// 		fetchUpdatedOrders();
+	// 	}, 10000); // Adjust the interval time as needed (e.g., every 10 seconds)
+
+	// 	return () => {
+	// 		clearInterval(intervalId);
+	// 	};
+	// }, []);
 	return (
 		<div className="mt-20 ">
 			<h1 className="text-center text-xl font-semibold">Order Status</h1>
@@ -136,16 +230,36 @@ const OrderStatus = () => {
 											</>
 										))}
 									</div>
+
 									<div className="divider my-0"></div>
 									<div className="flex justify-between px-3">
 										<p className="text-base">
-											45 minutes Remaining
+											{timers[order.id] ? (
+												<>
+													{Math.floor(
+														timers[order.id] / 60
+													)}{" "}
+													minutes{" "}
+													{timers[order.id] % 60}{" "}
+													seconds Remaining
+												</>
+											) : (
+												"Timer ended"
+											)}
 										</p>
 										<p className="flex items-center gap-2 ">
 											<span className="text-sm">
 												Total:
 											</span>{" "}
 											<Takaicon></Takaicon> {order.price}
+											<button
+												onClick={() =>
+													startTimer(order.id)
+												}
+												className="btn"
+											>
+												{order.id}
+											</button>
 										</p>
 									</div>
 								</div>

@@ -40,7 +40,9 @@ const Cart = () => {
 	const productPrice = useRef({});
 	const [clickedState, setClickedState] = useState(true);
 	const timeoutIdRef = useRef(null);
-
+	const [countdown, setCountdown] = useState(120); // Countdown timer in seconds
+	const [shopperId, setshopperId] = useState(); // Countdown timer in seconds
+	const [timerStarted, setTimerStarted] = useState(false);
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
 			setShoppers(res.data);
@@ -54,22 +56,29 @@ const Cart = () => {
 	}, []);
 
 	const redirectTimer = async (shopperId) => {
+		setshopperId(shopperId)
 		// console.log(clickedState);
-		if (clickedState === true) {
-			// Store the timeout ID in a variable
-			const timeoutId = setTimeout(() => {
-				addOrder(shopperId);
-				pause();
-			}, 120000);
+		setTimerStarted(true);
+		setCountdown(120); // Reset countdown to 120 seconds when Buy button is clicked
+		const interval = setInterval(() => {
+			if (countdown > 0) {
+				setCountdown((prevCountdown) => prevCountdown - 1);
+			}
+		}, 1000);
 
-			timeoutIdRef.current = timeoutId;
-			// Clear the timeout when "Cancel1" is clicked
-			return () => {
-				reset();
-				clearTimeout(timeoutId);
-			};
-		}
+		setTimeout(() => {
+			clearInterval(interval);
+			addOrder(shopperId); // Perform action after countdown completes
+		}, 120000);
 	};
+	useEffect(() => {
+		if (timerStarted && countdown === 0) {
+			addOrder(shopperId); // Perform action after countdown completes
+		}
+	}, [countdown, timerStarted, shopperId]);
+
+	const displayMinutes = Math.floor(countdown / 60);
+	const displaySeconds = countdown % 60;
 
 	useEffect(() => {
 		// Calculate and set totals when cartItems or buyStates change
@@ -199,7 +208,7 @@ const Cart = () => {
 				[shopperId]: {},
 			});
 		}
-		navigate("/orderStatus")
+		navigate("/orderStatus");
 	};
 
 	const handleBuyClick = (shopperId) => {
@@ -492,8 +501,8 @@ const Cart = () => {
 															fontSize: "15px",
 														}}
 													>
-														<span>{minutes}</span>m
-														<span>{seconds}</span>s
+														<span>{displayMinutes}</span>m
+														<span>{displaySeconds}</span>s
 													</div>
 													<p>
 														{isRunning
