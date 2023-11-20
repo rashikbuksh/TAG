@@ -29,12 +29,13 @@ const OrderStatus = () => {
 			.then((response) => {
 				const newPendingOrders = response.data;
 				setPendingOrders(newPendingOrders);
+				console.log(pendingOrders);
 			})
 			.catch((error) => {
 				// console.log(error);
 				setPendingOrders([]);
 			});
-	}, [user.id, pendingOrders]);
+	}, [user.id]);
 
 	useEffect(() => {
 		// Make the API calls for each pending order and collect the products

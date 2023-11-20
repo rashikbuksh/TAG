@@ -11,6 +11,7 @@ import { addToWishlist } from "../../store/slices/wishlist-slice";
 import ProductCart from "../ProductCart/ProductCart";
 import ProductSlider from "../ProductSlider/ProductSlider";
 import LoadingPage from "../LodingPage/LoadingPage";
+import { FaCheckCircle } from "react-icons/fa";
 
 const AllProducts = ({ limit }) => {
 	const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -95,9 +96,9 @@ const AllProducts = ({ limit }) => {
 					<div className="my-5"></div>
 					{prods && (
 						<h2 className="section-title space-mb--20 ">
-							<span className="text-xl font-bold">
-								Verified Product{" "}
-							</span>
+							<p className="text-xl font-bold flex items-center gap-3">
+							<span>Verified Product</span>{" "}<FaCheckCircle className=" primary-text"></FaCheckCircle>
+							</p>
 
 							<Link className="primary-text"
 								to={

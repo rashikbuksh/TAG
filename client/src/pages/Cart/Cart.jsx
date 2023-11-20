@@ -41,8 +41,10 @@ const Cart = () => {
 	const [clickedState, setClickedState] = useState(true);
 	const timeoutIdRef = useRef(null);
 	const [countdown, setCountdown] = useState(120); // Countdown timer in seconds
-	const [shopperId, setshopperId] = useState(); // Countdown timer in seconds
+	const [shopperId, setshopperId] = useState(null); // Countdown timer in seconds
 	const [timerStarted, setTimerStarted] = useState(false);
+	const [runningTimerShopperId, setRunningTimerShopperId] = useState(null);
+
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
 			setShoppers(res.data);
@@ -56,7 +58,7 @@ const Cart = () => {
 	}, []);
 
 	const redirectTimer = async (shopperId) => {
-		setshopperId(shopperId)
+		setRunningTimerShopperId(shopperId);
 		// console.log(clickedState);
 		setTimerStarted(true);
 		setCountdown(120); // Reset countdown to 120 seconds when Buy button is clicked
@@ -68,6 +70,7 @@ const Cart = () => {
 
 		setTimeout(() => {
 			clearInterval(interval);
+			setRunningTimerShopperId(null);
 			addOrder(shopperId); // Perform action after countdown completes
 		}, 120000);
 	};
@@ -212,6 +215,16 @@ const Cart = () => {
 	};
 
 	const handleBuyClick = (shopperId) => {
+		if (
+			runningTimerShopperId !== null &&
+			runningTimerShopperId !== shopperId
+		) {
+			// If a timer is already running for another shopper, return without starting a new timer
+			cogoToast.warn("Please wait for the current timer to complete", {
+				position: "bottom-left",
+			});
+			return;
+		}
 		// console.log(clickedState, "handle buy");
 		// Toggle the buy state for the specific shop
 		setBuyStates((prevBuyStates) => ({
@@ -251,7 +264,7 @@ const Cart = () => {
 			...productQuantities,
 			[shopperId]: quantities,
 		});
-		if (clickedState == true) {
+		if (clickedState == true ) {
 			redirectTimer(shopperId);
 			cogoToast.warn(
 				"Order auto-submitted after 2 mins.If you want to cancel, click 'Cancel",
@@ -304,6 +317,8 @@ const Cart = () => {
 			[shopperId]: quantities,
 		});
 		clearTimeout(timeoutIdRef.current);
+		setRunningTimerShopperId(null);
+
 		reset();
 	};
 
@@ -481,6 +496,22 @@ const Cart = () => {
 								(cartItem) => cartItem.shopper_id === shopper.id
 							) && (
 								<div className="mx-4 my-1 flex items-center justify-between p-1">
+									{runningTimerShopperId === shopper.id && (
+										<div className="p-1 text-xs">
+											<div
+												style={{
+													fontSize: "15px",
+												}}
+											>
+												<span>{displayMinutes}</span>m
+												<span>{displaySeconds}</span>s
+											</div>
+											<p>
+												{isRunning ? "" : "Stop Timer"}
+											</p>
+										</div>
+									)}
+
 									<div className="flex gap-3">
 										{buyStates[shopper.id] ? (
 											<>
@@ -495,28 +526,13 @@ const Cart = () => {
 												>
 													Cancel
 												</button>{" "}
-												<div className="p-1 text-xs">
-													<div
-														style={{
-															fontSize: "15px",
-														}}
-													>
-														<span>{displayMinutes}</span>m
-														<span>{displaySeconds}</span>s
-													</div>
-													<p>
-														{isRunning
-															? ""
-															: "Stop Timer"}
-													</p>
-												</div>
 												<button
 													onClick={() =>
 														addOrder(shopper.id)
 													}
 													className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
 												>
-													Buy
+													Buy2
 												</button>{" "}
 											</>
 										) : (
@@ -528,9 +544,15 @@ const Cart = () => {
 														),
 														start();
 												}}
+												disabled={
+													runningTimerShopperId !==
+														null &&
+													runningTimerShopperId !==
+														shopper.id
+												}
 												className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
 											>
-												Buy
+												Buy1
 											</button>
 										)}
 									</div>
