@@ -40,6 +40,10 @@ const Cart = () => {
 	const productPrice = useRef({});
 	const [clickedState, setClickedState] = useState(true);
 	const timeoutIdRef = useRef(null);
+	const [countdown, setCountdown] = useState(120); // Countdown timer in seconds
+	const [shopperId, setshopperId] = useState(null); // Countdown timer in seconds
+	const [timerStarted, setTimerStarted] = useState(false);
+	const [runningTimerShopperId, setRunningTimerShopperId] = useState(null);
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -54,22 +58,30 @@ const Cart = () => {
 	}, []);
 
 	const redirectTimer = async (shopperId) => {
+		setRunningTimerShopperId(shopperId);
 		// console.log(clickedState);
-		if (clickedState === true) {
-			// Store the timeout ID in a variable
-			const timeoutId = setTimeout(() => {
-				addOrder(shopperId);
-				pause();
-			}, 120000);
+		setTimerStarted(true);
+		setCountdown(120); // Reset countdown to 120 seconds when Buy button is clicked
+		const interval = setInterval(() => {
+			if (countdown > 0) {
+				setCountdown((prevCountdown) => prevCountdown - 1);
+			}
+		}, 1000);
 
-			timeoutIdRef.current = timeoutId;
-			// Clear the timeout when "Cancel1" is clicked
-			return () => {
-				reset();
-				clearTimeout(timeoutId);
-			};
-		}
+		setTimeout(() => {
+			clearInterval(interval);
+			setRunningTimerShopperId(null);
+			addOrder(shopperId); // Perform action after countdown completes
+		}, 120000);
 	};
+	useEffect(() => {
+		if (timerStarted && countdown === 0) {
+			addOrder(shopperId); // Perform action after countdown completes
+		}
+	}, [countdown, timerStarted, shopperId]);
+
+	const displayMinutes = Math.floor(countdown / 60);
+	const displaySeconds = countdown % 60;
 
 	useEffect(() => {
 		// Calculate and set totals when cartItems or buyStates change
@@ -199,10 +211,20 @@ const Cart = () => {
 				[shopperId]: {},
 			});
 		}
-		navigate("/orderStatus")
+		navigate("/orderStatus");
 	};
 
 	const handleBuyClick = (shopperId) => {
+		if (
+			runningTimerShopperId !== null &&
+			runningTimerShopperId !== shopperId
+		) {
+			// If a timer is already running for another shopper, return without starting a new timer
+			cogoToast.warn("Please wait for the current timer to complete", {
+				position: "bottom-left",
+			});
+			return;
+		}
 		// console.log(clickedState, "handle buy");
 		// Toggle the buy state for the specific shop
 		setBuyStates((prevBuyStates) => ({
@@ -242,7 +264,7 @@ const Cart = () => {
 			...productQuantities,
 			[shopperId]: quantities,
 		});
-		if (clickedState == true) {
+		if (clickedState == true ) {
 			redirectTimer(shopperId);
 			cogoToast.warn(
 				"Order auto-submitted after 2 mins.If you want to cancel, click 'Cancel",
@@ -295,6 +317,8 @@ const Cart = () => {
 			[shopperId]: quantities,
 		});
 		clearTimeout(timeoutIdRef.current);
+		setRunningTimerShopperId(null);
+
 		reset();
 	};
 
@@ -472,6 +496,22 @@ const Cart = () => {
 								(cartItem) => cartItem.shopper_id === shopper.id
 							) && (
 								<div className="mx-4 my-1 flex items-center justify-between p-1">
+									{runningTimerShopperId === shopper.id && (
+										<div className="p-1 text-xs">
+											<div
+												style={{
+													fontSize: "15px",
+												}}
+											>
+												<span>{displayMinutes}</span>m
+												<span>{displaySeconds}</span>s
+											</div>
+											<p>
+												{isRunning ? "" : "Stop Timer"}
+											</p>
+										</div>
+									)}
+
 									<div className="flex gap-3">
 										{buyStates[shopper.id] ? (
 											<>
@@ -486,28 +526,13 @@ const Cart = () => {
 												>
 													Cancel
 												</button>{" "}
-												<div className="p-1 text-xs">
-													<div
-														style={{
-															fontSize: "15px",
-														}}
-													>
-														<span>{minutes}</span>m
-														<span>{seconds}</span>s
-													</div>
-													<p>
-														{isRunning
-															? ""
-															: "Stop Timer"}
-													</p>
-												</div>
 												<button
 													onClick={() =>
 														addOrder(shopper.id)
 													}
 													className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
 												>
-													Buy
+													Buy2
 												</button>{" "}
 											</>
 										) : (
@@ -519,9 +544,15 @@ const Cart = () => {
 														),
 														start();
 												}}
+												disabled={
+													runningTimerShopperId !==
+														null &&
+													runningTimerShopperId !==
+														shopper.id
+												}
 												className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
 											>
-												Buy
+												Buy1
 											</button>
 										)}
 									</div>

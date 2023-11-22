@@ -18,10 +18,9 @@ const params = {
 };
 
 const HeroSlider = () => {
-	const { data, isLoading, errorMessage } = useFetch("hero-slider.json");
+	// const { data, isLoading, errorMessage } = useFetch("/heroslider/getslider");
 
 	const [sliderData, setSliderData] = useState([]);
-
 	useEffect(() => {
 		api.get("/heroslider/getslider")
 			.then((res) => {

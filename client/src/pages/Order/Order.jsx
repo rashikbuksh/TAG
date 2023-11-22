@@ -39,7 +39,7 @@ const Order = () => {
 			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
 			<div className="order-product-area">
 				{data?.map((single) => {
-					console.log(single);
+					// console.log(single);
 					return (
 						<div
 							className="cart-product border-bottom--medium flex items-center justify-between"

@@ -8,7 +8,7 @@ import { api } from "../../lib/api";
 import Cookies from "js-cookie";
 
 const Profile = () => {
-	const { data, isLoading, errorMessage } = useFetch("profile.json");
+	// const { data, isLoading, errorMessage } = useFetch("profile.json");
 	const [totalOrder, setTotalOrder] = useState(0);
 	const id = localStorage.getItem("user-id");
 	const [userdata, setUserdata] = useState({});
@@ -127,8 +127,8 @@ const Profile = () => {
 	// 	});
 	// };
 
-	if (isLoading) return <Preloader />;
-	if (errorMessage) return <ErrorMessage errorMessage={errorMessage} />;
+	// if (isLoading) return <Preloader />;
+	// if (errorMessage) return <ErrorMessage errorMessage={errorMessage} />;
 
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">

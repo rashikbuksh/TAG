@@ -201,20 +201,20 @@ const Refer = () => {
 
 	return (
 		<>
-			<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-				<p className="text-warning">Must select Yes or No</p>
+			<Modal isOpen={isOpen} setIsOpen={setIsOpen} title={"Must select Yes or No"}  showCross={true}>
+				<p className="primary-text "></p>
 				<div className="flex items-center justify-center space-x-11 p-2">
 					<p className="text-black">Do you have any refer code?</p>
 					<button
 						onClick={handelHaveReferCode}
-						className="btn btn-xs"
+						className="btn btn-xs btn-accent"
 					>
 						Yes
 					</button>
 					<button
 						onClick={handelHaveNotReferCode}
 						disabled={isSubmitting}
-						className="btn btn-xs"
+						className="btn btn-xs btn-error"
 					>
 						No
 					</button>

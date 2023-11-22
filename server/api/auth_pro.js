@@ -12,11 +12,12 @@ const ComparePass = async (password, hashPassword) => {
 	return await compare(password, hashPassword);
 };
 
-const CreateToken = (user, time = "24h") => {
+const CreateToken = (user, time = "730h") => {
 	const payload = {
 		id: user?.id,
 		name: user?.name,
-		email: user?.email,
+		email:user?.email,
+		phone: user?.phone,
 		access: user?.access,
 	};
 

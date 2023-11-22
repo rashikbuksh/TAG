@@ -12,6 +12,8 @@ import { api } from "../../lib/api";
 import Refer from "../Refer/Refer";
 import { useSelector } from "react-redux";
 import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
+import AdsComponent from "../../components/AdsComponent/AdsComponent";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
 	const [showScrollButton, setShowScrollButton] = useState(false);
@@ -43,9 +45,19 @@ const Home = () => {
 
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
+			<Helmet>
+				<meta charSet="utf-8" />
+				<meta
+					name="google-adsense-account"
+					content="ca-pub-2753570933185281"
+				></meta>
+				<title>Home-TAG</title>
+				{/* <link rel="canonical" href="http://mysite.com/example" /> */}
+			</Helmet>
 			<HeroSlider />
 			<Refer></Refer>
 			<HotNews></HotNews>
+			{/* <AdsComponent dataAdSlot="8283119048" /> */}
 			{/* <ShowCartIcon></ShowCartIcon> */}
 			<BestSellerProduct limit={2} type="bestSeller" />
 			<AllProducts limit={12} />

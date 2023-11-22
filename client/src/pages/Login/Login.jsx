@@ -19,10 +19,20 @@ const Login = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const loginSchema = yup.object().shape({
-		email: yup
+		emailOrPhone: yup
 			.string()
-			.email("Please enter valid email address")
-			.required("Email address is required"),
+			.test("emailOrPhone", "Invalid email or phone number", (value) => {
+				if (!value) return false; // Return false if the field is empty
+
+				// Check if the value matches the email format
+				const isValidEmail = yup.string().email().isValidSync(value);
+
+				// Check if the value matches the phone number format (adjust the phone number validation regex as needed)
+				const isValidPhone = /^\+?[0-9]{8,}$/.test(value); // Example: Allows numbers with optional '+' prefix and at least 8 digits
+
+				return isValidEmail || isValidPhone;
+			})
+			.required("Email address or phone number is required"),
 		password: yup
 			.string()
 			.min(8, "Password must be at least 8 characters")
@@ -75,18 +85,18 @@ const Login = () => {
 								htmlFor="email"
 								className="mb-1 px-4 text-base font-semibold"
 							>
-								Email Address
+								Email / Phone 
 							</label>
 							<input
 								type="text"
 								id="email"
 								className="auth-input"
-								name="email"
+								name="emailOrPhone"
 								placeholder="Enter Email"
-								{...register("email")}
+								{...register("emailOrPhone")}
 							/>
 							<p className="text-danger px-4">
-								{errors.email?.message}
+								{errors.emailOrPhone?.message}
 							</p>
 						</div>
 						<div className="relative">
@@ -119,8 +129,10 @@ const Login = () => {
 								{errors.password?.message}
 							</p>
 							<div className="px-3">
-							<a className="link-info link">Forgot Password?</a>
-						</div>
+								<a className="link-info link">
+									Forgot Password?
+								</a>
+							</div>
 						</div>
 
 						{loginError && (
@@ -128,8 +140,6 @@ const Login = () => {
 								<p className="text-error">{loginError}</p>
 							</div>
 						)}
-
-						
 
 						<button
 							type="submit"

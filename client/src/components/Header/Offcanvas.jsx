@@ -6,6 +6,7 @@ import { api } from "../../lib/api";
 import { FaBars, FaHome, FaUserPlus } from "react-icons/fa";
 import { useAuth } from "../../context/auth";
 import Drawer from "react-modern-drawer";
+import { DashBoardIcon } from "../../SvgHub/Icons";
 function Offcanvas(props) {
 	const {
 		toggleDrawer,
@@ -107,7 +108,7 @@ function Offcanvas(props) {
 						</div>
 					))}
 					<div className="">
-						<ul
+						<ul 
 							onClick={handeloffDrawer}
 							className="offcanvas-navigation overflow-y-auto"
 						>
@@ -122,13 +123,7 @@ function Offcanvas(props) {
 								item.access == "shopper" ? (
 									<li key={item.id}>
 										<span className="icon">
-											<ReactSVG
-												src={
-													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/assets/img/icons/profile-two.svg"
-												}
-											/>
+											<DashBoardIcon></DashBoardIcon>
 										</span>
 										<Link
 											key={user}

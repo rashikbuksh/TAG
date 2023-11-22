@@ -45,7 +45,7 @@ const HotNews = () => {
 
 	return (
 		<div className="mx-auto my-10 max-w-7xl">
-			<h1 className="my-2 text-xl">Hot News</h1>
+			<h1 className="my-2 text-xl font-semibold">Hot News</h1>
 			<div className="">
 				<Swiper
 					slidesPerView={1.5}

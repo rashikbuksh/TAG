@@ -72,7 +72,7 @@ const ShopkeeperProfileCV = () => {
 	// console.log(selectedCategoryProduct);
 	const handleSearch = (letter) => {
 		setSelectedLetter(letter);
-		console.log(letter);
+		// console.log(letter);
 		if (letter === "#") {
 			setFilteredProducts(selectedCategoryProduct);
 		} else {
@@ -83,7 +83,7 @@ const ShopkeeperProfileCV = () => {
 		}
 	};
 	return (
-		<div className="mt-5">
+		<div className="mt-5 lg:mx-auto lg:w-[50%]">
 			{/* <ShowCartIcon></ShowCartIcon> */}
 			<div className="">
 				<div className="mx-auto my-3">
@@ -96,8 +96,21 @@ const ShopkeeperProfileCV = () => {
 										: "offline"
 								} mb-2`}
 							>
-								<div className=" h-[100px] w-[100px] rounded-full border p-1">
-									<img src={logo} alt="" className="" />
+								<div className=" h-[80px] w-[80px] rounded-full border p-1">
+									<img
+										className="h-6 w-6 rounded-full"
+										src={
+											shopkeeperInfo.profile_picture
+												? `${
+														import.meta.env
+															.VITE_APP_IMG_URL
+												  }/usersProfilePic/${
+														shopkeeperInfo.profile_picture
+												  }`
+												: logo
+										}
+										alt=""
+									/>
 								</div>
 							</div>
 
@@ -109,30 +122,30 @@ const ShopkeeperProfileCV = () => {
 							</h1> */}
 							<h1
 								title="shop Name"
-								className="mb-1 text-xl font-semibold"
+								className=" text-lg font-semibold"
 							>
 								<span className="primary-text">#</span>
 								{id} {shopkeeperInfo.name}
 							</h1>
 							<div className="mb-2">
 								<Rating
-									style={{ maxWidth: 100 }}
+									style={{ maxWidth: 80 }}
 									readOnly
 									orientation="horizontal"
 									value={shopkeeperInfo.review_count}
 								/>
 							</div>
-							<div className="mt-4 flex items-center justify-center gap-4">
-								<FaLocationDot className="text-3xl text-blue-400 lg:text-6xl "></FaLocationDot>
-								<button className=" font-xl h-[48px] w-[140px] rounded bg-[#FF4C5E] text-white">
+							<div className=" flex items-center justify-center gap-4">
+								<FaLocationDot className="text-3xl text-blue-400 lg:text-3xl "></FaLocationDot>
+								<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
 									Follow
 								</button>
-								<FaRegMessage className=" text-3xl text-blue-400 lg:text-6xl "></FaRegMessage>
+								<FaRegMessage className=" text-3xl text-blue-400 lg:text-3xl "></FaRegMessage>
 							</div>
 						</div>
 					)}
 
-					<div className=" flex items-center justify-start gap-3  border-gray-300 px-4 ">
+					<div className="  flex items-center justify-start gap-3  border-gray-300 px-4 ">
 						<select
 							defaultValue={"0"}
 							className=" w-1/3 rounded border border-gray-300 px-3  py-2 text-gray-700 sm:text-sm"
@@ -156,10 +169,10 @@ const ShopkeeperProfileCV = () => {
 							</div>
 						</div>
 					</div>
-					<div className="alphabet-list absolute right-0 bottom-20  z-10 ml-5  w-[30px] ">
+					<div className="alphabet-list absolute bottom-24 right-0  z-10 ml-5  w-[30px] ">
 						{alphabet.map((letter) => (
 							<button
-								className="flex flex-col items-center justify-center font-bold text-[10px]"
+								className="flex flex-col items-center justify-center text-[10px] font-bold"
 								key={letter}
 								onClick={() => handleSearch(letter)}
 							>
@@ -184,9 +197,10 @@ const ShopkeeperProfileCV = () => {
 							</div>
 						)}
 						<div className="">
-							<div className="grid w-[90%] h-[42vh] border-t  overflow-y-auto grid-cols-2 gap-1 lg:mx-auto lg:grid-cols-4">
+							{/* //show product div  */}
+							<div className="mb-20 grid h-[50vh] w-[90%] grid-cols-2  gap-1 overflow-y-auto border-t lg:mx-auto lg:grid-cols-4">
 								{filteredAllProducts.map((single) => {
-									console.log(filteredAllProducts);
+									// console.log(filteredAllProducts);
 									return (
 										<div
 											key={single.id}
@@ -209,26 +223,11 @@ const ShopkeeperProfileCV = () => {
 													alt=""
 												/>
 											</Link>
-											<br />
-											<Link
-												to={
-													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													`/shopkeeperProfileCV/${single.shopper_id}`
-												}
-											>
-												<p className="text-xs text-gray-400">
-													Shop Id{" "}
-													<span className="font-bold text-black">
-														#{single.shopper_id}
-													</span>
-												</p>
-											</Link>
 
-											<div className="flex items-center justify-between">
+											<div className="my-1 flex items-center justify-between">
 												<div className="relative flex flex-col bg-white ">
 													<div className="h-fit">
-														<h3 className="w-[70px] truncate   text-sm  text-black">
+														<h3 className="w-[100px] truncate   text-sm  text-black">
 															{" "}
 															{single.name}{" "}
 														</h3>

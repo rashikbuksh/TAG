@@ -19,13 +19,17 @@ const Register = () => {
 		name: yup.string().required("Name is required"),
 		emailAddress: yup
 			.string()
-			.email("Please enter valid email address")
-			.required("Email address is required"),
+			.email("Please enter valid email address"),
 		password: yup
 			.string()
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
-		phone: yup.string().required("Phone Number is required").max(11),
+			phone: yup
+			.string()
+			.matches(/^[0-9]+$/, "Phone number must contain only digits")
+			.max(11, "Phone number must be at most 11 characters")
+			.min(11, "Phone number must be at most 11 characters")
+			.required("Phone number is required"),
 	});
 
 	const { register, handleSubmit, formState } = useForm({
@@ -67,148 +71,7 @@ const Register = () => {
 		setShowPassword((prevShowPassword) => !prevShowPassword);
 	};
 	return (
-		// <div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
-		// 	{/* auth page header */}
-		// 	<div className="auth-page-header space-mb--50">
-		// 		<div className="container">
-		// 			<div className="row">
-		// 				<div className="col-12">
-		// 					<h3 className="auth-page-header__title">Welcome</h3>
-		// 					<p className="auth-page-header__text">
-		// 						Don't have account? <br /> Please sign up for
-		// 						creating a new account.
-		// 					</p>
-		// 				</div>
-		// 			</div>
-		// 		</div>
-		// 	</div>
-		// 	{/* auth page body */}
-		// 	<div className="auth-page-body">
-		// 		<div className="container">
-		// 			<div className="row">
-		// 				<div className="col-12">
-		// 					{/* Auth form */}
-		// 					<div className="auth-form">
-		// 						<form onSubmit={handleSubmit(onSubmit)}>
-		// 							<div className=" ">
-		// 								<label htmlFor="name">Name</label>
-		// 								<input
-		// 									type="text"
-		// 									name="name"
-		// 									id="name"
-		// 									placeholder="Enter Full name"
-		// 									{...register("name")}
-		// 								/>
-		// 								<p className="text-danger">
-		// 									{errors.name?.message}
-		// 								</p>
-		// 							</div>
-		// 							<div className=" ">
-		// 								<label htmlFor="emailAddress">
-		// 									Email Address
-		// 								</label>
-		// 								<input
-		// 									type="text"
-		// 									name="emailAddress"
-		// 									id="emailAddress"
-		// 									placeholder="Enter Email Address"
-		// 									{...register("emailAddress")}
-		// 								/>
-		// 								<p className="text-danger">
-		// 									{errors.emailAddress?.message}
-		// 								</p>
-		// 							</div>
-		// 							<div className=" ">
-		// 								<label htmlFor="phone">
-		// 									Phone Number
-		// 								</label>
-		// 								<input
-		// 									type="text"
-		// 									name="phone"
-		// 									id="phone"
-		// 									placeholder="Enter Phone Number"
-		// 									{...register("phone")}
-		// 								/>
-		// 								<p className="text-danger">
-		// 									{errors.phone?.message}
-		// 								</p>
-		// 							</div>
-		// 							<div className=" ">
-		// 								<label htmlFor="password">
-		// 									Password
-		// 								</label>
-		// 								<input
-		// 									type="password"
-		// 									name="password"
-		// 									id="password"
-		// 									placeholder="Enter Password"
-		// 									{...register("password")}
-		// 								/>
-		// 								<p className="text-danger">
-		// 									{errors.password?.message}
-		// 								</p>
-		// 							</div>
-		// 							<div className="auth-form__single-field space-mb--40">
-		// 								<p className="auth-form__info-text">
-		// 									Already have an account?{" "}
-		// 									<Link
-		// 										to={
-		// 											import.meta.env
-		// 												.VITE_API_PUBLIC_URL +
-		// 											"/login"
-		// 										}
-		// 									>
-		// 										Sign in Now
-		// 									</Link>
-		// 								</p>
-		// 							</div>
-		// 							<button
-		// 								type="submit"
-		// 								className="auth-form__button"
-		// 							>
-		// 								Sign Up
-		// 							</button>
-		// 						</form>
-		// 					</div>
-		// 				</div>
-		// 			</div>
-		// 		</div>
-		// 	</div>
-		// 	{/* auth page footer */}
-		// 	<div className="auth-page-footer">
-		// 		<div className="container">
-		// 			<div className="row">
-		// 				<div className="col-12">
-		// 					<span className="auth-page-separator space-mt--20 space-mb--20 text-center">
-		// 						- OR -
-		// 					</span>
-		// 					<div className="auth-page-social-login">
-		// 						<button>
-		// 							<ReactSVG
-		// 								src={
-		// 									import.meta.env
-		// 										.VITE_API_PUBLIC_URL +
-		// 									"/assets/img/icons/facebook.svg"
-		// 								}
-		// 							/>
-		// 							Sign In with Facebook
-		// 						</button>
-		// 						<button>
-		// 							<ReactSVG
-		// 								src={
-		// 									import.meta.env
-		// 										.VITE_API_PUBLIC_URL +
-		// 									"/assets/img/icons/google.svg"
-		// 								}
-		// 							/>
-		// 							Sign In with Google
-		// 						</button>
-		// 					</div>
-		// 				</div>
-		// 			</div>
-		// 		</div>
-		// 	</div>
-		// </div>
+		
 		<div className="relative ">
 			<div className="mx-auto flex h-screen flex-col justify-around px-[25px] lg:w-[50%]">
 				<div className="mx-auto my-5 h-[80px]">
@@ -244,9 +107,9 @@ const Register = () => {
 						<div className=" ">
 							<label
 								htmlFor="emailAddress"
-								className="mb-1 px-4 text-base font-semibold"
+								className="mb-1 px-4 text-base font-semibold flex justify-between"
 							>
-								Email Address
+								<span>Email</span> <span className="text-xs" >Optional</span>
 							</label>
 							<input
 								type="text"

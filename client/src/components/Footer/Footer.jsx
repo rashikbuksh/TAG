@@ -2,8 +2,11 @@ import React from "react";
 import { FaRegBell, FaRegNewspaper } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+import { useAuth } from "../../context/auth";
+import { DashBoardIcon } from "../../SvgHub/Icons";
 
 const Footer = () => {
+	const {user}=useAuth()
 	return (
 		<footer>
 			<div className="footer-nav-wrapper">
@@ -30,7 +33,16 @@ const Footer = () => {
 						<span>News</span>
 					</div>
 				</Link>
-				<Link
+				
+				{user.access==="shopper"?<Link
+					to={import.meta.env.VITE_API_PUBLIC_URL + "/chat"}
+					className="footer-nav-single"
+				>
+					<div className="menu-wrapper">
+						<DashBoardIcon></DashBoardIcon>
+						<span>Dashboard</span>
+					</div>
+				</Link>:<Link
 					to={import.meta.env.VITE_API_PUBLIC_URL + "/chat"}
 					className="footer-nav-single"
 				>
@@ -44,6 +56,8 @@ const Footer = () => {
 						<span>Chat</span>
 					</div>
 				</Link>
+					
+				}
 				<Link
 					to={import.meta.env.VITE_API_PUBLIC_URL + "/notification"}
 					className="footer-nav-single"
