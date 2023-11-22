@@ -1,14 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import { set, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import * as yup from "yup";
 import { api } from "../../lib/api";
+import { TagLogo2 } from "../../SvgHub/TagLogo2";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
 
 const Register = () => {
+	const [showPassword, setShowPassword] = useState(false);
 	const getUserLocation = () => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition);
@@ -16,6 +20,7 @@ const Register = () => {
 			alert("Geolocation is not supported by this browser.");
 		}
 	};
+	
 
 	const [address, setAddress] = React.useState("");
 
@@ -29,12 +34,13 @@ const Register = () => {
 	};
 	const registerSchema = yup.object().shape({
 		name: yup.string().required("Name is required"),
-		phone: yup.string().required("Phone Number is required").max(11),
-		emailAddress: yup
+		phone: yup
 			.string()
-			.email("Please enter valid email address")
-			.required("Email address is required"),
-		password: yup
+			.matches(/^[0-9]+$/, "Phone number must contain only digits")
+			.max(11, "Phone number must be at most 11 characters")
+			.required("Phone number is required"),
+		emailAddress: yup.string().email("Please enter a valid email address"),
+			password: yup
 			.string()
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
@@ -75,168 +81,172 @@ const Register = () => {
 				}
 			});
 	};
-
+	const togglePasswordVisibility = () => {
+		setShowPassword((prevShowPassword) => !prevShowPassword);
+	};
+	useEffect(()=>{
+		getUserLocation()
+	},[])
 	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
+		<div className="space-pt--70 space-pb--120 relative">
 			{/* auth page header */}
-			<div className="auth-page-header space-mb--50">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							<h3 className="auth-page-header__title">Welcome</h3>
-							<p className="auth-page-header__text">
-								Don't have account? <br /> Please sign up for
-								creating a new account.
+			<div className="mx-auto flex h-screen flex-col justify-around px-[25px] lg:w-[50%]">
+				<div className="mx-auto my-5 h-[80px]">
+					<TagLogo2></TagLogo2>
+				</div>
+				<div className="mb-4 w-full text-center ">
+					<p className="text-2xl font-bold">Create A New Account</p>
+				</div>
+				<div className="">
+					<form
+						onSubmit={handleSubmit(onSubmit)}
+						className="space-y-4"
+					>
+						<div className="">
+							<label
+								htmlFor="name"
+								className="mb-1 px-4 text-base font-semibold "
+							>
+								Shop Name
+							</label>
+							<input
+								type="text"
+								name="name"
+								id="name"
+								className="auth-input"
+								placeholder="Enter Shop name"
+								{...register("name")}
+							/>
+							<p className="text-danger px-4">
+								{errors.name?.message}
 							</p>
 						</div>
+						<div className="auth-form__single-field space-mb--30">
+							<label
+								htmlFor="phone"
+								className="mb-1 px-4 text-base font-semibold "
+							>
+								Phone Number
+							</label>
+							<input
+								type="text"
+								name="phone"
+								id="phone"
+								className="auth-input"
+								placeholder="Enter Phone Number"
+								{...register("phone")}
+							/>
+							<p className="text-danger px-4">
+								{errors.phone?.message}
+							</p>
+						</div>
+						<div className="auth-form__single-field space-mb--30">
+							<label
+								htmlFor="emailAddress"
+								className="mb-1 px-4 text-base font-semibold flex justify-between"
+							>
+								<span>Email </span> <span className="text-xs" >Optional</span>
+							</label>
+							<input
+								type="text"
+								name="emailAddress"
+								id="emailAddress"
+								className="auth-input"
+								placeholder="Enter Email Address"
+								{...register("emailAddress")}
+							/>
+							<p className="text-danger px-4">
+								{errors.emailAddress?.message}
+							</p>
+						</div>
+						<div className="relative">
+							<label
+								htmlFor="password"
+								className="mb-1 px-4 text-base font-semibold "
+							>
+								Password
+							</label>
+							<input
+								type={showPassword ? "text" : "password"}
+								name="password"
+								id="password"
+								className="auth-input"
+								placeholder="Enter Password"
+								{...register("password")}
+							/>
+							<p
+								onClick={togglePasswordVisibility}
+								className="absolute right-4 top-11 cursor-pointer text-blue-500"
+							>
+								{showPassword ? (
+									<FaEye className="text-2xl text-black " />
+								) : (
+									<FaEyeSlash className="text-2xl text-black " />
+								)}
+							</p>
+							<p className="text-danger px-4">
+								{errors.password?.message}
+							</p>
+						</div>
+						<div className="relative">
+							<label
+								htmlFor="name"
+								className="mb-1 px-4 text-base font-semibold "
+							>
+								Shop Location
+							</label>
+							<input
+								type="text"
+								readOnly
+								name="shipping_address"
+								id="shipping_address"
+								className="auth-input"
+								placeholder="Enter your Shop Location"
+								{...register("shipping_address")}
+							/>
+							<p className="text-danger px-4">
+								{errors.shipping_address?.message}
+							</p>
+							<button
+								className="absolute right-4 top-11 cursor-pointer text-blue-500"
+								type="button"
+								onClick={getUserLocation}
+							>
+								<FaLocationDot className="text-xl"></FaLocationDot>
+							</button>
+						</div>
+
+						<button type="submit" className="auth-btn mt-4">
+							Sign Up
+						</button>
+					</form>
+					<div className="my-3 text-center">
+						<p
+							className="cursor-pointer "
+							style={{ color: "var(--greyscale-500, #9E9E9E)" }}
+						>
+							Already have an account?{" "}
+							<Link
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									"/login"
+								}
+							>
+								<span className="primary-text">
+									Sign in Now
+								</span>
+							</Link>
+						</p>
 					</div>
 				</div>
-			</div>
-			{/* auth page body */}
-			<div className="auth-page-body">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							{/* Auth form */}
-							<div className="auth-form">
-								<form onSubmit={handleSubmit(onSubmit)}>
-									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="name">Shop Name</label>
-										<input
-											type="text"
-											name="name"
-											id="name"
-											placeholder="Enter Shop name"
-											{...register("name")}
-										/>
-										<p className="text-danger">
-											{errors.name?.message}
-										</p>
-									</div>
-									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="phone">
-											Phone Number
-										</label>
-										<input
-											type="text"
-											name="phone"
-											id="phone"
-											placeholder="Enter Phone Number"
-											{...register("phone")}
-										/>
-										<p className="text-danger">
-											{errors.phone?.message}
-										</p>
-									</div>
-									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="emailAddress">
-											Email Address
-										</label>
-										<input
-											type="text"
-											name="emailAddress"
-											id="emailAddress"
-											placeholder="Enter Email Address"
-											{...register("emailAddress")}
-										/>
-										<p className="text-danger">
-											{errors.emailAddress?.message}
-										</p>
-									</div>
-									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="password">
-											Password
-										</label>
-										<input
-											type="password"
-											name="password"
-											id="password"
-											placeholder="Enter Password"
-											{...register("password")}
-										/>
-										<p className="text-danger">
-											{errors.password?.message}
-										</p>
-									</div>
-									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="name">
-											Shop Location
-										</label>
-										<input
-											type="text"
-											name="shipping_address"
-											id="shipping_address"
-											placeholder="Enter your Shop Location"
-											{...register("shipping_address")}
-										/>
-										<p className="text-danger">
-											{errors.shipping_address?.message}
-										</p>
-										<button
-											type="button"
-											onClick={getUserLocation}
-										>
-											Get Location
-										</button>
-									</div>
-									<div className="auth-form__single-field space-mb--40">
-										<p className="auth-form__info-text">
-											Already have an account?{" "}
-											<Link
-												to={
-													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/login"
-												}
-											>
-												Sign in Now
-											</Link>
-										</p>
-									</div>
-									<button
-										type="submit"
-										className="auth-form__button"
-									>
-										Sign Up
-									</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			{/* auth page footer */}
-			<div className="auth-page-footer">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							<span className="auth-page-separator space-mt--20 space-mb--20 text-center">
-								- OR -
-							</span>
-							<div className="auth-page-social-login">
-								<button>
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/facebook.svg"
-										}
-									/>
-									Sign In with Facebook
-								</button>
-								<button>
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/google.svg"
-										}
-									/>
-									Sign In with Google
-								</button>
-							</div>
-						</div>
-					</div>
+				<div className="w-full text-center">
+					{" "}
+					<p className="text-center">
+						By Signing up you accept the{" "}
+						<span className="primary-text">Terms of Service</span>{" "}
+						and <br />{" "}
+						<span className="primary-text">Privacy Policy</span>
+					</p>
 				</div>
 			</div>
 		</div>

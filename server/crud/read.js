@@ -52,18 +52,25 @@ GET_DATA.forEach(({ uri, query, param }) => {
 app.post("/auth/verify_login", (req, res) => {
 	// console.log(req?.body.email, req?.body.password);
 
-	const { email, password } = req?.body;
+	const { emailOrPhone, password , } = req?.body;
 
 	db.getConnection((err, connection) => {
 		if (err) {
 			console.error("Error getting MySQL connection: ", err);
 			return res.status(500).json({ error: "Database error" });
 		}
-
+		let queryField = 'email';
+		if (/^\+?[0-9]{8,}$/.test(emailOrPhone)) { // Check if input resembles a phone number
+		  queryField = 'phone';
+		}
+		else{
+			queryField = 'email';
+		}
 		// Call your stored procedure
 		connection.query(
-			`Select * from customer_profile where email = ?`,
-			[email],
+			`Select * from customer_profile where ${queryField} = ?`,
+			[emailOrPhone],
+			
 			async (err, rows) => {
 				// console.log("row", rows);
 				// console.log("err", err);

@@ -35,7 +35,7 @@ const OrderStatus = () => {
 				// console.log(error);
 				setPendingOrders([]);
 			});
-	}, [user.id]);
+	}, [user.id,]);
 
 	useEffect(() => {
 		// Make the API calls for each pending order and collect the products

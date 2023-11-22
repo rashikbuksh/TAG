@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
 	const login = async (data) => {
 		try {
 			const res = await api.post("/auth/verify_login", {
-				email: data.email,
+				emailOrPhone: data.emailOrPhone,
 				password: data.password,
 			});
 			// console.log("response", res);
