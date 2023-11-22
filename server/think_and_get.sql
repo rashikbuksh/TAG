@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2023 at 06:41 PM
+-- Generation Time: Nov 22, 2023 at 07:41 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -88,11 +88,11 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper', NULL, '', NULL, NULL),
 (15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545112', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper', NULL, '', NULL, NULL),
 (16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
-(17, 'Anik Store', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', NULL, 'anik123@gmail.com', '22.3303507__91.7867411', NULL, NULL, NULL, NULL, 'shopper', 1, '9ikaktaf3rp', 'referred', '1699292263970__121837251.jpg'),
+(17, 'Anik Store', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684345120', 'anik123@gmail.com', '22.3303507__91.7867411', NULL, NULL, NULL, NULL, 'shopper', 1, '9ikaktaf3rp', 'referred', '1699292263970__121837251.jpg'),
 (18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (20, 'TAG@admin.com', NULL, NULL, NULL, NULL, '$2b$10$1R4tRAPwHpmV6EnGtAStUeJZY8aj0Dt9NR.B2fjgNiXSYkmH5rm46', NULL, 'tag@admin.com', NULL, NULL, NULL, NULL, NULL, 'admin', NULL, 'bo1ntlas7k7', 'unreferred', NULL),
-(36, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$sAtGIF2DZL.hB8LTMCQ7ZOp2Zdzln6WmbhK7pCrFhEKz46bH/6AF.', '01684545111', 'rashik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '1mwoauien49', 'referred', '1699291825260__ahmed-abu-hameeda-D9lCSvUcErk-unsplash.jpg'),
+(36, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$sAtGIF2DZL.hB8LTMCQ7ZOp2Zdzln6WmbhK7pCrFhEKz46bH/6AF.', '01684545111', NULL, '22.3304379__91.7872739', NULL, NULL, NULL, NULL, 'customer', NULL, '1mwoauien49', 'referred', '1699370631335__IMG_4137.JPG'),
 (48, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$p.NA9WD2M7T/HFzL1kX.wee8biKelsaoe7qNWl/zXHfeHHG2GVErq', '01684545121', 'anik1234567@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, 'kmigen4lv1', NULL, NULL),
 (49, 'Towhidul Islam', NULL, NULL, NULL, NULL, '$2b$10$NII3Zsp1lU/4SQt9eM/vv.CufLSYICSlfRHgRceEX55hATtYA.4Pe', '01878601610', 'towhidulislam2.bd@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', 'referred', NULL),
 (52, 'Modarator', NULL, NULL, NULL, NULL, '$2b$10$KFdI.jfOFD5WbZhp.vHdTO6TJMunfxfEum7Hxza9rfnOpqxQxPsKq', '01888888888', 'modarator@tag.com', NULL, NULL, NULL, NULL, NULL, 'modarator', NULL, '', 'unreferred', NULL),
@@ -105,7 +105,8 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (71, 'r1@g.com', NULL, NULL, NULL, NULL, '$2b$10$RguEkd4D9knGB2Wk37Wi/.HDm/q3.3OH..Vb1ntVQp.O4dlM621nC', '01878602612', 'r1@g.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, 'b47acyx1klp', 'referred', NULL),
 (72, 'refbylink@g.com', NULL, NULL, NULL, NULL, '$2b$10$5RMgK8aUvxpztgEQkNMK...ohKcZKW0VE2N5Vjo3CSx1gbbmO3CMm', '01814032120', 'refbylink@g.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', 'referred', NULL),
 (73, 'wrongref@p.com', NULL, NULL, NULL, NULL, '$2b$10$PwOatoHZsK3nquPMBnkK9uCbU1ungUWDOjGd5rKrXzYUq6C3ihJQq', '0187861161', 'wrongref@p.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, 'cw46k460k1m', 'referred', NULL),
-(74, 'adasda', NULL, NULL, NULL, NULL, '$2b$10$j/EHcnuo7nTjIi84bJb5nuF4C3nmMMe2j9IdNaAT9WeNmFwVLlS7a', 'sdasd', 'asdasda@daasd', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL);
+(74, 'adasda', NULL, NULL, NULL, NULL, '$2b$10$j/EHcnuo7nTjIi84bJb5nuF4C3nmMMe2j9IdNaAT9WeNmFwVLlS7a', 'sdasd', 'asdasda@daasd', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
+(76, 'Towhidul Store', NULL, NULL, NULL, NULL, '$2b$10$BfsPyaAGL5wcR50.PNp51eHjBE6sohrTrqHUM59vrKdiUJftIzAZ6', '01601401607', 'towhidulislam2.bd@gmail.com', '22.3176576__91.7980074', NULL, NULL, NULL, NULL, 'shopper', NULL, '', 'unreferred', '1700676814695__channels4_profile.jpg');
 
 -- --------------------------------------------------------
 
@@ -177,7 +178,7 @@ INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `
 (43, 47, 17, '2023-10-30T14:49:55.722Z', '-1', '', '', 0, 0, 0, 0, 'regular', 'Chilli SauceTK.150', '1698677186176__BD-chili-Sauce--1kg.jpg'),
 (44, 48, 17, '2023-10-30T14:50:37.511Z', '0', '', '', 1, 1, 0, 0, 'regular', 'Pran-Sauce-750-gm TK.270', '1698677343796__Pran-Sauce-750-gm.jpg'),
 (45, 49, 17, '2023-11-01T17:07:35.664Z', '3', '', '', 0, 0, 0, 0, 'regular', 'Yellow RiceTK.323.01', '1696949688320__milled-rice-bowl-wooden-spoon-black-cement-floor.jpg'),
-(46, 50, 17, '2023-11-05T13:06:44.531Z', '1', '', '', 0, 0, 0, 0, 'regular', 'Hand bag In Town TK.33.66', '1696949606356__bag.png');
+(46, 50, 17, '2023-11-05T13:06:44.531Z', '1', '', '', 0, 1, 0, 0, 'regular', 'Hand bag In Town TK.33.66', '1696949606356__bag.png');
 
 -- --------------------------------------------------------
 
@@ -215,7 +216,8 @@ INSERT INTO `news_comment` (`id`, `news_id`, `commented_by`, `comment`, `news_ti
 (50, 34, 36, 'Interested', '10/27/2023, 9:39:35 PM'),
 (51, 33, 36, 'Interested', '10/27/2023, 9:39:39 PM'),
 (52, 44, 36, 'Not Interested', '10/31/2023, 3:49:10 PM'),
-(54, 28, 36, 'Interested', '10/31/2023, 7:05:04 PM');
+(54, 28, 36, 'Interested', '10/31/2023, 7:05:04 PM'),
+(55, 46, 17, 'Interested', '11/10/2023, 12:34:10 AM');
 
 -- --------------------------------------------------------
 
@@ -281,7 +283,33 @@ INSERT INTO `notification` (`id`, `notification_content`, `notification_time`, `
 (14, 'You have a new order. Order Number is #41.', '2023-11-04 19:13:17', 17, 36, 0),
 (15, 'You have a new order. Order Number is #42.', '2023-11-04 19:56:50', 11, 36, 0),
 (16, 'You have a new order. Order Number is #43.', '2023-11-04 19:59:34', 17, 36, 0),
-(17, 'You have a new order. Order Number is #44.', '2023-11-04 20:01:00', 17, 36, 0);
+(17, 'You have a new order. Order Number is #44.', '2023-11-04 20:01:00', 17, 36, 0),
+(18, 'You have a new order. Order Number is #45.', '2023-11-08 14:03:48', 3, 36, 0),
+(19, 'You have a new order. Order Number is #46.', '2023-11-08 17:27:52', 17, 36, 0),
+(20, 'You have a new order. Order Number is #47.', '2023-11-08 17:48:48', 17, 36, 0),
+(21, 'You have a new order. Order Number is #48.', '2023-11-08 17:55:37', 3, 36, 0),
+(22, 'You have a new order. Order Number is #49.', '2023-11-09 15:51:12', 17, 36, 0),
+(23, 'You have a new order. Order Number is #50.', '2023-11-09 18:06:45', 17, 36, 0),
+(24, 'You have a new order. Order Number is #51.', '2023-11-09 18:07:52', 17, 36, 0),
+(25, 'You have a new order. Order Number is #52.', '2023-11-16 15:51:08', 17, 36, 0),
+(26, 'You have a new order. Order Number is #53.', '2023-11-16 15:52:18', 11, 36, 0),
+(27, 'You have a new order. Order Number is #54.', '2023-11-18 07:04:21', 11, 36, 0),
+(28, 'You have a new order. Order Number is #55.', '2023-11-18 07:06:44', 17, 36, 0),
+(29, 'You have a new order. Order Number is #56.', '2023-11-18 09:09:39', 11, 36, 0),
+(30, 'You have a new order. Order Number is #57.', '2023-11-18 09:14:02', 17, 36, 0),
+(31, 'You have a new order. Order Number is #58.', '2023-11-18 09:23:24', 17, 36, 0),
+(32, 'You have a new order. Order Number is #59.', '2023-11-18 09:49:24', 17, 36, 0),
+(33, 'You have a new order. Order Number is #60.', '2023-11-18 09:52:12', 17, 36, 0),
+(34, 'You have a new order. Order Number is #61.', '2023-11-18 10:08:44', 17, 36, 0),
+(35, 'You have a new order. Order Number is #62.', '2023-11-20 12:56:20', 17, 36, 0),
+(36, 'You have a new order. Order Number is #63.', '2023-11-20 12:57:08', 3, 36, 0),
+(37, 'You have a new order. Order Number is #64.', '2023-11-20 14:01:32', 11, 36, 0),
+(38, 'You have a new order. Order Number is #65.', '2023-11-20 14:01:41', 17, 36, 0),
+(39, 'You have a new order. Order Number is #66.', '2023-11-20 16:01:23', 3, 36, 0),
+(40, 'You have a new order. Order Number is #67.', '2023-11-20 16:02:27', 11, 36, 0),
+(41, 'You have a new order. Order Number is #68.', '2023-11-20 16:06:03', 17, 36, 0),
+(42, 'You have a new order. Order Number is #69.', '2023-11-20 16:30:43', 3, 36, 0),
+(43, 'You have a new order. Order Number is #70.', '2023-11-22 18:31:14', 3, 36, 0);
 
 -- --------------------------------------------------------
 
@@ -347,32 +375,54 @@ CREATE TABLE `product_order` (
 --
 
 INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, `discount`, `order_status`, `customer_profile_id`, `shopper_id`, `cancel_report`) VALUES
-(19, '14,15', '2,1', '0', 500, '0,5', 'pending', 16, 3, NULL),
-(20, '1,4', '7,9', '0', 400, '10,0', 'pending', 16, 11, NULL),
-(21, '26', '1', '0', 100, '2', 'completed', 16, 17, 'Customer is not taking the product'),
-(22, '26', '2', '0', 200, '2', 'cancelled', 16, 17, 'Customer is not taking the product'),
 (23, '18,27', '2,1', '0', 193, '0,3', 'cancelled', 36, 17, 'There are not enough Products in my store'),
 (24, '26,27', '1,1', '0', 131, '2,3', 'cancelled', 36, 17, 'There are not enough Products in my store'),
-(25, '8,14,15', '3,25,1', '0', 1393, '2,0,5', 'pending', 36, 3, NULL),
-(26, '1,4', '16,7', '0', 1496, '10,0', 'pending', 36, 11, NULL),
-(27, '17', '1', '0', 26, '0', 'pending', 36, 15, NULL),
-(28, '27', '1', '0', 33, '3', 'pending', 36, 17, NULL),
-(29, '14', '2', '0', 50, '0', 'pending', 17, 3, NULL),
-(30, '26,29,31', '1,1,1', '0', 216, '2,2,40', 'pending', 16, 17, NULL),
-(31, '29', '6', '0', 206, '2', 'cancelled', 36, 17, 'কাস্টমার আমার দোকানে আসেনি'),
+(25, '8,14,15', '3,25,1', '0', 1393, '2,0,5', 'cancelled', 36, 3, NULL),
+(26, '1,4', '16,7', '0', 1496, '10,0', 'cancelled', 36, 11, NULL),
+(27, '17', '1', '0', 26, '0', 'cancelled', 36, 15, NULL),
+(28, '27', '1', '0', 33, '3', 'cancelled', 36, 17, NULL),
+(29, '14', '2', '0', 50, '0', 'cancelled', 17, 3, NULL),
+(30, '26,29,31', '1,1,1', '0', 216, '2,2,40', 'cancelled', 16, 17, NULL),
+(31, '29', '6', '0', 206, '', 'cancelled', 36, 17, 'কাস্টমার আমার দোকানে আসেনি'),
 (32, '26,27,29,31,32', '1,1,1,2,1', '0', 514, '2,3,2,40,10', 'cancelled', 36, 17, 'কাস্টমার আমার দোকানে আসেনি'),
-(33, '1', '2', '0', 178, '10', 'pending', 36, 11, NULL),
-(34, '40', '1', '0', 2, '0', 'pending', 73, 17, NULL),
-(35, '1,4', '1,1', '0', 99, '10,0', 'pending', 36, 11, NULL),
-(36, '29,31', '2,1', '0', 153, '2,40', 'pending', 36, 17, NULL),
-(37, '26,29,31,32', '1,1,1,1', '0', 500, '', 'pending', 36, 17, NULL),
-(38, '26,29,31,32', '1,1,1,1', '0', 421, '2,2,40,10', 'pending', 36, 17, NULL),
-(39, '', '', '0', 0, '', 'pending', 36, 11, NULL),
-(40, '', '', '0', 0, '', 'pending', 36, 11, NULL),
-(41, '31,33,40', '1,1,100', '0', 464, '40,10,0', 'pending', 36, 17, NULL),
-(42, '1,4,26,32,34', '2,4,8,5,2', '0', 218, '10,0,2,10,0', 'pending', 36, 11, NULL),
-(43, '26,32,34', '8,5,2', '0', 1897, '2,10,0', 'other', 36, 17, NULL),
-(44, '26,32,41', '1,10,3', '0', 3180, '2,10,4', 'completed', 36, 17, NULL);
+(33, '1', '2', '0', 178, '10', 'cancelled', 36, 11, NULL),
+(34, '40', '1', '0', 2, '0', 'cancelled', 73, 17, NULL),
+(35, '1,4', '1,1', '0', 99, '10,0', 'cancelled', 36, 11, NULL),
+(36, '29,31', '2,1', '0', 153, '2,40', 'cancelled', 36, 17, NULL),
+(37, '26,29,31,32', '1,1,1,1', '0', 500, '', 'cancelled', 36, 17, NULL),
+(38, '26,29,31,32', '1,1,1,1', '0', 421, '2,2,40,10', 'cancelled', 36, 17, NULL),
+(39, '', '', '0', 0, '', 'cancelled', 36, 11, NULL),
+(40, '', '', '0', 0, '', 'cancelled', 36, 11, NULL),
+(41, '31,33,40', '1,1,100', '0', 464, '40,10,0', 'cancelled', 36, 17, NULL),
+(42, '1,4,26,32,34', '2,4,8,5,2', '0', 218, '10,0,2,10,0', 'cancelled', 36, 11, NULL),
+(43, '26,32,34', '8,5,2', '0', 1897, '2,10,0', 'cancelled', 36, 17, NULL),
+(44, '26,32,41', '1,10,3', '0', 3180, '2,10,4', 'completed', 36, 17, NULL),
+(45, '8,15', '3,1', '0', 768, '2,5', 'cancelled', 36, 3, NULL),
+(46, '26,28,32', '3,1,6', '0', 1458, '2,77,10', 'cancelled', 36, 17, NULL),
+(47, '26,32,34,41', '8,2,1,1', '0', 1761, '2,10,0,4', 'completed', 36, 17, NULL),
+(48, '8,15', '1,3', '0', 1520, '2,5', 'cancelled', 36, 3, NULL),
+(49, '29', '4', '0', 137, '2', 'cancelled', 36, 17, NULL),
+(50, '32,48', '7,1', '0', 1536, '10,0', 'cancelled', 36, 17, NULL),
+(51, '26,29,41,43,49', '3,4,3,3,3', '0', 2788, '2,2,4,3,3', 'cancelled', 36, 17, NULL),
+(52, '26,32,34,41,49', '1,2,1,8,4', '0', 5118, '2,10,0,4,3', 'cancelled', 36, 17, NULL),
+(53, '1', '1', '0', 89, '10', 'cancelled', 36, 11, NULL),
+(54, '1,4', '7,5', '0', 674, '10,0', 'canceled', 36, 11, 'Time Out'),
+(55, '26,28,29,32,33,34,41,48', '25,1,1,4,1,12,12,5', '0', 10454, '2,77,2,10,10,0,4,0', 'completed', 36, 17, NULL),
+(56, '4', '1', '0', 10, '0', 'completed', 36, 11, NULL),
+(57, '26,32,34,41', '1,1,1,2', '0', 1146, '2,10,0,4', 'completed', 36, 17, NULL),
+(58, '32,34,41', '1,1,1', '0', 608, '10,0,4', 'cancelled', 36, 17, 'Time Out'),
+(59, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
+(60, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cencelled', 36, 17, 'Time Out'),
+(61, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
+(62, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'pending', 36, 17, NULL),
+(63, '8,15', '34,1', '0', 3806, '2,5', 'cancelled', 36, 3, 'Time Out'),
+(64, '4,26,32,34,41', '1,1,2,2,2', '0', 10, '0,2,10,0,4', 'cancelled', 36, 11, 'Time Out'),
+(65, '4,26,32,34,41', '1,1,2,2,2', '0', 1337, '0,2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
+(66, '8', '2', '0', 196, '2', 'cancelled', 36, 3, 'Time Out'),
+(67, '1,4', '1,1', '0', 99, '10,0', 'pending', 36, 11, NULL),
+(68, '26,32,34,41', '2,1,3,4', '0', 2121, '2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
+(69, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out'),
+(70, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out');
 
 -- --------------------------------------------------------
 
@@ -433,24 +483,24 @@ CREATE TABLE `shopper_product` (
 --
 
 INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`, `shopper_id`, `view`) VALUES
-(1, 'gg product', 99, 10, 100, 10, 2, 3, 1, 11, 14),
+(1, 'gg product', 99, 10, 100, 10, 2, 3, 1, 11, 17),
 (4, 'sugar', 10, 0, 100, 11, 0, 0, 13, 11, 39),
 (8, 'Vanity Bag', 100, 2, 25, 0, 0, 0, 12, 3, 3),
 (14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3, 1),
 (15, 'Vanity Bag', 499, 5, 1000, 0, 0, 0, 12, 3, 3),
 (17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15, 1),
-(26, 'Ishan Tea', 124, 2, 20, 40, 0, 0, 14, 17, 4),
+(26, 'Ishan Tea', 124, 2, 20, 40, 0, 0, 14, 17, 8),
 (27, 'sugar', 34, 3, 19, 0, 0, 0, 13, 17, 1),
 (28, 'Vanity Bag', 35, 77, 67, 0, 0, 0, 12, 17, 1),
 (29, 'Potato Chips ', 35, 2, 4, 0, 0, 0, 17, 17, 7),
 (30, '7 up Normal', 43, 3, 1000, 0, 0, 0, 18, 17, 0),
 (31, '7 up Verified', 140, 40, 54, 0, 0, 0, 19, 17, 8),
-(32, '7 up Verified', 201, 10, 100, 100, 0, 0, 19, 17, 8),
+(32, '7 up Verified', 201, 10, 100, 100, 0, 0, 19, 17, 14),
 (33, '7 up Normal', 200, 10, 10, 0, 0, 0, 18, 17, 0),
 (34, 'Potato Chips ', 10, 0, 100, 50, 0, 0, 17, 17, 1),
 (39, ' Sprite (20 Fl Oz Bottle) varified', 23, 0, 8, 0, 0, 0, 43, 17, 7),
 (40, ' Sprite (20 Fl Oz Bottle)', 2, 0, 88, 0, 0, 0, 42, 17, 3),
-(41, 'Yellow Rice', 434, 4, 33, 120, 0, 0, 16, 17, 19),
+(41, 'Yellow Rice', 434, 4, 33, 120, 0, 0, 16, 17, 33),
 (42, 'Coke Cola Original', 35, 0, 33, 0, 0, 0, 44, 17, 0),
 (43, 'Ishan Tea ', 23, 3, 22, 0, 0, 0, 14, 17, 0),
 (45, 'Hand bag In Town', 272, 7, 34, 0, 0, 0, 15, 17, 0),
@@ -458,7 +508,7 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (47, 'Chilli Sauce', 150, -1, 32, 0, 0, 0, 45, 17, 2),
 (48, 'Pran-Sauce-750-gm', 270, 0, 123, 0, 0, 0, 46, 17, 7),
 (49, 'Yellow Rice', 333, 3, 34, 0, 0, 0, 16, 17, 0),
-(50, 'Hand bag In Town', 34, 1, 32, 0, 0, 0, 15, 17, 0);
+(50, 'Hand bag In Town', 34, 1, 32, 0, 0, 0, 15, 17, 1);
 
 --
 -- Indexes for dumped tables
@@ -558,7 +608,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `hero_slider`
@@ -576,7 +626,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `news_comment`
 --
 ALTER TABLE `news_comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `news_like`
@@ -588,7 +638,7 @@ ALTER TABLE `news_like`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -600,7 +650,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `refer`
