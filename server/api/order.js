@@ -35,7 +35,21 @@ const read = [
   },
   {
     uri: "/order/getordershopper/:shopper_id",
-    query: `SELECT * FROM product_order WHERE shopper_id = ?`,
+    query: `SELECT * 
+    FROM product_order 
+    WHERE (order_status = 'pending' OR order_status = 'accepted') 
+      AND shopper_id = ? 
+    ORDER BY id DESC;`,
+    param: ["shopper_id"],
+    msg: "product_id",
+  },
+  {
+    uri: "/order/getorderhistoryshopper/:shopper_id",
+    query: `SELECT * 
+    FROM product_order 
+    WHERE (order_status = 'cancelled' OR order_status = 'completed') 
+      AND shopper_id = ? 
+    ORDER BY id DESC;`,
     param: ["shopper_id"],
     msg: "product_id",
   },
@@ -101,7 +115,7 @@ const change = [
   {
     uri: "/order/ordertimeoutStatus/:id",
     query: `UPDATE product_order SET order_status = ? , cancel_report = ? WHERE id = ?`,
-    body: ["order_status","cancel_report"],
+    body: ["order_status", "cancel_report"],
     param: ["id"],
     msg: "id",
   },

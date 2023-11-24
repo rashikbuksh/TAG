@@ -161,7 +161,7 @@ const ShopKeeperDashBoard = () => {
 										</div>
 									</div>
 									<div className="flex justify-end mt-4">
-										<button onClick={()=>setIsClockOpen(!isClockOpen)} className="w-[80px] h-[30px] text-white bg-[#2D8FCA] rounded ">Done</button>
+										<button onClick={()=>setIsClockOpen(!isClockOpen)} className="action-button">Done</button>
 									</div>
 								</div>
 

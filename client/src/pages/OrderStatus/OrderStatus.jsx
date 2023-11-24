@@ -168,6 +168,7 @@ const OrderStatus = () => {
 								<div className="mx-auto w-[100%] p-2">
 									<div>
 										{productList.map((product) => (
+											
 											<>
 												<div key={product.id}>
 													<div className="relative my-2 h-[80px] bg-gray-100 p-2">
@@ -188,7 +189,7 @@ const OrderStatus = () => {
 																		.env
 																		.VITE_API_PUBLIC_URL
 																}/product/${
-																	product.id
+																	product.pid
 																}`}
 															>
 																<h1 className="text-sm">
