@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Breadcrumb } from "../../components";
-import { api } from "../../lib/api";
-import { Takaicon } from "../../SvgHub/SocialIcon";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Breadcrumb } from '../../components';
+import { Takaicon } from '../../SvgHub/SocialIcon';
+import { api } from '../../lib/api';
 
-const OrderShopper = () => {
-	const [data, setData] = useState([]);
-
+const ShopperOrderHistory = () => {
+    const [data, setData] = useState([]);
 	// Get user ID from local storage
 	const shopper_id = localStorage.getItem("user-id");
 
 	useEffect(() => {
-		api.get(`/order/getordershopper/${shopper_id}`)
+		api.get(`/order/getorderhistoryshopper/${shopper_id}`)
 			.then((response) => {
 				setData(response.data);
 				// console.log(response.data);
@@ -94,4 +93,4 @@ const OrderShopper = () => {
 	);
 };
 
-export default OrderShopper;
+export default ShopperOrderHistory;

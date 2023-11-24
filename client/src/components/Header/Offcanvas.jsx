@@ -195,6 +195,34 @@ function Offcanvas(props) {
 										</Link>
 									)
 								)}
+							
+							</li>
+							<li>
+							<span className="icon">
+									<ReactSVG
+										src={
+											import.meta.env
+												.VITE_API_PUBLIC_URL +
+											"/assets/img/icons/cart-two.svg"
+										}
+									/>
+								</span>
+							{userInfo.map((item) =>
+									item.access == "shopper" ? (
+										<Link
+											key={user}
+											to={
+												import.meta.env
+													.VITE_API_PUBLIC_URL +
+												`/ordersHistoryDetails/${user.id}`
+											}
+										>
+											Order History
+										</Link>
+									) : (
+										""
+									)
+								)}
 							</li>
 							{user.access === "customer" && (
 								<li>

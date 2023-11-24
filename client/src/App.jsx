@@ -37,6 +37,8 @@ import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import OrderStatus from "./pages/OrderStatus/OrderStatus";
 import OrderModal from "./pages/Order/OrderModal/OrderModal";
+import OrderDetailsShopper from "./pages/OrderShopper/OrderModal";
+import ShopperOrderHistory from "./pages/OrderHistory/ShopperOrderHistory";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -225,7 +227,21 @@ const PROTECTED_ROUTES = [
 		access: ["admin","customer", "shopper"],
 	},
 	{
-		id: 28,
+		id: 30,
+		name: "Order Details Shoper",
+		path: "/orderShoperDetails/:id",
+		element: OrderDetailsShopper,
+		access: ["admin", "shopper"],
+	},
+	{
+		id: 31,
+		name: "Order History Shoper",
+		path: "/ordersHistoryDetails/:id",
+		element: ShopperOrderHistory,
+		access: ["admin", "shopper"],
+	},
+	{
+		id: 32,
 		name: "IndividualMessagePage",
 		path: "/individualMessagePage",
 		element: IndividualMessagePage,
