@@ -15,7 +15,11 @@ const params = {
 		disableOnInteraction: false,
 	},
 	pagination: true,
+
 };
+if (window.matchMedia("(min-width: 1024px)").matches) {
+	params.slidesPerView = 2;
+  }
 
 const HeroSlider = () => {
 	// const { data, isLoading, errorMessage } = useFetch("/heroslider/getslider");
@@ -25,16 +29,15 @@ const HeroSlider = () => {
 		api.get("/heroslider/getslider")
 			.then((res) => {
 				setSliderData(res.data);
+				
 			})
 			.catch((err) => {
 				// console.log(err);
 			});
 	}, []);
 	return (
-		<div className="hero-slider  space-y--10 max-w-7xl mx-auto">
-			<div className="">
-				<div className="">
-					<div className="">
+		<div className="hero-slider max-w-7xl  -mx-2 lg:mx-auto">
+			
 						<div className="hero-slider-wrapper">
 							{!!sliderData.length && (
 								<Swiper options={params}>
@@ -78,9 +81,6 @@ const HeroSlider = () => {
 							)}
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
 	);
 };
 

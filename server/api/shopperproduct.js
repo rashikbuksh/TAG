@@ -14,6 +14,23 @@ const add = [
 	},
 ];
 
+// const add = [
+// 	{
+// 		uri: "/shopperproduct/addshopperproduct",
+// 		query: `INSERT INTO shopper_product (name, price, discount, product_count, product_id, shopper_id)
+// 		VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), ...`,
+// 		body: [
+// 			"name",
+// 			"price",
+// 			"discount",
+// 			"product_count",
+// 			"product_id",
+// 			"shopper_id",
+// 		],
+// 		msg: "name",
+// 	},
+// ];
+
 const read = [
 	{
 		uri: "/shopperproduct/getshopperproduct",

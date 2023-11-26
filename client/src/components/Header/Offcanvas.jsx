@@ -108,7 +108,7 @@ function Offcanvas(props) {
 						</div>
 					))}
 					<div className="">
-						<ul 
+						<ul
 							onClick={handeloffDrawer}
 							className="offcanvas-navigation overflow-y-auto"
 						>
@@ -195,20 +195,20 @@ function Offcanvas(props) {
 										</Link>
 									)
 								)}
-							
 							</li>
-							<li>
-							<span className="icon">
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/cart-two.svg"
-										}
-									/>
-								</span>
+
 							{userInfo.map((item) =>
-									item.access == "shopper" ? (
+								item.access == "shopper" ? (
+									<li key={userInfo.id}>
+										<span className="icon">
+											<ReactSVG
+												src={
+													import.meta.env
+														.VITE_API_PUBLIC_URL +
+													"/assets/img/icons/cart-two.svg"
+												}
+											/>
+										</span>
 										<Link
 											key={user}
 											to={
@@ -219,11 +219,11 @@ function Offcanvas(props) {
 										>
 											Order History
 										</Link>
-									) : (
-										""
-									)
-								)}
-							</li>
+									</li>
+								) : (
+									""
+								)
+							)}
 							{user.access === "customer" && (
 								<li>
 									<span className="icon">

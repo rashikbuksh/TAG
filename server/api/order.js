@@ -27,7 +27,7 @@ const read = [
     query: `SELECT po.*, cp.name as shopper_name
 	FROM product_order po
 	JOIN customer_profile cp ON po.shopper_id = cp.id
-	WHERE po.order_status = 'pending'
+	WHERE (po.order_status = 'pending' OR po.order_status = 'accepted')
 	AND po.customer_profile_id = ? ORDER BY id DESC`,
 
     param: ["customer_profile_id"],

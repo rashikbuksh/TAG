@@ -48,7 +48,7 @@ const BestSellerProduct = ({ limit, type }) => {
 					<div className="">
 						{/* section title */}
 						{prods && (
-							<h2 className="section-title space-mb--20">
+							<h2 className="section-title ">
 								<span className="text-xl font-bold">
 									Best Sale{" "}
 								</span>
@@ -75,7 +75,7 @@ const BestSellerProduct = ({ limit, type }) => {
 
 						{/* featured products */}
 						<div className="featured-product-wrapper space-mb-m--15">
-							<div className="mt-8 grid grid-cols-2 gap-1 lg:grid-cols-4">
+							<div className="mt-1 grid grid-cols-2 gap-1 lg:grid-cols-4">
 								{shopperProducts.map((single) => {
 									return (
 										<div

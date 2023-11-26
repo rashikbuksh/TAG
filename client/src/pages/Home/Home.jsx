@@ -44,7 +44,7 @@ const Home = () => {
 	// Use useMemo to update memoizedCartItems when cartItems change
 
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper my-12 space-pb--120">
 			<Helmet>
 				<meta charSet="utf-8" />
 				<meta

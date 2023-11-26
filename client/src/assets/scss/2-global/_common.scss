@@ -6,6 +6,11 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+@media (min-width: 1024px) {
+    .bg-img {
+        background-size: contain;
+    }
+}
 
 .border-bottom {
     border-bottom: 1px solid $grey--seven !important;
