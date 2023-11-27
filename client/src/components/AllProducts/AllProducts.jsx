@@ -64,7 +64,7 @@ const AllProducts = ({ limit }) => {
 	return (
 		<div className=" mx-auto  max-w-7xl">
 			<div className="">
-				<div className=" my-10">
+				<div className="">
 					{/* Popular Product  */}
 					{prods && (
 						<h2 className="section-title space-mb--20">
@@ -93,7 +93,7 @@ const AllProducts = ({ limit }) => {
 					)}
 
 					<ProductSlider products={popularProducts}></ProductSlider>
-					<div className="my-5"></div>
+					<div className="my-2"></div>
 					{prods && (
 						<h2 className="section-title space-mb--20 ">
 							<p className="text-xl font-bold flex items-center gap-3">
@@ -120,7 +120,7 @@ const AllProducts = ({ limit }) => {
 						</h2>
 					)}
 					<ProductSlider products={isVerifiedProduct}></ProductSlider>
-					<div className="my-5"></div>
+					<div className="my-2"></div>
 					{prods && (
 						<h2 className="section-title space-mb--20">
 							<span className="text-xl font-bold">Product </span>

@@ -4,7 +4,8 @@ import { useAuth } from "../../context/auth";
 import { Link } from "react-router-dom";
 import { Takaicon } from "../../SvgHub/SocialIcon";
 import { getDiscountPrice } from "../../helpers/product";
-import { FaDotCircle } from "react-icons/fa";
+// import { FaDotCircle } from "react-icons/fa";
+import { FaCircle } from "react-icons/fa6";
 
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
@@ -35,7 +36,7 @@ const OrderStatus = () => {
 				// console.log(error);
 				setPendingOrders([]);
 			});
-	}, [user.id,]);
+	}, [user.id]);
 
 	useEffect(() => {
 		// Make the API calls for each pending order and collect the products
@@ -151,9 +152,18 @@ const OrderStatus = () => {
 						</h1>
 						<div className="flex items-center gap-2">
 							<p>Status</p>{" "}
-							<span>
-								<FaDotCircle className="text-green-500" />
-							</span>
+							{order.order_status === "accepted" ? (
+								<span>
+									<FaCircle className="text-green-500" />
+								</span>
+							) : order.order_status === "pending" ? (
+								<span>
+									<FaCircle className="text-yellow-500" />
+								</span>
+							) : (
+								""
+							)}
+						
 						</div>
 					</div>
 					<hr />
@@ -168,7 +178,6 @@ const OrderStatus = () => {
 								<div className="mx-auto w-[100%] p-2">
 									<div>
 										{productList.map((product) => (
-											
 											<>
 												<div key={product.id}>
 													<div className="relative my-2 h-[80px] bg-gray-100 p-2">
