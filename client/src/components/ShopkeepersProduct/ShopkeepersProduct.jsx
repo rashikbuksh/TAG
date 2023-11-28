@@ -75,7 +75,7 @@ const ShopkeepersProduct = () => {
 						<span className="lg:text-xl">Delete</span>
 					</div>
 				</div>
-				<div className="  my-10 grid grid-cols-1 gap-10 lg:grid-cols-2">
+				<div className="my-10 grid grid-cols-2 gap-10 lg:grid-cols-2">
 					{prods.map((product) => (
 						<ShopkeeperProductcart
 							key={product.id}

@@ -156,3 +156,22 @@ export const DashBoardIcon = () => {
 		</svg>
 	);
 };
+export const TikIcon = () => {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="18"
+			height="14"
+			viewBox="0 0 18 14"
+			fill="none"
+		>
+			<path
+				d="M2 8L5.52642 10.8211C6.35374 11.483 7.55365 11.3848 8.2624 10.5973L16 2"
+				stroke="#1C76FF"
+				strokeWidth="4"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
