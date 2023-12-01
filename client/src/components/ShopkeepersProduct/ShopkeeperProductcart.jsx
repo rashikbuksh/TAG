@@ -1,17 +1,27 @@
 /* eslint-disable react/prop-types */
 import Axios from "axios";
 import { useEffect, useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";
 import { api } from "../../lib/api";
+import { useAuth } from "../../context/auth";
 
-const ShopkeeperProductcart = ({ product }) => {
-	const { id, name, price, discount, product_count, product_id, image } =
-		product;
-
+const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
+	const {
+		id,
+		name,
+		price,
+		discount,
+		product_count,
+		product_id,
+		image,
+		isVerified,
+	} = product;
+	const browserUrl = window.location.pathname;
 	// State for quantity
-	const [quantity, setQuantity] = useState(product_count);
-
+	const [quantity, setQuantity] = useState(0);
+	const [newPrice, setNewPrice] = useState();
+	const [newDisCount, setnewDisCount] = useState();
 	// Function to increase quantity
 	const increaseQuantity = () => {
 		setQuantity(quantity + 1);
@@ -19,7 +29,7 @@ const ShopkeeperProductcart = ({ product }) => {
 
 	// Function to decrease quantity
 	const decreaseQuantity = () => {
-		if (quantity > 1) {
+		if (quantity > 0) {
 			setQuantity(quantity - 1);
 		}
 	};
@@ -37,14 +47,18 @@ const ShopkeeperProductcart = ({ product }) => {
 	};
 
 	const [isEditingPrice, setIsEditingPrice] = useState(false);
-	const [newPrice, setNewPrice] = useState(price);
 
 	const handleEditClick = () => {
 		setIsEditingPrice(true);
 	};
 
 	const handlePriceChange = (e) => {
+		// console.log(e.target.value);
 		setNewPrice(e.target.value);
+	};
+	const handleDiscountChange = (e) => {
+		console.log(e.target.value);
+		setnewDisCount(e.target.value);
 	};
 
 	const handlePriceUpdate = () => {
@@ -102,84 +116,153 @@ const ShopkeeperProductcart = ({ product }) => {
 		setQuantity(0);
 		updateProductCount();
 	};
-
+	const { user } = useAuth();
+	const handleCheckboxChange = (e) => {
+		// Check if newPrice is not empty
+		if (newPrice && newDisCount && quantity) {
+			const selectedProductInfo = {
+				name: name,
+				price: newPrice,
+				discount: newDisCount,
+				product_count: quantity,
+				product_id: id,
+				shopper_id: user.id,
+				image: image,
+			};
+			onProductSelection(selectedProductInfo, e.target.checked);
+		} else {
+			// Prevent selection if newPrice is empty
+			alert("Please enter a price, Discount,Quantity before selecting.");
+			// You might want to handle this scenario by showing an error message or taking appropriate action
+		}
+	};
 	return (
-		<div className="">
-			<div className="mx-4 h-[450px] border border-black p-4 lg:mx-0 lg:w-[600px]">
-				<div className="flex items-center justify-between">
+		<div className="w-[190px] px-0.5">
+			<div className="lg:mx-0 ">
+				<div className="mb-1 flex h-[50px]  items-center gap-3 border px-2 py-1">
 					<input
 						type="checkbox"
-						className="checkbox-success checkbox"
+						className="checkbox-success checkbox checkbox-xs"
+						onChange={handleCheckboxChange}
+						checked={isSelected}
 					/>
-					<h1 className="text-xl font-bold">{name || ""}</h1>
-					<div className="dropdown dropdown-end">
-						<label tabIndex={0} className="btn m-1">
-							<FaBars />
-						</label>
-						<ul
-							tabIndex={0}
-							className="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
-						>
-							<li>
-								<button onClick={handleEditClick}>Edit</button>
-							</li>
-							<li>
-								<button onClick={handleDeleteClick}>
-									Delete
-								</button>
-							</li>
-							<li>
-								<a>Share</a>
-							</li>
-							<li>
-								<button onClick={handleNotAvailable}>
-									Not Available
-								</button>
-							</li>
-						</ul>
+					<h1 className="text-xs">{name}</h1>
+					<div>
+						{isVerified === "verified" ? (
+							<FaCheckCircle className=" primary-text"></FaCheckCircle>
+						) : (
+							""
+						)}
 					</div>
+					{browserUrl === "/shopkeeperProduct" ? (
+						<div className="dropdown dropdown-top">
+							<label tabIndex={0} className="m-1">
+								<FaBars />
+							</label>
+							<ul
+								tabIndex={0}
+								className="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
+							>
+								<li>
+									<button onClick={handleEditClick}>
+										Edit
+									</button>
+								</li>
+								<li>
+									<button onClick={handleDeleteClick}>
+										Delete
+									</button>
+								</li>
+								<li>
+									<a>Share</a>
+								</li>
+								<li>
+									<button onClick={handleNotAvailable}>
+										Not Available
+									</button>
+								</li>
+							</ul>
+						</div>
+					) : (
+						""
+					)}
 				</div>
-				<div className="divider"></div>
-				<div className="flex flex-col items-center justify-center gap-3">
+
+				<div className="flex flex-col items-center justify-center gap-1 border p-1">
 					<img
-						className="h-[200px] w-[200px]"
+						className="h-[100px] w-[100px]"
 						src={`${
 							import.meta.env.VITE_APP_IMG_URL
 						}/products/${image}`}
 						alt="No Image"
 					/>
 					<div>
-						<label className="sr-only">Quantity</label>
-						<div className="flex items-center gap-1">
-							<button
-								type="button"
-								onClick={decreaseQuantity}
-								className="h-10 w-10 leading-10 text-gray-600 transition hover:opacity-75"
-							>
-								<FaMinus />
-							</button>
+						<div className="my-2 flex flex-col items-center ">
+							<div>
+								<div className="">
+									<label className="">QTY:</label>
+									<div className="flex w-full items-center justify-between gap-2 rounded-lg bg-[#F2F8FD]   sm:text-sm">
+										<button
+											className="flex h-[30px]   w-[30px] items-center justify-center bg-[#60abe9] text-base   text-white"
+											onClick={decreaseQuantity}
+										>
+											-
+										</button>
+										<input
+											className="w-full bg-[#F2F8FD] text-center"
+											type="text"
+											value={quantity}
+											readOnly
+										/>
+										<button
+											className="flex h-[30px]   w-[30px] items-center justify-center bg-[#60abe9] text-base   text-white "
+											onClick={increaseQuantity}
+										>
+											+
+										</button>
+									</div>
+								</div>
 
-							<input
-								type="number"
-								id="Quantity"
-								value={quantity}
-								className="h-10 w-16 rounded border border-gray-200 text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
-							/>
+								<div className="mt-0.5  flex flex-col gap-0.5">
+									<label className="">Price:</label>
+									<input
+										type="number"
+										className="w-full rounded-lg bg-[#F2F8FD] px-2 py-1 pe-10  sm:text-sm"
+										placeholder={`Enter Price`}
+										name=""
+										max={isVerified ? price : ""}
+										value={newPrice} // Set input value to newPrice
+										onChange={handlePriceChange}
+										id=""
+									/>
+								</div>
+								<div className="relative  mt-0.5 flex flex-col gap-0.5">
+									<label className="">Discount:</label>
+									<input
+										type="text"
+										className="w-full rounded-lg bg-[#F2F8FD] px-2 py-1 pe-10  sm:text-sm"
+										placeholder="Enter Discount"
+										name=""
+										// Update newPrice state when input changes
+										id=""
+										value={newDisCount} // Set input value to newPrice
+										onChange={handleDiscountChange}
+									/>
+									<p className="absolute right-1 top-7">%</p>
+								</div>
+							</div>
 
-							<button
-								type="button"
-								onClick={increaseQuantity}
-								className="h-10 w-10 leading-10 text-gray-600 transition hover:opacity-75"
-							>
-								<FaPlus />
-							</button>
-							<button
-								type="button"
-								onClick={updateProductCount}
-								className="rounded-md bg-blue-200 px-2 py-1 text-black"
-							>
-								Confirm
-							</button>
+							{browserUrl === "/shopkeeperProduct" ? (
+								<button
+									type="button"
+									onClick={updateProductCount}
+									className="rounded-md bg-blue-200 px-2 py-1 text-black"
+								>
+									Confirm
+								</button>
+							) : (
+								""
+							)}
 						</div>
 					</div>
 					<div>
@@ -214,9 +297,7 @@ const ShopkeeperProductcart = ({ product }) => {
 								</button>
 							</div>
 						) : (
-							<p className="text-center text-xl font-bold">
-								Price {newPrice} Taka{" "}
-							</p>
+							""
 						)}
 					</div>
 				</div>
