@@ -1,7 +1,10 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import cogoToast from "@hasanm95/cogo-toast";
+import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useStopwatch } from "react-timer-hook";
+import { Takaicon } from "../../SvgHub/SocialIcon";
+import { useAuth } from "../../context/auth";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
 import {
@@ -10,40 +13,26 @@ import {
 	deleteFromCart,
 	increaseQuantity,
 } from "../../store/slices/cart-slice";
-import { FaTrash } from "react-icons/fa";
-import { Takaicon } from "../../SvgHub/SocialIcon";
-import cogoToast from "@hasanm95/cogo-toast";
 
 const Cart = () => {
-	const {
-		totalSeconds,
-		seconds,
-		minutes,
-		hours,
-		days,
-		isRunning,
-		start,
-		pause,
-		reset,
-	} = useStopwatch({ autoStart: false });
 	const dispatch = useDispatch();
-
-	const userID = localStorage.getItem("user-id");
+	const { user } = useAuth();
 	const { cartItems } = useSelector((state) => state.cart);
 	const [shoppers, setShoppers] = useState([]); // Maintain an array of shoppers
 	const [buyStates, setBuyStates] = useState({}); // Initialize a separate buy state for each shop
 	const [totals, setTotals] = useState({}); // Store totals for each shopper
 	const [productQuantities, setProductQuantities] = useState({});
 	const [productDiscounts, setProductDiscounts] = useState({});
-	const productDiscount = useRef({});
-	const productQuantity = useRef({});
-	const productPrice = useRef({});
 	const [clickedState, setClickedState] = useState(true);
-	const timeoutIdRef = useRef(null);
 	const [countdown, setCountdown] = useState(120); // Countdown timer in seconds
 	const [shopperId, setshopperId] = useState(null); // Countdown timer in seconds
 	const [timerStarted, setTimerStarted] = useState(false);
 	const [runningTimerShopperId, setRunningTimerShopperId] = useState(null);
+	const [intervalId, setIntervalId] = useState(null);
+	const productDiscount = useRef({});
+	const productQuantity = useRef({});
+	const productPrice = useRef({});
+	const timeoutIdRef = useRef(null);
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -57,16 +46,30 @@ const Cart = () => {
 		});
 	}, []);
 
+	useEffect(() => {
+		return () => {
+			if (intervalId) {
+				clearInterval(intervalId);
+			}
+		};
+	}, [shopperId]);
+
 	const redirectTimer = async (shopperId) => {
 		setRunningTimerShopperId(shopperId);
-		// console.log(clickedState);
 		setTimerStarted(true);
-		setCountdown(120); // Reset countdown to 120 seconds when Buy button is clicked
+		countdownRef.current = 120; // Reset countdown to 120 seconds when Buy button is clicked
+
+		if (intervalId) {
+			clearInterval(intervalId);
+		}
+
 		const interval = setInterval(() => {
-			if (countdown > 0) {
-				setCountdown((prevCountdown) => prevCountdown - 1);
+			if (countdownRef.current > 0) {
+				countdownRef.current -= 1;
 			}
 		}, 1000);
+
+		setIntervalId(interval);
 
 		setTimeout(() => {
 			clearInterval(interval);
@@ -78,14 +81,11 @@ const Cart = () => {
 		if (timerStarted && countdown === 0) {
 			addOrder(shopperId); // Perform action after countdown completes
 		}
-	}, [countdown, timerStarted, shopperId]);
+	}, [countdown, timerStarted]);
 
-	const displayMinutes = Math.floor(countdown / 60);
-	const displaySeconds = countdown % 60;
-
-	useEffect(() => {
+	const calculatedTotals = useMemo(() => {
 		// Calculate and set totals when cartItems or buyStates change
-		const calculatedTotals = {};
+		const totals = {};
 		shoppers.forEach((shopper) => {
 			const shopperTotal = cartItems.reduce((total, cartItem) => {
 				if (cartItem.shopper_id === shopper.id) {
@@ -97,18 +97,19 @@ const Cart = () => {
 				}
 				return total;
 			}, 0);
-			calculatedTotals[shopper.id] = parseFloat(shopperTotal).toFixed(2);
+			totals[shopper.id] = parseFloat(shopperTotal).toFixed(2);
 		});
-		setTotals(calculatedTotals);
+		return totals;
 	}, [cartItems, buyStates, shoppers, productDiscounts]);
+
 	const navigate = useNavigate();
 	const addOrder = (shopperId) => {
 		// Check if productDiscounts[shopperId] is defined, if not, set it as an empty object
 
 		const productIds =
 			cartItems
-				.filter((cartItem) => cartItem.shopper_id === shopperId)
-				.map((cartItem) => cartItem.id) || {};
+				?.filter((cartItem) => cartItem.shopper_id === shopperId)
+				?.map((cartItem) => cartItem.id) || {};
 
 		const quantities = productQuantity || {};
 		const discounts = productDiscount || {};
@@ -142,47 +143,11 @@ const Cart = () => {
 			}
 		});
 
-		// console.log(total, "total");
-
-		var last_order_id = 0;
 		const wantobuy = window.confirm("Are you sure you want to buy?");
 		if (!wantobuy) {
 			return;
 		} else {
-			api.post("/order/add_order", {
-				product_id: productid,
-				quantity: quantity,
-				discount: discount,
-				customer_profile_id: userID,
-				shopper_id: shopperId,
-				price: total,
-				order_status: "pending",
-				weight: 0,
-			}).then((res) => {
-				if (res.data.status === 201) {
-					api.get("/order/getLastOrder").then((res) => {
-						last_order_id = res.data[0].id;
-						api.post("/notification/addnotification", {
-							notification_content:
-								"You have a new order. Order Number is #" +
-								last_order_id +
-								".",
-							notification_time: new Date()
-								.toISOString()
-								.slice(0, 19)
-								.replace("T", " "),
-							not_from: shopperId,
-							not_to: userID,
-							status: 0,
-						}).then((res) => {
-							if (res.data.status === 201) {
-								// alert("Notification Added Successfully");
-							}
-						});
-					});
-				}
-			});
-
+			addOrderToDB(shopperId, productid, quantity, discount, total);
 			// remove the items from the cart
 			productIds.forEach((productId) => {
 				cartItems.forEach((cartItem) => {
@@ -205,13 +170,54 @@ const Cart = () => {
 			[shopperId]: {},
 		});
 		if (!productDiscounts[shopperId]) {
-			// console.log(discount, productid, quantity, "all");
 			setProductDiscounts({
 				...productDiscounts,
 				[shopperId]: {},
 			});
 		}
 		navigate("/orderStatus");
+	};
+
+	const addOrderToDB = async (
+		shopperId,
+		productid,
+		quantity,
+		discount,
+		total
+	) => {
+		api.post("/order/add_order", {
+			product_id: productid,
+			quantity: quantity,
+			discount: discount,
+			customer_profile_id: user.id,
+			shopper_id: shopperId,
+			price: total,
+			order_status: "pending",
+			weight: 0,
+		}).then((res) => {
+			if (res.data.status === 201) {
+				api.get("/order/getLastOrder").then((res) => {
+					let last_order_id = res.data[0].id;
+					api.post("/notification/addnotification", {
+						notification_content:
+							"You have a new order. Order Number is #" +
+							last_order_id +
+							".",
+						notification_time: new Date()
+							.toISOString()
+							.slice(0, 19)
+							.replace("T", " "),
+						not_from: shopperId,
+						not_to: user.id,
+						status: 0,
+					}).then((res) => {
+						if (res.data.status === 201) {
+							// alert("Notification Added Successfully");
+						}
+					});
+				});
+			}
+		});
 	};
 
 	const handleBuyClick = (shopperId) => {
@@ -225,7 +231,6 @@ const Cart = () => {
 			});
 			return;
 		}
-		// console.log(clickedState, "handle buy");
 		// Toggle the buy state for the specific shop
 		setBuyStates((prevBuyStates) => ({
 			...prevBuyStates,
@@ -238,13 +243,9 @@ const Cart = () => {
 				productDiscount[cartItem.id] = cartItem.discount;
 				productQuantity[cartItem.id] = cartItem.quantity;
 				productPrice[cartItem.id] = cartItem.price;
-				// console.log(cartItem.id, "discount", cartItem.discount);
 				discounts[cartItem.id] = cartItem.discount;
 			}
 		});
-		// console.log(productDiscount, "productDiscount");
-		// console.log(productQuantity, "productQuantity");
-		// console.log(productPrice, "productPrice");
 
 		// Store the discounts in state
 		setProductDiscounts((prevDiscounts) => ({
@@ -264,7 +265,7 @@ const Cart = () => {
 			...productQuantities,
 			[shopperId]: quantities,
 		});
-		if (clickedState == true ) {
+		if (clickedState == true) {
 			redirectTimer(shopperId);
 			cogoToast.warn(
 				"Order auto-submitted after 2 mins.If you want to cancel, click 'Cancel",
@@ -290,13 +291,9 @@ const Cart = () => {
 				productDiscount[cartItem.id] = cartItem.discount;
 				productQuantity[cartItem.id] = cartItem.quantity;
 				productPrice[cartItem.id] = cartItem.price;
-				// console.log(cartItem.id, "discount", cartItem.discount);
 				discounts[cartItem.id] = cartItem.discount;
 			}
 		});
-		// console.log(productDiscount, "productDiscount");
-		// console.log(productQuantity, "productQuantity");
-		// console.log(productPrice, "productPrice");
 
 		// Store the discounts in state
 		setProductDiscounts((prevDiscounts) => ({
@@ -318,8 +315,6 @@ const Cart = () => {
 		});
 		clearTimeout(timeoutIdRef.current);
 		setRunningTimerShopperId(null);
-
-		reset();
 	};
 
 	return (
@@ -348,7 +343,6 @@ const Cart = () => {
 								</>
 							)}
 							{cartItems.map((cartItem) => {
-								let cartTotalPrice = 0;
 								if (cartItem.shopper_id === shopper.id) {
 									return (
 										<div
@@ -477,7 +471,7 @@ const Cart = () => {
 															<input
 																type="hidden"
 																value={
-																	totals[
+																	calculatedTotals[
 																		shopper
 																			.id
 																	] || 0
@@ -503,12 +497,12 @@ const Cart = () => {
 													fontSize: "15px",
 												}}
 											>
-												<span>{displayMinutes}</span>m
-												<span>{displaySeconds}</span>s
+												<span>
+													{Math.floor(countdown / 60)}
+													m
+												</span>
+												m<span>{countdown % 60}</span>s
 											</div>
-											<p>
-												{isRunning ? "" : "Stop Timer"}
-											</p>
 										</div>
 									)}
 
@@ -527,8 +521,14 @@ const Cart = () => {
 													Cancel
 												</button>{" "}
 												<button
-													onClick={() =>
-														addOrder(shopper.id)
+													onClick={
+														(() =>
+															addOrder(
+																shopper.id
+															),
+														setshopperId(
+															shopper.id
+														))
 													}
 													className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
 												>
@@ -541,8 +541,7 @@ const Cart = () => {
 													setClicked(false),
 														handleBuyClick(
 															shopper.id
-														),
-														start();
+														);
 												}}
 												disabled={
 													runningTimerShopperId !==
@@ -558,9 +557,9 @@ const Cart = () => {
 									</div>
 									<h2 className="flex items-center justify-center gap-2 text-xs font-bold">
 										<Takaicon></Takaicon>
-										{parseFloat(totals[shopper.id]).toFixed(
-											2
-										)}
+										{parseFloat(
+											calculatedTotals[shopper.id]
+										).toFixed(2)}
 									</h2>
 								</div>
 							)}

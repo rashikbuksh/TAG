@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { api } from "../../lib/api";
-import { useAuth } from "../../context/auth";
 import { Link } from "react-router-dom";
 import { Takaicon } from "../../SvgHub/SocialIcon";
+import { useAuth } from "../../context/auth";
 import { getDiscountPrice } from "../../helpers/product";
+import { api } from "../../lib/api";
 // import { FaDotCircle } from "react-icons/fa";
+import { check } from "prettier";
 import { FaCircle } from "react-icons/fa6";
 
 const OrderStatus = () => {
@@ -80,40 +81,7 @@ const OrderStatus = () => {
 					});
 
 					// Check order status after timer ends
-					const id = orderId;
-					api.get(`/order/getorder_by_id/${id}`)
-						.then((response) => {
-							console.log(response);
-							const orderStatus = response.data[0].order_status;
-							if (orderStatus === "pending") {
-								// Update order status to canceled
-								api.post(`/order/ordertimeoutStatus/${id}`, {
-									order_status: "cancelled",
-									cancel_report: "Time Out",
-								})
-									.then(() => {
-										// Set a timeout for cancel report
-										setTimeout(() => {
-											// Perform actions for cancel report
-											console.log(
-												`Cancel report for order ID ${orderId}`
-											);
-										}, 5000); // Adjust timeout duration as needed
-									})
-									.catch((error) => {
-										console.error(
-											"Error updating status:",
-											error
-										);
-									});
-							}
-						})
-						.catch((error) => {
-							console.error(
-								"Error fetching order status:",
-								error
-							);
-						});
+					checkOrderStatus(orderId);
 				}
 			}, 1000);
 
@@ -124,18 +92,38 @@ const OrderStatus = () => {
 			}));
 		}
 	};
-	// startTimer()
-	// useEffect(() => {
-	// 	fetchUpdatedOrders();
 
-	// 	const intervalId = setInterval(() => {
-	// 		fetchUpdatedOrders();
-	// 	}, 10000); // Adjust the interval time as needed (e.g., every 10 seconds)
-
-	// 	return () => {
-	// 		clearInterval(intervalId);
-	// 	};
-	// }, []);
+	const checkOrderStatus = (orderId) => {
+		const id = orderId;
+		api.get(`/order/getorder_by_id/${id}`)
+			.then((response) => {
+				console.log(response);
+				const orderStatus = response.data[0].order_status;
+				if (orderStatus === "pending") {
+					// Update order status to canceled
+					api.post(`/order/ordertimeoutStatus/${id}`, {
+						order_status: "cancelled",
+						cancel_report: "Time Out",
+					})
+						.then(() => {
+							// Set a timeout for cancel report
+							setTimeout(() => {
+								// Perform actions for cancel report
+								console.log(
+									`Cancel report for order ID ${orderId}`
+								);
+							}, 5000); // Adjust timeout duration as needed
+						})
+						.catch((error) => {
+							console.error("Error updating status:", error);
+						});
+				}
+			})
+			.catch((error) => {
+				console.error("Error fetching order status:", error);
+			});
+	};
+	
 	return (
 		<div className="mt-20 ">
 			<h1 className="text-center text-xl font-semibold">Order Status</h1>
@@ -163,7 +151,6 @@ const OrderStatus = () => {
 							) : (
 								""
 							)}
-						
 						</div>
 					</div>
 					<hr />
