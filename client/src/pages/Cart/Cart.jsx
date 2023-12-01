@@ -1,5 +1,5 @@
 import cogoToast from "@hasanm95/cogo-toast";
-import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,9 +20,6 @@ const Cart = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const [shoppers, setShoppers] = useState([]); // Maintain an array of shoppers
 	const [buyStates, setBuyStates] = useState({}); // Initialize a separate buy state for each shop
-	const [totals, setTotals] = useState({}); // Store totals for each shopper
-	const [productQuantities, setProductQuantities] = useState({});
-	const [productDiscounts, setProductDiscounts] = useState({});
 	const [clickedState, setClickedState] = useState(true);
 	const [countdown, setCountdown] = useState(120); // Countdown timer in seconds
 	const [shopperId, setshopperId] = useState(null); // Countdown timer in seconds
@@ -57,16 +54,21 @@ const Cart = () => {
 	const redirectTimer = async (shopperId) => {
 		setRunningTimerShopperId(shopperId);
 		setTimerStarted(true);
-		countdownRef.current = 120; // Reset countdown to 120 seconds when Buy button is clicked
+		setCountdown(120); // Reset countdown to 120 seconds when Buy button is clicked
 
 		if (intervalId) {
 			clearInterval(intervalId);
 		}
 
 		const interval = setInterval(() => {
-			if (countdownRef.current > 0) {
-				countdownRef.current -= 1;
-			}
+			setCountdown((prevCountdown) => {
+				if (prevCountdown > 0) {
+					return prevCountdown - 1;
+				} else {
+					clearInterval(interval);
+					return prevCountdown;
+				}
+			});
 		}, 1000);
 
 		setIntervalId(interval);
@@ -79,7 +81,9 @@ const Cart = () => {
 	};
 	useEffect(() => {
 		if (timerStarted && countdown === 0) {
-			addOrder(shopperId); // Perform action after countdown completes
+			return (
+				<button onClick={() => addOrder(shopperId)}>Add Order</button>
+			); // Perform action after countdown completes
 		}
 	}, [countdown, timerStarted]);
 
@@ -100,7 +104,7 @@ const Cart = () => {
 			totals[shopper.id] = parseFloat(shopperTotal).toFixed(2);
 		});
 		return totals;
-	}, [cartItems, buyStates, shoppers, productDiscounts]);
+	}, [cartItems, buyStates, shoppers]);
 
 	const navigate = useNavigate();
 	const addOrder = (shopperId) => {
@@ -155,24 +159,6 @@ const Cart = () => {
 						dispatch(deleteFromCart(cartItem, shopperId));
 					}
 				});
-			});
-		}
-		setTotals((prevTotals) => ({
-			...prevTotals,
-			[shopperId]: 0,
-		}));
-		setProductQuantities({
-			...productQuantities,
-			[shopperId]: {},
-		});
-		setProductDiscounts({
-			...productDiscounts,
-			[shopperId]: {},
-		});
-		if (!productDiscounts[shopperId]) {
-			setProductDiscounts({
-				...productDiscounts,
-				[shopperId]: {},
 			});
 		}
 		navigate("/orderStatus");
@@ -246,24 +232,11 @@ const Cart = () => {
 				discounts[cartItem.id] = cartItem.discount;
 			}
 		});
-
-		// Store the discounts in state
-		setProductDiscounts((prevDiscounts) => ({
-			...prevDiscounts,
-			[shopperId]: discounts,
-		}));
-
 		const quantities = {};
 		cartItems.forEach((cartItem) => {
 			if (cartItem.shopper_id === shopperId) {
 				quantities[cartItem.id] = cartItem.quantity;
 			}
-		});
-
-		// Store the quantities in state
-		setProductQuantities({
-			...productQuantities,
-			[shopperId]: quantities,
 		});
 		if (clickedState == true) {
 			redirectTimer(shopperId);
@@ -294,24 +267,11 @@ const Cart = () => {
 				discounts[cartItem.id] = cartItem.discount;
 			}
 		});
-
-		// Store the discounts in state
-		setProductDiscounts((prevDiscounts) => ({
-			...prevDiscounts,
-			[shopperId]: discounts,
-		}));
-
 		const quantities = {};
 		cartItems.forEach((cartItem) => {
 			if (cartItem.shopper_id === shopperId) {
 				quantities[cartItem.id] = cartItem.quantity;
 			}
-		});
-
-		// Store the quantities in state
-		setProductQuantities({
-			...productQuantities,
-			[shopperId]: quantities,
 		});
 		clearTimeout(timeoutIdRef.current);
 		setRunningTimerShopperId(null);
@@ -501,7 +461,7 @@ const Cart = () => {
 													{Math.floor(countdown / 60)}
 													m
 												</span>
-												m<span>{countdown % 60}</span>s
+												<span>{countdown % 60}</span>s
 											</div>
 										</div>
 									)}
@@ -511,25 +471,22 @@ const Cart = () => {
 											<>
 												<button
 													onClick={() => {
-														setClicked(true),
-															handelCancel(
-																shopper.id
-															);
+														setClicked(true);
+														handelCancel(
+															shopper.id
+														);
 													}}
 													className="h-[24px] w-[48px] rounded bg-[#a92f4e] text-xs text-white"
 												>
 													Cancel
 												</button>{" "}
 												<button
-													onClick={
-														(() =>
-															addOrder(
-																shopper.id
-															),
+													onClick={() => {
+														addOrder(shopper.id);
 														setshopperId(
 															shopper.id
-														))
-													}
+														);
+													}}
 													className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
 												>
 													Buy2
