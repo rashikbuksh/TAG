@@ -29,7 +29,6 @@ const Cart = () => {
 	const productDiscount = useRef({});
 	const productQuantity = useRef({});
 	const productPrice = useRef({});
-	const timeoutIdRef = useRef(null);
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -74,10 +73,12 @@ const Cart = () => {
 		setIntervalId(interval);
 
 		setTimeout(() => {
-			clearInterval(interval);
-			setRunningTimerShopperId(null);
-			addOrder(shopperId); // Perform action after countdown completes
-		}, 120000);
+			if (countdown > 0 && timerStarted == true) {
+				clearInterval(interval);
+				setRunningTimerShopperId(null);
+				addOrder(shopperId); // Perform action after countdown completes
+			}
+		}, 12000);
 	};
 	useEffect(() => {
 		if (timerStarted && countdown === 0) {
@@ -258,22 +259,23 @@ const Cart = () => {
 			[shopperId]: !prevBuyStates[shopperId],
 		}));
 
-		const discounts = {};
-		cartItems.forEach((cartItem) => {
-			if (cartItem.shopper_id === shopperId) {
-				productDiscount[cartItem.id] = cartItem.discount;
-				productQuantity[cartItem.id] = cartItem.quantity;
-				productPrice[cartItem.id] = cartItem.price;
-				discounts[cartItem.id] = cartItem.discount;
-			}
-		});
-		const quantities = {};
-		cartItems.forEach((cartItem) => {
-			if (cartItem.shopper_id === shopperId) {
-				quantities[cartItem.id] = cartItem.quantity;
-			}
-		});
-		clearTimeout(timeoutIdRef.current);
+		setTimerStarted(false);
+
+		// const discounts = {};
+		// cartItems.forEach((cartItem) => {
+		// 	if (cartItem.shopper_id === shopperId) {
+		// 		productDiscount[cartItem.id] = cartItem.discount;
+		// 		productQuantity[cartItem.id] = cartItem.quantity;
+		// 		productPrice[cartItem.id] = cartItem.price;
+		// 		discounts[cartItem.id] = cartItem.discount;
+		// 	}
+		// });
+		// const quantities = {};
+		// cartItems.forEach((cartItem) => {
+		// 	if (cartItem.shopper_id === shopperId) {
+		// 		quantities[cartItem.id] = cartItem.quantity;
+		// 	}
+		// });
 		setRunningTimerShopperId(null);
 	};
 
@@ -461,7 +463,7 @@ const Cart = () => {
 													{Math.floor(countdown / 60)}
 													m
 												</span>
-												<span>{countdown % 60}</span>s
+												<span>{countdown % 60}s</span>
 											</div>
 										</div>
 									)}
