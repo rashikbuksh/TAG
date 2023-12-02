@@ -21,7 +21,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	// State for quantity
 	const [quantity, setQuantity] = useState(0);
 	const [newPrice, setNewPrice] = useState();
-	const [newDisCount, setnewDisCount] = useState();
+	const [newDisCount, setnewDisCount] = useState(0);
 	// Function to increase quantity
 	const increaseQuantity = () => {
 		setQuantity(quantity + 1);
@@ -119,7 +119,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	const { user } = useAuth();
 	const handleCheckboxChange = (e) => {
 		// Check if newPrice is not empty
-		if (newPrice && newDisCount && quantity) {
+		if (newPrice && quantity) {
 			const selectedProductInfo = {
 				name: name,
 				price: newPrice,
@@ -154,7 +154,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 							""
 						)}
 					</div>
-					{browserUrl === "/shopkeeperProduct" ? (
+					{/* {browserUrl === "/shopkeeperProduct" ? (
 						<div className="dropdown dropdown-top">
 							<label tabIndex={0} className="m-1">
 								<FaBars />
@@ -185,7 +185,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 						</div>
 					) : (
 						""
-					)}
+					)} */}
 				</div>
 
 				<div className="flex flex-col items-center justify-center gap-1 border p-1">
