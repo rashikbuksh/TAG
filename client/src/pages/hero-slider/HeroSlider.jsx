@@ -161,7 +161,7 @@ const HeroSlider = () => {
 											placeholder="Enter Slider Position"
 										>
 											{/* <option>Select One</option> */}
-											<option value="Top" selected>Top</option>
+											<option value="top" selected>Top</option>
 											<option value="middel">
 												Middel
 											</option>

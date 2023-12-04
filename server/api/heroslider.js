@@ -14,15 +14,15 @@ const read = [
   },
   {
     uri: "/heroslider/getslider/top",
-    query: `SELECT * from hero_slider WHERE slider_position= "top"`,
+    query: `SELECT * from hero_slider WHERE slider_position= "top" ORDER BY id DESC`,
   },
   {
     uri: "/heroslider/getslider/middel",
-    query: `SELECT * from hero_slider WHERE slider_position= "middel"`,
+    query: `SELECT * from hero_slider WHERE slider_position= "middel" ORDER BY id DESC`,
   },
   {
     uri: "/heroslider/getslider/bottom",
-    query: `SELECT * from hero_slider WHERE slider_position= "bottom"`,
+    query: `SELECT * from hero_slider WHERE slider_position= "bottom" ORDER BY id DESC`,
   },
 ];
 

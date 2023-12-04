@@ -7,33 +7,30 @@ import Swiper, { SwiperSlide } from "../swiper";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const params = {
-	loop: true,
-	speed: 1000,
-	autoplay: {
-		delay: 3500,
-		disableOnInteraction: false,
-	},
-	pagination: true,
-
-};
-if (window.matchMedia("(min-width: 1024px)").matches) {
-	params.slidesPerView = 2;
-  }
-
-const HeroSlider = ({sliderData}) => {
+const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 	// const { data, isLoading, errorMessage } = useFetch("/heroslider/getslider");
-
-
+	const params = {
+		loop: true,
+		speed: 1000,
+		autoplay: isAutoPlay
+			? {
+					delay: 3500,
+					disableOnInteraction: false,
+			  }
+			: false,
+		pagination: true,
+	};
+	if (window.matchMedia("(min-width: 1024px)").matches) {
+		params.slidesPerView = 2;
+	}
 	return (
-		<div className="hero-slider max-w-7xl  -mx-2 lg:mx-auto">
-			
-						<div className="hero-slider-wrapper">
-							{!!sliderData.length && (
-								<Swiper options={params}>
-									{sliderData.map((single) => (
-										<SwiperSlide key={single.id}>
-											<div
+		<div className="hero-slider -mx-2  max-w-7xl lg:mx-auto">
+			<div className="hero-slider-wrapper">
+				{!!sliderData.length && (
+					<Swiper options={params}>
+						{sliderData.map((single) => (
+							<SwiperSlide key={single.id}>
+								{/* <div
 												className="hero-slider-item flex bg-img"
 												style={{
 													backgroundImage: `url(${
@@ -44,8 +41,17 @@ const HeroSlider = ({sliderData}) => {
 													})`,
 												}}
 											>
-											</div>
-											{/* <div className="container">
+											</div> */}
+								<img
+									src={
+										import.meta.env.VITE_APP_IMG_URL +
+										"/heroslider/" +
+										single.image
+									}
+									className="mx-auto h-[216px]  w-full md:w-auto"
+									alt=""
+								/>
+								{/* <div className="container">
 													<div className="row">
 														<div className="col-12">
 															hero slider content
@@ -65,12 +71,12 @@ const HeroSlider = ({sliderData}) => {
 														</div>
 													</div>
 												</div> */}
-										</SwiperSlide>
-									))}
-								</Swiper>
-							)}
-						</div>
-					</div>
+							</SwiperSlide>
+						))}
+					</Swiper>
+				)}
+			</div>
+		</div>
 	);
 };
 

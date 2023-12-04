@@ -123,7 +123,7 @@ const AllProducts = ({ limit ,sliderData}) => {
 					)}
 					<ProductSlider products={isVerifiedProduct}></ProductSlider>
 					<div className="my-4"></div>
-					<HeroSlider sliderData={sliderData} />
+					<HeroSlider sliderData={sliderData} isAutoPlay={false} />
 					<div className="my-4"></div>
 					{prods && (
 						<h2 className="section-title space-mb--20">

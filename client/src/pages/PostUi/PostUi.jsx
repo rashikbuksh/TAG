@@ -23,6 +23,7 @@ import demoProfile from "../../../public/assets/img/Tag-logo-blue-get_50_50.png"
 const PostUi = ({ postData }) => {
 	const userid = localStorage.getItem("user-id");
 	const [shopperProducts, setShopperProduct] = useState([]);
+	console.log("🚀 ~ file: PostUi.jsx:26 ~ PostUi ~ shopperProducts:", shopperProducts)
 	const [shopperInfo, setShopperInfo] = useState([]);
 
 	const {
