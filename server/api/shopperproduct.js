@@ -34,7 +34,7 @@ const add = [
 const read = [
 	{
 		uri: "/shopperproduct/getshopperproduct",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, isVerified, category_id, p.image, sp.shopper_id, sale_count, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id AND cp.id = sp.shopper_id`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, isVerified, category_id, p.image, sp.shopper_id, sale_count, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id AND cp.id = sp.shopper_id AND product_count > 0`,
 	},
 	{
 		uri: "/shopperproduct/getshopperproduct/:id",

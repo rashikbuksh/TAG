@@ -10,6 +10,7 @@ const HeroSlider = () => {
 	const addHeroSliderScema = yup.object({
 		title: yup.string().required("Title required"),
 		subtitle: yup.string().required("Sub Title required"),
+		slider_position: yup.string().required("Slider position required"),
 		image: yup
 			.mixed()
 			.required("Picture is required")
@@ -26,6 +27,7 @@ const HeroSlider = () => {
 			title: "",
 			subtitle: "",
 			image: "",
+			slider_position: "",
 		},
 		resolver: yupResolver(addHeroSliderScema),
 	});
@@ -65,6 +67,7 @@ const HeroSlider = () => {
 		api.post(`/heroslider/addslider`, {
 			title: data.title,
 			subtitle: data.subtitle,
+			slider_position:data.slider_position,
 			image: ImageName,
 		}).then((response) => {
 			// console.log(response.data);
@@ -82,7 +85,7 @@ const HeroSlider = () => {
 			.catch((err) => {
 				// console.log(err);
 			});
-	}, []);
+	}, [sliderData]);
 
 	async function deleteSlider(id) {
 		// console.log(id);
@@ -146,6 +149,28 @@ const HeroSlider = () => {
 										</p>
 									</div>
 									<div className="auth-form__single-field space-mb--30">
+										<label htmlFor="slider_position">
+											Slider Position
+										</label>
+
+										<br />
+										<select
+											{...register("slider_position")}
+											defaultValue={"top"}
+											className="select select-bordered w-full "
+											placeholder="Enter Slider Position"
+										>
+											{/* <option>Select One</option> */}
+											<option value="Top" selected>Top</option>
+											<option value="middel">
+												Middel
+											</option>
+											<option value="bottom">
+												Bottom
+											</option>
+										</select>
+									</div>
+									<div className="auth-form__single-field space-mb--30">
 										<label htmlFor="category_picture">
 											Image
 										</label>
@@ -181,23 +206,22 @@ const HeroSlider = () => {
 					<div className="row">
 						<div className="col-12">
 							{/* Auth form */}
-							<div className="auth-form">
+							<div className="auth-form grid grid-cols-3 gap-3">
 								{!!sliderData.length &&
 									sliderData.map((single) => (
-										<div key={single.id}>
-											<button
-												className="mb-2 ml-auto mr-2 flex justify-end rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-												onClick={() =>
-													deleteSlider(single.id)
-												}
-											>
-												Delete
-											</button>
-											<div className="auth-form__single-field space-mb--30">
+										<div key={single.id} className="border p-2 rounded my-2">
+											
+											<div className="auth-form__single-field space-mb--30 flex gap-3">
+											<p className="text-black">Slider title: </p>
 												{single.title}
 											</div>
-											<div className="auth-form__single-field space-mb--30">
+											<div className="auth-form__single-field space-mb--30 flex gap-3">
+											<p className="text-black">Slider subtitle: </p>
 												{single.subtitle}
+											</div>
+											<div className="auth-form__single-field space-mb--30 flex gap-3">
+												<p className="text-black">Slider Position: </p>
+												{single.slider_position}
 											</div>
 											<div className="auth-form__single-field space-mb--30">
 												<img
@@ -211,6 +235,14 @@ const HeroSlider = () => {
 													alt="No Image"
 												/>
 											</div>
+											<button
+												className="mb-2 ml-auto mr-2 flex justify-end rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+												onClick={() =>
+													deleteSlider(single.id)
+												}
+											>
+												Delete
+											</button>
 										</div>
 									))}
 							</div>

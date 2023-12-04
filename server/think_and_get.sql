@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2023 at 07:41 PM
+-- Generation Time: Dec 04, 2023 at 02:24 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -92,7 +92,7 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (20, 'TAG@admin.com', NULL, NULL, NULL, NULL, '$2b$10$1R4tRAPwHpmV6EnGtAStUeJZY8aj0Dt9NR.B2fjgNiXSYkmH5rm46', NULL, 'tag@admin.com', NULL, NULL, NULL, NULL, NULL, 'admin', NULL, 'bo1ntlas7k7', 'unreferred', NULL),
-(36, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$sAtGIF2DZL.hB8LTMCQ7ZOp2Zdzln6WmbhK7pCrFhEKz46bH/6AF.', '01684545111', NULL, '22.3304379__91.7872739', NULL, NULL, NULL, NULL, 'customer', NULL, '1mwoauien49', 'referred', '1699370631335__IMG_4137.JPG'),
+(36, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$sAtGIF2DZL.hB8LTMCQ7ZOp2Zdzln6WmbhK7pCrFhEKz46bH/6AF.', '01684545111', 'rashik@gmail.com', '22.3304379__91.7872739', NULL, NULL, NULL, NULL, 'customer', NULL, '1mwoauien49', 'referred', '1699370631335__IMG_4137.JPG'),
 (48, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$p.NA9WD2M7T/HFzL1kX.wee8biKelsaoe7qNWl/zXHfeHHG2GVErq', '01684545121', 'anik1234567@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, 'kmigen4lv1', NULL, NULL),
 (49, 'Towhidul Islam', NULL, NULL, NULL, NULL, '$2b$10$NII3Zsp1lU/4SQt9eM/vv.CufLSYICSlfRHgRceEX55hATtYA.4Pe', '01878601610', 'towhidulislam2.bd@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', 'referred', NULL),
 (52, 'Modarator', NULL, NULL, NULL, NULL, '$2b$10$KFdI.jfOFD5WbZhp.vHdTO6TJMunfxfEum7Hxza9rfnOpqxQxPsKq', '01888888888', 'modarator@tag.com', NULL, NULL, NULL, NULL, NULL, 'modarator', NULL, '', 'unreferred', NULL),
@@ -118,17 +118,19 @@ CREATE TABLE `hero_slider` (
   `id` int(11) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `subtitle` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL
+  `image` varchar(255) DEFAULT NULL,
+  `slider_position` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `hero_slider`
 --
 
-INSERT INTO `hero_slider` (`id`, `title`, `subtitle`, `image`) VALUES
-(3, 'Leo', 'Leo', '1693821528877__2D1A8929.JPG'),
-(4, 'Ishan Tea', 'Cha Pata From Sylhet', '1693929901663__20230807_154229.jpg'),
-(6, 'hello', 'hello', '1698599927072__image.jpg');
+INSERT INTO `hero_slider` (`id`, `title`, `subtitle`, `image`, `slider_position`) VALUES
+(4, 'Ishan Tea', 'Cha Pata From Sylhet', '1693929901663__20230807_154229.jpg', 'top'),
+(6, 'hello', 'hello', '1698599927072__image.jpg', 'top'),
+(7, 'sss', 'sss', '1701694046146__download.jpg', 'middel'),
+(8, 'Test', 'Test', '1701694701108__7061506.jpg', 'middel');
 
 -- --------------------------------------------------------
 
@@ -309,7 +311,13 @@ INSERT INTO `notification` (`id`, `notification_content`, `notification_time`, `
 (40, 'You have a new order. Order Number is #67.', '2023-11-20 16:02:27', 11, 36, 0),
 (41, 'You have a new order. Order Number is #68.', '2023-11-20 16:06:03', 17, 36, 0),
 (42, 'You have a new order. Order Number is #69.', '2023-11-20 16:30:43', 3, 36, 0),
-(43, 'You have a new order. Order Number is #70.', '2023-11-22 18:31:14', 3, 36, 0);
+(43, 'You have a new order. Order Number is #70.', '2023-11-22 18:31:14', 3, 36, 0),
+(44, 'You have a new order. Order Number is #71.', '2023-11-24 18:20:35', 11, 36, 0),
+(45, 'You have a new order. Order Number is #72.', '2023-11-24 18:21:10', 17, 36, 0),
+(46, 'You have a new order. Order Number is #73.', '2023-11-26 16:41:11', 17, 36, 0),
+(47, 'You have a new order. Order Number is #74.', '2023-11-28 13:21:57', 17, 36, 0),
+(48, 'You have a new order. Order Number is #75.', '2023-11-28 13:26:15', 17, 36, 0),
+(49, 'You have a new order. Order Number is #76.', '2023-11-28 13:37:03', 17, 36, 0);
 
 -- --------------------------------------------------------
 
@@ -414,15 +422,21 @@ INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, 
 (59, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
 (60, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cencelled', 36, 17, 'Time Out'),
 (61, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
-(62, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'pending', 36, 17, NULL),
+(62, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Customer is not taking the product'),
 (63, '8,15', '34,1', '0', 3806, '2,5', 'cancelled', 36, 3, 'Time Out'),
 (64, '4,26,32,34,41', '1,1,2,2,2', '0', 10, '0,2,10,0,4', 'cancelled', 36, 11, 'Time Out'),
 (65, '4,26,32,34,41', '1,1,2,2,2', '0', 1337, '0,2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
 (66, '8', '2', '0', 196, '2', 'cancelled', 36, 3, 'Time Out'),
-(67, '1,4', '1,1', '0', 99, '10,0', 'pending', 36, 11, NULL),
+(67, '1,4', '1,1', '0', 99, '10,0', 'cancelled', 36, 11, 'Time Out'),
 (68, '26,32,34,41', '2,1,3,4', '0', 2121, '2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
 (69, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out'),
-(70, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out');
+(70, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out'),
+(71, '1,4', '2,1', '0', 188, '10,0', 'pending', 36, 11, NULL),
+(72, '26,32,34,41', '13,3,3,3', '0', 3402, '2,10,0,4', 'completed', 36, 17, NULL),
+(73, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'accepted', 36, 17, NULL),
+(74, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'completed', 36, 17, NULL),
+(75, '32,41', '1,1', '0', 598, '10,4', 'accepted', 36, 17, NULL),
+(76, '4,26,41,43', '1,1,1,1', '0', 560, '0,2,4,3', 'accepted', 36, 17, NULL);
 
 -- --------------------------------------------------------
 
@@ -492,15 +506,15 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (26, 'Ishan Tea', 124, 2, 20, 40, 0, 0, 14, 17, 8),
 (27, 'sugar', 34, 3, 19, 0, 0, 0, 13, 17, 1),
 (28, 'Vanity Bag', 35, 77, 67, 0, 0, 0, 12, 17, 1),
-(29, 'Potato Chips ', 35, 2, 4, 0, 0, 0, 17, 17, 7),
+(29, 'Potato Chips ', 35, 2, 4, 0, 0, 0, 17, 17, 8),
 (30, '7 up Normal', 43, 3, 1000, 0, 0, 0, 18, 17, 0),
 (31, '7 up Verified', 140, 40, 54, 0, 0, 0, 19, 17, 8),
-(32, '7 up Verified', 201, 10, 100, 100, 0, 0, 19, 17, 14),
+(32, '7 up Verified', 201, 10, 100, 100, 0, 0, 19, 17, 15),
 (33, '7 up Normal', 200, 10, 10, 0, 0, 0, 18, 17, 0),
 (34, 'Potato Chips ', 10, 0, 100, 50, 0, 0, 17, 17, 1),
 (39, ' Sprite (20 Fl Oz Bottle) varified', 23, 0, 8, 0, 0, 0, 43, 17, 7),
 (40, ' Sprite (20 Fl Oz Bottle)', 2, 0, 88, 0, 0, 0, 42, 17, 3),
-(41, 'Yellow Rice', 434, 4, 33, 120, 0, 0, 16, 17, 33),
+(41, 'Yellow Rice', 434, 4, 33, 120, 0, 0, 16, 17, 35),
 (42, 'Coke Cola Original', 35, 0, 33, 0, 0, 0, 44, 17, 0),
 (43, 'Ishan Tea ', 23, 3, 22, 0, 0, 0, 14, 17, 0),
 (45, 'Hand bag In Town', 272, 7, 34, 0, 0, 0, 15, 17, 0),
@@ -508,7 +522,18 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (47, 'Chilli Sauce', 150, -1, 32, 0, 0, 0, 45, 17, 2),
 (48, 'Pran-Sauce-750-gm', 270, 0, 123, 0, 0, 0, 46, 17, 7),
 (49, 'Yellow Rice', 333, 3, 34, 0, 0, 0, 16, 17, 0),
-(50, 'Hand bag In Town', 34, 1, 32, 0, 0, 0, 15, 17, 1);
+(50, 'Hand bag In Town', 34, 1, 32, 0, 0, 0, 15, 17, 1),
+(51, 'gg product', 2, 2, 0, 0, 0, 0, 1, 17, 0),
+(52, 'Vanity Bag', 100, 1, 2, 0, 0, 0, 12, 17, 0),
+(53, 'Alo Potato', 100, 1, 3, 0, 0, 0, 11, 17, 0),
+(54, 'Hand bag In Town', 300, 2, 3, 0, 0, 0, 15, 17, 0),
+(55, 'Pran-Sauce-750-gm', 1, 0, 1, 0, 0, 0, 46, 17, 0),
+(56, 'gg product', 2, 1, 0, 0, 0, 0, 1, 17, 1),
+(57, 'gg product', 100, 0, 6, 0, 0, 0, 1, 17, 0),
+(58, 'Hand bag In Town', 300, 2, 3, 0, 0, 0, 15, 17, 0),
+(59, 'Chilli Sauce', 120, 1, 29, 0, 0, 0, 45, 17, 0),
+(60, 'Coke Cola Original', 300, 2, 7, 0, 0, 0, 44, 17, 0),
+(61, ' Sprite (20 Fl Oz Bottle) varified', 20, 0, 18, 0, 0, 0, 43, 17, 0);
 
 --
 -- Indexes for dumped tables
@@ -614,7 +639,7 @@ ALTER TABLE `customer_profile`
 -- AUTO_INCREMENT for table `hero_slider`
 --
 ALTER TABLE `hero_slider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -638,7 +663,7 @@ ALTER TABLE `news_like`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -650,7 +675,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `refer`
@@ -662,7 +687,7 @@ ALTER TABLE `refer`
 -- AUTO_INCREMENT for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- Constraints for dumped tables

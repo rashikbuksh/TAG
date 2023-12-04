@@ -42,6 +42,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		view,
 		isVerified,
 		shopper_id,
+		product_count,
 		shipping_address,
 	} = prod;
 	// console.log(shopper_id, "shopper_id");
@@ -119,9 +120,9 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		background: "#FFF",
 		boxShadow: "0px 8px 32px 0px rgba(184, 184, 184, 0.10)",
 	};
-const showQuantitypalet=()=>{
-	setDisplay(1)
-}
+	const showQuantitypalet = () => {
+		setDisplay(1);
+	};
 	return (
 		<div className="z-0 " style={divStyle}>
 			<div
@@ -138,65 +139,65 @@ const showQuantitypalet=()=>{
 					}/products/${image}`}
 					alt=""
 				/>
-				{display > 0 &&
-					user.access ==
-						"customer" &&(
-							<div
-								className={`absolute  flex   ${
-									height ? `h-[150px]` : "h-full"
-								}  ${
-									width ? `w-[150px]` : "w-full"
-								}  items-center justify-center gap-2 rounded-sm bg-black bg-opacity-50`}
-							>
-								<div className="relative mt-1 flex flex-col items-center justify-center gap-10">
-									<h4 className="text-base text-white flex items-center">
-									৳ {" "}
-										{`${(
-											parseFloat(
-												getDiscountPrice(
-													price,
-													discount
-												)
-											) * quantity
-										).toFixed(2)}`}
-									</h4>
-									<div className="flex items-center gap-1">
-										<button
-											type="button"
-											onClick={decreasePQuantity}
-											className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10  transition hover:opacity-75"
-										>
-											<FaMinus className="text-black" />
-										</button>
+							{/* quantity  */}
+							<div className="badge bg-[#2D8FCA] text-white absolute top-3 right-2">
+							<p>{product_count}</p>
+							</div> 
+							
+				{display > 0 && user.access == "customer" && (
+					<div
+						className={`absolute  flex   ${
+							height ? `h-[150px]` : "h-full"
+						}  ${
+							width ? `w-[150px]` : "w-full"
+						}  items-center justify-center gap-2 rounded-sm bg-black bg-opacity-50`}
+					>
+						<div className="relative mt-1 flex flex-col items-center justify-center gap-10">
+							<h4 className="flex items-center text-base text-white">
+								৳{" "}
+								{`${(
+									parseFloat(
+										getDiscountPrice(price, discount)
+									) * quantity
+								).toFixed(2)}`}
+							</h4>
+							<div className="flex items-center gap-1">
+								<button
+									type="button"
+									onClick={decreasePQuantity}
+									className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10  transition hover:opacity-75"
+								>
+									<FaMinus className="text-black" />
+								</button>
 
-										<input
-											type="number"
-											id="Quantity"
-											value={quantity}
-											disabled
-											className="h-8 w-12 rounded border border-gray-200 bg-white text-center "
-										/>
+								<input
+									type="number"
+									id="Quantity"
+									value={quantity}
+									disabled
+									className="h-8 w-12 rounded border border-gray-200 bg-white text-center "
+								/>
 
-										<button
-											type="button"
-											onClick={increasePQuantity}
-											className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10   transition hover:opacity-75"
-										>
-											<FaPlus className="text-black" />
-										</button>
-									</div>
-								</div>
-								<div className="absolute right-2 top-1 lg:hidden">
-									<button
-										type="button"
-										onClick={handleMouseLeave}
-										className=" flex items-center justify-center rounded-md  p-1 leading-10  transition hover:opacity-75"
-									>
-										<FaX className="rounded-md text-xl text-pink-400 " />
-									</button>
-								</div>
+								<button
+									type="button"
+									onClick={increasePQuantity}
+									className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 leading-10   transition hover:opacity-75"
+								>
+									<FaPlus className="text-black" />
+								</button>
 							</div>
-						)}
+						</div>
+						<div className="absolute right-2 top-1 lg:hidden">
+							<button
+								type="button"
+								onClick={handleMouseLeave}
+								className=" flex items-center justify-center rounded-md  p-1 leading-10  transition hover:opacity-75"
+							>
+								<FaX className="rounded-md text-xl text-pink-400 " />
+							</button>
+						</div>
+					</div>
+				)}
 			</div>
 			{/* name  */}
 			<div className="my-1 flex items-start justify-start gap-3 px-2">
@@ -219,6 +220,7 @@ const showQuantitypalet=()=>{
 					)}
 				</div>
 			</div>
+		
 			{/* price  */}
 			<div className="px-2">
 				<div className="flex items-center gap-2">
@@ -229,6 +231,8 @@ const showQuantitypalet=()=>{
 					)}`}</span>
 				</div>
 			</div>
+	
+			
 			<div className="my-2"></div>
 			<div></div>
 			<div className=" flex items-end justify-between   ">
@@ -274,11 +278,12 @@ const showQuantitypalet=()=>{
 							}}
 							className=""
 						>
-						 <span onClick={showQuantitypalet}><AddToCartIcon2></AddToCartIcon2></span>	
+							<span onClick={showQuantitypalet}>
+								<AddToCartIcon2></AddToCartIcon2>
+							</span>
 						</button>
 					)}
 				</div>
-				
 			</div>
 		</div>
 	);

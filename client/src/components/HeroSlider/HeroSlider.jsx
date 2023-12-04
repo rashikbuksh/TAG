@@ -21,20 +21,10 @@ if (window.matchMedia("(min-width: 1024px)").matches) {
 	params.slidesPerView = 2;
   }
 
-const HeroSlider = () => {
+const HeroSlider = ({sliderData}) => {
 	// const { data, isLoading, errorMessage } = useFetch("/heroslider/getslider");
 
-	const [sliderData, setSliderData] = useState([]);
-	useEffect(() => {
-		api.get("/heroslider/getslider")
-			.then((res) => {
-				setSliderData(res.data);
-				
-			})
-			.catch((err) => {
-				// console.log(err);
-			});
-	}, []);
+
 	return (
 		<div className="hero-slider max-w-7xl  -mx-2 lg:mx-auto">
 			
@@ -44,7 +34,7 @@ const HeroSlider = () => {
 									{sliderData.map((single) => (
 										<SwiperSlide key={single.id}>
 											<div
-												className="hero-slider-item d-flex bg-img"
+												className="hero-slider-item flex bg-img"
 												style={{
 													backgroundImage: `url(${
 														import.meta.env
