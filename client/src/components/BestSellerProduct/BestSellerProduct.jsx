@@ -16,7 +16,7 @@ import {
 	addToCart,
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
-import { AddToCartIcon1 } from "../../SvgHub/Icons";
+import { AddToCartIcon1, AddToCartIcon2 } from "../../SvgHub/Icons";
 import LoadingPage from "../LodingPage/LoadingPage";
 import { FaArrowRight } from "react-icons/fa";
 import { useAuth } from "../../context/auth";
@@ -166,10 +166,10 @@ const BestSellerProduct = ({ limit, type }) => {
 																: "btn btn-disabled border-none bg-white bg-none p-0"
 														}`}
 													>
-														<AddToCartIcon1
+														<AddToCartIcon2
 															width={42}
 															height={42}
-														></AddToCartIcon1>
+														></AddToCartIcon2>
 													</button>
 												</div>
 											</div>

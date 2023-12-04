@@ -12,8 +12,9 @@ import ProductCart from "../ProductCart/ProductCart";
 import ProductSlider from "../ProductSlider/ProductSlider";
 import LoadingPage from "../LodingPage/LoadingPage";
 import { FaCheckCircle } from "react-icons/fa";
+import HeroSlider from "../HeroSlider/HeroSlider";
 
-const AllProducts = ({ limit }) => {
+const AllProducts = ({ limit ,sliderData}) => {
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 	const [prods, setProds] = useState([]);
 	const [popularProducts, setPopularProducts] = useState([]);
@@ -51,6 +52,7 @@ const AllProducts = ({ limit }) => {
 				// alert(error);
 			});
 	}, []);
+	
 
 	const isVerifiedProduct = prods.filter(
 		(product) => product.isVerified === "verified"
@@ -120,7 +122,9 @@ const AllProducts = ({ limit }) => {
 						</h2>
 					)}
 					<ProductSlider products={isVerifiedProduct}></ProductSlider>
-					<div className="my-2"></div>
+					<div className="my-4"></div>
+					<HeroSlider sliderData={sliderData} isAutoPlay={false} />
+					<div className="my-4"></div>
 					{prods && (
 						<h2 className="section-title space-mb--20">
 							<span className="text-xl font-bold">Product </span>

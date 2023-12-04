@@ -33,25 +33,94 @@ export const AddToCartIcon1 = ({ width = 32, height = 32 }) => {
 		</svg>
 	);
 };
-export const AddToCartIcon2 = ({ width = 57, height = 29 }) => {
+export const AddToCartIcon2 = ({ width = 40, height = 40 }) => {
+	const svgStyle = {
+		background:"none"
+	};
 	return (
 		<svg
+			version="1.1"
+			id="Layer_1"
 			xmlns="http://www.w3.org/2000/svg"
-			width={width}
+			xmlnsXlink="http://www.w3.org/1999/xlink"
+			x="0px"
+			y="0px"
+			viewBox="0 0 1000 1000"
+			style={svgStyle}
+			xmlSpace="preserve"
 			height={height}
-			viewBox="0 0 57 29"
-			fill="none"
+			width={width}
 		>
-			<path
-				d="M0 6C0 2.68629 2.68629 0 6 0H57V23C57 26.3137 54.3137 29 51 29H0V6Z"
-				fill="#3061AD"
-			/>
-			<path
-				fillRule="evenodd"
-				clipRule="evenodd"
-				d="M25.2687 7H31.7052C33.4477 7 34.9348 8.25658 35.2212 9.97103L36.7064 18.8599C37.0685 21.0271 35.3931 23 33.1904 23H23.7835C21.5808 23 19.9053 21.0271 20.2675 18.8599L21.7527 9.97103C22.0391 8.25658 23.5262 7 25.2687 7ZM28.4869 13.8889C30.3325 13.8889 31.8286 12.3965 31.8286 10.5556V9.66667C31.8286 9.29848 31.5294 9 31.1603 9C30.7912 9 30.492 9.29848 30.492 9.66667V10.5556C30.492 11.6601 29.5943 12.5556 28.4869 12.5556C27.3796 12.5556 26.4819 11.6601 26.4819 10.5556V9.66667C26.4819 9.29848 26.1827 9 25.8136 9C25.4445 9 25.1452 9.29848 25.1452 9.66667V10.5556C25.1452 12.3965 26.6414 13.8889 28.4869 13.8889Z"
-				fill="white"
-			/>
+			<style type="text/css">
+				{`
+          .st1{fill:url(#SVGID_1_);}
+          .st2{fill:url(#SVGID_2_);}
+          .st3{fill:none;stroke:#FFFFFF;stroke-width:23;stroke-linecap:round;stroke-miterlimit:10;}
+          .st4{fill:#FFFFFF;}
+        `}
+			</style>
+			<rect className="st0" width="1000" height="1000" fill="transparent" />
+			<linearGradient
+				id="SVGID_1_"
+				gradientUnits="userSpaceOnUse"
+				x1="96.1845"
+				y1="500"
+				x2="903.8156"
+				y2="500"
+			>
+				<stop offset="0" style={{ stopColor: "#2CE1FF" }} />
+				<stop offset="0.3127" style={{ stopColor: "#25B9D6" }} />
+				<stop offset="0.5503" style={{ stopColor: "#209FBC" }} />
+				<stop offset="0.6734" style={{ stopColor: "#1BA3C3" }} />
+				<stop offset="0.8558" style={{ stopColor: "#0EAED7" }} />
+				<stop offset="1" style={{ stopColor: "#00B9EC" }} />
+			</linearGradient>
+			<circle className="st1" cx="500" cy="500" r="403.82" />
+			<linearGradient
+				id="SVGID_2_"
+				gradientUnits="userSpaceOnUse"
+				x1="129.0388"
+				y1="500"
+				x2="870.9612"
+				y2="500"
+			>
+				<stop offset="0" style={{ stopColor: "#00ABD3" }} />
+				<stop offset="0.2546" style={{ stopColor: "#06B3D9" }} />
+				<stop offset="0.6402" style={{ stopColor: "#17C8EA" }} />
+				<stop offset="1" style={{ stopColor: "#2CE1FF" }} />
+			</linearGradient>
+			<circle className="st2" cx="500" cy="500" r="370.96" />
+			<g>
+				<g>
+					<path
+						className="st3"
+						d="M233.31,321.17l79.57,30.31c3.33,1.27,5.87,4.03,6.86,7.46l59.2,205.3c1.51,5.22,6.28,8.82,11.72,8.82h215.01
+			c5.3,0,10.02-3.34,11.78-8.34l61.49-174.84c2.08-5.93-2.31-12.13-8.59-12.13H389.55"
+					/>
+					<path
+						className="st3"
+						d="M614.5,655.21H386.9c-5.3,0-9.02-5.22-7.3-10.23l24.77-71.94"
+					/>
+					<g>
+						<line
+							className="st3"
+							x1="503.17"
+							y1="416.35"
+							x2="503.17"
+							y2="517.82"
+						/>
+						<line
+							className="st3"
+							x1="552.32"
+							y1="466.28"
+							x2="450.85"
+							y2="467.09"
+						/>
+					</g>
+				</g>
+				<circle className="st4" cx="564.43" cy="710.44" r="28.29" />
+				<circle className="st4" cx="453.98" cy="710.44" r="28.29" />
+			</g>
 		</svg>
 	);
 };
@@ -68,9 +137,9 @@ export const MapIcon = ({ width = 17, height = 20 }) => {
 				fillRule="evenodd"
 				clipRule="evenodd"
 				d="M8.46542 17.7778C11.4574 17.7778 16.4441 12.265 16.4441 7.90124C16.4441 3.5375 12.8719 0 8.46542 0C4.05889 0 0.486694 3.5375 0.486694 7.90124C0.486694 12.265 5.4734 17.7778 8.46542 17.7778ZM8.46542 10.6667C9.93426 10.6667 11.125 9.47276 11.125 8C11.125 6.52724 9.93426 5.33333 8.46542 5.33333C6.99658 5.33333 5.80584 6.52724 5.80584 8C5.80584 9.47276 6.99658 10.6667 8.46542 10.6667Z"
-				fill="#1C76FF"
+				fill="#FF0B0B"
 			/>
-			<ellipse cx="9" cy="19" rx="6" ry="1" fill="#C3E0F4" />
+			<ellipse cx="9" cy="20" rx="6" ry="1" fill="#C3E0F4" />
 		</svg>
 	);
 };

@@ -76,8 +76,7 @@ const Product = () => {
 	const [productStock, setProductStock] = useState(0);
 	const [showFullDescription, setShowFullDescription] = useState(false);
 
-	const [prods, setProds] = useState([]);
-
+	const [products, setProds] = useState([]);
 	// console.log(prods, "productStock");
 	const [shopperName, setShopperName] = useState("");
 
@@ -115,25 +114,39 @@ const Product = () => {
 			{/* <ShowCartIcon></ShowCartIcon> */}
 			{/*====================  product image slider ====================*/}
 			<div className="">
-				{prods.map((single) => {
+				{products.map((single) => {
 					return (
 						<div
 							key={Math.random()}
-							className=" w-full rounded  p-3"
+							className=" relative w-full  rounded p-3"
 						>
 							<img
 								src={`${
 									import.meta.env.VITE_APP_IMG_URL
 								}/products/${single.image}`}
-								className="mx-auto h-full w-[317px] rounded object-cover"
+								className={`${
+									products && products[0].active_status === 1
+										? ""
+										: "blur-sm"
+								} mx-auto h-full w-[317px] rounded object-cover`}
 								alt="Product"
 							/>
+							{products && products[0].active_status === 1 ? (
+								""
+							) : (
+								<button
+									disabled
+									className="absolute left-0 top-[40%] w-full bg-primary py-1 text-white "
+								>
+									Shop Closed
+								</button>
+							)}
 						</div>
 					);
 				})}
 			</div>
 			{/*====================  End of product image slider  ====================*/}
-			{prods.map((prods) => {
+			{products.map((prods) => {
 				// console.log(prods, "in product");
 				return (
 					<div key={Math.random()} className="">
@@ -160,12 +173,14 @@ const Product = () => {
 												</Link>
 
 												<div className="">
-													<FaRegMessage
+													<button
 														onClick={
 															handelOpenMessageModal
 														}
-														className="text-xl"
-													/>
+													>
+														<FaRegMessage className="text-xl" />
+													</button>
+
 													<MessageModal
 														isOpen={isOpen}
 														setIsOpen={setIsOpen}
@@ -205,6 +220,12 @@ const Product = () => {
 													<div className="cart-product__counter absolute  right-1  rounded-full bg-[#F2F8FD] px-2 py-2">
 														<div className="flex items-center justify-center gap-2">
 															<button
+																disabled={
+																	products &&
+																	products[0]
+																		.active_status !==
+																		1
+																}
 																className="quantity-button  bg-[#60abe9]"
 																onClick={
 																	decreasePQuantity
@@ -219,15 +240,22 @@ const Product = () => {
 																readOnly
 															/>
 															<button
-																className="quantity-button primary-background "
+																className="quantity-button primary-background"
 																onClick={
 																	increasePQuantity
 																}
 																disabled={
-																	prods.quantity >=
-																	cartItemStock(
-																		prods
-																	)
+																	(products &&
+																		products.length >
+																			0 &&
+																		products[0]
+																			.active_status !==
+																			1) ||
+																	(prods &&
+																		prods.quantity >=
+																			cartItemStock(
+																				prods
+																			))
 																}
 															>
 																+
@@ -309,6 +337,10 @@ const Product = () => {
 								""
 							) : user.access === "shopper" ? (
 								""
+							) : products && products[0].active_status !== 1 ? (
+								<button disabled className="auth-btn">
+									Shop Closed
+								</button>
 							) : cartItem ? (
 								<button disabled className="auth-btn">
 									Already in Cart
@@ -334,6 +366,7 @@ const Product = () => {
 					</div>
 				);
 			})}
+
 			{/* product content description */}
 			{/* <div className="product-content-description border-bottom--thick space-pt--25 space-pb--25">
 				<div className="container">

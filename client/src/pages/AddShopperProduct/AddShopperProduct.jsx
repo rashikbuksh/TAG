@@ -15,35 +15,35 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import { FaX } from "react-icons/fa6";
 const ShopperProduct = () => {
-	const [productImage, setProductsImage] = useState();
-	const [productPrice, setProductsPrice] = useState(null);
-	const [productquantity, setProductsquantity] = useState();
+	// const [productImage, setProductsImage] = useState();
+	// const [productPrice, setProductsPrice] = useState(null);
+	// const [productquantity, setProductsquantity] = useState();
 	const [category, setCategory] = useState([]);
-	const ShopperProductSchema = yup.object({
-		name: yup.string().required("Name is required"),
-		price: yup.number().required("Price is required"),
-		discount: yup.number().required("Discount is required"),
-		product_count: yup.number().required("Product count is required"),
-		product_id: yup.string().required("Product ID is required"),
-	});
+	// const ShopperProductSchema = yup.object({
+	// 	name: yup.string().required("Name is required"),
+	// 	price: yup.number().required("Price is required"),
+	// 	discount: yup.number().required("Discount is required"),
+	// 	product_count: yup.number().required("Product count is required"),
+	// 	product_id: yup.string().required("Product ID is required"),
+	// });
 
 	const user_id = localStorage.getItem("user-id");
 
-	const form = useForm({
-		defaultValues: {
-			name: "",
-			price: "",
-			discount: "",
-			product_count: "",
-			product_id: "",
-		},
-		resolver: yupResolver(ShopperProductSchema),
-	});
+	// const form = useForm({
+	// 	defaultValues: {
+	// 		name: "",
+	// 		price: "",
+	// 		discount: "",
+	// 		product_count: "",
+	// 		product_id: "",
+	// 	},
+	// 	resolver: yupResolver(ShopperProductSchema),
+	// });
 
-	const { register, handleSubmit, formState } = form;
-	const { errors } = formState;
+	// const { register, handleSubmit, formState } = form;
+	// const { errors } = formState;
 
-	const [productNames, setProductsNames] = useState([]);
+	// const [productNames, setProductsNames] = useState([]);
 
 	// useEffect(() => {
 	// 	api.get(`/product/getproduct`).then((response) => {
@@ -52,7 +52,7 @@ const ShopperProduct = () => {
 	// 	});
 	// }, []);
 
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	// const selectedProduct = (e) => {
 	// 	var product = e.target.value.split("__");
@@ -214,6 +214,8 @@ const ShopperProduct = () => {
 					);
 					if (response.data.status === 201) {
 						alert("Product Added Successfully");
+						window.location.reload()
+						
 					}
 				});
 			});
