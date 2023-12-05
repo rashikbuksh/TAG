@@ -203,10 +203,10 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 									<label className="">QTY:</label>
 									<div className="flex w-full items-center justify-between gap-2 rounded-lg bg-[#F2F8FD]   sm:text-sm">
 										<button
-											className="flex h-[30px]   w-[30px] items-center justify-center bg-[#60abe9] text-base   text-white"
+											className="flex h-[30px]   w-[60px] items-center justify-center bg-[#60abe9] text-base   text-white"
 											onClick={decreaseQuantity}
 										>
-											-
+											<FaMinus />
 										</button>
 										<input
 											className="w-full bg-[#F2F8FD] text-center"
@@ -215,10 +215,10 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 											readOnly
 										/>
 										<button
-											className="flex h-[30px]   w-[30px] items-center justify-center bg-[#60abe9] text-base   text-white "
+											className="flex h-[30px]   w-[60px] items-center justify-center bg-[#60abe9] text-base   text-white "
 											onClick={increaseQuantity}
 										>
-											+
+											<FaPlus />
 										</button>
 									</div>
 								</div>

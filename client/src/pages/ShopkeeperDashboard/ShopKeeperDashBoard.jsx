@@ -95,7 +95,7 @@ const ShopKeeperDashBoard = () => {
 	};
 	const dates = ["SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"];
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper mt-10 space-pb--120">
 			<Breadcrumb pageTitle="DashBoard" prevUrl="/home" />
 			<div className="mx-auto rounded-lg  p-4 md:w-[50%]">
 				<div className="flex items-center justify-between">
@@ -126,7 +126,7 @@ const ShopKeeperDashBoard = () => {
 										days.map((day,index)=> <div className="border-1 border-blue-500 h-5 w-5 flex items-center justify-center text-black  rounded-full font-bold " key={index}>{day}</div>)
 									}
 									</div> */}
-									<form className="flex  gap-1">
+									<form className="flex  gap-2 items-center">
 										<label className="text-lg font-bold">
 											Time:{" "}
 										</label>
@@ -135,14 +135,15 @@ const ShopKeeperDashBoard = () => {
 											id="datetime"
 											name="datetime"
 											defaultValue={"10:00"}
-											className="ml-3 h-[30px] w-[120px]  rounded border px-2 py-2 font-semibold"
+											className=" h-[30px] w-[120px]  rounded border px-2 py-2 font-semibold"
 										/>
+										<p>TO</p>
 										<input
 											type="time"
 											id="datetime"
 											defaultValue={"03:00"}
 											name="datetime1"
-											className="ml-3 h-[30px] w-[120px]  rounded border px-2 py-2 font-semibold"
+											className=" h-[30px] w-[120px]  rounded border px-2 py-2 font-semibold"
 										/>
 									</form>
 									<div className="mt-6 flex gap-2">

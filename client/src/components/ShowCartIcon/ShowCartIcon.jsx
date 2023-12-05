@@ -32,7 +32,7 @@ const ShowCartIcon = () => {
 				showcart
 					? "right-0 transition-all duration-300 ease-in-out"
 					: "-right-72 transition-all duration-300 ease-in-out"
-			} bottom-96 z-20 flex h-[46px] w-[50px] items-center justify-center rounded-l-full shadow-lg`}
+			} top-96 z-20 flex h-[46px] w-[50px] items-center justify-center rounded-l-full shadow-lg`}
 		>
 			<FaShoppingBag className="text-2xl text-white"></FaShoppingBag>
 			<div className=" absolute right-2 top-1 rounded-full bg-red-700 p-[2px] text-xs  text-white">

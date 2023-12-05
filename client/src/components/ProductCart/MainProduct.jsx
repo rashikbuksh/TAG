@@ -137,9 +137,9 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					onClick={() => {
 						navigateProductPage(id);
 					}}
-					className="absolute left-0 top-[40%] z-50 w-full bg-primary py-1 text-white "
+					className="absolute left-0 top-[40%] z-50 w-full bg-primary py-1 text-white rounded-lg"
 				>
-					Shop Closed
+					Shop Closed Now
 				</button>
 			)}
 			<div
