@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2023 at 02:24 PM
+-- Generation Time: Dec 05, 2023 at 07:37 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -87,7 +87,7 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (6, 'Rashik Buksh', NULL, NULL, NULL, 'rbr', 'rafsan123', '01709305072', 'rbr@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', NULL, NULL, NULL, NULL, 'customer', NULL, '', 'unreferred', NULL),
 (11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper', NULL, '', NULL, NULL),
 (15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545112', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper', NULL, '', NULL, NULL),
-(16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
+(16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', 'unreferred', NULL),
 (17, 'Anik Store', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684345120', 'anik123@gmail.com', '22.3303507__91.7867411', NULL, NULL, NULL, NULL, 'shopper', 1, '9ikaktaf3rp', 'referred', '1699292263970__121837251.jpg'),
 (18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
@@ -317,7 +317,8 @@ INSERT INTO `notification` (`id`, `notification_content`, `notification_time`, `
 (46, 'You have a new order. Order Number is #73.', '2023-11-26 16:41:11', 17, 36, 0),
 (47, 'You have a new order. Order Number is #74.', '2023-11-28 13:21:57', 17, 36, 0),
 (48, 'You have a new order. Order Number is #75.', '2023-11-28 13:26:15', 17, 36, 0),
-(49, 'You have a new order. Order Number is #76.', '2023-11-28 13:37:03', 17, 36, 0);
+(49, 'You have a new order. Order Number is #76.', '2023-11-28 13:37:03', 17, 36, 0),
+(50, 'You have a new order. Order Number is #77.', '2023-12-06 00:16:26', 17, 16, 0);
 
 -- --------------------------------------------------------
 
@@ -375,68 +376,70 @@ CREATE TABLE `product_order` (
   `order_status` varchar(255) DEFAULT NULL,
   `customer_profile_id` int(11) NOT NULL,
   `shopper_id` int(11) NOT NULL,
-  `cancel_report` text DEFAULT NULL
+  `cancel_report` text DEFAULT NULL,
+  `order_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_order`
 --
 
-INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, `discount`, `order_status`, `customer_profile_id`, `shopper_id`, `cancel_report`) VALUES
-(23, '18,27', '2,1', '0', 193, '0,3', 'cancelled', 36, 17, 'There are not enough Products in my store'),
-(24, '26,27', '1,1', '0', 131, '2,3', 'cancelled', 36, 17, 'There are not enough Products in my store'),
-(25, '8,14,15', '3,25,1', '0', 1393, '2,0,5', 'cancelled', 36, 3, NULL),
-(26, '1,4', '16,7', '0', 1496, '10,0', 'cancelled', 36, 11, NULL),
-(27, '17', '1', '0', 26, '0', 'cancelled', 36, 15, NULL),
-(28, '27', '1', '0', 33, '3', 'cancelled', 36, 17, NULL),
-(29, '14', '2', '0', 50, '0', 'cancelled', 17, 3, NULL),
-(30, '26,29,31', '1,1,1', '0', 216, '2,2,40', 'cancelled', 16, 17, NULL),
-(31, '29', '6', '0', 206, '', 'cancelled', 36, 17, 'কাস্টমার আমার দোকানে আসেনি'),
-(32, '26,27,29,31,32', '1,1,1,2,1', '0', 514, '2,3,2,40,10', 'cancelled', 36, 17, 'কাস্টমার আমার দোকানে আসেনি'),
-(33, '1', '2', '0', 178, '10', 'cancelled', 36, 11, NULL),
-(34, '40', '1', '0', 2, '0', 'cancelled', 73, 17, NULL),
-(35, '1,4', '1,1', '0', 99, '10,0', 'cancelled', 36, 11, NULL),
-(36, '29,31', '2,1', '0', 153, '2,40', 'cancelled', 36, 17, NULL),
-(37, '26,29,31,32', '1,1,1,1', '0', 500, '', 'cancelled', 36, 17, NULL),
-(38, '26,29,31,32', '1,1,1,1', '0', 421, '2,2,40,10', 'cancelled', 36, 17, NULL),
-(39, '', '', '0', 0, '', 'cancelled', 36, 11, NULL),
-(40, '', '', '0', 0, '', 'cancelled', 36, 11, NULL),
-(41, '31,33,40', '1,1,100', '0', 464, '40,10,0', 'cancelled', 36, 17, NULL),
-(42, '1,4,26,32,34', '2,4,8,5,2', '0', 218, '10,0,2,10,0', 'cancelled', 36, 11, NULL),
-(43, '26,32,34', '8,5,2', '0', 1897, '2,10,0', 'cancelled', 36, 17, NULL),
-(44, '26,32,41', '1,10,3', '0', 3180, '2,10,4', 'completed', 36, 17, NULL),
-(45, '8,15', '3,1', '0', 768, '2,5', 'cancelled', 36, 3, NULL),
-(46, '26,28,32', '3,1,6', '0', 1458, '2,77,10', 'cancelled', 36, 17, NULL),
-(47, '26,32,34,41', '8,2,1,1', '0', 1761, '2,10,0,4', 'completed', 36, 17, NULL),
-(48, '8,15', '1,3', '0', 1520, '2,5', 'cancelled', 36, 3, NULL),
-(49, '29', '4', '0', 137, '2', 'cancelled', 36, 17, NULL),
-(50, '32,48', '7,1', '0', 1536, '10,0', 'cancelled', 36, 17, NULL),
-(51, '26,29,41,43,49', '3,4,3,3,3', '0', 2788, '2,2,4,3,3', 'cancelled', 36, 17, NULL),
-(52, '26,32,34,41,49', '1,2,1,8,4', '0', 5118, '2,10,0,4,3', 'cancelled', 36, 17, NULL),
-(53, '1', '1', '0', 89, '10', 'cancelled', 36, 11, NULL),
-(54, '1,4', '7,5', '0', 674, '10,0', 'canceled', 36, 11, 'Time Out'),
-(55, '26,28,29,32,33,34,41,48', '25,1,1,4,1,12,12,5', '0', 10454, '2,77,2,10,10,0,4,0', 'completed', 36, 17, NULL),
-(56, '4', '1', '0', 10, '0', 'completed', 36, 11, NULL),
-(57, '26,32,34,41', '1,1,1,2', '0', 1146, '2,10,0,4', 'completed', 36, 17, NULL),
-(58, '32,34,41', '1,1,1', '0', 608, '10,0,4', 'cancelled', 36, 17, 'Time Out'),
-(59, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
-(60, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cencelled', 36, 17, 'Time Out'),
-(61, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
-(62, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Customer is not taking the product'),
-(63, '8,15', '34,1', '0', 3806, '2,5', 'cancelled', 36, 3, 'Time Out'),
-(64, '4,26,32,34,41', '1,1,2,2,2', '0', 10, '0,2,10,0,4', 'cancelled', 36, 11, 'Time Out'),
-(65, '4,26,32,34,41', '1,1,2,2,2', '0', 1337, '0,2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
-(66, '8', '2', '0', 196, '2', 'cancelled', 36, 3, 'Time Out'),
-(67, '1,4', '1,1', '0', 99, '10,0', 'cancelled', 36, 11, 'Time Out'),
-(68, '26,32,34,41', '2,1,3,4', '0', 2121, '2,10,0,4', 'cancelled', 36, 17, 'Time Out'),
-(69, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out'),
-(70, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out'),
-(71, '1,4', '2,1', '0', 188, '10,0', 'pending', 36, 11, NULL),
-(72, '26,32,34,41', '13,3,3,3', '0', 3402, '2,10,0,4', 'completed', 36, 17, NULL),
-(73, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'accepted', 36, 17, NULL),
-(74, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'completed', 36, 17, NULL),
-(75, '32,41', '1,1', '0', 598, '10,4', 'accepted', 36, 17, NULL),
-(76, '4,26,41,43', '1,1,1,1', '0', 560, '0,2,4,3', 'accepted', 36, 17, NULL);
+INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, `discount`, `order_status`, `customer_profile_id`, `shopper_id`, `cancel_report`, `order_time`) VALUES
+(23, '18,27', '2,1', '0', 193, '0,3', 'cancelled', 36, 17, 'There are not enough Products in my store', '2023-10-18 00:01:21'),
+(24, '26,27', '1,1', '0', 131, '2,3', 'cancelled', 36, 17, 'There are not enough Products in my store', '2023-10-18 00:01:21'),
+(25, '8,14,15', '3,25,1', '0', 1393, '2,0,5', 'cancelled', 36, 3, NULL, '2023-10-18 00:01:21'),
+(26, '1,4', '16,7', '0', 1496, '10,0', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21'),
+(27, '17', '1', '0', 26, '0', 'cancelled', 36, 15, NULL, '2023-10-18 00:01:21'),
+(28, '27', '1', '0', 33, '3', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(29, '14', '2', '0', 50, '0', 'cancelled', 17, 3, NULL, '2023-10-18 00:01:21'),
+(30, '26,29,31', '1,1,1', '0', 216, '2,2,40', 'cancelled', 16, 17, NULL, '2023-10-18 00:01:21'),
+(31, '29', '6', '0', 206, '', 'cancelled', 36, 17, 'কাস্টমার আমার দোকানে আসেনি', '2023-10-18 00:01:21'),
+(32, '26,27,29,31,32', '1,1,1,2,1', '0', 514, '2,3,2,40,10', 'cancelled', 36, 17, 'কাস্টমার আমার দোকানে আসেনি', '2023-10-18 00:01:21'),
+(33, '1', '2', '0', 178, '10', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21'),
+(34, '40', '1', '0', 2, '0', 'cancelled', 73, 17, NULL, '2023-10-18 00:01:21'),
+(35, '1,4', '1,1', '0', 99, '10,0', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21'),
+(36, '29,31', '2,1', '0', 153, '2,40', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(37, '26,29,31,32', '1,1,1,1', '0', 500, '', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(38, '26,29,31,32', '1,1,1,1', '0', 421, '2,2,40,10', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(39, '', '', '0', 0, '', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21'),
+(40, '', '', '0', 0, '', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21'),
+(41, '31,33,40', '1,1,100', '0', 464, '40,10,0', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(42, '1,4,26,32,34', '2,4,8,5,2', '0', 218, '10,0,2,10,0', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21'),
+(43, '26,32,34', '8,5,2', '0', 1897, '2,10,0', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(44, '26,32,41', '1,10,3', '0', 3180, '2,10,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21'),
+(45, '8,15', '3,1', '0', 768, '2,5', 'cancelled', 36, 3, NULL, '2023-10-18 00:01:21'),
+(46, '26,28,32', '3,1,6', '0', 1458, '2,77,10', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(47, '26,32,34,41', '8,2,1,1', '0', 1761, '2,10,0,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21'),
+(48, '8,15', '1,3', '0', 1520, '2,5', 'cancelled', 36, 3, NULL, '2023-10-18 00:01:21'),
+(49, '29', '4', '0', 137, '2', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(50, '32,48', '7,1', '0', 1536, '10,0', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(51, '26,29,41,43,49', '3,4,3,3,3', '0', 2788, '2,2,4,3,3', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(52, '26,32,34,41,49', '1,2,1,8,4', '0', 5118, '2,10,0,4,3', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21'),
+(53, '1', '1', '0', 89, '10', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21'),
+(54, '1,4', '7,5', '0', 674, '10,0', 'canceled', 36, 11, 'Time Out', '2023-10-18 00:01:21'),
+(55, '26,28,29,32,33,34,41,48', '25,1,1,4,1,12,12,5', '0', 10454, '2,77,2,10,10,0,4,0', 'completed', 36, 17, NULL, '2023-10-18 00:01:21'),
+(56, '4', '1', '0', 10, '0', 'completed', 36, 11, NULL, '2023-10-18 00:01:21'),
+(57, '26,32,34,41', '1,1,1,2', '0', 1146, '2,10,0,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21'),
+(58, '32,34,41', '1,1,1', '0', 608, '10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21'),
+(59, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21'),
+(60, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cencelled', 36, 17, 'Time Out', '2023-10-18 00:01:21'),
+(61, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21'),
+(62, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Customer is not taking the product', '2023-10-18 00:01:21'),
+(63, '8,15', '34,1', '0', 3806, '2,5', 'cancelled', 36, 3, 'Time Out', '2023-10-18 00:01:21'),
+(64, '4,26,32,34,41', '1,1,2,2,2', '0', 10, '0,2,10,0,4', 'cancelled', 36, 11, 'Time Out', '2023-10-18 00:01:21'),
+(65, '4,26,32,34,41', '1,1,2,2,2', '0', 1337, '0,2,10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21'),
+(66, '8', '2', '0', 196, '2', 'cancelled', 36, 3, 'Time Out', '2023-10-18 00:01:21'),
+(67, '1,4', '1,1', '0', 99, '10,0', 'cancelled', 36, 11, 'Time Out', '2023-10-18 00:01:21'),
+(68, '26,32,34,41', '2,1,3,4', '0', 2121, '2,10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21'),
+(69, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out', '2023-10-18 00:01:21'),
+(70, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out', '2023-10-18 00:01:21'),
+(71, '1,4', '2,1', '0', 188, '10,0', 'pending', 36, 11, NULL, '2023-10-18 00:01:21'),
+(72, '26,32,34,41', '13,3,3,3', '0', 3402, '2,10,0,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21'),
+(73, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'accepted', 36, 17, NULL, '2023-10-18 00:01:21'),
+(74, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21'),
+(75, '32,41', '1,1', '0', 598, '10,4', 'accepted', 36, 17, NULL, '2023-10-18 00:01:21'),
+(76, '4,26,41,43', '1,1,1,1', '0', 560, '0,2,4,3', 'accepted', 36, 17, NULL, '2023-10-18 00:01:21'),
+(77, '28,32,41', '4,1,1', '0', 630, '77,10,4', 'pending', 16, 17, NULL, '2023-12-06 00:16:26');
 
 -- --------------------------------------------------------
 
@@ -535,6 +538,25 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (60, 'Coke Cola Original', 300, 2, 7, 0, 0, 0, 44, 17, 0),
 (61, ' Sprite (20 Fl Oz Bottle) varified', 20, 0, 18, 0, 0, 0, 43, 17, 0);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `util`
+--
+
+CREATE TABLE `util` (
+  `id` int(11) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `util`
+--
+
+INSERT INTO `util` (`id`, `label`, `value`) VALUES
+(1, 'cart_order_timer', '120');
+
 --
 -- Indexes for dumped tables
 --
@@ -620,6 +642,12 @@ ALTER TABLE `shopper_product`
   ADD KEY `shopper_id` (`shopper_id`);
 
 --
+-- Indexes for table `util`
+--
+ALTER TABLE `util`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -663,7 +691,7 @@ ALTER TABLE `news_like`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -675,7 +703,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `refer`
@@ -688,6 +716,12 @@ ALTER TABLE `refer`
 --
 ALTER TABLE `shopper_product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+
+--
+-- AUTO_INCREMENT for table `util`
+--
+ALTER TABLE `util`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

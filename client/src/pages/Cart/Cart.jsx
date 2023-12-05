@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Takaicon } from "../../SvgHub/SocialIcon";
 import { useAuth } from "../../context/auth";
+import GetDateTime from "../../helpers/GetDateTime";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
 import {
@@ -30,6 +31,10 @@ const Cart = () => {
 	const productQuantity = useRef({});
 	const productPrice = useRef({});
 
+	// cart_order_timer
+	const cart_order_timer = "cart_order_timer";
+	const [cart_order_timer_value, setCart_order_timer_value] = useState();
+
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
 			setShoppers(res.data);
@@ -39,6 +44,9 @@ const Cart = () => {
 				initialBuyStates[shopper.id] = false;
 			});
 			setBuyStates(initialBuyStates);
+		});
+		api.get(`/util/getUtil/${cart_order_timer}`).then((res) => {
+			setCart_order_timer_value(res.data[0].value);
 		});
 	}, []);
 
@@ -53,7 +61,7 @@ const Cart = () => {
 	const redirectTimer = async (shopperId) => {
 		setRunningTimerShopperId(shopperId);
 		setTimerStarted(true);
-		setCountdown(120); // Reset countdown to 120 seconds when Buy button is clicked
+		setCountdown(cart_order_timer_value); // Reset countdown to 120 seconds when Buy button is clicked
 
 		if (intervalId) {
 			clearInterval(intervalId);
@@ -82,9 +90,8 @@ const Cart = () => {
 	};
 	useEffect(() => {
 		if (timerStarted && countdown === 0) {
-			return (
-				<button onClick={() => addOrder(shopperId)}>Add Order</button>
-			); // Perform action after countdown completes
+			addOrder(shopperId);
+			// Perform action after countdown completes
 		}
 	}, [countdown, timerStarted]);
 
@@ -162,7 +169,7 @@ const Cart = () => {
 				});
 			});
 		}
-		navigate("/orderStatus");
+		// navigate("/orderStatus");
 	};
 
 	const addOrderToDB = async (
@@ -172,6 +179,7 @@ const Cart = () => {
 		discount,
 		total
 	) => {
+		console.log(shopperId, productid, quantity, discount, total);
 		api.post("/order/add_order", {
 			product_id: productid,
 			quantity: quantity,
@@ -181,6 +189,7 @@ const Cart = () => {
 			price: total,
 			order_status: "pending",
 			weight: 0,
+			order_time: GetDateTime(),
 		}).then((res) => {
 			if (res.data.status === 201) {
 				api.get("/order/getLastOrder").then((res) => {
@@ -190,10 +199,7 @@ const Cart = () => {
 							"You have a new order. Order Number is #" +
 							last_order_id +
 							".",
-						notification_time: new Date()
-							.toISOString()
-							.slice(0, 19)
-							.replace("T", " "),
+						notification_time: GetDateTime(),
 						not_from: shopperId,
 						not_to: user.id,
 						status: 0,
@@ -298,7 +304,7 @@ const Cart = () => {
 										to={`../shopkeeperProfileCV/${shopper.id}`}
 									>
 										<h2 className=" px-4 text-base font-semibold">
-											{shopper.name} Store Items
+											{shopper.name}
 										</h2>
 									</Link>
 									<div className="mx-auto mb-3 h-[1px] w-[90%] bg-[#EBEBEB]"></div>
@@ -499,6 +505,9 @@ const Cart = () => {
 												onClick={() => {
 													setClicked(false),
 														handleBuyClick(
+															shopper.id
+														),
+														setshopperId(
 															shopper.id
 														);
 												}}
