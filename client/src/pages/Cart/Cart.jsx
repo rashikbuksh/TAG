@@ -57,7 +57,7 @@ const Cart = () => {
 			}
 		};
 	}, [shopperId]);
-
+// console.log(countdown);
 	const redirectTimer = async (shopperId) => {
 		setRunningTimerShopperId(shopperId);
 		setTimerStarted(true);
@@ -179,7 +179,7 @@ const Cart = () => {
 		discount,
 		total
 	) => {
-		console.log(shopperId, productid, quantity, discount, total);
+		// console.log(shopperId, productid, quantity, discount, total);
 		api.post("/order/add_order", {
 			product_id: productid,
 			quantity: quantity,
