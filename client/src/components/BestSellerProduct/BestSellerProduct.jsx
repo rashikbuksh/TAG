@@ -39,7 +39,7 @@ const BestSellerProduct = ({ limit, type }) => {
 		);
 	}, [dispatch]);
 
-	if (!prods?.length) return <LoadingPage></LoadingPage>;
+	if (!shopperProducts?.length) return <LoadingPage></LoadingPage>;
 	// console.log(shopperProducts);
 	return (
 		<div className="featured-product-area space-mb--25 mx-auto max-w-7xl">
@@ -47,7 +47,7 @@ const BestSellerProduct = ({ limit, type }) => {
 				<div className="">
 					<div className="">
 						{/* section title */}
-						{prods && (
+						{shopperProducts && (
 							<h2 className="section-title ">
 								<span className="text-xl font-bold">
 									Best Sale{" "}
