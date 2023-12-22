@@ -1,25 +1,26 @@
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import Axios from "axios";
 import { useEffect, useState } from "react";
-import { FaCartShopping, FaLocationDot, FaRegMessage } from "react-icons/fa6";
+import { Button } from "react-bootstrap";
+import { FaLocationDot, FaRegMessage } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { api } from "../../lib/api";
 import logo from "../../../public/assets/img/Tag-logo-blue-get_100_100.png";
 import SearchFunction from "../../AdminComponents/SearchFunction/Index";
+import { AddToCartIcon1 } from "../../SvgHub/Icons";
 import { Takaicon } from "../../SvgHub/SocialIcon";
+import { useAuth } from "../../context/auth";
 import { checkIfInCart } from "../../helpers/product";
+import { api } from "../../lib/api";
 import {
 	addToCart,
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
-import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../context/auth";
-import { AddToCartIcon1 } from "../../SvgHub/Icons";
-import ShowCartIcon from "../ShowCartIcon/ShowCartIcon";
+import LocationModal from "../LocationModal/LocationModal";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
+	const user = useAuth();
 	const { cartItems } = useSelector((state) => state.cart);
 	const [shopperProduct, setShopperProduct] = useState([]);
 	const [shopkeeperInfo, setShopkeeperInfo] = useState([]);
@@ -27,14 +28,14 @@ const ShopkeeperProfileCV = () => {
 	const [selectedCategoryProduct, setSelectedCategoryProduct] = useState([]);
 	const [filteredAllProducts, setFilteredProducts] = useState([]);
 	const [selectedLetter, setSelectedLetter] = useState("");
-	// const options = ["bag", "rice", "vevarage"];
+	const [mapModal, setMapModal] = useState(false);
+	const [latitude, setLatitude] = useState(0);
+	const [longitude, setLongitude] = useState(0);
 	const dispatch = useDispatch();
-	const { user } = useAuth();
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
 			.then((res) => {
 				setShopkeeperInfo(res.data[0]);
-				// console.log(res.data[0]);
 			})
 			.catch((err) => {});
 
@@ -49,11 +50,9 @@ const ShopkeeperProfileCV = () => {
 			})
 			.catch((err) => {});
 		api.get(`/category/get/category`).then((response) => {
-			// console.log(response.data);
 			setCategory(response.data);
 		});
 	}, [id]);
-	// console.log(shopkeeperInfo);
 	const selectedCategory = (e) => {
 		const selectedCategoryId = parseInt(e.target.value); // Convert the value to an integer if needed
 		if (selectedCategoryId === 0) {
@@ -69,10 +68,8 @@ const ShopkeeperProfileCV = () => {
 	};
 	const alphabet = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-	// console.log(selectedCategoryProduct);
 	const handleSearch = (letter) => {
 		setSelectedLetter(letter);
-		// console.log(letter);
 		if (letter === "#") {
 			setFilteredProducts(selectedCategoryProduct);
 		} else {
@@ -81,6 +78,13 @@ const ShopkeeperProfileCV = () => {
 			);
 			setFilteredProducts(filteredResults);
 		}
+	};
+
+	const MapModal = (location) => {
+		let positionFromDb = location.split("__");
+		setLatitude(positionFromDb[0]);
+		setLongitude(positionFromDb[1]);
+		setMapModal(true);
 	};
 	return (
 		<div className="mt-5 lg:mx-auto lg:w-[50%]">
@@ -113,13 +117,6 @@ const ShopkeeperProfileCV = () => {
 									/>
 								</div>
 							</div>
-
-							{/* <h1
-								title="shop id"
-								className="text-base font-semibold"
-							>
-								
-							</h1> */}
 							<h1
 								title="shop Name"
 								className=" text-lg font-semibold"
@@ -136,7 +133,24 @@ const ShopkeeperProfileCV = () => {
 								/>
 							</div>
 							<div className=" flex items-center justify-center gap-4">
-								<FaLocationDot className="text-3xl text-blue-400 lg:text-3xl "></FaLocationDot>
+								<Button
+									onClick={() =>
+										MapModal(
+											shopkeeperInfo.shipping_address
+										)
+									}
+								>
+									<FaLocationDot className="text-3xl text-blue-400 lg:text-3xl "></FaLocationDot>
+								</Button>
+								{mapModal &&
+									LocationModal({
+										isOpen: mapModal,
+										setIsOpen: setMapModal,
+										title: "Location",
+										latitude: latitude,
+										longitude: longitude,
+										popup: shopkeeperInfo.name,
+									})}
 								<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
 									Follow
 								</button>
@@ -200,7 +214,6 @@ const ShopkeeperProfileCV = () => {
 							{/* //show product div  */}
 							<div className="mb-20 grid h-[50vh] w-[90%] grid-cols-2  gap-1 overflow-y-auto border-t lg:mx-auto lg:grid-cols-4">
 								{filteredAllProducts.map((single) => {
-									// console.log(filteredAllProducts);
 									return (
 										<div
 											key={single.id}

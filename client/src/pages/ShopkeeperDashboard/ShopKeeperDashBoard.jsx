@@ -13,42 +13,21 @@ import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import Timekeeper from "react-timekeeper";
 import { Logger } from "sass";
+import { Breadcrumb } from "../../components";
 import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
-import { Breadcrumb } from "../../components";
 
 const ShopKeeperDashBoard = () => {
-	// const shopname = "Rafi Edu Store";
-	// const locatiion = "New Market City Complex, Dhaka 1205";
-	// const [isOpen, setIsOpen] = useState(false);
 	const [isClockOpen, setIsClockOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState("");
 	const [activeStatus, setActiveStatus] = useState(false);
-	// const {user}=useAuth()
-	// // console.log(user);
-
-	// const toggleDrawer = () => {
-	// 	setIsOpen((prevState) => !prevState);
-	// };
-
-	// const mobileDrawerStyle = {
-	// 	width: "60%", // Adjust this value as needed for mobile
-	// };
-
-	// const desktopDrawerStyle = {
-	// 	width: "25%", // Adjust this value as needed for desktop
-	// };
 
 	const id = localStorage.getItem("user-id");
 	// console.log(id);
 
 	const [shopkeeper, setShopkeeper] = useState([]);
 	const [productCount, setProductCount] = useState(0);
-
-	// clock
-	const date = new Date();
-	// console.log(activeStatus);
 
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`).then((res) => {
@@ -95,7 +74,7 @@ const ShopKeeperDashBoard = () => {
 	};
 	const dates = ["SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"];
 	return (
-		<div className="body-wrapper mt-10 space-pb--120">
+		<div className="body-wrapper space-pb--120 mt-10">
 			<Breadcrumb pageTitle="DashBoard" prevUrl="/home" />
 			<div className="mx-auto rounded-lg  p-4 md:w-[50%]">
 				<div className="flex items-center justify-between">
@@ -112,7 +91,10 @@ const ShopKeeperDashBoard = () => {
 								checked={activeStatus}
 								onChange={handleToggleChange}
 							/>
-							<button onClick={handleOpenClockModal} className="font-bold">
+							<button
+								onClick={handleOpenClockModal}
+								className="font-bold"
+							>
 								Set
 							</button>
 							<Modal
@@ -126,7 +108,7 @@ const ShopKeeperDashBoard = () => {
 										days.map((day,index)=> <div className="border-1 border-blue-500 h-5 w-5 flex items-center justify-center text-black  rounded-full font-bold " key={index}>{day}</div>)
 									}
 									</div> */}
-									<form className="flex  gap-2 items-center">
+									<form className="flex  items-center gap-2">
 										<label className="text-lg font-bold">
 											Time:{" "}
 										</label>
@@ -161,8 +143,15 @@ const ShopKeeperDashBoard = () => {
 											))}
 										</div>
 									</div>
-									<div className="flex justify-end mt-4">
-										<button onClick={()=>setIsClockOpen(!isClockOpen)} className="action-button">Done</button>
+									<div className="mt-4 flex justify-end">
+										<button
+											onClick={() =>
+												setIsClockOpen(!isClockOpen)
+											}
+											className="action-button"
+										>
+											Done
+										</button>
 									</div>
 								</div>
 

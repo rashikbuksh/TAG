@@ -1,15 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/esm/Button";
-import { set, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { ReactSVG } from "react-svg";
-import * as yup from "yup";
-import { api } from "../../lib/api";
-import { TagLogo2 } from "../../SvgHub/TagLogo2";
+import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import * as yup from "yup";
+import { TagLogo2 } from "../../SvgHub/TagLogo2";
+import { api } from "../../lib/api";
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -20,12 +18,8 @@ const Register = () => {
 			alert("Geolocation is not supported by this browser.");
 		}
 	};
-	
-
-	const [address, setAddress] = React.useState("");
 
 	const showPosition = (position) => {
-		setAddress(position.coords.latitude + "__" + position.coords.longitude);
 		getValues("shipping_address");
 		setValue(
 			"shipping_address",
@@ -40,7 +34,7 @@ const Register = () => {
 			.max(11, "Phone number must be at most 11 characters")
 			.required("Phone number is required"),
 		emailAddress: yup.string().email("Please enter a valid email address"),
-			password: yup
+		password: yup
 			.string()
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
@@ -84,9 +78,9 @@ const Register = () => {
 	const togglePasswordVisibility = () => {
 		setShowPassword((prevShowPassword) => !prevShowPassword);
 	};
-	useEffect(()=>{
-		getUserLocation()
-	},[])
+	useEffect(() => {
+		getUserLocation();
+	}, []);
 	return (
 		<div className="space-pt--70 space-pb--120 relative">
 			{/* auth page header */}
@@ -143,9 +137,10 @@ const Register = () => {
 						<div className="auth-form__single-field space-mb--30">
 							<label
 								htmlFor="emailAddress"
-								className="mb-1 px-4 text-base font-semibold flex justify-between"
+								className="mb-1 flex justify-between px-4 text-base font-semibold"
 							>
-								<span>Email </span> <span className="text-xs" >Optional</span>
+								<span>Email </span>{" "}
+								<span className="text-xs">Optional</span>
 							</label>
 							<input
 								type="text"
