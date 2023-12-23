@@ -1,5 +1,6 @@
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import { map } from "leaflet";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { FaLocationDot, FaRegMessage } from "react-icons/fa6";
@@ -10,6 +11,7 @@ import SearchFunction from "../../AdminComponents/SearchFunction/Index";
 import { AddToCartIcon1 } from "../../SvgHub/Icons";
 import { Takaicon } from "../../SvgHub/SocialIcon";
 import { useAuth } from "../../context/auth";
+import GetLocation from "../../helpers/GetLocation";
 import { checkIfInCart } from "../../helpers/product";
 import { api } from "../../lib/api";
 import {
@@ -17,6 +19,7 @@ import {
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
 import LocationModal from "../LocationModal/LocationModal";
+import MapDistanceModal from "../LocationModal/MapDistanceModal";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
@@ -80,7 +83,7 @@ const ShopkeeperProfileCV = () => {
 		}
 	};
 
-	const MapModal = (location) => {
+	const MapModalOpener = (location) => {
 		let positionFromDb = location.split("__");
 		setLatitude(positionFromDb[0]);
 		setLongitude(positionFromDb[1]);
@@ -135,22 +138,28 @@ const ShopkeeperProfileCV = () => {
 							<div className=" flex items-center justify-center gap-4">
 								<Button
 									onClick={() =>
-										MapModal(
+										MapModalOpener(
 											shopkeeperInfo.shipping_address
 										)
 									}
 								>
 									<FaLocationDot className="text-3xl text-blue-400 lg:text-3xl "></FaLocationDot>
 								</Button>
-								{mapModal &&
-									LocationModal({
-										isOpen: mapModal,
-										setIsOpen: setMapModal,
-										title: "Location",
-										latitude: latitude,
-										longitude: longitude,
-										popup: shopkeeperInfo.name,
-									})}
+								<MapDistanceModal
+									isOpen={mapModal}
+									setIsOpen={setMapModal}
+									startLoc={GetLocation()}
+									endLoc={shopkeeperInfo.shipping_address}
+									startPopup={"I am Here"}
+									endPopup={shopkeeperInfo.name}
+								/>
+								{/* <LocationModal
+									isOpen={mapModal}
+									setIsOpen={setMapModal}
+									latitude={latitude}
+									longitude={longitude}
+									popup={shopkeeperInfo.name}
+								/> */}
 								<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
 									Follow
 								</button>
