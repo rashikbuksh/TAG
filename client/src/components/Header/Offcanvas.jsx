@@ -169,44 +169,46 @@ function Offcanvas(props) {
 									All products
 								</Link>
 							</li>
-							<li>
-								<span className="icon">
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/cart-two.svg"
-										}
-									/>
-								</span>
-								{userid
-									? userInfo.map((item) =>
-											item.access == "shopper" ? (
-												<Link
-													key={user}
-													to={
-														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														`/orderShopper`
-													}
-												>
-													Order
-												</Link>
-											) : (
-												<Link
-													key={user}
-													to={
-														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														`/order`
-													}
-												>
-													My Orders
-												</Link>
-											)
-									  )
-									: ""}
-							</li>
+							{userid && (
+								<li>
+									<span className="icon">
+										<ReactSVG
+											src={
+												import.meta.env
+													.VITE_API_PUBLIC_URL +
+												"/assets/img/icons/cart-two.svg"
+											}
+										/>
+									</span>
+									{userid
+										? userInfo.map((item) =>
+												item.access == "shopper" ? (
+													<Link
+														key={user}
+														to={
+															import.meta.env
+																.VITE_API_PUBLIC_URL +
+															`/orderShopper`
+														}
+													>
+														Order
+													</Link>
+												) : (
+													<Link
+														key={user}
+														to={
+															import.meta.env
+																.VITE_API_PUBLIC_URL +
+															`/order`
+														}
+													>
+														My Orders
+													</Link>
+												)
+										  )
+										: ""}
+								</li>
+							)}
 
 							{userid
 								? userInfo.map((item) =>
@@ -261,20 +263,25 @@ function Offcanvas(props) {
 										</li>
 								  )
 								: ""}
+							{user ? (
+								<li>
+									<span className="icon">
+										<FaUserPlus className="text-xl"></FaUserPlus>
+									</span>
+									<Link
+										to={
+											import.meta.env
+												.VITE_API_PUBLIC_URL +
+											"/referPage"
+										}
+									>
+										Refer
+									</Link>
+								</li>
+							) : (
+								""
+							)}
 
-							<li>
-								<span className="icon">
-									<FaUserPlus className="text-xl"></FaUserPlus>
-								</span>
-								<Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"/referPage"
-									}
-								>
-									Refer
-								</Link>
-							</li>
 							{userid
 								? userInfo.map((item) =>
 										item.access == "admin" ? (
@@ -300,17 +307,23 @@ function Offcanvas(props) {
 										) : null
 								  )
 								: ""}
-							<li>
-								<span className="icon">
-									<img
-										width="24"
-										height="24"
-										src="https://img.icons8.com/material-outlined/24/exit.png"
-										alt="exit"
-									/>
-								</span>
-								<button onClick={logout}>Logout</button>
-							</li>
+							{user ? (
+								<li>
+									<span className="icon">
+										<img
+											width="24"
+											height="24"
+											src="https://img.icons8.com/material-outlined/24/exit.png"
+											alt="exit"
+										/>
+									</span>
+									<button onClick={logout}>Logout</button>
+								</li>
+							) : (
+								<Link to={"/login"} className="w-full text-center rounded-lg bg-primary py-2  text-white">
+									Login
+								</Link>
+							)}
 						</ul>
 					</div>
 				</div>

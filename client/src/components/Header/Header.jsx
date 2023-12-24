@@ -129,8 +129,8 @@ function Header() {
 										}
 									>
 										<div className="avatar">
-											<div className="w-8 rounded-full ring ring-[#2F5BA9] ">
-												{userData ? (
+											{userData ? (
+												<div className="w-8 rounded-full ring ring-[#2F5BA9] ">
 													<img
 														src={`${
 															import.meta.env
@@ -139,12 +139,12 @@ function Header() {
 															userData.profile_picture
 														}`}
 													/>
-												) : (
-													<button className="auth-btn">
-														Login
-													</button>
-												)}
-											</div>
+												</div>
+											) : (
+												<button className="w-[60px] bg-primary text-white rounded-lg  py-2">
+													Login
+												</button>
+											)}
 										</div>
 									</Link>
 								)}
