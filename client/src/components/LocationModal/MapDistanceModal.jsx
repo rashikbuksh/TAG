@@ -1,5 +1,6 @@
+import { Map } from "leaflet";
 import React, { useEffect, useState } from "react";
-import { Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { Transition } from "react-transition-group";
 import Modal from "../Modal/Modal";
 
@@ -12,9 +13,10 @@ const MapDistanceModal = (
 	endPopup
 ) => {
 	const [isShown, setIsShown] = useState(false);
-	const [map, setMap] = useState(null);
 	const [startMarker, setStartMarker] = useState(null);
 	const [endMarker, setEndMarker] = useState(null);
+
+	const map = new L.Map();
 
 	useEffect(() => {
 		if (map) {

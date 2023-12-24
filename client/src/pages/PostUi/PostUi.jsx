@@ -4,6 +4,7 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 import {
 	FaClock,
 	FaHeart,
@@ -12,18 +13,16 @@ import {
 	FaShare,
 	FaShoppingCart,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { PiShareFat } from "react-icons/pi";
-import { set } from "react-hook-form";
+import { Link } from "react-router-dom";
+import demoProfile from "../../../src/assets/img/Tag-logo-blue-get_50_50.png";
 import Modal from "../../components/Modal/Modal";
 import MainProduct from "../../components/ProductCart/MainProduct";
 import { api } from "../../lib/api";
 import CommentModal from "./CommentModal";
-import demoProfile from "../../../public/assets/img/Tag-logo-blue-get_50_50.png";
 const PostUi = ({ postData }) => {
 	const userid = localStorage.getItem("user-id");
 	const [shopperProducts, setShopperProduct] = useState([]);
-	console.log("🚀 ~ file: PostUi.jsx:26 ~ PostUi ~ shopperProducts:", shopperProducts)
 	const [shopperInfo, setShopperInfo] = useState([]);
 
 	const {
@@ -150,7 +149,7 @@ const PostUi = ({ postData }) => {
 					</div>
 				</div>
 				{shopper_product_id && (
-					<div className="mx-auto  mt-2 border border-top-0 rounded-lg ">
+					<div className="border-top-0  mx-auto mt-2 rounded-lg border ">
 						{shopperProducts &&
 							shopperProducts.map((shopperproduct) => (
 								<MainProduct
@@ -164,7 +163,7 @@ const PostUi = ({ postData }) => {
 				{shopper_product_id ? (
 					""
 				) : (
-					<div className="my-1 rounded-lg border border-top-0">
+					<div className="border-top-0 my-1 rounded-lg border">
 						{shopperProducts ? (
 							<div>
 								{shopper_product_id ? (

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../../lib/api";
 import MainProduct from "./MainProduct";
-import logo from "../../../public/assets/img/Tag-logo-blue-get_50_50.png";
+import logo from "../../../src/assets/img/Tag-logo-blue-get_50_50.png";
 
 const ProductCart = ({ product }) => {
 	const divStyle = {

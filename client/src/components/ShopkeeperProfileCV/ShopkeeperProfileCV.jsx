@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { FaLocationDot, FaRegMessage } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import logo from "../../../public/assets/img/Tag-logo-blue-get_100_100.png";
+import logo from "../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 import SearchFunction from "../../AdminComponents/SearchFunction/Index";
 import { AddToCartIcon1 } from "../../SvgHub/Icons";
 import { Takaicon } from "../../SvgHub/SocialIcon";
@@ -145,21 +145,21 @@ const ShopkeeperProfileCV = () => {
 								>
 									<FaLocationDot className="text-3xl text-blue-400 lg:text-3xl "></FaLocationDot>
 								</Button>
-								<MapDistanceModal
+								{/* <MapDistanceModal
 									isOpen={mapModal}
 									setIsOpen={setMapModal}
 									startLoc={GetLocation()}
 									endLoc={shopkeeperInfo.shipping_address}
 									startPopup={"I am Here"}
 									endPopup={shopkeeperInfo.name}
-								/>
-								{/* <LocationModal
+								/> */}
+								<LocationModal
 									isOpen={mapModal}
 									setIsOpen={setMapModal}
 									latitude={latitude}
 									longitude={longitude}
 									popup={shopkeeperInfo.name}
-								/> */}
+								/>
 								<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
 									Follow
 								</button>
