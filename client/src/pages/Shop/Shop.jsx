@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { ShopProducts } from "../../components";
+import { Footer, Header, ShopProducts } from "../../components";
 import {
 	getIndividualCategories,
 	getIndividualColors,
@@ -17,7 +17,7 @@ const Shop = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [category, setCategory] = useState([]);
-
+	
 	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproduct`)
 			.then((response) => {
@@ -46,6 +46,9 @@ const Shop = () => {
 			  });
 
 	return (
+		<>
+		<Header/>
+		<Footer/>
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			<div className="shop-header bg-color--grey">
 				<div className="space-y--15 container">
@@ -144,6 +147,7 @@ const Shop = () => {
 			{/* shop products */}
 			{filteredProduct && <ShopProducts products={filteredProduct} />}
 		</div>
+		</>
 	);
 };
 

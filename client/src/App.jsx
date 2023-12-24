@@ -78,13 +78,13 @@ const PROTECTED_ROUTES = [
 	// 	element: Shop,
 	// 	access: ["admin", "customer", "shopper"],
 	// },
-	{
-		id: 6,
-		name: "Product",
-		path: "/product/:id",
-		element: Product,
-		access: ["admin", "customer", "shopper"],
-	},
+	// {
+	// 	id: 6,
+	// 	name: "Product",
+	// 	path: "/product/:id",
+	// 	element: Product,
+	// 	access: ["admin", "customer", "shopper"],
+	// },
 	{
 		id: 7,
 		name: "Chat",
@@ -162,13 +162,13 @@ const PROTECTED_ROUTES = [
 		element: OrderShopper,
 		access: ["admin", "shopper"],
 	},
-	{
-		id: 18,
-		name: "ShopkeeperProfileCV",
-		path: "/shopkeeperProfileCV/:id",
-		element: ShopkeeperProfileCV,
-		access: ["admin", "customer", "shopper"],
-	},
+	// {
+	// 	id: 18,
+	// 	name: "ShopkeeperProfileCV",
+	// 	path: "/shopkeeperProfileCV/:id",
+	// 	element: ShopkeeperProfileCV,
+	// 	access: ["admin", "customer", "shopper"],
+	// },
 
 	{
 		id: 19,
@@ -276,6 +276,14 @@ const PUBLIC_ROUTES = [
 	{
 		path: "/",
 		element: Welcome,
+	},
+	{
+		path: "/product/:id",
+		element: Product,
+	},
+	{
+		path: "/shopkeeperProfileCV/:id",
+		element: ShopkeeperProfileCV,
 	},
 	{
 		path: "/home",

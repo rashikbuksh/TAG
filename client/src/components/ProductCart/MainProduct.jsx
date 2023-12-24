@@ -137,7 +137,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					onClick={() => {
 						navigateProductPage(id);
 					}}
-					className="absolute left-0 top-[40%] z-50 w-full bg-primary py-1 text-white rounded-lg"
+					className="absolute left-0 top-[40%] z-50 w-full rounded-lg bg-primary py-1 text-white"
 				>
 					Shop Closed Now
 				</button>
@@ -168,6 +168,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					</div>
 
 					{display > 0 &&
+						user &&
 						user.access == "customer" &&
 						active_status === 1 && (
 							<div
@@ -264,9 +265,9 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				<div></div>
 				<div className=" flex items-end justify-between   ">
 					<div className=" flex items-center">
-						{user.access === "admin" ? (
+						{user && user.access === "admin" ? (
 							""
-						) : user.access === "shopper" ? (
+						) :user && user.access === "shopper" ? (
 							""
 						) : (
 							<div className=" flex items-center p-1">
@@ -291,30 +292,34 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 						)}
 					</div>
 
-					<div className=" flex items-end">
-						{user.access === "admin" ? (
-							""
-						) : user.access === "shopper" ? (
-							""
-						) : (
-							<button
-								disabled={active_status !== 1}
-								onClick={() => {
-									prod.quantity = quantity;
-									if (checkIfInCart(cartItems, prod)) {
-										dispatch(increaseQuantityofProd(prod));
-									} else {
-										dispatch(addToCart(prod));
-									}
-								}}
-								className=""
-							>
-								<span onClick={showQuantitypalet}>
-									<AddToCartIcon2></AddToCartIcon2>
-								</span>
-							</button>
-						)}
-					</div>
+					<div className="flex items-end">
+    {user && user.access === "admin" ? (
+        ""
+    ) : user && user.access === "shopper" ? (
+        ""
+    ) : user ? (
+        <button
+            disabled={active_status !== 1}
+            onClick={() => {
+                prod.quantity = quantity;
+                if (checkIfInCart(cartItems, prod)) {
+                    dispatch(increaseQuantityofProd(prod));
+                } else {
+                    dispatch(addToCart(prod));
+                }
+            }}
+            className=""
+        >
+            <span onClick={showQuantitypalet}>
+                <AddToCartIcon2></AddToCartIcon2>
+            </span>
+        </button>
+    ) : (
+        <Link to={import.meta.env.VITE_API_PUBLIC_URL + "/login"}>
+            <AddToCartIcon2></AddToCartIcon2>
+        </Link>
+    )}
+</div>
 				</div>
 			</div>
 		</div>

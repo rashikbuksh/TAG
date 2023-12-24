@@ -68,8 +68,9 @@ const Home = () => {
 			});
 	}, []);
 	return (
-		<>
+		<div className="p-2">
 			<Header />
+			<Footer />
 			<div className="body-wrapper space-pb--120 my-12">
 				<Helmet>
 					<meta charSet="utf-8" />
@@ -96,8 +97,8 @@ const Home = () => {
 					</button>
 				)}
 			</div>
-			<Footer />
-		</>
+	
+		</div>
 	);
 };
 
