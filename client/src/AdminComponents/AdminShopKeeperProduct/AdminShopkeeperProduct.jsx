@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { api } from '../../lib/api';
-import ShopkeeperProductList from './ShopkeeperProductList';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { api } from "../../lib/api";
+import ShopkeeperProductList from "./ShopkeeperProductList";
 
 const AdminShopkeeperProduct = () => {
-    const {id} = useParams()
-    // console.log(id);
-    const [shoperProduct, setShopperProduct]=useState([])
-    useEffect(() => {
+	const { id } = useParams();
+	// console.log(id);
+	const [shoperProduct, setShopperProduct] = useState([]);
+	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproductAdmin/${id}`)
 			.then((response) => {
 				setShopperProduct(response.data);
@@ -15,11 +15,14 @@ const AdminShopkeeperProduct = () => {
 			.catch((error) => {
 				alert(error);
 			});
-	}, [id]);
-    // console.log(shoperProduct);
-    return (
-        <>
-        <p className='text-3xl font-bold px-10 py-3'> Shoper Product For Shopper Id {id}</p>
+	}, [id, shoperProduct]);
+	// console.log(shoperProduct);
+	return (
+		<>
+			<p className="px-10 py-3 text-3xl font-bold">
+				{" "}
+				Shoper Product For Shopper Id {id}
+			</p>
 			<div className="mx-auto  w-1/2 p-6">
 				<label className="sr-only">Search</label>
 
@@ -73,7 +76,7 @@ const AdminShopkeeperProduct = () => {
 				</div>
 			</div>
 		</>
-    );
+	);
 };
 
 export default AdminShopkeeperProduct;

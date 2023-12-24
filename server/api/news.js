@@ -58,8 +58,14 @@ const change = [
 
 const remove = [
 	{
-		uri: "/news/deletenews/:id",
+		uri: "/news/deletenews/:id/by/shopperproduct",
 		query: `DELETE FROM news WHERE shopper_product_id = ?`,
+		param: ["id"],
+		msg: "news",
+	},
+	{
+		uri: "/news/deletenews/:id",
+		query: `DELETE FROM news WHERE id = ?`,
 		param: ["id"],
 		msg: "news",
 	},

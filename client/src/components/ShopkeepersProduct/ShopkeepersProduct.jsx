@@ -2,6 +2,7 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import { FaArrowAltCircleLeft, FaPlusCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import ShopkeeperProductcart from "./ShopkeeperProductcart";
 const ShopkeepersProduct = () => {
@@ -26,7 +27,7 @@ const ShopkeepersProduct = () => {
 		},
 	];
 
-	const id = localStorage.getItem("user-id");
+	const { id } = useAuth();
 
 	const [prods, setProds] = useState([]);
 

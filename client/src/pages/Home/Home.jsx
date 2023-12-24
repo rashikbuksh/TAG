@@ -1,21 +1,20 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { FaArrowAltCircleUp, FaArrowUp, FaShoppingBag } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
+import { FaArrowUp } from "react-icons/fa";
 import {
 	AllProducts,
 	BestSellerProduct,
-	CategorySlider,
+	Footer,
+	Header,
 	HeroSlider,
 } from "../../components";
 import HotNews from "../../components/HotNews/HotNews";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import Refer from "../Refer/Refer";
-import { useSelector } from "react-redux";
-import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
-import AdsComponent from "../../components/AdsComponent/AdsComponent";
-import { Helmet } from "react-helmet";
 
 const Home = () => {
+	const { user } = useAuth();
 	const [showScrollButton, setShowScrollButton] = useState(false);
 	const [sliderDataTop, setSliderDataTop] = useState([]);
 	const [sliderDataMiddel, setSliderDataMiddel] = useState([]);
@@ -69,32 +68,36 @@ const Home = () => {
 			});
 	}, []);
 	return (
-		<div className="body-wrapper space-pb--120 my-12">
-			<Helmet>
-				<meta charSet="utf-8" />
-				<meta
-					name="google-adsense-account"
-					content="ca-pub-2753570933185281"
-				></meta>
-				<title>Home-TAG</title>
-				{/* <link rel="canonical" href="http://mysite.com/example" /> */}
-			</Helmet>
-			<HeroSlider sliderData={sliderDataTop} />
-			<Refer></Refer>
-			<HotNews></HotNews>
-			{/* <AdsComponent dataAdSlot="8283119048" /> */}
-			{/* <ShowCartIcon></ShowCartIcon> */}
-			<BestSellerProduct limit={2} type="bestSeller" />
-			<AllProducts limit={12} sliderData={sliderDataMiddel} />
-			{showScrollButton && (
-				<button
-					className="fixed bottom-24 right-5 z-20 rounded-full bg-white bg-opacity-50 p-2 shadow-lg"
-					onClick={handleSmoothScroll}
-				>
-					<FaArrowUp className="text-3xl text-gray-200"></FaArrowUp>
-				</button>
-			)}
-		</div>
+		<>
+			<Header />
+			<div className="body-wrapper space-pb--120 my-12">
+				<Helmet>
+					<meta charSet="utf-8" />
+					<meta
+						name="google-adsense-account"
+						content="ca-pub-2753570933185281"
+					></meta>
+					<title>Home-TAG</title>
+					{/* <link rel="canonical" href="http://mysite.com/example" /> */}
+				</Helmet>
+				<HeroSlider sliderData={sliderDataTop} />
+				{user ? <Refer /> : ""}
+				<HotNews></HotNews>
+				{/* <AdsComponent dataAdSlot="8283119048" /> */}
+				{/* <ShowCartIcon></ShowCartIcon> */}
+				<BestSellerProduct limit={2} type="bestSeller" />
+				<AllProducts limit={12} sliderData={sliderDataMiddel} />
+				{showScrollButton && (
+					<button
+						className="fixed bottom-24 right-5 z-20 rounded-full bg-white bg-opacity-50 p-2 shadow-lg"
+						onClick={handleSmoothScroll}
+					>
+						<FaArrowUp className="text-3xl text-gray-200"></FaArrowUp>
+					</button>
+				)}
+			</div>
+			<Footer />
+		</>
 	);
 };
 

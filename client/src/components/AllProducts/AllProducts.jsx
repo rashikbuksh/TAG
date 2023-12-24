@@ -1,6 +1,7 @@
 import Axios from "axios";
 import PropTypes from "prop-types";
 import { Fragment, default as React, useEffect, useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -8,13 +9,12 @@ import { ReactSVG } from "react-svg";
 import { getDiscountPrice, getProducts } from "../../helpers/product";
 import { api } from "../../lib/api";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
+import HeroSlider from "../HeroSlider/HeroSlider";
+import LoadingPage from "../LodingPage/LoadingPage";
 import ProductCart from "../ProductCart/ProductCart";
 import ProductSlider from "../ProductSlider/ProductSlider";
-import LoadingPage from "../LodingPage/LoadingPage";
-import { FaCheckCircle } from "react-icons/fa";
-import HeroSlider from "../HeroSlider/HeroSlider";
 
-const AllProducts = ({ limit ,sliderData}) => {
+const AllProducts = ({ limit, sliderData }) => {
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 	const [prods, setProds] = useState([]);
 	const [popularProducts, setPopularProducts] = useState([]);
@@ -22,13 +22,6 @@ const AllProducts = ({ limit ,sliderData}) => {
 
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-
-	// get userid from local storage
-	const userId = localStorage.getItem("user-id");
-
-	if (userId === null) {
-		window.location.href = "/login";
-	}
 
 	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproduct`)
@@ -52,7 +45,6 @@ const AllProducts = ({ limit ,sliderData}) => {
 				// alert(error);
 			});
 	}, []);
-	
 
 	const isVerifiedProduct = prods.filter(
 		(product) => product.isVerified === "verified"
@@ -74,7 +66,8 @@ const AllProducts = ({ limit ,sliderData}) => {
 								Popular Product{" "}
 							</span>
 
-							<Link className="primary-text"
+							<Link
+								className="primary-text"
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
 									"/shop"
@@ -98,11 +91,13 @@ const AllProducts = ({ limit ,sliderData}) => {
 					<div className="my-2"></div>
 					{prods && (
 						<h2 className="section-title space-mb--20 ">
-							<p className="text-xl font-bold flex items-center gap-3">
-							<span>Verified Product</span>{" "}<FaCheckCircle className=" primary-text"></FaCheckCircle>
+							<p className="flex items-center gap-3 text-xl font-bold">
+								<span>Verified Product</span>{" "}
+								<FaCheckCircle className=" primary-text"></FaCheckCircle>
 							</p>
 
-							<Link className="primary-text"
+							<Link
+								className="primary-text"
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
 									"/shop"
@@ -129,7 +124,8 @@ const AllProducts = ({ limit ,sliderData}) => {
 						<h2 className="section-title space-mb--20">
 							<span className="text-xl font-bold">Product </span>
 
-							<Link className="primary-text"
+							<Link
+								className="primary-text"
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
 									"/shop"

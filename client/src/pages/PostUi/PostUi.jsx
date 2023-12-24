@@ -18,9 +18,11 @@ import { Link } from "react-router-dom";
 import demoProfile from "../../../src/assets/img/Tag-logo-blue-get_50_50.png";
 import Modal from "../../components/Modal/Modal";
 import MainProduct from "../../components/ProductCart/MainProduct";
+import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import CommentModal from "./CommentModal";
 const PostUi = ({ postData }) => {
+	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");
 	const [shopperProducts, setShopperProduct] = useState([]);
 	const [shopperInfo, setShopperInfo] = useState([]);
@@ -55,7 +57,7 @@ const PostUi = ({ postData }) => {
 		api.get(`/auth/getUserInfo/${shop_id}}`).then((res) => {
 			setShopperInfo(res.data);
 		});
-	}, []);
+	}, [postData]);
 
 	const currentDate = new Date(date);
 	const formattedTime = currentDate.toLocaleTimeString([], {
@@ -91,6 +93,18 @@ const PostUi = ({ postData }) => {
 		setcommentId(id);
 		setIsOpen(true);
 	}
+
+	const handleNewsDelete = () => {
+		const confirm = window.confirm("Are you sure you want to delete?");
+		if (!confirm) return;
+		api.delete(`/news/deletenews/${id}`)
+			.then((res) => {
+				alert("News Deleted Successfully");
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	};
 
 	return (
 		<div className="my-6">
@@ -128,13 +142,28 @@ const PostUi = ({ postData }) => {
 											</div>
 										))}
 									</Link>
-									<div className="">
-										<Rating
-											style={{ maxWidth: 80 }}
-											readOnly
-											orientation="horizontal"
-											value={rating}
-										/>
+									<div className="flex">
+										<div>
+											<Rating
+												style={{ maxWidth: 80 }}
+												readOnly
+												orientation="horizontal"
+												value={rating}
+											/>
+										</div>
+										<div className="flex-grow">
+											{shop_id == userid ||
+											user.access == "admin" ? (
+												<button
+													className="text-xs text-gray-500"
+													onClick={handleNewsDelete}
+												>
+													Delete
+												</button>
+											) : (
+												""
+											)}
+										</div>
 									</div>
 								</div>
 

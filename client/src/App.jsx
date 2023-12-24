@@ -10,13 +10,13 @@ import ProtectedRoutes from "./routes";
 
 import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
 import AdminStats from "./AdminComponents/AdminStats/AdminStats";
+import Allnews from "./AdminComponents/AllNews/Allnews";
 import BestSellProduct from "./AdminComponents/BestSellProduct/BestSellProduct";
 import MakeModarator from "./AdminComponents/MakeModarator/MakeModarator";
 import ManageModarator from "./AdminComponents/ManageModarator/ManageModarator";
 import TagOrderHistory from "./AdminComponents/TagOrderHistory/TagOrderHistory";
 import TagUserOrderHistory from "./AdminComponents/TagOrderHistory/TagUserOrderHistory";
 import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
-import Allnews from "./AllNews/Allnews";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Offcanvas from "./components/Header/Offcanvas";
@@ -31,14 +31,14 @@ import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
 import AddShopperProduct from "./pages/AddShopperProduct/AddShopperProduct";
 import NewsFeed from "./pages/NewsFeed/NewsFeed";
+import OrderModal from "./pages/Order/OrderModal/OrderModal";
+import ShopperOrderHistory from "./pages/OrderHistory/ShopperOrderHistory";
+import OrderDetailsShopper from "./pages/OrderShopper/OrderModal";
 import OrderShopper from "./pages/OrderShopper/OrderShopper";
+import OrderStatus from "./pages/OrderStatus/OrderStatus";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
-import OrderStatus from "./pages/OrderStatus/OrderStatus";
-import OrderModal from "./pages/Order/OrderModal/OrderModal";
-import OrderDetailsShopper from "./pages/OrderShopper/OrderModal";
-import ShopperOrderHistory from "./pages/OrderHistory/ShopperOrderHistory";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -64,20 +64,20 @@ const AllProductAdmin = lazy(() =>
 );
 
 const PROTECTED_ROUTES = [
-	{
-		id: 1,
-		name: "Home",
-		path: "/home",
-		element: Home,
-		access: ["admin", "customer", "shopper", "modarator"],
-	},
-	{
-		id: 5,
-		name: "Shop",
-		path: "/shop",
-		element: Shop,
-		access: ["admin", "customer", "shopper"],
-	},
+	// {
+	// 	id: 1,
+	// 	name: "Home",
+	// 	path: "/home",
+	// 	element: Home,
+	// 	access: ["admin", "customer", "shopper", "modarator"],
+	// },
+	// {
+	// 	id: 5,
+	// 	name: "Shop",
+	// 	path: "/shop",
+	// 	element: Shop,
+	// 	access: ["admin", "customer", "shopper"],
+	// },
 	{
 		id: 6,
 		name: "Product",
@@ -175,7 +175,7 @@ const PROTECTED_ROUTES = [
 		name: "orderStatus",
 		path: "/orderStatus",
 		element: OrderStatus,
-		access: ["admin","customer", "shopper"],
+		access: ["admin", "customer", "shopper"],
 	},
 	// {
 	// 	id: 20,
@@ -224,7 +224,7 @@ const PROTECTED_ROUTES = [
 		name: "Order Details",
 		path: "/orderDetails/:id",
 		element: OrderModal,
-		access: ["admin","customer", "shopper"],
+		access: ["admin", "customer", "shopper"],
 	},
 	{
 		id: 30,
@@ -276,6 +276,14 @@ const PUBLIC_ROUTES = [
 	{
 		path: "/",
 		element: Welcome,
+	},
+	{
+		path: "/home",
+		element: Home,
+	},
+	{
+		path: "/shop",
+		element: Shop,
 	},
 	{
 		path: "/no-access",
@@ -378,20 +386,6 @@ const ADMIN_ROUTES = [
 		element: Allnews,
 		access: ["admin"],
 	},
-	{
-		id: 11,
-		name: "All Newa",
-		path: "/allnews",
-		element: Allnews,
-		access: ["admin"],
-	},
-	// {
-	// 	id: 12,
-	// 	name: "Make Modarator",
-	// 	path: "/makemodarator",
-	// 	element: MakeModarator,
-	// 	access: ["admin"],
-	// },
 	{
 		id: 12,
 		name: "Make Modarator",

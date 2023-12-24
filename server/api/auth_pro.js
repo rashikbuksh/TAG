@@ -16,7 +16,7 @@ const CreateToken = (user, time = "730h") => {
 	const payload = {
 		id: user?.id,
 		name: user?.name,
-		email:user?.email,
+		email: user?.email,
 		phone: user?.phone,
 		access: user?.access,
 	};
@@ -43,7 +43,16 @@ const VerifyToken = (req, res, next) => {
 	if (
 		req?.originalUrl == "/auth/register" ||
 		req?.originalUrl == "/auth/registershopper" ||
-		req?.originalUrl == "/auth/getUserID"
+		req?.originalUrl == "/auth/getUserID" ||
+		req?.originalUrl == "/heroslider/getslider/bottom" ||
+		req?.originalUrl == "/heroslider/getslider/top" ||
+		req?.originalUrl == "/heroslider/getslider/middel" ||
+		req?.originalUrl == "/news/getnews" ||
+		req?.originalUrl ==
+			"/shopperproduct/getshopperproductBasedOnSaleCount" ||
+		req?.originalUrl == "/shopperproduct/getshopperproduct" ||
+		req?.originalUrl == "/shopperproduct/getPopularShopperProduct" ||
+		req?.originalUrl == "/category/get/category"
 	) {
 		next();
 	} else {

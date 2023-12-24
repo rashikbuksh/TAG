@@ -1,25 +1,25 @@
 import Axios from "axios";
 import PropTypes from "prop-types";
 import React, { Fragment, useEffect, useState } from "react";
+import { FaArrowRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+import { AddToCartIcon1, AddToCartIcon2 } from "../../SvgHub/Icons";
+import { Takaicon } from "../../SvgHub/SocialIcon";
+import { useAuth } from "../../context/auth";
 import {
 	checkIfInCart,
 	getDiscountPrice,
 	getProducts,
 } from "../../helpers/product";
 import { api } from "../../lib/api";
-import { addToWishlist } from "../../store/slices/wishlist-slice";
-import { Takaicon } from "../../SvgHub/SocialIcon";
 import {
 	addToCart,
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
-import { AddToCartIcon1, AddToCartIcon2 } from "../../SvgHub/Icons";
+import { addToWishlist } from "../../store/slices/wishlist-slice";
 import LoadingPage from "../LodingPage/LoadingPage";
-import { FaArrowRight } from "react-icons/fa";
-import { useAuth } from "../../context/auth";
 
 const BestSellerProduct = ({ limit, type }) => {
 	const { cartItems } = useSelector((state) => state.cart);
@@ -83,7 +83,7 @@ const BestSellerProduct = ({ limit, type }) => {
 											className="bestsellCartShado w-full p-2"
 										>
 											<Link
-											className="flex items-center justify-center"
+												className="flex items-center justify-center"
 												to={
 													import.meta.env
 														.VITE_API_PUBLIC_URL +
@@ -118,7 +118,7 @@ const BestSellerProduct = ({ limit, type }) => {
 											<div className="flex items-center justify-between">
 												<div className="relative flex flex-col bg-white ">
 													<div className="h-fit">
-														<h3 className="text-sm w-[80px]   truncate  text-black">
+														<h3 className="w-[80px] truncate   text-sm  text-black">
 															{" "}
 															{single.name}{" "}
 														</h3>
@@ -133,44 +133,59 @@ const BestSellerProduct = ({ limit, type }) => {
 													</div>
 												</div>
 												<div>
-													<button
-														disabled={
-															user.access !==
-															"customer"
-														}
-														onClick={() => {
-															single.quantity = 0;
-															if (
-																checkIfInCart(
-																	cartItems,
-																	single
-																)
-															) {
-																dispatch(
-																	increaseQuantityofProd(
-																		single
-																	)
-																);
-															} else {
-																dispatch(
-																	addToCart(
-																		single
-																	)
-																);
+													{user ? (
+														<button
+															disabled={
+																user.access !==
+																"customer"
 															}
-														}}
-														className={`${
-															user.access ===
-															"customer"
-																? ""
-																: "btn btn-disabled border-none bg-white bg-none p-0"
-														}`}
-													>
-														<AddToCartIcon2
-															width={42}
-															height={42}
-														></AddToCartIcon2>
-													</button>
+															onClick={() => {
+																single.quantity = 0;
+																if (
+																	checkIfInCart(
+																		cartItems,
+																		single
+																	)
+																) {
+																	dispatch(
+																		increaseQuantityofProd(
+																			single
+																		)
+																	);
+																} else {
+																	dispatch(
+																		addToCart(
+																			single
+																		)
+																	);
+																}
+															}}
+															className={`${
+																user.access ===
+																"customer"
+																	? ""
+																	: "btn btn-disabled border-none bg-white bg-none p-0"
+															}`}
+														>
+															<AddToCartIcon2
+																width={42}
+																height={42}
+															></AddToCartIcon2>
+														</button>
+													) : (
+														<Link
+															to={
+																import.meta.env
+																	.VITE_API_PUBLIC_URL +
+																"/login"
+															}
+														>
+															<AddToCartIcon2
+																width={42}
+																height={42}
+															></AddToCartIcon2>
+														</Link>
+													)}
 												</div>
 											</div>
 										</div>

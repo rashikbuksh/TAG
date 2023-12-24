@@ -85,7 +85,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	};
 
 	const handleDeleteClick = () => {
-		api.delete(`/news/deletenews/${id}`);
+		api.delete(`/news/deletenews/${id}/by/shopperproduct`);
 		const isConfirmed = window.confirm(
 			"Are you sure you want to delete this product?"
 		);
