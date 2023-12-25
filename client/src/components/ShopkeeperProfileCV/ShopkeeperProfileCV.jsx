@@ -18,10 +18,9 @@ import {
 	addToCart,
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
-import LocationModal from "../LocationModal/LocationModal";
-import MapDistanceModal from "../LocationModal/MapDistanceModal";
-import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
+import LocationModal from "../LocationModal/LocationModal";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
@@ -34,8 +33,7 @@ const ShopkeeperProfileCV = () => {
 	const [filteredAllProducts, setFilteredProducts] = useState([]);
 	const [selectedLetter, setSelectedLetter] = useState("");
 	const [mapModal, setMapModal] = useState(false);
-	const [latitude, setLatitude] = useState(0);
-	const [longitude, setLongitude] = useState(0);
+	const [latlong, setLatLong] = useState({ latitude: 0, longitude: 0 });
 	const dispatch = useDispatch();
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
@@ -87,8 +85,12 @@ const ShopkeeperProfileCV = () => {
 
 	const MapModalOpener = (location) => {
 		let positionFromDb = location.split("__");
-		setLatitude(positionFromDb[0]);
-		setLongitude(positionFromDb[1]);
+		setLatLong({
+			latitude: positionFromDb[0],
+			longitude: positionFromDb[1],
+		});
+		// setLatitude(positionFromDb[0]);
+		// setLongitude(positionFromDb[1]);
 		setMapModal(true);
 	};
 	return (
@@ -161,8 +163,7 @@ const ShopkeeperProfileCV = () => {
 									<LocationModal
 										isOpen={mapModal}
 										setIsOpen={setMapModal}
-										latitude={latitude}
-										longitude={longitude}
+										latlong={latlong}
 										popup={shopkeeperInfo.name}
 									/>
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">

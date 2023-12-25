@@ -1,7 +1,6 @@
 import { Map } from "leaflet";
 import React, { useEffect, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { Transition } from "react-transition-group";
+import { Marker, Popup, TileLayer } from "react-leaflet";
 import Modal from "../Modal/Modal";
 
 const MapDistanceModal = (
@@ -19,12 +18,13 @@ const MapDistanceModal = (
 	const map = new L.Map();
 
 	useEffect(() => {
+		console.log(startLoc, "startLoc");
 		if (map) {
 			// Add Mapbox access token if you are using the Mapbox Directions API
 			L.Routing.control({
 				waypoints: [
-					L.latLng(startLoc), // Replace with the coordinates of the starting marker
-					L.latLng(endLoc), // Replace with the coordinates of the ending marker
+					L.latLng(startLoc.latitude, startLoc.longitude), // Replace with the coordinates of the starting marker
+					L.latLng(endLoc.latitude, endLoc.longitude), // Replace with the coordinates of the ending marker
 				],
 				routeWhileDragging: true,
 			}).addTo(map);
