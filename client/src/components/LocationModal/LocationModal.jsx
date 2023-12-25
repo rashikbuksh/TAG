@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import GetLocation from "../../helpers/GetLocation";
 import Modal from "../Modal/Modal";
