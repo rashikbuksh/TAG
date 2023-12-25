@@ -141,9 +141,9 @@ function Header() {
 													/>
 												</div>
 											) : (
-												<button className="w-[60px] bg-primary text-white rounded-lg  py-2">
+												<Link to={"/login"} className="w-[60px] text-center bg-primary text-white rounded-lg  py-2">
 													Login
-												</button>
+												</Link>
 											)}
 										</div>
 									</Link>
