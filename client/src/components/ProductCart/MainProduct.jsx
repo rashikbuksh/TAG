@@ -253,6 +253,16 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 						)}
 					</div>
 				</div>
+				{user && user.access === "customer" ? (
+					""
+				) : !user ? (
+					""
+				) : (
+					<div className="flex items-center justify-end gap-2">
+						<FaEye></FaEye>
+						<p>{view}</p>
+					</div>
+				)}
 
 				{/* price  */}
 				<div className="px-2">
