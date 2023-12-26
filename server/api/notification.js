@@ -21,8 +21,24 @@ const read = [
 	},
 ];
 
+const change = [
+	{
+		uri: "/notification/readnotification/:id",
+		query: `UPDATE notification SET status = 0 WHERE id = ?`,
+		param: ["id"],
+		msg: "id",
+	},
+	{
+		uri: "/notification/changeToUnreadNotification/:id",
+		query: `UPDATE notification SET status = 1 WHERE id = ?`,
+		param: ["id"],
+		msg: "id",
+	},
+];
+
 // Export modules
 module.exports = Object.freeze({
 	add,
 	read,
+	change,
 });

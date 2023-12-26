@@ -1,11 +1,9 @@
-import Axios from "axios";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { ReactSVG } from "react-svg";
-import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
-import useFetch from "../../hooks/use-fetch";
+import { Breadcrumb } from "../../components";
+import NotificationSound from "../../helpers/NotificationSound";
 import { api } from "../../lib/api";
 
 const Notification = () => {
@@ -29,6 +27,16 @@ const Notification = () => {
 		);
 	}, []);
 
+	const HandleUpdateNotificationStatus = (id) => {
+		api.post(`/notification/readnotification/${id}`)
+			.then((res) => {
+				// console.log(res.data);
+			})
+			.catch((err) => {
+				// console.log(err);
+			});
+	};
+
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			<Breadcrumb pageTitle="Notification" prevUrl="/home" />
@@ -37,12 +45,16 @@ const Notification = () => {
 					<div
 						className={clsx(
 							"notification-item",
-							single.unread && "notification-item--unread"
+							single.status == 1 && "notification-item--unread"
 						)}
 						key={single.id}
 					>
+						{single.status ? <NotificationSound /> : ""}
 						<Link
 							to={import.meta.env.VITE_API_PUBLIC_URL + `/order`}
+							onClick={() =>
+								HandleUpdateNotificationStatus(single.id)
+							}
 						>
 							<div
 								className={`${

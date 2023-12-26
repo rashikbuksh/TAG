@@ -57,7 +57,7 @@ const Cart = () => {
 			}
 		};
 	}, [shopperId]);
-// console.log(countdown);
+	// console.log(countdown);
 	const redirectTimer = async (shopperId) => {
 		setRunningTimerShopperId(shopperId);
 		setTimerStarted(true);
@@ -202,7 +202,7 @@ const Cart = () => {
 						notification_time: GetDateTime(),
 						not_from: shopperId,
 						not_to: user.id,
-						status: 0,
+						status: 1,
 					}).then((res) => {
 						if (res.data.status === 201) {
 							// alert("Notification Added Successfully");

@@ -39,14 +39,12 @@ const Order = () => {
 			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
 			<div className="order-product-area">
 				{data?.map((single) => {
-					// console.log(single);
 					return (
 						<div
 							className="cart-product border-bottom--medium flex items-center justify-between"
 							key={single.id}
 						>
 							<Link
-								// onClick={() => handelOpenModal(single)}
 								to={`/orderDetails/${single.id}`}
 								className="font-s text-lg"
 							>

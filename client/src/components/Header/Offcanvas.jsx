@@ -19,7 +19,6 @@ function Offcanvas(props) {
 	const userid = localStorage.getItem("user-id");
 	const [userInfo, setUserInfo] = useState([]);
 	const { user } = useAuth();
-	// console.log(user);
 	useEffect(() => {
 		const offcanvasNavigations = document.querySelectorAll(
 			".offcanvas-navigation > li"
@@ -40,7 +39,7 @@ function Offcanvas(props) {
 		localStorage.removeItem("user-id");
 		Cookies.remove("user");
 		Cookies.remove("auth");
-		window.location.href = "/login";
+		window.location.href = "/home";
 	};
 	const handeloffDrawer = () => {
 		setIsOffcanvasOpen(!isOffcanvasOpen);
