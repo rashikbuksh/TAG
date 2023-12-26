@@ -27,12 +27,12 @@ const ShopkeepersProduct = () => {
 		},
 	];
 
-	const { id } = useAuth();
+	const { user } = useAuth();
 
 	const [prods, setProds] = useState([]);
 
 	useEffect(() => {
-		api.get(`/shopperproduct/getshopperproductOfShopkeeper/${id}`)
+		api.get(`/shopperproduct/getshopperproductOfShopkeeper/${user.id}`)
 			.then((response) => {
 				setProds(response.data);
 				// console.log(response.data);

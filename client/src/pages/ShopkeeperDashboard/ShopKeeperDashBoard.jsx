@@ -22,7 +22,12 @@ const ShopKeeperDashBoard = () => {
 	const [isClockOpen, setIsClockOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState("");
 	const [activeStatus, setActiveStatus] = useState(false);
-
+	const [productCountContent, setProductCountContent] = useState("");
+	const [notificationContent, setNotificationContent] = useState("");
+	const [addProductContent, setAddProductContent] = useState("");
+	const [newOrderContent, setNewOrderContent] = useState("");
+	const [buyProductContent, setBuyProductContent] = useState("");
+	const [orderHistoryContent, setOrderHistoryContent] = useState("");
 	const id = localStorage.getItem("user-id");
 	// console.log(id);
 
@@ -39,6 +44,7 @@ const ShopKeeperDashBoard = () => {
 		// get product count
 		api.get(`/shopkeeperproduct/getshopkeeperproductCount/${id}`).then(
 			(res) => {
+				setProductCountContent(res.data[0].count);
 				setProductCount(res.data[0].count);
 			}
 		);
@@ -66,6 +72,7 @@ const ShopKeeperDashBoard = () => {
 			});
 	};
 	// console.log(shopkeeper);
+	const { user } = useAuth();
 	const boxShadowStyle = {
 		boxShadow: "0px 80px 100px 0px rgba(0, 0, 0, 0.03)",
 	};
@@ -73,8 +80,40 @@ const ShopKeeperDashBoard = () => {
 		setIsClockOpen(!isClockOpen);
 	};
 	const dates = ["SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"];
+	const sections = [
+		{
+			title: "My Product",
+			link: `/shopkeeperProduct`,
+			content: `Total Product: ${productCountContent}`,
+		},
+		{
+			title: "Notification",
+			content: notificationContent.toString(), // Assuming notificationCount is a variable containing the count
+			link: "/notification", // Placeholder link for notifications
+		},
+		{
+			title: "Add Product",
+			content: addProductContent, // Assuming addProductContent is a variable containing 'Add Product' data
+			link: "/addshopperproduct", // Placeholder link for adding a product
+		},
+		{
+			title: "New Order",
+			content: newOrderContent, // Assuming newOrderContent is a variable containing 'New Order' data
+			link: "/orderShopper", // Placeholder link for new orders
+		},
+		{
+			title: "Buy Product",
+			content: buyProductContent, // Assuming buyProductContent is a variable containing 'Buy Product' data
+			link: "/buy-product", // Placeholder link for buying a product
+		},
+		{
+			title: "Order History",
+			content: orderHistoryContent, // Assuming orderHistoryContent is a variable containing 'Order History' data
+			link: `/ordersHistoryDetails/${user.id}`, // Placeholder link for order history
+		},
+	];
 	return (
-		<div className="body-wrapper space-pb--120 mt-10">
+		<div className="body-wrapper space-pb--120 mt-10 bg-gray-100">
 			<Breadcrumb pageTitle="DashBoard" prevUrl="/home" />
 			<div className="mx-auto rounded-lg  p-4 md:w-[50%]">
 				<div className="flex items-center justify-between">
@@ -164,121 +203,7 @@ const ShopKeeperDashBoard = () => {
 							</Modal>
 						</div>
 					</div>
-					<div>
-						{/* <button onClick={toggleDrawer}>
-							<FaBars className="text-3xl"></FaBars>
-						</button> */}
-						{/* <Drawer
-							open={isOpen}
-							onClose={toggleDrawer}
-							direction="right"
-							style={
-								window.innerWidth < 768
-									? mobileDrawerStyle
-									: desktopDrawerStyle
-							}
-						>
-							<div className="pt-32">
-								<div>
-									<ul className="offcanvas-navigation">
-										<li>
-											<span className="icon">
-												<ReactSVG
-													src={`${
-														import.meta.env
-															.VITE_API_PUBLIC_URL
-													}/assets/img/icons/profile.svg`}
-												/>
-											</span>
-											<Link
-												to={`${
-													import.meta.env
-														.VITE_API_PUBLIC_URL
-												}/login`}
-											>
-												Login / Sign up
-											</Link>
-										</li>
-										<li>
-											<span className="icon">
-												<FaHome></FaHome>
-											</span>
-											<Link
-												to={`${
-													import.meta.env
-														.VITE_API_PUBLIC_URL
-												}/home`}
-											>
-												Home
-											</Link>
-										</li>
-										<li>
-											<span className="icon">
-												<ReactSVG
-													src={`${
-														import.meta.env
-															.VITE_API_PUBLIC_URL
-													}/assets/img/icons/profile.svg`}
-												/>
-											</span>
-											<Link
-												to={`${
-													import.meta.env
-														.VITE_API_PUBLIC_URL
-												}/contact`}
-											>
-												Contact Us
-											</Link>
-										</li>
-										<li>
-											<span className="icon">
-												<FaFileContract></FaFileContract>
-											</span>
-											<Link
-												to={`${
-													import.meta.env
-														.VITE_API_PUBLIC_URL
-												}/wishlist`}
-											>
-												Terms and Condition
-											</Link>
-										</li>
-										<li>
-											<span className="icon">
-												<FaFontAwesomeFlag></FaFontAwesomeFlag>
-											</span>
-											<Link
-												to={`${
-													import.meta.env
-														.VITE_API_PUBLIC_URL
-												}/edit-profile`}
-											>
-												Report
-											</Link>
-										</li>
-										<li>
-											<span className="icon">
-												<ReactSVG
-													src={`${
-														import.meta.env
-															.VITE_API_PUBLIC_URL
-													}/assets/img/icons/gear-two.svg`}
-												/>
-											</span>
-											<Link
-												to={`${
-													import.meta.env
-														.VITE_API_PUBLIC_URL
-												}/edit-profile`}
-											>
-												Settings
-											</Link>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</Drawer> */}
-					</div>
+					<div></div>
 				</div>
 
 				<div className="my-10">
@@ -321,65 +246,43 @@ const ShopKeeperDashBoard = () => {
 						</p>
 					</div>
 					<div className="divider"></div>
-					<div className="flex gap-10">
-						<div
-							style={boxShadowStyle}
-							className="flex h-[120px] w-[150px] flex-col items-center justify-center gap-2 rounded-lg bg-[#FFF] lg:h-[200px] "
-						>
-							<h1 className="text-base font-bold text-black ">
+					<div className="grid grid-cols-2 gap-2 ">
+						{sections.map((section, index) =>
+							section.link ? (
 								<Link
+									key={index}
 									to={`${
 										import.meta.env.VITE_API_PUBLIC_URL
-									}/shopkeeperProduct`}
+									}${section.link}`}
+									className="text-center text-black"
 								>
-									My Product
+									<div
+										key={index}
+										style={boxShadowStyle}
+										className={`my-10 flex gap-10 ${
+											section.content ? "" : "flex-col"
+										}`}
+									>
+										<div
+											className={`flex w-full flex-col items-center justify-center rounded-lg bg-[#FFf] h-[120px] ${
+												section.content
+													? ""
+													: "text-center"
+											}`}
+										>
+											<h1 className="text-base font-bold text-black">
+												{section.title}
+											</h1>
+											{section.content && (
+												<p className="text-sm font-semibold lg:text-xl">
+													{section.content}
+												</p>
+											)}
+										</div>
+									</div>
 								</Link>
-							</h1>
-							<p className="text-sm font-semibold lg:text-xl">
-								Total Product : {productCount}
-							</p>
-						</div>
-						<div
-							style={boxShadowStyle}
-							className=" flex h-[120px] w-[150px] flex-col items-center justify-center gap-2 rounded-lg bg-[#FFF] lg:h-[200px]"
-						>
-							<h1 className="text-base font-bold text-black ">
-								Notification
-							</h1>
-							<p className="text-sm font-semibold lg:text-xl">
-								3
-							</p>
-						</div>
-					</div>
-					<div style={boxShadowStyle} className="my-10 flex gap-10">
-						<div className="flex h-[120px] w-[150px] flex-col items-center justify-center gap-2 rounded-lg bg-[#FFF] lg:h-[200px]">
-							<h1 className="text-base font-bold text-black ">
-								News
-							</h1>
-						</div>
-						<div className="flex h-[120px] w-[150px] flex-col items-center justify-center gap-2 rounded-lg bg-[#FFF] lg:h-[200px]">
-							<h1 className="text-base font-bold text-black ">
-								Order History
-							</h1>
-						</div>
-					</div>
-					<div className="my-10 flex gap-10">
-						<div
-							style={boxShadowStyle}
-							className="flex h-[120px] w-[150px] flex-col items-center justify-center gap-2 rounded-lg bg-[#FFF] lg:h-[200px]"
-						>
-							<h1 className="text-center text-base font-bold text-black ">
-								Add Social Media
-							</h1>
-						</div>
-						<div
-							style={boxShadowStyle}
-							className="flex h-[120px] w-[150px] flex-col items-center justify-center gap-2 rounded-lg bg-[#FFF] lg:h-[200px]"
-						>
-							<h1 className="text-base font-bold text-black ">
-								My Account
-							</h1>
-						</div>
+							) : null
+						)}
 					</div>
 				</div>
 			</div>
