@@ -53,7 +53,7 @@ const read = [
 	},
 	{
 		uri: "/shopperproduct/getshopperproductOfShopkeeper/:id",
-		query: `SELECT sp.id, sp.name,sp.shopper_id, sp.price, discount, product_count, product_id, category_id, image, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id and shopper_id = ?`,
+		query: `SELECT sp.id, sp.name,sp.shopper_id, sp.price, discount, product_count, product_id, category_id, p.image, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id and cp.id = sp.shopper_id and shopper_id = ?`,
 		param: ["id"],
 	},
 	{
@@ -62,11 +62,11 @@ const read = [
 	},
 	{
 		uri: "/shopperproduct/getshopperproductBasedOnSaleCount",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC LIMIT 4`,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, p.image, sp.shopper_id, sale_count, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id and cp.id = sp.shopper_id ORDER BY sale_count DESC LIMIT 4`,
 	},
 	{
 		uri: "/shopperproduct/getAllshopperproductBasedOnSaleCount",
-		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, image, sp.shopper_id, sale_count, sp.view FROM shopper_product sp, product p WHERE sp.product_id = p.id ORDER BY sale_count DESC `,
+		query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, p.image, sp.shopper_id, sale_count, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id and cp.id = sp.shopper_id ORDER BY sale_count DESC `,
 	},
 	{
 		uri: "/shopkeeperproduct/getshopkeeperproductCount/:id",
@@ -88,7 +88,8 @@ const read = [
               sp.shopper_id,
               sp.sale_count,
               sp.view,
-              cp.active_status
+              cp.active_status,
+			  cp.shipping_address
           FROM
               shopper_product sp
           JOIN product p ON
@@ -102,7 +103,7 @@ const read = [
 	},
 	{
 		uri: "/shopperproduct/get-searched-product/:keyword",
-		query: `SELECT sp.id, sp.name, sp.price, sp.discount, sp.product_count, isVerified, product_id, category_id, p.image, sp.shopper_id, sp.sale_count, sp.view, cp.active_status
+		query: `SELECT sp.id, sp.name, sp.price, sp.discount, sp.product_count, isVerified, product_id, category_id, p.image, sp.shopper_id, sp.sale_count, sp.view, cp.active_status, cp.shipping_address
 				FROM shopper_product sp
 				JOIN product p ON sp.product_id = p.id
         JOIN customer_profile cp ON sp.shopper_id = cp.id

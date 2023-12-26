@@ -11,6 +11,8 @@ import {
 import { FaEye, FaRegMessage, FaX } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { AddToCartIcon1, AddToCartIcon2, MapIcon } from "../../SvgHub/Icons";
+import { Takaicon } from "../../SvgHub/SocialIcon";
 import { useAuth } from "../../context/auth";
 import {
 	checkIfInCart,
@@ -26,8 +28,6 @@ import {
 } from "../../store/slices/cart-slice";
 import LocationModal from "../LocationModal/LocationModal";
 import MessageModal from "../MessageModal/MessageModal";
-import { AddToCartIcon1, AddToCartIcon2, MapIcon } from "../../SvgHub/Icons";
-import { Takaicon } from "../../SvgHub/SocialIcon";
 
 const MainProduct = ({ shopperProduct, product, height, width }) => {
 	const navigate = useNavigate();
@@ -46,30 +46,29 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		product_count,
 		shipping_address,
 	} = prod;
-	// console.log(
-	// 	"🚀 ~ file: MainProduct.jsx:49 ~ MainProduct ~ active_status:",
-	// 	active_status
-	// );
-	// console.log(shopper_id, "shopper_id");
+
 	const cartItems = useSelector((state) => state.cart.cartItems);
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);
 	const [display, setDisplay] = useState(0);
 	const [isOpen, setIsOpen] = useState(false);
-	const [isLocatioonOpen, setIsLocatioonOpen] = useState(false);
+	const [isLocationOpen, setIsLocationOpen] = useState(false);
+	const [latLong, setLatLong] = useState({ latitude: 0, longitude: 0 });
+	const [userInfo, setUserInfo] = useState([]);
 
 	const { user } = useAuth();
 	const handleMouseEnter = () => {
 		setDisplay(1); // Set the quantity to 1 when hovering
 	};
+	const GetUserInfo = () => {
+		api.get(`/auth/getUserInfo/${shopper_id}`).then((res) => {
+			setUserInfo(res.data[0]);
+		});
+	};
 
 	const handleMouseLeave = () => {
 		setDisplay(0); // Reset the quantity when leaving
 	};
-	// State for quantity
-	// const [quantity, setQuantity] = useState(product_count);
-
-	// Function to increase quantity
 
 	const [cartItem, setCartItem] = useState(0);
 
@@ -86,7 +85,6 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		}
 	};
 
-	// Function to decrease quantity
 	const decreasePQuantity = () => {
 		if (cartItem) {
 			dispatch(decreaseQuantity(cartItem));
@@ -114,7 +112,13 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		setIsOpen(!isOpen);
 	};
 	const handelOpenLocationModal = () => {
-		setIsLocatioonOpen(!isOpen);
+		GetUserInfo();
+		let positionFromDb = shipping_address?.split("__");
+		setLatLong({
+			latitude: positionFromDb[0],
+			longitude: positionFromDb[1],
+		});
+		setIsLocationOpen(!isOpen);
 	};
 	const navigateProductPage = (id) => {
 		api.post(`/shopperproduct/increaseView/${id}`);
@@ -285,18 +289,13 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 									disabled={active_status !== 1}
 									onClick={handelOpenLocationModal}
 								>
-									<MapIcon
-										height={30}
-										width={30}
-										onClick={handelOpenLocationModal}
-									/>
+									<MapIcon height={30} width={30} />
 								</button>
 								<LocationModal
-									isOpen={isLocatioonOpen}
-									setIsOpen={setIsLocatioonOpen}
-									title={"Location"}
-									shopper_id={shopper_id}
-									map_location={shipping_address}
+									isOpen={isLocationOpen}
+									setIsOpen={setIsLocationOpen}
+									popup={userInfo.name}
+									latlong={latLong}
 								></LocationModal>
 							</div>
 						)}

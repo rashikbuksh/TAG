@@ -121,15 +121,15 @@ function Header() {
 								{isOffcanvasOpen ? (
 									<FaX className="text-2xl   text-pink-500"></FaX>
 								) : (
-									<Link
-										to={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/profile"
-										}
-									>
-										<div className="avatar">
-											{userData ? (
+									<div className="avatar">
+										{userData ? (
+											<Link
+												to={
+													import.meta.env
+														.VITE_API_PUBLIC_URL +
+													"/profile"
+												}
+											>
 												<div className="w-8 rounded-full ring ring-[#2F5BA9] ">
 													<img
 														src={`${
@@ -140,13 +140,16 @@ function Header() {
 														}`}
 													/>
 												</div>
-											) : (
-												<Link to={"/login"} className="w-[60px] text-center bg-primary text-white rounded-lg  py-2">
-													Login
-												</Link>
-											)}
-										</div>
-									</Link>
+											</Link>
+										) : (
+											<Link
+												to={"/login"}
+												className="w-[60px] rounded-lg bg-primary py-2 text-center  text-white"
+											>
+												Login
+											</Link>
+										)}
+									</div>
 								)}
 							</div>
 						</div>

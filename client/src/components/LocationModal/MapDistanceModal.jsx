@@ -1,69 +1,24 @@
 import { Map } from "leaflet";
 import React, { useEffect, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { Transition } from "react-transition-group";
+import { Marker, Popup, TileLayer } from "react-leaflet";
 import Modal from "../Modal/Modal";
 
-const MapDistanceModal = (
-	startLoc,
-	endLoc,
-	isOpen,
-	setIsOpen,
-	startPopup,
-	endPopup
-) => {
-	const [isShown, setIsShown] = useState(false);
-	const [startMarker, setStartMarker] = useState(null);
-	const [endMarker, setEndMarker] = useState(null);
+const MapDistanceModal = () => {
+	var map = L.map("map").setView([51.505, -0.09], 13);
+	L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+		maxZoom: 19,
+		attribution:
+			'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	}).addTo(map);
+	var marker = L.marker([51.5, -0.09]).addTo(map);
+	marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+	function onMapClick(e) {
+		alert("You clicked the map at " + e.latlng);
+	}
 
-	const map = new L.Map();
-
-	useEffect(() => {
-		if (map) {
-			// Add Mapbox access token if you are using the Mapbox Directions API
-			L.Routing.control({
-				waypoints: [
-					L.latLng(startLoc), // Replace with the coordinates of the starting marker
-					L.latLng(endLoc), // Replace with the coordinates of the ending marker
-				],
-				routeWhileDragging: true,
-			}).addTo(map);
-		}
-	}, [map]);
-
-	const handleMapClick = (event) => {
-		setIsShown(isOpen);
-		console.log(isOpen);
-
-		if (!startMarker) {
-			setStartMarker(startLoc.latitude, startLoc.longitude);
-		} else if (!endMarker) {
-			setEndMarker(endLoc.latitude, endLoc.longitude);
-		}
-	};
-
+	map.on("click", onMapClick);
 	return (
-		<Modal isOpen={isOpen} setIsOpen={setIsOpen} showCross={true}>
-			<Map
-				center={[startLoc]}
-				zoom={13}
-				style={{ height: "50vh" }}
-				onClick={handleMapClick}
-				ref={(ref) => setMap(ref)}
-			>
-				<TileLayer
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-					attribution="© OpenStreetMap contributors"
-				/>
-
-				<Marker position={[startLoc.latitude, startLoc.longitude]}>
-					<Popup>{startPopup}</Popup>
-				</Marker>
-				<Marker position={[endLoc.latitude, endLoc.longitude]}>
-					<Popup>{endPopup}</Popup>
-				</Marker>
-			</Map>
-		</Modal>
+		<div className="map" id="map" style={"#map { height: 180px; }"}></div>
 	);
 };
 

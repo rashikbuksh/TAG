@@ -239,9 +239,14 @@ function Offcanvas(props) {
 										)
 								  )
 								: ""}
+<<<<<<< HEAD
 							{userid
 								? user &&
 								  user.access === "customer" && (
+=======
+							{user
+								? user.access === "customer" && (
+>>>>>>> f7baf5dbaaefffd5d6d3a3f10ebd9dc018b15d67
 										<li>
 											<span className="icon">
 												<ReactSVG
