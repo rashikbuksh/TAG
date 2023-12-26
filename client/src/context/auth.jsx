@@ -45,16 +45,13 @@ const AuthProvider = ({ children }) => {
 			// console.log("loginUser", loginUser);
 
 			if (token && loginUser) {
-				const go = PROTECTED_ROUTES.find((route) =>
-					route?.access?.includes(loginUser?.access)
-				);
 				localStorage.setItem("user-id", loginUser?.id);
 				if (loginUser.access === "admin") {
 					window.location.href = "/admin/stat";
 				} else if (loginUser.access === "shopper") {
 					window.location.href = "/shopkeeperDashboard";
 				} else {
-					window.location.href = go?.path;
+					window.location.href = "/home";
 				}
 			}
 		} catch (error) {

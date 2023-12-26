@@ -240,7 +240,8 @@ function Offcanvas(props) {
 								  )
 								: ""}
 							{userid
-								? user.access === "customer" && (
+								? user &&
+								  user.access === "customer" && (
 										<li>
 											<span className="icon">
 												<ReactSVG
@@ -320,7 +321,10 @@ function Offcanvas(props) {
 									<button onClick={logout}>Logout</button>
 								</li>
 							) : (
-								<Link to={"/login"} className="w-full text-center rounded-lg bg-primary py-2  text-white">
+								<Link
+									to={"/login"}
+									className="w-full rounded-lg bg-primary py-2 text-center  text-white"
+								>
 									Login
 								</Link>
 							)}

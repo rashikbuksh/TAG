@@ -249,6 +249,16 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 						)}
 					</div>
 				</div>
+				{user && user.access === "customer" ? (
+					""
+				) : !user ? (
+					""
+				) : (
+					<div className="flex items-center justify-end gap-2">
+						<FaEye></FaEye>
+						<p>{view}</p>
+					</div>
+				)}
 
 				{/* price  */}
 				<div className="px-2">
@@ -267,7 +277,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					<div className=" flex items-center">
 						{user && user.access === "admin" ? (
 							""
-						) :user && user.access === "shopper" ? (
+						) : user && user.access === "shopper" ? (
 							""
 						) : (
 							<div className=" flex items-center p-1">
@@ -293,33 +303,38 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					</div>
 
 					<div className="flex items-end">
-    {user && user.access === "admin" ? (
-        ""
-    ) : user && user.access === "shopper" ? (
-        ""
-    ) : user ? (
-        <button
-            disabled={active_status !== 1}
-            onClick={() => {
-                prod.quantity = quantity;
-                if (checkIfInCart(cartItems, prod)) {
-                    dispatch(increaseQuantityofProd(prod));
-                } else {
-                    dispatch(addToCart(prod));
-                }
-            }}
-            className=""
-        >
-            <span onClick={showQuantitypalet}>
-                <AddToCartIcon2></AddToCartIcon2>
-            </span>
-        </button>
-    ) : (
-        <Link to={import.meta.env.VITE_API_PUBLIC_URL + "/login"}>
-            <AddToCartIcon2></AddToCartIcon2>
-        </Link>
-    )}
-</div>
+						{user && user.access === "admin" ? (
+							""
+						) : user && user.access === "shopper" ? (
+							""
+						) : user ? (
+							<button
+								disabled={active_status !== 1}
+								onClick={() => {
+									prod.quantity = quantity;
+									if (checkIfInCart(cartItems, prod)) {
+										dispatch(increaseQuantityofProd(prod));
+									} else {
+										dispatch(addToCart(prod));
+									}
+								}}
+								className=""
+							>
+								<span onClick={showQuantitypalet}>
+									<AddToCartIcon2></AddToCartIcon2>
+								</span>
+							</button>
+						) : (
+							<Link
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									"/login"
+								}
+							>
+								<AddToCartIcon2></AddToCartIcon2>
+							</Link>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>
