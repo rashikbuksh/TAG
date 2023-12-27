@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2023 at 07:37 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Generation Time: Dec 27, 2023 at 03:19 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -66,7 +66,7 @@ CREATE TABLE `customer_profile` (
   `email` varchar(255) DEFAULT NULL,
   `shipping_address` varchar(255) DEFAULT NULL,
   `total_order` int(11) DEFAULT NULL,
-  `to_be_shipped` int(11) DEFAULT NULL,
+  `address` text DEFAULT NULL,
   `review_count` int(11) DEFAULT NULL,
   `offer` varchar(255) DEFAULT NULL,
   `access` varchar(255) NOT NULL,
@@ -80,15 +80,15 @@ CREATE TABLE `customer_profile` (
 -- Dumping data for table `customer_profile`
 --
 
-INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_name`, `password`, `phone`, `email`, `shipping_address`, `total_order`, `to_be_shipped`, `review_count`, `offer`, `access`, `active_status`, `refer_code`, `refer_status`, `profile_picture`) VALUES
-(1, 'hasib', '[value-3]', '[value-4]', '[value-5]', 'hasibarrafiulfahim', 'hasib1234', '[value-8]', 'hasibarrafiulfahim@gmail.com', '[value-10]', 0, 0, 0, '[value-14]', 'customer', 0, '', NULL, NULL),
+INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_name`, `password`, `phone`, `email`, `shipping_address`, `total_order`, `address`, `review_count`, `offer`, `access`, `active_status`, `refer_code`, `refer_status`, `profile_picture`) VALUES
+(1, 'hasib', '[value-3]', '[value-4]', '[value-5]', 'hasibarrafiulfahim', 'hasib1234', '[value-8]', 'hasibarrafiulfahim@gmail.com', '[value-10]', 0, '0', 0, '[value-14]', 'customer', 0, '', NULL, NULL),
 (2, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', NULL, 'rashikbuksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
-(3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545118', 'rashik1@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, 2, 3, 'no', 'shopper', NULL, '', 'referred', NULL),
+(3, 'Buksh', NULL, NULL, NULL, 'buksh', 'rafsan123', '01684545118', 'rashik1@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', 1, '2', 3, 'no', 'shopper', NULL, '', 'referred', NULL),
 (6, 'Rashik Buksh', NULL, NULL, NULL, 'rbr', 'rafsan123', '01709305072', 'rbr@gmail.com', '730/5/1, Block-C, Khilgaon, Dhaka', NULL, NULL, NULL, NULL, 'customer', NULL, '', 'unreferred', NULL),
 (11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper', NULL, '', NULL, NULL),
 (15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545112', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper', NULL, '', NULL, NULL),
 (16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', 'unreferred', NULL),
-(17, 'Anik Store', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684345120', 'anik123@gmail.com', '22.3303507__91.7867411', NULL, NULL, NULL, NULL, 'shopper', 1, '9ikaktaf3rp', 'referred', '1699292263970__121837251.jpg'),
+(17, 'Anik Store', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684345120', 'anik123@gmail.com', '22.3303507__91.7867411', NULL, 'k block haishahar', NULL, NULL, 'shopper', 1, '9ikaktaf3rp', 'referred', '1699292263970__121837251.jpg'),
 (18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (20, 'TAG@admin.com', NULL, NULL, NULL, NULL, '$2b$10$1R4tRAPwHpmV6EnGtAStUeJZY8aj0Dt9NR.B2fjgNiXSYkmH5rm46', NULL, 'tag@admin.com', NULL, NULL, NULL, NULL, NULL, 'admin', NULL, 'bo1ntlas7k7', 'unreferred', NULL),
@@ -345,20 +345,23 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `sku`, `name`, `image`, `short_description`, `full_description`, `category_id`, `isVerified`, `price`, `quantity`) VALUES
 (1, NULL, 'gg product', 'WelcomeScan.jpg', '10', '10 update', 3, 'verified', 0, NULL),
-(11, NULL, 'Alo Potato', '1689276807795__Welcome Scan.jpg', '10', '1010 updated', 1, NULL, NULL, NULL),
+(11, NULL, 'Alo Potato', '1689276807795__Welcome Scan.jpg', '10', '1010 updated', 1, NULL, 70, NULL),
 (12, NULL, 'Vanity Bag', '1690478518635__Welcome Scan.jpg', 'Bag', 'Bag', 14, NULL, NULL, NULL),
 (13, NULL, 'sugar update', '1691920308947__Welcome Scan.jpg', '10', '10', 1, NULL, NULL, NULL),
-(14, NULL, 'Ishan Tea ', '1693931993449__20230807_154229.jpg', 'Cha pata', 'Cha pata From Sylhet ', 16, 'verified', NULL, NULL),
+(14, NULL, 'Ishan Tea ', '1693931993449__20230807_154229.jpg', 'Cha pata', 'Cha pata From Sylhet ', 16, 'verified', 90, NULL),
 (15, NULL, 'Hand bag In Town', '1696949606356__bag.png', 'This is a hand bag , ', 'This is a benity bag , and this is fopr women', 14, NULL, NULL, NULL),
-(16, NULL, 'Yellow Rice', '1696949688320__milled-rice-bowl-wooden-spoon-black-cement-floor.jpg', 'RIce Desc updated by Towhid', 'Rice in Bangladesh Rice is the staple food of about 135 million people of Bangladesh. It provides nearly 48% of rural employment, about two-third of total calorie supply and about one-half of the total protein intake of an average person in the country. R', 12, 'verified', NULL, NULL),
-(17, NULL, 'Photato chips', '1696949827009__1678540367603.jpg', 'asdfasd', 'asdvgasdvasdfvgasdv', 2, 'verified', NULL, NULL),
+(16, NULL, 'Yellow Rice', '1696949688320__milled-rice-bowl-wooden-spoon-black-cement-floor.jpg', 'RIce Desc updated by Towhid', 'Rice in Bangladesh Rice is the staple food of about 135 million people of Bangladesh. It provides nearly 48% of rural employment, about two-third of total calorie supply and about one-half of the total protein intake of an average person in the country. R', 12, 'verified', 98, NULL),
+(17, NULL, 'Photato chips', '1696949827009__1678540367603.jpg', 'asdfasd', 'asdvgasdvasdfvgasdv', 2, 'verified', 98, NULL),
 (18, NULL, '7 up Normal', '1696951856422__7upimage.jpg', 'This is 7 up', 'This is 7 up', 2, 'notVerified', NULL, NULL),
-(19, NULL, '7 up Verified', '1696951925428__photo-1622766815178-641bef2b4630.jpg', '7 up Verified', '7 up Verified', 2, 'verified', NULL, NULL),
+(19, NULL, '7 up Verified', '1696951925428__photo-1622766815178-641bef2b4630.jpg', '7 up Verified', '7 up Verified', 2, 'verified', 90, NULL),
 (42, NULL, ' Sprite (20 Fl Oz Bottle)', '1697265535780__sprite1.jpg', ' Sprite (20 Fl Oz Bottle)', ' Sprite (20 Fl Oz Bottle)', 2, 'notVerified', 0, 0),
-(43, NULL, ' Sprite (20 Fl Oz Bottle) varified', '1697265581988__sprite1.jpg', ' Sprite (20 Fl Oz Bottle)', ' Sprite (20 Fl Oz Bottle)', 2, 'verified', 23, 43),
+(43, NULL, ' Sprite (20 Fl Oz Bottle) varified', '1697265581988__sprite1.jpg', ' Sprite (20 Fl Oz Bottle)', ' Sprite (20 Fl Oz Bottle)', 2, 'verified', 90, 43),
 (44, NULL, 'Coke Cola Original', '1697265631757__coke.jpg', 'Coca-Cola Classic strikes the perfect balance between sweetness and acidity, resulting in a harmonio', 'Coca-Cola Classic strikes the perfect balance between sweetness and acidity, resulting in a harmonious blend that is simply irresistible. The careful combination of ingredients ensures that every sip delivers a satisfying and well-rounded flavour. This ic', 2, 'notVerified', 0, 0),
 (45, NULL, 'Chilli Sauce', '1698677186176__BD-chili-Sauce--1kg.jpg', 'Chilli sauce, also commonly spelled as \"chili sauce\" or \"hot sauce,\" is a condiment made from chili ', 'Chili sauce can be used as a condiment, marinade, or ingredient in cooking to add heat and flavor to dishes such as tacos, burgers, stir-fries, and more. When choosing a chili sauce, consider your heat tolerance, as well as the specific flavor profile you', 17, 'notVerified', 0, 0),
-(46, NULL, 'Pran-Sauce-750-gm', '1698677343796__Pran-Sauce-750-gm.jpg', 'Pran hot tomato sauce plastic jar is one of the most popular sauces in Bangladesh. ', 'Pran hot tomato sauce plastic jar is one of the most popular sauces in Bangladesh. it is enriched with the power of fresh tomato, red chili, sugar, onion. 100% natural flavor and organic taste.', 17, 'verified', 270, 50);
+(46, NULL, 'Pran-Sauce-750-gm', '1698677343796__Pran-Sauce-750-gm.jpg', 'Pran hot tomato sauce plastic jar is one of the most popular sauces in Bangladesh. ', 'Pran hot tomato sauce plastic jar is one of the most popular sauces in Bangladesh. it is enriched with the power of fresh tomato, red chili, sugar, onion. 100% natural flavor and organic taste.', 17, 'verified', 270, 50),
+(47, NULL, 'Mango Pickle', '1703680620299__download.jpeg', 'Mango pickle is a popular condiment in many cuisines, particularly in South Asia. ', 'Mango pickle is a popular condiment in many cuisines, particularly in South Asia. It\'s made by preserving raw mangoes in a mixture of various spices, oil, and sometimes vinegar. The preparation methods and spice mixtures can vary widely based on regional ', 2, 'notVerified', 191, 59),
+(48, NULL, 'Pran Olive Pickle', '1703680891922__pran-olive-pickle-400-gm.jpeg', 'Pran Olive Pickle', 'Pran Olive Pickle', 2, 'verified', 135, 100),
+(49, NULL, 'Pran Olive Pickle n-v', '1703680913920__pran-olive-pickle-400-gm.jpeg', 'Pran Olive Pickle', 'Pran Olive Pickle', 2, 'notVerified', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -515,7 +518,7 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (32, '7 up Verified', 201, 10, 100, 100, 0, 0, 19, 17, 15),
 (33, '7 up Normal', 200, 10, 10, 0, 0, 0, 18, 17, 0),
 (34, 'Potato Chips ', 10, 0, 100, 50, 0, 0, 17, 17, 1),
-(39, ' Sprite (20 Fl Oz Bottle) varified', 23, 0, 8, 0, 0, 0, 43, 17, 7),
+(39, ' Sprite (20 Fl Oz Bottle) varified', 600, 6, 60, 0, 0, 0, 43, 17, 7),
 (40, ' Sprite (20 Fl Oz Bottle)', 2, 0, 88, 0, 0, 0, 42, 17, 3),
 (41, 'Yellow Rice', 434, 4, 33, 120, 0, 0, 16, 17, 35),
 (42, 'Coke Cola Original', 35, 0, 33, 0, 0, 0, 44, 17, 0),
@@ -523,16 +526,16 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (45, 'Hand bag In Town', 272, 7, 34, 0, 0, 0, 15, 17, 0),
 (46, 'Coke Cola Original', 545, 8, 45, 0, 0, 0, 44, 17, 0),
 (47, 'Chilli Sauce', 150, -1, 32, 0, 0, 0, 45, 17, 2),
-(48, 'Pran-Sauce-750-gm', 270, 0, 123, 0, 0, 0, 46, 17, 7),
+(48, 'Pran-Sauce-750-gm', 27000, 27, 27, 0, 0, 0, 46, 17, 7),
 (49, 'Yellow Rice', 333, 3, 34, 0, 0, 0, 16, 17, 0),
 (50, 'Hand bag In Town', 34, 1, 32, 0, 0, 0, 15, 17, 1),
-(51, 'gg product', 2, 2, 0, 0, 0, 0, 1, 17, 0),
+(51, 'gg product', 200, 0, 8, 0, 0, 0, 1, 17, 0),
 (52, 'Vanity Bag', 100, 1, 2, 0, 0, 0, 12, 17, 0),
 (53, 'Alo Potato', 100, 1, 3, 0, 0, 0, 11, 17, 0),
 (54, 'Hand bag In Town', 300, 2, 3, 0, 0, 0, 15, 17, 0),
 (55, 'Pran-Sauce-750-gm', 1, 0, 1, 0, 0, 0, 46, 17, 0),
-(56, 'gg product', 2, 1, 0, 0, 0, 0, 1, 17, 1),
-(57, 'gg product', 100, 0, 6, 0, 0, 0, 1, 17, 0),
+(56, 'gg product', 20, 4, 3, 0, 0, 0, 1, 17, 1),
+(57, 'gg product', 100, 0, 6, 0, 0, 0, 1, 17, 1),
 (58, 'Hand bag In Town', 300, 2, 3, 0, 0, 0, 15, 17, 0),
 (59, 'Chilli Sauce', 120, 1, 29, 0, 0, 0, 45, 17, 0),
 (60, 'Coke Cola Original', 300, 2, 7, 0, 0, 0, 44, 17, 0),
@@ -697,7 +700,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `product_order`

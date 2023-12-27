@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import {
+	FaAddressCard,
 	FaBars,
 	FaFileContract,
 	FaFontAwesomeFlag,
@@ -32,6 +33,7 @@ const ShopKeeperDashBoard = () => {
 	// console.log(id);
 
 	const [shopkeeper, setShopkeeper] = useState([]);
+	console.log("🚀 ~ file: ShopKeeperDashBoard.jsx:35 ~ ShopKeeperDashBoard ~ shopkeeper:", shopkeeper)
 	const [productCount, setProductCount] = useState(0);
 
 	useEffect(() => {
@@ -242,6 +244,12 @@ const ShopKeeperDashBoard = () => {
 							<FaMapPin></FaMapPin>{" "}
 							{shopkeeper.shipping_address
 								? shopkeeper.shipping_address
+								: "No Adress provided"}
+						</p>
+						<p className="flex items-center gap-2 text-sm text-black lg:text-xl">
+							<FaAddressCard></FaAddressCard>{" "}
+							{shopkeeper.address
+								? shopkeeper.address
 								: "No Adress provided"}
 						</p>
 					</div>

@@ -13,32 +13,38 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 		name,
 		price,
 		discount,
-		product_count,
+		quantity,
 		product_id,
 		image,
 		isVerified,
 	} = product;
+	console.log(
+		"🚀 ~ file: ShopkeeperProductcart.jsx:21 ~ ShopkeeperProductcart ~ product_count:",
+		quantity
+	);
 	const browserUrl = window.location.pathname;
-	// State for quantity
-	const [quantity, setQuantity] = useState(0);
+	// State for newQuantity
+	const [newQuantity, setnewQuantity] = useState(
+		parseInt(!quantity ? 0 : quantity)
+	);
 	const [newPrice, setNewPrice] = useState(price);
 	const [newDisCount, setnewDisCount] = useState(0);
-	// Function to increase quantity
-	const increaseQuantity = () => {
-		setQuantity(quantity + 1);
+	// Function to increase newQuantity
+	const increasenewQuantity = () => {
+		setnewQuantity(newQuantity + 1);
 	};
 
-	// Function to decrease quantity
-	const decreaseQuantity = () => {
-		if (quantity > 0) {
-			setQuantity(quantity - 1);
+	// Function to decrease newQuantity
+	const decreasenewQuantity = () => {
+		if (newQuantity > 0) {
+			setnewQuantity(newQuantity - 1);
 		}
 	};
 
 	const updateProductCount = () => {
 		api.post(`/product/updateProductCount`, {
 			id: id,
-			product_count: quantity,
+			product_count: newQuantity,
 		}).then((res) => {
 			// console.log("res", res);
 			if (res.data.status === 200) {
@@ -124,20 +130,16 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 				});
 		}
 	};
-	const handleNotAvailable = () => {
-		setQuantity(0);
-		updateProductCount();
-	};
+
 	const { user } = useAuth();
-	console.log(price);
 	const handleCheckboxChange = (e) => {
 		// Check if newPrice is not empty
-		if (newPrice && quantity) {
+		if (newPrice && newQuantity) {
 			const selectedProductInfo = {
 				name: name,
 				price: newPrice,
 				discount: newDisCount,
-				product_count: quantity,
+				product_count: newQuantity,
 				product_id: id,
 				shopper_id: user.id,
 				image: image,
@@ -145,7 +147,9 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 			onProductSelection(selectedProductInfo, e.target.checked);
 		} else {
 			// Prevent selection if newPrice is empty
-			alert("Please enter a price, Discount,Quantity before selecting.");
+			alert(
+				"Please enter a price, Discount,newQuantity before selecting."
+			);
 			// You might want to handle this scenario by showing an error message or taking appropriate action
 		}
 	};
@@ -167,38 +171,6 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 							""
 						)}
 					</div>
-					{/* {browserUrl === "/shopkeeperProduct" ? (
-						<div className="dropdown dropdown-top">
-							<label tabIndex={0} className="m-1">
-								<FaBars />
-							</label>
-							<ul
-								tabIndex={0}
-								className="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
-							>
-								<li>
-									<button onClick={handleEditClick}>
-										Edit
-									</button>
-								</li>
-								<li>
-									<button onClick={handleDeleteClick}>
-										Delete
-									</button>
-								</li>
-								<li>
-									<a>Share</a>
-								</li>
-								<li>
-									<button onClick={handleNotAvailable}>
-										Not Available
-									</button>
-								</li>
-							</ul>
-						</div>
-					) : (
-						""
-					)} */}
 				</div>
 
 				<div className="flex flex-col items-center justify-center gap-1 border p-1">
@@ -217,19 +189,23 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 									<div className="flex w-full items-center justify-between gap-2 rounded-lg bg-[#F2F8FD]   sm:text-sm">
 										<button
 											className="flex h-[30px]   w-[60px] items-center justify-center bg-[#60abe9] text-base   text-white"
-											onClick={decreaseQuantity}
+											onClick={decreasenewQuantity}
 										>
 											<FaMinus />
 										</button>
 										<input
 											className="w-full bg-[#F2F8FD] text-center"
-											type="text"
-											value={quantity}
-											readOnly
+											type="number"
+											value={newQuantity}
+											onChange={(e) =>
+												setnewQuantity(
+													parseInt(e.target.value)
+												)
+											}
 										/>
 										<button
 											className="flex h-[30px]   w-[60px] items-center justify-center bg-[#60abe9] text-base   text-white "
-											onClick={increaseQuantity}
+											onClick={increasenewQuantity}
 										>
 											<FaPlus />
 										</button>

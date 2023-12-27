@@ -277,9 +277,7 @@ const AddProductForm = () => {
 										</p>
 									</div>
 
-									{form.watch("product_varification") ===
-										"verified" && (
-										<>
+									
 											<div className="auth-form__single-field space-mb--30">
 												<label htmlFor="price">
 													Price
@@ -311,8 +309,6 @@ const AddProductForm = () => {
 													{errors.quantity?.message}
 												</p>
 											</div>
-										</>
-									)}
 
 									<button className="auth-form__button">
 										Add Product

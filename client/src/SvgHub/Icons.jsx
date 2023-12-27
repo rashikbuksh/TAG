@@ -35,7 +35,7 @@ export const AddToCartIcon1 = ({ width = 32, height = 32 }) => {
 };
 export const AddToCartIcon2 = ({ width = 40, height = 40 }) => {
 	const svgStyle = {
-		background:"none"
+		background: "none",
 	};
 	return (
 		<svg
@@ -59,7 +59,12 @@ export const AddToCartIcon2 = ({ width = 40, height = 40 }) => {
           .st4{fill:#FFFFFF;}
         `}
 			</style>
-			<rect className="st0" width="1000" height="1000" fill="transparent" />
+			<rect
+				className="st0"
+				width="1000"
+				height="1000"
+				fill="transparent"
+			/>
 			<linearGradient
 				id="SVGID_1_"
 				gradientUnits="userSpaceOnUse"
@@ -241,6 +246,42 @@ export const TikIcon = () => {
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>
+		</svg>
+	);
+};
+export const SuccessIcon = () => {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="80"
+			height="80"
+			viewBox="0 0 80 80"
+			fill="none"
+		>
+			<circle cx="40" cy="40" r="40" fill="#2F5BA9" />
+			<path
+				fillRule="evenodd"
+				clipRule="evenodd"
+				d="M47.9685 32.5069C48.6444 31.831 49.7402 31.831 50.4161 32.5069C51.0921 33.1828 51.0921 34.2787 50.4161 34.9546L37.7238 47.6469C37.0479 48.3228 35.9521 48.3228 35.2762 47.6469L29.5069 41.8777C28.831 41.2018 28.831 40.1059 29.5069 39.43C30.1828 38.7541 31.2787 38.7541 31.9546 39.43L36.5 43.9754L47.9685 32.5069Z"
+				fill="white"
+			/>
+			<mask
+				id="mask0_776_999"
+				style={{ maskType: "luminance" }}
+				maskUnits="userSpaceOnUse"
+				x="29"
+				y="32"
+				width="22"
+				height="17"
+			>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M47.9685 32.5069C48.6444 31.831 49.7402 31.831 50.4161 32.5069C51.0921 33.1828 51.0921 34.2787 50.4161 34.9546L37.7238 47.6469C37.0479 48.3228 35.9521 48.3228 35.2762 47.6469L29.5069 41.8777C28.831 41.2018 28.831 40.1059 29.5069 39.43C30.1828 38.7541 31.2787 38.7541 31.9546 39.43L36.5 43.9754L47.9685 32.5069Z"
+					fill="white"
+				/>
+			</mask>
+			<g mask="url(#mask0_776_999)">{/* Content inside the mask */}</g>
 		</svg>
 	);
 };
