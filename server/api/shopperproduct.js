@@ -53,7 +53,7 @@ const read = [
 	},
 	{
 		uri: "/shopperproduct/getshopperproductOfShopkeeper/:id",
-		query: `SELECT sp.id, sp.name,sp.shopper_id, sp.price, discount, product_count, product_id, category_id, p.image, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id and cp.id = sp.shopper_id and shopper_id = ?`,
+		query: `SELECT sp.id, sp.name,sp.shopper_id, sp.price, discount, product_count, product_id, category_id, p.image,p.isVerified, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id and cp.id = sp.shopper_id and shopper_id = ?`,
 		param: ["id"],
 	},
 	{
@@ -128,7 +128,12 @@ const change = [
 		uri: "/shopperproduct/updateProductPrice",
 		query: `UPDATE shopper_product SET price = ? WHERE id = ?`,
 		body: ["price", "id"],
-	},
+	}, 
+	{
+		uri: "/shopperproduct/updateProductDetails",
+		query: `UPDATE shopper_product SET price = ?, discount = ?, product_count = ? WHERE id = ?`,
+		body: ["price", "discount", "quantity", "id"], 
+	}
 ];
 
 const remove = [
