@@ -12,6 +12,7 @@ import {
 	FaRegComment,
 	FaShare,
 	FaShoppingCart,
+	FaTrash,
 } from "react-icons/fa";
 import { PiShareFat } from "react-icons/pi";
 import { Link } from "react-router-dom";
@@ -21,6 +22,7 @@ import MainProduct from "../../components/ProductCart/MainProduct";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import CommentModal from "./CommentModal";
+import { FaX } from "react-icons/fa6";
 const PostUi = ({ postData }) => {
 	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");
@@ -111,7 +113,7 @@ const PostUi = ({ postData }) => {
 			<div className="rounded-lg ">
 				<div className="">
 					<div className="flex items-center justify-between ">
-						<div className="mx-auto flex w-full items-center gap-3 rounded-lg border p-2 ">
+						<div className="mx-auto flex w-full items-center justify-between gap-3 rounded-lg border p-2 ">
 							{shopperInfo.map((shopperinfo) => (
 								<img
 									key={Math.random()}
@@ -151,22 +153,10 @@ const PostUi = ({ postData }) => {
 												value={rating}
 											/>
 										</div>
-										<div className="flex-grow">
-											{shop_id == userid ||
-											user.access == "admin" ? (
-												<button
-													className="text-xs text-gray-500"
-													onClick={handleNewsDelete}
-												>
-													Delete
-												</button>
-											) : (
-												""
-											)}
-										</div>
+										
 									</div>
 								</div>
-
+							
 								<p className="text-sm text-gray-500">
 									{formattedTime}{" "}
 									<span className="text-gray-400">
@@ -174,8 +164,23 @@ const PostUi = ({ postData }) => {
 									</span>
 								</p>
 							</div>
+							<div className="flex justify-end">
+											{shop_id == userid ||
+											user.access == "admin" ? (
+												<button
+													className="text-xs text-gray-500"
+													onClick={handleNewsDelete}
+												>
+													<FaX size={20}/>
+												</button>
+											) : (
+												""
+											)}
+										</div>
 						</div>
+						
 					</div>
+					
 				</div>
 				{shopper_product_id && (
 					<div className="border-top-0  mx-auto mt-2 rounded-lg border ">
