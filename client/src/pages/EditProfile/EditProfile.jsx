@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Breadcrumb } from "../../components";
 import { api } from "../../lib/api";
+import { useAuth } from "../../context/auth";
 
 const EditProfile = () => {
 	const id = localStorage.getItem("user-id");
@@ -21,6 +22,7 @@ const EditProfile = () => {
 	const editProfileSchema = yup.object().shape({
 		name: yup.string(),
 		shipping_address: yup.string(),
+		address: yup.string(),
 	});
 
 	const { register, handleSubmit, formState, setValue, getValues } = useForm({
@@ -35,6 +37,7 @@ const EditProfile = () => {
 				setUserInfo(res.data[0]);
 				setValue("name", res.data[0].name);
 				setValue("shipping_address", res.data[0].shipping_address);
+				setValue("address", res.data[0].address);
 			})
 			.catch((err) => {
 				console.log(err.message, "err.message");
@@ -46,10 +49,13 @@ const EditProfile = () => {
 	};
 
 	const onSubmit = async (data) => {
+		console.log(data);
+
 		if (isFormDirty) {
 			api.post(`/profile/edit_profile/${id}`, {
 				name: data.name,
 				shipping_address: data.shipping_address,
+				address: data.address,
 			}).then((response) => {
 				if (response.data.message === id + " updated successfully") {
 					alert("Profile Updated Successfully");
@@ -59,13 +65,13 @@ const EditProfile = () => {
 		}
 	};
 
-	const getUserLocation = () => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(showPosition);
-		} else {
-			alert("Geolocation is not supported by this browser.");
-		}
-	};
+	// const getUserLocation = () => {
+	// 	if (navigator.geolocation) {
+	// 		navigator.geolocation.getCurrentPosition(showPosition);
+	// 	} else {
+	// 		alert("Geolocation is not supported by this browser.");
+	// 	}
+	// };
 
 	const showPosition = (position) => {
 		setValue(
@@ -74,7 +80,7 @@ const EditProfile = () => {
 		);
 		handleFormChange();
 	};
-
+	const { user } = useAuth();
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
 			<Breadcrumb pageTitle="Edit Profile" prevUrl="/home" />
@@ -94,6 +100,7 @@ const EditProfile = () => {
 											defaultValue={userinfo.name}
 											{...register("name")}
 											onChange={handleFormChange}
+											disabled={user.access == "shopper"}
 										/>
 										<p>{errors.name?.message}</p>
 									</div>
@@ -116,12 +123,26 @@ const EditProfile = () => {
 										<p>
 											{errors.shipping_address?.message}
 										</p>
-										<button
-											type="button"
-											onClick={getUserLocation}
-										>
-											Get Location
-										</button>
+									</div>
+									<div className="edit-profile-form__single-field space-mb--30">
+										<label htmlFor="shipping_address">
+											Address
+										</label>
+										<input
+											name="shipping_address"
+											id="address"
+											type="text"
+											placeholder="Enter Address"
+											defaultValue={
+												userinfo.address
+											}
+											{...register("address")}
+											onChange={handleFormChange}
+											
+										/>
+										<p>
+											{errors.shipping_address?.message}
+										</p>
 									</div>
 									<button
 										type="submit"

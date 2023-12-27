@@ -5,6 +5,7 @@ import OrderProducTable from "../../components/OrderProductTable/OrderProducTabl
 import { api } from "../../lib/api";
 import { useParams } from "react-router-dom";
 import { Breadcrumb } from "../../components";
+import SuccessOrderModal from "../../components/SuccessOrderModal/SuccessOrderModal";
 
 const OrderDetailsShopper = () => {
 	const { id } = useParams();
@@ -15,6 +16,10 @@ const OrderDetailsShopper = () => {
 	const [price, setPrice] = useState(null);
 	const [products, setProducts] = useState([]);
 	// console.log(order_status, "modal");
+	const [isOpen, setIsOpen]=useState(false)
+	const handelIsOpenModal=()=>{
+		setIsOpen(!isOpen)
+	}
 	useEffect(() => {
 		if (id) {
 			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
@@ -61,30 +66,7 @@ const OrderDetailsShopper = () => {
 				alert(error);
 			});
 	};
-	// const handleStatusChange = (id, selectId) => {
-	// 	const newOrderStatus = document.getElementById(selectId).value;
-	// 	setOrderStatus(newOrderStatus);
-	// 	if (newOrderStatus === "cancelled") {
-	// 		handleCancel(id);
-	// 	} else {
-	// 		api.post(`/order/updateorderstatus/${id}`, {
-	// 			order_status: "completed",
-	// 		})
-	// 			.then((response) => {
-	// 				alert(response.data.message);
-	// 				if (response.status === 200) {
-	// 					window.location.reload();
-	// 					setCancelReport("");
-	// 				}
-	// 			})
-	// 			.catch((error) => {
-	// 				alert(error);
-	// 			});
-	// 	}
 
-	// 	// Check if the selected status is "cancelled" and call handleCancel
-	// };
-	// console.log(products);
 	const handleCancel = async (id) => {
 		const { value: report } = await Swal.fire({
 			title: "Cancel Order",
@@ -163,7 +145,7 @@ const OrderDetailsShopper = () => {
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			<Breadcrumb
 				pageTitle={`Order Number: #${id}`}
-				prevUrl= {`/home`}
+				prevUrl={`/home`}
 				// onClick={() => goToPreviousPage()}
 			/>
 
@@ -223,31 +205,12 @@ const OrderDetailsShopper = () => {
 					) : (
 						""
 					)}
-
-					{/* <div className="cart-product__status">
-					<select
-						id={selectId}
-						value={orderStatus}
-						className="w-xs select select-bordered select-sm"
-						onChange={() => handleStatusChange(id, selectId)}
-					>
-						<option value="pending">
-							<FaRedo /> Pending
-						</option>
-						<option value="completed">
-							<FaRegCheckCircle /> Completed
-						</option>
-						<option value="cancelled">
-							<FaRegCheckCircle /> Cancelled
-						</option>
-						<option value="other">
-							<FaRedo /> Other
-						</option>
-					</select>
-				</div> */}
 				</div>
 			)}
-
+			<button onClick={handelIsOpenModal} className="h-[30px] w-[80px] rounded bg-green-700  text-white ">
+				test
+			</button>
+			<SuccessOrderModal isOpen={isOpen} setIsOpen={setIsOpen}/>
 			{isShownReport && (
 				<div>
 					<p>Selected Cancel Report: {cancelReport}</p>

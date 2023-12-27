@@ -131,7 +131,7 @@ function Header() {
 												}
 											>
 												<div className="w-8 rounded-full ring ring-[#2F5BA9] ">
-													<img
+													<img className="rounded-full"
 														src={`${
 															import.meta.env
 																.VITE_APP_IMG_URL

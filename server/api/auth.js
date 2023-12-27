@@ -7,13 +7,13 @@ const read = [
 	// },
 	{
 		uri: "/auth/getUserInfo/:id",
-		query: `SELECT profile_picture, name, user_name, active_status, review_count, access, shipping_address from customer_profile where id = ?`,
+		query: `SELECT profile_picture, name, user_name, active_status, review_count, access, shipping_address,address from customer_profile where id = ?`,
 		param: ["id"],
 		msg: "id is incorrect",
 	},
 	{
 		uri: "/auth/getUserAllInfo/:id",
-		query: `SELECT name,shipping_address,image from customer_profile where id = ?`,
+		query: `SELECT name,shipping_address,address,image from customer_profile where id = ?`,
 		param: ["id"],
 		msg: "id is incorrect",
 	},

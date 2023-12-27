@@ -309,12 +309,25 @@ const Profile = () => {
 									</div>
 									<div className="profile-info-block">
 										<div className="profile-info-block__title">
-											Total Order
+											Address
 										</div>
 										<div className="profile-info-block__value">
-											{totalOrder}
+											{userdata.address}
 										</div>
 									</div>
+									{userdata.access == "shopper" ? (
+										""
+									) : (
+										<div className="profile-info-block">
+											<div className="profile-info-block__title">
+												Total Order
+											</div>
+											<div className="profile-info-block__value">
+												{totalOrder}
+											</div>
+										</div>
+									)}
+
 									<div className="profile-info-block">
 										<div className="profile-info-block__title">
 											Edit Profile
