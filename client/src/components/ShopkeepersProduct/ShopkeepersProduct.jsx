@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import ShopkeeperProductcart from "./ShopkeeperProductcart";
+import ShopkeeperMyProduct from "./ShopkeeperMyProduct";
 const ShopkeepersProduct = () => {
 	const products = [
 		{
@@ -44,8 +45,8 @@ const ShopkeepersProduct = () => {
 
 	return (
 		<div>
-			<div className="h-32"></div>
-			<div className="mx-auto p-2 lg:w-[70%] lg:border lg:border-gray-100 lg:p-4">
+			
+			<div className="mx-auto p-2 mt-14 lg:w-[70%] lg:border lg:border-gray-100 lg:p-4">
 				<div className="flex">
 					<Link to={`${import.meta.env.VITE_API_PUBLIC_URL}/home`}>
 						<FaArrowAltCircleLeft className="text-4xl"></FaArrowAltCircleLeft>
@@ -56,6 +57,7 @@ const ShopkeepersProduct = () => {
 						My Product
 					</h1>
 				</div>
+
 				<div className="divider"></div>
 				<div className="flex items-center justify-between gap-10">
 					<Link
@@ -76,12 +78,13 @@ const ShopkeepersProduct = () => {
 						<span className="lg:text-xl">Delete</span>
 					</div>
 				</div>
-				<div className="my-10 grid grid-cols-2 gap-10 lg:grid-cols-2">
-					{prods.map((product) => (
-						<ShopkeeperProductcart
+				<div className="my-10 grid grid-cols-2  gap-10 lg:grid-cols-2">
+					{prods.map((product,index) => (
+						<ShopkeeperMyProduct
 							key={product.id}
 							product={product}
-						></ShopkeeperProductcart>
+							index={index}
+						></ShopkeeperMyProduct>
 					))}
 				</div>
 			</div>

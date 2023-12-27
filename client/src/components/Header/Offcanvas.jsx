@@ -227,7 +227,7 @@ function Offcanvas(props) {
 													to={
 														import.meta.env
 															.VITE_API_PUBLIC_URL +
-														`/ordersHistoryDetails/${user.id}`
+														`/ordersHistoryDetails/${user&& user.id}`
 													}
 												>
 													Order History

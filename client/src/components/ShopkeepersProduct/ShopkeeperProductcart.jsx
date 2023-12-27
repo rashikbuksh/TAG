@@ -5,6 +5,7 @@ import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";
 import { api } from "../../lib/api";
 import { useAuth } from "../../context/auth";
+import { Takaicon } from "../../SvgHub/SocialIcon";
 
 const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	const {
@@ -20,7 +21,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	const browserUrl = window.location.pathname;
 	// State for quantity
 	const [quantity, setQuantity] = useState(0);
-	const [newPrice, setNewPrice] = useState();
+	const [newPrice, setNewPrice] = useState(price);
 	const [newDisCount, setnewDisCount] = useState(0);
 	// Function to increase quantity
 	const increaseQuantity = () => {
@@ -53,8 +54,19 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	};
 
 	const handlePriceChange = (e) => {
-		// console.log(e.target.value);
-		setNewPrice(e.target.value);
+		if (isVerified === "verified") {
+			// If the product is verified, show a warning message
+			alert("Cannot edit price for verified products");
+			return;
+		}
+
+		const enteredPrice = parseFloat(e.target.value);
+
+		if (enteredPrice > price) {
+			setNewPrice(price);
+		} else {
+			setNewPrice(enteredPrice);
+		}
 	};
 	const handleDiscountChange = (e) => {
 		console.log(e.target.value);
@@ -117,6 +129,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 		updateProductCount();
 	};
 	const { user } = useAuth();
+	console.log(price);
 	const handleCheckboxChange = (e) => {
 		// Check if newPrice is not empty
 		if (newPrice && quantity) {
@@ -230,11 +243,25 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 										className="w-full rounded-lg bg-[#F2F8FD] px-2 py-1 pe-10  sm:text-sm"
 										placeholder={`Enter Price`}
 										name=""
-										max={isVerified ? price : ""}
-										value={newPrice} // Set input value to newPrice
+										value={
+											isVerified === "verified"
+												? price
+												: newPrice
+										} // Set input value to newPrice
+										disabled={isVerified === "verified"}
 										onChange={handlePriceChange}
 										id=""
 									/>
+									{isVerified === "verified" ? (
+										<p className="flex items-center gap-1 text-xs text-red-400">
+											Price must be <Takaicon /> {price}{" "}
+										</p>
+									) : (
+										<p className="flex items-center gap-3 text-xs text-red-400">
+											Suggested Price- <Takaicon />
+											{price ? price : "N/A"}
+										</p>
+									)}
 								</div>
 								<div className="relative  mt-0.5 flex flex-col gap-0.5">
 									<label className="">Discount:</label>

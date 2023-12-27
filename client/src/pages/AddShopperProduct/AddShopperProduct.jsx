@@ -176,6 +176,10 @@ const ShopperProduct = () => {
 		}
 	};
 	const [selectedProducts, setSelectedProducts] = useState([]);
+	console.log(
+		"🚀 ~ file: AddShopperProduct.jsx:179 ~ ShopperProduct ~ selectedProducts:",
+		selectedProducts
+	);
 	// console.log(
 	// 	"🚀 ~ file: AddShopperProduct.jsx:177 ~ ShopperProduct ~ selectedProducts:",
 	// 	selectedProducts
@@ -214,8 +218,7 @@ const ShopperProduct = () => {
 					// );
 					if (response.data.status === 201) {
 						alert("Product Added Successfully");
-						window.location.reload()
-						
+						window.location.reload();
 					}
 				});
 			});
@@ -223,7 +226,7 @@ const ShopperProduct = () => {
 	};
 	const removeProduct = (productId) => {
 		// console.log("🚀 ~ file: AddShopperProduct.jsx:223 ~ removeProduct ~ productId:", productId)
-		
+
 		const updatedProducts = selectedProducts.filter(
 			(product) => product.product_id !== productId
 		);
@@ -232,6 +235,22 @@ const ShopperProduct = () => {
 	return (
 		<div className="body-wrapper  space-pt--70 space-pb--120 relative ">
 			<Breadcrumb pageTitle="Add Product" prevUrl="/shopkeeperProduct" />
+			<div role="alert" className="alert alert-info my-3 flex text-left">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					className="h-6 w-6 shrink-0 stroke-current"
+				>
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth="2"
+						d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+					></path>
+				</svg>
+				<span>Verified product prices remain unchanged.</span>
+			</div>
 			{/* image Slider Section  */}
 			<div className="mySwiper">
 				<Swiper
@@ -260,12 +279,12 @@ const ShopperProduct = () => {
 										alt=""
 									/>
 									<button
-										className="absolute right-0 top-0 bg-red-600 rounded text-white p-1" 
+										className="absolute right-0 top-0 rounded bg-red-600 p-1 text-white"
 										onClick={() =>
 											removeProduct(product.product_id)
 										}
 									>
-									<FaX className="text-red"></FaX>
+										<FaX className="text-red"></FaX>
 									</button>
 								</div>
 							</SwiperSlide>
