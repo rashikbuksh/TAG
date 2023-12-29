@@ -23,7 +23,6 @@ const ReferCodeGenerator = () => {
 
 	const generateReferCode = () => {
 		setReferCode(Math.random().toString(36).substring(2, 15));
-		// console.log(referCode);
 	};
 
 	const addReferCode = () => {
@@ -35,7 +34,6 @@ const ReferCodeGenerator = () => {
 
 	useEffect(() => {
 		api.get(`/auth/getRefer/${id}`).then((res) => {
-			// console.log(res.data[0].refer_code);
 			setReferCode(res.data[0].refer_code);
 		});
 	}, []);

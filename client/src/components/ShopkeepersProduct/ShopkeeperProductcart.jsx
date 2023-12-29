@@ -3,9 +3,9 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";
-import { api } from "../../lib/api";
-import { useAuth } from "../../context/auth";
 import { Takaicon } from "../../SvgHub/SocialIcon";
+import { useAuth } from "../../context/auth";
+import { api } from "../../lib/api";
 
 const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	const {
@@ -18,10 +18,6 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 		image,
 		isVerified,
 	} = product;
-	console.log(
-		"🚀 ~ file: ShopkeeperProductcart.jsx:21 ~ ShopkeeperProductcart ~ product_count:",
-		quantity
-	);
 	const browserUrl = window.location.pathname;
 	// State for newQuantity
 	const [newQuantity, setnewQuantity] = useState(
@@ -46,7 +42,6 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 			id: id,
 			product_count: newQuantity,
 		}).then((res) => {
-			// console.log("res", res);
 			if (res.data.status === 200) {
 				alert("Product Count Updated Successfully");
 			}
@@ -75,7 +70,6 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 		}
 	};
 	const handleDiscountChange = (e) => {
-		console.log(e.target.value);
 		setnewDisCount(e.target.value);
 	};
 
@@ -89,7 +83,6 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 			id: id,
 			price: newPrice,
 		}).then((res) => {
-			// console.log("res", res);
 			if (res.data.status === 200) {
 				alert("Product Price Updated Successfully");
 			}
@@ -110,7 +103,6 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 		if (isConfirmed) {
 			api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
 				.then((res) => {
-					// console.log("res", res);
 					if (res.data.status === 200) {
 						alert("Product Deleted Successfully");
 						window.location.reload();

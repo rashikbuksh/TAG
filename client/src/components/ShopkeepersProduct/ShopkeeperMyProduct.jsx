@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { FaBars, FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
-import { api } from "../../lib/api";
 import { Takaicon } from "../../SvgHub/SocialIcon";
+import { api } from "../../lib/api";
 
-const ShopkeeperMyProduct = ({ product,index }) => {
+const ShopkeeperMyProduct = ({ product, index }) => {
 	const { id, name, price, product_count, image, isVerified } = product;
-	console.log("🚀 ~ file: ShopkeeperMyProduct.jsx:9 ~ ShopkeeperMyProduct ~ isVerified:", isVerified)
 
 	const [quantity, setQuantity] = useState(product_count);
 	const [newPrice, setNewPrice] = useState(price);
@@ -46,7 +45,6 @@ const ShopkeeperMyProduct = ({ product,index }) => {
 	const handleDiscountChange = (e) => {
 		setNewDisCount(e.target.value);
 	};
-console.log(newDisCount);
 	const handleProductUpdate = () => {
 		if (isVerified === "verified") {
 			alert("Cannot edit price for verified products");
@@ -57,8 +55,7 @@ console.log(newDisCount);
 			id: id,
 			price: newPrice,
 			discount: newDisCount,
-            quantity:quantity
-
+			quantity: quantity,
 		})
 			.then((res) => {
 				if (res.data.status === 200) {
@@ -80,7 +77,6 @@ console.log(newDisCount);
 		if (isConfirmed) {
 			api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
 				.then((res) => {
-					// console.log("res", res);
 					if (res.data.status === 200) {
 						alert("Product Deleted Successfully");
 						window.location.reload();
@@ -116,32 +112,42 @@ console.log(newDisCount);
 							""
 						)}
 					</div>
-					<div className="flex justify-center items-center h-screen">
-  <div className="dropdown relative">
-  <div className={`dropdown dropdown-${index % 2 === 0 ? 'right' : 'left'}`}>
-      <label tabIndex={0} className="m-1">
-        <FaBars />
-      </label>
-      <ul
-        tabIndex={0}
-        className="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
-      >
-        <li>
-          <button onClick={handleEditClick}>Edit</button>
-        </li>
-        <li>
-          <button onClick={handleDeleteClick}>Delete</button>
-        </li>
-        <li>
-          <a>Share</a>
-        </li>
-        <li>
-          <button onClick={handleNotAvailable}>Not Available</button>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+					<div className="flex h-screen items-center justify-center">
+						<div className="dropdown relative">
+							<div
+								className={`dropdown dropdown-${
+									index % 2 === 0 ? "right" : "left"
+								}`}
+							>
+								<label tabIndex={0} className="m-1">
+									<FaBars />
+								</label>
+								<ul
+									tabIndex={0}
+									className="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
+								>
+									<li>
+										<button onClick={handleEditClick}>
+											Edit
+										</button>
+									</li>
+									<li>
+										<button onClick={handleDeleteClick}>
+											Delete
+										</button>
+									</li>
+									<li>
+										<a>Share</a>
+									</li>
+									<li>
+										<button onClick={handleNotAvailable}>
+											Not Available
+										</button>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div className="flex flex-col items-center justify-center gap-1 border p-1">
@@ -159,7 +165,7 @@ console.log(newDisCount);
 								<div className="flex w-full items-center justify-between gap-2 rounded-lg bg-[#F2F8FD] sm:text-sm">
 									<button
 										className="flex h-[30px] w-[60px] items-center justify-center bg-[#60abe9] text-base text-white"
-                                        disabled={!isEditingPrice}
+										disabled={!isEditingPrice}
 										onClick={decreaseQuantity}
 									>
 										<FaMinus />
@@ -173,7 +179,7 @@ console.log(newDisCount);
 									/>
 									<button
 										className="flex h-[30px] w-[60px] items-center justify-center bg-[#60abe9] text-base text-white"
-                                        disabled={!isEditingPrice}
+										disabled={!isEditingPrice}
 										onClick={increaseQuantity}
 									>
 										<FaPlus />

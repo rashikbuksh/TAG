@@ -3,11 +3,9 @@ import Modal from "../../components/Modal/Modal";
 import OrderProducTable from "../../components/OrderProductTable/OrderProducTable";
 
 const TagOrderDetailsModal = ({ isOpen, setIsOpen, orderDetails }) => {
-	// console.log(orderDetails, "Order der");
 	// const [OrderDetails, setOrderDetails] = useState(orderDetails||[]);
 	const totalPrice = orderDetails.map((d) => d.totalPrice);
 	const cancel_report = orderDetails.map((d) => d.cancel_report);
-	// console.log(totalPrice);
 	return (
 		<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
 			<div>

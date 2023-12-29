@@ -15,7 +15,6 @@ const OrderDetailsShopper = () => {
 	const [orderStatus, setOrderStatus] = useState();
 	const [price, setPrice] = useState(null);
 	const [products, setProducts] = useState([]);
-	// console.log(order_status, "modal");
 	const [isOpen, setIsOpen]=useState(false)
 	const handelIsOpenModal=()=>{
 		setIsOpen(!isOpen)

@@ -15,7 +15,6 @@ const TagUser = () => {
 				alert(error);
 			});
 	}, []);
-	// console.log(tagUsers);
 	return (
 		<>
 			<p className="px-10 py-3 text-3xl font-bold">ALL User</p>

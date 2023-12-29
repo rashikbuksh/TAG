@@ -14,7 +14,6 @@ const OrderShopper = () => {
 		api.get(`/order/getordershopper/${shopper_id}`)
 			.then((response) => {
 				setData(response.data);
-				// console.log(response.data);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -26,7 +25,6 @@ const OrderShopper = () => {
 			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
 			<div className="order-product-area">
 				{data?.map((single) => {
-					// console.log(single);
 					return (
 						<div
 							className="cart-product border-bottom--medium flex items-center justify-between"

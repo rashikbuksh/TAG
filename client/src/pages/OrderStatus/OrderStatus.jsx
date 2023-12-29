@@ -22,7 +22,7 @@ const OrderStatus = () => {
 				setPendingOrders(newPendingOrders);
 			})
 			.catch((error) => {
-				// console.log(error);
+				console.error(error);
 			});
 	};
 	useEffect(() => {
@@ -31,10 +31,9 @@ const OrderStatus = () => {
 			.then((response) => {
 				const newPendingOrders = response.data;
 				setPendingOrders(newPendingOrders);
-				console.log(pendingOrders);
 			})
 			.catch((error) => {
-				// console.log(error);
+				console.error(error);
 				setPendingOrders([]);
 			});
 	}, [user.id]);
@@ -55,8 +54,6 @@ const OrderStatus = () => {
 			setProducts(productData);
 		});
 	}, [pendingOrders]);
-	// console.log(products);
-	// console.log(pendingOrders);
 
 	const startTimer = (orderId) => {
 		fetchUpdatedOrders();
@@ -97,7 +94,6 @@ const OrderStatus = () => {
 		const id = orderId;
 		api.get(`/order/getorder_by_id/${id}`)
 			.then((response) => {
-				console.log(response);
 				const orderStatus = response.data[0].order_status;
 				if (orderStatus === "pending") {
 					// Update order status to canceled
@@ -107,12 +103,7 @@ const OrderStatus = () => {
 					})
 						.then(() => {
 							// Set a timeout for cancel report
-							setTimeout(() => {
-								// Perform actions for cancel report
-								console.log(
-									`Cancel report for order ID ${orderId}`
-								);
-							}, 5000); // Adjust timeout duration as needed
+							setTimeout(() => {}, 5000); // Adjust timeout duration as needed
 						})
 						.catch((error) => {
 							console.error("Error updating status:", error);
@@ -123,7 +114,7 @@ const OrderStatus = () => {
 				console.error("Error fetching order status:", error);
 			});
 	};
-	
+
 	return (
 		<div className="mt-20 ">
 			<h1 className="text-center text-xl font-semibold">Order Status</h1>

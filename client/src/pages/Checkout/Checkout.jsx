@@ -52,7 +52,6 @@ const Checkout = () => {
 			}
 			i++;
 		}
-		// console.log(orderedItem, discountedItem, quantityItem);
 	}
 	const settingState = (state) => {
 		dispatch({
@@ -63,7 +62,6 @@ const Checkout = () => {
 	};
 
 	const handleSubmit = () => {
-		// console.log(cartItems);
 		if (weightItem == "") {
 			weightItem = "0";
 		}
@@ -78,7 +76,6 @@ const Checkout = () => {
 			customer_profile_id: Number(id),
 		})
 			.then((response) => {
-				// console.log(response.data);
 			})
 			.catch((error) => {
 				alert(error);

@@ -25,7 +25,6 @@ const Profile = () => {
 			setImage(file);
 		}
 	};
-	// console.log(image);
 	const handleProfileImageUpload = async () => {
 		if (!image) {
 			alert("Please select an image.");
@@ -48,7 +47,6 @@ const Profile = () => {
 					},
 				}
 			);
-			// console.log(response);
 
 			if (response.data.msg == "File Uploaded") {
 				const imageFileName = response.data.profileImage;
@@ -56,12 +54,9 @@ const Profile = () => {
 				api.post(`/profile/update_profile_image/${id}`, {
 					profile_picture: imageFileName,
 				}).then((response) => {
-					// console.log(response);
 					if (response.data.message == `${id} updated successfully`) {
 						setImage(null);
 						alert("Profile image updated successfully");
-						// You can also update the image state here if needed
-						// setImage(null);
 					}
 				});
 			} else {
@@ -86,49 +81,6 @@ const Profile = () => {
 				alert(error);
 			});
 	}, [userdata, id]);
-
-	// const handleProfileImageUpload = async () => {
-	// 	// Add your image upload logic here
-	// 	const formData = new FormData();
-	// 	formData.append("uploadFiles", image);
-
-	// 	let imageFileName = null;
-
-	// 	await Axios.post(
-	// 		`${
-	// 			import.meta.env.VITE_APP_API_URL
-	// 		}/imageUpload/uploadprofileimage`,
-	// 		formData,
-	// 		{
-	// 			headers: {
-	// 				"Content-Type": "multipart/form-data;",
-	// 				Authorization: Cookies?.get("auth"),
-	// 			},
-	// 		}
-	// 	).then((response) => {
-	// 		console.log(response);
-	// 		if (response.data.msg === "File Uploaded") {
-	// 			imageFileName = response.data.profileImage;
-	// 		}
-	// 	});
-
-	// 	// Update the user's profile image in the database
-	// 	api.post(`/profile/update_profile_image/${id}`, {
-	// 		profile_picture: imageFileName,
-	// 	}).then((response) => {
-	// 		console.log(response);
-	// 		if (
-	// 			// response.data.message === "Profile image updated successfully"
-	// 			console.log("In od")
-	// 		) {
-	// 			// You can update the state or take any other action as needed
-	// 			alert("Profile image updated successfully");
-	// 		}
-	// 	});
-	// };
-
-	// if (isLoading) return <Preloader />;
-	// if (errorMessage) return <ErrorMessage errorMessage={errorMessage} />;
 
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">

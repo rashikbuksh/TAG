@@ -49,11 +49,8 @@ const AllProducts = ({ limit, sliderData }) => {
 	const isVerifiedProduct = prods.filter(
 		(product) => product.isVerified === "verified"
 	);
-	// console.log(isVerifiedProduct,"isVerifiedProduct");
 
 	if (!prods?.length) return <LoadingPage></LoadingPage>;
-
-	// console.log(prods,"Product for check varify");
 
 	return (
 		<div className=" mx-auto  max-w-7xl">

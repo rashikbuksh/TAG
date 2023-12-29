@@ -9,13 +9,11 @@ const TagOrderTable = ({ order }) => {
     const [orderDetails , setOrderDetails]=useState([])
 
 	const handelOpenOrderHistoryModal = (id) => {
-        // console.log(id);
 		setIsOpen(!isOpen);
 
 		if (id) {
 			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
 				.then((response) => {
-                    // console.log(response.data);
 					setOrderDetails(response.data); // Use console.log instead of log
 				})
 				.catch((error) => {
@@ -23,7 +21,6 @@ const TagOrderTable = ({ order }) => {
 				});
 		}
 	};
-    // console.log(orderDetails,"tagordertable");
     const cancel_report=orderDetails.map(d=>d.cancel_report)
 
 	return (

@@ -253,13 +253,11 @@ const PostUi = ({ postData }) => {
 										news_id: id,
 										liked_by: Number(userid),
 									}).then((res) => {
-										// console.log(res, "res");
 										setIsLiked(true);
 										setLikeId(res.data.id);
 										api.post(
 											`/news/increaseLikeCount/${id}`
 										);
-										// window.location.reload();
 									});
 								}}
 							>

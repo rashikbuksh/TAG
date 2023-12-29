@@ -7,7 +7,6 @@ const IndividualMessagePage = () => {
 
 	const handleSubmitMessage = (event) => {
 		event.preventDefault();
-		// console.log("Submitted Comment:", selectedMessage);
 	};
 	return (
 		<div className="">

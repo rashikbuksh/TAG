@@ -79,7 +79,6 @@ const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 				post_img: ImageName,
 				category: "regular",
 			});
-			// console.log(response.data.message,userID + " added successfully");
 
 			if (response.data.message == `${userID} added successfully`) {
 				setContent("");

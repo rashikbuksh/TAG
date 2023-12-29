@@ -48,7 +48,6 @@ const Register = () => {
 	const { errors } = formState;
 
 	const onSubmit = (data) => {
-		// console.log(data);
 		api.post(`/auth/registershopper`, {
 			name: data.name,
 			phone: data.phone,
@@ -58,7 +57,6 @@ const Register = () => {
 			shipping_address: data.shipping_address,
 		})
 			.then((response) => {
-				// console.log(response.data.message); // Log the entire response for debugging
 				if (
 					response.data.message ===
 					data.name + " added successfully"

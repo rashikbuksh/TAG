@@ -32,7 +32,6 @@ import MessageModal from "../MessageModal/MessageModal";
 const MainProduct = ({ shopperProduct, product, height, width }) => {
 	const navigate = useNavigate();
 	const prod = product || shopperProduct;
-	// console.log(prod, "prod");
 	const {
 		name,
 		price,

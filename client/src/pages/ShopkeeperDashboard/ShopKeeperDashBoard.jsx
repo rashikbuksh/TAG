@@ -30,15 +30,12 @@ const ShopKeeperDashBoard = () => {
 	const [buyProductContent, setBuyProductContent] = useState("");
 	const [orderHistoryContent, setOrderHistoryContent] = useState("");
 	const id = localStorage.getItem("user-id");
-	// console.log(id);
 
 	const [shopkeeper, setShopkeeper] = useState([]);
-	console.log("🚀 ~ file: ShopKeeperDashBoard.jsx:35 ~ ShopKeeperDashBoard ~ shopkeeper:", shopkeeper)
 	const [productCount, setProductCount] = useState(0);
 
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`).then((res) => {
-			// console.log(res.data, "resdata");
 			setShopkeeper(res.data[0]);
 			setActiveStatus(res.data[0].active_status === 0 ? false : true);
 		});
@@ -73,7 +70,6 @@ const ShopKeeperDashBoard = () => {
 				alert(error);
 			});
 	};
-	// console.log(shopkeeper);
 	const { user } = useAuth();
 	const boxShadowStyle = {
 		boxShadow: "0px 80px 100px 0px rgba(0, 0, 0, 0.03)",
@@ -272,7 +268,7 @@ const ShopKeeperDashBoard = () => {
 										}`}
 									>
 										<div
-											className={`flex w-full flex-col items-center justify-center rounded-lg bg-[#FFf] h-[120px] ${
+											className={`flex h-[120px] w-full flex-col items-center justify-center rounded-lg bg-[#FFf] ${
 												section.content
 													? ""
 													: "text-center"

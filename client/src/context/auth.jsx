@@ -31,8 +31,6 @@ const AuthProvider = ({ children }) => {
 				emailOrPhone: data.emailOrPhone,
 				password: data.password,
 			});
-			// console.log("response", res);
-			// console.log(res.data.message);
 			if (res.data.message) {
 				setLoginError(res.data.message);
 			}
@@ -41,8 +39,6 @@ const AuthProvider = ({ children }) => {
 
 			updateAuthCookie(token || "");
 			updateUserCookie(JSON.stringify(loginUser) || "");
-
-			// console.log("loginUser", loginUser);
 
 			if (token && loginUser) {
 				localStorage.setItem("user-id", loginUser?.id);
@@ -56,7 +52,7 @@ const AuthProvider = ({ children }) => {
 			}
 		} catch (error) {
 			// alert(error);
-			// console.log(error);
+			console.error(error);
 		}
 	};
 
