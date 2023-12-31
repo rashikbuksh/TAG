@@ -33,6 +33,11 @@ const Notification = () => {
 			});
 	};
 
+	const getOrderNumberFromNotification = (notification) => {
+		const orderNumber = notification.split("#")[1].split(".")[0];
+		return orderNumber;
+	};
+
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			<Breadcrumb pageTitle="Notification" prevUrl="/home" />
@@ -45,13 +50,51 @@ const Notification = () => {
 						)}
 						key={single.id}
 					>
-						{single.status ? <NotificationSound /> : ""}
-						<Link
-							to={import.meta.env.VITE_API_PUBLIC_URL + `/order`}
-							onClick={() =>
-								HandleUpdateNotificationStatus(single.id)
-							}
-						>
+						{single.notification_content.includes("commented") ? (
+							<Link
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									`/newsfeed`
+								}
+								onClick={() =>
+									HandleUpdateNotificationStatus(single.id)
+								}
+							>
+								<div
+									className={`${
+										notification[0].id === single.id
+											? "text-red-600"
+											: ""
+									}`}
+									dangerouslySetInnerHTML={{
+										__html: single.notification_content,
+									}}
+								/>
+							</Link>
+						) : single.notification_content.includes("Order") ? (
+							<Link
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									`/orderDetails/${getOrderNumberFromNotification(
+										single.notification_content
+									)}`
+								}
+								onClick={() =>
+									HandleUpdateNotificationStatus(single.id)
+								}
+							>
+								<div
+									className={`${
+										notification[0].id === single.id
+											? "text-red-600"
+											: ""
+									}`}
+									dangerouslySetInnerHTML={{
+										__html: single.notification_content,
+									}}
+								/>
+							</Link>
+						) : (
 							<div
 								className={`${
 									notification[0].id === single.id
@@ -62,7 +105,9 @@ const Notification = () => {
 									__html: single.notification_content,
 								}}
 							/>
-						</Link>
+						)}
+						{single.status ? <NotificationSound /> : ""}
+
 						<div className="notification-item__time">
 							{" "}
 							<span>

@@ -2,9 +2,18 @@ import React, { useEffect, useState } from "react";
 import { get } from "react-hook-form";
 import { FaTrash } from "react-icons/fa6";
 import Modal from "../../components/Modal/Modal";
+import { useAuth } from "../../context/auth";
+import GetDateTime from "../../helpers/GetDateTime";
 import { api } from "../../lib/api";
 
-const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
+const CommentModal = ({
+	isOpen,
+	setIsOpen,
+	title,
+	id,
+	setcommentId,
+	shop_id,
+}) => {
 	const FixedComments = [
 		"Excellent",
 		"Interested",
@@ -13,6 +22,8 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 		"Not Interested",
 		"Bad",
 	];
+
+	const { user } = useAuth();
 
 	const userID = localStorage.getItem("user-id");
 
@@ -32,9 +43,22 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 		api.post(`/newscomment/addcomment`, {
 			comment: selectedComment,
 			news_id: id,
-			commented_by: userID,
+			commented_by: user.id,
 			news_time: date,
-		}).then((res) => {});
+		}).then((res) => {
+			if (res.status == 201) {
+				// add comment in the notification table
+				api.post(`/notification/addnotification`, {
+					notification_content:
+						"You have a new comment in your post. commented by " +
+						user.name,
+					notification_time: GetDateTime(),
+					not_from: user.id,
+					not_to: shop_id,
+					status: 1,
+				});
+			}
+		});
 		api.post(`/news/increaseCommentCount/${id}`).then((res) => {});
 		setSelectedComment(""); // Reset the selected comment state
 	};
