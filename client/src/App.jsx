@@ -39,6 +39,7 @@ import OrderStatus from "./pages/OrderStatus/OrderStatus";
 import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
+import LateOrdersPage from "./AdminComponents/LateOrdersPage/LateOrdersPage";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -374,7 +375,7 @@ const ADMIN_ROUTES = [
 		access: ["admin"],
 	},
 	{
-		id: 10,
+		id: 11,
 		name: "Order History",
 		path: "/tagorderhistory/:id",
 		element: TagOrderHistory,
@@ -388,17 +389,24 @@ const ADMIN_ROUTES = [
 		access: ["admin"],
 	},
 	{
-		id: 11,
+		id: 13,
 		name: "All Newa",
 		path: "/allnews",
 		element: Allnews,
 		access: ["admin"],
 	},
 	{
-		id: 12,
+		id: 14,
 		name: "Make Modarator",
 		path: "/manageModarator",
 		element: ManageModarator,
+		access: ["admin"],
+	},
+	{
+		id: 15,
+		name: "Make Modarator",
+		path: "/lateorderSubmition",
+		element: LateOrdersPage,
 		access: ["admin"],
 	},
 ];

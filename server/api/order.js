@@ -57,7 +57,7 @@ const read = [
     WHERE shopper_id = ? 
     ORDER BY id DESC;`,
     param: ["shopper_id"],
-    msg: "shopper_id",
+    msg: "product_id",
   },
   {
     uri: "/order/getorderhistoryshopper/:shopper_id",
@@ -114,9 +114,10 @@ WHERE
   {
     uri: "/order/gettimeoutorder",
     query: `SELECT *
-		FROM product_order
-		WHERE order_status = 'accepted'
-		AND TIMEDIFF(delivery_time, order_time) > '00:45:00';`,
+    FROM product_order
+    WHERE TIMEDIFF(delivery_time, order_time) > '00:45:00'
+    AND (order_delay_report != 'solved' OR order_delay_report IS NULL);
+    `,
   },
 ];
 
@@ -153,6 +154,13 @@ const change = [
     uri: "/order/orderdeliverytime/:id",
     query: `UPDATE product_order SET delivery_time = ? WHERE id = ?`,
     body: ["delivery_time"],
+    param: ["id"],
+    msg: "id",
+  },
+  {
+    uri: "/order/resolvedorder_delay/:id",
+    query: `UPDATE product_order SET order_delay_report = ? WHERE id = ?`,
+    body: ["order_delay_report"],
     param: ["id"],
     msg: "id",
   },

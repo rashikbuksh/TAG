@@ -35,6 +35,17 @@ const Sidebar = () => {
 					</div>
 				</div>
 				<div className="space-y-2">
+					<h2 className="tracki text-sm font-semibold uppercase text-gray-400">
+						Report
+					</h2>
+					<div className="flex flex-col space-y-4">
+						<Link to="/lateorderSubmition">
+							Late Order Submission
+						</Link>
+					</div>
+				</div>
+
+				<div className="space-y-2">
 					<div className="flex flex-col space-y-1">
 						<Link to="/manageAdmin">Manage Admin</Link>
 						<Link to="/manageModarator">Manage Modarator</Link>
