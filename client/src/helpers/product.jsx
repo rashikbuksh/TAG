@@ -89,14 +89,11 @@ export const getIndividualColors = (products) => {
 
 //get products based on filter
 export const getSortedProducts = (products, sortType, sortValue) => {
-	// console.log(products, sortType, sortValue);
 	if (products && sortType && sortValue) {
 		if (sortType === "category") {
 			products.filter((product) => {
-				// console.log(product ? product.product_id == sortValue : null);
 				let bool = product ? product.product_id == sortValue : null;
 				if (bool) {
-					// console.log(product);
 					return product;
 				}
 			});

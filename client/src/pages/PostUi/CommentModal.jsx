@@ -34,13 +34,8 @@ const CommentModal = ({ isOpen, setIsOpen, title, id, setcommentId }) => {
 			news_id: id,
 			commented_by: userID,
 			news_time: date,
-		}).then((res) => {
-			// console.log(res.data);
-		});
-		api.post(`/news/increaseCommentCount/${id}`).then((res) => {
-			// console.log(res.data);
-		});
-		// console.log("Submitted Comment:", selectedComment);
+		}).then((res) => {});
+		api.post(`/news/increaseCommentCount/${id}`).then((res) => {});
 		setSelectedComment(""); // Reset the selected comment state
 	};
 

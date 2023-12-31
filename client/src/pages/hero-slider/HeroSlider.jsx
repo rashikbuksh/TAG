@@ -42,7 +42,6 @@ const HeroSlider = () => {
 		formData.append("uploadFiles", file);
 
 		var ImageName = null;
-		// console.log(new Date());
 		if (file === null) {
 			ImageName = null;
 		} else {
@@ -58,7 +57,6 @@ const HeroSlider = () => {
 					},
 				}
 			).then((response) => {
-				// console.log(response.data);
 				if (response.data.msg === "File Uploaded") {
 					ImageName = response.data.productImage;
 				}
@@ -70,7 +68,6 @@ const HeroSlider = () => {
 			slider_position:data.slider_position,
 			image: ImageName,
 		}).then((response) => {
-			// console.log(response.data);
 			if (response.data.message == title + " Added Successful") {
 				alert("Slider Added Successful");
 			}
@@ -83,14 +80,12 @@ const HeroSlider = () => {
 				setSliderData(res.data);
 			})
 			.catch((err) => {
-				// console.log(err);
+				console.error(err);
 			});
 	}, [sliderData]);
 
 	async function deleteSlider(id) {
-		// console.log(id);
 		await api.delete(`/heroslider/deleteslider/${id}`).then((response) => {
-			// console.log(response.data);
 			if (response.data.message == id + " Deleted Successful") {
 				alert("Slider Deleted Successful");
 			}

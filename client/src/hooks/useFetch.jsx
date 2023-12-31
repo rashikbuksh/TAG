@@ -42,7 +42,6 @@ async function useFetchFunc(url, setData, setLoading, setError) {
 			});
 	} catch (err) {
 		if (err.name === "AbortError") {
-			// console.log("Fetch Aborted");
 		} else {
 			setLoading(false);
 			setError(err.message);

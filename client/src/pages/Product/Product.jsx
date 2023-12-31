@@ -12,7 +12,12 @@ import {
 } from "../../store/slices/cart-slice";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 
+import { FaCheckCircle } from "react-icons/fa";
 import { FaEye, FaRegMessage } from "react-icons/fa6";
+import { StarIcon } from "../../SvgHub/Icons";
+import { Footer, Header } from "../../components";
+import MessageModal from "../../components/MessageModal/MessageModal";
+import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "../../context/auth";
 import {
 	cartItemStock,
@@ -21,11 +26,6 @@ import {
 	getProductCartQuantity,
 } from "../../helpers/product";
 import { api } from "../../lib/api";
-import { StarIcon } from "../../SvgHub/Icons";
-import MessageModal from "../../components/MessageModal/MessageModal";
-import { FaCheckCircle } from "react-icons/fa";
-import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
-import { Footer, Header } from "../../components";
 
 const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
@@ -62,7 +62,6 @@ const Product = () => {
 	useEffect(() => {
 		// Find the product in the cart based on the 'id' parameter
 		const productInCart = cartItems.find((item) => item.id == id);
-		console.log(productInCart);
 
 		if (productInCart) {
 			// If the product is in the cart, set the product and quantity in the state
@@ -78,7 +77,6 @@ const Product = () => {
 	const [showFullDescription, setShowFullDescription] = useState(false);
 
 	const [products, setProds] = useState([]);
-	// console.log(prods, "productStock");
 	const [shopperName, setShopperName] = useState("");
 
 	useEffect(() => {
@@ -91,8 +89,6 @@ const Product = () => {
 				// alert(error);
 			});
 	}, [id]);
-	// console.log(prods);
-	// console.log(prods, "loggged productjs");
 
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 	const [isOpen, setIsOpen] = useState(false);
@@ -152,7 +148,6 @@ const Product = () => {
 				</div>
 				{/*====================  End of product image slider  ====================*/}
 				{products.map((prods) => {
-					// console.log(prods, "in product");
 					return (
 						<div key={Math.random()} className="">
 							<div className="">
@@ -352,7 +347,7 @@ const Product = () => {
 										}
 									>
 										<button className="auth-btn ">
-										Add To Cart{" "}
+											Add To Cart{" "}
 										</button>
 									</Link>
 								) : user.access === "admin" ? (

@@ -13,7 +13,6 @@ const Refer = () => {
 		referCode: "",
 	});
 	const refer_codeFromRg = localStorage.getItem("ref_c");
-	// console.log(refer_codeFromRg);
 	const { user } = useAuth();
 	const validationSchema = Yup.object().shape({
 		referCode: Yup.string().required("Refer code is required"),
@@ -47,18 +46,15 @@ const Refer = () => {
 			if (refer_codeFromRg) {
 				api.get(`/profile/get_refer_code`)
 					.then((response) => {
-						// console.log(response.data);
 						const referCodes = response.data;
 						const referredParsonId = referCodes.find(
 							(code) => code.refer_code === refer_codeFromRg
 						);
-						// console.log(referredParsonId);
 						if (referredParsonId) {
 							api.post(`/profile/edit_refer_status/${id}`, {
 								refer_status: "referred",
 							})
 								.then((response) => {
-									// console.log(response.data);
 									alert(response.data.message);
 									if (response.status === 200) {
 										alert("Change success");
@@ -68,7 +64,6 @@ const Refer = () => {
 											referred_to: user.id,
 										})
 											.then((response) => {
-												// console.log(response.data);
 												if (response.status === 200) {
 													alert(
 														"Added success to refer"
@@ -141,19 +136,15 @@ const Refer = () => {
 			.then(() => {
 				api.get(`/profile/get_refer_code`)
 					.then((response) => {
-						// console.log(response.data);
 						const referCodes = response.data;
 						const referredParsonId = referCodes.find(
 							(code) => code.refer_code === formData.referCode
 						);
-						// console.log(referredParsonId);
 						if (referredParsonId) {
 							api.post(`/profile/edit_refer_status/${id}`, {
 								refer_status: "referred",
 							})
 								.then((response) => {
-									// console.log(response.data);
-									// alert(response.data.message);
 									if (response.status === 200) {
 										alert("Change success");
 										api.post(`/add_refer`, {
@@ -161,7 +152,6 @@ const Refer = () => {
 											referred_to: user.id,
 										})
 											.then((response) => {
-												// console.log(response.data);
 												if (response.status === 200) {
 													alert(
 														"Added success to refer"
@@ -201,20 +191,25 @@ const Refer = () => {
 
 	return (
 		<>
-			<Modal isOpen={isOpen} setIsOpen={setIsOpen} title={"Must select Yes or No"}  showCross={true}>
+			<Modal
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				title={"Must select Yes or No"}
+				showCross={true}
+			>
 				<p className="primary-text "></p>
 				<div className="flex items-center justify-center space-x-11 p-2">
 					<p className="text-black">Do you have any refer code?</p>
 					<button
 						onClick={handelHaveReferCode}
-						className="btn btn-xs btn-accent"
+						className="btn btn-accent btn-xs"
 					>
 						Yes
 					</button>
 					<button
 						onClick={handelHaveNotReferCode}
 						disabled={isSubmitting}
-						className="btn btn-xs btn-error"
+						className="btn btn-error btn-xs"
 					>
 						No
 					</button>

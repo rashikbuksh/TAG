@@ -50,21 +50,21 @@ const Home = () => {
 				setSliderDataTop(res.data);
 			})
 			.catch((err) => {
-				// console.log(err);
+				console.error(err);
 			});
 		api.get("/heroslider/getslider/middel")
 			.then((res) => {
 				setSliderDataMiddel(res.data);
 			})
 			.catch((err) => {
-				// console.log(err);
+				console.error(err);
 			});
 		api.get("/heroslider/getslider/bottom")
 			.then((res) => {
 				setSliderDataBottom(res.data);
 			})
 			.catch((err) => {
-				// console.log(err);
+				console.error(err);
 			});
 	}, []);
 	return (
@@ -97,7 +97,6 @@ const Home = () => {
 					</button>
 				)}
 			</div>
-	
 		</div>
 	);
 };

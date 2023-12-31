@@ -14,7 +14,6 @@ const ProductCart = ({ product }) => {
 		border: "0.5px solid #E4E4E4",
 		background: "#FFF",
 	};
-	// console.log(product,"productCart");
 	const shopper_id = product.shopper_id;
 
 	const [shopper, setShopper] = useState([]);
@@ -22,11 +21,8 @@ const ProductCart = ({ product }) => {
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${shopper_id}`).then((res) => {
 			setShopper(res.data);
-			// console.log(res.data);
 		});
 	}, []);
-
-	// console.log(shopper, "shopper in pc");
 
 	return (
 		<div

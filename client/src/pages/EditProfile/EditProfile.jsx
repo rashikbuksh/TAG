@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Breadcrumb } from "../../components";
-import { api } from "../../lib/api";
 import { useAuth } from "../../context/auth";
+import { api } from "../../lib/api";
 
 const EditProfile = () => {
 	const id = localStorage.getItem("user-id");
@@ -40,7 +40,7 @@ const EditProfile = () => {
 				setValue("address", res.data[0].address);
 			})
 			.catch((err) => {
-				console.log(err.message, "err.message");
+				console.error(err.message, "err.message");
 			});
 	}, [id, setValue]);
 
@@ -49,8 +49,6 @@ const EditProfile = () => {
 	};
 
 	const onSubmit = async (data) => {
-		console.log(data);
-
 		if (isFormDirty) {
 			api.post(`/profile/edit_profile/${id}`, {
 				name: data.name,
@@ -133,12 +131,9 @@ const EditProfile = () => {
 											id="address"
 											type="text"
 											placeholder="Enter Address"
-											defaultValue={
-												userinfo.address
-											}
+											defaultValue={userinfo.address}
 											{...register("address")}
 											onChange={handleFormChange}
-											
 										/>
 										<p>
 											{errors.shipping_address?.message}

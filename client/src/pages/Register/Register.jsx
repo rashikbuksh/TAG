@@ -14,7 +14,6 @@ const Register = () => {
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [showPassword, setShowPassword] = useState(false);
-	// console.log(id);
 	const registerSchema = yup.object().shape({
 		name: yup.string().required("Name is required"),
 		emailAddress: yup
@@ -39,7 +38,6 @@ const Register = () => {
 	const { errors } = formState;
 
 	const onSubmit = (data) => {
-		// console.log(data);
 
 		Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, {
 			name: data.name,
@@ -49,7 +47,6 @@ const Register = () => {
 			access: "customer",
 		})
 			.then((response) => {
-				// console.log(response);
 				if (response.data.message === data.phone) {
 					navigate("/login");
 					if (id) {

@@ -18,7 +18,6 @@ const SearchProducts = ({ limit }) => {
 		api.get(`/shopperproduct/get-searched-product/${keyword}`).then(
 			(response) => {
 				setAllProducts(response.data);
-				console.log(response.data, "response.data");
 			}
 		);
 	}, [keyword]);

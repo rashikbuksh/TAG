@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ShopkeeperTable = ({tagShopkeeper}) => {
-    // console.log(tagShopkeeper);
     return (
         <>
         <tr>

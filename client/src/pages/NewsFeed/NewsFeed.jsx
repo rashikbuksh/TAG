@@ -30,7 +30,7 @@ const NewsFeed = () => {
 				setPosts(res.data);
 			})
 			.catch((err) => {
-				// console.log(err);
+				console.error(err);
 			});
 
 		const handleScroll = () => {
