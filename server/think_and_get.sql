@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2023 at 03:19 PM
+-- Generation Time: Dec 31, 2023 at 09:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -88,7 +88,7 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (11, 'buksh', NULL, NULL, NULL, NULL, 'buksh1234', NULL, 'buksh@gmail.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'shopper', NULL, '', NULL, NULL),
 (15, 'Rashik Buksh', NULL, NULL, NULL, NULL, 'rafsan123', '01684545112', 'rashikbuksh123@gmail.com', '23.7507983__90.4219536', NULL, NULL, NULL, NULL, 'shopper', NULL, '', NULL, NULL),
 (16, 'anik', NULL, NULL, NULL, NULL, '$2b$10$XoJbPYObeFN.dhLLpniv.e6uZbfuORw0YhAaYAXnDvPlfgjpXWk02', NULL, 'anik@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', 'unreferred', NULL),
-(17, 'Anik Store', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684345120', 'anik123@gmail.com', '22.3303507__91.7867411', NULL, 'k block haishahar', NULL, NULL, 'shopper', 1, '9ikaktaf3rp', 'referred', '1699292263970__121837251.jpg'),
+(17, 'Anik Store', NULL, NULL, NULL, NULL, '$2b$10$hLJbqslh/frc8Zp/.IyBv.tPItlpdjEmoEzEorlhDmLK8f1bHmI6K', '01684345120', 'anik123@gmail.com', '22.3303507__91.7867411', NULL, 'k block haishahar chittagong', NULL, NULL, 'shopper', 1, '9ikaktaf3rp', 'referred', '1699292263970__121837251.jpg'),
 (18, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$59OJMjepWmTnuNbiT5VR3uCK93oHNlBHmWm6GOlRNtsjkkkn7AXUK', NULL, 'rafid@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (19, 'RAFID BUKSH', NULL, NULL, NULL, NULL, '$2b$10$VeU3tFlgbCpCrsV2CQtMSupS9/JYqhBAMPWXEq7wEnBFj6iQWxZl6', NULL, 'rafid123@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (20, 'TAG@admin.com', NULL, NULL, NULL, NULL, '$2b$10$1R4tRAPwHpmV6EnGtAStUeJZY8aj0Dt9NR.B2fjgNiXSYkmH5rm46', NULL, 'tag@admin.com', NULL, NULL, NULL, NULL, NULL, 'admin', NULL, 'bo1ntlas7k7', 'unreferred', NULL),
@@ -318,7 +318,9 @@ INSERT INTO `notification` (`id`, `notification_content`, `notification_time`, `
 (47, 'You have a new order. Order Number is #74.', '2023-11-28 13:21:57', 17, 36, 0),
 (48, 'You have a new order. Order Number is #75.', '2023-11-28 13:26:15', 17, 36, 0),
 (49, 'You have a new order. Order Number is #76.', '2023-11-28 13:37:03', 17, 36, 0),
-(50, 'You have a new order. Order Number is #77.', '2023-12-06 00:16:26', 17, 16, 0);
+(50, 'You have a new order. Order Number is #77.', '2023-12-06 00:16:26', 17, 16, 0),
+(51, 'You have a new order. Order Number is #78.', '2023-12-27 20:35:37', 17, 36, 0),
+(52, 'You have a new order. Order Number is #79.', '2023-12-29 19:51:26', 17, 36, 1);
 
 -- --------------------------------------------------------
 
@@ -442,7 +444,9 @@ INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, 
 (74, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21'),
 (75, '32,41', '1,1', '0', 598, '10,4', 'accepted', 36, 17, NULL, '2023-10-18 00:01:21'),
 (76, '4,26,41,43', '1,1,1,1', '0', 560, '0,2,4,3', 'accepted', 36, 17, NULL, '2023-10-18 00:01:21'),
-(77, '28,32,41', '4,1,1', '0', 630, '77,10,4', 'pending', 16, 17, NULL, '2023-12-06 00:16:26');
+(77, '28,32,41', '4,1,1', '0', 630, '77,10,4', 'pending', 16, 17, NULL, '2023-12-06 00:16:26'),
+(78, '26,32,34,41', '1,3,1,1', '0', 1091, '2,10,0,4', 'pending', 36, 17, NULL, '2023-12-27 20:35:37'),
+(79, '32,34,41', '1,1,1', '0', 608, '10,0,4', 'pending', 36, 17, NULL, '2023-12-29 19:51:26');
 
 -- --------------------------------------------------------
 
@@ -509,7 +513,7 @@ INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count
 (14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3, 1),
 (15, 'Vanity Bag', 499, 5, 1000, 0, 0, 0, 12, 3, 3),
 (17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15, 1),
-(26, 'Ishan Tea', 124, 2, 20, 40, 0, 0, 14, 17, 8),
+(26, 'Ishan Tea', 124, 2, 20, 40, 0, 0, 14, 17, 9),
 (27, 'sugar', 34, 3, 19, 0, 0, 0, 13, 17, 1),
 (28, 'Vanity Bag', 35, 77, 67, 0, 0, 0, 12, 17, 1),
 (29, 'Potato Chips ', 35, 2, 4, 0, 0, 0, 17, 17, 8),
@@ -694,7 +698,7 @@ ALTER TABLE `news_like`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -706,7 +710,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `refer`
