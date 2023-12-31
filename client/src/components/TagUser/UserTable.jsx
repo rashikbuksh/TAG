@@ -40,6 +40,7 @@ const UserTable = ({ taguser }) => {
 				<td>{taguser.phone ? taguser.phone : "N/A"}</td>
 				<td>{taguser.email ? taguser.email : "N/A"}</td>
 				<td>{taguser.access ? taguser.access : "N/A"}</td>
+				
 				<td>
 					{/*  */}
 					<Link to={`/taguserorderhistory/${taguser.id}`}>

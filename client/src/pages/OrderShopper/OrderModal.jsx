@@ -6,6 +6,7 @@ import { api } from "../../lib/api";
 import { useParams } from "react-router-dom";
 import { Breadcrumb } from "../../components";
 import SuccessOrderModal from "../../components/SuccessOrderModal/SuccessOrderModal";
+import GetDateTime from "../../helpers/GetDateTime";
 
 const OrderDetailsShopper = () => {
 	const { id } = useParams();
@@ -15,10 +16,10 @@ const OrderDetailsShopper = () => {
 	const [orderStatus, setOrderStatus] = useState();
 	const [price, setPrice] = useState(null);
 	const [products, setProducts] = useState([]);
-	const [isOpen, setIsOpen]=useState(false)
-	const handelIsOpenModal=()=>{
-		setIsOpen(!isOpen)
-	}
+	const [isOpen, setIsOpen] = useState(false);
+	const handelIsOpenModal = () => {
+		setIsOpen(!isOpen);
+	};
 	useEffect(() => {
 		if (id) {
 			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
@@ -40,9 +41,20 @@ const OrderDetailsShopper = () => {
 			.then((response) => {
 				alert(response.data.message);
 				if (response.status === 200) {
-					window.location.reload();
-					setOrderStatus("accepted");
-					setCancelReport("");
+					api.post(`/order/ordershopperaccepttime/${id}`, {
+						shopper_order_accept_time:  GetDateTime(),
+					})
+						.then((response) => {
+							alert(response.data.message);
+							if (response.status === 200) {
+								window.location.reload();
+								setOrderStatus("accepted");
+								setCancelReport("");
+							}
+						})
+						.catch((error) => {
+							alert(error);
+						});
 				}
 			})
 			.catch((error) => {
@@ -56,9 +68,20 @@ const OrderDetailsShopper = () => {
 			.then((response) => {
 				alert(response.data.message);
 				if (response.status === 200) {
-					window.location.reload();
-					setOrderStatus("completed");
-					setCancelReport("");
+					api.post(`order/orderdeliverytime/${id}`, {
+						delivery_time: GetDateTime(),
+					})
+						.then((response) => {
+							alert(response.data.message);
+							if (response.status === 200) {
+								window.location.reload();
+								setOrderStatus("completed");
+								setCancelReport("");
+							}
+						})
+						.catch((error) => {
+							alert(error);
+						});
 				}
 			})
 			.catch((error) => {
@@ -206,10 +229,13 @@ const OrderDetailsShopper = () => {
 					)}
 				</div>
 			)}
-			<button onClick={handelIsOpenModal} className="h-[30px] w-[80px] rounded bg-green-700  text-white ">
+			<button
+				onClick={handelIsOpenModal}
+				className="h-[30px] w-[80px] rounded bg-green-700  text-white "
+			>
 				test
 			</button>
-			<SuccessOrderModal isOpen={isOpen} setIsOpen={setIsOpen}/>
+			<SuccessOrderModal isOpen={isOpen} setIsOpen={setIsOpen} />
 			{isShownReport && (
 				<div>
 					<p>Selected Cancel Report: {cancelReport}</p>
