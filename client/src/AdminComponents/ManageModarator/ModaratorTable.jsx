@@ -10,7 +10,6 @@ const ModaratorTable = ({tagModartor}) => {
 		if (isConfirmed) {
 			api.delete(`/auth/deleteModarator/${id}`)
 				.then((res) => {
-					// console.log("res", res);
 					if (res.data.status === 200) {
 						alert("Modarator Deleted Successfully");
 						window.location.reload();

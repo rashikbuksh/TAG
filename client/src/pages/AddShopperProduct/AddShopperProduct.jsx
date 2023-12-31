@@ -3,17 +3,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { get, useForm } from "react-hook-form";
+import { FaX } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import * as yup from "yup";
-import { getDiscountPrice } from "../../helpers/product";
-import { api } from "../../lib/api";
-import { Breadcrumb } from "../../components";
-import SearchFunction from "../../AdminComponents/SearchFunction/Index";
-import ShopkeeperProductcart from "../../components/ShopkeepersProduct/ShopkeeperProductcart";
-import { TikIcon } from "../../SvgHub/Icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-import { FaX } from "react-icons/fa6";
+import * as yup from "yup";
+import SearchFunction from "../../AdminComponents/SearchFunction/Index";
+import { TikIcon } from "../../SvgHub/Icons";
+import { Breadcrumb } from "../../components";
+import ShopkeeperProductcart from "../../components/ShopkeepersProduct/ShopkeeperProductcart";
+import { getDiscountPrice } from "../../helpers/product";
+import { api } from "../../lib/api";
 const ShopperProduct = () => {
 	const [category, setCategory] = useState([]);
 
@@ -26,7 +26,6 @@ const ShopperProduct = () => {
 			setProducts(response.data);
 		});
 		api.get(`/category/get/category`).then((response) => {
-			// console.log(response.data);
 			setCategory(response.data);
 		});
 	}, []);
@@ -46,14 +45,6 @@ const ShopperProduct = () => {
 		}
 	};
 	const [selectedProducts, setSelectedProducts] = useState([]);
-	console.log(
-		"🚀 ~ file: AddShopperProduct.jsx:179 ~ ShopperProduct ~ selectedProducts:",
-		selectedProducts
-	);
-	// console.log(
-	// 	"🚀 ~ file: AddShopperProduct.jsx:177 ~ ShopperProduct ~ selectedProducts:",
-	// 	selectedProducts
-	// );
 
 	const handleProductSelection = (productInfo, isSelected) => {
 		if (isSelected) {
@@ -69,9 +60,7 @@ const ShopperProduct = () => {
 		}
 	};
 	const handelAddShoperProduct = () => {
-		// console.log(selectedProducts.length);
 		if (selectedProducts.length === 0) {
-			// console.log("addProduct");
 		} else {
 			selectedProducts.forEach((product) => {
 				api.post(`/shopperproduct/addshopperproduct`, {
@@ -82,10 +71,6 @@ const ShopperProduct = () => {
 					product_id: product.product_id,
 					shopper_id: Number(user_id),
 				}).then((response) => {
-					// console.log(
-					// 	"🚀 ~ file: AddShopperProduct.jsx:209 ~ selectedProducts.forEach ~ response:",
-					// 	response
-					// );
 					if (response.data.status === 201) {
 						alert("Product Added Successfully");
 						window.location.reload();
@@ -95,8 +80,6 @@ const ShopperProduct = () => {
 		}
 	};
 	const removeProduct = (productId) => {
-		// console.log("🚀 ~ file: AddShopperProduct.jsx:223 ~ removeProduct ~ productId:", productId)
-
 		const updatedProducts = selectedProducts.filter(
 			(product) => product.product_id !== productId
 		);

@@ -33,7 +33,7 @@ const ShopkeeperProfileCV = () => {
 	const [filteredAllProducts, setFilteredProducts] = useState([]);
 	const [selectedLetter, setSelectedLetter] = useState("");
 	const [mapModal, setMapModal] = useState(false);
-	const [latlong, setLatLong] = useState({ latitude: 0, longitude: 0 });
+	const [latLong, setLatLong] = useState({ latitude: 0, longitude: 0 });
 	const dispatch = useDispatch();
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
@@ -89,8 +89,6 @@ const ShopkeeperProfileCV = () => {
 			latitude: positionFromDb[0],
 			longitude: positionFromDb[1],
 		});
-		// setLatitude(positionFromDb[0]);
-		// setLongitude(positionFromDb[1]);
 		setMapModal(true);
 	};
 	return (
@@ -163,9 +161,9 @@ const ShopkeeperProfileCV = () => {
 									<LocationModal
 										isOpen={mapModal}
 										setIsOpen={setMapModal}
-										latlong={latlong}
 										popup={shopkeeperInfo.name}
-									/>
+										latlong={latLong}
+									></LocationModal>
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
 										Follow
 									</button>

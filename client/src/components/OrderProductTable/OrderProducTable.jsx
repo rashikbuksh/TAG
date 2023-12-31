@@ -3,7 +3,6 @@ import { getDiscountPrice } from "../../helpers/product";
 import { Takaicon } from "../../SvgHub/SocialIcon";
 
 const OrderProducTable = ({ product }) => {
-	// console.log(Orderdproduct, "sadas");
 	return (
 		<div>
 			<div className="relative my-2 h-[80px] bg-gray-100 p-2">

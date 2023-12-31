@@ -8,22 +8,18 @@ const TagOrderHistory = () => {
 	const { user } = useAuth();
 	const [orderData, setOrderData] = useState([]);
 	const { id } = useParams();
-	// console.log(user);
-	// console.log(id, "check id when relod");
 
 	useEffect(() => {
 		if (id) {
 			api.get(`/order/getordershopper/${id}`)
 				.then((response) => {
 					setOrderData(response.data);
-					// console.log(response.data);
 				})
 				.catch((error) => {
 					console.error(error);
 				});
 		}
 	}, [id]);
-	// console.log(orderData);
 	return (
 		<>
 			<p className="px-10 py-3 text-3xl font-bold">

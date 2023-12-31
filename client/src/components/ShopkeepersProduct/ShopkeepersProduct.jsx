@@ -36,10 +36,9 @@ const ShopkeepersProduct = () => {
 		api.get(`/shopperproduct/getshopperproductOfShopkeeper/${user.id}`)
 			.then((response) => {
 				setProds(response.data);
-				// console.log(response.data);
 			})
 			.catch((error) => {
-				// console.log(error);
+				console.error(error);
 			});
 	}, []);
 

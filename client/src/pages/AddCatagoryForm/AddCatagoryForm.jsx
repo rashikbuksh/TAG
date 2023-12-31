@@ -29,7 +29,6 @@ const AddcategoryForm = () => {
 			name: data.category_name,
 			url: data.category_url,
 		}).then((response) => {
-			// console.log(response.data);
 			if (
 				response.data.message ===
 				data.category_name + " added successfully"

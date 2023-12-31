@@ -16,7 +16,6 @@ const TagShopKeeper = () => {
 				alert(error);
 			});
 	}, []);
-	// console.log(tagShopkeepers);
 	return (
 		<>
 			<p className="px-10 py-3 text-3xl font-bold">All Shopkeeper</p>

@@ -24,7 +24,6 @@ const ShowCartIcon = () => {
 			};
 		}
 	}, [cartItems]);
-    // console.log(cartItems);
 	return (
 		<Link to={"/cart"}>
         <div

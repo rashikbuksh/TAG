@@ -17,23 +17,19 @@ const Notification = () => {
 		api.get(`/auth/getUserInfo/${userid}`).then((res) => {
 			setUser(res.data);
 			setUserAccess(res.data.access);
-			// console.log(res.data);
 		});
 		api.get(`/notification/getnotification/${userid}/${userid}`).then(
 			(res) => {
 				setNotification(res.data);
-				// console.log(res.data);
 			}
 		);
 	}, []);
 
 	const HandleUpdateNotificationStatus = (id) => {
 		api.post(`/notification/readnotification/${id}`)
-			.then((res) => {
-				// console.log(res.data);
-			})
+			.then((res) => {})
 			.catch((err) => {
-				// console.log(err);
+				console.error(err);
 			});
 	};
 

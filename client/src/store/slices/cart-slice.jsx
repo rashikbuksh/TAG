@@ -14,7 +14,6 @@ const cartSlice = createSlice({
 				const cartItem = state.cartItems.find(
 					(item) => item.id === product.id
 				);
-				// console.log(cartItem);
 				if (!cartItem) {
 					state.cartItems.push({
 						...product,
@@ -113,7 +112,6 @@ const cartSlice = createSlice({
 		},
 		increaseQuantity(state, action) {
 			const product = action.payload;
-			// console.log("Product", product);
 			state.cartItems = state.cartItems.map((item) =>
 				item.id == product.cartItem.id
 					? { ...item, quantity: item.quantity + 1 }
@@ -122,11 +120,9 @@ const cartSlice = createSlice({
 			// cogoToast.warn("Item Incremented From Cart", {
 			// 	position: "bottom-left",
 			// });
-			// console.log("state.cartItems: ", state.cartItems);
 		},
 		increaseQuantityofProd(state, action) {
 			const product = action.payload;
-			// console.log("Product", product);
 			state.cartItems = state.cartItems.map((item) =>
 				item.id == product.id
 					? { ...item, quantity: item.quantity + 1 }
@@ -135,7 +131,6 @@ const cartSlice = createSlice({
 			// cogoToast.warn("Item Incremented in Cart", {
 			// 	position: "bottom-left",
 			// });
-			// console.log("state.cartItems: ", state.cartItems);
 		},
 		deleteAllFromCart(state) {
 			state.cartItems = [];
