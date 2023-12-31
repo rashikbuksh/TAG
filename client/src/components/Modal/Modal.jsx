@@ -2,7 +2,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FaX } from "react-icons/fa6";
 
-const Modal = ({ isOpen, setIsOpen, title, children, setcommentId,showCross }) => {
+const Modal = ({
+	isOpen,
+	setIsOpen,
+	title,
+	children,
+	setcommentId,
+	showCross,
+}) => {
 	function closeModal() {
 		setIsOpen(false);
 		setcommentId?.(0);
@@ -10,20 +17,10 @@ const Modal = ({ isOpen, setIsOpen, title, children, setcommentId,showCross }) =
 
 	return (
 		<>
-			{/* <div className="fixed inset-0 flex items-center justify-center">
-            <button
-              type="button"
-              onClick={openModal}
-              className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-            >
-              Open dialog
-            </button>
-          </div> */}
-
 			<Transition appear show={isOpen} as={Fragment}>
 				<Dialog
 					as="div"
-					className="relative z-10 h-[70vh] w-full"
+					className="relative z-10 h-[70vh] w-full overflow-y-auto"
 					onClose={closeModal}
 				>
 					<Transition.Child
@@ -39,7 +36,7 @@ const Modal = ({ isOpen, setIsOpen, title, children, setcommentId,showCross }) =
 					</Transition.Child>
 
 					<div className="fixed inset-0 overflow-y-auto">
-						<div className="flex min-h-full items-center justify-center p-4 text-center">
+						<div className="flex min-h-full  items-center justify-center p-4 text-center">
 							<Transition.Child
 								as={Fragment}
 								enter="ease-out duration-300"
@@ -78,7 +75,10 @@ const Modal = ({ isOpen, setIsOpen, title, children, setcommentId,showCross }) =
 											)}
 										</div>
 									</Dialog.Title>
-									{children}
+									<div className="max-h-[60vh] overflow-y-auto">
+										{/* Apply max-height and overflow-y-auto to enable scrolling */}
+										{children}
+									</div>
 								</Dialog.Panel>
 							</Transition.Child>
 						</div>

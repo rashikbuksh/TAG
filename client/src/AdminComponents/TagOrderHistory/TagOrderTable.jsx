@@ -7,6 +7,7 @@ import { getDiscountPrice } from "../../helpers/product";
 const TagOrderTable = ({ order }) => {
 	const [isOpen, setIsOpen] = useState(false);
     const [orderDetails , setOrderDetails]=useState([])
+    console.log("🚀 ~ file: TagOrderTable.jsx:10 ~ TagOrderTable ~ orderDetails:", orderDetails)
 
 	const handelOpenOrderHistoryModal = (id) => {
 		setIsOpen(!isOpen);

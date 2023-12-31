@@ -11,7 +11,7 @@ const TagOrderHistory = () => {
 
 	useEffect(() => {
 		if (id) {
-			api.get(`/order/getordershopper/${id}`)
+			api.get(`/order/getallordershopper/${id}`)
 				.then((response) => {
 					setOrderData(response.data);
 				})
