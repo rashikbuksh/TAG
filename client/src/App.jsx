@@ -40,6 +40,7 @@ import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import LateOrdersPage from "./AdminComponents/LateOrdersPage/LateOrdersPage";
+import Policy from "./pages/Policy/Policy";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -289,6 +290,10 @@ const PUBLIC_ROUTES = [
 	{
 		path: "/home",
 		element: Home,
+	},
+	{
+		path: "/Policy",
+		element: Policy,
 	},
 	{
 		path: "/shop",
