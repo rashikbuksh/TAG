@@ -12,6 +12,7 @@ import HotNews from "../../components/HotNews/HotNews";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import Refer from "../Refer/Refer";
+import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 
 const Home = () => {
 	const { user } = useAuth();
@@ -71,6 +72,7 @@ const Home = () => {
 		<div className="p-2">
 			<Header />
 			<Footer />
+			<ShowCartIcon></ShowCartIcon>
 			<div className="body-wrapper space-pb--120 my-12">
 				<Helmet>
 					<meta charSet="utf-8" />

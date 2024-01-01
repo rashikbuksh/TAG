@@ -38,7 +38,7 @@ const Register = () => {
 			.string()
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
-		shipping_address: yup.string(),
+		shipping_address: yup.string().required("Shipping Address is required"),
 	});
 
 	const { register, handleSubmit, formState, setValue, getValues } = useForm({
@@ -190,7 +190,6 @@ const Register = () => {
 							</label>
 							<input
 								type="text"
-								readOnly
 								name="shipping_address"
 								id="shipping_address"
 								className="auth-input"
