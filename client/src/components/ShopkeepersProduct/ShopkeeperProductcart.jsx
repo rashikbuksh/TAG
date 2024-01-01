@@ -62,12 +62,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 		}
 
 		const enteredPrice = parseFloat(e.target.value);
-
-		if (enteredPrice > price) {
-			setNewPrice(price);
-		} else {
-			setNewPrice(enteredPrice);
-		}
+		setNewPrice(enteredPrice);
 	};
 	const handleDiscountChange = (e) => {
 		setnewDisCount(e.target.value);

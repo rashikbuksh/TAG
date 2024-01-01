@@ -5,11 +5,11 @@ import { Takaicon } from "../../SvgHub/SocialIcon";
 import { api } from "../../lib/api";
 
 const ShopkeeperMyProduct = ({ product, index }) => {
-	const { id, name, price, product_count, image, isVerified } = product;
+	const { id, name, price, product_count, image, isVerified,discount } = product;
 
 	const [quantity, setQuantity] = useState(product_count);
 	const [newPrice, setNewPrice] = useState(price);
-	const [newDisCount, setNewDisCount] = useState(product_count);
+	const [newDisCount, setNewDisCount] = useState(discount);
 	const [isEditingPrice, setIsEditingPrice] = useState(false);
 
 	const increaseQuantity = () => {
