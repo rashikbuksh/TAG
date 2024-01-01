@@ -14,15 +14,16 @@ import {
 	FaShoppingCart,
 	FaTrash,
 } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
 import { PiShareFat } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import demoProfile from "../../../src/assets/img/Tag-logo-blue-get_50_50.png";
 import Modal from "../../components/Modal/Modal";
 import MainProduct from "../../components/ProductCart/MainProduct";
 import { useAuth } from "../../context/auth";
+import GetDateTime from "../../helpers/GetDateTime";
 import { api } from "../../lib/api";
 import CommentModal from "./CommentModal";
-import { FaX } from "react-icons/fa6";
 const PostUi = ({ postData }) => {
 	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");
@@ -153,10 +154,9 @@ const PostUi = ({ postData }) => {
 												value={rating}
 											/>
 										</div>
-										
 									</div>
 								</div>
-							
+
 								<p className="text-sm text-gray-500">
 									{formattedTime}{" "}
 									<span className="text-gray-400">
@@ -165,22 +165,19 @@ const PostUi = ({ postData }) => {
 								</p>
 							</div>
 							<div className="flex justify-end">
-											{shop_id == userid ||
-											user.access == "admin" ? (
-												<button
-													className="text-xs text-gray-500"
-													onClick={handleNewsDelete}
-												>
-													<FaX size={20}/>
-												</button>
-											) : (
-												""
-											)}
-										</div>
+								{shop_id == userid || user.access == "admin" ? (
+									<button
+										className="text-xs text-gray-500"
+										onClick={handleNewsDelete}
+									>
+										<FaX size={20} />
+									</button>
+								) : (
+									""
+								)}
+							</div>
 						</div>
-						
 					</div>
-					
 				</div>
 				{shopper_product_id && (
 					<div className="border-top-0  mx-auto mt-2 rounded-lg border ">
@@ -262,7 +259,19 @@ const PostUi = ({ postData }) => {
 										setLikeId(res.data.id);
 										api.post(
 											`/news/increaseLikeCount/${id}`
-										);
+										).then((res) => {
+											api.post(
+												"/notification/addnotification",
+												{
+													notification_content: `${user.name} liked your post`,
+													notification_time:
+														GetDateTime(),
+													not_to: shop_id,
+													not_from: userid,
+													status: 0,
+												}
+											);
+										});
 									});
 								}}
 							>
@@ -283,6 +292,7 @@ const PostUi = ({ postData }) => {
 						setIsOpen={setIsOpen}
 						title={"comments"}
 						id={id}
+						shop_id={shop_id}
 						setcommentId={setcommentId}
 					>
 						Hi
