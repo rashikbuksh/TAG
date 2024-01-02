@@ -13,6 +13,7 @@ import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import Refer from "../Refer/Refer";
 import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
+import FooterSection from "../FooterSection/FooterSection";
 
 const Home = () => {
 	const { user } = useAuth();
@@ -73,7 +74,7 @@ const Home = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon></ShowCartIcon>
-			<div className="body-wrapper space-pb--120 my-12">
+			<div className="body-wrapper mt-12 mb-20">
 				<Helmet>
 					<meta charSet="utf-8" />
 					<meta
@@ -98,6 +99,7 @@ const Home = () => {
 						<FaArrowUp className="text-3xl text-gray-200"></FaArrowUp>
 					</button>
 				)}
+				<FooterSection />
 			</div>
 		</div>
 	);

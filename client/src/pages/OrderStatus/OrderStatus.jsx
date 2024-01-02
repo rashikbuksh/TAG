@@ -5,8 +5,8 @@ import { useAuth } from "../../context/auth";
 import { getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
 // import { FaDotCircle } from "react-icons/fa";
-import { check } from "prettier";
 import { FaCircle } from "react-icons/fa6";
+import { ChatIcon } from "../../SvgHub/Icons";
 
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
@@ -221,8 +221,8 @@ const OrderStatus = () => {
 									</div>
 
 									<div className="divider my-0"></div>
-									<div className="flex justify-between px-3">
-										<p className="text-base">
+									<div className="flex justify-end px-3">
+										{/* <p className="text-base">
 											{timers[order.id] ? (
 												<>
 													{Math.floor(
@@ -235,20 +235,20 @@ const OrderStatus = () => {
 											) : (
 												"Timer ended"
 											)}
-										</p>
+										</p> */}
 										<p className="flex items-center gap-2 ">
 											<span className="text-sm">
 												Total:
 											</span>{" "}
 											<Takaicon></Takaicon> {order.price}
-											<button
+											{/* <button
 												onClick={() =>
 													startTimer(order.id)
 												}
 												className="btn"
 											>
 												{order.id}
-											</button>
+											</button> */}
 										</p>
 									</div>
 								</div>
@@ -256,6 +256,11 @@ const OrderStatus = () => {
 						))}
 				</div>
 			))}
+			<button className="fixed bottom-36 right-5 z-20 rounded-full bg-white  p-3 shadow-lg  border-blue-900 border-4 flex flex-col items-center ">
+				<ChatIcon />
+				<span className="text-black text-md">Live Chat</span>
+			</button>
+
 			<div className="h-14"></div>
 		</div>
 	);

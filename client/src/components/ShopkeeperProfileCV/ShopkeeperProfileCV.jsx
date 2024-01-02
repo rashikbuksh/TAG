@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import logo from "../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 import SearchFunction from "../../AdminComponents/SearchFunction/Index";
-import { AddToCartIcon1 } from "../../SvgHub/Icons";
+import { AddToCartIcon1, AddToCartIcon2 } from "../../SvgHub/Icons";
 import { Takaicon } from "../../SvgHub/SocialIcon";
 import { useAuth } from "../../context/auth";
 import GetLocation from "../../helpers/GetLocation";
@@ -21,10 +21,11 @@ import {
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import LocationModal from "../LocationModal/LocationModal";
+import ShowCartIcon from "../ShowCartIcon/ShowCartIcon";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
-	const user = useAuth();
+	const { user } = useAuth();
 	const { cartItems } = useSelector((state) => state.cart);
 	const [shopperProduct, setShopperProduct] = useState([]);
 	const [shopkeeperInfo, setShopkeeperInfo] = useState([]);
@@ -95,6 +96,7 @@ const ShopkeeperProfileCV = () => {
 		<>
 			<Header />
 			<Footer />
+			<ShowCartIcon />
 			<div className="mt-[5rem] lg:mx-auto lg:w-[50%]">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				<div className="">
@@ -140,16 +142,11 @@ const ShopkeeperProfileCV = () => {
 										value={shopkeeperInfo.review_count}
 									/>
 								</div>
+								<div>33 Followers</div>
 								<div className=" flex items-center justify-center gap-4">
-									<Button
-										onClick={() =>
-											MapModalOpener(
-												shopkeeperInfo.shipping_address
-											)
-										}
-									>
-										<FaLocationDot className="text-3xl text-blue-400 lg:text-3xl "></FaLocationDot>
-									</Button>
+									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white">
+										Message
+									</button>
 									{/* <MapDistanceModal
 									isOpen={mapModal}
 									setIsOpen={setMapModal}
@@ -158,16 +155,26 @@ const ShopkeeperProfileCV = () => {
 									startPopup={"I am Here"}
 									endPopup={shopkeeperInfo.name}
 								/> */}
+
+									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
+										Follow
+									</button>
+									<button
+										className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white"
+										onClick={() =>
+											MapModalOpener(
+												shopkeeperInfo.shipping_address
+											)
+										}
+									>
+										Location
+									</button>
 									<LocationModal
 										isOpen={mapModal}
 										setIsOpen={setMapModal}
 										popup={shopkeeperInfo.name}
 										latlong={latLong}
 									></LocationModal>
-									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
-										Follow
-									</button>
-									<FaRegMessage className=" text-3xl text-blue-400 lg:text-3xl "></FaRegMessage>
 								</div>
 							</div>
 						)}
@@ -312,10 +319,10 @@ const ShopkeeperProfileCV = () => {
 																	: "btn btn-disabled border-none bg-white bg-none p-0"
 															}`}
 														>
-															<AddToCartIcon1
+															<AddToCartIcon2
 																width={32}
 																height={32}
-															></AddToCartIcon1>
+															></AddToCartIcon2>
 														</button>
 													</div>
 												</div>
