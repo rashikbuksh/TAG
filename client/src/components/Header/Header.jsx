@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
-import { FaX } from "react-icons/fa6";
+import { FaLocationDot, FaMapLocationDot, FaX } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { useAuth } from "../../context/auth";
@@ -115,8 +115,9 @@ function Header() {
 								</form>
 							</div>
 						</div>
-						<div className=" ">
+						<div className="flex items-center justify-center gap-3 ">
 							{/* header logo */}
+							<FaLocationDot color="red" size={30} />
 							<div className="">
 								{isOffcanvasOpen ? (
 									<FaX className="text-2xl   text-pink-500"></FaX>
