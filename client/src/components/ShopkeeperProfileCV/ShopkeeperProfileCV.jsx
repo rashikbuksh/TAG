@@ -21,6 +21,7 @@ import {
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import LocationModal from "../LocationModal/LocationModal";
+import MapDistanceModal from "../LocationModal/MapDistanceModal";
 import ShowCartIcon from "../ShowCartIcon/ShowCartIcon";
 const ShopkeeperProfileCV = () => {
 	// get id from url
@@ -169,12 +170,18 @@ const ShopkeeperProfileCV = () => {
 									>
 										Location
 									</button>
-									<LocationModal
+									{/* <LocationModal
 										isOpen={mapModal}
 										setIsOpen={setMapModal}
 										popup={shopkeeperInfo.name}
 										latlong={latLong}
-									></LocationModal>
+									></LocationModal> */}
+									<MapDistanceModal
+										isOpen={mapModal}
+										setIsOpen={setMapModal}
+										popup={shopkeeperInfo.name}
+										latlong={latLong}
+									/>
 								</div>
 							</div>
 						)}

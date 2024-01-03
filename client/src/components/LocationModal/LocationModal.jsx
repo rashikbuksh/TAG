@@ -1,5 +1,5 @@
 import deg2rad from "deg2rad";
-import { Icon } from "leaflet";
+import { Icon, Map } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import React from "react";
 import {
@@ -43,12 +43,13 @@ const LocationModal = ({ isOpen, setIsOpen, latlong, popup }) => {
 
 	const shopperIcon = new Icon({
 		iconUrl: "../../../public/assets/img/map-marker-for-shopper.png",
-		iconSize: [38, 38], // size of the icon
+		iconSize: [20, 20], // size of the icon
+		iconAnchor: [10, 20],
 	});
 
 	const customerIcon = new Icon({
 		iconUrl: "../../../public/assets/img/circle-100.png",
-		iconSize: [38, 38], // size of the icon
+		iconSize: [20, 20], // size of the icon
 	});
 
 	return (
@@ -76,8 +77,6 @@ const LocationModal = ({ isOpen, setIsOpen, latlong, popup }) => {
 				>
 					<Popup>I am Here</Popup>
 				</Marker>
-				{/* draw line between markers */}
-				{/* on polyline click it will show the distance of those markers */}
 
 				<Polyline
 					positions={[
@@ -96,6 +95,7 @@ const LocationModal = ({ isOpen, setIsOpen, latlong, popup }) => {
 							  )} km`}
 					</Popup>
 				</Polyline>
+				{/* <MapDistanceModal /> */}
 			</MapContainer>
 		</Modal>
 	);

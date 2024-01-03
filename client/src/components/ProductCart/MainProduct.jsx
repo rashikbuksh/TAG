@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
 	FaCheckCircle,
 	FaCross,
@@ -27,6 +27,7 @@ import {
 	increaseQuantityofProd,
 } from "../../store/slices/cart-slice";
 import LocationModal from "../LocationModal/LocationModal";
+import MapDistanceModal from "../LocationModal/MapDistanceModal";
 import MessageModal from "../MessageModal/MessageModal";
 
 const MainProduct = ({ shopperProduct, product, height, width }) => {
@@ -131,6 +132,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 	const showQuantitypalet = () => {
 		setDisplay(1);
 	};
+
 	return (
 		<div className="relative">
 			{active_status === 1 ? (
@@ -274,8 +276,6 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					</div>
 				</div>
 
-				<div className="my-2"></div>
-				<div></div>
 				<div className=" flex items-end justify-between   ">
 					<div className=" flex items-center">
 						{user && user.access === "admin" ? (
@@ -290,12 +290,18 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 								>
 									<MapIcon height={30} width={30} />
 								</button>
-								<LocationModal
+								{/* <LocationModal
 									isOpen={isLocationOpen}
 									setIsOpen={setIsLocationOpen}
 									popup={userInfo.name}
 									latlong={latLong}
-								></LocationModal>
+								></LocationModal> */}
+								<MapDistanceModal
+									isOpen={isLocationOpen}
+									setIsOpen={setIsLocationOpen}
+									popup={userInfo.name}
+									latlong={latLong}
+								/>
 							</div>
 						)}
 					</div>

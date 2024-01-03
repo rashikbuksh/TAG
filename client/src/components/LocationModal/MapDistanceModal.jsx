@@ -1,24 +1,49 @@
-import { Map } from "leaflet";
-import React, { useEffect, useState } from "react";
-import { Marker, Popup, TileLayer } from "react-leaflet";
+import { Icon } from "leaflet";
+import "leaflet-routing-machine";
+import "lrm-google";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import GetLocation from "../../helpers/GetLocation";
 import Modal from "../Modal/Modal";
+import RoutingMachine from "./RoutingMachine";
 
-const MapDistanceModal = () => {
-	var map = L.map("map").setView([51.505, -0.09], 13);
-	L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-		maxZoom: 19,
-		attribution:
-			'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	}).addTo(map);
-	var marker = L.marker([51.5, -0.09]).addTo(map);
-	marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-	function onMapClick(e) {
-		alert("You clicked the map at " + e.latlng);
-	}
+const MapDistanceModal = ({ isOpen, setIsOpen, latlong, popup }) => {
+	// user Location
+	const currentLocation = GetLocation();
 
-	map.on("click", onMapClick);
+	setTimeout(function () {
+		window.dispatchEvent(new Event("resize"));
+	}, 1);
 	return (
-		<div className="map" id="map" style={"#map { height: 180px; }"}></div>
+		<Modal isOpen={isOpen} setIsOpen={setIsOpen} showCross={false}>
+			<MapContainer
+				center={[latlong.latitude, latlong.longitude]}
+				zoom={15}
+				style={{ height: "70vh", width: "70vh" }}
+			>
+				<TileLayer
+					url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				/>
+				<RoutingMachine
+					userLocation={[latlong.latitude, latlong.longitude]}
+					shopperLocation={[
+						currentLocation.latitude,
+						currentLocation.longitude,
+					]}
+				/>
+				{/* <Marker position={[latlong.latitude, latlong.longitude]}>
+					<Popup>{popup}</Popup>
+				</Marker>
+				<Marker
+					position={[
+						currentLocation.latitude,
+						currentLocation.longitude,
+					]}
+				>
+					<Popup>I am Here</Popup>
+				</Marker> */}
+			</MapContainer>
+		</Modal>
 	);
 };
 
