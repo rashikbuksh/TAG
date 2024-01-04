@@ -120,45 +120,18 @@ const Cart = () => {
 		const productIds =
 			cartItems
 				?.filter((cartItem) => cartItem.shopper_id === shopperId)
-				?.map((cartItem) => cartItem.id) || {};
+				?.map((cartItem) => cartItem) || {};
 
-		const quantities = productQuantity || {};
-		const discounts = productDiscount || {};
-		const prices = productPrice || {};
+		const total = calculatedTotals[shopperId] || 0;
 
-		var discount = Object.entries(discounts).map(([key, value]) => {
-			return value;
-		});
-		var productid = Object.entries(quantities).map(([key, value]) => {
-			return key;
-		});
-		var quantity = Object.entries(quantities).map(([key, value]) => {
-			return value;
-		});
-		discount.pop();
-		productid.pop();
-		quantity.pop();
-
-		discount = discount.join(",");
-		productid = productid.join(",");
-		quantity = quantity.join(",");
-
-		let total = 0;
-		productIds.forEach((productId) => {
-			const cartItem = cartItems.find((item) => item.id === productId);
-			if (cartItem) {
-				const quantity = quantities[productId] || 0;
-				const discount = discounts[productId] || 0;
-				const price = prices[productId];
-				total += getDiscountPrice(price, discount) * quantity;
-			}
-		});
+		console.log("productIds", productIds);
+		console.log("total", total);
 
 		const wantobuy = window.confirm("Are you sure you want to buy?");
 		if (!wantobuy) {
 			return;
 		} else {
-			addOrderToDB(shopperId, productid, quantity, discount, total);
+			addOrderToDB(productIds, total);
 			// remove the items from the cart
 			productIds.forEach((productId) => {
 				cartItems.forEach((cartItem) => {
@@ -171,44 +144,73 @@ const Cart = () => {
 		// navigate("/orderStatus");
 	};
 
-	const addOrderToDB = async (
-		shopperId,
-		productid,
-		quantity,
-		discount,
-		total
-	) => {
-		api.post("/order/add_order", {
-			product_id: productid,
-			quantity: quantity,
-			discount: discount,
-			customer_profile_id: user.id,
-			shopper_id: shopperId,
-			price: total,
-			order_status: "pending",
-			weight: 0,
-			order_time: GetDateTime(),
-		}).then((res) => {
-			if (res.data.status === 201) {
-				api.get("/order/getLastOrder").then((res) => {
-					let last_order_id = res.data[0].id;
-					api.post("/notification/addnotification", {
-						notification_content:
-							"You have a new order. Order Number is #" +
-							last_order_id +
-							".",
-						notification_time: GetDateTime(),
-						not_from: shopperId,
-						not_to: user.id,
-						status: 1,
-					}).then((res) => {
-						if (res.data.status === 201) {
-							// alert("Notification Added Successfully");
+	const addOrderToDB = async (productIds, total) => {
+		try {
+			const orderRes = await api.post("/order/add-order", {
+				customer_profile_id: user.id,
+				shopper_id: shopperId,
+				order_status: "pending",
+				order_time: GetDateTime(),
+				price: total,
+			});
+			console.log("orderRes", orderRes.status);
+			if (orderRes.status == 201) {
+				const lastOrderRes = await api.get(
+					`/order/getLastOrder/${user.id}`
+				);
+				console.log("lastOrderRes", lastOrderRes.status);
+				if (lastOrderRes.status == 200) {
+					let last_order_id = lastOrderRes.data[0].id;
+
+					const notificationRes = await api.post(
+						"/notification/addnotification",
+						{
+							notification_content:
+								"You have a new order. Order Number is #" +
+								last_order_id +
+								".",
+							notification_time: GetDateTime(),
+							not_from: shopperId,
+							not_to: user.id,
+							status: 1,
 						}
-					});
-				});
+					);
+					console.log("notificationRes", notificationRes.status);
+					if (notificationRes.status == 201) {
+						const productPromises = productIds.map((product) => {
+							const productid = product.id;
+							const quantity = product.quantity;
+							const discount = product.discount;
+							const price = product.price;
+							const weight = product.weight || 0;
+
+							return api.post(
+								`/ordered-product/add-ordered-product`,
+								{
+									order_id: last_order_id,
+									product_id: productid,
+									quantity: quantity,
+									discount: discount,
+									price: price,
+									weight: weight,
+								}
+							);
+						});
+
+						const responses = await Promise.all(productPromises);
+
+						// All API calls were successful
+						console.log(responses);
+						// navigate("/orderStatus");
+					}
+				}
 			}
-		});
+		} catch (error) {
+			// At least one API call failed
+			cogoToast.error("Order failed", {
+				position: "bottom-left",
+			});
+		}
 	};
 
 	const handleBuyClick = (shopperId) => {

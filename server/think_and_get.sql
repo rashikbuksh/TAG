@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2023 at 03:27 PM
+-- Generation Time: Jan 04, 2024 at 07:41 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   `url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -179,8 +179,8 @@ INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `
 (42, 46, 17, '2023-10-29T14:42:53.597Z', '8', '', '', 0, 0, 0, 0, 'regular', 'Coke Cola Original TK.501.40', '1697265631757__coke.jpg'),
 (43, 47, 17, '2023-10-30T14:49:55.722Z', '-1', '', '', 0, 0, 0, 0, 'regular', 'Chilli SauceTK.150', '1698677186176__BD-chili-Sauce--1kg.jpg'),
 (44, 48, 17, '2023-10-30T14:50:37.511Z', '0', '', '', 1, 1, 0, 0, 'regular', 'Pran-Sauce-750-gm TK.270', '1698677343796__Pran-Sauce-750-gm.jpg'),
-(45, 49, 17, '2023-11-01T17:07:35.664Z', '3', '', '', 0, 0, 0, 0, 'regular', 'Yellow RiceTK.323.01', '1696949688320__milled-rice-bowl-wooden-spoon-black-cement-floor.jpg'),
-(46, 50, 17, '2023-11-05T13:06:44.531Z', '1', '', '', 0, 1, 0, 0, 'regular', 'Hand bag In Town TK.33.66', '1696949606356__bag.png');
+(45, 49, 17, '2023-11-01T17:07:35.664Z', '3', '', '', 1, 0, 0, 0, 'regular', 'Yellow RiceTK.323.01', '1696949688320__milled-rice-bowl-wooden-spoon-black-cement-floor.jpg'),
+(46, 50, 17, '2023-11-05T13:06:44.531Z', '1', '', '', 1, 2, 0, 0, 'regular', 'Hand bag In Town TK.33.66', '1696949606356__bag.png');
 
 -- --------------------------------------------------------
 
@@ -219,7 +219,8 @@ INSERT INTO `news_comment` (`id`, `news_id`, `commented_by`, `comment`, `news_ti
 (51, 33, 36, 'Interested', '10/27/2023, 9:39:39 PM'),
 (52, 44, 36, 'Not Interested', '10/31/2023, 3:49:10 PM'),
 (54, 28, 36, 'Interested', '10/31/2023, 7:05:04 PM'),
-(55, 46, 17, 'Interested', '11/10/2023, 12:34:10 AM');
+(55, 46, 17, 'Interested', '11/10/2023, 12:34:10 AM'),
+(60, 46, 16, 'Excellent', '12/31/2023, 11:21:10 PM');
 
 -- --------------------------------------------------------
 
@@ -247,7 +248,9 @@ INSERT INTO `news_like` (`id`, `news_id`, `liked_by`) VALUES
 (62, 34, 36),
 (63, 44, 36),
 (64, 28, 36),
-(65, 37, 36);
+(65, 37, 36),
+(67, 46, 16),
+(68, 45, 16);
 
 -- --------------------------------------------------------
 
@@ -321,7 +324,37 @@ INSERT INTO `notification` (`id`, `notification_content`, `notification_time`, `
 (50, 'You have a new order. Order Number is #77.', '2023-12-06 00:16:26', 17, 16, 0),
 (51, 'You have a new order. Order Number is #78.', '2023-12-27 20:35:37', 17, 36, 0),
 (52, 'You have a new order. Order Number is #79.', '2023-12-29 19:51:26', 17, 36, 0),
-(53, 'You have a new order. Order Number is #80.', '2023-12-31 16:31:53', 17, 36, 1);
+(53, 'You have a new order. Order Number is #80.', '2023-12-31 16:31:53', 17, 36, 0),
+(54, 'You have a new comment in your post. commented by anik', '2023-12-31 23:21:10', 16, 17, 0),
+(55, 'anik liked your post', '2023-12-31 23:49:59', 16, 17, 0),
+(56, 'You have a new order. Order Number is #87.', '2024-01-05 00:37:55', 17, 16, 1),
+(57, 'You have a new order. Order Number is #92.', '2024-01-05 00:39:52', 17, 16, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ordered_product`
+--
+
+CREATE TABLE `ordered_product` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `discount` decimal(20,3) NOT NULL,
+  `quantity` decimal(20,3) NOT NULL,
+  `price` decimal(20,3) NOT NULL,
+  `weight` decimal(20,3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ordered_product`
+--
+
+INSERT INTO `ordered_product` (`id`, `order_id`, `product_id`, `discount`, `quantity`, `price`, `weight`) VALUES
+(1, 91, 41, 4.000, 1.000, 434.000, 0.000),
+(2, 91, 32, 10.000, 1.000, 201.000, 0.000),
+(3, 92, 41, 4.000, 2.000, 434.000, 0.000),
+(4, 92, 32, 10.000, 2.000, 201.000, 0.000);
 
 -- --------------------------------------------------------
 
@@ -338,7 +371,7 @@ CREATE TABLE `product` (
   `full_description` varchar(255) DEFAULT NULL,
   `category_id` int(11) NOT NULL,
   `isVerified` varchar(15) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
+  `price` decimal(20,3) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -347,24 +380,24 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `sku`, `name`, `image`, `short_description`, `full_description`, `category_id`, `isVerified`, `price`, `quantity`) VALUES
-(1, NULL, 'gg product', 'WelcomeScan.jpg', '10', '', 3, 'verified', 0, NULL),
-(11, NULL, 'Alo Potato', '1689276807795__Welcome Scan.jpg', '10', '1010 updated', 1, NULL, 70, NULL),
+(1, NULL, 'gg product', 'WelcomeScan.jpg', '10', '', 3, 'verified', 0.000, NULL),
+(11, NULL, 'Alo Potato', '1689276807795__Welcome Scan.jpg', '10', '1010 updated', 1, NULL, 70.000, NULL),
 (12, NULL, 'Vanity Bag', '1690478518635__Welcome Scan.jpg', 'Bag', 'Bag', 14, NULL, NULL, NULL),
 (13, NULL, 'sugar update', '1691920308947__Welcome Scan.jpg', '10', '10', 1, NULL, NULL, NULL),
-(14, NULL, 'Ishan Tea ', '1693931993449__20230807_154229.jpg', 'Cha pata', 'Cha pata From Sylhet ', 16, 'verified', 90, NULL),
+(14, NULL, 'Ishan Tea ', '1693931993449__20230807_154229.jpg', 'Cha pata', 'Cha pata From Sylhet ', 16, 'verified', 90.000, NULL),
 (15, NULL, 'Hand bag In Town', '1696949606356__bag.png', 'This is a hand bag , ', 'This is a benity bag , and this is fopr women', 14, NULL, NULL, NULL),
-(16, NULL, 'Yellow Rice', '1696949688320__milled-rice-bowl-wooden-spoon-black-cement-floor.jpg', 'RIce Desc updated by Towhid', 'Rice in Bangladesh Rice is the staple food of about 135 million people of Bangladesh. It provides nearly 48% of rural employment, about two-third of total calorie supply and about one-half of the total protein intake of an average person in the country. R', 12, 'verified', 98, NULL),
-(17, NULL, 'Photato chips', '1696949827009__1678540367603.jpg', 'asdfasd', 'asdvgasdvasdfvgasdv', 2, 'verified', 98, NULL),
+(16, NULL, 'Yellow Rice', '1696949688320__milled-rice-bowl-wooden-spoon-black-cement-floor.jpg', 'RIce Desc updated by Towhid', 'Rice in Bangladesh Rice is the staple food of about 135 million people of Bangladesh. It provides nearly 48% of rural employment, about two-third of total calorie supply and about one-half of the total protein intake of an average person in the country. R', 12, 'verified', 98.000, NULL),
+(17, NULL, 'Photato chips', '1696949827009__1678540367603.jpg', 'asdfasd', 'asdvgasdvasdfvgasdv', 2, 'verified', 98.000, NULL),
 (18, NULL, '7 up Normal', '1696951856422__7upimage.jpg', 'This is 7 up', 'This is 7 up', 2, 'notVerified', NULL, NULL),
-(19, NULL, '7 up Verified', '1696951925428__photo-1622766815178-641bef2b4630.jpg', '7 up Verified', '7 up Verified', 2, 'verified', 90, NULL),
-(42, NULL, ' Sprite (20 Fl Oz Bottle)', '1697265535780__sprite1.jpg', ' Sprite (20 Fl Oz Bottle)', ' Sprite (20 Fl Oz Bottle)', 2, 'notVerified', 0, 0),
-(43, NULL, ' Sprite (20 Fl Oz Bottle) varified', '1697265581988__sprite1.jpg', ' Sprite (20 Fl Oz Bottle)', ' Sprite (20 Fl Oz Bottle)', 2, 'verified', 90, 43),
-(44, NULL, 'Coke Cola Original', '1697265631757__coke.jpg', 'Coca-Cola Classic strikes the perfect balance between sweetness and acidity, resulting in a harmonio', 'Coca-Cola Classic strikes the perfect balance between sweetness and acidity, resulting in a harmonious blend that is simply irresistible. The careful combination of ingredients ensures that every sip delivers a satisfying and well-rounded flavour. This ic', 2, 'notVerified', 0, 0),
-(45, NULL, 'Chilli Sauce', '1698677186176__BD-chili-Sauce--1kg.jpg', 'Chilli sauce, also commonly spelled as \"chili sauce\" or \"hot sauce,\" is a condiment made from chili ', 'Chili sauce can be used as a condiment, marinade, or ingredient in cooking to add heat and flavor to dishes such as tacos, burgers, stir-fries, and more. When choosing a chili sauce, consider your heat tolerance, as well as the specific flavor profile you', 17, 'notVerified', 0, 0),
-(46, NULL, 'Pran-Sauce-750-gm', '1698677343796__Pran-Sauce-750-gm.jpg', 'Pran hot tomato sauce plastic jar is one of the most popular sauces in Bangladesh. ', 'Pran hot tomato sauce plastic jar is one of the most popular sauces in Bangladesh. it is enriched with the power of fresh tomato, red chili, sugar, onion. 100% natural flavor and organic taste.', 17, 'verified', 270, 50),
-(47, NULL, 'Mango Pickle', '1703680620299__download.jpeg', 'Mango pickle is a popular condiment in many cuisines, particularly in South Asia. ', 'Mango pickle is a popular condiment in many cuisines, particularly in South Asia. It\'s made by preserving raw mangoes in a mixture of various spices, oil, and sometimes vinegar. The preparation methods and spice mixtures can vary widely based on regional ', 2, 'notVerified', 191, 59),
-(48, NULL, 'Pran Olive Pickle', '1703680891922__pran-olive-pickle-400-gm.jpeg', 'Pran Olive Pickle', 'Pran Olive Pickle', 2, 'verified', 135, 100),
-(49, NULL, 'Pran Olive Pickle n-v', '1703680913920__pran-olive-pickle-400-gm.jpeg', 'Pran Olive Pickle', 'Pran Olive Pickle', 2, 'notVerified', 0, 0);
+(19, NULL, '7 up Verified', '1696951925428__photo-1622766815178-641bef2b4630.jpg', '7 up Verified', '7 up Verified', 2, 'verified', 90.000, NULL),
+(42, NULL, ' Sprite (20 Fl Oz Bottle)', '1697265535780__sprite1.jpg', ' Sprite (20 Fl Oz Bottle)', ' Sprite (20 Fl Oz Bottle)', 2, 'notVerified', 0.000, 0),
+(43, NULL, ' Sprite (20 Fl Oz Bottle) varified', '1697265581988__sprite1.jpg', ' Sprite (20 Fl Oz Bottle)', ' Sprite (20 Fl Oz Bottle)', 2, 'verified', 90.000, 43),
+(44, NULL, 'Coke Cola Original', '1697265631757__coke.jpg', 'Coca-Cola Classic strikes the perfect balance between sweetness and acidity, resulting in a harmonio', 'Coca-Cola Classic strikes the perfect balance between sweetness and acidity, resulting in a harmonious blend that is simply irresistible. The careful combination of ingredients ensures that every sip delivers a satisfying and well-rounded flavour. This ic', 2, 'notVerified', 0.000, 0),
+(45, NULL, 'Chilli Sauce', '1698677186176__BD-chili-Sauce--1kg.jpg', 'Chilli sauce, also commonly spelled as \"chili sauce\" or \"hot sauce,\" is a condiment made from chili ', 'Chili sauce can be used as a condiment, marinade, or ingredient in cooking to add heat and flavor to dishes such as tacos, burgers, stir-fries, and more. When choosing a chili sauce, consider your heat tolerance, as well as the specific flavor profile you', 17, 'notVerified', 0.000, 0),
+(46, NULL, 'Pran-Sauce-750-gm', '1698677343796__Pran-Sauce-750-gm.jpg', 'Pran hot tomato sauce plastic jar is one of the most popular sauces in Bangladesh. ', 'Pran hot tomato sauce plastic jar is one of the most popular sauces in Bangladesh. it is enriched with the power of fresh tomato, red chili, sugar, onion. 100% natural flavor and organic taste.', 17, 'verified', 270.000, 50),
+(47, NULL, 'Mango Pickle', '1703680620299__download.jpeg', 'Mango pickle is a popular condiment in many cuisines, particularly in South Asia. ', 'Mango pickle is a popular condiment in many cuisines, particularly in South Asia. It\'s made by preserving raw mangoes in a mixture of various spices, oil, and sometimes vinegar. The preparation methods and spice mixtures can vary widely based on regional ', 2, 'notVerified', 191.000, 59),
+(48, NULL, 'Pran Olive Pickle', '1703680891922__pran-olive-pickle-400-gm.jpeg', 'Pran Olive Pickle', 'Pran Olive Pickle', 2, 'verified', 135.000, 100),
+(49, NULL, 'Pran Olive Pickle n-v', '1703680913920__pran-olive-pickle-400-gm.jpeg', 'Pran Olive Pickle', 'Pran Olive Pickle', 2, 'notVerified', 0.000, 0);
 
 -- --------------------------------------------------------
 
@@ -374,14 +407,10 @@ INSERT INTO `product` (`id`, `sku`, `name`, `image`, `short_description`, `full_
 
 CREATE TABLE `product_order` (
   `id` int(11) NOT NULL,
-  `product_id` varchar(255) DEFAULT NULL,
-  `quantity` varchar(255) DEFAULT NULL,
-  `weight` varchar(255) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
-  `discount` varchar(255) DEFAULT NULL,
   `order_status` varchar(255) DEFAULT NULL,
   `customer_profile_id` int(11) NOT NULL,
   `shopper_id` int(11) NOT NULL,
+  `price` decimal(20,3) NOT NULL,
   `cancel_report` text DEFAULT NULL,
   `order_time` datetime NOT NULL,
   `shopper_order_accept_time` datetime DEFAULT NULL,
@@ -393,65 +422,13 @@ CREATE TABLE `product_order` (
 -- Dumping data for table `product_order`
 --
 
-INSERT INTO `product_order` (`id`, `product_id`, `quantity`, `weight`, `price`, `discount`, `order_status`, `customer_profile_id`, `shopper_id`, `cancel_report`, `order_time`, `shopper_order_accept_time`, `delivery_time`, `order_delay_report`) VALUES
-(23, '18,27', '2,1', '0', 193, '0,3', 'cancelled', 36, 17, 'There are not enough Products in my store', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(24, '26,27', '1,1', '0', 131, '2,3', 'cancelled', 36, 17, 'There are not enough Products in my store', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(25, '8,14,15', '3,25,1', '0', 1393, '2,0,5', 'cancelled', 36, 3, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(26, '1,4', '16,7', '0', 1496, '10,0', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(27, '17', '1', '0', 26, '0', 'cancelled', 36, 15, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(28, '27', '1', '0', 33, '3', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(29, '14', '2', '0', 50, '0', 'cancelled', 17, 3, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(30, '26,29,31', '1,1,1', '0', 216, '2,2,40', 'cancelled', 16, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(31, '29', '6', '0', 206, '', 'cancelled', 36, 17, 'কাস্টমার আমার দোকানে আসেনি', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(32, '26,27,29,31,32', '1,1,1,2,1', '0', 514, '2,3,2,40,10', 'cancelled', 36, 17, 'কাস্টমার আমার দোকানে আসেনি', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(33, '1', '2', '0', 178, '10', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(34, '40', '1', '0', 2, '0', 'cancelled', 73, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(35, '1,4', '1,1', '0', 99, '10,0', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(36, '29,31', '2,1', '0', 153, '2,40', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(37, '26,29,31,32', '1,1,1,1', '0', 500, '', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(38, '26,29,31,32', '1,1,1,1', '0', 421, '2,2,40,10', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(39, '', '', '0', 0, '', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(40, '', '', '0', 0, '', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(41, '31,33,40', '1,1,100', '0', 464, '40,10,0', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(42, '1,4,26,32,34', '2,4,8,5,2', '0', 218, '10,0,2,10,0', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(43, '26,32,34', '8,5,2', '0', 1897, '2,10,0', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(44, '26,32,41', '1,10,3', '0', 3180, '2,10,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(45, '8,15', '3,1', '0', 768, '2,5', 'cancelled', 36, 3, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(46, '26,28,32', '3,1,6', '0', 1458, '2,77,10', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(47, '26,32,34,41', '8,2,1,1', '0', 1761, '2,10,0,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(48, '8,15', '1,3', '0', 1520, '2,5', 'cancelled', 36, 3, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(49, '29', '4', '0', 137, '2', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(50, '32,48', '7,1', '0', 1536, '10,0', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(51, '26,29,41,43,49', '3,4,3,3,3', '0', 2788, '2,2,4,3,3', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(52, '26,32,34,41,49', '1,2,1,8,4', '0', 5118, '2,10,0,4,3', 'cancelled', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(53, '1', '1', '0', 89, '10', 'cancelled', 36, 11, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(54, '1,4', '7,5', '0', 674, '10,0', 'canceled', 36, 11, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(55, '26,28,29,32,33,34,41,48', '25,1,1,4,1,12,12,5', '0', 10454, '2,77,2,10,10,0,4,0', 'completed', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(56, '4', '1', '0', 10, '0', 'completed', 36, 11, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(57, '26,32,34,41', '1,1,1,2', '0', 1146, '2,10,0,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(58, '32,34,41', '1,1,1', '0', 608, '10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(59, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(60, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cencelled', 36, 17, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(61, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(62, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'cancelled', 36, 17, 'Customer is not taking the product', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(63, '8,15', '34,1', '0', 3806, '2,5', 'cancelled', 36, 3, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(64, '4,26,32,34,41', '1,1,2,2,2', '0', 10, '0,2,10,0,4', 'cancelled', 36, 11, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(65, '4,26,32,34,41', '1,1,2,2,2', '0', 1337, '0,2,10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(66, '8', '2', '0', 196, '2', 'cancelled', 36, 3, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(67, '1,4', '1,1', '0', 99, '10,0', 'cancelled', 36, 11, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(68, '26,32,34,41', '2,1,3,4', '0', 2121, '2,10,0,4', 'cancelled', 36, 17, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(69, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(70, '8,15', '1,1', '0', 572, '2,5', 'cancelled', 36, 3, 'Time Out', '2023-10-18 00:01:21', NULL, NULL, NULL),
-(71, '1,4', '2,1', '0', 188, '10,0', 'pending', 36, 11, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(72, '26,32,34,41', '13,3,3,3', '0', 3402, '2,10,0,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(73, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'accepted', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(74, '26,32,34,41', '1,1,1,1', '0', 729, '2,10,0,4', 'completed', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(75, '32,41', '1,1', '0', 598, '10,4', 'accepted', 36, 17, NULL, '2023-10-18 00:01:21', NULL, NULL, NULL),
-(76, '4,26,41,43', '1,1,1,1', '0', 560, '0,2,4,3', 'completed', 36, 17, NULL, '2023-10-18 00:01:21', '2023-10-18 00:20:21', '2023-10-18 01:01:21', NULL),
-(77, '28,32,41', '4,1,1', '0', 630, '77,10,4', 'pending', 16, 17, NULL, '2023-12-06 00:16:26', NULL, NULL, NULL),
-(78, '26,32,34,41', '1,3,1,1', '0', 1091, '2,10,0,4', 'accepted', 36, 17, NULL, '2023-12-27 20:35:37', '2023-12-31 18:41:55', NULL, NULL),
-(79, '32,34,41', '1,1,1', '0', 608, '10,0,4', 'completed', 36, 17, NULL, '2023-12-29 19:51:26', '2023-12-31 08:58:55', '2023-12-31 09:05:27', NULL),
-(80, '26,32,34,41,43,49', '2,9,24,3,23,3', '0', 4843, '2,10,0,4,3,3', 'completed', 36, 17, NULL, '2023-12-31 16:31:53', '2023-12-31 16:38:00', '2023-12-31 16:38:24', NULL);
+INSERT INTO `product_order` (`id`, `order_status`, `customer_profile_id`, `shopper_id`, `price`, `cancel_report`, `order_time`, `shopper_order_accept_time`, `delivery_time`, `order_delay_report`) VALUES
+(87, 'pending', 16, 17, 597.540, NULL, '2024-01-05 00:32:52', NULL, NULL, NULL),
+(88, 'pending', 16, 17, 597.540, NULL, '2024-01-05 00:35:09', NULL, NULL, NULL),
+(89, 'pending', 16, 17, 597.540, NULL, '2024-01-05 00:35:48', NULL, NULL, NULL),
+(90, 'pending', 16, 17, 597.540, NULL, '2024-01-05 00:36:33', NULL, NULL, NULL),
+(91, 'pending', 16, 17, 597.540, NULL, '2024-01-05 00:37:55', NULL, NULL, NULL),
+(92, 'pending', 16, 17, 1195.080, NULL, '2024-01-05 00:39:52', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -496,8 +473,8 @@ INSERT INTO `refer` (`id`, `referred_by`, `referred_to`) VALUES
 CREATE TABLE `shopper_product` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `price` int(11) NOT NULL,
-  `discount` int(11) NOT NULL,
+  `price` decimal(20,3) NOT NULL,
+  `discount` decimal(20,3) NOT NULL,
   `product_count` int(11) NOT NULL,
   `sale_count` int(11) DEFAULT 0,
   `wishlist_count` int(11) DEFAULT 0,
@@ -512,43 +489,43 @@ CREATE TABLE `shopper_product` (
 --
 
 INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`, `shopper_id`, `view`) VALUES
-(1, 'gg product', 99, 10, 100, 10, 2, 3, 1, 11, 17),
-(4, 'sugar', 10, 0, 100, 11, 0, 0, 13, 11, 39),
-(8, 'Vanity Bag', 100, 2, 25, 0, 0, 0, 12, 3, 3),
-(14, 'sugar', 25, 0, 110, 0, 0, 0, 13, 3, 1),
-(15, 'Vanity Bag', 499, 5, 1000, 0, 0, 0, 12, 3, 3),
-(17, 'sugar', 26, 0, 100, 0, 0, 0, 13, 15, 1),
-(26, 'Ishan Tea', 124, 2, 20, 40, 0, 0, 14, 17, 9),
-(27, 'sugar', 34, 3, 19, 0, 0, 0, 13, 17, 1),
-(28, 'Vanity Bag', 35, 77, 67, 0, 0, 0, 12, 17, 1),
-(29, 'Potato Chips ', 35, 2, 4, 0, 0, 0, 17, 17, 8),
-(30, '7 up Normal', 43, 3, 1000, 0, 0, 0, 18, 17, 0),
-(31, '7 up Verified', 140, 40, 54, 0, 0, 0, 19, 17, 8),
-(32, '7 up Verified', 201, 10, 100, 100, 0, 0, 19, 17, 15),
-(33, '7 up Normal', 200, 10, 10, 0, 0, 0, 18, 17, 0),
-(34, 'Potato Chips ', 10, 0, 100, 50, 0, 0, 17, 17, 1),
-(39, ' Sprite (20 Fl Oz Bottle) varified', 600, 6, 60, 0, 0, 0, 43, 17, 7),
-(40, ' Sprite (20 Fl Oz Bottle)', 2, 0, 88, 0, 0, 0, 42, 17, 3),
-(41, 'Yellow Rice', 434, 4, 33, 120, 0, 0, 16, 17, 35),
-(42, 'Coke Cola Original', 35, 0, 33, 0, 0, 0, 44, 17, 0),
-(43, 'Ishan Tea ', 23, 3, 22, 0, 0, 0, 14, 17, 0),
-(45, 'Hand bag In Town', 272, 7, 34, 0, 0, 0, 15, 17, 0),
-(46, 'Coke Cola Original', 545, 8, 45, 0, 0, 0, 44, 17, 0),
-(47, 'Chilli Sauce', 150, -1, 32, 0, 0, 0, 45, 17, 2),
-(48, 'Pran-Sauce-750-gm', 27000, 27, 27, 0, 0, 0, 46, 17, 7),
-(49, 'Yellow Rice', 333, 3, 34, 0, 0, 0, 16, 17, 0),
-(50, 'Hand bag In Town', 34, 1, 32, 0, 0, 0, 15, 17, 1),
-(51, 'gg product', 200, 0, 8, 0, 0, 0, 1, 17, 0),
-(52, 'Vanity Bag', 100, 1, 2, 0, 0, 0, 12, 17, 0),
-(53, 'Alo Potato', 100, 1, 3, 0, 0, 0, 11, 17, 0),
-(54, 'Hand bag In Town', 300, 2, 3, 0, 0, 0, 15, 17, 0),
-(55, 'Pran-Sauce-750-gm', 1, 0, 1, 0, 0, 0, 46, 17, 0),
-(56, 'gg product', 20, 4, 3, 0, 0, 0, 1, 17, 1),
-(57, 'gg product', 100, 0, 6, 0, 0, 0, 1, 17, 1),
-(58, 'Hand bag In Town', 300, 2, 3, 0, 0, 0, 15, 17, 0),
-(59, 'Chilli Sauce', 120, 1, 29, 0, 0, 0, 45, 17, 0),
-(60, 'Coke Cola Original', 300, 2, 7, 0, 0, 0, 44, 17, 0),
-(61, ' Sprite (20 Fl Oz Bottle) varified', 20, 0, 18, 0, 0, 0, 43, 17, 0);
+(1, 'gg product', 99.000, 10.000, 100, 10, 2, 3, 1, 11, 17),
+(4, 'sugar', 10.000, 0.000, 100, 11, 0, 0, 13, 11, 39),
+(8, 'Vanity Bag', 100.000, 2.000, 25, 0, 0, 0, 12, 3, 3),
+(14, 'sugar', 25.000, 0.000, 110, 0, 0, 0, 13, 3, 1),
+(15, 'Vanity Bag', 499.000, 5.000, 1000, 0, 0, 0, 12, 3, 3),
+(17, 'sugar', 26.000, 0.000, 100, 0, 0, 0, 13, 15, 1),
+(26, 'Ishan Tea', 124.000, 2.000, 20, 40, 0, 0, 14, 17, 9),
+(27, 'sugar', 34.000, 3.000, 19, 0, 0, 0, 13, 17, 1),
+(28, 'Vanity Bag', 35.000, 77.000, 67, 0, 0, 0, 12, 17, 1),
+(29, 'Potato Chips ', 35.000, 2.000, 4, 0, 0, 0, 17, 17, 8),
+(30, '7 up Normal', 43.000, 3.000, 1000, 0, 0, 0, 18, 17, 0),
+(31, '7 up Verified', 140.000, 40.000, 54, 0, 0, 0, 19, 17, 8),
+(32, '7 up Verified', 201.000, 10.000, 100, 100, 0, 0, 19, 17, 15),
+(33, '7 up Normal', 200.000, 10.000, 10, 0, 0, 0, 18, 17, 0),
+(34, 'Potato Chips ', 10.000, 0.000, 100, 50, 0, 0, 17, 17, 1),
+(39, ' Sprite (20 Fl Oz Bottle) varified', 600.000, 6.000, 60, 0, 0, 0, 43, 17, 7),
+(40, ' Sprite (20 Fl Oz Bottle)', 2.000, 0.000, 88, 0, 0, 0, 42, 17, 3),
+(41, 'Yellow Rice', 434.000, 4.000, 33, 120, 0, 0, 16, 17, 35),
+(42, 'Coke Cola Original', 35.000, 0.000, 33, 0, 0, 0, 44, 17, 0),
+(43, 'Ishan Tea ', 23.000, 3.000, 22, 0, 0, 0, 14, 17, 0),
+(45, 'Hand bag In Town', 272.000, 7.000, 34, 0, 0, 0, 15, 17, 0),
+(46, 'Coke Cola Original', 545.000, 8.000, 45, 0, 0, 0, 44, 17, 0),
+(47, 'Chilli Sauce', 150.000, -1.000, 32, 0, 0, 0, 45, 17, 2),
+(48, 'Pran-Sauce-750-gm', 27000.000, 27.000, 27, 0, 0, 0, 46, 17, 7),
+(49, 'Yellow Rice', 333.000, 3.000, 34, 0, 0, 0, 16, 17, 0),
+(50, 'Hand bag In Town', 34.000, 1.000, 32, 0, 0, 0, 15, 17, 1),
+(51, 'gg product', 200.000, 0.000, 8, 0, 0, 0, 1, 17, 0),
+(52, 'Vanity Bag', 100.000, 1.000, 2, 0, 0, 0, 12, 17, 0),
+(53, 'Alo Potato', 100.000, 1.000, 3, 0, 0, 0, 11, 17, 0),
+(54, 'Hand bag In Town', 300.000, 2.000, 3, 0, 0, 0, 15, 17, 0),
+(55, 'Pran-Sauce-750-gm', 1.000, 0.000, 1, 0, 0, 0, 46, 17, 0),
+(56, 'gg product', 20.000, 4.000, 3, 0, 0, 0, 1, 17, 1),
+(57, 'gg product', 100.000, 0.000, 6, 0, 0, 0, 1, 17, 1),
+(58, 'Hand bag In Town', 300.000, 2.000, 3, 0, 0, 0, 15, 17, 0),
+(59, 'Chilli Sauce', 120.000, 1.000, 29, 0, 0, 0, 45, 17, 0),
+(60, 'Coke Cola Original', 300.000, 2.000, 7, 0, 0, 0, 44, 17, 0),
+(61, ' Sprite (20 Fl Oz Bottle) varified', 20.000, 0.000, 18, 0, 0, 0, 43, 17, 0);
 
 -- --------------------------------------------------------
 
@@ -625,6 +602,14 @@ ALTER TABLE `notification`
   ADD KEY `ordered_by` (`not_to`);
 
 --
+-- Indexes for table `ordered_product`
+--
+ALTER TABLE `ordered_product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -691,19 +676,25 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `news_comment`
 --
 ALTER TABLE `news_comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `news_like`
 --
 ALTER TABLE `news_like`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `ordered_product`
+--
+ALTER TABLE `ordered_product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -715,7 +706,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `refer`
@@ -767,6 +758,13 @@ ALTER TABLE `news_like`
 ALTER TABLE `notification`
   ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`not_from`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`not_to`) REFERENCES `customer_profile` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ordered_product`
+--
+ALTER TABLE `ordered_product`
+  ADD CONSTRAINT `ordered_product_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `product_order` (`id`),
+  ADD CONSTRAINT `ordered_product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `shopper_product` (`id`);
 
 --
 -- Constraints for table `product`

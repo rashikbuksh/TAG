@@ -66,7 +66,7 @@ const Checkout = () => {
 			weightItem = "0";
 		}
 		getItemID();
-		api.post(`/order/add_order`, {
+		api.post(`/order/add-order`, {
 			product_id: orderedItem,
 			quantity: quantityItem,
 			weight: weightItem,
@@ -75,8 +75,7 @@ const Checkout = () => {
 			order_status: "pending",
 			customer_profile_id: Number(id),
 		})
-			.then((response) => {
-			})
+			.then((response) => {})
 			.catch((error) => {
 				alert(error);
 			});

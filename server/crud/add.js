@@ -24,6 +24,7 @@ const { add: Newslike } = require("../api/newslike");
 
 const { add: Newscomment } = require("../api/newscomment");
 const { add: refer } = require("../api/refer");
+const { add: OrdredProduct } = require("../api/ordered_product");
 
 const ADD_DATA = [
 	...JobEntry,
@@ -38,6 +39,7 @@ const ADD_DATA = [
 	...Newslike,
 	...Newscomment,
 	...refer,
+	...OrdredProduct,
 ];
 
 ADD_DATA.forEach(({ uri, query, body, msg }) => {

@@ -17,6 +17,7 @@ const { read: Newslike } = require("../api/newslike");
 const { read: Newscomment } = require("../api/newscomment");
 const { read: Refer } = require("../api/refer");
 const { read: Util } = require("../api/util");
+const { read: OrdredProduct } = require("../api/ordered_product");
 
 const GET_DATA = [
 	...JobEntry,
@@ -33,6 +34,7 @@ const GET_DATA = [
 	...Newscomment,
 	...Refer,
 	...Util,
+	...OrdredProduct,
 ];
 
 GET_DATA.forEach(({ uri, query, param }) => {

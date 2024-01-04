@@ -10,6 +10,7 @@ const { change: Auth } = require("../api/auth");
 const { change: Refer } = require("../api/refer");
 const { change: Util } = require("../api/util");
 const { change: Notification } = require("../api/notification");
+const { change: OrdredProduct } = require("../api/ordered_product");
 
 const CHANGE_DATA = [
 	...JobEntry,
@@ -22,6 +23,7 @@ const CHANGE_DATA = [
 	...Refer,
 	...Util,
 	...Notification,
+	...OrdredProduct,
 ];
 
 CHANGE_DATA.forEach(({ uri, query, body, param, msg }) => {

@@ -4,6 +4,7 @@ import { api } from "../../lib/api";
 import TagOrderDetailsModal from "../TagOrderHistory/TagOrderDetailsModal";
 
 import moment from "moment-timezone";
+import FormattedTime from "../../helpers/FormattedTime";
 
 const LateOrderTable = ({ order }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -23,18 +24,18 @@ const LateOrderTable = ({ order }) => {
 				});
 		}
 	};
-	const formattedOrderTime = moment
-		.utc(order.order_time, "YYYY-MM-DD HH:mm:ss")
-		.tz("Asia/Dhaka")
-		.format("hh:mm A DD/MM/YY");
-	const formattedaccept_time = moment
-		.utc(order.shopper_order_accept_time, "YYYY-MM-DD HH:mm:ss")
-		.tz("Asia/Dhaka")
-		.format("hh:mm A DD/MM/YY");
-	const formatteddelivery_time = moment
-		.utc(order.delivery_time, "YYYY-MM-DD HH:mm:ss")
-		.tz("Asia/Dhaka")
-		.format("hh:mm A DD/MM/YY");
+	const formattedOrderTime = FormattedTime({
+		time: order.order_time,
+		format: "hh:mm A DD/MM/YY",
+	});
+	const formattedaccept_time = FormattedTime({
+		time: order.accept_time,
+		format: "hh:mm A DD/MM/YY",
+	});
+	const formatteddelivery_time = FormattedTime({
+		time: order.delivery_time,
+		format: "hh:mm A DD/MM/YY",
+	});
 	useEffect(() => {
 		// Check if both delivery_time and order_time exist and are valid timestamps
 		if (
