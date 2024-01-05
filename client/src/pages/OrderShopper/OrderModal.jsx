@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FaRedo, FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
-import Swal from "sweetalert2";
-import OrderProducTable from "../../components/OrderProductTable/OrderProducTable";
-import { api } from "../../lib/api";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import { Breadcrumb } from "../../components";
+import OrderProducTable from "../../components/OrderProductTable/OrderProducTable";
 import SuccessOrderModal from "../../components/SuccessOrderModal/SuccessOrderModal";
 import GetDateTime from "../../helpers/GetDateTime";
+import { api } from "../../lib/api";
 
 const OrderDetailsShopper = () => {
 	const { id } = useParams();
@@ -42,7 +42,7 @@ const OrderDetailsShopper = () => {
 				alert(response.data.message);
 				if (response.status === 200) {
 					api.post(`/order/ordershopperaccepttime/${id}`, {
-						shopper_order_accept_time:  GetDateTime(),
+						shopper_order_accept_time: GetDateTime(),
 					})
 						.then((response) => {
 							alert(response.data.message);

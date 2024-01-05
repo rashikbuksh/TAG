@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import TagOrderTable from "./TagOrderTable";
-import { useAuth } from "../../context/auth";
 
 const TagOrderHistory = () => {
 	const { user } = useAuth();
@@ -51,12 +51,7 @@ const TagOrderHistory = () => {
 										/>
 									</label>
 								</th>
-								<th>Image</th>
 								<th>Order Id</th>
-								<th>product_id , quantity</th>
-								{/* <th>Short Decription</th> */}
-								{/* <th>Full Description</th> */}
-								<th>weight</th>
 								<th>price</th>
 								<th>Order Status</th>
 								<th>Actions</th>

@@ -58,10 +58,10 @@ const read = [
 	{
 		uri: "/order/getorderhistoryshopper/:shopper_id",
 		query: `SELECT * 
-    FROM product_order 
-    WHERE (order_status = 'cancelled' OR order_status = 'completed') 
-      AND shopper_id = ? 
-    ORDER BY id DESC;`,
+				FROM product_order 
+				WHERE (order_status = 'cancelled' OR order_status = 'completed') 
+				AND shopper_id = ? 
+				ORDER BY id DESC;`,
 		param: ["shopper_id"],
 		msg: "product_id",
 	},
@@ -79,22 +79,25 @@ const read = [
 	{
 		uri: "/order/getProductbyid/:id",
 		query: `SELECT
-					sp.*,
+					po.id AS order_id,
 					sp.id AS pid,
-					sp.price AS product_Price,
-					po.*,
+					sp.name as name,
+					op.quantity,
+					op.discount,
+					op.price,
+					op.weight,
 					po.price AS totalPrice,
-					SUBSTRING_INDEX(SUBSTRING_INDEX(po.quantity, ',', FIND_IN_SET(sp.id, po.product_id)), ',', -1) AS product_quantity,
-					SUBSTRING_INDEX(SUBSTRING_INDEX(po.discount, ',', FIND_IN_SET(sp.id, po.product_id)), ',', -1) AS product_discounted_price,
-					p.image AS product_image
-				FROM
-					shopper_product sp
-				JOIN
-					product_order po ON FIND_IN_SET(sp.id, po.product_id)
-				JOIN
-					product p ON sp.product_id = p.id
-				WHERE
-					FIND_IN_SET(po.id, ?) > 0;`,
+					p.image AS product_image,
+					po.order_status AS order_status,
+					po.cancel_report as cancel_report,
+					po.order_time as order_time,
+					po.shopper_order_accept_time as shopper_order_accept_time,
+					po.delivery_time as delivery_time
+				FROM shopper_product sp
+					JOIN ordered_product op ON op.product_id = sp.id
+					JOIN product_order po ON po.id = op.order_id
+					JOIN product p ON sp.product_id = p.id
+				WHERE po.id = ?;`,
 		param: ["id"],
 		msg: "product_id",
 	},

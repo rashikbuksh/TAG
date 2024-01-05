@@ -40,14 +40,15 @@ const OrderStatus = () => {
 
 	useEffect(() => {
 		// Make the API calls for each pending order and collect the products
-		const productPromises = pendingOrders.map((order) => {
-			return api
-				.get(`/order/getProductbyid/${order.id}`)
-				.then((response) => response.data)
-				.catch((error) => {
-					// console.error(error);
-					return [];
-				});
+		const productPromises = pendingOrders.map(async (order) => {
+			try {
+				const response = await api.get(
+					`/order/getProductbyid/${order.id}`
+				);
+				return response.data;
+			} catch (error) {
+				return [];
+			}
 		});
 
 		Promise.all(productPromises).then((productData) => {
@@ -190,12 +191,12 @@ const OrderStatus = () => {
 															<div>
 																<h2 className="text-xs">
 																	{getDiscountPrice(
-																		product.product_Price,
-																		product.product_discounted_price
+																		product.price,
+																		product.discount
 																	)}{" "}
 																	X{" "}
 																	{
-																		product.product_quantity
+																		product.quantity
 																	}
 																</h2>
 															</div>
@@ -204,10 +205,10 @@ const OrderStatus = () => {
 																	<Takaicon></Takaicon>{" "}
 																	{parseFloat(
 																		getDiscountPrice(
-																			product.product_Price,
-																			product.product_discounted_price
+																			product.price,
+																			product.discount
 																		) *
-																			product.product_quantity
+																			product.quantity
 																	).toFixed(
 																		2
 																	)}
@@ -240,7 +241,8 @@ const OrderStatus = () => {
 											<span className="text-sm">
 												Total:
 											</span>{" "}
-											<Takaicon></Takaicon> {order.price}
+											<Takaicon></Takaicon>{" "}
+											{order.totalPrice}
 											{/* <button
 												onClick={() =>
 													startTimer(order.id)
@@ -256,9 +258,9 @@ const OrderStatus = () => {
 						))}
 				</div>
 			))}
-			<button className="fixed bottom-36 right-5 z-20 rounded-full bg-white  p-3 shadow-lg  border-blue-900 border-4 flex flex-col items-center ">
+			<button className="fixed bottom-36 right-5 z-20 flex flex-col  items-center rounded-full  border-4 border-blue-900 bg-white p-3 shadow-lg ">
 				<ChatIcon />
-				<span className="text-black text-md">Live Chat</span>
+				<span className="text-md text-black">Live Chat</span>
 			</button>
 
 			<div className="h-14"></div>

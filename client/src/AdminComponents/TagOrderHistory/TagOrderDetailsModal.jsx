@@ -1,7 +1,8 @@
+import moment from "moment-timezone";
 import React, { useEffect, useState } from "react";
 import Modal from "../../components/Modal/Modal";
 import OrderProducTable from "../../components/OrderProductTable/OrderProducTable";
-import moment from "moment-timezone";
+import FormattedTime from "../../helpers/FormattedTime";
 
 const TagOrderDetailsModal = ({ isOpen, setIsOpen, orderDetails }) => {
 	const [formattedDifference, setFormattedDifference] = useState("N/A");
@@ -12,18 +13,18 @@ const TagOrderDetailsModal = ({ isOpen, setIsOpen, orderDetails }) => {
 	const order_time = orderDetails.map((d) => d.order_time);
 	const accept_time = orderDetails.map((d) => d.shopper_order_accept_time);
 	const delivery_time = orderDetails.map((d) => d.delivery_time);
-	const formattedOrderTime = moment
-		.utc(order_time, "YYYY-MM-DD HH:mm:ss")
-		.tz("Asia/Dhaka")
-		.format("hh:mm A DD/MM/YY");
-	const formattedaccept_time = moment
-		.utc(accept_time, "YYYY-MM-DD HH:mm:ss")
-		.tz("Asia/Dhaka")
-		.format("hh:mm A DD/MM/YY");
-	const formatteddelivery_time = moment
-		.utc(delivery_time, "YYYY-MM-DD HH:mm:ss")
-		.tz("Asia/Dhaka")
-		.format("hh:mm A DD/MM/YY");
+	const formattedOrderTime = FormattedTime({
+		time: order_time,
+		format: "hh:mm A DD/MM/YY",
+	});
+	const formattedaccept_time = FormattedTime({
+		time: accept_time,
+		format: "hh:mm A DD/MM/YY",
+	});
+	const formatteddelivery_time = FormattedTime({
+		time: delivery_time,
+		format: "hh:mm A DD/MM/YY",
+	});
 
 	useEffect(() => {
 		// Check if both delivery_time and order_time exist and are valid timestamps

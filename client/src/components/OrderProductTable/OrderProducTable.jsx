@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import { getDiscountPrice } from "../../helpers/product";
 import { Takaicon } from "../../SvgHub/SocialIcon";
+import { getDiscountPrice } from "../../helpers/product";
 
 const OrderProducTable = ({ product }) => {
 	const Orderdproduct = product;
+
+	console.log(Orderdproduct);
 	return (
 		<div>
 			<div className="relative my-2 h-[80px] bg-gray-100 p-2">
@@ -27,10 +29,10 @@ const OrderProducTable = ({ product }) => {
 					<div>
 						<h2 className="text-xs">
 							{getDiscountPrice(
-								Orderdproduct.product_Price,
-								Orderdproduct.product_discounted_price
+								Orderdproduct.price,
+								Orderdproduct.discount
 							)}{" "}
-							X {Orderdproduct.product_quantity}
+							X {Orderdproduct.quantity}
 						</h2>
 					</div>
 					<div>
@@ -38,9 +40,9 @@ const OrderProducTable = ({ product }) => {
 							<Takaicon></Takaicon>{" "}
 							{parseFloat(
 								getDiscountPrice(
-									Orderdproduct.product_Price,
-									Orderdproduct.product_discounted_price
-								) * Orderdproduct.product_quantity
+									Orderdproduct.price,
+									Orderdproduct.discount
+								) * Orderdproduct.quantity
 							).toFixed(2)}
 						</h2>
 					</div>
