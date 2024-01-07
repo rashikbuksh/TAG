@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { FaBars, FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
+import { FaBars, FaCheckCircle, FaEye, FaMinus, FaPlus } from "react-icons/fa";
 import { Takaicon } from "../../../SvgHub/SocialIcon";
 import { api } from "../../../lib/api";
 
 const ShopkeeperMyProduct = ({ product, index }) => {
-	const { id, name, price, product_count, image, isVerified, discount } =
+	const { id, name, price, product_count, image, isVerified, discount,view } =
 		product;
 
 	const [quantity, setQuantity] = useState(product_count);

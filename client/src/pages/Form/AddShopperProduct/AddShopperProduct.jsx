@@ -103,9 +103,11 @@ const ShopperProduct = () => {
 								}
 							);
 							if (response12.status === 201) {
-								alert("Product Added Successfully");
+								alert("Product Added Successfully with News");
 							}
 						}
+					} else {
+						alert("Product Added Successfully");
 					}
 				}
 			}
