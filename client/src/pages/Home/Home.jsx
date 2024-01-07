@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { FaArrowUp } from "react-icons/fa";
@@ -13,10 +14,11 @@ import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import FooterSection from "../FooterSection/FooterSection";
+import Cookies from "js-cookie";
 import Refer from "../Refer/Refer";
 
 const Home = () => {
-	const { user } = useAuth();
+	const { user, Logout } = useAuth();
 	const [showScrollButton, setShowScrollButton] = useState(false);
 	const [sliderDataTop, setSliderDataTop] = useState([]);
 	const [sliderDataMiddel, setSliderDataMiddel] = useState([]);
@@ -68,7 +70,13 @@ const Home = () => {
 			.catch((err) => {
 				console.error(err);
 			});
+		if (!user) {
+			localStorage.removeItem("user-id");
+			Cookies.remove("user");
+			Cookies.remove("auth");
+		}
 	}, []);
+
 	return (
 		<div className="p-2">
 			<Header />

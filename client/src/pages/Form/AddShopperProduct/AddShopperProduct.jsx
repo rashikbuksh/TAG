@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import * as yup from "yup";
-import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
-import { TikIcon } from "../../../SvgHub/Icons";
-import { Breadcrumb } from "../../../components";
-import ShopkeeperProductcart from "../../../components/Shopkeeper/ShopkeepersProduct/ShopkeeperProductcart";
-import { getDiscountPrice } from "../../../helpers/product";
-import { api } from "../../../lib/api";
+import SearchFunction from "../../AdminComponents/SearchFunction/Index";
+import { TikIcon } from "../../SvgHub/Icons";
+import { Breadcrumb } from "../../components";
+import ShopkeeperProductcart from "../../components/ShopkeepersProduct/ShopkeeperProductcart";
+import GetDateTime from "../../helpers/GetDateTime";
+import { getDiscountPrice } from "../../helpers/product";
+import { api } from "../../lib/api";
+
 const ShopperProduct = () => {
 	const [category, setCategory] = useState([]);
 
@@ -61,19 +63,53 @@ const ShopperProduct = () => {
 	};
 	const handelAddShoperProduct = () => {
 		if (selectedProducts.length === 0) {
+			alert("Add Product");
 		} else {
 			selectedProducts.forEach((product) => {
 				api.post(`/shopperproduct/addshopperproduct`, {
 					name: product.name,
 					price: product.price,
 					discount: product.discount,
-					product_count: product.product_count,
+					product_count: product.product_count || "A",
 					product_id: product.product_id,
 					shopper_id: Number(user_id),
 				}).then((response) => {
+					console.log(response, "76");
 					if (response.data.status === 201) {
-						alert("Product Added Successfully");
-						window.location.reload();
+						if (product.discount >= 15) {
+							api.get(
+								`/shopperproduct/getLastProduct/${product.shopper_id}`
+							).then((response) => {
+								console.log(
+									"🚀 ~ file: AddShopperProduct.jsx:81 ~ ).then ~ response:",
+									response
+								);
+								if (response.status === 200) {
+									const productData = response.data[0];
+									api.post(`/news/addproductnews`, {
+										shopper_product_id: productData.id,
+										shop_id: productData.shopper_id,
+										date: GetDateTime(),
+										discount: productData.discount,
+										duration: "",
+										location: "",
+										category: "regular",
+										post_content: `${
+											product.name
+										} TK ${getDiscountPrice(
+											product.price,
+											product.discount
+										)}`,
+										post_img: productData.product_image,
+									}).then((response) => {
+										if (response.status === 201) {
+											alert("Product Added Successfully");
+											window.location.reload();
+										}
+									});
+								}
+							});
+						}
 					}
 				});
 			});

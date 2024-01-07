@@ -5,8 +5,8 @@ import { useAuth } from "../../../context/auth";
 import { getDiscountPrice } from "../../../helpers/product";
 import { api } from "../../../lib/api";
 // import { FaDotCircle } from "react-icons/fa";
-import { FaCircle } from "react-icons/fa6";
-import { ChatIcon } from "../../../SvgHub/Icons";
+import { FaCircle, FaPersonWalking } from "react-icons/fa6";
+import { ChatIcon } from "../../SvgHub/Icons";
 
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
@@ -55,41 +55,6 @@ const OrderStatus = () => {
 			setProducts(productData);
 		});
 	}, [pendingOrders]);
-
-	const startTimer = (orderId) => {
-		fetchUpdatedOrders();
-		if (!timers[orderId]) {
-			let timer = 100; // 10 seconds for demonstration
-
-			const interval = setInterval(() => {
-				timer--;
-
-				if (timer >= 0) {
-					setTimers((prevTimers) => ({
-						...prevTimers,
-						[orderId]: timer,
-					}));
-				} else {
-					clearInterval(interval);
-					// Remove the timer from state when it ends
-					setTimers((prevTimers) => {
-						const updatedTimers = { ...prevTimers };
-						delete updatedTimers[orderId];
-						return updatedTimers;
-					});
-
-					// Check order status after timer ends
-					checkOrderStatus(orderId);
-				}
-			}, 1000);
-
-			// Initialize the timer in state
-			setTimers((prevTimers) => ({
-				...prevTimers,
-				[orderId]: timer,
-			}));
-		}
-	};
 
 	const checkOrderStatus = (orderId) => {
 		const id = orderId;
@@ -149,118 +114,90 @@ const OrderStatus = () => {
 					{products
 						.filter((productList) =>
 							productList.some(
-								(product) => product.id === order.id
+								(product) => product.id == order.product_id
 							)
 						)
 						.map((productList) => (
-							<div key={productList[0].order_id}>
-								<div className="mx-auto w-[100%] p-2">
-									<div>
-										{productList.map((product) => (
-											<>
-												<div key={product.id}>
-													<div className="relative my-2 h-[80px] bg-gray-100 p-2">
-														<img
-															className="absolute top-2 h-[60px] w-[60px]"
-															src={`${
-																import.meta.env
-																	.VITE_APP_IMG_URL
-															}/products/${
-																product.product_image
-															}`}
-															alt="Selected Product"
-														/>
-														<div className="ms-auto h-fit w-[75%]">
-															<Link
-																to={`${
-																	import.meta
-																		.env
-																		.VITE_API_PUBLIC_URL
-																}/product/${
-																	product.pid
-																}`}
-															>
-																<h1 className="text-sm">
-																	{
-																		product.name
-																	}
-																</h1>
-															</Link>
-														</div>
-														<div className="ms-auto mt-3 flex w-[90%] justify-end gap-5">
-															<div>
-																<h2 className="text-xs">
-																	{getDiscountPrice(
-																		product.price,
-																		product.discount
-																	)}{" "}
-																	X{" "}
-																	{
-																		product.quantity
-																	}
-																</h2>
-															</div>
-															<div>
-																<h2 className="flex items-center gap-1 text-xs">
-																	<Takaicon></Takaicon>{" "}
-																	{parseFloat(
-																		getDiscountPrice(
-																			product.price,
-																			product.discount
-																		) *
-																			product.quantity
-																	).toFixed(
-																		2
-																	)}
-																</h2>
-															</div>
-														</div>
-													</div>
+							<div
+								className="mx-auto w-[100%] p-2"
+								key={productList.pid}
+							>
+								{productList.map((product) => (
+									<div key={product.id}>
+										<div className="relative my-2 h-[80px] bg-gray-100 p-2">
+											<img
+												className="absolute top-2 h-[60px] w-[60px]"
+												src={`${
+													import.meta.env
+														.VITE_APP_IMG_URL
+												}/products/${
+													product.product_image
+												}`}
+												alt="Selected Product"
+											/>
+											<div className="ms-auto h-fit w-[75%]">
+												<Link
+													to={`${
+														import.meta.env
+															.VITE_API_PUBLIC_URL
+													}/product/${product.pid}`}
+												>
+													<h1 className="text-sm">
+														{product.name}
+													</h1>
+												</Link>
+											</div>
+											<div className="ms-auto mt-3 flex w-[90%] justify-end gap-5">
+												<div>
+													<h2 className="text-xs">
+														{getDiscountPrice(
+															product.price,
+															product.discount
+														)}{" "}
+														X {product.quantity}
+													</h2>
 												</div>
-											</>
-										))}
+												<div>
+													<h2 className="flex items-center gap-1 text-xs">
+														<Takaicon></Takaicon>{" "}
+														{parseFloat(
+															getDiscountPrice(
+																product.price,
+																product.discount
+															) * product.quantity
+														).toFixed(2)}
+													</h2>
+												</div>
+											</div>
+										</div>
+									</div>
+								))}
+
+								<div className="divider my-0"></div>
+								<div className="flex justify-between px-3">
+									<div className="flex items-center gap-4 text-[#FF2A2A]">
+										<div>
+											<p>Within 1 hr Collect</p>
+											<p>Your Products</p>
+										</div>
+										<FaPersonWalking
+											color="green"
+											size={20}
+										/>
 									</div>
 
-									<div className="divider my-0"></div>
-									<div className="flex justify-end px-3">
-										{/* <p className="text-base">
-											{timers[order.id] ? (
-												<>
-													{Math.floor(
-														timers[order.id] / 60
-													)}{" "}
-													minutes{" "}
-													{timers[order.id] % 60}{" "}
-													seconds Remaining
-												</>
-											) : (
-												"Timer ended"
-											)}
-										</p> */}
-										<p className="flex items-center gap-2 ">
-											<span className="text-sm">
-												Total:
-											</span>{" "}
-											<Takaicon></Takaicon>{" "}
-											{order.totalPrice}
-											{/* <button
-												onClick={() =>
-													startTimer(order.id)
-												}
-												className="btn"
-											>
-												{order.id}
-											</button> */}
-										</p>
-									</div>
+									<p className="flex items-center gap-2 ">
+										<span className="text-sm">Total:</span>{" "}
+										<Takaicon></Takaicon> {order.price}
+									</p>
 								</div>
 							</div>
 						))}
 				</div>
 			))}
-			<button className="fixed bottom-36 right-5 z-20 flex flex-col  items-center rounded-full  border-4 border-blue-900 bg-white p-3 shadow-lg ">
+			<button className="fixed bottom-24 right-5 z-20 flex flex-col  items-center rounded-full  border-4 border-blue-900 bg-white p-2 shadow-lg ">
 				<ChatIcon />
-				<span className="text-md text-black">Live Chat</span>
+				<span className="text-xs text-black">Live Chat</span>
 			</button>
 
 			<div className="h-14"></div>

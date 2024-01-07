@@ -121,7 +121,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	const { user } = useAuth();
 	const handleCheckboxChange = (e) => {
 		// Check if newPrice is not empty
-		if (newPrice && newQuantity) {
+		if (newPrice) {
 			const selectedProductInfo = {
 				name: name,
 				price: newPrice,

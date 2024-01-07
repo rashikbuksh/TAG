@@ -15,7 +15,7 @@ const add = [
 const read = [
 	{
 		uri: "/notification/getnotification/:userid/:user_id",
-		query: `SELECT * FROM notification WHERE not_from = ? OR not_to= ? ORDER BY notification_time desc`,
+		query: `SELECT * FROM notification WHERE not_from = ?  ORDER BY notification_time desc`,
 		param: ["userid", "user_id"],
 		msg: "id",
 	},
