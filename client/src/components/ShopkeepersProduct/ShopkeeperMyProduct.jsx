@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { FaBars, FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
+import { FaBars, FaCheckCircle, FaEye, FaMinus, FaPlus } from "react-icons/fa";
 import { Takaicon } from "../../SvgHub/SocialIcon";
 import { api } from "../../lib/api";
 
 const ShopkeeperMyProduct = ({ product, index }) => {
-	const { id, name, price, product_count, image, isVerified,discount } = product;
+	const { id, name, price, product_count, image, isVerified,discount,view } = product;
 
 	const [quantity, setQuantity] = useState(product_count);
 	const [newPrice, setNewPrice] = useState(price);
@@ -159,6 +159,8 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 						alt="No Image"
 					/>
 					<div>
+						<p className="flex justify-end items-center gap-2"><FaEye/>{view}</p>
+					
 						<div className="my-2 flex flex-col items-center">
 							<div>
 								<label>QTY:</label>
@@ -212,6 +214,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 										{price ? price : "N/A"}
 									</p>
 								)}
+							
 							</div>
 							<div className="relative mt-0.5 flex flex-col gap-0.5">
 								<label>Discount:</label>

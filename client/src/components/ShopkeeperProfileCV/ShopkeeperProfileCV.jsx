@@ -23,6 +23,7 @@ import Header from "../Header/Header";
 import LocationModal from "../LocationModal/LocationModal";
 import MapDistanceModal from "../LocationModal/MapDistanceModal";
 import ShowCartIcon from "../ShowCartIcon/ShowCartIcon";
+import { FaEye } from "react-icons/fa";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
@@ -268,6 +269,18 @@ const ShopkeeperProfileCV = () => {
 														alt=""
 													/>
 												</Link>
+												{}
+												{user &&
+												user.access === "customer" ? (
+													""
+												) : user.id == single.shopper_id ? (
+													<div className="flex items-center justify-end gap-2">
+														<FaEye></FaEye>
+														<p>{single.view}</p>
+													</div>
+												) : (
+													""
+												)}
 
 												<div className="my-1 flex items-center justify-between">
 													<div className="relative flex flex-col bg-white ">

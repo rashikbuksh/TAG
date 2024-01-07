@@ -14,11 +14,11 @@ const MapDistanceModal = ({ isOpen, setIsOpen, latlong, popup }) => {
 		window.dispatchEvent(new Event("resize"));
 	}, 1);
 	return (
-		<Modal isOpen={isOpen} setIsOpen={setIsOpen} showCross={false}>
+		<Modal isOpen={isOpen} setIsOpen={setIsOpen} showCross={false} title={"Location"}>
 			<MapContainer
 				center={[latlong.latitude, latlong.longitude]}
-				zoom={15}
-				style={{ height: "70vh", width: "70vh" }}
+				zoom={50}
+				style={{ height: "400px", width: "100%" }}
 			>
 				<TileLayer
 					url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"

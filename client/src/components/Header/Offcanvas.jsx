@@ -28,12 +28,12 @@ function Offcanvas(props) {
 				props.activeStatus(false);
 			});
 		});
-		if (userid) {
-			api.get(`/auth/getUserInfo/${userid}`).then((res) => {
+		if (user) {
+			api.get(`/auth/getUserInfo/${user.id}`).then((res) => {
 				setUserInfo(res.data);
 			});
 		}
-	}, [props, userid]);
+	}, [props, user]);
 
 	const logout = () => {
 		localStorage.removeItem("user-id");
@@ -44,7 +44,7 @@ function Offcanvas(props) {
 	const handeloffDrawer = () => {
 		setIsOffcanvasOpen(!isOffcanvasOpen);
 	};
-
+	console.log(userInfo, userData);
 	return (
 		// <div className={`offcanvas-menu ${props.show ? "active" : ""}`}>
 
@@ -69,50 +69,43 @@ function Offcanvas(props) {
 				}
 			>
 				<div className="py-10 ">
-					{userid
-						? userInfo.map((item) => (
-								<div
-									key={item}
-									className="profile-card text-center"
-								>
-									<div>
-										<div className="avatar">
-											<div className="w-20 rounded-full ring  ring-offset-2 ring-offset-[#00AAFF]">
-												<img
-													src={
-														userData
-															? `${
-																	import.meta
-																		.env
-																		.VITE_APP_IMG_URL
-															  }/usersProfilePic/${
-																	userData.profile_picture
-															  }`
-															: `${
-																	import.meta
-																		.env
-																		.VITE_API_PUBLIC_URL +
-																	"/assets/img/profile.jpg"
-															  }`
-													}
-													className="img-fluid"
-													alt=""
-												/>
-											</div>
-										</div>
-									</div>
-									<div className="profile-card__content">
-										<p className="name text-lg">
-											{item.name ? item.name : "Guest"}{" "}
-											<span className="id">
-												ID: {user ? user.id : "Guest"}{" "}
-												{/* Assuming you want to display the user's ID */}
-											</span>
-										</p>
+					{userInfo.map((item) => (
+						<div key={item} className="profile-card text-center">
+							<div>
+								<div className="avatar">
+									<div className="w-20 rounded-full ring  ring-offset-2 ring-offset-[#00AAFF]">
+										<img
+											src={
+												item
+													? `${
+															import.meta.env
+																.VITE_APP_IMG_URL
+													  }/usersProfilePic/${
+														item.profile_picture
+													  }`
+													: `${
+															import.meta.env
+																.VITE_API_PUBLIC_URL +
+															"/assets/img/profile.jpg"
+													  }`
+											}
+											className="img-fluid"
+											alt=""
+										/>
 									</div>
 								</div>
-						  ))
-						: ""}
+							</div>
+							<div className="profile-card__content">
+								<p className="name text-lg">
+									{user ? item.name : "Guest"}{" "}
+									<span className="id">
+										ID: {user ? user.id : "Guest"}{" "}
+										{/* Assuming you want to display the user's ID */}
+									</span>
+								</p>
+							</div>
+						</div>
+					))}
 					<div className="">
 						<ul
 							onClick={handeloffDrawer}
@@ -227,7 +220,9 @@ function Offcanvas(props) {
 													to={
 														import.meta.env
 															.VITE_API_PUBLIC_URL +
-														`/ordersHistoryDetails/${user&& user.id}`
+														`/ordersHistoryDetails/${
+															user && user.id
+														}`
 													}
 												>
 													Order History

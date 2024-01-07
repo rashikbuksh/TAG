@@ -14,9 +14,10 @@ import { api } from "../../lib/api";
 import Refer from "../Refer/Refer";
 import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import FooterSection from "../FooterSection/FooterSection";
+import Cookies from "js-cookie";
 
 const Home = () => {
-	const { user } = useAuth();
+	const { user, Logout } = useAuth();
 	const [showScrollButton, setShowScrollButton] = useState(false);
 	const [sliderDataTop, setSliderDataTop] = useState([]);
 	const [sliderDataMiddel, setSliderDataMiddel] = useState([]);
@@ -68,13 +69,19 @@ const Home = () => {
 			.catch((err) => {
 				console.error(err);
 			});
+		if (!user) {
+			localStorage.removeItem("user-id");
+			Cookies.remove("user");
+			Cookies.remove("auth");
+		}
 	}, []);
+
 	return (
 		<div className="p-2">
 			<Header />
 			<Footer />
 			<ShowCartIcon></ShowCartIcon>
-			<div className="body-wrapper mt-12 mb-20">
+			<div className="body-wrapper mb-20 mt-12">
 				<Helmet>
 					<meta charSet="utf-8" />
 					<meta

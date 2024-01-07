@@ -132,14 +132,6 @@ const Cart = () => {
 			return;
 		} else {
 			addOrderToDB(productIds, total);
-			// remove the items from the cart
-			productIds.forEach((productId) => {
-				cartItems.forEach((cartItem) => {
-					if (cartItem.id === productId) {
-						dispatch(deleteFromCart(cartItem, shopperId));
-					}
-				});
-			});
 		}
 		// navigate("/orderStatus");
 	};
@@ -198,6 +190,30 @@ const Cart = () => {
 						});
 
 						const responses = await Promise.all(productPromises);
+						console.log(
+							"🚀 ~ file: Cart.jsx:201 ~ addOrderToDB ~ responses:",
+							responses
+						);
+						const isDeleteProduct = responses.every(
+							(response) => response.status === 201
+						);
+						console.log(isDeleteProduct);
+						if (isDeleteProduct) {
+							productIds.forEach((productId) => {
+								console.log(productId,"productId");
+								cartItems.forEach((cartItem) => {
+									console.log(
+										"🚀 ~ file: Cart.jsx:212 ~ cartItems.forEach ~ cartItem:",
+										cartItem
+									);
+									if (cartItem.id === productId.id) {
+										dispatch(
+											deleteFromCart(cartItem, shopperId)
+										);
+									}
+								});
+							});
+						}
 
 						// All API calls were successful
 						console.log(responses);
