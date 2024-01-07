@@ -204,7 +204,7 @@ const ShopKeeperDashBoard = () => {
 					<div></div>
 				</div>
 
-				<div className="my-10">
+				<div className="">
 					<div className="flex flex-col items-center justify-center">
 						<div
 							className={`avatar ${
@@ -263,7 +263,7 @@ const ShopKeeperDashBoard = () => {
 									<div
 										key={index}
 										style={boxShadowStyle}
-										className={`my-10 flex gap-10 ${
+										className={` flex  ${
 											section.content ? "" : "flex-col"
 										}`}
 									>
