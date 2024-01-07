@@ -1,26 +1,22 @@
-import { validateFieldsNatively } from "@hookform/resolvers";
-import { yupResolver } from "@hookform/resolvers/yup";
-import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import { get, useForm } from "react-hook-form";
 import { FaX } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-import * as yup from "yup";
 import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
 import { TikIcon } from "../../../SvgHub/Icons";
 import { Breadcrumb } from "../../../components";
 import ShopkeeperProductcart from "../../../components/Shopkeeper/ShopkeepersProduct/ShopkeeperProductcart";
+import { useAuth } from "../../../context/auth";
 import GetDateTime from "../../../helpers/GetDateTime";
 import { getDiscountPrice } from "../../../helpers/product";
 import { api } from "../../../lib/api";
 
 const ShopperProduct = () => {
 	const [category, setCategory] = useState([]);
-
-	const user_id = localStorage.getItem("user-id");
+	const { user } = useAuth();
 	const [products, setProducts] = useState([]);
+	const [util, setUtil] = useState([]);
+	const [selectedProducts, setSelectedProducts] = useState([]);
 
 	const [filteredProductArr, setFilteredProductArr] = useState(products);
 	useEffect(() => {
@@ -30,10 +26,13 @@ const ShopperProduct = () => {
 		api.get(`/category/get/category`).then((response) => {
 			setCategory(response.data);
 		});
+		api.get(`/util/getUtil/product_discount`).then((response) => {
+			setUtil(response.data[0]);
+		});
 	}, []);
 
 	const selectedCategory = (e) => {
-		const selectedCategoryId = parseInt(e.target.value, 10); // Convert the value to an integer
+		const selectedCategoryId = parseInt(e.target.value); // Convert the value to an integer
 
 		if (selectedCategoryId === 0) {
 			// If "Category" is selected, show all products
@@ -46,7 +45,6 @@ const ShopperProduct = () => {
 			setFilteredProductArr(filteredProducts);
 		}
 	};
-	const [selectedProducts, setSelectedProducts] = useState([]);
 
 	const handleProductSelection = (productInfo, isSelected) => {
 		if (isSelected) {
@@ -61,58 +59,56 @@ const ShopperProduct = () => {
 			setSelectedProducts(updatedSelectedProducts);
 		}
 	};
-	const handelAddShoperProduct = () => {
+	const handelAddShoperProduct = async () => {
 		if (selectedProducts.length === 0) {
 			alert("Add Product");
 		} else {
-			selectedProducts.forEach((product) => {
-				api.post(`/shopperproduct/addshopperproduct`, {
-					name: product.name,
-					price: product.price,
-					discount: product.discount,
-					product_count: product.product_count || "A",
-					product_id: product.product_id,
-					shopper_id: Number(user_id),
-				}).then((response) => {
-					console.log(response, "76");
-					if (response.data.status === 201) {
-						if (product.discount >= 15) {
-							api.get(
-								`/shopperproduct/getLastProduct/${product.shopper_id}`
-							).then((response) => {
-								console.log(
-									"🚀 ~ file: AddShopperProduct.jsx:81 ~ ).then ~ response:",
-									response
-								);
-								if (response.status === 200) {
-									const productData = response.data[0];
-									api.post(`/news/addproductnews`, {
-										shopper_product_id: productData.id,
-										shop_id: productData.shopper_id,
-										date: GetDateTime(),
-										discount: productData.discount,
-										duration: "",
-										location: "",
-										category: "regular",
-										post_content: `${
-											product.name
-										} TK ${getDiscountPrice(
-											product.price,
-											product.discount
-										)}`,
-										post_img: productData.product_image,
-									}).then((response) => {
-										if (response.status === 201) {
-											alert("Product Added Successfully");
-											window.location.reload();
-										}
-									});
+			for (const product of selectedProducts) {
+				const response = await api.post(
+					`/shopperproduct/addshopperproduct`,
+					{
+						name: product.name,
+						price: product.price,
+						discount: product.discount,
+						product_count: product.product_count || "A",
+						product_id: product.product_id,
+						shopper_id: Number(user.id),
+					}
+				);
+				if (response.data.status === 201) {
+					if (product.discount >= parseInt(util.value)) {
+						const response1 = await api.get(
+							`/shopperproduct/getLastProduct/${product.shopper_id}`
+						);
+						if (response1.status === 200) {
+							const productData = response1.data[0];
+
+							const response12 = await api.post(
+								`/news/addproductnews`,
+								{
+									shopper_product_id: productData.id,
+									shop_id: productData.shopper_id,
+									date: GetDateTime(),
+									discount: productData.discount,
+									duration: "",
+									location: "",
+									category: "regular",
+									post_content: `${
+										product.name
+									} TK ${getDiscountPrice(
+										product.price,
+										product.discount
+									)}`,
+									post_img: productData.product_image,
 								}
-							});
+							);
+							if (response12.status === 201) {
+								alert("Product Added Successfully");
+							}
 						}
 					}
-				});
-			});
+				}
+			}
 		}
 	};
 	const removeProduct = (productId) => {
@@ -234,121 +230,3 @@ const ShopperProduct = () => {
 };
 
 export default ShopperProduct;
-
-// privious code
-// <div className="body-wrapper  space-pt--70 space-pb--120 mt-3">
-// 	<h1 className="text-center text-xl font-bold">Add Product</h1>
-// 	<div className="m-1 rounded border bg-gray-100 p-3">
-// 		<div className="">
-// 			<form onSubmit={handleSubmit(onSubmit)}>
-// 				<div className="   px-1 py-1">
-// 					<label htmlFor="product_id">Product Name</label>
-// 					<br />
-// 					<select
-// 						className="select w-full"
-// 						name="product_id"
-// 						id="product_id"
-// 						onChange={setProductsvalue}
-// 						defaultValue={0}
-// 					>
-// 						<option value="0">Select Product</option>
-// 						{productNames &&
-// 							productNames.map((product) => (
-// 								<option
-// 									key={product.id}
-// 									value={
-// 										product.id +
-// 										"||--" +
-// 										product.name +
-// 										"||--" +
-// 										product.image +
-// 										"||--" +
-// 										product.price +
-// 										"||--" +
-// 										product.quantity
-// 									}
-// 								>
-// 									{product.name}
-// 								</option>
-// 							))}
-// 					</select>
-// 				</div>
-// 				<div className="my-2 flex items-center justify-center ">
-// 					{productImage && (
-// 						<img
-// 							className="w-56  border-2 border-black"
-// 							src={`${
-// 								import.meta.env.VITE_APP_IMG_URL
-// 							}/products/${productImage}`}
-// 							alt="Selected Product"
-// 						/>
-// 					)}
-// 				</div>
-// 				<div className="flex items-center gap-2">
-// 					<div className="my-2 px-1 py-1">
-// 						<label htmlFor="price">Price</label>
-// 						<input
-// 							className="input w-full"
-// 							{...register("price")}
-// 							type="number"
-// 							name="price"
-// 							id="price"
-// 							max={
-// 								productPrice &&
-// 								parseFloat(productPrice) > 0
-// 									? parseFloat(productPrice)
-// 									: null
-// 							}
-// 							placeholder={
-// 								productPrice !== "null" &&
-// 								productPrice !== "0" &&
-// 								productPrice !== null
-// 									? productPrice
-// 									: "Enter Price"
-// 							}
-// 						/>
-// 						<p className="text-danger">
-// 							{errors.price?.message}
-// 						</p>
-// 					</div>
-// 					<div className="  my-2 px-1 py-1">
-// 						<label htmlFor="discount">Discount</label>
-// 						<input
-// 							className="input w-full"
-// 							{...register("discount")}
-// 							type="number"
-// 							name="discount"
-// 							id="discount"
-// 							placeholder="Enter Discount"
-// 						/>
-// 						<p className="text-danger">
-// 							{errors.discount?.message}
-// 						</p>
-// 					</div>
-// 				</div>
-// 				<div className="  my-2 px-1 py-1">
-// 					<label htmlFor="product_count">
-// 						Product Quantity
-// 					</label>
-// 					<input
-// 						className="input w-full"
-// 						{...register("product_count")}
-// 						type="number"
-// 						name="product_count"
-// 						id="product_count"
-// 						placeholder="Enter Product Quantity"
-// 					/>
-// 					<p className="text-danger">
-// 						{errors.product_count?.message}
-// 					</p>
-// 				</div>
-// 				<button
-// 					type="submit"
-// 					className="btn btn-accent btn-block "
-// 				>
-// 					Add Shopper Product
-// 				</button>
-// 			</form>
-// 		</div>
-// 	</div>
-// </div>
