@@ -1,6 +1,5 @@
-import { Icon } from "leaflet";
 import "leaflet-routing-machine";
-import "lrm-google";
+// import "lrm-google";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import GetLocation from "../../../helpers/GetLocation";
 import Modal from "../Modal";

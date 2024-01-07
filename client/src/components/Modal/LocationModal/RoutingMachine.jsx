@@ -36,6 +36,8 @@ const createRoutineMachineLayer = (props) => {
 			} else if (i === nWps - 1) {
 				// This is the end marker
 				return L.marker(wp.latLng, { icon: customerIcon });
+			} else {
+				return L.marker(wp.latLng, { icon: shopperIcon });
 			}
 		},
 	});
