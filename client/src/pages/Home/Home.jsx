@@ -14,7 +14,6 @@ import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import FooterSection from "../FooterSection/FooterSection";
-import Cookies from "js-cookie";
 import Refer from "../Refer/Refer";
 
 const Home = () => {

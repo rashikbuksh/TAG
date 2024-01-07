@@ -6,7 +6,7 @@ import { getDiscountPrice } from "../../../helpers/product";
 import { api } from "../../../lib/api";
 // import { FaDotCircle } from "react-icons/fa";
 import { FaCircle, FaPersonWalking } from "react-icons/fa6";
-import { ChatIcon } from "../../SvgHub/Icons";
+import { ChatIcon } from "../../../SvgHub/Icons";
 
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);

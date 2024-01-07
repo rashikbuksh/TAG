@@ -8,13 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import * as yup from "yup";
-import SearchFunction from "../../AdminComponents/SearchFunction/Index";
-import { TikIcon } from "../../SvgHub/Icons";
-import { Breadcrumb } from "../../components";
-import ShopkeeperProductcart from "../../components/ShopkeepersProduct/ShopkeeperProductcart";
-import GetDateTime from "../../helpers/GetDateTime";
-import { getDiscountPrice } from "../../helpers/product";
-import { api } from "../../lib/api";
+import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
+import { TikIcon } from "../../../SvgHub/Icons";
+import { Breadcrumb } from "../../../components";
+import ShopkeeperProductcart from "../../../components/Shopkeeper/ShopkeepersProduct/ShopkeeperProductcart";
+import GetDateTime from "../../../helpers/GetDateTime";
+import { getDiscountPrice } from "../../../helpers/product";
+import { api } from "../../../lib/api";
 
 const ShopperProduct = () => {
 	const [category, setCategory] = useState([]);
