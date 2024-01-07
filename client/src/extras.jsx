@@ -8,17 +8,17 @@ import {
 } from "react-router-dom";
 
 import { Preloader } from "./components";
-import ShopkeeperProfileCV from "./components/ShopkeeperProfileCV/ShopkeeperProfileCV";
-import ShopkeepersProduct from "./components/ShopkeepersProduct/ShopkeepersProduct";
+import ShopkeeperProfileCV from "./components/Shopkeeper/ShopkeeperProfileCV/ShopkeeperProfileCV";
+import ShopkeepersProduct from "./components/Shopkeeper/ShopkeepersProduct/ShopkeepersProduct";
 import TestComponents from "./components/TestComponents/TestComponents";
 import ScrollToTop from "./helpers/scroll-top";
 import { DefaultLayout } from "./layouts";
-import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
 import AddShopperProduct from "./pages/AddShopperProduct/AddShopperProduct";
+import AddCatagoryForm from "./pages/Form/AddCatagoryForm/AddCatagoryForm";
 import NewsFeed from "./pages/NewsFeed/NewsFeed";
-import OrderSingle from "./pages/OrderShopper/OrderShopper";
-import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
+import OrderSingle from "./pages/Order/OrderShopper/OrderShopper";
+import RegisterShopper from "./pages/Register/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 
 const Welcome = lazy(() => import("./pages/Welcome"));

@@ -1,27 +1,27 @@
-import Breadcrumb from "./Breadcrumb";
-import Header from "./Header";
-import Footer from "./Footer";
-import Preloader from "./Preloader";
-import ErrorMessage from "./ErrorMessage";
-import HeroSlider from "./HeroSlider";
 import CategorySlider from "./CategorySlider";
-import BestSellerProduct from "./BestSellerProduct";
-import AllProducts from "./AllProducts";
-import ShopProducts from "./ShopProducts";
-import SearchProducts from "./SearchProducts";
+import ErrorMessage from "./ErrorMessage";
+import Breadcrumb from "./MainComponent/Breadcrumb";
+import Footer from "./MainComponent/Footer";
+import Header from "./MainComponent/Header";
+import HeroSlider from "./MainComponent/HeroSlider";
+import Preloader from "./Preloader";
+import AllProducts from "./Product/AllProducts";
+import BestSellerProduct from "./Product/BestSellerProduct";
+import SearchProducts from "./Product/SearchProducts";
+import ShopProducts from "./Product/ShopProducts";
 import Rating from "./Rating";
 
 export {
-  Breadcrumb,
-  Header,
-  Footer,
-  Preloader,
-  ErrorMessage,
-  HeroSlider,
-  CategorySlider,
-  BestSellerProduct,
-  AllProducts,
-  ShopProducts,
-  SearchProducts,
-  Rating
+	AllProducts,
+	BestSellerProduct,
+	Breadcrumb,
+	CategorySlider,
+	ErrorMessage,
+	Footer,
+	Header,
+	HeroSlider,
+	Preloader,
+	Rating,
+	SearchProducts,
+	ShopProducts,
 };

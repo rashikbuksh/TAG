@@ -19,7 +19,7 @@ import { PiShareFat } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import demoProfile from "../../../src/assets/img/Tag-logo-blue-get_50_50.png";
 import Modal from "../../components/Modal/Modal";
-import MainProduct from "../../components/ProductCart/MainProduct";
+import MainProduct from "../../components/Product/ProductCart/MainProduct";
 import { useAuth } from "../../context/auth";
 import GetDateTime from "../../helpers/GetDateTime";
 import { api } from "../../lib/api";

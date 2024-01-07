@@ -16,7 +16,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FaEye, FaRegMessage } from "react-icons/fa6";
 import { StarIcon } from "../../SvgHub/Icons";
 import { Footer, Header } from "../../components";
-import MessageModal from "../../components/MessageModal/MessageModal";
+import MessageModal from "../../components/Modal/MessageModal/MessageModal";
 import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "../../context/auth";
 import {
@@ -110,7 +110,7 @@ const Product = () => {
 		<>
 			<Header />
 			<Footer />
-			<ShowCartIcon/>
+			<ShowCartIcon />
 			<div className="mx-auto px-4 py-20 lg:w-[50%] ">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}

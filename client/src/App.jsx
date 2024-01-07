@@ -11,36 +11,36 @@ import ProtectedRoutes from "./routes";
 import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
 import AdminStats from "./AdminComponents/AdminStats/AdminStats";
 import Allnews from "./AdminComponents/AllNews/Allnews";
-import BestSellProduct from "./AdminComponents/BestSellProduct/BestSellProduct";
+import LateOrdersPage from "./AdminComponents/LateOrdersPage/LateOrdersPage";
 import MakeModarator from "./AdminComponents/MakeModarator/MakeModarator";
 import ManageModarator from "./AdminComponents/ManageModarator/ManageModarator";
+import BestSellProduct from "./AdminComponents/Product/BestSellProduct/BestSellProduct";
 import TagOrderHistory from "./AdminComponents/TagOrderHistory/TagOrderHistory";
 import TagUserOrderHistory from "./AdminComponents/TagOrderHistory/TagUserOrderHistory";
 import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Offcanvas from "./components/Header/Offcanvas";
 import IndividualMessagePage from "./components/IndividualMessagePage/IndividualMessagePage";
 import LoadingPage from "./components/LodingPage/LoadingPage";
-import ShopkeeperProfileCV from "./components/ShopkeeperProfileCV/ShopkeeperProfileCV";
-import ShopkeepersProduct from "./components/ShopkeepersProduct/ShopkeepersProduct";
+import Footer from "./components/MainComponent/Footer";
+import Header from "./components/MainComponent/Header";
+import Offcanvas from "./components/MainComponent/Header/Offcanvas";
+import ShopkeeperProfileCV from "./components/Shopkeeper/ShopkeeperProfileCV/ShopkeeperProfileCV";
+import ShopkeepersProduct from "./components/Shopkeeper/ShopkeepersProduct/ShopkeepersProduct";
 import TagUser from "./components/TagUser/TagUser";
 import ReferCodeGenerator from "./helpers/ReferCodeGenerator";
 import { DefaultLayout } from "./layouts";
-import AddCatagoryForm from "./pages/AddCatagoryForm/AddCatagoryForm";
 import AddProductForm from "./pages/AddProductForm/AddProductForm";
 import AddShopperProduct from "./pages/AddShopperProduct/AddShopperProduct";
+import AddCatagoryForm from "./pages/Form/AddCatagoryForm/AddCatagoryForm";
 import NewsFeed from "./pages/NewsFeed/NewsFeed";
+import ShopperOrderHistory from "./pages/Order/OrderHistory/ShopperOrderHistory";
 import OrderModal from "./pages/Order/OrderModal/OrderModal";
-import ShopperOrderHistory from "./pages/OrderHistory/ShopperOrderHistory";
 import OrderDetailsShopper from "./pages/OrderShopper/OrderModal";
 import OrderShopper from "./pages/OrderShopper/OrderShopper";
 import OrderStatus from "./pages/OrderStatus/OrderStatus";
-import RegisterShopper from "./pages/RegisterShopper/RegisterShopper";
+import Policy from "./pages/Policy/Policy";
+import RegisterShopper from "./pages/Register/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
-import LateOrdersPage from "./AdminComponents/LateOrdersPage/LateOrdersPage";
-import Policy from "./pages/Policy/Policy";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -62,7 +62,7 @@ const Order = lazy(() => import("./pages/Order"));
 const HeroSlider = lazy(() => import("./pages/hero-slider/HeroSlider"));
 const AdminPage = lazy(() => import("./pages/AdminPage/Admin"));
 const AllProductAdmin = lazy(() =>
-	import("./AdminComponents/AllProduct/AllProductAdmin")
+	import("./AdminComponents/Product/AllProduct/AllProductAdmin")
 );
 
 const PROTECTED_ROUTES = [

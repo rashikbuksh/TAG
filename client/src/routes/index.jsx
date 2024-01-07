@@ -1,16 +1,15 @@
 import { Navigate, Outlet, useParams } from "react-router-dom";
 import { PROTECTED_ROUTES } from "../App";
 import { Footer, Header } from "../components";
-import Offcanvas from "../components/Header/Offcanvas";
-import { useAuth } from "../context/auth";
 import LoadingPage from "../components/LodingPage/LoadingPage";
+import Offcanvas from "../components/MainComponent/Header/Offcanvas";
 import ShowCartIcon from "../components/ShowCartIcon/ShowCartIcon";
+import { useAuth } from "../context/auth";
 
 export default function ProtectedRoutes() {
 	const { signed, loading, user } = useAuth();
 
-	if (loading)
-		return <LoadingPage></LoadingPage>;
+	if (loading) return <LoadingPage></LoadingPage>;
 
 	if (!signed) return <Navigate to="/login" replace={true} />;
 
@@ -19,20 +18,19 @@ export default function ProtectedRoutes() {
 	// console.log("protected", PROTECTED_ROUTES);
 
 	const checkPath = PROTECTED_ROUTES?.find(
-		(route) => route?.path||`${route?.path}/*` == window.location.pathname
+		(route) => route?.path || `${route?.path}/*` == window.location.pathname
 	);
 
 	const haveAccess = checkPath?.access?.includes(user?.access);
 
 	return haveAccess ? (
 		<>
-		<ShowCartIcon></ShowCartIcon>
+			<ShowCartIcon></ShowCartIcon>
 			<Header />
 			{/* <Offcanvas /> */}
 			<Footer />
 			<div className="p-2">
-
-			<Outlet />
+				<Outlet />
 			</div>
 		</>
 	) : (

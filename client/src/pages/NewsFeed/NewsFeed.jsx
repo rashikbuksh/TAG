@@ -1,7 +1,7 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
-import NewsFeedInput from "../../components/NewsFeedInput/NewsFeedInput";
+import NewsFeedInput from "../../components/News/NewsFeedInput/NewsFeedInput";
 import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";

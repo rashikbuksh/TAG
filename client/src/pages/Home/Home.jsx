@@ -8,12 +8,12 @@ import {
 	Header,
 	HeroSlider,
 } from "../../components";
-import HotNews from "../../components/HotNews/HotNews";
+import HotNews from "../../components/News/HotNews/HotNews";
+import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
-import Refer from "../Refer/Refer";
-import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import FooterSection from "../FooterSection/FooterSection";
+import Refer from "../Refer/Refer";
 
 const Home = () => {
 	const { user } = useAuth();
@@ -74,7 +74,7 @@ const Home = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon></ShowCartIcon>
-			<div className="body-wrapper mt-12 mb-20">
+			<div className="body-wrapper mb-20 mt-12">
 				<Helmet>
 					<meta charSet="utf-8" />
 					<meta

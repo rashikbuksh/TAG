@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import AdminHeader from "../../AdminComponents/AdminHeader/AdminHeader";
 import AdminStats from "../../AdminComponents/AdminStats/AdminStats";
-import ProductChart from "../../AdminComponents/ProductChart/ProductChart";
+import ProductChart from "../../AdminComponents/Product/ProductChart/ProductChart";
 import Sidebar from "../../AdminComponents/Sidebar/Sidebar";
 
 const Admin = () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Breadcrumb } from "../../../components";
 import Modal from "../../../components/Modal/Modal";
-import OrderProducTable from "../../../components/OrderProductTable/OrderProducTable";
+import OrderProducTable from "../../../components/Product/OrderProductTable/OrderProducTable";
 import { api } from "../../../lib/api";
 
 const OrderModal = () => {
