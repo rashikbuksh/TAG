@@ -54,8 +54,6 @@ GET_DATA.forEach(({ uri, query, param }) => {
 });
 
 app.post("/auth/verify_login", (req, res) => {
-	// console.log(req?.body.email, req?.body.password);
-
 	const { emailOrPhone, password } = req?.body;
 
 	db.getConnection((err, connection) => {
@@ -76,8 +74,6 @@ app.post("/auth/verify_login", (req, res) => {
 			[emailOrPhone],
 
 			async (err, rows) => {
-				// console.log("row", rows);
-				// console.log("err", err);
 				if (err) {
 					console.error("Error getting MySQL connection: ", err);
 					return res.status(500).json({ error: "Database error" });
@@ -92,9 +88,7 @@ app.post("/auth/verify_login", (req, res) => {
 				}
 
 				await ComparePass(password, rows[0].password).then((result) => {
-					// console.log(rows[0].password, result);
 					if (!result) {
-						// console.log("result", result);
 						return res.status(200).json({
 							status: 200,
 							type: "delete",
@@ -130,7 +124,6 @@ app.post("/auth/verify_login", (req, res) => {
 
 app.post("/auth/getUserID", (req, res) => {
 	const { phone } = req?.body;
-	// console.log("phone", phone);
 
 	const query = `SELECT id from customer_profile where phone=?`;
 

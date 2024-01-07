@@ -5,7 +5,6 @@ import { getDiscountPrice } from "../../../helpers/product";
 const OrderProducTable = ({ product }) => {
 	const Orderdproduct = product;
 
-	console.log(Orderdproduct);
 	return (
 		<div>
 			<div className="relative my-2 h-[80px] bg-gray-100 p-2">

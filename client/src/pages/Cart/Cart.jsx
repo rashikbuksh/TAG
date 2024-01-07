@@ -124,9 +124,6 @@ const Cart = () => {
 
 		const total = calculatedTotals[shopperId] || 0;
 
-		console.log("productIds", productIds);
-		console.log("total", total);
-
 		const wantobuy = window.confirm("Are you sure you want to buy?");
 		if (!wantobuy) {
 			return;
@@ -141,7 +138,7 @@ const Cart = () => {
 				});
 			});
 		}
-		// navigate("/orderStatus");
+		navigate("/orderStatus");
 	};
 
 	const addOrderToDB = async (productIds, total) => {
@@ -153,12 +150,10 @@ const Cart = () => {
 				order_time: GetDateTime(),
 				price: total,
 			});
-			console.log("orderRes", orderRes.status);
 			if (orderRes.status == 201) {
 				const lastOrderRes = await api.get(
 					`/order/getLastOrder/${user.id}`
 				);
-				console.log("lastOrderRes", lastOrderRes.status);
 				if (lastOrderRes.status == 200) {
 					let last_order_id = lastOrderRes.data[0].id;
 
@@ -175,7 +170,6 @@ const Cart = () => {
 							status: 1,
 						}
 					);
-					console.log("notificationRes", notificationRes.status);
 					if (notificationRes.status == 201) {
 						const productPromises = productIds.map((product) => {
 							const productid = product.id;
@@ -198,10 +192,6 @@ const Cart = () => {
 						});
 
 						const responses = await Promise.all(productPromises);
-
-						// All API calls were successful
-						console.log(responses);
-						// navigate("/orderStatus");
 					}
 				}
 			}

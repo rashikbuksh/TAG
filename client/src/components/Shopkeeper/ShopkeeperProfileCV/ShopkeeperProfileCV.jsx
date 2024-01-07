@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { FaLocationDot, FaRegMessage } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
 import { AddToCartIcon1, AddToCartIcon2 } from "../../../SvgHub/Icons";
 import { Takaicon } from "../../../SvgHub/SocialIcon";
@@ -13,7 +14,6 @@ import { useAuth } from "../../../context/auth";
 import GetLocation from "../../../helpers/GetLocation";
 import { checkIfInCart } from "../../../helpers/product";
 import { api } from "../../../lib/api";
-import logo from "../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 import {
 	addToCart,
 	increaseQuantityofProd,
