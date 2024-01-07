@@ -160,6 +160,8 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 						alt="No Image"
 					/>
 					<div>
+						<p className="flex justify-end items-center gap-2"><FaEye/>{view}</p>
+					
 						<div className="my-2 flex flex-col items-center">
 							<div>
 								<label>QTY:</label>
@@ -213,6 +215,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 										{price ? price : "N/A"}
 									</p>
 								)}
+							
 							</div>
 							<div className="relative mt-0.5 flex flex-col gap-0.5">
 								<label>Discount:</label>
