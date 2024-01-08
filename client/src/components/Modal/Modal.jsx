@@ -59,7 +59,7 @@ const Modal = ({
 											} `}
 										>
 											{title && (
-												<p className="p-2 font-bold">
+												<p className="p-2 font-bold ">
 													{title}
 												</p>
 											)}

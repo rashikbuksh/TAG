@@ -25,7 +25,8 @@ import {
   
     return (
       <div className="mt-3">
-        <h1 className="ml-3 mt-5 text-lg font-semibold">Follow Us</h1>
+        <div className="divider my-0"></div>
+        <h1 className="ml-3  text-lg font-semibold">Follow Us</h1>
         <div className="mx-auto mt-5 flex w-[80%] justify-between">
           <FacebookIcon />
           <Linkedin />
@@ -43,7 +44,7 @@ import {
           <img src={AppStore} alt="" />
         </div>
   
-        <div className="bg-black mt-4 text-white h-[40px] flex items-center justify-center">
+        <div className="bg-black mt-4 text-white h-[40px] flex items-center justify-center -mx-4">
           <p>
             Copyright {currentYear} Tagthinkandget.
             <span>All Rights Reserved</span>

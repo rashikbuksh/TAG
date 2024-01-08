@@ -44,7 +44,7 @@ const HotNews = () => {
 		.slice(0, 5);
 
 	return (
-		<div className="mx-auto my-4 max-w-7xl">
+		<div className="mx-auto  max-w-7xl">
 			<h1 className="my-2 text-xl font-semibold text-red-600">
 				Hot News
 			</h1>

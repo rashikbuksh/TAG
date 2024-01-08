@@ -30,13 +30,13 @@ const SearchFunction = ({ arr, setFilteredArr,width }) => {
 		}
 	}, [trimmedValue, arr, setFilteredArr]);
 	return (
-		<div className={`mx-auto ${width?"w-full":"w-1/2"}  p-6`}>
+		<div className={`mx-auto ${width?"w-full":"w-9/12"}  py-3`}>
 			<label className="sr-only">Search</label>
 			<input
 				type="text"
 				id="Search"
 				placeholder="Search for..."
-				className="w-full rounded-md border-gray-200 px-2 py-2.5 pe-10 shadow-sm sm:text-sm"
+				className="w-full rounded-md border-gray-400 px-2 py-2.5 pe-10 shadow-md sm:text-sm"
 				onChange={(e) => handleSearchChange(e.target.value)}
 			/>
 		</div>

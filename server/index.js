@@ -3,7 +3,6 @@ const express = require("express");
 const { app, ExecuteQuery } = require("./config");
 const axios = require("axios");
 const multer = require("multer");
-const base_url = "";
 var productImage = null;
 
 const storage = multer.diskStorage({

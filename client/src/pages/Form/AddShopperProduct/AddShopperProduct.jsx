@@ -120,9 +120,9 @@ const ShopperProduct = () => {
 		setSelectedProducts(updatedProducts);
 	};
 	return (
-		<div className="body-wrapper  space-pt--70 space-pb--120 relative ">
+		<div className="body-wrapper  my-10 relative ">
 			<Breadcrumb pageTitle="Add Product" prevUrl="/shopkeeperProduct" />
-			<div role="alert" className="alert alert-info my-3 flex text-left">
+			<div role="alert" className="alert alert-info my-1 flex text-left">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -197,6 +197,7 @@ const ShopperProduct = () => {
 					<div className="">
 						<div className="">
 							<SearchFunction
+					
 								arr={products}
 								setFilteredArr={setFilteredProductArr}
 								width={true}
@@ -223,7 +224,7 @@ const ShopperProduct = () => {
 			</div>
 			<button
 				onClick={handelAddShoperProduct}
-				className="fixed bottom-24 right-5 z-20 flex h-[56px] w-[56px] items-center justify-center rounded-full bg-white  p-2 shadow-lg"
+				className="fixed bottom-24 right-5 z-20 flex h-[56px] w-[56px] items-center justify-center rounded-full bg-[#46b3f7]  p-2 shadow-lg"
 			>
 				<TikIcon></TikIcon>
 			</button>

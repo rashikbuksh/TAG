@@ -6,6 +6,7 @@ import { useAuth } from "../../../context/auth";
 import { api } from "../../../lib/api";
 import ShopkeeperMyProduct from "./ShopkeeperMyProduct";
 import ShopkeeperProductcart from "./ShopkeeperProductcart";
+import Breadcrumb from "../../MainComponent/Breadcrumb/Breadcrumb";
 const ShopkeepersProduct = () => {
 	const products = [
 		{
@@ -45,16 +46,10 @@ const ShopkeepersProduct = () => {
 	return (
 		<div>
 			<div className="mx-auto mt-14 p-2 lg:w-[70%] lg:border lg:border-gray-100 lg:p-4">
-				<div className="flex">
-					<Link to={`${import.meta.env.VITE_API_PUBLIC_URL}/home`}>
-						<FaArrowAltCircleLeft className="text-4xl"></FaArrowAltCircleLeft>
-					</Link>
-
-					<h1 className="flex-grow text-center text-2xl font-extrabold">
-						{" "}
-						My Product
-					</h1>
-				</div>
+				<Breadcrumb
+					pageTitle={"My Product"}
+					prevUrl={"/shopkeeperDashboard"}
+				/>
 
 				<div className="divider"></div>
 				<div className="flex items-center justify-between gap-10">

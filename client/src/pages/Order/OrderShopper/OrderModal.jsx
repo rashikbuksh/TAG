@@ -7,6 +7,7 @@ import OrderProducTable from "../../../components/Product/OrderProductTable/Orde
 import SuccessOrderModal from "../../../components/SuccessOrderModal/SuccessOrderModal";
 import GetDateTime from "../../../helpers/GetDateTime";
 import { api } from "../../../lib/api";
+import { useAuth } from "../../../context/auth";
 
 const OrderDetailsShopper = () => {
 	const { id } = useParams();
@@ -19,6 +20,9 @@ const OrderDetailsShopper = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const handelIsOpenModal = () => {
 		setIsOpen(!isOpen);
+		if (isOpen === false) {
+			// window.location.reload();
+		}
 	};
 	useEffect(() => {
 		if (id) {
@@ -62,6 +66,7 @@ const OrderDetailsShopper = () => {
 			});
 	};
 	const handleCompleteOrder = (id) => {
+		handelIsOpenModal();
 		api.post(`/order/updateorderstatus/${id}`, {
 			order_status: "completed",
 		})
@@ -74,9 +79,9 @@ const OrderDetailsShopper = () => {
 						.then((response) => {
 							alert(response.data.message);
 							if (response.status === 200) {
-								window.location.reload();
 								setOrderStatus("completed");
 								setCancelReport("");
+								
 							}
 						})
 						.catch((error) => {
@@ -162,12 +167,12 @@ const OrderDetailsShopper = () => {
 			// setIsShownReport(true);
 		}
 	};
-
+	const { user } = useAuth();
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			<Breadcrumb
 				pageTitle={`Order Number: #${id}`}
-				prevUrl={`/home`}
+				prevUrl={user.access === "customer" ? "/home" : "/orderShopper"}
 				// onClick={() => goToPreviousPage()}
 			/>
 
@@ -229,12 +234,12 @@ const OrderDetailsShopper = () => {
 					)}
 				</div>
 			)}
-			<button
+			{/* <button
 				onClick={handelIsOpenModal}
 				className="h-[30px] w-[80px] rounded bg-green-700  text-white "
 			>
 				test
-			</button>
+			</button> */}
 			<SuccessOrderModal isOpen={isOpen} setIsOpen={setIsOpen} />
 			{isShownReport && (
 				<div>
