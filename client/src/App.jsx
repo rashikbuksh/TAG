@@ -41,6 +41,7 @@ import Policy from "./pages/Policy/Policy";
 import RegisterShopper from "./pages/Register/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
+import VerificationOTP from "./pages/VerificationOTP/Index";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -298,6 +299,10 @@ const PUBLIC_ROUTES = [
 	{
 		path: "/shop",
 		element: Shop,
+	},
+	{
+		path: "/OTPVerification",
+		element: VerificationOTP,
 	},
 	{
 		path: "/no-access",
