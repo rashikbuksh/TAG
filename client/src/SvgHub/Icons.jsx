@@ -241,7 +241,7 @@ export const TikIcon = () => {
 		>
 			<path
 				d="M2 8L5.52642 10.8211C6.35374 11.483 7.55365 11.3848 8.2624 10.5973L16 2"
-				stroke="#1C76FF"
+				stroke="#fff"
 				strokeWidth="4"
 				strokeLinecap="round"
 				strokeLinejoin="round"

@@ -7,6 +7,7 @@ import { api } from "../../../lib/api";
 // import { FaDotCircle } from "react-icons/fa";
 import { FaCircle, FaPersonWalking } from "react-icons/fa6";
 import { ChatIcon } from "../../../SvgHub/Icons";
+import { Breadcrumb } from "../../../components";
 
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
@@ -85,7 +86,7 @@ const OrderStatus = () => {
 
 	return (
 		<div className="mt-20 ">
-			<h1 className="text-center text-xl font-semibold">Order Status</h1>
+			<Breadcrumb pageTitle={"Order Status"} prevUrl={"/cart"}></Breadcrumb>
 			{orderProducts.map(
 				({ id, shopper_name, order_status, price, products }) => (
 					<div key={id} className="my-10">
@@ -185,7 +186,7 @@ const OrderStatus = () => {
 									<p className="flex items-center gap-2 ">
 										<span className="text-sm">Total:</span>{" "}
 										<Takaicon></Takaicon>{" "}
-										{orderProducts.price}
+										{price}
 									</p>
 								</div>
 							</div>

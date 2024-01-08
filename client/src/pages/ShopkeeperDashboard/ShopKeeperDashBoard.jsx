@@ -130,7 +130,7 @@ const ShopKeeperDashBoard = () => {
 							/>
 							<button
 								onClick={handleOpenClockModal}
-								className="font-bold"
+								className="font-bold  link primary-text"
 							>
 								Set
 							</button>
@@ -233,15 +233,15 @@ const ShopKeeperDashBoard = () => {
 							</div>
 						</div>
 
-						<h1 className="my-3 text-base font-bold ">
+						<h1 className="my-1 text-base font-bold ">
 							{shopkeeper.name}
 						</h1>
-						<p className="flex items-center gap-2 text-sm text-black lg:text-xl">
+						{/* <p className="flex items-center gap-2 text-sm text-black lg:text-xl">
 							<FaMapPin></FaMapPin>{" "}
 							{shopkeeper.shipping_address
 								? shopkeeper.shipping_address
 								: "No Adress provided"}
-						</p>
+						</p> */}
 						<p className="flex items-center gap-2 text-sm text-black lg:text-xl">
 							<FaAddressCard></FaAddressCard>{" "}
 							{shopkeeper.address
@@ -250,7 +250,7 @@ const ShopKeeperDashBoard = () => {
 						</p>
 					</div>
 					<div className="divider"></div>
-					<div className="grid grid-cols-2 gap-2 ">
+					<div className="grid grid-cols-2 gap-4 ">
 						{sections.map((section, index) =>
 							section.link ? (
 								<Link

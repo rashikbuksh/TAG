@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { FaArrowUp } from "react-icons/fa";
+import clsx from "clsx";
 import {
 	AllProducts,
 	BestSellerProduct,
@@ -15,6 +16,7 @@ import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
+import NotificationSound from "../../helpers/NotificationSound";
 
 const Home = () => {
 	const { user, Logout } = useAuth();
@@ -75,9 +77,10 @@ const Home = () => {
 			Cookies.remove("auth");
 		}
 	}, []);
+	
 
 	return (
-		<div className="p-2">
+		<div className="p-3">
 			<Header />
 			<Footer />
 			<ShowCartIcon></ShowCartIcon>
@@ -106,8 +109,9 @@ const Home = () => {
 						<FaArrowUp className="text-3xl text-gray-200"></FaArrowUp>
 					</button>
 				)}
-				<FooterSection />
+				{sliderDataTop && <FooterSection />}
 			</div>
+			
 		</div>
 	);
 };

@@ -22,7 +22,7 @@ const OrderShopper = () => {
 
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">
-			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
+			<Breadcrumb pageTitle="Orders" prevUrl="/shopkeeperDashboard" />
 			<div className="order-product-area">
 				{data?.map((single) => {
 					return (

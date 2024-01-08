@@ -146,7 +146,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 				<div className="mb-1 flex h-[50px]  items-center gap-3 border px-2 py-1">
 					<input
 						type="checkbox"
-						className="checkbox-success checkbox checkbox-xs"
+						className="checkbox-success checkbox checkbox-md"
 						onChange={handleCheckboxChange}
 						checked={isSelected}
 					/>

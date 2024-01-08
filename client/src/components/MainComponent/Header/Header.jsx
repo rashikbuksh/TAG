@@ -7,6 +7,8 @@ import { useAuth } from "../../../context/auth";
 import { api } from "../../../lib/api";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
+import clsx from "clsx";
+import NotificationSound from "../../../helpers/NotificationSound";
 
 function Header() {
 	const [activateOffcanvas, setActivateOffcanvas] = useState(false);
@@ -66,90 +68,159 @@ function Header() {
 			setUserdata(response.data[0]);
 		});
 	}, []);
-	return (
-		<header>
-			<div className="px-6 py-3">
-				<div className="">
-					<div className="flex items-center justify-between">
-						<div className="">
-							<Offcanvas
-								isOffcanvasOpen={isOffcanvasOpen}
-								setIsOffcanvasOpen={setIsOffcanvasOpen}
-								toggleDrawer={toggleDrawer}
-								mobileDrawerStyle={mobileDrawerStyle}
-								show={activateOffcanvas}
-								desktopDrawerStyle={desktopDrawerStyle}
-								activeStatus={getMenuActiveStatus}
-								userData={userData}
-							/>
-						</div>
 
-						<div className="">
-							{/* header search */}
-							<div className="header-search">
-								<form onSubmit={onSubmit}>
-									<input
-										onChange={(e) =>
-											handleSearchProductChange(e)
-										}
-										name="search"
-										type="text"
-										placeholder="Search anything"
-									/>
-									<Link
-										to={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/search/" +
-											search
-										}
-									>
-										<ReactSVG
-											src={
+	const [notification, setNotification] = useState([]);
+	const [userAccess, setUserAccess] = useState(null);
+	const [suser, setsUser] = useState(null);
+	const userid = localStorage.getItem("user-id");
+	useEffect(() => {
+		api.get(`/auth/getUserInfo/${userid}`).then((res) => {
+			setsUser(res.data);
+			setUserAccess(res.data.access);
+		});
+		api.get(`/notification/getnotification/${userid}/${userid}`).then(
+			(res) => {
+				setNotification(res.data);
+			}
+		);
+	}, []);
+
+	const notificationsWithStatusOne = notification.filter(
+		(item) => item.status === 1
+	);
+	// {notification.map((single) => (
+	// 	<div
+	// 		className={clsx(
+	// 			"notification-item",
+	// 			single.status === 1 && "notification-item--unread"
+	// 		)}
+	// 		key={single.id}
+	// 	>
+	// 		{/* Other notification content */}
+	// 		{single.status === 1 && <NotificationSound />}
+
+	// 		{/* Rest of your notification rendering */}
+	// 	</div>
+	// ))}
+	console.log(notificationsWithStatusOne.length);
+	return (
+		<>
+			<header>
+				<div className="px-6 py-3">
+					<div className="">
+						<div className="flex items-center justify-between">
+							<div className="">
+								<Offcanvas
+									isOffcanvasOpen={isOffcanvasOpen}
+									setIsOffcanvasOpen={setIsOffcanvasOpen}
+									toggleDrawer={toggleDrawer}
+									mobileDrawerStyle={mobileDrawerStyle}
+									show={activateOffcanvas}
+									desktopDrawerStyle={desktopDrawerStyle}
+									activeStatus={getMenuActiveStatus}
+									userData={userData}
+								/>
+							</div>
+
+							<div className="">
+								{/* header search */}
+								<div className="header-search">
+									<form onSubmit={onSubmit}>
+										<input
+											onChange={(e) =>
+												handleSearchProductChange(e)
+											}
+											name="search"
+											type="text"
+											placeholder="Search anything"
+										/>
+										<Link
+											to={
 												import.meta.env
 													.VITE_API_PUBLIC_URL +
-												"/assets/img/icons/search.svg"
+												"/search/" +
+												search
 											}
-										/>
-									</Link>
-								</form>
-							</div>
-						</div>
-						<div className="flex items-center justify-center gap-3 ">
-							{/* header logo */}
-							<FaLocationDot color="red" size={30} />
-							<div className="">
-								{isOffcanvasOpen ? (
-									<FaX className="text-2xl   text-pink-500"></FaX>
-								) : (
-									<div className="avatar">
-										{userData ? (
-											<Link
-												to={
+										>
+											<ReactSVG
+												src={
 													import.meta.env
 														.VITE_API_PUBLIC_URL +
-													"/profile"
+													"/assets/img/icons/search.svg"
 												}
-											>
-												<div className="w-8 rounded-full ring ring-[#2F5BA9] ">
-													<img
-														className="rounded-full"
-														src={`${
-															import.meta.env
-																.VITE_APP_IMG_URL
-														}/usersProfilePic/${
-															userData.profile_picture
-														}`}
-													/>
-												</div>
-											</Link>
+											/>
+										</Link>
+									</form>
+								</div>
+							</div>
+							<div className="flex items-center justify-center gap-3 ">
+								{/* header logo */}
+
+								{user && user.access === "shopper" ? (
+									<Link
+										to={"/notification"}
+										className="relative"
+									>
+										<FaBell className="text-4xl   text-yellow-500" />
+										{notificationsWithStatusOne.length !==
+											0 && (
+											<p className="absolute -top-2 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white">
+												{
+													notificationsWithStatusOne.length
+												}
+												<NotificationSound />
+											</p>
+										)}
+									</Link>
+								) : (
+									<div className="">
+										{isOffcanvasOpen ? (
+											<>
+												(
+												<FaX className="text-2xl   text-pink-500"></FaX>
+												){" "}
+											</>
 										) : (
-											<Link
-												to={"/login"}
-												className="w-[60px] rounded-lg bg-primary py-2 text-center  text-white"
-											>
-												Login
-											</Link>
+											<div>
+												{userData ? (
+													<div className="flex items-center justify-center gap-3">
+														<FaLocationDot
+															color="red"
+															size={30}
+														/>
+														<div className="avatar">
+															<Link
+																to={
+																	import.meta
+																		.env
+																		.VITE_API_PUBLIC_URL +
+																	"/profile"
+																}
+															>
+																<div className="h-8 w-8 rounded-full ring ring-[#2F5BA9] ">
+																	<img
+																		className="rounded-full"
+																		src={`${
+																			import.meta
+																				.env
+																				.VITE_APP_IMG_URL
+																		}/usersProfilePic/${
+																			userData.profile_picture
+																		}`}
+																	/>
+																</div>
+															</Link>
+														</div>
+													</div>
+												) : (
+													<Link
+														to={"/login"}
+														className="w-[60px] rounded-lg bg-primary py-2 text-center  text-white"
+													>
+														Login
+													</Link>
+												)}
+											</div>
 										)}
 									</div>
 								)}
@@ -157,11 +228,11 @@ function Header() {
 						</div>
 					</div>
 				</div>
-			</div>
-			{/* search keywords */}
-			<SearchKeywords show={activateSearch} />
-			{/* offcanvas menu */}
-		</header>
+				{/* search keywords */}
+				<SearchKeywords show={activateSearch} />
+				{/* offcanvas menu */}
+			</header>
+		</>
 	);
 }
 

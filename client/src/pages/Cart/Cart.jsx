@@ -7,6 +7,7 @@ import { Takaicon } from "../../SvgHub/SocialIcon";
 import { useAuth } from "../../context/auth";
 import GetDateTime from "../../helpers/GetDateTime";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
+import NoItemInCart from '../../assets/img/cart/shopping_cart_remove.png';
 import { api } from "../../lib/api";
 import {
 	addToCart,
@@ -14,6 +15,7 @@ import {
 	deleteFromCart,
 	increaseQuantity,
 } from "../../store/slices/cart-slice";
+import { Breadcrumb } from "../../components";
 
 const Cart = () => {
 	const dispatch = useDispatch();
@@ -298,9 +300,9 @@ const Cart = () => {
 	return (
 		<>
 			<div className="mx-auto my-14 h-full overflow-scroll lg:w-[50%]">
-				<h1 className="text-center text-2xl font-bold">Cart</h1>
-				<Link to={"/orderStatus"} className="mr-6 flex justify-end">
-					<p className="primary-text link">See Order Status</p>
+				<Breadcrumb pageTitle={"Cart"} prevUrl={"/home"}></Breadcrumb>
+				<Link to={"/orderStatus"} className="mr-2 flex justify-end">
+					<p className="link uppercase text-green-500 text-md my-2 font-bold"> Order Status</p>
 				</Link>
 
 				{cartItems && cartItems.length > 0 ? (
@@ -468,23 +470,7 @@ const Cart = () => {
 								(cartItem) => cartItem.shopper_id === shopper.id
 							) && (
 								<div className="mx-4 my-1 flex items-center justify-between p-1">
-									{runningTimerShopperId === shopper.id && (
-										<div className="p-1 text-xs">
-											<div
-												style={{
-													fontSize: "15px",
-												}}
-											>
-												<span>
-													{Math.floor(countdown / 60)}
-													m
-												</span>
-												<span>{countdown % 60}s</span>
-											</div>
-										</div>
-									)}
-
-									<div className="flex gap-3">
+									<div className="flex items-center gap-3">
 										{buyStates[shopper.id] ? (
 											<>
 												<button
@@ -494,10 +480,33 @@ const Cart = () => {
 															shopper.id
 														);
 													}}
-													className="h-[24px] w-[48px] rounded bg-[#a92f4e] text-xs text-white"
+													className="rounded bg-[#a92f4e] px-3 py-2 text-xs text-white"
 												>
 													Cancel
 												</button>{" "}
+												{runningTimerShopperId ===
+													shopper.id && (
+													<div className="p-1 text-xs">
+														<div
+															style={{
+																fontSize:
+																	"15px",
+															}}
+														>
+															<span>
+																{Math.floor(
+																	countdown /
+																		60
+																)}
+																m
+															</span>
+															<span>
+																{countdown % 60}
+																s
+															</span>
+														</div>
+													</div>
+												)}
 												<button
 													onClick={() => {
 														addOrder(shopper.id);
@@ -505,9 +514,9 @@ const Cart = () => {
 															shopper.id
 														);
 													}}
-													className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
+													className=" rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white"
 												>
-													Buy2
+													Conform
 												</button>{" "}
 											</>
 										) : (
@@ -527,9 +536,9 @@ const Cart = () => {
 													runningTimerShopperId !==
 														shopper.id
 												}
-												className="h-[24px] w-[48px] rounded bg-[#2F5BA9] text-sm text-white"
+												className="rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white"
 											>
-												Buy1
+												Buy
 											</button>
 										)}
 									</div>
@@ -544,7 +553,13 @@ const Cart = () => {
 						</div>
 					))
 				) : (
-					<div>No items in cart</div>
+					<div className="flex items-center justify-center h-[40vh] flex-col gap-2">
+						
+						<img src={NoItemInCart} alt="" />
+						<p className="font-bold">
+						No items in cart
+						</p>
+					</div>
 				)}
 			</div>
 			<div className="h-14"></div>
