@@ -119,7 +119,7 @@ app.post("/sentOtp", async (req, res) => {
 
   const requestBody = {
     phone: number, // Assuming 'number' is the phone number received in the request body
-    gateway_key: "7a3686f9-6423-442e-bdb7-847b7979f447",
+    gateway_key: process.env.SMS_gateway_key,
   };
 
   try {
@@ -129,7 +129,7 @@ app.post("/sentOtp", async (req, res) => {
       {
         headers: {
           "Content-Type": "application/json",
-		  'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoxMDcyfQ.jcQ5hDOOYvS2_lpIerPEnj-Eop9y2dVdeJspmVQro-Y`
+		  'Authorization': `Bearer ${process.env.API_KEY_SMS}`
         },
       }
     );
