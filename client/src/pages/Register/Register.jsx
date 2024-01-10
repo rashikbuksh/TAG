@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { api } from "../../lib/api";
 import { TagLogo2 } from "../../SvgHub/TagLogo2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -53,14 +54,14 @@ const Register = () => {
 						localStorage.setItem("ref_c", id);
 					}
 
-					alert("Registration Successful");
+					toast("Registration Successful");
 				}
 			})
 			.catch((error) => {
 				if (
 					error.response.data.message == "Error executing the query"
 				) {
-					alert("Email or Phone Number already exists");
+					toast("Email or Phone Number already exists");
 				}
 			});
 	};

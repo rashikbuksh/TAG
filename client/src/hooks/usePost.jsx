@@ -34,9 +34,9 @@ async function usePostFunc(props) {
 		};
 
 		setItems((prev) => [newItem, ...prev]);
-		alert(response ?? {});
+		toast(response ?? {});
 	} catch (error) {
-		alert(error?.response ?? {});
+		toast(error?.response ?? {});
 	} finally {
 		onClose();
 	}

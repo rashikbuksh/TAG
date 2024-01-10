@@ -5,6 +5,7 @@ import TagOrderDetailsModal from "../TagOrderHistory/TagOrderDetailsModal";
 
 import moment from "moment-timezone";
 import FormattedTime from "../../helpers/FormattedTime";
+import { toast } from "react-toastify";
 
 const LateOrderTable = ({ order }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -79,13 +80,13 @@ const LateOrderTable = ({ order }) => {
 			order_delay_report: "solved",
 		})
 			.then((response) => {
-				alert(response.data.message);
+				toast(response.data.message);
 				if (response.status === 200) {
 					window.location.reload();
 				}
 			})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	};
 	return (

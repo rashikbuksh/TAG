@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SearchFunction from "../../AdminComponents/SearchFunction/Index";
 import { api } from "../../lib/api";
 import UserTable from "./UserTable";
+import { toast } from "react-toastify";
 
 const TagUser = () => {
 	const [tagUsers, setTagUsers] = useState([]);
@@ -12,7 +13,7 @@ const TagUser = () => {
 				setTagUsers(response.data);
 			})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	}, []);
 	return (

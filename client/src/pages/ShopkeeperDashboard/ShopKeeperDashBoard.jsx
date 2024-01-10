@@ -18,6 +18,7 @@ import { Breadcrumb } from "../../components";
 import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
+import { toast } from "react-toastify";
 
 const ShopKeeperDashBoard = () => {
 	const [isClockOpen, setIsClockOpen] = useState(false);
@@ -61,13 +62,13 @@ const ShopKeeperDashBoard = () => {
 			active_status: newActiveStatus,
 		})
 			.then((response) => {
-				alert(response.data.message);
+				toast(response.data.message);
 				if (response.status === 200) {
-					alert("Change seccess");
+					toast("Change seccess");
 				}
 			})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	};
 	const { user } = useAuth();

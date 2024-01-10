@@ -32,7 +32,7 @@ const AllProducts = ({ limit, sliderData }) => {
 			.catch((error) => {
 				setError(error.message);
 				setLoading(false);
-				// alert(error);
+	
 			});
 		api.get(`/shopperproduct/getPopularShopperProduct`)
 			.then((response) => {
@@ -42,7 +42,6 @@ const AllProducts = ({ limit, sliderData }) => {
 			.catch((error) => {
 				setError(error.message);
 				setLoading(false);
-				// alert(error);
 			});
 	}, []);
 

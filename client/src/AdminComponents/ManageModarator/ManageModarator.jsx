@@ -3,6 +3,7 @@ import MakeModaratorModal from "../MakeModarator/MakeModarator";
 import { api } from "../../lib/api";
 import ModaratorTable from "./ModaratorTable";
 import SearchFunction from "../SearchFunction/Index";
+import { toast } from "react-toastify";
 
 const ManageModarator = () => {
     const [isOpen, setIsOpen]=useState(false)
@@ -14,7 +15,7 @@ const ManageModarator = () => {
 				setTagModarator(response.data);
 			})
 			.catch((error) => {
-				alert(error);
+				toast.error(error);
 			});
 	}, [tagModarator]);
     const handelOpenModal=()=>{

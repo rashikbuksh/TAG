@@ -1,19 +1,37 @@
 import React, { useEffect } from "react";
 import { api } from "../../lib/api";
+import Swal from "sweetalert2";
 
 const ShopkeeperProductList = ({ product }) => {
 	const handleDelete = (id) => {
-		const confirm = window.confirm(
-			"Are you sure you want to delete this product?"
-		);
-		if (!confirm) return;
-		api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
-			.then((res) => {
-				alert("Product Deleted Successfully");
-			})
-			.catch((error) => {
-				alert(error);
-			});
+		Swal.fire({
+			title: "Are you sure?",
+			text: "Are you sure you want to delete this product?",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
+					.then((res) => {
+						Swal.fire({
+							title: "Deleted!",
+							text: "Product Deleted Successfully.",
+							icon: "success",
+						});
+					})
+					.catch((error) => {
+						Swal.fire({
+							icon: "error",
+							title: "Oops...",
+							text: { error },
+							footer: '<a href="#">Why do I have this issue?</a>',
+						});
+					});
+			}
+		});
 	};
 	return (
 		<>

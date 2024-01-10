@@ -302,12 +302,12 @@ const Cart = () => {
 			<div className="mx-auto my-14 h-full overflow-scroll lg:w-[50%]">
 				<Breadcrumb pageTitle={"Cart"} prevUrl={"/home"}></Breadcrumb>
 				<Link to={"/orderStatus"} className="mr-2 flex justify-end">
-					<p className="link uppercase text-green-500 text-md my-2 font-bold"> Order Status</p>
+					<p className="link uppercase text-green-500 text-md mt-2 font-bold"> Order Status</p>
 				</Link>
 
 				{cartItems && cartItems.length > 0 ? (
 					shoppers.map((shopper) => (
-						<div className="mb-10" key={shopper.id}>
+						<div className="" key={shopper.id}>
 							{cartItems.some(
 								(cartItem) => cartItem.shopper_id === shopper.id
 							) && (

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { api } from "../../lib/api";
+import { toast } from "react-toastify";
 const HeroSlider = () => {
 	const [sliderData, setSliderData] = useState([]);
 	const addHeroSliderScema = yup.object({
@@ -69,7 +70,7 @@ const HeroSlider = () => {
 			image: ImageName,
 		}).then((response) => {
 			if (response.data.message == title + " Added Successful") {
-				alert("Slider Added Successful");
+				toast("Slider Added Successful");
 			}
 		});
 	};
@@ -87,7 +88,7 @@ const HeroSlider = () => {
 	async function deleteSlider(id) {
 		await api.delete(`/heroslider/deleteslider/${id}`).then((response) => {
 			if (response.data.message == id + " Deleted Successful") {
-				alert("Slider Deleted Successful");
+				toast("Slider Deleted Successful");
 			}
 		});
 	}

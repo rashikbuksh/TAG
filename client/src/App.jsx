@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import AuthProvider from "./context/auth";
 import ProtectedRoutes from "./routes";
+import 'react-toastify/dist/ReactToastify.css';
 
 import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
 import AdminStats from "./AdminComponents/AdminStats/AdminStats";
@@ -42,6 +43,7 @@ import RegisterShopper from "./pages/Register/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import VerificationOTP from "./pages/VerificationOTP/Index";
+import { ToastContainer } from "react-toastify";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() => import("./pages/Register"));
@@ -431,6 +433,7 @@ function App() {
 			{!isadminPage && <Offcanvas />}
 			{!isadminPage && <Footer />}
 			<AuthProvider>
+				<ToastContainer  />
 				<Routes>
 					<Route element={<ProtectedRoutes />}>
 						{PROTECTED_ROUTES?.map((route) => (

@@ -3,6 +3,7 @@ import UserTable from "../../components/TagUser/UserTable";
 import { api } from "../../lib/api";
 import SearchFunction from "../SearchFunction/Index";
 import ShopkeeperTable from "./ShopkeeperTable";
+import { toast } from "react-toastify";
 
 const TagShopKeeper = () => {
 	const [tagShopkeepers, settagShopkeepers] = useState([]);
@@ -13,7 +14,7 @@ const TagShopKeeper = () => {
 				settagShopkeepers(response.data);
 			})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	}, []);
 	return (

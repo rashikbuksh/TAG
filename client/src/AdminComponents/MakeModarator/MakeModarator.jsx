@@ -8,6 +8,7 @@ import * as yup from "yup";
 import Select from "react-select"; // Import the react-select component
 import { api } from "../../lib/api";
 import Axios from "axios";
+import { toast } from "react-toastify";
 
 const MakeModaratorModal = ({ isOpen, setIsOpen }) => {
 	const [modaratorPassword, setModaratorPassword] = useState(null);
@@ -59,14 +60,14 @@ const MakeModaratorModal = ({ isOpen, setIsOpen }) => {
 					setModaratorEmail(data.email);
 					setModaratorPassword(data.password);
                     setIsOpen(false)
-					alert("Modarator Created Successful");
+					toast("Modarator Created Successful");
 				}
 			})
 			.catch((error) => {
 				if (
 					error.response.data.message == "Error executing the query"
 				) {
-					alert("Email or Phone Number already exists");
+					toast("Email or Phone Number already exists");
 				}
 			});
 	};

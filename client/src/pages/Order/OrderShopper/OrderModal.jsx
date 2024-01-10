@@ -8,6 +8,7 @@ import SuccessOrderModal from "../../../components/SuccessOrderModal/SuccessOrde
 import GetDateTime from "../../../helpers/GetDateTime";
 import { api } from "../../../lib/api";
 import { useAuth } from "../../../context/auth";
+import { toast } from "react-toastify";
 
 const OrderDetailsShopper = () => {
 	const { id } = useParams();
@@ -43,13 +44,12 @@ const OrderDetailsShopper = () => {
 			order_status: "accepted",
 		})
 			.then((response) => {
-				alert(response.data.message);
 				if (response.status === 200) {
 					api.post(`/order/ordershopperaccepttime/${id}`, {
 						shopper_order_accept_time: GetDateTime(),
 					})
 						.then((response) => {
-							alert(response.data.message);
+							toast(response.data.message);
 							if (response.status === 200) {
 								window.location.reload();
 								setOrderStatus("accepted");
@@ -57,12 +57,12 @@ const OrderDetailsShopper = () => {
 							}
 						})
 						.catch((error) => {
-							alert(error);
+							toast(error);
 						});
 				}
 			})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	};
 	const handleCompleteOrder = (id) => {
@@ -70,14 +70,13 @@ const OrderDetailsShopper = () => {
 		api.post(`/order/updateorderstatus/${id}`, {
 			order_status: "completed",
 		})
-			.then((response) => {
-				alert(response.data.message);
+			.then((response) => {			
 				if (response.status === 200) {
 					api.post(`order/orderdeliverytime/${id}`, {
 						delivery_time: GetDateTime(),
 					})
 						.then((response) => {
-							alert(response.data.message);
+							toast(response.data.message);
 							if (response.status === 200) {
 								setOrderStatus("completed");
 								setCancelReport("");
@@ -85,12 +84,12 @@ const OrderDetailsShopper = () => {
 							}
 						})
 						.catch((error) => {
-							alert(error);
+							toast(error);
 						});
 				}
 			})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	};
 
@@ -143,25 +142,25 @@ const OrderDetailsShopper = () => {
 				order_status: "cancelled",
 			})
 				.then((response) => {
-					alert(response.data.message);
+					toast(response.data.message);
 					if (response.status === 200) {
 						api.post(`/order/cancelReport/${id}`, {
 							cancel_report: report,
 						})
 							.then((response) => {
-								alert(response.data.message);
+								toast(response.data.message);
 								if (response.status === 200) {
-									alert("success");
+									// toast("success");
 									setIsShownReport(true);
 								}
 							})
 							.catch((error) => {
-								alert(error);
+								toast(error);
 							});
 					}
 				})
 				.catch((error) => {
-					alert(error);
+					toast(error);
 				});
 			setCancelReport(report);
 			// setIsShownReport(true);

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../../../lib/api";
 import SearchFunction from "../../SearchFunction/Index";
 import AdminProductCart from "./AdminProductCart";
+import { toast } from "react-toastify";
 
 const AllProductAdmin = () => {
 	const [products, setProducts] = useState([]);
@@ -13,7 +14,7 @@ const AllProductAdmin = () => {
 				setProducts(response.data);
 			})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	}, []);
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../../../components/Modal/Modal";
 import { api } from "../../../lib/api";
+import toast from "../../../../../server/util/toast";
 
 const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 	const [isEditActive, setIsEditActive] = useState(true);
@@ -30,13 +31,13 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 			full_description: productFullDescription,
 		})
 			.then((response) => {
-				alert(response.data.message);
+				toast(response.data.message);
 				if (response.status === 200) {
-					alert("Change seccess");
+					toast("Change seccess");
 				}
 			})
 			.catch((error) => {
-				alert(error);
+				toast.error(error);
 			});
 	};
 	const handelVarified = () => {
@@ -44,13 +45,13 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 			isVerified: "verified",
 		})
 			.then((response) => {
-				alert(response.data.message);
+				toast(response.data.message);
 				if (response.status === 200) {
-					alert("Change seccess");
+					toast("Change seccess");
 				}
 			})
 			.catch((error) => {
-				alert(error);
+				toast.error(error);
 			});
 	};
 

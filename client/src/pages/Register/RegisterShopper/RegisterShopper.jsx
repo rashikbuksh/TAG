@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { TagLogo2 } from "../../../SvgHub/TagLogo2";
 import { api } from "../../../lib/api";
+import { toast } from "react-toastify";
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -15,7 +16,7 @@ const Register = () => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition);
 		} else {
-			alert("Geolocation is not supported by this browser.");
+			toast("Geolocation is not supported by this browser.");
 		}
 	};
 
@@ -61,7 +62,7 @@ const Register = () => {
 					response.data.message ===
 					data.name + " added successfully"
 				) {
-					alert("Registration Successful");
+					toast("Registration Successful");
 					window.location.href = "/login";
 				}
 			})
@@ -69,7 +70,7 @@ const Register = () => {
 				if (
 					error.response.data.message == "Error executing the query"
 				) {
-					alert("Email or Phone Number already exists");
+					toast("Email or Phone Number already exists");
 				}
 			});
 	};

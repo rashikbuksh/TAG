@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { Breadcrumb } from "../../components";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
 	const id = localStorage.getItem("user-id");
@@ -56,7 +57,7 @@ const EditProfile = () => {
 				address: data.address,
 			}).then((response) => {
 				if (response.data.message === id + " updated successfully") {
-					alert("Profile Updated Successfully");
+					toast.success("Profile Updated Successfully");
 					window.location.href = "/profile";
 				}
 			});
@@ -67,7 +68,7 @@ const EditProfile = () => {
 	// 	if (navigator.geolocation) {
 	// 		navigator.geolocation.getCurrentPosition(showPosition);
 	// 	} else {
-	// 		alert("Geolocation is not supported by this browser.");
+	// 		toast("Geolocation is not supported by this browser.");
 	// 	}
 	// };
 

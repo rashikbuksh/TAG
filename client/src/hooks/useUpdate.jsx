@@ -1,4 +1,5 @@
 
+import { toast } from "react-toastify";
 import { api } from "../lib/api";
 
 async function useUpdateFunc({
@@ -29,9 +30,9 @@ async function useUpdateFunc({
 			})
 		);
 
-		alert(response);
+		toast(response);
 	} catch (error) {
-		alert(error?.response);
+		toast(error?.response);
 	} finally {
 		onClose();
 	}
