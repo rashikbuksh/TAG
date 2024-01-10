@@ -12,7 +12,6 @@ const AdminShopkeeperProduct = () => {
 				setShopperProduct(response.data);
 			})
 			.catch((error) => {
-				alert(error);
 			});
 	}, [id, shoperProduct]);
 	return (

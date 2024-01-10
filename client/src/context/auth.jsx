@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { PROTECTED_ROUTES } from "../App";
 import { useCookie } from "../hooks";
 import { api } from "../lib/api";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext({});
 
@@ -33,6 +34,15 @@ const AuthProvider = ({ children }) => {
 			});
 			if (res.data.message) {
 				setLoginError(res.data.message);
+				toast(`${res.data.message}`, {
+					position: "top-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+				});
 			}
 
 			const { token, user: loginUser } = res?.data;
@@ -51,7 +61,6 @@ const AuthProvider = ({ children }) => {
 				}
 			}
 		} catch (error) {
-			// alert(error);
 			console.error(error);
 		}
 	};

@@ -7,6 +7,7 @@ import { ReactSVG } from "react-svg";
 import { Breadcrumb } from "../../components";
 import { getDiscountPrice } from "../../helpers/product";
 import { api } from "../../lib/api";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
 	const navigate = useNavigate();
@@ -77,7 +78,7 @@ const Checkout = () => {
 		})
 			.then((response) => {})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	};
 

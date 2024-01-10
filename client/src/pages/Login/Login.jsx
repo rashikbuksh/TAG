@@ -134,9 +134,11 @@ const Login = () => {
 								</a>
 							</div>
 						</div>
+						
 
 						{loginError && (
 							<div>
+								
 								<p className="text-error">{loginError}</p>
 							</div>
 						)}

@@ -9,6 +9,7 @@ import useFetch from "../../hooks/use-fetch";
 import { api } from "../../lib/api";
 import OrderModal from "./OrderModal/OrderModal";
 import { Takaicon } from "../../SvgHub/SocialIcon";
+import { toast } from "react-toastify";
 
 const Order = () => {
 	const [data, setData] = useState([]);
@@ -30,7 +31,7 @@ const Order = () => {
 				setData(response.data);
 			})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	}, [customer_profile_id]);
 

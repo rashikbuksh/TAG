@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { api } from "../../../lib/api";
+import { toast } from "react-toastify";
 
 const AddProductForm = () => {
 	const [categoryNames, setCategoryNames] = useState([]);
@@ -130,7 +131,7 @@ const AddProductForm = () => {
 		}).then((response) => {
 			if (response.data.message === data.name + " added successfully") {
 				form.reset();
-				alert("Product Added Successfully");
+				toast.success("Product Added Successfully");
 			}
 		});
 	};

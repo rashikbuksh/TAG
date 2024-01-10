@@ -6,6 +6,7 @@ import { FaBars } from "react-icons/fa6";
 import { Takaicon } from "../../../SvgHub/SocialIcon";
 import { useAuth } from "../../../context/auth";
 import { api } from "../../../lib/api";
+import { toast } from "react-toastify";
 
 const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	const {
@@ -43,7 +44,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 			product_count: newQuantity,
 		}).then((res) => {
 			if (res.data.status === 200) {
-				alert("Product Count Updated Successfully");
+				toast.success("Product Count Updated Successfully");
 			}
 		});
 	};
@@ -57,7 +58,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	const handlePriceChange = (e) => {
 		if (isVerified === "verified") {
 			// If the product is verified, show a warning message
-			alert("Cannot edit price for verified products");
+			toast.warning("Cannot edit price for verified products");
 			return;
 		}
 
@@ -79,7 +80,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 			price: newPrice,
 		}).then((res) => {
 			if (res.data.status === 200) {
-				alert("Product Price Updated Successfully");
+				toast.success("Product Price Updated Successfully");
 			}
 		});
 
@@ -90,38 +91,38 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 		setIsEditingPrice(false);
 	};
 
-	const handleDeleteClick = () => {
-		api.delete(`/news/deletenews/${id}/by/shopperproduct`);
-		const isConfirmed = window.confirm(
-			"Are you sure you want to delete this product?"
-		);
-		if (isConfirmed) {
-			api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
-				.then((res) => {
-					if (res.data.status === 200) {
-						alert("Product Deleted Successfully");
-						window.location.reload();
-						// You may also want to update your UI to remove the deleted product from the list
-						// Assuming you have a function to remove the product from the list, you can call it here.
-					} else {
-						alert(
-							"Failed to delete the product. Please try again."
-						);
-					}
-				})
-				.catch((error) => {
-					console.error("Error deleting product:", error);
-					alert(
-						"An error occurred while deleting the product. Please try again."
-					);
-				});
-		}
-	};
+	// const handleDeleteClick = () => {
+	// 	api.delete(`/news/deletenews/${id}/by/shopperproduct`);
+	// 	const isConfirmed = window.confirm(
+	// 		"Are you sure you want to delete this product?"
+	// 	);
+	// 	if (isConfirmed) {
+	// 		api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
+	// 			.then((res) => {
+	// 				if (res.data.status === 200) {
+	// 					toast("Product Deleted Successfully");
+	// 					window.location.reload();
+	// 					// You may also want to update your UI to remove the deleted product from the list
+	// 					// Assuming you have a function to remove the product from the list, you can call it here.
+	// 				} else {
+	// 					toast(
+	// 						"Failed to delete the product. Please try again."
+	// 					);
+	// 				}
+	// 			})
+	// 			.catch((error) => {
+	// 				console.error("Error deleting product:", error);
+	// 				toast(
+	// 					"An error occurred while deleting the product. Please try again."
+	// 				);
+	// 			});
+	// 	}
+	// };
 
 	const { user } = useAuth();
 	const handleCheckboxChange = (e) => {
 		// Check if newPrice is not empty
-		if (newPrice) {
+		if (newPrice,newQuantity) {
 			const selectedProductInfo = {
 				name: name,
 				price: newPrice,
@@ -134,7 +135,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 			onProductSelection(selectedProductInfo, e.target.checked);
 		} else {
 			// Prevent selection if newPrice is empty
-			alert(
+			toast(
 				"Please enter a price, Discount,newQuantity before selecting."
 			);
 			// You might want to handle this scenario by showing an error message or taking appropriate action

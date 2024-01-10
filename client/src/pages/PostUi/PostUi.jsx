@@ -24,6 +24,8 @@ import { useAuth } from "../../context/auth";
 import GetDateTime from "../../helpers/GetDateTime";
 import { api } from "../../lib/api";
 import CommentModal from "./CommentModal";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 const PostUi = ({ postData }) => {
 	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");
@@ -98,15 +100,30 @@ const PostUi = ({ postData }) => {
 	}
 
 	const handleNewsDelete = () => {
-		const confirm = window.confirm("Are you sure you want to delete?");
-		if (!confirm) return;
-		api.delete(`/news/deletenews/${id}`)
-			.then((res) => {
-				alert("News Deleted Successfully");
-			})
-			.catch((error) => {
-				alert(error);
-			});
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				api.delete(`/news/deletenews/${id}`)
+					.then((res) => {
+						Swal.fire({
+							title: "Deleted!",
+							text: "News Deleted Successfully.",
+							icon: "success",
+						});
+						window.location.reload();
+					})
+					.catch((error) => {
+						toast(error);
+					});
+			}
+		});
 	};
 
 	return (

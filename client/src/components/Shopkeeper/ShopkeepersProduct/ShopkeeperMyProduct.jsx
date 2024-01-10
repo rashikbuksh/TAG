@@ -3,10 +3,20 @@ import { useState } from "react";
 import { FaBars, FaCheckCircle, FaEye, FaMinus, FaPlus } from "react-icons/fa";
 import { Takaicon } from "../../../SvgHub/SocialIcon";
 import { api } from "../../../lib/api";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const ShopkeeperMyProduct = ({ product, index }) => {
-	const { id, name, price, product_count, image, isVerified, discount,view } =
-		product;
+	const {
+		id,
+		name,
+		price,
+		product_count,
+		image,
+		isVerified,
+		discount,
+		view,
+	} = product;
 
 	const [quantity, setQuantity] = useState(product_count);
 	const [newPrice, setNewPrice] = useState(price);
@@ -34,7 +44,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 
 	const handlePriceChange = (e) => {
 		if (isVerified === "verified") {
-			alert("Cannot edit price for verified products");
+			toast.warning("Cannot edit price for verified products");
 			return;
 		}
 
@@ -48,7 +58,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 	};
 	const handleProductUpdate = () => {
 		if (isVerified === "verified") {
-			alert("Cannot edit price for verified products");
+			toast.warning("Cannot edit price for verified products");
 			return;
 		}
 
@@ -60,42 +70,56 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		})
 			.then((res) => {
 				if (res.data.status === 200) {
-					alert("Product Price Updated Successfully");
+					toast("Product Price Updated Successfully");
 				}
 			})
 			.catch((error) => {
 				console.error("Error updating product price:", error);
-				alert("Failed to update product price. Please try again.");
+				toast.error(
+					"Failed to update product price. Please try again."
+				);
 			});
 
 		setIsEditingPrice(false);
 	};
 	const handleDeleteClick = () => {
 		api.delete(`/news/deletenews/${id}/by/shopperproduct`);
-		const isConfirmed = window.confirm(
-			"Are you sure you want to delete this product?"
-		);
-		if (isConfirmed) {
-			api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
-				.then((res) => {
-					if (res.data.status === 200) {
-						alert("Product Deleted Successfully");
-						window.location.reload();
-						// You may also want to update your UI to remove the deleted product from the list
-						// Assuming you have a function to remove the product from the list, you can call it here.
-					} else {
-						alert(
-							"Failed to delete the product. Please try again."
+		Swal.fire({
+			title: "Are you sure you want to delete this product?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
+					.then((res) => {
+						if (res.data.status === 200) {
+							toast("Product Deleted Successfully");
+							Swal.fire({
+								title: "Deleted!",
+								text: "Your file has been deleted.",
+								icon: "success",
+							});
+							window.location.reload();
+							// You may also want to update your UI to remove the deleted product from the list
+							// Assuming you have a function to remove the product from the list, you can call it here.
+						} else {
+							toast(
+								"Failed to delete the product. Please try again."
+							);
+						}
+					})
+					.catch((error) => {
+						console.error("Error deleting product:", error);
+						toast(
+							"An error occurred while deleting the product. Please try again."
 						);
-					}
-				})
-				.catch((error) => {
-					console.error("Error deleting product:", error);
-					alert(
-						"An error occurred while deleting the product. Please try again."
-					);
-				});
-		}
+					});
+			}
+		});
 	};
 	const handleNotAvailable = () => {
 		setQuantity(0);
@@ -160,8 +184,11 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 						alt="No Image"
 					/>
 					<div>
-						<p className="flex justify-end items-center gap-2"><FaEye/>{view}</p>
-					
+						<p className="flex items-center justify-end gap-2">
+							<FaEye />
+							{view}
+						</p>
+
 						<div className="my-2 flex flex-col items-center">
 							<div>
 								<label>QTY:</label>
@@ -215,7 +242,6 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 										{price ? price : "N/A"}
 									</p>
 								)}
-							
 							</div>
 							<div className="relative mt-0.5 flex flex-col gap-0.5">
 								<label>Discount:</label>

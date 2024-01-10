@@ -43,7 +43,7 @@ const OrderStatus = () => {
 		Promise.all(productPromises).then((productData) => {
 			setProducts(productData);
 		});
-	}, [pendingOrders]);
+	}, [pendingOrders, products]);
 
 	const orderProducts = useMemo(() => {
 		return pendingOrders.map((order) => ({
@@ -85,8 +85,11 @@ const OrderStatus = () => {
 	};
 
 	return (
-		<div className="mt-20 ">
-			<Breadcrumb pageTitle={"Order Status"} prevUrl={"/cart"}></Breadcrumb>
+		<div className="mt-10 ">
+			<Breadcrumb
+				pageTitle={"Order Status"}
+				prevUrl={"/cart"}
+			></Breadcrumb>
 			{orderProducts.map(
 				({ id, shopper_name, order_status, price, products }) => (
 					<div key={id} className="my-10">
@@ -185,8 +188,7 @@ const OrderStatus = () => {
 
 									<p className="flex items-center gap-2 ">
 										<span className="text-sm">Total:</span>{" "}
-										<Takaicon></Takaicon>{" "}
-										{price}
+										<Takaicon></Takaicon> {price}
 									</p>
 								</div>
 							</div>

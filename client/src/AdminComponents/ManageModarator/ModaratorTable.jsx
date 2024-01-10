@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../../lib/api';
+import { toast } from 'react-toastify';
 
 const ModaratorTable = ({tagModartor}) => {
     const handleModaratorDelete=(id)=>{
@@ -11,19 +12,19 @@ const ModaratorTable = ({tagModartor}) => {
 			api.delete(`/auth/deleteModarator/${id}`)
 				.then((res) => {
 					if (res.data.status === 200) {
-						alert("Modarator Deleted Successfully");
+						toast("Modarator Deleted Successfully");
 						window.location.reload();
 						// You may also want to update your UI to remove the deleted product from the list
 						// Assuming you have a function to remove the product from the list, you can call it here.
 					} else {
-						alert(
+						toast.error(
 							"Failed to delete the Modarator. Please try again."
 						);
 					}
 				})
 				.catch((error) => {
 					console.error("Error deleting Modarator:", error);
-					alert(
+					toast.error(
 						"An error occurred while deleting the MOdarator. Please try again."
 					);
 				});

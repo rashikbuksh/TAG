@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
+import { toast } from "react-toastify";
 
 const Refer = () => {
 	const [referStatus, setReferStatus] = useState("");
@@ -35,7 +36,6 @@ const Refer = () => {
 				}
 			})
 			.catch((error) => {
-				// alert(error);
 			});
 	};
 
@@ -55,9 +55,9 @@ const Refer = () => {
 								refer_status: "referred",
 							})
 								.then((response) => {
-									alert(response.data.message);
+									toast(response.data.message);
 									if (response.status === 200) {
-										alert("Change success");
+										toast("Change success");
 										localStorage.removeItem("ref_c");
 										api.post(`/add_refer`, {
 											referred_by: referredParsonId.id,
@@ -65,7 +65,7 @@ const Refer = () => {
 										})
 											.then((response) => {
 												if (response.status === 200) {
-													alert(
+													toast(
 														"Added success to refer"
 													);
 													localStorage.removeItem(
@@ -77,17 +77,17 @@ const Refer = () => {
 											})
 											.catch((error) => {
 												// Re-enable the button if there's an error
-												alert(error);
+												toast(error);
 											});
 									}
 								})
 								.catch((error) => {
 									// Re-enable the button if there's an error
-									alert(error);
+									toast(error);
 								});
 						} else {
 							setError("Enter A Valid Refer code");
-							alert("Invalid Refer code");
+							toast("Invalid Refer code");
 							localStorage.removeItem("ref_c");
 							window.location.reload(true);
 							// Re-enable the button if there's an error
@@ -97,7 +97,7 @@ const Refer = () => {
 					.catch((error) => {
 						setIsSubmitting(false);
 						handelHaveReferCodeChecked(id); // Re-enable the button if there's an error
-						alert(error);
+						toast(error);
 					});
 			} else {
 				handelHaveReferCodeChecked(id);
@@ -113,14 +113,14 @@ const Refer = () => {
 			refer_status: "unreferred",
 		})
 			.then((response) => {
-				// alert(response.data.message);
+				// toast(response.data.message);
 				if (response.status === 200) {
 					setIsOpen(false); // Close the modal when successful
 				}
 			})
 			.catch((error) => {
 				setIsSubmitting(false); // Re-enable the button if there's an error
-				alert(error);
+				toast(error);
 			});
 	};
 
@@ -146,14 +146,14 @@ const Refer = () => {
 							})
 								.then((response) => {
 									if (response.status === 200) {
-										alert("Change success");
+										toast("Change success");
 										api.post(`/add_refer`, {
 											referred_by: referredParsonId.id,
 											referred_to: user.id,
 										})
 											.then((response) => {
 												if (response.status === 200) {
-													alert(
+													toast(
 														"Added success to refer"
 													);
 													setIsOpen(false); // Close the modal when everything is successful
@@ -161,13 +161,13 @@ const Refer = () => {
 											})
 											.catch((error) => {
 												setIsSubmitting(false); // Re-enable the button if there's an error
-												alert(error);
+												toast(error);
 											});
 									}
 								})
 								.catch((error) => {
 									setIsSubmitting(false); // Re-enable the button if there's an error
-									alert(error);
+									toast(error);
 								});
 						} else {
 							setError("Enter A Valid Refer code");
@@ -176,7 +176,7 @@ const Refer = () => {
 					})
 					.catch((error) => {
 						setIsSubmitting(false); // Re-enable the button if there's an error
-						alert(error);
+						toast(error);
 					});
 			})
 			.catch((errors) => {

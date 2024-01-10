@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { api } from "../../lib/api";
 import LateOrderTable from "./LateOrderTable";
+import { toast } from "react-toastify";
 
 const LateOrdersPage = () => {
 	const [taglateOrder, setTagLateOrder] = useState([]);
@@ -12,7 +13,7 @@ const LateOrdersPage = () => {
 				setTagLateOrder(response.data);
 			})
 			.catch((error) => {
-				alert(error);
+				toast(error);
 			});
 	}, []);
 

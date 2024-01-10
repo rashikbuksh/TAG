@@ -144,7 +144,7 @@ const change = [
 
 const remove = [
   {
-    uri: "/shopperproduct/deleteshopperproduct/:id(*)",
+    uri: "/shopperproduct/deleteshopperproduct/:id",
     query: `DELETE FROM shopper_product WHERE id = ?`,
     param: ["id"],
   },

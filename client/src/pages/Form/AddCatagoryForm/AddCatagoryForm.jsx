@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { api } from "../../../lib/api";
+import { toast } from "react-toastify";
 
 const AddcategoryForm = () => {
 	const addcategoryScema = yup.object({
@@ -33,7 +34,7 @@ const AddcategoryForm = () => {
 				response.data.message ===
 				data.category_name + " added successfully"
 			) {
-				alert("Category Added Successful");
+				toast("Category Added Successful");
 			}
 		});
 	};

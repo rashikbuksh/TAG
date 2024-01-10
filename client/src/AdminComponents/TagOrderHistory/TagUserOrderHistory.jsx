@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { api } from "../../lib/api";
 import TagOrderTable from "./TagOrderTable";
 import { useAuth } from "../../context/auth";
+import { toast } from "react-toastify";
 
 const TagUserOrderHistory = () => {
 	const { user } = useAuth();
@@ -16,7 +17,7 @@ const TagUserOrderHistory = () => {
 					setOrderData(response.data);
 				})
 				.catch((error) => {
-					alert(error);
+					toast.error(error);
 				});
 		}
 	}, [customer_profile_id]);

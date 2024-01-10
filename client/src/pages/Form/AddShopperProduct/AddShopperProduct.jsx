@@ -10,6 +10,7 @@ import { useAuth } from "../../../context/auth";
 import GetDateTime from "../../../helpers/GetDateTime";
 import { getDiscountPrice } from "../../../helpers/product";
 import { api } from "../../../lib/api";
+import { toast } from "react-toastify";
 
 const ShopperProduct = () => {
 	const [category, setCategory] = useState([]);
@@ -61,8 +62,10 @@ const ShopperProduct = () => {
 	};
 	const handelAddShoperProduct = async () => {
 		if (selectedProducts.length === 0) {
-			alert("Add Product");
+			toast("Add Product");
 		} else {
+			let allProductsAddedSuccessfully = true;
+
 			for (const product of selectedProducts) {
 				const response = await api.post(
 					`/shopperproduct/addshopperproduct`,
@@ -75,11 +78,13 @@ const ShopperProduct = () => {
 						shopper_id: Number(user.id),
 					}
 				);
+
 				if (response.data.status === 201) {
 					if (product.discount >= parseInt(util.value)) {
 						const response1 = await api.get(
 							`/shopperproduct/getLastProduct/${product.shopper_id}`
 						);
+
 						if (response1.status === 200) {
 							const productData = response1.data[0];
 
@@ -102,17 +107,26 @@ const ShopperProduct = () => {
 									post_img: productData.product_image,
 								}
 							);
-							if (response12.status === 201) {
-								alert("Product Added Successfully with News");
+
+							if (response12.status !== 201) {
+								allProductsAddedSuccessfully = false;
 							}
 						}
-					} else {
-						alert("Product Added Successfully");
 					}
+				} else {
+					allProductsAddedSuccessfully = false;
 				}
+			}
+
+			if (allProductsAddedSuccessfully) {
+				setSelectedProducts([]);
+				toast.success("All Products Added Successfully");
+			} else {
+				toast.error("Some Products Failed to Add");
 			}
 		}
 	};
+
 	const removeProduct = (productId) => {
 		const updatedProducts = selectedProducts.filter(
 			(product) => product.product_id !== productId
@@ -120,9 +134,9 @@ const ShopperProduct = () => {
 		setSelectedProducts(updatedProducts);
 	};
 	return (
-		<div className="body-wrapper  my-10 relative ">
+		<div className="body-wrapper  relative my-10 ">
 			<Breadcrumb pageTitle="Add Product" prevUrl="/shopkeeperProduct" />
-			<div role="alert" className="alert alert-info my-1 flex text-left">
+			<div role="toast" className="toast-info toast my-1 flex text-left">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -197,7 +211,6 @@ const ShopperProduct = () => {
 					<div className="">
 						<div className="">
 							<SearchFunction
-					
 								arr={products}
 								setFilteredArr={setFilteredProductArr}
 								width={true}

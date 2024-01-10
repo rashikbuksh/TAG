@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { FaCamera, FaFileImage } from "react-icons/fa";
 import { api } from "../../../lib/api";
 import Modal from "../../Modal/Modal";
+import { toast } from "react-toastify";
 
 const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 	const [cameraError, setCameraError] = useState(null);
@@ -84,7 +85,7 @@ const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 				setContent("");
 				setFile(null); // Reset the selected image
 				setIsPosting(false);
-				alert("News Feed Added Successfully");
+				toast("News Feed Added Successfully");
 				setIsOpen(!isOpen);
 			}
 		} catch (error) {

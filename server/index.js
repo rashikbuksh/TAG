@@ -4,7 +4,8 @@ const { app, ExecuteQuery } = require("./config");
 const axios = require("axios");
 const multer = require("multer");
 var productImage = null;
-
+var http = require("http");
+var querystring = require("querystring");
 const storage = multer.diskStorage({
   destination: (req, file, callBack) => {
     if (file.mimetype.substring(0, 5) == "image") {
@@ -115,37 +116,36 @@ app.use(express.json()); // Middleware to parse JSON requests
 
 app.post("/sentOtp", async (req, res) => {
   const { number } = req.body;
+  var postData = querystring.stringify({
+    // token: process.env.API_KEY_SMS,
+    to: `+88${number}`,
+    message: "Test sms using API from towhid",
+  });
 
-  const requestBody = {
-    phone: number, // Assuming 'number' is the phone number received in the request body
-    gateway_key: process.env.SMS_gateway_key,
+  var options = {
+    hostname: "api.greenweb.com.bd",
+    path: "/api.php",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Length": postData.length,
+    },
   };
 
-  try {
-    const response = await axios.post(
-      `https://api.fazpass.com/v1/otp/request`,
-      requestBody,
-      {
-        headers: {
-          "Content-Type": "application/json",
-		  'Authorization': `Bearer ${process.env.API_KEY_SMS}`
-        },
-      }
-    );
+  var req = http.request(options, function (res) {
+    res.setEncoding("utf8");
 
-    // Handle response data accordingly
-    console.log(response);
+    res.on("data", function (chunk) {
+      console.log("BODY:", chunk);
+    });
 
-    // Respond to the client with the data received from the external API
-    res
-      .status(200)
-      .json({ message: "OTP request sent successfully", data: response.data });
-  } catch (error) {
-    // Handle error
-    console.log( error);
-    console.error("There was a problem with the request:", error.message);
+    res.on("end", function () {});
+  });
 
-    // Respond with an error status to the client
-    res.status(500).json({ error: "Failed to send OTP request" });
-  }
+  req.on("error", function (e) {
+    console.log("Problem with request:", e.message);
+  });
+
+  req.write(postData);
+  req.end();
 });

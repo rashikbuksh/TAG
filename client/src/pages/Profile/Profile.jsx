@@ -6,6 +6,7 @@ import { ErrorMessage, Preloader } from "../../components";
 import useFetch from "../../hooks/use-fetch";
 import { api } from "../../lib/api";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 const Profile = () => {
 	// const { data, isLoading, errorMessage } = useFetch("profile.json");
@@ -19,7 +20,7 @@ const Profile = () => {
 		if (file) {
 			const allowedTypes = ["image/png", "image/jpeg"]; // Allowed file types
 			if (!allowedTypes.includes(file.type)) {
-				alert("Please select a PNG or JPG file.");
+				toast.warning("Please select a PNG or JPG file.");
 				return;
 			}
 			setImage(file);
@@ -27,7 +28,7 @@ const Profile = () => {
 	};
 	const handleProfileImageUpload = async () => {
 		if (!image) {
-			alert("Please select an image.");
+			toast.warning("Please select an image.");
 			return;
 		}
 
@@ -56,15 +57,15 @@ const Profile = () => {
 				}).then((response) => {
 					if (response.data.message == `${id} updated successfully`) {
 						setImage(null);
-						alert("Profile image updated successfully");
+						toast.success("Profile image updated successfully");
 					}
 				});
 			} else {
-				alert("Failed to upload image.");
+				toast("Failed to upload image.");
 			}
 		} catch (error) {
 			console.error("Error uploading image:", error);
-			alert("An error occurred while uploading the image.");
+			toast.error("An error occurred while uploading the image.");
 		}
 	};
 
@@ -78,7 +79,7 @@ const Profile = () => {
 				setTotalOrder(response.data[0].total_order);
 			})
 			.catch((error) => {
-				alert(error);
+				toast.error(error);
 			});
 	}, [userdata, id]);
 

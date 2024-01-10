@@ -14,12 +14,12 @@ const Welcome = () => {
 	}, []);
 
 	return (
-		<div className="flex h-screen w-screen flex-col items-center justify-center pt-[216px] ">
+		<div className="flex h-screen w-screen flex-col items-center justify-center pt-32 ">
 			<div className="h-[165px] flex-grow">
 				<Taglogo />
 			</div>
 			<div className="flex-grow">
-				<p className="text-sm font-semibold">Beta Version 23.0.1</p>
+				<p className="text-sm font-semibold mt-28">Beta Version 24.1.01</p>
 			</div>
 		</div>
 	);
