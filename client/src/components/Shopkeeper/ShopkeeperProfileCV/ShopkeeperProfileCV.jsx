@@ -35,7 +35,7 @@ const ShopkeeperProfileCV = () => {
 	const [filteredAllProducts, setFilteredProducts] = useState([]);
 	const [selectedLetter, setSelectedLetter] = useState("");
 	const [mapModal, setMapModal] = useState(false);
-	const [latLong, setLatLong] = useState({ latitude: 0, longitude: 0 });
+	const [latLong, setLatLong] = useState({ lat: 0, lng: 0 });
 	const dispatch = useDispatch();
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
@@ -88,8 +88,8 @@ const ShopkeeperProfileCV = () => {
 	const MapModalOpener = (location) => {
 		let positionFromDb = location.split("__");
 		setLatLong({
-			latitude: positionFromDb[0],
-			longitude: positionFromDb[1],
+			lat: positionFromDb[0],
+			lng: positionFromDb[1],
 		});
 		setMapModal(true);
 	};
@@ -269,15 +269,19 @@ const ShopkeeperProfileCV = () => {
 													/>
 												</Link>
 												{}
-												{user &&
-												user.access === "customer" ? (
-													""
-												) : user.id ==
-												  single.shopper_id ? (
-													<div className="flex items-center justify-end gap-2">
-														<FaEye></FaEye>
-														<p>{single.view}</p>
-													</div>
+												{user ? (
+													user.access ===
+													"customer" ? (
+														""
+													) : user.id ==
+													  single.shopper_id ? (
+														<div className="flex items-center justify-end gap-2">
+															<FaEye></FaEye>
+															<p>{single.view}</p>
+														</div>
+													) : (
+														""
+													)
 												) : (
 													""
 												)}

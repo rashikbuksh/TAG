@@ -53,7 +53,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 	const [display, setDisplay] = useState(0);
 	const [isOpen, setIsOpen] = useState(false);
 	const [isLocationOpen, setIsLocationOpen] = useState(false);
-	const [latLong, setLatLong] = useState({ latitude: 0, longitude: 0 });
+	const [latLong, setLatLong] = useState({ lat: 0, lng: 0 });
 	const [userInfo, setUserInfo] = useState([]);
 
 	const { user } = useAuth();
@@ -115,8 +115,8 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		GetUserInfo();
 		let positionFromDb = shipping_address?.split("__");
 		setLatLong({
-			latitude: positionFromDb[0],
-			longitude: positionFromDb[1],
+			lat: positionFromDb[0],
+			lng: positionFromDb[1],
 		});
 		setIsLocationOpen(!isOpen);
 	};
@@ -255,20 +255,19 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					</div>
 				</div>
 				<div className="h-3 px-6">
-				{user && user.access === "customer" ? (
-					""
-				) : !user ? (
-					""
-				) : user.id == shopper_id ? (
-					<div className="flex items-center justify-end gap-2">
-						<FaEye></FaEye>
-						<p>{view}</p>
-					</div>
-				) : (
-					""
-				)}
+					{user && user.access === "customer" ? (
+						""
+					) : !user ? (
+						""
+					) : user.id == shopper_id ? (
+						<div className="flex items-center justify-end gap-2">
+							<FaEye></FaEye>
+							<p>{view}</p>
+						</div>
+					) : (
+						""
+					)}
 				</div>
-				
 
 				{/* price  */}
 				<div className="px-2">
@@ -301,12 +300,15 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 									popup={userInfo.name}
 									latlong={latLong}
 								></LocationModal> */}
-								<MapDistanceModal
-									isOpen={isLocationOpen}
-									setIsOpen={setIsLocationOpen}
-									popup={userInfo.name}
-									latlong={latLong}
-								/>
+
+								{isLocationOpen && (
+									<MapDistanceModal
+										isOpen={isLocationOpen}
+										setIsOpen={setIsLocationOpen}
+										popup={userInfo.name}
+										latlong={latLong}
+									/>
+								)}
 							</div>
 						)}
 					</div>

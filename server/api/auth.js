@@ -7,19 +7,32 @@ const read = [
 	// },
 	{
 		uri: "/auth/getUserInfo/:id",
-		query: `SELECT profile_picture, name, user_name, active_status, review_count, access, shipping_address,address from customer_profile where id = ?`,
+		query: `SELECT profile_picture, name, user_name, active_status, review_count, access, shipping_address, address from customer_profile where id = ?`,
 		param: ["id"],
 		msg: "id is incorrect",
 	},
 	{
 		uri: "/auth/getUserAllInfo/:id",
-		query: `SELECT name,shipping_address,address,image from customer_profile where id = ?`,
+		query: `SELECT name, shipping_address, address, image from customer_profile where id = ?`,
 		param: ["id"],
 		msg: "id is incorrect",
 	},
 	{
 		uri: "/auth/getShopperInfo",
-		query: `SELECT id, image, name, user_name,phone,email,access, review_count from customer_profile where access = "shopper"`,
+		query: `SELECT
+					cp.id,
+					cp.image,
+					cp.name,
+					cp.user_name,
+					cp.phone,
+					cp.email,
+					cp.access,
+					cp.review_count,
+                    REPLACE(cp.shipping_address, '__', ',') as shipping_address
+				FROM
+					customer_profile cp
+				WHERE
+					access = "shopper"`,
 	},
 	{
 		uri: "/auth/getALLUserInfo",
