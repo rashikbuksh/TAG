@@ -1,22 +1,39 @@
 import "leaflet-routing-machine";
 // import "lrm-google";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { useState } from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
 import GetLocation from "../../../helpers/GetLocation";
+import { api } from "../../../lib/api";
 import Modal from "../Modal";
 import RoutingMachine from "./RoutingMachine";
+import "./styles.css";
 
 const MapDistanceModal = ({ isOpen, setIsOpen, latlong, popup }) => {
+	const distanceCalculator = "map_minimum_distance_in_meter";
+	const [minimumDistance, setMinimumDistance] = useState(0);
+	api.get(`/util/getUtil/${distanceCalculator}`).then((res) => {
+		setMinimumDistance(res.data[0].value);
+	});
+
 	// user Location
-	const currentLocation = GetLocation();
+	const { location, loading, error } = GetLocation();
+	if (loading) return <h1>Loading...</h1>;
+	if (error) return <h1>{error}</h1>;
 
 	setTimeout(function () {
 		window.dispatchEvent(new Event("resize"));
 	}, 1);
+
 	return (
-		<Modal isOpen={isOpen} setIsOpen={setIsOpen} showCross={false} title={"Location"}>
+		<Modal
+			isOpen={isOpen}
+			setIsOpen={setIsOpen}
+			showCross={false}
+			title={"Location"}
+		>
 			<MapContainer
-				center={[latlong.latitude, latlong.longitude]}
-				zoom={50}
+				center={location}
+				zoom={25}
 				style={{ height: "400px", width: "100%" }}
 			>
 				<TileLayer
@@ -24,23 +41,13 @@ const MapDistanceModal = ({ isOpen, setIsOpen, latlong, popup }) => {
 					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				/>
 				<RoutingMachine
-					userLocation={[latlong.latitude, latlong.longitude]}
-					shopperLocation={[
-						currentLocation.latitude,
-						currentLocation.longitude,
-					]}
+					userLocation={location}
+					// handle for multiple shopper location
+					shopperLocation={latlong}
+					popup={popup}
+					minimumDistance={minimumDistance}
+					classname="leaflet-routing-container"
 				/>
-				{/* <Marker position={[latlong.latitude, latlong.longitude]}>
-					<Popup>{popup}</Popup>
-				</Marker>
-				<Marker
-					position={[
-						currentLocation.latitude,
-						currentLocation.longitude,
-					]}
-				>
-					<Popup>I am Here</Popup>
-				</Marker> */}
 			</MapContainer>
 		</Modal>
 	);

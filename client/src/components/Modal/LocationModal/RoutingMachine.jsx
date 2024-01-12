@@ -1,13 +1,25 @@
 import { createControlComponent } from "@react-leaflet/core";
 import L, { Icon } from "leaflet";
 import "leaflet-routing-machine";
+import { useState } from "react";
+import { api } from "../../../lib/api";
 
 const createRoutineMachineLayer = (props) => {
+	const userLocationLatLng = L.latLng(props.userLocation);
+	let shopperLocationsLatLng =
+		props.shopperLocation instanceof Array
+			? props.shopperLocation.map((location) => L.latLng(location))
+			: [L.latLng(props.shopperLocation)];
+
+	shopperLocationsLatLng = shopperLocationsLatLng.filter(
+		(location) =>
+			userLocationLatLng.distanceTo(location) <= props.minimumDistance
+	);
 	// Shopper Marker
 	const shopperIcon = new Icon({
 		iconUrl: "../../../public/assets/img/map-marker-for-shopper.png",
 		iconSize: [30, 30], // size of the icon
-		iconAnchor: [5, 30],
+		iconAnchor: [15, 30],
 	});
 	// Customer Marker
 	const customerIcon = new Icon({
@@ -16,28 +28,28 @@ const createRoutineMachineLayer = (props) => {
 	});
 	const instance = L.Routing.control({
 		serviceUrl: "https://router.project-osrm.org/route/v1",
-		waypoints: [
-			L.latLng(props.userLocation),
-			L.latLng(props.shopperLocation),
-		],
+		waypoints: [userLocationLatLng, ...shopperLocationsLatLng],
 		lineOptions: {
 			styles: [{ color: "#373afa", weight: 4 }],
 		},
 		show: false,
-		addWaypoints: false,
 		routeWhileDragging: false,
 		draggableWaypoints: false,
 		fitSelectedRoutes: false,
 		showAlternatives: false,
+		alternatives: false,
+		steps: false,
 		createMarker: function (i, wp, nWps) {
 			if (i === 0) {
 				// This is the start marker
-				return L.marker(wp.latLng, { icon: shopperIcon });
-			} else if (i === nWps - 1) {
-				// This is the end marker
-				return L.marker(wp.latLng, { icon: customerIcon });
+				return L.marker(wp.latLng, { icon: customerIcon }).bindPopup(
+					"I am Here"
+				);
 			} else {
-				return L.marker(wp.latLng, { icon: shopperIcon });
+				// This is the stop marker
+				return L.marker(wp.latLng, { icon: shopperIcon }).bindPopup(
+					props.popup
+				);
 			}
 		},
 	});

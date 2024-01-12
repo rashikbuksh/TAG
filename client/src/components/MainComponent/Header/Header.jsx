@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
 import { FaLocationDot, FaMapLocationDot, FaX } from "react-icons/fa6";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { useAuth } from "../../../context/auth";
+import GetLocation from "../../../helpers/GetLocation";
+import NotificationSound from "../../../helpers/NotificationSound";
 import { api } from "../../../lib/api";
+import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
-import clsx from "clsx";
-import NotificationSound from "../../../helpers/NotificationSound";
 
 function Header() {
 	const [activateOffcanvas, setActivateOffcanvas] = useState(false);
@@ -17,6 +19,10 @@ function Header() {
 	const [userData, setUserdata] = useState(null);
 	const { user } = useAuth();
 	const id = user ? user.id : null;
+
+	const [locationModal, setLocationModal] = useState(false);
+
+	const currentLocation = GetLocation();
 
 	const handleClickOffcanvas = (e) => {
 		e.preventDefault();
@@ -70,13 +76,11 @@ function Header() {
 	}, []);
 
 	const [notification, setNotification] = useState([]);
-	const [userAccess, setUserAccess] = useState(null);
 	const [suser, setsUser] = useState(null);
 	const userid = localStorage.getItem("user-id");
 	useEffect(() => {
-		api.get(`/auth/getUserInfo/${userid}`).then((res) => {
+		api.get(`/auth/getShopperInfo`).then((res) => {
 			setsUser(res.data);
-			setUserAccess(res.data.access);
 		});
 		api.get(`/notification/getnotification/${userid}/${userid}`).then(
 			(res) => {
@@ -102,7 +106,11 @@ function Header() {
 	// 		{/* Rest of your notification rendering */}
 	// 	</div>
 	// ))}
-	console.log(notificationsWithStatusOne.length);
+	// console.log(notificationsWithStatusOne.length);
+
+	const HandleLocationClick = () => {
+		setLocationModal(true);
+	};
 	return (
 		<>
 			<header>
@@ -187,7 +195,38 @@ function Header() {
 														<FaLocationDot
 															color="red"
 															size={30}
-														/>
+															onClick={
+																HandleLocationClick
+															}
+														></FaLocationDot>
+														{locationModal && (
+															<MapDistanceModal
+																isOpen={
+																	locationModal
+																}
+																setIsOpen={
+																	setLocationModal
+																}
+																latlong={suser.map(
+																	(
+																		single
+																	) => {
+																		const splittedLoc =
+																			single.shipping_address.split(
+																				","
+																			);
+																		return {
+																			lat: splittedLoc[0],
+																			lng: splittedLoc[1],
+																		};
+																	}
+																)}
+																popup={
+																	userData.name
+																}
+															/>
+														)}
+
 														<div className="avatar">
 															<Link
 																to={
@@ -198,16 +237,21 @@ function Header() {
 																}
 															>
 																<div className="h-8 w-8 rounded-full ring ring-[#2F5BA9] ">
-																	<img
-																		className="rounded-full"
-																		src={`${
-																			import.meta
-																				.env
-																				.VITE_APP_IMG_URL
-																		}/usersProfilePic/${
-																			userData.profile_picture
-																		}`}
-																	/>
+																	{userData.profile_picture !==
+																	null ? (
+																		<img
+																			className="rounded-full"
+																			src={`${
+																				import.meta
+																					.env
+																					.VITE_APP_IMG_URL
+																			}/usersProfilePic/${
+																				userData.profile_picture
+																			}`}
+																		/>
+																	) : (
+																		""
+																	)}
 																</div>
 															</Link>
 														</div>
