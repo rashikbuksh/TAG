@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../../../components/Modal/Modal";
 import { api } from "../../../lib/api";
-import toast from "../../../../../server/util/toast";
+import { toast } from "react-toastify";
+
 
 const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 	const [isEditActive, setIsEditActive] = useState(true);

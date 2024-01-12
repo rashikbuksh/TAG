@@ -24,7 +24,7 @@ const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 		params.slidesPerView = 2;
 	}
 	return (
-		<div className="hero-slider -mx-2  max-w-7xl lg:mx-auto">
+		<div className="hero-slider -mx-4  max-w-7xl lg:mx-auto">
 			<div className="hero-slider-wrapper">
 				{!!sliderData.length && (
 					<Swiper options={params}>

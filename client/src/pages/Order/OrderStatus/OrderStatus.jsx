@@ -43,7 +43,7 @@ const OrderStatus = () => {
 		Promise.all(productPromises).then((productData) => {
 			setProducts(productData);
 		});
-	}, [pendingOrders, products]);
+	}, [pendingOrders]);
 
 	const orderProducts = useMemo(() => {
 		return pendingOrders.map((order) => ({

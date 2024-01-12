@@ -106,7 +106,7 @@ function Header() {
 	return (
 		<>
 			<header>
-				<div className="px-6 py-3">
+				<div className="px-6 py-3 ">
 					<div className="">
 						<div className="flex items-center justify-between">
 							<div className="">
