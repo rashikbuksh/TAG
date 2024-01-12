@@ -269,19 +269,17 @@ const ShopkeeperProfileCV = () => {
 													/>
 												</Link>
 												{}
-												{user ? (
-													user.access ===
-													"customer" ? (
-														""
-													) : user.id ==
-													  single.shopper_id ? (
-														<div className="flex items-center justify-end gap-2">
-															<FaEye></FaEye>
-															<p>{single.view}</p>
-														</div>
-													) : (
-														""
-													)
+												{user &&
+												user.access === "customer" ? (
+													""
+												) : user &&
+												  user.id ==
+														single.shopper_id ? (
+													<div className="flex items-center justify-end gap-2">
+														<FaEye></FaEye>
+														<p>{single.view}</p>
+													</div>
+
 												) : (
 													""
 												)}
