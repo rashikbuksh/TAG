@@ -32,7 +32,7 @@ import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import ShowCartIcon from "../../ShowCartIcon/ShowCartIcon";
 import Drawer from "react-modern-drawer";
 import { PiShareFat } from "react-icons/pi";
-import { FaEye } from "react-icons/fa";
+import { FaCopy, FaEye } from "react-icons/fa";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
@@ -151,7 +151,7 @@ const ShopkeeperProfileCV = () => {
 								</div>
 								<div className="divider"></div>
 								<p>Copy Link </p>
-								<p
+								<p 
 							onClick={() =>
 								copyToClipboard(
 									`${
@@ -159,10 +159,10 @@ const ShopkeeperProfileCV = () => {
 									}/shopkeeperProfileCV/${id}`
 								)
 							}
-							className="link-info link"
+							className="link-info link text-md bg-gray-200 p-2 rounded flex justify-between items-center"
 						>{`${
 							import.meta.env.VITE_API_PUBLIC_URL
-						}/shopkeeperProfileCV/${id}`}</p>
+						}/shopkeeperProfileCV/${id}`} <FaCopy size={30}/></p>
 							</div>
 						</Drawer>
 						{shopkeeperInfo && (

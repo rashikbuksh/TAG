@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { FaBars, FaCheckCircle, FaEye, FaFacebook, FaMinus, FaPlus } from "react-icons/fa";
+import { FaBars, FaCheckCircle, FaCopy, FaEye, FaFacebook, FaMinus, FaPlus } from "react-icons/fa";
 import { FacebookIcon, InstagramIcon, Linkedin, Takaicon, TwitterIcon, WhatsappIcon } from "../../../SvgHub/SocialIcon";
 import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
@@ -183,10 +183,10 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 									}/product/${id}`
 								)
 							}
-							className="link-info link"
+							className="link-info link text-md bg-gray-200 p-2 rounded flex justify-between items-center"
 						>{`${
 							import.meta.env.VITE_API_PUBLIC_URL
-						}/product/${id}`}</p>
+						}/product/${id}`} <FaCopy size={30}/></p>
 							</div>
 						</Drawer>
 					<div className="flex h-screen items-center justify-center">
