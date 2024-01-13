@@ -16,7 +16,6 @@ import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
-import NotificationSound from "../../helpers/NotificationSound";
 
 const Home = () => {
 	const { user, Logout } = useAuth();
