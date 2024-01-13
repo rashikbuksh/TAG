@@ -3,13 +3,20 @@ import "@smastrom/react-rating/style.css";
 import { map } from "leaflet";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { FaLocationDot, FaRegMessage } from "react-icons/fa6";
+import { FaLocationDot, FaRegMessage, FaX } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
 import { AddToCartIcon1, AddToCartIcon2 } from "../../../SvgHub/Icons";
-import { Takaicon } from "../../../SvgHub/SocialIcon";
+import {
+	FacebookIcon,
+	InstagramIcon,
+	Linkedin,
+	Takaicon,
+	TwitterIcon,
+	WhatsappIcon,
+} from "../../../SvgHub/SocialIcon";
 import { useAuth } from "../../../context/auth";
 import GetLocation from "../../../helpers/GetLocation";
 import { checkIfInCart } from "../../../helpers/product";
@@ -23,6 +30,9 @@ import Header from "../../MainComponent/Header/Header";
 import LocationModal from "../../Modal/LocationModal/LocationModal";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import ShowCartIcon from "../../ShowCartIcon/ShowCartIcon";
+import Drawer from "react-modern-drawer";
+import { PiShareFat } from "react-icons/pi";
+import { FaEye } from "react-icons/fa";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
@@ -35,6 +45,8 @@ const ShopkeeperProfileCV = () => {
 	const [filteredAllProducts, setFilteredProducts] = useState([]);
 	const [selectedLetter, setSelectedLetter] = useState("");
 	const [mapModal, setMapModal] = useState(false);
+	const [copySuccess, setCopySuccess] = useState(null);
+	const [referCode, setReferCode] = useState(null);
 	const [latLong, setLatLong] = useState({ lat: 0, lng: 0 });
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -93,15 +105,66 @@ const ShopkeeperProfileCV = () => {
 		});
 		setMapModal(true);
 	};
+	const [isShareOpen, setIsShareOpen] = useState(false);
+	const toggleDrawer = () => {
+		setIsShareOpen((prevState) => !prevState);
+	};
+	const copyToClipboard = (reffer) => {
+		navigator.clipboard
+			.writeText(reffer)
+			.then(() => {
+				setCopySuccess("Copied to clipboard!");
+				addReferCode();
+			})
+			.catch((err) => {
+				setCopySuccess("Copy failed: " + err);
+			});
+	};
 	return (
 		<>
 			<Header />
 			<Footer />
 			<ShowCartIcon />
-			<div className="mt-[5rem] lg:mx-auto lg:w-[50%]">
+			<div className="relative mt-[5rem] lg:mx-auto lg:w-[50%]">
 				{/* <ShowCartIcon></ShowCartIcon> */}
-				<div className="">
+				<div className=" ">
 					<div className="mx-auto my-3">
+						<Drawer
+							open={isShareOpen}
+							onClose={toggleDrawer}
+							direction="bottom"
+						>
+							<div className="p-2">
+								<div className="mx-2 flex items-center justify-between ">
+									<p className="text-lg font-bold">Share</p>
+									<FaX
+										className="text-xl"
+										onClick={toggleDrawer}
+									></FaX>
+								</div>
+								<div className="mx-auto mt-5 flex w-[80%] justify-between">
+									<FacebookIcon />
+									<Linkedin />
+									<WhatsappIcon />
+									<InstagramIcon />
+									<TwitterIcon />
+								</div>
+								<div className="divider"></div>
+								<p>Copy Link </p>
+								<p
+							onClick={() =>
+								copyToClipboard(
+									`${
+										import.meta.env.VITE_API_PUBLIC_URL
+									}/shopkeeperProfileCV/${id}`
+								)
+							}
+							className="link-info link"
+						>{`${
+							import.meta.env.VITE_API_PUBLIC_URL
+						}/shopkeeperProfileCV/${id}`}</p>
+							</div>
+						</Drawer>
 						{shopkeeperInfo && (
 							<div className="relative flex flex-col items-center">
 								<div
@@ -143,11 +206,22 @@ const ShopkeeperProfileCV = () => {
 										value={shopkeeperInfo.review_count}
 									/>
 								</div>
-								<div>33 Followers</div>
+								<div className="flex gap-4 my-1 items-center">
+									<div>33 Followers</div>
+									<button
+										className="font-xl flex h-[40px] w-[40px] items-center justify-center rounded bg-[#469CD6] text-white"
+										onClick={() =>
+											setIsShareOpen(!isShareOpen)
+										}
+									>
+										<PiShareFat className="text-lg" />
+									</button>
+								</div>
 								<div className=" flex items-center justify-center gap-4">
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white">
 										Message
 									</button>
+
 									{/* <MapDistanceModal
 									isOpen={mapModal}
 									setIsOpen={setMapModal}
@@ -279,7 +353,6 @@ const ShopkeeperProfileCV = () => {
 														<FaEye></FaEye>
 														<p>{single.view}</p>
 													</div>
-
 												) : (
 													""
 												)}
