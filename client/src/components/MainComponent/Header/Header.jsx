@@ -76,6 +76,7 @@ function Header() {
 	}, []);
 
 	const [notification, setNotification] = useState([]);
+	const [userAccess, setUserAccess] = useState(null);
 	const [suser, setsUser] = useState(null);
 	const userid = localStorage.getItem("user-id");
 	useEffect(() => {
@@ -92,6 +93,7 @@ function Header() {
 	const notificationsWithStatusOne = notification.filter(
 		(item) => item.status === 1
 	);
+
 	// {notification.map((single) => (
 	// 	<div
 	// 		className={clsx(
@@ -170,7 +172,7 @@ function Header() {
 										className="relative"
 									>
 										<FaBell className="text-4xl   text-yellow-500" />
-										{notificationsWithStatusOne.length !==
+										{notificationsWithStatusOne.length >
 											0 && (
 											<p className="absolute -top-2 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white">
 												{

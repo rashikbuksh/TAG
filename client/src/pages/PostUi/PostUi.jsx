@@ -5,6 +5,7 @@ import "@smastrom/react-rating/style.css";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { set } from "react-hook-form";
+import Drawer from "react-modern-drawer";
 import {
 	FaClock,
 	FaHeart,
@@ -26,6 +27,7 @@ import { api } from "../../lib/api";
 import CommentModal from "./CommentModal";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { FacebookIcon, InstagramIcon, Linkedin, TwitterIcon, WhatsappIcon } from "../../SvgHub/SocialIcon";
 const PostUi = ({ postData }) => {
 	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");
@@ -48,7 +50,10 @@ const PostUi = ({ postData }) => {
 		post_content,
 		post_img,
 	} = postData;
-
+	const [isShareOpen, setIsShareOpen] = useState(false);
+	const toggleDrawer = () => {
+		setIsShareOpen((prevState) => !prevState);
+	};
 	useEffect(() => {
 		if (shopper_product_id == null) {
 		} else {
@@ -318,7 +323,36 @@ const PostUi = ({ postData }) => {
 						<div className="text-xs">
 							<p className="text-sm">{share_count} share</p>
 						</div>
-						<PiShareFat className="text-lg" />
+						<Drawer
+							open={isShareOpen}
+							onClose={toggleDrawer}
+							direction="bottom"
+						>
+							<div className="p-2">
+								<div className="mx-2 flex items-center justify-between ">
+									<p className="text-lg font-bold">Share</p>
+									<FaX
+										className="text-xl"
+										onClick={toggleDrawer}
+									></FaX>
+								</div>
+								<div className="mx-auto mt-5 flex w-[80%] justify-between">
+									<FacebookIcon />
+									<Linkedin />
+									<WhatsappIcon />
+									<InstagramIcon />
+									<TwitterIcon />
+								</div>
+								<div className="divider"></div>
+								<p>Copy Link</p>
+							</div>
+						</Drawer>
+						<button>
+							<PiShareFat
+								onClick={() => setIsShareOpen(!isShareOpen)}
+								className="text-lg"
+							/>
+						</button>
 					</div>
 				</div>
 			</div>
