@@ -1,8 +1,8 @@
+import clsx from "clsx";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { FaArrowUp } from "react-icons/fa";
-import clsx from "clsx";
 import {
 	AllProducts,
 	BestSellerProduct,
@@ -13,6 +13,7 @@ import {
 import HotNews from "../../components/News/HotNews/HotNews";
 import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "../../context/auth";
+import NotificationSound from "../../helpers/NotificationSound";
 import { api } from "../../lib/api";
 import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
@@ -54,21 +55,21 @@ const Home = () => {
 				setSliderDataTop(res.data);
 			})
 			.catch((err) => {
-				console.error(err);
+				// console.error(err);
 			});
 		api.get("/heroslider/getslider/middel")
 			.then((res) => {
 				setSliderDataMiddel(res.data);
 			})
 			.catch((err) => {
-				console.error(err);
+				// console.error(err);
 			});
 		api.get("/heroslider/getslider/bottom")
 			.then((res) => {
 				setSliderDataBottom(res.data);
 			})
 			.catch((err) => {
-				console.error(err);
+				// console.error(err);
 			});
 		if (!user) {
 			localStorage.removeItem("user-id");
@@ -76,7 +77,6 @@ const Home = () => {
 			Cookies.remove("auth");
 		}
 	}, []);
-	
 
 	return (
 		<div className="px-3">
@@ -110,7 +110,6 @@ const Home = () => {
 				)}
 				{sliderDataTop && <FooterSection />}
 			</div>
-			
 		</div>
 	);
 };

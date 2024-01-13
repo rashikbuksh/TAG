@@ -1,12 +1,12 @@
 import Axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+import { toast } from "react-toastify";
 import { ErrorMessage, Preloader } from "../../components";
 import useFetch from "../../hooks/use-fetch";
 import { api } from "../../lib/api";
-import Cookies from "js-cookie";
-import { toast } from "react-toastify";
 
 const Profile = () => {
 	// const { data, isLoading, errorMessage } = useFetch("profile.json");
@@ -148,7 +148,8 @@ const Profile = () => {
 													</label>
 													<input
 														onChange={
-															handleImageUpload
+															handleImageUpload ||
+															(() => {})
 														}
 														id="dropzone-file"
 														type="file"
