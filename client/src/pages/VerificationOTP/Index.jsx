@@ -96,11 +96,10 @@ const VerificationOTP = () => {
 		}
 	};
 
-		setTimeout(() => {
-			setIsOpen(false);
-			// navigate("/home");
-		}, 2000);
-	};
+	setTimeout(() => {
+		setIsOpen(false);
+		// navigate("/home");
+	}, 2000);
 	return (
 		<article className="mt-28 px-6 ">
 			<SuccessOtpModal
