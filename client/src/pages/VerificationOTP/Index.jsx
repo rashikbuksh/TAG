@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { api } from "../../lib/api";
 import { TagLogo2 } from "../../SvgHub/TagLogo2";
+import SuccessOtpModal from "../../components/SuccessOtpModal/SuccessOtpModal";
+import { useNavigate } from "react-router-dom";
 
 const VerificationOTP = () => {
 	const correctOTP = "1234"; // Hardcoded correct OTP for demonstration
@@ -8,7 +10,7 @@ const VerificationOTP = () => {
 	const [otp, setOtp] = useState(new Array(numberOfDigits).fill(""));
 	const [otpError, setOtpError] = useState(null);
 	const otpBoxReference = useRef([]);
-
+	const [isOpen, setIsOpen] = useState(false);
 	// Function to generate a random 4-digit OTP
 	const generateOTP = () => {
 		const min = 1000;
@@ -53,7 +55,7 @@ const VerificationOTP = () => {
 			otpBoxReference.current[index + 1].focus();
 		}
 	};
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		if (otp.join("") !== "" && otp.join("") !== correctOTP) {
 			setOtpError("❌ Wrong OTP. Please check again.");
@@ -61,9 +63,22 @@ const VerificationOTP = () => {
 			setOtpError(null);
 		}
 	}, [otp]);
+	const handelModal = () => {
+		setIsOpen(!isOpen);
+		console.log(isOpen);
 
+		setTimeout(() => {
+			setIsOpen(false);
+			// navigate("/home");
+		}, 2000);
+	};
 	return (
 		<article className="mt-28 px-6 ">
+			<SuccessOtpModal
+				bgTransparent={true}
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+			/>
 			<div className="my-10 flex items-center justify-center">
 				<TagLogo2 />
 			</div>
@@ -97,6 +112,9 @@ const VerificationOTP = () => {
 			</p>
 			<button className="btn btn-block mt-10" onClick={sendCode}>
 				Get Code
+			</button>
+			<button className="btn btn-success my-10" onClick={handelModal}>
+				Test
 			</button>
 		</article>
 	);

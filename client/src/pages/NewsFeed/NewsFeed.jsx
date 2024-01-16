@@ -49,7 +49,7 @@ const NewsFeed = () => {
 	}, [posts]);
 	const { user } = useAuth();
 	return (
-		<div className="mt-20">
+		<div className="mt-10">
 			<div className="mx-auto w-[90%]">
 				<h1 className="text-center text-2xl font-bold">News Feed</h1>
 				<div className="divider my-0"></div>
