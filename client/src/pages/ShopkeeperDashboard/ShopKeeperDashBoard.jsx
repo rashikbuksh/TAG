@@ -112,7 +112,7 @@ const ShopKeeperDashBoard = () => {
 		},
 	];
 	return (
-		<div className="body-wrapper space-pb--120 mt-10 bg-gray-100">
+		<div className="body-wrapper space-pb--120 mt-10 bg-gray-50">
 			<Breadcrumb pageTitle="DashBoard" prevUrl="/home" />
 			<div className="mx-auto rounded-lg  p-4 md:w-[50%]">
 				<div className="flex items-center justify-between">
@@ -263,9 +263,9 @@ const ShopKeeperDashBoard = () => {
 								>
 									<div
 										key={index}
-										style={boxShadowStyle}
-										className={` flex  ${
-											section.content ? "" : "flex-col"
+										// style={boxShadowStyle}
+										className={` flex dashboardCard ${
+											section.content ? "" : "flex-col "
 										}`}
 									>
 										<div

@@ -6,7 +6,6 @@ import { api } from "../lib/api";
 
 // Create the context
 export const OtpVerificationContext = createContext();
-
 // Create the provider component
 export const OtpVerificationProvider = ({ children }) => {
 	const [verificationCode, setVerificationCode] = useState("");

@@ -133,10 +133,10 @@ const PostUi = ({ postData }) => {
 
 	return (
 		<div className="my-6">
-			<div className="rounded-lg ">
+			<div className="rounded-lg border ">
 				<div className="">
 					<div className="flex items-center justify-between ">
-						<div className="mx-auto flex w-full items-center justify-between gap-3 rounded-lg border p-2 ">
+						<div className="mx-auto flex w-full items-center justify-between gap-3  border-b  p-2 ">
 							{shopperInfo.map((shopperinfo) => (
 								<img
 									key={Math.random()}
@@ -202,7 +202,7 @@ const PostUi = ({ postData }) => {
 					</div>
 				</div>
 				{shopper_product_id && (
-					<div className="border-top-0  mx-auto mt-2 rounded-lg border ">
+					<div className="  mx-auto    ">
 						{shopperProducts &&
 							shopperProducts.map((shopperproduct) => (
 								<MainProduct
@@ -216,7 +216,7 @@ const PostUi = ({ postData }) => {
 				{shopper_product_id ? (
 					""
 				) : (
-					<div className="border-top-0 my-1 rounded-lg border">
+					<div className=" ">
 						{shopperProducts ? (
 							<div>
 								{shopper_product_id ? (
@@ -248,7 +248,7 @@ const PostUi = ({ postData }) => {
 					</div>
 				)}
 
-				<div className="my-2 flex justify-between rounded-lg border p-2">
+				<div className=" flex justify-between  border-t p-2">
 					<div className="flex flex-col items-center justify-center">
 						<div className="text-xs">
 							<p className="text-sm">{like_count} Likes</p>
