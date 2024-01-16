@@ -50,7 +50,7 @@ const VerifyToken = (req, res, next) => {
 		req?.originalUrl == "/auth/getUserID" ||
 		req?.originalUrl == "/heroslider/getslider/bottom" ||
 		req?.originalUrl == "/heroslider/getslider/top" ||
-		req?.originalUrl == "/heroslider/getslider/middel" ||
+		req?.originalUrl == "/heroslider/getslider/middle" ||
 		req?.originalUrl == "/news/getnews" ||
 		req?.originalUrl ==
 			"/shopperproduct/getshopperproductBasedOnSaleCount" ||

@@ -1,37 +1,37 @@
-import Welcome from "./Welcome";
-import Home from "./Home";
-import Shop from "./Shop";
-import Product from "./Product";
-import Chat from "./Chat";
 import Cart from "./Cart";
-import Wishlist from "./Wishlist";
+import Chat from "./Chat";
 import Checkout from "./Checkout";
-import Notfound from "./NotFound";
-import Search from "./Search";
-import Profile from "./Profile";
-import EditProfile from "./EditProfile";
-import Login from "./Login";
-import Register from "./Register";
-import Notification from "./Notification";
 import Contact from "./Contact";
+import EditProfile from "./EditProfile";
+import Home from "./Home";
+import Login from "./Login";
+import Notfound from "./NotFound";
+import Notification from "./Notification";
 import Order from "./Order";
+import Product from "./Product";
+import Profile from "./Profile";
+import Register from "./Register/RegisterCustomer/Register";
+import Search from "./Search";
+import Shop from "./Shop";
+import Welcome from "./Welcome";
+import Wishlist from "./Wishlist";
 
 export {
-  Welcome,
-  Home,
-  Shop,
-  Product,
-  Chat,
-  Cart,
-  Wishlist,
-  Checkout,
-  Notfound,
-  Search,
-  Profile,
-  EditProfile,
-  Login,
-  Register,
-  Notification,
-  Contact,
-  Order
+	Cart,
+	Chat,
+	Checkout,
+	Contact,
+	EditProfile,
+	Home,
+	Login,
+	Notfound,
+	Notification,
+	Order,
+	Product,
+	Profile,
+	Register,
+	Search,
+	Shop,
+	Welcome,
+	Wishlist,
 };

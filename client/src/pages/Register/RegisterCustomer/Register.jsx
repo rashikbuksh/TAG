@@ -1,15 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Axios from "axios";
-import Cookies from "js-cookie";
 import React, { useState } from "react";
-import { get, useForm } from "react-hook-form";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { ReactSVG } from "react-svg";
-import * as yup from "yup";
-import { api } from "../../lib/api";
-import { TagLogo2 } from "../../SvgHub/TagLogo2";
+import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { toast } from "react-toastify";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import * as yup from "yup";
+import { TagLogo2 } from "../../../SvgHub/TagLogo2";
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -17,14 +12,12 @@ const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const registerSchema = yup.object().shape({
 		name: yup.string().required("Name is required"),
-		emailAddress: yup
-			.string()
-			.email("Please enter valid email address"),
+		emailAddress: yup.string().email("Please enter valid email address"),
 		password: yup
 			.string()
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
-			phone: yup
+		phone: yup
 			.string()
 			.matches(/^[0-9]+$/, "Phone number must contain only digits")
 			.max(11, "Phone number must be at most 11 characters")
@@ -39,37 +32,12 @@ const Register = () => {
 	const { errors } = formState;
 
 	const onSubmit = (data) => {
-
-		Axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, {
-			name: data.name,
-			email: data.emailAddress,
-			phone: data.phone,
-			password: data.password,
-			access: "customer",
-		})
-			.then((response) => {
-				if (response.data.message === data.phone) {
-					navigate("/login");
-					if (id) {
-						localStorage.setItem("ref_c", id);
-					}
-
-					toast("Registration Successful");
-				}
-			})
-			.catch((error) => {
-				if (
-					error.response.data.message == "Error executing the query"
-				) {
-					toast("Email or Phone Number already exists");
-				}
-			});
+		navigate("/OTPVerification", { state: { data, id } });
 	};
 	const togglePasswordVisibility = () => {
 		setShowPassword((prevShowPassword) => !prevShowPassword);
 	};
 	return (
-		
 		<div className="relative ">
 			<div className="mx-auto flex h-screen flex-col justify-around px-[25px] lg:w-[50%]">
 				<div className="mx-auto my-5 h-[80px]">
@@ -105,9 +73,10 @@ const Register = () => {
 						<div className=" ">
 							<label
 								htmlFor="emailAddress"
-								className="mb-1 px-4 text-base font-semibold flex justify-between"
+								className="mb-1 flex justify-between px-4 text-base font-semibold"
 							>
-								<span>Email</span> <span className="text-xs" >Optional</span>
+								<span>Email</span>{" "}
+								<span className="text-xs">Optional</span>
 							</label>
 							<input
 								type="text"

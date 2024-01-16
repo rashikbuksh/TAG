@@ -1,9 +1,21 @@
+import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { api } from "../../lib/api";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { TagLogo2 } from "../../SvgHub/TagLogo2";
+import { useOtpVerification } from "../../context/otpVerification";
 
 const VerificationOTP = () => {
-	const correctOTP = "1234"; // Hardcoded correct OTP for demonstration
+	const navigate = useNavigate();
+	const data = useLocation().state.data;
+
+	const id = useLocation().state.id;
+
+	const { name, emailAddress, phone, password } = data;
+
+	const { sendOtp, handleVerificationCodeChange, verifyOtp } =
+		useOtpVerification();
+
 	const numberOfDigits = 4;
 	const [otp, setOtp] = useState(new Array(numberOfDigits).fill(""));
 	const [otpError, setOtpError] = useState(null);
@@ -17,22 +29,11 @@ const VerificationOTP = () => {
 	};
 
 	const sendCode = async () => {
-		const generatedOTP = generateOTP(); // Generate OTP
-		const phoneNumber = "01878601610"; // Replace this with the recipient's phone number
-		// console.log(generatedOTP);
-		// Make an API call to send the OTP
-		// api.post("/sentOtp", {
-		//   number: phoneNumber,
-		//   otp: generatedOTP.toString(), // Convert OTP to string before sending
-		// })
-		//   .then((response) => {
-		//     console.log("OTP sent:", generatedOTP); // Log the sent OTP
-		//     // Handle the API response as needed
-		//   })
-		//   .catch((error) => {
-		//     console.log("Error sending OTP:", error);
-		//     // Handle errors if any
-		//   });
+		const generatedOtp = generateOTP();
+		console.log("send code", generatedOtp);
+		sendOtp(generatedOtp);
+		// hash code
+		handleVerificationCodeChange(generatedOtp.toString());
 	};
 
 	const handleChange = (value, index) => {
@@ -54,13 +55,46 @@ const VerificationOTP = () => {
 		}
 	};
 
-	useEffect(() => {
-		if (otp.join("") !== "" && otp.join("") !== correctOTP) {
-			setOtpError("❌ Wrong OTP. Please check again.");
+	const handleVerificationOfOTP = () => {
+		const code = otp.join("");
+		console.log("handleVerificationOfOTP code", code);
+		if (code.length === numberOfDigits) {
+			console.log("handleVerificationOfOTP code inside condition", code);
+			let verifiedOrNot = verifyOtp(code);
+			if (verifiedOrNot == true) {
+				// insert user data to database
+				console.log("insert user data to database");
+				axios
+					.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, {
+						name: name,
+						email: emailAddress,
+						phone: phone,
+						password: password,
+						access: "customer",
+					})
+					.then((response) => {
+						if (response.data.message === phone) {
+							if (id) {
+								localStorage.setItem("ref_c", id);
+							}
+							navigate("/login");
+							toast("Registration Successful");
+						}
+					})
+					.catch((error) => {
+						console.log(error, "error");
+						if (
+							error.response.data.message ==
+							"Error executing the query"
+						) {
+							toast("Email or Phone Number already exists");
+						}
+					});
+			}
 		} else {
-			setOtpError(null);
+			setOtpError("Please enter a 4-digit OTP");
 		}
-	}, [otp]);
+	};
 
 	return (
 		<article className="mt-28 px-6 ">
@@ -97,6 +131,12 @@ const VerificationOTP = () => {
 			</p>
 			<button className="btn btn-block mt-10" onClick={sendCode}>
 				Get Code
+			</button>
+			<button
+				className="btn btn-block mt-4"
+				onClick={handleVerificationOfOTP}
+			>
+				Verify
 			</button>
 		</article>
 	);

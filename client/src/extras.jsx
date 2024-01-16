@@ -22,7 +22,9 @@ import RegisterShopper from "./pages/Register/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
-const Register = lazy(() => import("./pages/Register"));
+const Register = lazy(() =>
+	import("./pages/Register/RegisterCustomer/Register")
+);
 const Login = lazy(() => import("./pages/Login"));
 const Home = lazy(() => import("./pages/Home"));
 const Shop = lazy(() => import("./pages/Shop"));

@@ -5,10 +5,12 @@ import {
 	BrowserRouter as Router,
 	Routes,
 } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./context/auth";
+import OtpVerificationProvider from "./context/otpVerification";
 import ProtectedRoutes from "./routes";
-import 'react-toastify/dist/ReactToastify.css';
 
+import { ToastContainer } from "react-toastify";
 import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
 import AdminStats from "./AdminComponents/AdminStats/AdminStats";
 import Allnews from "./AdminComponents/AllNews/Allnews";
@@ -41,12 +43,13 @@ import OrderStatus from "./pages/Order/OrderStatus/OrderStatus";
 import Policy from "./pages/Policy/Policy";
 import RegisterShopper from "./pages/Register/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
-import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import VerificationOTP from "./pages/VerificationOTP/Index";
-import { ToastContainer } from "react-toastify";
+import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
-const Register = lazy(() => import("./pages/Register"));
+const Register = lazy(() =>
+	import("./pages/Register/RegisterCustomer/Register")
+);
 const Login = lazy(() => import("./pages/Login"));
 const Home = lazy(() => import("./pages/Home"));
 const Shop = lazy(() => import("./pages/Shop"));
@@ -432,26 +435,48 @@ function App() {
 			{!isadminPage && <Header />}
 			{!isadminPage && <Offcanvas />}
 			{!isadminPage && <Footer />}
-			<AuthProvider>
-				<ToastContainer  />
-				<Routes>
-					<Route element={<ProtectedRoutes />}>
-						{PROTECTED_ROUTES?.map((route) => (
-							<Route
-								key={route?.path}
-								path={`${route?.path}/*`}
-								element={
-									<Suspense
-										fallback={<LoadingPage></LoadingPage>}
-									>
-										<route.element />
-									</Suspense>
-								}
-							/>
-						))}
-					</Route>
-					<Route element={<AdminProtactedRoutes />}>
-						{ADMIN_ROUTES?.map((route) => (
+			<OtpVerificationProvider>
+				<AuthProvider>
+					<ToastContainer />
+					<Routes>
+						<Route element={<ProtectedRoutes />}>
+							{PROTECTED_ROUTES?.map((route) => (
+								<Route
+									key={route?.path}
+									path={`${route?.path}/*`}
+									element={
+										<Suspense
+											fallback={
+												<LoadingPage></LoadingPage>
+											}
+										>
+											<route.element />
+										</Suspense>
+									}
+								/>
+							))}
+						</Route>
+						<Route element={<AdminProtactedRoutes />}>
+							{ADMIN_ROUTES?.map((route) => (
+								<Route
+									key={route?.path}
+									path={`${route?.path}/*`}
+									element={
+										<Suspense
+											fallback={
+												<div>
+													<LoadingPage></LoadingPage>
+												</div>
+											}
+										>
+											<route.element />
+										</Suspense>
+									}
+								/>
+							))}
+						</Route>
+
+						{PUBLIC_ROUTES?.map((route) => (
 							<Route
 								key={route?.path}
 								path={`${route?.path}/*`}
@@ -468,27 +493,9 @@ function App() {
 								}
 							/>
 						))}
-					</Route>
-
-					{PUBLIC_ROUTES?.map((route) => (
-						<Route
-							key={route?.path}
-							path={`${route?.path}/*`}
-							element={
-								<Suspense
-									fallback={
-										<div>
-											<LoadingPage></LoadingPage>
-										</div>
-									}
-								>
-									<route.element />
-								</Suspense>
-							}
-						/>
-					))}
-				</Routes>
-			</AuthProvider>
+					</Routes>
+				</AuthProvider>
+			</OtpVerificationProvider>
 		</Router>
 	);
 }

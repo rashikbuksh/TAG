@@ -1,52 +1,56 @@
+import axios from "axios";
 import bcrypt from "bcryptjs";
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { set } from "react-hook-form";
 import { useCookie } from "../hooks";
 import { api } from "../lib/api";
 
 // Create the context
-export const OtpVerificationContext = createContext();
+const OtpVerificationContext = createContext();
+const saltRounds = 10;
 
 // Create the provider component
-export const OtpVerificationProvider = ({ children }) => {
-	const [verificationCode, setVerificationCode] = useState("");
-	const [verificationStatus, setVerificationStatus] = useState(false);
-
+const OtpVerificationProvider = ({ children }) => {
 	const [otpCookie, updateOtpCookie, removeOtpCookie] = useCookie("otp");
 
 	// Function to handle verification code input
-	const handleVerificationCodeChange = (code) => {
-		// hash code
-		const hashedCode = bcrypt.hashSync(code, import.meta.env.VITE_APP_SALT);
+	const handleVerificationCodeChange = async (code) => {
+		const hashedCode = code;
 		updateOtpCookie(hashedCode);
 	};
 
-	const verifyOtp = () => {
-		if (
-			otpCookie &&
-			otpCookie ===
-				bcrypt.hashSync(verificationCode, import.meta.env.VITE_APP_SALT)
-		) {
+	const verifyOtp = (code) => {
+		if (otpCookie && otpCookie === code) {
 			// If the OTP is correct, remove the cookie
+			console.log("otpCookie matching", otpCookie === code);
 			removeOtpCookie();
-			setVerificationStatus(true);
+			return true;
 		} else {
 			// If the OTP is incorrect, show an error message
-			setVerificationCode("");
-			setVerificationStatus(false);
 			alert("Incorrect OTP. Please try again.");
 		}
+		return false;
 	};
 
 	const sendOtp = async (Otp) => {
 		const generatedOtp = Otp;
 		const phoneNumber = "01878601610";
-		api.post("/sentOtp", {
-			number: phoneNumber,
-			otp: generatedOtp.toString(),
-		})
+		console.log("sendOtp send code", generatedOtp);
+		await axios
+			.post(
+				`${import.meta.env.VITE_APP_API_URL}/sentOtp`,
+				{
+					number: phoneNumber,
+					otp: generatedOtp.toString(),
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			)
 			.then((response) => {
-				console.log("OTP sent:", generatedOtp);
+				console.log("OTP sent:", response, generatedOtp);
 			})
 			.catch((error) => {
 				console.log("Error sending OTP:", error);
@@ -56,10 +60,8 @@ export const OtpVerificationProvider = ({ children }) => {
 	// Define the context value
 	const contextValue = {
 		handleVerificationCodeChange,
-		handleVerificationCodeSubmit,
 		sendOtp,
 		verifyOtp,
-		verificationStatus,
 	};
 
 	// Return the provider component with the context value
@@ -69,3 +71,9 @@ export const OtpVerificationProvider = ({ children }) => {
 		</OtpVerificationContext.Provider>
 	);
 };
+
+// Custom hook to consume the context
+export const useOtpVerification = () => {
+	return useContext(OtpVerificationContext);
+};
+export default OtpVerificationProvider;

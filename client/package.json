@@ -20,6 +20,7 @@
 		"animate.css": "^4.1.1",
 		"axios": "^1.4.0",
 		"bcrypt": "^5.1.1",
+		"bcryptjs": "^2.4.3",
 		"bootstrap": "^5.2.3",
 		"clsx": "^1.2.1",
 		"deg2rad": "^1.0.0",

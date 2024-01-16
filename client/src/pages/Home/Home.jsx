@@ -57,7 +57,7 @@ const Home = () => {
 			.catch((err) => {
 				// console.error(err);
 			});
-		api.get("/heroslider/getslider/middel")
+		api.get("/heroslider/getslider/middle")
 			.then((res) => {
 				setSliderDataMiddel(res.data);
 			})
