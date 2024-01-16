@@ -26,6 +26,7 @@ import {
 	getProductCartQuantity,
 } from "../../helpers/product";
 import { api } from "../../lib/api";
+import { Helmet } from "react-helmet";
 
 const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
@@ -85,8 +86,7 @@ const Product = () => {
 				setProds(response.data);
 				setProductStock(response.data[0]?.product_count);
 			})
-			.catch((error) => {
-			});
+			.catch((error) => {});
 	}, [id]);
 
 	const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -105,6 +105,40 @@ const Product = () => {
 	const toggleDescription = () => {
 		setShowFullDescription(!showFullDescription);
 	};
+	<Helmet>
+		<meta
+			name="msapplication-TileImage"
+			content={`${import.meta.env.VITE_APP_IMG_URL}/products/${
+				products[0]?.image
+			}`}
+		/>
+		<meta
+			property="og:site_name"
+			content={import.meta.env.VITE_APP_IMG_URL}
+		/>
+		<meta property="og:title" content={products[0]?.name} />
+		<meta
+			property="og:description"
+			content={products[0]?.full_description}
+		/>
+		<meta
+			property="og:image"
+			itemprop="image"
+			content={`${import.meta.env.VITE_APP_IMG_URL}/products/${
+				products[0]?.image
+			}`}
+		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:image:type" content={"jpj"} />
+		<meta property="og:image:width" content={"416px"} />
+		<meta property="og:image:height" content={"210px"} />
+		<meta
+			property="og:url"
+			content={`${import.meta.env.VITE_APP_IMG_URL}/products/${
+				products[0]?.image
+			}`}
+		/>
+	</Helmet>;
 	return (
 		<>
 			<Header />

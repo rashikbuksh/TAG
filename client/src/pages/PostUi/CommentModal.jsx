@@ -83,41 +83,48 @@ const CommentModal = ({
 			setcommentId={setcommentId}
 			title={title}
 		>
-			<div className="my-2 ">
+			<div className="my-2">
 				{/* reuseble components  */}
 				<div className="h-52  overflow-y-auto">
-					<div className="my-1 flex w-full  flex-col justify-center rounded-xl bg-gray-200 ">
+					<div className="my-1 flex w-full  flex-col justify-center rounded-xl  ">
 						{newsComment.map((comment) => {
 							return comment.news_id === id && userInfo ? (
-								<div key={comment.id}>
+								<div
+									key={comment.id}
+									className="my-1 rounded bg-[#f3f3f3b7]"
+								>
 									{userInfo.map((user) => {
 										return user.id ==
 											comment.commented_by ? (
 											<div
 												key={user.id}
-												className="ml-2 mt-2  flex items-center gap-3"
+												className="ml-2 mt-2  flex items-center gap-3 justify-between "
 											>
-												<img
-													src={`${
-														import.meta.env
-															.VITE_APP_IMG_URL
-													}/${user.image}`}
-													className="h-8 w-8 rounded-full"
-													alt=""
-												/>
+												<div className="flex items-center gap-3">
+													<img
+														src={`${
+															import.meta.env
+																.VITE_APP_IMG_URL
+														}/usersProfilePic/${
+															user.profile_picture
+														}`}
+														className="h-8 w-8 rounded-full"
+														alt=""
+													/>
+													<div>
+														<p className="text-base font-bold">
+															{user.name}
+														</p>
 
-												<div>
-													<p className="text-base font-bold">
-														{user.name}
-													</p>
-
-													<p className="text-xs font-bold">
-														{comment.news_time}
-													</p>
+														<p className="text-xs font-bold">
+															{comment.news_time}
+														</p>
+													</div>
 												</div>
+
 												{comment.commented_by ==
 													userID && (
-													<div className="flex justify-end">
+													<div className="flex justify-end mr-5">
 														<button
 															onClick={() => {
 																api.delete(
@@ -136,7 +143,7 @@ const CommentModal = ({
 										) : null;
 									})}
 									<div>
-										<p className="mb-3 ml-3 mt-2">
+										<p className=" px-14 py-2 text-xl">
 											{comment.comment}
 										</p>
 									</div>
@@ -150,7 +157,7 @@ const CommentModal = ({
 					{FixedComments.map((fixcom, index) => (
 						<div
 							key={index}
-							className="w-fit rounded bg-blue-200 px-3 py-1"
+							className="w-fit rounded bg-gray-200 p-2"
 							onClick={() => handleCommentClick(fixcom)} // Handle comment click
 						>
 							<p className="text-base font-bold">{fixcom}</p>
@@ -161,7 +168,7 @@ const CommentModal = ({
 					<form onSubmit={handleSubmitComment} className="w-full p-2">
 						<div className="mb-2">
 							<input
-								className="h-10 w-full rounded border p-2 focus:outline-none focus:ring-1 focus:ring-gray-300"
+								className="h-10 w-full text-blue-600 rounded border p-2 focus:outline-none focus:ring-1  font-bold text-xl focus:ring-gray-300"
 								name="comment"
 								placeholder="Add a comment"
 								disabled

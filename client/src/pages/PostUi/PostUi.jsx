@@ -5,6 +5,7 @@ import "@smastrom/react-rating/style.css";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { set } from "react-hook-form";
+import Drawer from "react-modern-drawer";
 import {
 	FaClock,
 	FaHeart,
@@ -26,6 +27,7 @@ import { api } from "../../lib/api";
 import CommentModal from "./CommentModal";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { FacebookIcon, InstagramIcon, Linkedin, TwitterIcon, WhatsappIcon } from "../../SvgHub/SocialIcon";
 const PostUi = ({ postData }) => {
 	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");
@@ -48,7 +50,10 @@ const PostUi = ({ postData }) => {
 		post_content,
 		post_img,
 	} = postData;
-
+	const [isShareOpen, setIsShareOpen] = useState(false);
+	const toggleDrawer = () => {
+		setIsShareOpen((prevState) => !prevState);
+	};
 	useEffect(() => {
 		if (shopper_product_id == null) {
 		} else {
@@ -128,10 +133,10 @@ const PostUi = ({ postData }) => {
 
 	return (
 		<div className="my-6">
-			<div className="rounded-lg ">
+			<div className="rounded-lg border ">
 				<div className="">
 					<div className="flex items-center justify-between ">
-						<div className="mx-auto flex w-full items-center justify-between gap-3 rounded-lg border p-2 ">
+						<div className="mx-auto flex w-full items-center justify-between gap-3  border-b  p-2 ">
 							{shopperInfo.map((shopperinfo) => (
 								<img
 									key={Math.random()}
@@ -197,7 +202,7 @@ const PostUi = ({ postData }) => {
 					</div>
 				</div>
 				{shopper_product_id && (
-					<div className="border-top-0  mx-auto mt-2 rounded-lg border ">
+					<div className="  mx-auto    ">
 						{shopperProducts &&
 							shopperProducts.map((shopperproduct) => (
 								<MainProduct
@@ -211,7 +216,7 @@ const PostUi = ({ postData }) => {
 				{shopper_product_id ? (
 					""
 				) : (
-					<div className="border-top-0 my-1 rounded-lg border">
+					<div className=" ">
 						{shopperProducts ? (
 							<div>
 								{shopper_product_id ? (
@@ -243,7 +248,7 @@ const PostUi = ({ postData }) => {
 					</div>
 				)}
 
-				<div className="my-2 flex justify-between rounded-lg border p-2">
+				<div className=" flex justify-between  border-t p-2">
 					<div className="flex flex-col items-center justify-center">
 						<div className="text-xs">
 							<p className="text-sm">{like_count} Likes</p>
@@ -318,7 +323,36 @@ const PostUi = ({ postData }) => {
 						<div className="text-xs">
 							<p className="text-sm">{share_count} share</p>
 						</div>
-						<PiShareFat className="text-lg" />
+						<Drawer
+							open={isShareOpen}
+							onClose={toggleDrawer}
+							direction="bottom"
+						>
+							<div className="p-2">
+								<div className="mx-2 flex items-center justify-between ">
+									<p className="text-lg font-bold">Share</p>
+									<FaX
+										className="text-xl"
+										onClick={toggleDrawer}
+									></FaX>
+								</div>
+								<div className="mx-auto mt-5 flex w-[80%] justify-between">
+									<FacebookIcon />
+									<Linkedin />
+									<WhatsappIcon />
+									<InstagramIcon />
+									<TwitterIcon />
+								</div>
+								<div className="divider"></div>
+								<p>Copy Link</p>
+							</div>
+						</Drawer>
+						<button>
+							<PiShareFat
+								onClick={() => setIsShareOpen(!isShareOpen)}
+								className="text-lg"
+							/>
+						</button>
 					</div>
 				</div>
 			</div>

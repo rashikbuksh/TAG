@@ -6,9 +6,7 @@ import { useCookie } from "../hooks";
 import { api } from "../lib/api";
 
 // Create the context
-const OtpVerificationContext = createContext();
-const saltRounds = 10;
-
+export const OtpVerificationContext = createContext();
 // Create the provider component
 const OtpVerificationProvider = ({ children }) => {
 	const [otpCookie, updateOtpCookie, removeOtpCookie] = useCookie("otp");

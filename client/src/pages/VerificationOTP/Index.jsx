@@ -20,7 +20,7 @@ const VerificationOTP = () => {
 	const [otp, setOtp] = useState(new Array(numberOfDigits).fill(""));
 	const [otpError, setOtpError] = useState(null);
 	const otpBoxReference = useRef([]);
-
+	const [isOpen, setIsOpen] = useState(false);
 	// Function to generate a random 4-digit OTP
 	const generateOTP = () => {
 		const min = 1000;
@@ -96,8 +96,18 @@ const VerificationOTP = () => {
 		}
 	};
 
+		setTimeout(() => {
+			setIsOpen(false);
+			// navigate("/home");
+		}, 2000);
+	};
 	return (
 		<article className="mt-28 px-6 ">
+			<SuccessOtpModal
+				bgTransparent={true}
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+			/>
 			<div className="my-10 flex items-center justify-center">
 				<TagLogo2 />
 			</div>

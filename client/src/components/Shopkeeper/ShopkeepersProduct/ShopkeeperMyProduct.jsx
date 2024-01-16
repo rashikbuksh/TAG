@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { FaBars, FaCheckCircle, FaEye, FaMinus, FaPlus } from "react-icons/fa";
-import { Takaicon } from "../../../SvgHub/SocialIcon";
+import { FaBars, FaCheckCircle, FaCopy, FaEye, FaFacebook, FaMinus, FaPlus } from "react-icons/fa";
+import { FacebookIcon, InstagramIcon, Linkedin, Takaicon, TwitterIcon, WhatsappIcon } from "../../../SvgHub/SocialIcon";
 import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-
+import Drawer from "react-modern-drawer";
+import { FaX } from "react-icons/fa6";
 const ShopkeeperMyProduct = ({ product, index }) => {
 	const {
 		id,
@@ -17,12 +18,13 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		discount,
 		view,
 	} = product;
+	console.log(product,"Product");
 
 	const [quantity, setQuantity] = useState(product_count);
 	const [newPrice, setNewPrice] = useState(price);
 	const [newDisCount, setNewDisCount] = useState(discount);
 	const [isEditingPrice, setIsEditingPrice] = useState(false);
-
+	const [copySuccess, setCopySuccess] = useState(null);
 	const increaseQuantity = () => {
 		setQuantity(quantity + 1);
 	};
@@ -125,6 +127,20 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		setQuantity(0);
 		handleProductUpdate();
 	};
+	const [isShareOpen, setIsShareOpen] = useState(false);
+	const toggleDrawer = () => {
+		setIsShareOpen((prevState) => !prevState);
+	};
+	const copyToClipboard = (data) => {
+		navigator.clipboard
+			.writeText(data)
+			.then(() => {
+				setCopySuccess("Copied to clipboard!");
+			})
+			.catch((err) => {
+				setCopySuccess("Copy failed: " + err);
+			});
+	};
 	return (
 		<div className="mx-auto px-0.5 md:w-[190px]">
 			<div className="lg:mx-0">
@@ -137,6 +153,42 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 							""
 						)}
 					</div>
+					<Drawer
+							open={isShareOpen}
+							onClose={toggleDrawer}
+							direction="bottom"
+						>
+							<div className="p-2">
+								<div className="mx-2 flex items-center justify-between ">
+									<p className="text-lg font-bold">Share</p>
+									<FaX
+										className="text-xl"
+										onClick={toggleDrawer}
+									></FaX>
+								</div>
+								<div className="mx-auto mt-5 flex w-[80%] justify-between">
+									<FaFacebook className="primary-text text-2xl"/>
+									<Linkedin />
+									<WhatsappIcon />
+									<InstagramIcon />
+									<TwitterIcon />
+								</div>
+								<div className="divider"></div>
+								<p>Copy Link </p>
+								<p
+							onClick={() =>
+								copyToClipboard(
+									`${
+										import.meta.env.VITE_API_PUBLIC_URL
+									}/product/${id}`
+								)
+							}
+							className="link-info link text-md bg-gray-200 p-2 rounded flex justify-between items-center"
+						>{`${
+							import.meta.env.VITE_API_PUBLIC_URL
+						}/product/${id}`} <FaCopy size={30}/></p>
+							</div>
+						</Drawer>
 					<div className="flex h-screen items-center justify-center">
 						<div className="dropdown relative">
 							<div
@@ -162,7 +214,9 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 										</button>
 									</li>
 									<li>
-										<a>Share</a>
+										<button onClick={() =>
+											setIsShareOpen(!isShareOpen)
+										}>Share</button>
 									</li>
 									<li>
 										<button onClick={handleNotAvailable}>

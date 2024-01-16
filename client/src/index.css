@@ -38,11 +38,17 @@
 }
 .auth-social-btn {
 	@apply rounded-2xl bg-gray-100 px-8 py-4;
-
 }
 .quantity-button {
-	@apply w-[20px] h-[20px]   text-white flex items-center justify-center text-base rounded-full;
+	@apply flex h-[20px]   w-[20px] items-center justify-center rounded-full text-base text-white;
 }
 .action-button {
-	@apply w-[80px] h-[30px] text-white bg-[#2D8FCA] rounded ;
+	@apply h-[30px] w-[80px] rounded bg-[#2D8FCA] text-white;
+}
+.dashboardCard  {
+	border-radius: 8px;
+	border: 1px solid #fff;
+	background: rgba(255, 255, 255, 0.5);
+	box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.148);
+
 }
