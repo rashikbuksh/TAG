@@ -33,6 +33,7 @@ const Register = () => {
 
 	const onSubmit = (data) => {
 		navigate("/OTPVerification", { state: { data, id } });
+		localStorage.setItem("isCodeSent", "false");
 	};
 	const togglePasswordVisibility = () => {
 		setShowPassword((prevShowPassword) => !prevShowPassword);

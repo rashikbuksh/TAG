@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { TagLogo2 } from "../../SvgHub/TagLogo2";
 import { useOtpVerification } from "../../context/otpVerification";
+import SuccessOtpModal from "../../components/SuccessOtpModal/SuccessOtpModal";
 
 const VerificationOTP = () => {
 	const navigate = useNavigate();
@@ -21,26 +22,45 @@ const VerificationOTP = () => {
 	const [otpError, setOtpError] = useState(null);
 	const otpBoxReference = useRef([]);
 	const [isOpen, setIsOpen] = useState(false);
-	// Function to generate a random 4-digit OTP
+
+	// Retrieve isCodeSent from localStorage or default to false
+	const [isCodeSent, setIsCodeSent] = useState(
+		JSON.parse(localStorage.getItem("isCodeSent")) || false
+	);
+
+	const [isOtpEmpty, setIsOtpEmpty] = useState(true);
+
 	const generateOTP = () => {
 		const min = 1000;
 		const max = 9999;
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	};
 
-	const sendCode = async () => {
+	const sendOTPCode = async () => {
 		const generatedOtp = generateOTP();
 		console.log("send code", generatedOtp);
-		sendOtp(generatedOtp);
-		// hash code
+		sendOtp(generatedOtp,phone);
 		handleVerificationCodeChange(generatedOtp.toString());
+		setOtpError("");
+		setOtp(new Array(numberOfDigits).fill(""));
+		setIsOtpEmpty(true)
+		// Save isCodeSent to localStorage
+		localStorage.setItem("isCodeSent", JSON.stringify(true));
 	};
+
+	useEffect(() => {
+		// If isCodeSent is false, send OTP
+		if (!isCodeSent) {
+			sendOTPCode();
+		}
+	}, [isCodeSent]);
 
 	const handleChange = (value, index) => {
 		let newArr = [...otp];
 		newArr[index] = value;
 		setOtp(newArr);
-
+		const newIsOtpEmpty = newArr.every((digit) => digit === "");
+		setIsOtpEmpty(newIsOtpEmpty);
 		if (value && index < numberOfDigits - 1) {
 			otpBoxReference.current[index + 1].focus();
 		}
@@ -55,12 +75,25 @@ const VerificationOTP = () => {
 		}
 	};
 
-	const handleVerificationOfOTP = () => {
+	const handelModalOpen = () => {
+		setIsOpen(true);
+		setTimeout(() => {
+			setIsOpen(false);
+			navigate("/login");
+		}, 2000);
+	};
+
+	const handleVerificationOfOTP = async () => {
+		console.log(data);
 		const code = otp.join("");
 		console.log("handleVerificationOfOTP code", code);
 		if (code.length === numberOfDigits) {
 			console.log("handleVerificationOfOTP code inside condition", code);
-			let verifiedOrNot = verifyOtp(code);
+			let verifiedOrNot = await verifyOtp(code);
+			console.log(
+				"🚀 ~ handleVerificationOfOTP ~ verifiedOrNot:",
+				verifiedOrNot
+			);
 			if (verifiedOrNot == true) {
 				// insert user data to database
 				console.log("insert user data to database");
@@ -77,8 +110,9 @@ const VerificationOTP = () => {
 							if (id) {
 								localStorage.setItem("ref_c", id);
 							}
-							navigate("/login");
+							handelModalOpen();
 							toast("Registration Successful");
+							setOtp("");
 						}
 					})
 					.catch((error) => {
@@ -87,65 +121,72 @@ const VerificationOTP = () => {
 							error.response.data.message ==
 							"Error executing the query"
 						) {
-							toast("Email or Phone Number already exists");
+							toast.error("Email or Phone Number already exists");
+							navigate("/login")
+							setOtp(new Array(numberOfDigits).fill(""));
 						}
 					});
+			} else {
+				setIsOtpEmpty(true);
+				setOtpError("Incorrect OTP");
+				// Hide Verify button
 			}
 		} else {
+			setIsOtpEmpty(true);
 			setOtpError("Please enter a 4-digit OTP");
 		}
 	};
 
-	setTimeout(() => {
-		setIsOpen(false);
-		// navigate("/home");
-	}, 2000);
 	return (
-		<article className="mt-28 px-6 ">
-			<SuccessOtpModal
-				bgTransparent={true}
-				isOpen={isOpen}
-				setIsOpen={setIsOpen}
-			/>
-			<div className="my-10 flex items-center justify-center">
+		<article className="mx-auto mt-28 max-w-md px-6">
+			<SuccessOtpModal isOpen={isOpen} setIsOpen={setIsOpen} />
+
+			<div className="flex items-center justify-center">
 				<TagLogo2 />
 			</div>
-			<p className="text-4xl font-bold">Verification Code</p>
-			<p className="mb-4 mt-6 text-base text-black">
-				One Time Password (OTP)
+
+			<p className="text-center text-3xl font-bold">Verification Code</p>
+			<p className="mb-4 mt-4 text-center text-base text-gray-600">
+				Please enter the One Time Password (OTP) sent to your mobile.
 			</p>
 
-			<div className="flex items-center gap-4">
-				{otp.map((digit, index) => (
-					<input
-						key={index}
-						value={digit}
-						maxLength={1}
-						onChange={(e) => handleChange(e.target.value, index)}
-						onKeyUp={(e) => handleBackspaceAndEnter(e, index)}
-						ref={(reference) =>
-							(otpBoxReference.current[index] = reference)
-						}
-						className={`block h-auto w-20 appearance-none rounded-md border bg-gray-300 p-3 text-xl font-bold text-black focus:border-2 focus:outline-none`}
-					/>
-				))}
+			<div className="flex items-center justify-center gap-2">
+				{Array.isArray(otp) &&
+					otp.map((digit, index) => (
+						<input
+							key={index}
+							value={digit}
+							maxLength={1}
+							onChange={(e) =>
+								handleChange(e.target.value, index)
+							}
+							onKeyUp={(e) => handleBackspaceAndEnter(e, index)}
+							ref={(reference) =>
+								(otpBoxReference.current[index] = reference)
+							}
+							className="block h-auto w-14 appearance-none rounded-md border bg-gray-200 p-2 text-center text-xl font-semibold focus:border-blue-500 focus:outline-none"
+						/>
+					))}
 			</div>
 
-			<p
-				className={`mt-4 text-lg text-white ${
-					otpError ? "error-show" : ""
-				}`}
-			>
+			<p className={`mt-2 text-center text-lg text-red-500`}>
 				{otpError}
 			</p>
-			<button className="btn btn-block mt-10" onClick={sendCode}>
-				Get Code
-			</button>
-			<button
-				className="btn btn-block mt-4"
-				onClick={handleVerificationOfOTP}
-			>
-				Verify
+
+			{isOtpEmpty ? (
+				<p className="mt-4 text-center text-gray-500">
+					Please enter the OTP to verify.
+				</p>
+			) : (
+				<button
+					className="btn btn-block mt-6 bg-blue-500 text-white hover:bg-blue-600"
+					onClick={handleVerificationOfOTP}
+				>
+					Verify
+				</button>
+			)}
+			<button className="link mx-auto my-10 block" onClick={sendOTPCode}>
+				Try Again
 			</button>
 		</article>
 	);
