@@ -1,8 +1,5 @@
 import axios from "axios";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { set } from "react-hook-form";
-import { useCookie } from "../hooks";
-import { api } from "../lib/api";
+import { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 // Create the context
@@ -23,7 +20,7 @@ const OtpVerificationProvider = ({ children }) => {
 	const verifyOtp = async (code) => {
 		if (otp && otp === code) {
 			// If the OTP is correct, remove the cookie
-			console.log("otpCookie matching", otp === code);
+			// console.log("otpCookie matching", otp === code);
 			// removeOtpCookie();
 			return true;
 		} else {
@@ -54,7 +51,7 @@ const OtpVerificationProvider = ({ children }) => {
 				}
 			)
 			.then((response) => {
-				console.log("OTP sent:", response, generatedOtp);
+				console.log("OTP sent:", response);
 			})
 			.catch((error) => {
 				console.log("Error sending OTP:", error);

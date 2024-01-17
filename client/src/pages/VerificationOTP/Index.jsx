@@ -38,7 +38,6 @@ const VerificationOTP = () => {
 
 	const sendOTPCode = async () => {
 		const generatedOtp = generateOTP();
-		console.log("send code", generatedOtp);
 		sendOtp(generatedOtp,phone);
 		handleVerificationCodeChange(generatedOtp.toString());
 		setOtpError("");
@@ -86,9 +85,8 @@ const VerificationOTP = () => {
 	const handleVerificationOfOTP = async () => {
 		console.log(data);
 		const code = otp.join("");
-		console.log("handleVerificationOfOTP code", code);
+		// console.log("handleVerificationOfOTP code", code);
 		if (code.length === numberOfDigits) {
-			console.log("handleVerificationOfOTP code inside condition", code);
 			let verifiedOrNot = await verifyOtp(code);
 			console.log(
 				"🚀 ~ handleVerificationOfOTP ~ verifiedOrNot:",
