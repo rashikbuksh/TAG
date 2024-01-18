@@ -42,7 +42,7 @@ const OtpVerificationProvider = ({ children }) => {
 				`${import.meta.env.VITE_APP_API_URL}/sentOtp`,
 				{
 					number: phoneNumber,
-					message: `Your OTP is ${generatedOtp.toString()}. - Tag Think and Get`,
+					message: `Your OTP verification is ${generatedOtp.toString()} - TAG Think and Get`,
 				},
 				{
 					headers: {

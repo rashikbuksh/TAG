@@ -45,6 +45,7 @@ import RegisterShopper from "./pages/Register/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import VerificationOTP from "./pages/VerificationOTP/Index";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
+import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
@@ -425,6 +426,36 @@ const ADMIN_ROUTES = [
 		access: ["admin"],
 	},
 ];
+const MODERATORS_ROUTES = [
+	{
+		id: 1,
+		name: "AddProductForm",
+		path: "/moderator/addproduct",
+		element: AddProductForm,
+		access: ["moderator"],
+	},
+	{
+		id: 2,
+		name: "AllAdminProduct",
+		path: "/moderator/allAdminProduct",
+		element: AllProductAdmin,
+		access: ["moderator"],
+	},
+	{
+		id: 3,
+		name: "Admin Stats",
+		path: "/moderator/stat",
+		element: AdminStats,
+		access: ["moderator"],
+	},
+	{
+		id: 4,
+		name: "AddCatagoryForm",
+		path: "/moderator/addcategory",
+		element: AddCatagoryForm,
+		access: ["moderator"],
+	},
+];
 
 function App() {
 	const isadminPage = "admin";
@@ -475,7 +506,25 @@ function App() {
 								/>
 							))}
 						</Route>
-
+						<Route element={<ModeratorProtactedRoutes />}>
+							{MODERATORS_ROUTES?.map((route) => (
+								<Route
+									key={route?.path}
+									path={`${route?.path}/*`}
+									element={
+										<Suspense
+											fallback={
+												<div>
+													<LoadingPage></LoadingPage>
+												</div>
+											}
+										>
+											<route.element />
+										</Suspense>
+									}
+								/>
+							))}
+						</Route>
 						{PUBLIC_ROUTES?.map((route) => (
 							<Route
 								key={route?.path}
@@ -501,4 +550,4 @@ function App() {
 }
 
 export default App;
-export { ADMIN_ROUTES, PROTECTED_ROUTES };
+export { ADMIN_ROUTES, PROTECTED_ROUTES, MODERATORS_ROUTES };

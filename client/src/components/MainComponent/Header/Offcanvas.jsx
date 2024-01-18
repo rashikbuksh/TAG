@@ -284,31 +284,37 @@ function Offcanvas(props) {
 								""
 							)}
 
-							{userid
-								? userInfo.map((item) =>
-										item.access == "admin" ? (
-											<li key={item.id}>
-												<span className="icon">
-													<img
-														width="50"
-														height="50"
-														src="https://img.icons8.com/ios-filled/50/administrator-male--v1.png"
-														alt="administrator-male--v1"
-													/>
-												</span>
-												<Link
-													to={
-														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														"/admin/stat"
-													}
-												>
-													Admin Page
-												</Link>
-											</li>
-										) : null
-								  )
-								: ""}
+							{user &&
+								userInfo.map((item) =>
+									item.access === "admin" ||
+									item.access === "moderator" ? (
+										<li key={item.id}>
+											<span className="icon">
+												<img
+													width="50"
+													height="50"
+													src="https://img.icons8.com/ios-filled/50/administrator-male--v1.png"
+													alt="administrator-male--v1"
+												/>
+											</span>
+											<Link
+												to={
+													item.access === "admin"
+														? import.meta.env
+																.VITE_API_PUBLIC_URL +
+														  "/admin/stat"
+														: import.meta.env
+																.VITE_API_PUBLIC_URL +
+														  "/moderator/stat"
+												}
+											>
+												{item.access === "admin"
+													? "Admin Page"
+													: "Moderator Page"}
+											</Link>
+										</li>
+									) : null
+								)}
 							{user ? (
 								<li>
 									<span className="icon">

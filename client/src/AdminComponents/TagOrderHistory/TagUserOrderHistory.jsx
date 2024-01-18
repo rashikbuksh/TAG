@@ -58,12 +58,9 @@ const TagUserOrderHistory = () => {
 										/>
 									</label>
 								</th>
-								<th>Image</th>
+						
 								<th>Order Id</th>
-								<th>product_id , quantity</th>
-								{/* <th>Short Decription</th> */}
-								{/* <th>Full Description</th> */}
-								<th>weight</th>
+					
 								<th>price</th>
 								<th>Order Status</th>
 								<th>Actions</th>

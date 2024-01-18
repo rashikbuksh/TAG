@@ -20,6 +20,7 @@ import Refer from "../Refer/Refer";
 
 const Home = () => {
 	const { user, Logout } = useAuth();
+	console.log("🚀 ~ Home ~ user:", user)
 	const [showScrollButton, setShowScrollButton] = useState(false);
 	const [sliderDataTop, setSliderDataTop] = useState([]);
 	const [sliderDataMiddel, setSliderDataMiddel] = useState([]);
