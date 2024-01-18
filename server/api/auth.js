@@ -12,6 +12,12 @@ const read = [
     msg: "id is incorrect",
   },
   {
+    uri: "/auth/checkUser/:phone",
+    query: `SELECT name, access from customer_profile where phone = ?`,
+    param: ["phone"],
+    msg: "phone",
+  },
+  {
     uri: "/auth/getUserAllInfo/:id",
     query: `SELECT name, shipping_address, address, image from customer_profile where id = ?`,
     param: ["id"],
@@ -44,7 +50,7 @@ const read = [
   },
   {
     uri: "/auth/getALLModaratorInfoForadmin",
-    query: `SELECT id, image, name,phone,email, user_name, access  from customer_profile where access = "modarator"`,
+    query: `SELECT id, image, name,phone,email, user_name, access  from customer_profile where access = "moderator"`,
   },
   {
     uri: "/auth/getRefer/:id",

@@ -53,7 +53,7 @@ const MakeModaratorModal = ({ isOpen, setIsOpen }) => {
 			email: data.emailAddress,
 			phone: data.phone,
 			password: data.password,
-			access: "modarator",
+			access: "moderator",
 		})
 			.then((response) => {
 				if (response.data.message === data.phone) {

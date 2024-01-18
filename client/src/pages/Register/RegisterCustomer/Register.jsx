@@ -5,6 +5,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { TagLogo2 } from "../../../SvgHub/TagLogo2";
+import { api } from "../../../lib/api";
+import { toast } from "react-toastify";
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -32,7 +34,23 @@ const Register = () => {
 	const { errors } = formState;
 
 	const onSubmit = (data) => {
-		navigate("/OTPVerification", { state: { data, id } });
+		api.get(`/auth/checkUser/${data.phone}`)
+			.then((response) => {
+				if (response.status === 200) {
+					toast.error("Email or Phone Number already exists");
+					navigate("/login");
+				} else {
+					toast.error("Try Again");
+				}
+			})
+			.catch((error) => {
+				if (error) {
+					if (error.response.status === 404) {
+						navigate("/OTPVerification", { state: { data, id } });
+						localStorage.setItem("isCodeSent", "false");
+					}
+				}
+			});
 	};
 	const togglePasswordVisibility = () => {
 		setShowPassword((prevShowPassword) => !prevShowPassword);

@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+import { FaSignOutAlt } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 const Sidebar = () => {
 	const { user } = useAuth();
+	const logout = () => {
+		localStorage.removeItem("user-id");
+		Cookies.remove("user");
+		Cookies.remove("auth");
+		window.location.href = "/home";
+	};
 	return (
-		<aside className="mt-24  h-[89vh] w-full overflow-auto bg-gray-900 p-6 text-gray-100 sm:w-60">
+		<aside className="mt-24 relative  h-[89vh] overflow-y-auto w-full overflow-auto bg-gray-900 p-6 text-gray-100 sm:w-60">
 			<nav className="space-y-8 text-sm">
 				<div className="space-y-2">
 					<h2 className="tracki text-sm font-semibold uppercase text-gray-400">
@@ -61,6 +69,14 @@ const Sidebar = () => {
 						<Link to="/tutorials">Tutorials</Link>
 						<Link to="/changelog">Changelog</Link>
 					</div>
+				</div>
+				<div className="mt-4">
+					<button className="btn flex items-center justify-center gap-2 hover:text-black" onClick={logout}>
+						<span className="icon">
+							<FaSignOutAlt />
+						</span>
+						Logout
+					</button>
 				</div>
 			</nav>
 		</aside>

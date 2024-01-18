@@ -1,45 +1,48 @@
 import axios from "axios";
-import bcrypt from "bcryptjs";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { set } from "react-hook-form";
-import { useCookie } from "../hooks";
-import { api } from "../lib/api";
+import { createContext, useContext, useState } from "react";
+import { toast } from "react-toastify";
 
 // Create the context
 export const OtpVerificationContext = createContext();
 // Create the provider component
 const OtpVerificationProvider = ({ children }) => {
-	const [otpCookie, updateOtpCookie, removeOtpCookie] = useCookie("otp");
+	// const [otpCookie, updateOtpCookie, removeOtpCookie] = useCookie("otp");
+	const [otp, setOtp] = useState("");
 
 	// Function to handle verification code input
-	const handleVerificationCodeChange = async (code) => {
-		const hashedCode = code;
-		updateOtpCookie(hashedCode);
+	const handleVerificationCodeChange = (code) => {
+		// Hash the code using SHA-256
+		// const hashedCode = SHA256(code).toString();
+		setOtp(code);
+		// Assuming updateOtpCookie is a function to update the OTP cookie
+		// updateOtpCookie(hashedCode);
 	};
-
-	const verifyOtp = (code) => {
-		if (otpCookie && otpCookie === code) {
+	const verifyOtp = async (code) => {
+		if (otp && otp === code) {
 			// If the OTP is correct, remove the cookie
-			console.log("otpCookie matching", otpCookie === code);
-			removeOtpCookie();
+			// console.log("otpCookie matching", otp === code);
+			// removeOtpCookie();
 			return true;
 		} else {
 			// If the OTP is incorrect, show an error message
-			alert("Incorrect OTP. Please try again.");
+			toast.error("Incorrect OTP. Please try again.");
+			// removeOtpCookie();
+			setOtp("");
 		}
+
 		return false;
 	};
 
-	const sendOtp = async (Otp) => {
+	const sendOtp = async (Otp, phone) => {
 		const generatedOtp = Otp;
-		const phoneNumber = "01878601610";
-		console.log("sendOtp send code", generatedOtp);
+		const phoneNumber = phone;
+		// console.log("sendOtp send code", generatedOtp);
 		await axios
 			.post(
 				`${import.meta.env.VITE_APP_API_URL}/sentOtp`,
 				{
 					number: phoneNumber,
-					otp: generatedOtp.toString(),
+					message: `Your OTP verification is ${generatedOtp.toString()} - TAG Think and Get`,
 				},
 				{
 					headers: {
@@ -48,7 +51,7 @@ const OtpVerificationProvider = ({ children }) => {
 				}
 			)
 			.then((response) => {
-				console.log("OTP sent:", response, generatedOtp);
+				console.log("OTP sent:", response);
 			})
 			.catch((error) => {
 				console.log("Error sending OTP:", error);

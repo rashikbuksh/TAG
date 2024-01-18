@@ -115,11 +115,11 @@ app.post(
 app.use(express.json()); // Middleware to parse JSON requests
 
 app.post("/sentOtp", async (req, res) => {
-  const { number } = req.body;
+  const { number, message } = req.body;
   var postData = querystring.stringify({
-    // token: process.env.API_KEY_SMS,
+    token: process.env.API_KEY_SMS,
     to: `+88${number}`,
-    message: "Test sms using API from towhid",
+    message: message,
   });
 
   var options = {

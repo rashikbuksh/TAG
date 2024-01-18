@@ -56,6 +56,8 @@ const AuthProvider = ({ children }) => {
 					window.location.href = "/admin/stat";
 				} else if (loginUser.access === "shopper") {
 					window.location.href = "/shopkeeperDashboard";
+				} else if (loginUser.access === "moderator") {
+					window.location.href = "/moderator/stat";
 				} else {
 					window.location.href = "/home";
 				}
