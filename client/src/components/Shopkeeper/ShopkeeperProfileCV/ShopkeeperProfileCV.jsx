@@ -3,7 +3,10 @@ import "@smastrom/react-rating/style.css";
 import { map } from "leaflet";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import { FaCopy, FaEye } from "react-icons/fa";
 import { FaLocationDot, FaRegMessage, FaX } from "react-icons/fa6";
+import { PiShareFat } from "react-icons/pi";
+import Drawer from "react-modern-drawer";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
@@ -30,9 +33,6 @@ import Header from "../../MainComponent/Header/Header";
 import LocationModal from "../../Modal/LocationModal/LocationModal";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import ShowCartIcon from "../../ShowCartIcon/ShowCartIcon";
-import Drawer from "react-modern-drawer";
-import { PiShareFat } from "react-icons/pi";
-import { FaCopy, FaEye } from "react-icons/fa";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
@@ -151,18 +151,22 @@ const ShopkeeperProfileCV = () => {
 								</div>
 								<div className="divider"></div>
 								<p>Copy Link </p>
-								<p 
-							onClick={() =>
-								copyToClipboard(
-									`${
+								<p
+									onClick={() =>
+										copyToClipboard(
+											`${
+												import.meta.env
+													.VITE_API_PUBLIC_URL
+											}/shopkeeperProfileCV/${id}`
+										)
+									}
+									className="text-md link-info link flex items-center justify-between rounded bg-gray-200 p-2"
+								>
+									{`${
 										import.meta.env.VITE_API_PUBLIC_URL
-									}/shopkeeperProfileCV/${id}`
-								)
-							}
-							className="link-info link text-md bg-gray-200 p-2 rounded flex justify-between items-center"
-						>{`${
-							import.meta.env.VITE_API_PUBLIC_URL
-						}/shopkeeperProfileCV/${id}`} <FaCopy size={30}/></p>
+									}/shopkeeperProfileCV/${id}`}{" "}
+									<FaCopy size={30} />
+								</p>
 							</div>
 						</Drawer>
 						{shopkeeperInfo && (
@@ -206,7 +210,7 @@ const ShopkeeperProfileCV = () => {
 										value={shopkeeperInfo.review_count}
 									/>
 								</div>
-								<div className="flex gap-4 my-1 items-center">
+								<div className="my-1 flex items-center gap-4">
 									<div>33 Followers</div>
 									<button
 										className="font-xl flex h-[40px] w-[40px] items-center justify-center rounded bg-[#469CD6] text-white"
@@ -221,16 +225,6 @@ const ShopkeeperProfileCV = () => {
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white">
 										Message
 									</button>
-
-									{/* <MapDistanceModal
-									isOpen={mapModal}
-									setIsOpen={setMapModal}
-									startLoc={GetLocation()}
-									endLoc={shopkeeperInfo.shipping_address}
-									startPopup={"I am Here"}
-									endPopup={shopkeeperInfo.name}
-								/> */}
-
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
 										Follow
 									</button>

@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Takaicon } from "../../../SvgHub/SocialIcon";
 import { Breadcrumb } from "../../../components";
+import { useAuth } from "../../../context/auth";
 import { api } from "../../../lib/api";
 
 const OrderShopper = () => {
 	const [data, setData] = useState([]);
 
 	// Get user ID from local storage
-	const shopper_id = localStorage.getItem("user-id");
+	const { user } = useAuth();
 
 	useEffect(() => {
+		const shopper_id = user.id;
 		api.get(`/order/getordershopper/${shopper_id}`)
 			.then((response) => {
 				setData(response.data);
@@ -18,7 +20,7 @@ const OrderShopper = () => {
 			.catch((error) => {
 				console.error(error);
 			});
-	}, [shopper_id]);
+	}, [user.id]);
 
 	return (
 		<div className="body-wrapper space-pt--70 space-pb--120">

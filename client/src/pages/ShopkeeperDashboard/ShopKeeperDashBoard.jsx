@@ -1,24 +1,12 @@
-import Axios from "axios";
 import { useEffect, useState } from "react";
-import {
-	FaAddressCard,
-	FaBars,
-	FaFileContract,
-	FaFontAwesomeFlag,
-	FaHome,
-	FaMapPin,
-} from "react-icons/fa";
-import Drawer from "react-modern-drawer";
+import { FaAddressCard } from "react-icons/fa";
 import "react-modern-drawer/dist/index.css";
 import { Link } from "react-router-dom";
-import { ReactSVG } from "react-svg";
-import Timekeeper from "react-timekeeper";
-import { Logger } from "sass";
+import { toast } from "react-toastify";
 import { Breadcrumb } from "../../components";
 import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
-import { toast } from "react-toastify";
 
 const ShopKeeperDashBoard = () => {
 	const [isClockOpen, setIsClockOpen] = useState(false);
@@ -131,7 +119,7 @@ const ShopKeeperDashBoard = () => {
 							/>
 							<button
 								onClick={handleOpenClockModal}
-								className="font-bold  link primary-text"
+								className="primary-text  link font-bold"
 							>
 								Set
 							</button>
@@ -264,7 +252,7 @@ const ShopKeeperDashBoard = () => {
 									<div
 										key={index}
 										// style={boxShadowStyle}
-										className={` flex dashboardCard ${
+										className={` dashboardCard flex ${
 											section.content ? "" : "flex-col "
 										}`}
 									>

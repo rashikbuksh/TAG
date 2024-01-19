@@ -24,6 +24,7 @@ const OrderProducTable = ({ product }) => {
 						<h1 className="text-sm">{Orderdproduct.name}</h1>
 					</Link>
 				</div>
+
 				<div className="ms-auto mt-3 flex w-[90%] justify-end gap-5">
 					<div>
 						<h2 className="text-xs">

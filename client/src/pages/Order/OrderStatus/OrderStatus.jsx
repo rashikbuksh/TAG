@@ -12,7 +12,6 @@ import { Breadcrumb } from "../../../components";
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
 	const [products, setProducts] = useState([]);
-	const [timers, setTimers] = useState({});
 	const { user } = useAuth();
 	const customer_profile_id = user.id;
 	useEffect(() => {
@@ -20,6 +19,7 @@ const OrderStatus = () => {
 			.then((response) => {
 				const newPendingOrders = response.data;
 				setPendingOrders(newPendingOrders);
+				console.log(newPendingOrders);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -57,31 +57,6 @@ const OrderStatus = () => {
 	const statusColors = {
 		accepted: "text-green-500",
 		pending: "text-yellow-500",
-	};
-
-	const checkOrderStatus = (orderId) => {
-		const id = orderId;
-		api.get(`/order/getorder_by_id/${id}`)
-			.then((response) => {
-				const orderStatus = response.data[0].order_status;
-				if (orderStatus === "pending") {
-					// Update order status to canceled
-					api.post(`/order/ordertimeoutStatus/${id}`, {
-						order_status: "cancelled",
-						cancel_report: "Time Out",
-					})
-						.then(() => {
-							// Set a timeout for cancel report
-							setTimeout(() => {}, 5000); // Adjust timeout duration as needed
-						})
-						.catch((error) => {
-							console.error("Error updating status:", error);
-						});
-				}
-			})
-			.catch((error) => {
-				console.error("Error fetching order status:", error);
-			});
 	};
 
 	return (
