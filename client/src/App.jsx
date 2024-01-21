@@ -46,6 +46,7 @@ import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard
 import VerificationOTP from "./pages/VerificationOTP/Index";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
+import ShopkeeperSchedule from "./pages/ShopkeeperDashboard/ShopkeeperSchedule";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
@@ -262,6 +263,13 @@ const PROTECTED_ROUTES = [
 		path: "/referPage",
 		element: ReferCodeGenerator,
 		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id: 32,
+		name: "Shopkeeper Schedule",
+		path: "/shopkeeperSchedule",
+		element: ShopkeeperSchedule,
+		access: ["admin", "shopper"],
 	},
 ];
 

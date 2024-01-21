@@ -18,6 +18,8 @@ const ShopKeeperDashBoard = () => {
 	const [newOrderContent, setNewOrderContent] = useState("");
 	const [buyProductContent, setBuyProductContent] = useState("");
 	const [orderHistoryContent, setOrderHistoryContent] = useState("");
+	const [shopkeeperScheduleContent, setShopkeeperScheduleContent] =
+		useState();
 	const id = localStorage.getItem("user-id");
 
 	const [shopkeeper, setShopkeeper] = useState([]);
@@ -97,6 +99,11 @@ const ShopKeeperDashBoard = () => {
 			title: "Order History",
 			content: orderHistoryContent, // Assuming orderHistoryContent is a variable containing 'Order History' data
 			link: `/ordersHistoryDetails/${user.id}`, // Placeholder link for order history
+		},
+		{
+			title: "Shopkeeper Schedule",
+			content: shopkeeperScheduleContent, // Assuming shopkeeperScheduleContent is a variable containing 'Order History' data
+			link: `/shopkeeperSchedule`, // Placeholder link for order history
 		},
 	];
 	return (

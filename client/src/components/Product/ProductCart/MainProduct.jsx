@@ -1,24 +1,13 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { useEffect, useRef, useState } from "react";
-import {
-	FaCheckCircle,
-	FaCross,
-	FaMapMarkerAlt,
-	FaMinus,
-	FaPlus,
-	FaWindowClose,
-} from "react-icons/fa";
-import { FaEye, FaRegMessage, FaX } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
+import { FaEye, FaX } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { AddToCartIcon1, AddToCartIcon2, MapIcon } from "../../../SvgHub/Icons";
+import { AddToCartIcon2, MapIcon } from "../../../SvgHub/Icons";
 import { Takaicon } from "../../../SvgHub/SocialIcon";
 import { useAuth } from "../../../context/auth";
-import {
-	checkIfInCart,
-	getDiscountPrice,
-	getProductCartQuantity,
-} from "../../../helpers/product";
+import { checkIfInCart, getDiscountPrice } from "../../../helpers/product";
 import { api } from "../../../lib/api";
 import {
 	addToCart,
@@ -27,7 +16,6 @@ import {
 	increaseQuantityofProd,
 } from "../../../store/slices/cart-slice";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
-import MessageModal from "../../Modal/MessageModal/MessageModal";
 
 const MainProduct = ({ shopperProduct, product, height, width }) => {
 	const navigate = useNavigate();
