@@ -2,16 +2,16 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { map } from "leaflet";
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import { FaCopy, FaEye } from "react-icons/fa";
-import { FaLocationDot, FaRegMessage, FaX } from "react-icons/fa6";
+import { FaX } from "react-icons/fa6";
 import { PiShareFat } from "react-icons/pi";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"; // need to keep this for map purpose
 import Drawer from "react-modern-drawer";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
-import { AddToCartIcon1, AddToCartIcon2 } from "../../../SvgHub/Icons";
+import { AddToCartIcon2 } from "../../../SvgHub/Icons";
 import {
 	FacebookIcon,
 	InstagramIcon,
@@ -21,7 +21,6 @@ import {
 	WhatsappIcon,
 } from "../../../SvgHub/SocialIcon";
 import { useAuth } from "../../../context/auth";
-import GetLocation from "../../../helpers/GetLocation";
 import { checkIfInCart } from "../../../helpers/product";
 import { api } from "../../../lib/api";
 import {
@@ -30,7 +29,6 @@ import {
 } from "../../../store/slices/cart-slice";
 import Footer from "../../MainComponent/Footer/Footer";
 import Header from "../../MainComponent/Header/Header";
-import LocationModal from "../../Modal/LocationModal/LocationModal";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import ShowCartIcon from "../../ShowCartIcon/ShowCartIcon";
 const ShopkeeperProfileCV = () => {
@@ -238,12 +236,6 @@ const ShopkeeperProfileCV = () => {
 									>
 										Location
 									</button>
-									{/* <LocationModal
-										isOpen={mapModal}
-										setIsOpen={setMapModal}
-										popup={shopkeeperInfo.name}
-										latlong={latLong}
-									></LocationModal> */}
 									<MapDistanceModal
 										isOpen={mapModal}
 										setIsOpen={setMapModal}

@@ -26,7 +26,6 @@ import {
 	increaseQuantity,
 	increaseQuantityofProd,
 } from "../../../store/slices/cart-slice";
-import LocationModal from "../../Modal/LocationModal/LocationModal";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import MessageModal from "../../Modal/MessageModal/MessageModal";
 
@@ -294,12 +293,6 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 								>
 									<MapIcon height={30} width={30} />
 								</button>
-								{/* <LocationModal
-									isOpen={isLocationOpen}
-									setIsOpen={setIsLocationOpen}
-									popup={userInfo.name}
-									latlong={latLong}
-								></LocationModal> */}
 
 								{isLocationOpen && (
 									<MapDistanceModal
