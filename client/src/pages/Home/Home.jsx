@@ -20,11 +20,14 @@ import Refer from "../Refer/Refer";
 
 const Home = () => {
 	const { user, Logout } = useAuth();
-	console.log("🚀 ~ Home ~ user:", user)
+	console.log("🚀 ~ Home ~ user:", user);
+
 	const [showScrollButton, setShowScrollButton] = useState(false);
 	const [sliderDataTop, setSliderDataTop] = useState([]);
 	const [sliderDataMiddel, setSliderDataMiddel] = useState([]);
 	const [sliderDataBottom, setSliderDataBottom] = useState([]);
+	const [dataLoaded, setDataLoaded] = useState(false); // New state variable
+
 	const handleSmoothScroll = () => {
 		window.scrollTo({
 			top: 0,
@@ -48,8 +51,6 @@ const Home = () => {
 		};
 	}, []);
 
-	// Use useMemo to update memoizedCartItems when cartItems change
-
 	useEffect(() => {
 		api.get("/heroslider/getslider/top")
 			.then((res) => {
@@ -72,6 +73,12 @@ const Home = () => {
 			.catch((err) => {
 				// console.error(err);
 			});
+
+		// Simulating the completion of data loading
+		setTimeout(() => {
+			setDataLoaded(true);
+		}, 2000); // You may replace this with your actual data loading logic
+
 		if (!user) {
 			localStorage.removeItem("user-id");
 			Cookies.remove("user");
@@ -83,22 +90,12 @@ const Home = () => {
 		<div className="px-3">
 			<Header />
 			<Footer />
-			<ShowCartIcon></ShowCartIcon>
+			<ShowCartIcon />
 			<div className="body-wrapper mb-20 mt-12">
-				<Helmet>
-					<meta charSet="utf-8" />
-					<meta
-						name="google-adsense-account"
-						content="ca-pub-2753570933185281"
-					></meta>
-					<title>Home-TAG</title>
-					{/* <link rel="canonical" href="http://mysite.com/example" /> */}
-				</Helmet>
+				<Helmet>{/* ... (existing Helmet content) */}</Helmet>
 				<HeroSlider sliderData={sliderDataTop} />
 				{user ? <Refer /> : ""}
-				<HotNews></HotNews>
-				{/* <AdsComponent dataAdSlot="8283119048" /> */}
-				{/* <ShowCartIcon></ShowCartIcon> */}
+				<HotNews />
 				<BestSellerProduct limit={2} type="bestSeller" />
 				<AllProducts limit={12} sliderData={sliderDataMiddel} />
 				{showScrollButton && (
@@ -109,7 +106,8 @@ const Home = () => {
 						<FaArrowUp className="text-3xl text-gray-200"></FaArrowUp>
 					</button>
 				)}
-				{sliderDataTop && <FooterSection />}
+				{dataLoaded && <FooterSection />}{" "}
+				{/* Conditionally render the FooterSection */}
 			</div>
 		</div>
 	);

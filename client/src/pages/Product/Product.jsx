@@ -254,6 +254,10 @@ const Product = () => {
 													  user.access ===
 															"shopper" ? (
 														""
+													) : user &&
+													  user.access ===
+															"new_shopper" ? (
+														""
 													) : (
 														<div className="cart-product__counter absolute  right-1  top-9 rounded-full bg-[#F2F8FD] px-2 py-2">
 															<div className="flex items-center justify-center gap-2">
@@ -387,6 +391,8 @@ const Product = () => {
 								) : user.access === "admin" ? (
 									""
 								) : user.access === "shopper" ? (
+									""
+								) : user && user.access === "new_shopper" ? (
 									""
 								) : products &&
 								  products[0].active_status !== 1 ? (

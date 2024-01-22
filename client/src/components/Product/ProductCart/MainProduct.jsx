@@ -318,6 +318,8 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 							""
 						) : user && user.access === "shopper" ? (
 							""
+						) : user && user.access === "new_shopper" ? (
+							""
 						) : user ? (
 							<button
 								disabled={active_status !== 1}

@@ -46,6 +46,8 @@ import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard
 import VerificationOTP from "./pages/VerificationOTP/Index";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
+import ShopperWaitingPage from "./components/ShopperWaitngPage/ShopperWaitingPage";
+import AdminNewShopRequest from "./AdminComponents/AdminNewShopRequest/AdminNewShopRequest";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
@@ -315,6 +317,10 @@ const PUBLIC_ROUTES = [
 		element: NotFound,
 	},
 	{
+		path: "/waitForVerify",
+		element: ShopperWaitingPage,
+	},
+	{
 		path: "*",
 		element: NotFound,
 	},
@@ -420,9 +426,16 @@ const ADMIN_ROUTES = [
 	},
 	{
 		id: 15,
-		name: "Make Modarator",
+		name: "Late Orders Page",
 		path: "/lateorderSubmition",
 		element: LateOrdersPage,
+		access: ["admin"],
+	},
+	{
+		id: 16,
+		name: "New Shop",
+		path: "/newShopRequest",
+		element: AdminNewShopRequest,
 		access: ["admin"],
 	},
 ];
