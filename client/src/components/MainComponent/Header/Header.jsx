@@ -91,21 +91,32 @@ function Header() {
 		(item) => item.status === 1
 	);
 
-	// {notification.map((single) => (
-	// 	<div
-	// 		className={clsx(
-	// 			"notification-item",
-	// 			single.status === 1 && "notification-item--unread"
-	// 		)}
-	// 		key={single.id}
-	// 	>
-	// 		{/* Other notification content */}
-	// 		{single.status === 1 && <NotificationSound />}
+	useEffect(() => {
+		// Play notification sound for new notifications
+		if (notificationsWithStatusOne.length > 0) {
+			NotificationSound();
+			// Update the status of the notifications after playing the sound
+			updateNotificationStatus();
+		}
+	}, [notificationsWithStatusOne]);
 
-	// 		{/* Rest of your notification rendering */}
-	// 	</div>
-	// ))}
-	// console.log(notificationsWithStatusOne.length);
+	const updateNotificationStatus = async () => {
+		try {
+			// Update the status of notifications to 2 (played)
+			const id = userid;
+			await api.post(`/notification/readnotification/${id}`);
+			// Update the local state with updated notifications
+			setNotification((prevNotifications) =>
+				prevNotifications.map((notification) =>
+					notification.status === 1
+						? { ...notification, status: 0 }
+						: notification
+				)
+			);
+		} catch (error) {
+			console.error("Error updating notification status:", error);
+		}
+	};
 
 	const HandleLocationClick = () => {
 		setLocationModal(true);
@@ -168,14 +179,13 @@ function Header() {
 										to={"/notification"}
 										className="relative"
 									>
-										<FaBell className="text-4xl   text-yellow-500" />
+										<FaBell className="text-4xl text-yellow-500" />
 										{notificationsWithStatusOne.length >
 											0 && (
 											<p className="absolute -top-2 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white">
 												{
 													notificationsWithStatusOne.length
 												}
-												<NotificationSound />
 											</p>
 										)}
 									</Link>
