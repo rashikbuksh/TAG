@@ -22,7 +22,7 @@ const MapDistanceModal = ({ isOpen, setIsOpen, latlong, popup }) => {
 
 	setTimeout(function () {
 		window.dispatchEvent(new Event("resize"));
-	}, 1);
+	}, 10);
 
 	return (
 		<Modal

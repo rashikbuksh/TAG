@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
 import { FaLocationDot, FaMapLocationDot, FaX } from "react-icons/fa6";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"; // need to keep this for map purpose
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { useAuth } from "../../../context/auth";
-import GetLocation from "../../../helpers/GetLocation";
 import NotificationSound from "../../../helpers/NotificationSound";
 import { api } from "../../../lib/api";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
@@ -21,8 +20,6 @@ function Header() {
 	const id = user ? user.id : null;
 
 	const [locationModal, setLocationModal] = useState(false);
-
-	const currentLocation = GetLocation();
 
 	const handleClickOffcanvas = (e) => {
 		e.preventDefault();

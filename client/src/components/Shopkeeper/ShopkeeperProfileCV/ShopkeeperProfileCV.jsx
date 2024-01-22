@@ -2,13 +2,16 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { map } from "leaflet";
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import { FaLocationDot, FaRegMessage, FaX } from "react-icons/fa6";
+import { FaCopy, FaEye } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
+import { PiShareFat } from "react-icons/pi";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"; // need to keep this for map purpose
+import Drawer from "react-modern-drawer";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
-import { AddToCartIcon1, AddToCartIcon2 } from "../../../SvgHub/Icons";
+import { AddToCartIcon2 } from "../../../SvgHub/Icons";
 import {
 	FacebookIcon,
 	InstagramIcon,
@@ -18,7 +21,6 @@ import {
 	WhatsappIcon,
 } from "../../../SvgHub/SocialIcon";
 import { useAuth } from "../../../context/auth";
-import GetLocation from "../../../helpers/GetLocation";
 import { checkIfInCart } from "../../../helpers/product";
 import { api } from "../../../lib/api";
 import {
@@ -27,12 +29,8 @@ import {
 } from "../../../store/slices/cart-slice";
 import Footer from "../../MainComponent/Footer/Footer";
 import Header from "../../MainComponent/Header/Header";
-import LocationModal from "../../Modal/LocationModal/LocationModal";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import ShowCartIcon from "../../ShowCartIcon/ShowCartIcon";
-import Drawer from "react-modern-drawer";
-import { PiShareFat } from "react-icons/pi";
-import { FaCopy, FaEye } from "react-icons/fa";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
@@ -151,18 +149,22 @@ const ShopkeeperProfileCV = () => {
 								</div>
 								<div className="divider"></div>
 								<p>Copy Link </p>
-								<p 
-							onClick={() =>
-								copyToClipboard(
-									`${
+								<p
+									onClick={() =>
+										copyToClipboard(
+											`${
+												import.meta.env
+													.VITE_API_PUBLIC_URL
+											}/shopkeeperProfileCV/${id}`
+										)
+									}
+									className="text-md link-info link flex items-center justify-between rounded bg-gray-200 p-2"
+								>
+									{`${
 										import.meta.env.VITE_API_PUBLIC_URL
-									}/shopkeeperProfileCV/${id}`
-								)
-							}
-							className="link-info link text-md bg-gray-200 p-2 rounded flex justify-between items-center"
-						>{`${
-							import.meta.env.VITE_API_PUBLIC_URL
-						}/shopkeeperProfileCV/${id}`} <FaCopy size={30}/></p>
+									}/shopkeeperProfileCV/${id}`}{" "}
+									<FaCopy size={30} />
+								</p>
 							</div>
 						</Drawer>
 						{shopkeeperInfo && (
@@ -206,7 +208,7 @@ const ShopkeeperProfileCV = () => {
 										value={shopkeeperInfo.review_count}
 									/>
 								</div>
-								<div className="flex gap-4 my-1 items-center">
+								<div className="my-1 flex items-center gap-4">
 									<div>33 Followers</div>
 									<button
 										className="font-xl flex h-[40px] w-[40px] items-center justify-center rounded bg-[#469CD6] text-white"
@@ -221,16 +223,6 @@ const ShopkeeperProfileCV = () => {
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white">
 										Message
 									</button>
-
-									{/* <MapDistanceModal
-									isOpen={mapModal}
-									setIsOpen={setMapModal}
-									startLoc={GetLocation()}
-									endLoc={shopkeeperInfo.shipping_address}
-									startPopup={"I am Here"}
-									endPopup={shopkeeperInfo.name}
-								/> */}
-
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
 										Follow
 									</button>
@@ -244,12 +236,6 @@ const ShopkeeperProfileCV = () => {
 									>
 										Location
 									</button>
-									{/* <LocationModal
-										isOpen={mapModal}
-										setIsOpen={setMapModal}
-										popup={shopkeeperInfo.name}
-										latlong={latLong}
-									></LocationModal> */}
 									<MapDistanceModal
 										isOpen={mapModal}
 										setIsOpen={setMapModal}
