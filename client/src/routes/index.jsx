@@ -12,6 +12,9 @@ export default function ProtectedRoutes() {
 	if (loading) return <LoadingPage></LoadingPage>;
 
 	if (!signed) return <Navigate to="/login" replace={true} />;
+	if (user && user.access === "new_shopper") {
+		return <Navigate to="/waitForVerify" replace={true} />;
+	}
 
 	// console.log("user in router", user);
 	// console.log(window.location.pathname);

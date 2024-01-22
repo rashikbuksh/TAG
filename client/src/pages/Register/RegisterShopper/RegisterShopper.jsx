@@ -54,7 +54,7 @@ const Register = () => {
 			phone: data.phone,
 			email: data.emailAddress,
 			password: data.password,
-			access: "shopper",
+			access: "new_shopper",
 			shipping_address: data.shipping_address,
 		})
 			.then((response) => {
@@ -63,7 +63,7 @@ const Register = () => {
 					data.name + " added successfully"
 				) {
 					toast("Registration Successful");
-					window.location.href = "/login";
+					window.location.href = "/waitForVerify";
 				}
 			})
 			.catch((error) => {

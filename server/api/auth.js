@@ -45,6 +45,10 @@ const read = [
     query: `SELECT id, image, profile_picture, name, user_name, access from customer_profile`,
   },
   {
+    uri: "/auth/getNewShopInfo",
+    query: `SELECT id, image,	shipping_address, name, user_name, phone,email, access from customer_profile WHERE access = "new_shopper"`,
+  },
+  {
     uri: "/auth/getALLUserInfoForadmin",
     query: `SELECT id, image, name,phone,email, user_name, access  from customer_profile where access = "customer"`,
   },
@@ -93,10 +97,21 @@ const change = [
     body: ["refer_code", "id"],
     msg: "id",
   },
+  {
+    uri: "/auth/confirmShopper",
+    query: `UPDATE customer_profile SET access = ? WHERE id = ?`,
+    body: ["access", "id"],
+    msg: "id",
+  },
 ];
 const remove = [
   {
     uri: "/auth/deleteModarator/:id",
+    query: `DELETE FROM customer_profile WHERE id = ?`,
+    param: ["id"],
+  },
+  {
+    uri: "/auth/newShopper/:id",
     query: `DELETE FROM customer_profile WHERE id = ?`,
     param: ["id"],
   },

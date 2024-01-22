@@ -24,7 +24,7 @@ import {
     }, []);
   
     return (
-      <div className="mt-3">
+      <div className="mt-3 max-w-7xl mx-auto">
         <div className="divider my-0"></div>
         <h1 className="ml-3  text-lg font-semibold">Follow Us</h1>
         <div className="mx-auto mt-5 flex w-[80%] justify-between">
@@ -50,6 +50,7 @@ import {
             <span>All Rights Reserved</span>
           </p>
         </div>
+        <div className="h-24"></div>
       </div>
     );
   };

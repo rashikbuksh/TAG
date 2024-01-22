@@ -35,6 +35,7 @@ const Sidebar = () => {
 						Operations
 					</h2>
 					<div className="flex flex-col space-y-4">
+						<Link to="/newShopRequest">New Shop Request</Link>
 						<Link to="/addcategory">Add Category</Link>
 						<Link to="/addproduct">Add Product</Link>
 						<Link to="/addheroslider">Add SliderImage</Link>
