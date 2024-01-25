@@ -33,12 +33,12 @@ const ShopProducts = ({ products }) => {
 			{/* <ShowCartIcon></ShowCartIcon> */}
 			<div className="shop-layout-switcher space-mt--15 space-mb--15 text-end">
 				<div className="container">
-					<button
+					{/* <button
 						className={`${gridActivate ? "active" : ""}`}
 						onClick={setGridActive}
 					>
 						<ReactSVG
-							src={
+							src={s
 								import.meta.env.VITE_API_PUBLIC_URL +
 								"/assets/img/icons/grid.svg"
 							}
@@ -54,7 +54,7 @@ const ShopProducts = ({ products }) => {
 								"/assets/img/icons/list.svg"
 							}
 						/>
-					</button>
+					</button> */}
 				</div>
 			</div>
 

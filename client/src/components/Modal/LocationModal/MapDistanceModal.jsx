@@ -41,12 +41,12 @@ const MapDistanceModal = ({ isOpen, setIsOpen, latlong, popup }) => {
 					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				/>
 				<RoutingMachine
-					userLocation={location}
+					userLocation={location} 
 					// handle for multiple shopper location
 					shopperLocation={latlong}
 					popup={popup}
 					minimumDistance={minimumDistance}
-					classname="leaflet-routing-container"
+					className="leaflet-routing-container"
 				/>
 			</MapContainer>
 		</Modal>

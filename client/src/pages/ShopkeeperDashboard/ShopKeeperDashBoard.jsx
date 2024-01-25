@@ -7,6 +7,7 @@ import { Breadcrumb } from "../../components";
 import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
+import { TagLogo2 } from "../../SvgHub/TagLogo2";
 
 const ShopKeeperDashBoard = () => {
 	const [isClockOpen, setIsClockOpen] = useState(false);
@@ -100,11 +101,11 @@ const ShopKeeperDashBoard = () => {
 			content: orderHistoryContent, // Assuming orderHistoryContent is a variable containing 'Order History' data
 			link: `/ordersHistoryDetails/${user.id}`, // Placeholder link for order history
 		},
-		{
-			title: "Shopkeeper Schedule",
-			content: shopkeeperScheduleContent, // Assuming shopkeeperScheduleContent is a variable containing 'Order History' data
-			link: `/shopkeeperSchedule`, // Placeholder link for order history
-		},
+		// {
+		// 	title: "Shopkeeper Schedule",
+		// 	content: shopkeeperScheduleContent, // Assuming shopkeeperScheduleContent is a variable containing 'Order History' data
+		// 	link: `/shopkeeperSchedule`, // Placeholder link for order history
+		// },
 	];
 	return (
 		<div className="body-wrapper space-pb--120 mt-10 bg-gray-50">
@@ -208,24 +209,23 @@ const ShopKeeperDashBoard = () => {
 							} `}
 						>
 							<div className="w-24 rounded-full">
-								<img
-									src={
-										shopkeeper
-											? `${
-													import.meta.env
-														.VITE_APP_IMG_URL
-											  }/usersProfilePic/${
-													shopkeeper.profile_picture
-											  }`
-											: `${
-													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/assets/img/profile.jpg"
-											  }`
-									}
-									className="img-fluid"
-									alt=""
-								/>
+								{shopkeeper.profile_picture ? (
+									<img
+										src={`${
+											import.meta.env.VITE_APP_IMG_URL
+										}/usersProfilePic/${
+											shopkeeper.profile_picture
+										}`}
+										className="img-fluid"
+										alt=""
+									/>
+								) : (
+									<img
+										src={'../../../public/assets/Tag-logo-blue-get_100_100.png'}
+										className="img-fluid"
+										alt=""
+									/>
+								)}
 							</div>
 						</div>
 

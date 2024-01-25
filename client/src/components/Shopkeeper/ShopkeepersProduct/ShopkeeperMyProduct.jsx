@@ -1,7 +1,22 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-import { FaBars, FaCheckCircle, FaCopy, FaEye, FaFacebook, FaMinus, FaPlus } from "react-icons/fa";
-import { FacebookIcon, InstagramIcon, Linkedin, Takaicon, TwitterIcon, WhatsappIcon } from "../../../SvgHub/SocialIcon";
+import { useEffect, useState } from "react";
+import {
+	FaBars,
+	FaCheckCircle,
+	FaCopy,
+	FaEye,
+	FaFacebook,
+	FaMinus,
+	FaPlus,
+} from "react-icons/fa";
+import {
+	FacebookIcon,
+	InstagramIcon,
+	Linkedin,
+	Takaicon,
+	TwitterIcon,
+	WhatsappIcon,
+} from "../../../SvgHub/SocialIcon";
 import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -18,8 +33,8 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		discount,
 		view,
 	} = product;
-	console.log(product,"Product");
-
+	console.log(product, "Product");
+	const [category, setCategory] = useState([]);
 	const [quantity, setQuantity] = useState(product_count);
 	const [newPrice, setNewPrice] = useState(price);
 	const [newDisCount, setNewDisCount] = useState(discount);
@@ -28,6 +43,11 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 	const increaseQuantity = () => {
 		setQuantity(quantity + 1);
 	};
+	useEffect(() => {
+		api.get(`/category/get/category`).then((response) => {
+			setCategory(response.data);
+		});
+	}, []);
 
 	const decreaseQuantity = () => {
 		if (quantity > 0) {
@@ -154,41 +174,44 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 						)}
 					</div>
 					<Drawer
-							open={isShareOpen}
-							onClose={toggleDrawer}
-							direction="bottom"
-						>
-							<div className="p-2">
-								<div className="mx-2 flex items-center justify-between ">
-									<p className="text-lg font-bold">Share</p>
-									<FaX
-										className="text-xl"
-										onClick={toggleDrawer}
-									></FaX>
-								</div>
-								<div className="mx-auto mt-5 flex w-[80%] justify-between">
-									<FaFacebook className="primary-text text-2xl"/>
-									<Linkedin />
-									<WhatsappIcon />
-									<InstagramIcon />
-									<TwitterIcon />
-								</div>
-								<div className="divider"></div>
-								<p>Copy Link </p>
-								<p
-							onClick={() =>
-								copyToClipboard(
-									`${
-										import.meta.env.VITE_API_PUBLIC_URL
-									}/product/${id}`
-								)
-							}
-							className="link-info link text-md bg-gray-200 p-2 rounded flex justify-between items-center"
-						>{`${
-							import.meta.env.VITE_API_PUBLIC_URL
-						}/product/${id}`} <FaCopy size={30}/></p>
+						open={isShareOpen}
+						onClose={toggleDrawer}
+						direction="bottom"
+					>
+						<div className="p-2">
+							<div className="mx-2 flex items-center justify-between ">
+								<p className="text-lg font-bold">Share</p>
+								<FaX
+									className="text-xl"
+									onClick={toggleDrawer}
+								></FaX>
 							</div>
-						</Drawer>
+							<div className="mx-auto mt-5 flex w-[80%] justify-between">
+								<FaFacebook className="primary-text text-2xl" />
+								<Linkedin />
+								<WhatsappIcon />
+								<InstagramIcon />
+								<TwitterIcon />
+							</div>
+							<div className="divider"></div>
+							<p>Copy Link </p>
+							<p
+								onClick={() =>
+									copyToClipboard(
+										`${
+											import.meta.env.VITE_API_PUBLIC_URL
+										}/product/${id}`
+									)
+								}
+								className="text-md link-info link flex items-center justify-between rounded bg-gray-200 p-2"
+							>
+								{`${
+									import.meta.env.VITE_API_PUBLIC_URL
+								}/product/${id}`}{" "}
+								<FaCopy size={30} />
+							</p>
+						</div>
+					</Drawer>
 					<div className="flex h-screen items-center justify-center">
 						<div className="dropdown relative">
 							<div
@@ -214,9 +237,13 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 										</button>
 									</li>
 									<li>
-										<button onClick={() =>
-											setIsShareOpen(!isShareOpen)
-										}>Share</button>
+										<button
+											onClick={() =>
+												setIsShareOpen(!isShareOpen)
+											}
+										>
+											Share
+										</button>
 									</li>
 									<li>
 										<button onClick={handleNotAvailable}>
