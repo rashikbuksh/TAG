@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { TagLogo2 } from "../../SvgHub/TagLogo2";
-
+import phoneIcon from '.../../../../../public/icons/phone.gif';
 const ShopperWaitingPage = () => {
 	return (
 		<div className="relative h-screen">
@@ -13,7 +13,7 @@ const ShopperWaitingPage = () => {
 				</p>
 				<img
 					className="mt-24 h-[135px] w-[130px]"
-					src="../../../src/assets/img/icons/phone.gif"
+					src={phoneIcon}
 					alt=""
 				/>
 				</div>

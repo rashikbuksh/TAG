@@ -7,7 +7,7 @@ import { Takaicon } from "../../SvgHub/SocialIcon";
 import { useAuth } from "../../context/auth";
 import GetDateTime from "../../helpers/GetDateTime";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
-import NoItemInCart from '../../assets/img/cart/shopping_cart_remove.png';
+import NoItemInCart from "../../../public/icons/cart/shopping_cart_remove.png";
 import { api } from "../../lib/api";
 import {
 	addToCart,
@@ -16,6 +16,7 @@ import {
 	increaseQuantity,
 } from "../../store/slices/cart-slice";
 import { Breadcrumb } from "../../components";
+import Swal from "sweetalert2";
 
 const Cart = () => {
 	const dispatch = useDispatch();
@@ -34,8 +35,8 @@ const Cart = () => {
 	const productPrice = useRef({});
 
 	// cart_order_timer
-	const cart_order_timer = "cart_order_timer";
 	const [cart_order_timer_value, setCart_order_timer_value] = useState();
+	const cart_order_timer = "cart_order_timer";
 
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
@@ -51,6 +52,14 @@ const Cart = () => {
 			setCart_order_timer_value(res.data[0].value);
 		});
 	}, []);
+	useEffect(() => {
+		// Retrieve countdown timer data from local storage on component mount
+		const timerData = JSON.parse(localStorage.getItem("cart_timer_data"));
+		console.log("🚀 ~ useEffect ~ timerData:", timerData);
+		if (timerData) {
+			setCountdown(timerData.countdown);
+		}
+	}, []);
 
 	useEffect(() => {
 		return () => {
@@ -59,6 +68,7 @@ const Cart = () => {
 			}
 		};
 	}, [shopperId]);
+
 	const redirectTimer = async (shopperId) => {
 		setRunningTimerShopperId(shopperId);
 		setTimerStarted(true);
@@ -95,6 +105,32 @@ const Cart = () => {
 			// Perform action after countdown completes
 		}
 	}, [countdown, timerStarted]);
+	const localStorageKey = "cart_timer_data";
+
+	// Load timer data from localStorage on component mount
+	useEffect(() => {
+		const timerData = JSON.parse(localStorage.getItem(localStorageKey));
+		if (timerData) {
+			setCountdown(timerData.countdown);
+			setTimerStarted(timerData.timerStarted);
+			setRunningTimerShopperId(
+				timerData.shopperId ? timerData.shopperId : "null"
+			);
+			console.log(timerData);
+		}
+	}, []);
+	useEffect(() => {
+		if (timerStarted) {
+			localStorage.setItem(
+				"cart_timer_data",
+				JSON.stringify({
+					shopperId: runningTimerShopperId,
+					countdown,
+					timerStarted,
+				})
+			);
+		}
+	}, [runningTimerShopperId, countdown, timerStarted]);
 
 	const calculatedTotals = useMemo(() => {
 		// Calculate and set totals when cartItems or buyStates change
@@ -126,13 +162,25 @@ const Cart = () => {
 
 		const total = calculatedTotals[shopperId] || 0;
 
-		const wantobuy = window.confirm("Are you sure you want to buy?");
-		if (!wantobuy) {
-			return;
-		} else {
-			addOrderToDB(productIds, total);
-		}
-		navigate("/orderStatus");
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'Are you sure you want to buy?',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes',
+			cancelButtonText: 'No'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// User clicked 'Yes'
+				addOrderToDB(productIds, total);
+				navigate("/orderStatus");
+			} else {
+				// User clicked 'No' or closed the dialog
+				return;
+			}
+		});
 	};
 
 	const addOrderToDB = async (productIds, total) => {
@@ -276,7 +324,14 @@ const Cart = () => {
 			...prevBuyStates,
 			[shopperId]: !prevBuyStates[shopperId],
 		}));
-
+		setCountdown(cart_order_timer_value);
+		const interval = setInterval(() => {
+			setCountdown((prevCountdown) => {
+				clearInterval(interval);
+				clearInterval(intervalId);
+				return prevCountdown;
+			});
+		}, 1000);
 		setTimerStarted(false);
 
 		// const discounts = {};
@@ -296,13 +351,20 @@ const Cart = () => {
 		// });
 		setRunningTimerShopperId(null);
 	};
-
+	const isTimeRunning =
+		localStorage.getItem("cart_timer_data") &&
+		JSON.parse(localStorage.getItem("cart_timer_data")).timerStarted &&
+		JSON.parse(localStorage.getItem("cart_timer_data")).countdown > 0;
+	console.log("🚀 ~ Cart ~ isTimeRunning:", isTimeRunning);
 	return (
 		<>
-			<div className="mx-auto my-14 h-full overflow-scroll lg:w-[50%]">
+			<div className="mx-auto mt-8 h-full overflow-scroll lg:w-[50%]">
 				<Breadcrumb pageTitle={"Cart"} prevUrl={"/home"}></Breadcrumb>
 				<Link to={"/orderStatus"} className="mr-2 flex justify-end">
-					<p className="link uppercase text-green-500 text-md mt-2 font-bold"> Order Status</p>
+					<p className="text-md link mt-2 font-bold uppercase text-green-500">
+						{" "}
+						Order Status
+					</p>
 				</Link>
 
 				{cartItems && cartItems.length > 0 ? (
@@ -471,7 +533,8 @@ const Cart = () => {
 							) && (
 								<div className="mx-4 my-1 flex items-center justify-between p-1">
 									<div className="flex items-center gap-3">
-										{buyStates[shopper.id] ? (
+										{isTimeRunning &&
+										buyStates[shopper.id] ? (
 											<>
 												<button
 													onClick={() => {
@@ -553,12 +616,9 @@ const Cart = () => {
 						</div>
 					))
 				) : (
-					<div className="flex items-center justify-center h-[40vh] flex-col gap-2">
-						
+					<div className="flex h-[40vh] flex-col items-center justify-center gap-2">
 						<img src={NoItemInCart} alt="" />
-						<p className="font-bold">
-						No items in cart
-						</p>
+						<p className="font-bold">No items in cart</p>
 					</div>
 				)}
 			</div>

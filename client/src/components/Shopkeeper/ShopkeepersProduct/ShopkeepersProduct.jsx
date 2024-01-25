@@ -53,24 +53,21 @@ const ShopkeepersProduct = () => {
 
 				<div className="divider"></div>
 				<div className="flex items-center justify-between gap-10">
-					<Link
-						to={`${
-							import.meta.env.VITE_API_PUBLIC_URL
-						}/addshopperproduct`}
-					>
-						<FaPlusCircle className="text-4xl"></FaPlusCircle>
-					</Link>
-					<input
-						type="text"
-						placeholder="Search Product"
-						className="input input-bordered input-md w-full max-w-xs rounded-full"
-					/>
-					<div>
-						<span className="lg:text-xl">Share</span>{" "}
-						<span className="lg:text-xl">|</span>{" "}
-						<span className="lg:text-xl">Delete</span>
-					</div>
-				</div>
+    <Link
+        to={`${
+            import.meta.env.VITE_API_PUBLIC_URL
+        }/addshopperproduct`}
+        className="text-4xl"
+    >
+        <FaPlusCircle />
+    </Link>
+    <input
+        type="text"
+        placeholder="Search Product"
+        className="input input-bordered input-md flex-grow rounded-full mr-4"
+    />
+</div>
+
 				<div className="my-10 grid grid-cols-2  gap-10 lg:grid-cols-2">
 					{prods.map((product, index) => (
 						<ShopkeeperMyProduct

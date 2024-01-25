@@ -30,7 +30,7 @@ const OrderDetailsShopper = () => {
 			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
 				.then((response) => {
 					setProducts(response.data);
-					setPrice(response.data[0].price);
+					setPrice(response.data[0].totalPrice);
 					setOrderStatus(response.data[0].order_status); // Use console.log instead of log
 				})
 				.catch((error) => {

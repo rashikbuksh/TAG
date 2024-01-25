@@ -4,6 +4,7 @@ import { Takaicon } from "../../../SvgHub/SocialIcon";
 import { Breadcrumb } from "../../../components";
 import { useAuth } from "../../../context/auth";
 import { api } from "../../../lib/api";
+import FormattedTime from "../../../helpers/FormattedTime";
 
 const OrderShopper = () => {
 	const [data, setData] = useState([]);
@@ -42,7 +43,10 @@ const OrderShopper = () => {
 									{single.productCategory}
 								</span>
 								<div className="text-xs">
-									<span>2 jan 2023 </span> <span>8:30</span>
+									{FormattedTime({
+										time: single.order_time,
+										format: "hh:mm A DD/MM/YY",
+									})}
 								</div>
 								<div>
 									<span className="text-xs">
