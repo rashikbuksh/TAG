@@ -8,7 +8,7 @@ import { api } from "../../../lib/api";
 import { FaCircle, FaPersonWalking } from "react-icons/fa6";
 import { ChatIcon } from "../../../SvgHub/Icons";
 import { Breadcrumb } from "../../../components";
-
+import chatIconImg from "../../../../public/icons/live-chat.png";
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
 	const [products, setProducts] = useState([]);
@@ -67,7 +67,7 @@ const OrderStatus = () => {
 			></Breadcrumb>
 			{orderProducts.map(
 				({ id, shopper_name, order_status, price, products }) => (
-					<div key={id} className=" mt-2 mb-10">
+					<div key={id} className=" mb-10 mt-2">
 						<div className="flex items-center justify-between">
 							<h1 className="text-xl">
 								{shopper_name}{" "}
@@ -172,8 +172,7 @@ const OrderStatus = () => {
 				)
 			)}
 			<button className="fixed bottom-24 right-5 z-20 flex flex-col  items-center rounded-full  border-4 border-blue-900 bg-white p-2 shadow-lg ">
-			<img src="../../../../public/icons/live-chat.png" alt="" />
-
+				<img src={chatIconImg} alt="" />
 			</button>
 
 			<div className="h-14"></div>

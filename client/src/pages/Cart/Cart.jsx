@@ -7,7 +7,7 @@ import { Takaicon } from "../../SvgHub/SocialIcon";
 import { useAuth } from "../../context/auth";
 import GetDateTime from "../../helpers/GetDateTime";
 import { cartItemStock, getDiscountPrice } from "../../helpers/product";
-import NoItemInCart from "../../../public/icons/cart/shopping_cart_remove.png";
+import NoItemInCart from "../../../public/icons/shopping_cart_remove.png";
 import { api } from "../../lib/api";
 import {
 	addToCart,
