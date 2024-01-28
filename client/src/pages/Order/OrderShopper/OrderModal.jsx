@@ -17,7 +17,9 @@ const OrderDetailsShopper = () => {
 	const [isShownReport, setIsShownReport] = useState(false);
 	const [orderStatus, setOrderStatus] = useState();
 	const [price, setPrice] = useState(null);
+	const [CustomerId, setCustomerId] = useState(null);
 	const [products, setProducts] = useState([]);
+	console.log("🚀 ~ OrderDetailsShopper ~ products:", products);
 	const [isOpen, setIsOpen] = useState(false);
 	const handelIsOpenModal = () => {
 		setIsOpen(!isOpen);
@@ -31,6 +33,7 @@ const OrderDetailsShopper = () => {
 				.then((response) => {
 					setProducts(response.data);
 					setPrice(response.data[0].totalPrice);
+					setCustomerId(response.data[0].customer_profile_id);
 					setOrderStatus(response.data[0].order_status); // Use console.log instead of log
 				})
 				.catch((error) => {
@@ -51,9 +54,20 @@ const OrderDetailsShopper = () => {
 						.then((response) => {
 							toast(response.data.message);
 							if (response.status === 200) {
-								window.location.reload();
-								setOrderStatus("accepted");
-								setCancelReport("");
+								api.post("/notification/addnotification", {
+									notification_content: `${user.name} accept your order. collect your products in 45 min.`,
+									notification_time: GetDateTime(),
+									not_to: user.id,
+									not_from: CustomerId,
+									status: 0,
+								}).then((response) => {
+									console.log(response);
+									if (response.status === 201) {
+										window.location.reload();
+										setOrderStatus("accepted");
+										setCancelReport("");
+									}
+								});
 							}
 						})
 						.catch((error) => {
@@ -70,7 +84,7 @@ const OrderDetailsShopper = () => {
 		api.post(`/order/updateorderstatus/${id}`, {
 			order_status: "completed",
 		})
-			.then((response) => {			
+			.then((response) => {
 				if (response.status === 200) {
 					api.post(`order/orderdeliverytime/${id}`, {
 						delivery_time: GetDateTime(),
@@ -78,9 +92,20 @@ const OrderDetailsShopper = () => {
 						.then((response) => {
 							toast(response.data.message);
 							if (response.status === 200) {
-								setOrderStatus("completed");
-								setCancelReport("");
-								
+								api.post("/notification/addnotification", {
+									notification_content: `Completed your order Succesfully #${id}`,
+									notification_time: GetDateTime(),
+									not_to: user.id,
+									not_from: CustomerId,
+									status: 0,
+								}).then((response) => {
+									console.log(response);
+									if (response.status === 201) {
+										setOrderStatus("completed");
+										setCancelReport("");
+									}
+								});
+							
 							}
 						})
 						.catch((error) => {

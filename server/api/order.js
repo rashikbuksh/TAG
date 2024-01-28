@@ -91,6 +91,7 @@ const read = [
 					po.order_status AS order_status,
 					po.cancel_report as cancel_report,
 					po.order_time as order_time,
+					po.customer_profile_id,
 					po.shopper_order_accept_time as shopper_order_accept_time,
 					po.delivery_time as delivery_time
 				FROM shopper_product sp

@@ -11,6 +11,7 @@ import {
 	toggleShopTopFilter,
 } from "../../helpers/product";
 import { api } from "../../lib/api";
+import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 
 const Shop = () => {
 	const [products, setProducts] = useState([]);
@@ -49,6 +50,7 @@ const Shop = () => {
 		<>
 		<Header/>
 		<Footer/>
+		<ShowCartIcon/>
 		<div className="body-wrapper space-pt--70 space-pb--120">
 			<div className="shop-header bg-color--grey">
 				<div className="space-y--15 container">

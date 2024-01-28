@@ -288,8 +288,8 @@ const PostUi = ({ postData }) => {
 													notification_content: `${user.name} liked your post`,
 													notification_time:
 														GetDateTime(),
-													not_to: shop_id,
-													not_from: userid,
+													not_to: userid,
+													not_from: shop_id,
 													status: 0,
 												}
 											);

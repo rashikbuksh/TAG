@@ -26,7 +26,7 @@ const AddProductForm = () => {
 
 	const addProductSchema = yup.object({
 		name: yup.string().required("Name required"),
-		short_description: yup.string().required("Short description required"),
+		short_description: yup.string(),
 		full_description: yup.string().required("Full description required"),
 		image: yup
 			.mixed()
@@ -218,7 +218,7 @@ const AddProductForm = () => {
 
 									<div className="auth-form__single-field space-mb--30">
 										<label htmlFor="short_description">
-											Short Description
+											Short Description (For seo) optional
 										</label>
 										<input
 											{...register("short_description")}
