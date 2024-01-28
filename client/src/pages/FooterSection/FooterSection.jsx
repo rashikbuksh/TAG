@@ -51,7 +51,7 @@ const FooterSection = () => {
 					<YoutubeIcon />
 				</a>
 				<a
-					href="https://wa.me/01533161339"
+					href="https://wa.me/+8801533161339"
 					target="_blank"
 					rel="noopener noreferrer"
 				>

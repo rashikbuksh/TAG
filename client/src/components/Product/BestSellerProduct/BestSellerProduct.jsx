@@ -41,7 +41,7 @@ const BestSellerProduct = ({ limit, type }) => {
 
 	if (!shopperProducts?.length) return <LoadingPage></LoadingPage>;
 	return (
-		<div className="featured-product-area space-mb--25 mx-auto max-w-7xl">
+		<div className="featured-product-area space-mb--25 mt-2 mx-auto max-w-7xl">
 			<div className="">
 				<div className="">
 					<div className="">

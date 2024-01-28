@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { useEffect, useState } from "react";
 import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
-import { FaEye, FaX } from "react-icons/fa6";
+import { FaEye, FaLocationDot, FaX } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { AddToCartIcon2, MapIcon } from "../../../SvgHub/Icons";
@@ -279,7 +279,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 									disabled={active_status !== 1}
 									onClick={handelOpenLocationModal}
 								>
-									<MapIcon height={30} width={30} />
+									<FaLocationDot color="red" size={30} />
 								</button>
 
 								{isLocationOpen && (

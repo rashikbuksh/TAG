@@ -253,20 +253,13 @@ const Profile = () => {
 											{userdata.email}
 										</div>
 									</div>
-									<div className="profile-info-block">
-										<div className="profile-info-block__title">
-											Shipping Address
-										</div>
-										<div className="profile-info-block__value">
-											{userdata.shipping_address}
-										</div>
-									</div>
+									
 									<div className="profile-info-block">
 										<div className="profile-info-block__title">
 											Address
 										</div>
 										<div className="profile-info-block__value">
-											{userdata.address}
+											{userdata.address?userdata.address:"N/A"}
 										</div>
 									</div>
 									{userdata.access == "shopper" ? (

@@ -4,7 +4,7 @@ import { FaBars, FaHome, FaUserPlus } from "react-icons/fa";
 import Drawer from "react-modern-drawer";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import { DashBoardIcon } from "../../../SvgHub/Icons";
+import { ChatIcon, DashBoardIcon } from "../../../SvgHub/Icons";
 import { useAuth } from "../../../context/auth";
 import { api } from "../../../lib/api";
 function Offcanvas(props) {
@@ -278,6 +278,24 @@ function Offcanvas(props) {
 										}
 									>
 										Refer
+									</Link>
+								</li>
+							) : (
+								""
+							)}
+							{user ? (
+								<li>
+									<span className="icon">
+										<ChatIcon/>
+									</span>
+									<Link
+										to={
+											import.meta.env
+												.VITE_API_PUBLIC_URL +
+											"/home"
+										}
+									>
+										Live Chat 
 									</Link>
 								</li>
 							) : (

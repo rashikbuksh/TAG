@@ -68,7 +68,7 @@ const read = [
   },
   {
     uri: "/shopperproduct/getshopperproductBasedOnSaleCount",
-    query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, p.image, sp.shopper_id, sale_count, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id and cp.id = sp.shopper_id ORDER BY sale_count DESC LIMIT 4`,
+    query: `SELECT sp.id, sp.name, sp.price, discount, product_count, product_id, category_id, p.image, sp.shopper_id, sale_count, sp.view, cp.shipping_address FROM shopper_product sp, product p, customer_profile cp WHERE sp.product_id = p.id and cp.id = sp.shopper_id ORDER BY sale_count DESC LIMIT 2`,
   },
   {
     uri: "/shopperproduct/getAllshopperproductBasedOnSaleCount",

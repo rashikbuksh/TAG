@@ -13,6 +13,7 @@ import LoadingPage from "../../LodingPage/LoadingPage";
 import HeroSlider from "../../MainComponent/HeroSlider/HeroSlider";
 import ProductCart from "../ProductCart/ProductCart";
 import ProductSlider from "../ProductSlider/ProductSlider";
+import { shuffleArray } from "../../../helpers/shuffleArray";
 
 const AllProducts = ({ limit, sliderData }) => {
 	const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -26,13 +27,13 @@ const AllProducts = ({ limit, sliderData }) => {
 	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproduct`)
 			.then((response) => {
-				setProds(response.data);
+				const shuffledProds = shuffleArray(response.data);
+				setProds(shuffledProds);
 				setLoading(false);
 			})
 			.catch((error) => {
 				setError(error.message);
 				setLoading(false);
-	
 			});
 		api.get(`/shopperproduct/getPopularShopperProduct`)
 			.then((response) => {
@@ -48,8 +49,12 @@ const AllProducts = ({ limit, sliderData }) => {
 	const isVerifiedProduct = prods.filter(
 		(product) => product.isVerified === "verified"
 	);
+	const isOfferProduct = prods.filter(
+		(product) => product.discount > 0 || product.discount === null
+	);
 
 	if (!prods?.length) return <LoadingPage></LoadingPage>;
+	if (loading) return <LoadingPage></LoadingPage>;
 
 	return (
 		<div className=" mx-auto  max-w-7xl">
@@ -57,7 +62,7 @@ const AllProducts = ({ limit, sliderData }) => {
 				<div className="">
 					{/* Popular Product  */}
 					{prods && (
-						<h2 className="section-title space-mb--20">
+						<h2 className="section-title  mb-2">
 							<span className="text-xl font-bold">
 								Popular Product{" "}
 							</span>
@@ -84,9 +89,37 @@ const AllProducts = ({ limit, sliderData }) => {
 					)}
 
 					<ProductSlider products={popularProducts}></ProductSlider>
-					<div className="my-2"></div>
+					<div className="my-4"></div>
 					{prods && (
-						<h2 className="section-title space-mb--20 ">
+						<h2 className="section-title mb-2">
+							<span className="text-xl font-bold">
+								Offer Products{" "}
+							</span>
+
+							<Link
+								className="primary-text"
+								to={
+									import.meta.env.VITE_API_PUBLIC_URL +
+									"/shop"
+								}
+							>
+								VIEW ALL{" "}
+								<span>
+									<ReactSVG
+										src={
+											import.meta.env
+												.VITE_API_PUBLIC_URL +
+											"/assets/img/icons/arrow-right.svg"
+										}
+									/>
+								</span>
+							</Link>
+						</h2>
+					)}
+					<ProductSlider products={isOfferProduct}></ProductSlider>
+					<div className="my-4"></div>
+					{prods && (
+						<h2 className="section-title mb-2 ">
 							<p className="flex items-center gap-3 text-xl font-bold">
 								<span>Verified Product</span>{" "}
 								<FaCheckCircle className=" primary-text"></FaCheckCircle>
@@ -117,8 +150,10 @@ const AllProducts = ({ limit, sliderData }) => {
 					<HeroSlider sliderData={sliderData} isAutoPlay={false} />
 					<div className="my-4"></div>
 					{prods && (
-						<h2 className="section-title space-mb--20">
-							<span className="text-xl font-bold">Product </span>
+						<h2 className="section-title mb-2">
+							<span className="text-xl font-bold">
+								All Products{" "}
+							</span>
 
 							<Link
 								className="primary-text"
@@ -141,6 +176,7 @@ const AllProducts = ({ limit, sliderData }) => {
 						</h2>
 					)}
 					<ProductSlider products={prods}></ProductSlider>
+
 					{/* <div className="">
 						<div className="grid gap-10 lg:grid-cols-4">
 							{prods.map((single) => {

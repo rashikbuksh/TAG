@@ -53,8 +53,8 @@ const CommentModal = ({
 						"You have a new comment in your post. commented by " +
 						user.name,
 					notification_time: GetDateTime(),
-					not_from: user.id,
-					not_to: shop_id,
+					not_from: shop_id,
+					not_to: user.id,
 					status: 1,
 				});
 			}
@@ -98,7 +98,7 @@ const CommentModal = ({
 											comment.commented_by ? (
 											<div
 												key={user.id}
-												className="ml-2 mt-2  flex items-center gap-3 justify-between "
+												className="ml-2 mt-2  flex items-center justify-between gap-3 "
 											>
 												<div className="flex items-center gap-3">
 													<img
@@ -124,7 +124,7 @@ const CommentModal = ({
 
 												{comment.commented_by ==
 													userID && (
-													<div className="flex justify-end mr-5">
+													<div className="mr-5 flex justify-end">
 														<button
 															onClick={() => {
 																api.delete(
@@ -168,7 +168,7 @@ const CommentModal = ({
 					<form onSubmit={handleSubmitComment} className="w-full p-2">
 						<div className="mb-2">
 							<input
-								className="h-10 w-full text-blue-600 rounded border p-2 focus:outline-none focus:ring-1  font-bold text-xl focus:ring-gray-300"
+								className="h-10 w-full rounded border p-2 text-xl font-bold text-blue-600  focus:outline-none focus:ring-1 focus:ring-gray-300"
 								name="comment"
 								placeholder="Add a comment"
 								disabled

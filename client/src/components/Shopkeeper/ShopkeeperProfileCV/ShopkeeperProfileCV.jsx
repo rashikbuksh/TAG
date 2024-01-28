@@ -112,7 +112,6 @@ const ShopkeeperProfileCV = () => {
 			.writeText(reffer)
 			.then(() => {
 				setCopySuccess("Copied to clipboard!");
-				addReferCode();
 			})
 			.catch((err) => {
 				setCopySuccess("Copy failed: " + err);
@@ -123,7 +122,7 @@ const ShopkeeperProfileCV = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon />
-			<div className="relative mt-[5rem] lg:mx-auto lg:w-[50%]">
+			<div className="relative mt-[3rem] lg:mx-auto lg:w-[50%]">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				<div className=" ">
 					<div className="mx-auto my-3">
@@ -193,13 +192,24 @@ const ShopkeeperProfileCV = () => {
 										/>
 									</div>
 								</div>
-								<h1
-									title="shop Name"
-									className=" text-lg font-semibold"
-								>
-									<span className="primary-text">#</span>
-									{id} {shopkeeperInfo.name}
-								</h1>
+								<div className="flex  items-center gap-2">
+									<h1
+										title="shop Name"
+										className=" text-lg font-semibold"
+									>
+										<span className="primary-text">#</span>
+										{id} {shopkeeperInfo.name}
+									</h1>
+									<button
+										className="font-xl flex h-[20px] w-[20px] items-center justify-center rounded bg-[#469CD6] text-white"
+										onClick={() =>
+											setIsShareOpen(!isShareOpen)
+										}
+									>
+										<PiShareFat className="text-lg" />
+									</button>
+								</div>
+
 								<div className="mb-2">
 									<Rating
 										style={{ maxWidth: 80 }}
@@ -209,15 +219,7 @@ const ShopkeeperProfileCV = () => {
 									/>
 								</div>
 								<div className="my-1 flex items-center gap-4">
-									<div>33 Followers</div>
-									<button
-										className="font-xl flex h-[40px] w-[40px] items-center justify-center rounded bg-[#469CD6] text-white"
-										onClick={() =>
-											setIsShareOpen(!isShareOpen)
-										}
-									>
-										<PiShareFat className="text-lg" />
-									</button>
+									<div>33 Followers *</div>
 								</div>
 								<div className=" flex items-center justify-center gap-4">
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white">
@@ -273,7 +275,7 @@ const ShopkeeperProfileCV = () => {
 								</div>
 							</div>
 						</div>
-						<div className="alphabet-list absolute bottom-24 right-0  z-10 ml-5  w-[30px] ">
+						<div className="alphabet-list absolute bottom-24 right-0  z-10 ml-5  w-[20px] ">
 							{alphabet.map((letter) => (
 								<button
 									className="flex flex-col items-center justify-center text-[10px] font-bold"
@@ -302,7 +304,7 @@ const ShopkeeperProfileCV = () => {
 							)}
 							<div className="">
 								{/* //show product div  */}
-								<div className="mb-20 grid h-[50vh] w-[90%] grid-cols-2  gap-1 overflow-y-auto border-t lg:mx-auto lg:grid-cols-4">
+								<div className="mb-20 grid h-[52vh] w-[93%] grid-cols-2  gap-1 overflow-y-auto border-t lg:mx-auto lg:grid-cols-4 px-2">
 									{filteredAllProducts.map((single) => {
 										return (
 											<div
