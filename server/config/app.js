@@ -1,7 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { DB_PORT } = require("./secret");
+const http = require("http");
+const { DB_PORT, MAP_PORT, OSRM_GRAPH } = require("./secret");
 var cors = require("cors");
+const helmet = require("helmet");
+const logfmt = require("logfmt");
 const { json } = require("body-parser");
 
 const app = express();
@@ -37,50 +40,20 @@ app.use("/uploads", express.static("uploads"));
 const { VerifyToken } = require("../api/auth_pro");
 app.use(VerifyToken);
 
-const OSRM = require("@project-osrm/osrm");
-// importing random coordinates in Bangladesh used as sources and destinations
+const index = require("../util/index");
 
-console.log(OSRM);
-
-const osrm = new OSRM("./MapData/bangladesh-latest.osrm");
-
-console.log(osrm);
-
-const coordinates = [
-	[90.4219168, 23.7517979],
-	[91.4219169, 24.751798],
-];
-
-const makeOsrmOptions = (sources, destinations) => {
-	return {
-		coordinates: coordinates,
-		sources: sources || [],
-		destinations: destinations || [],
-		annotations: ["distance", "duration"],
-	};
-};
-
-const osrmOptions = makeOsrmOptions();
-osrm.table(osrmOptions, (err, result) => {
-	if (err) {
-		console.log(err);
-	}
-	// console.table(result);
+const server = index.createServer({
+	osrmDataPath: OSRM_GRAPH,
 });
 
-osrm.route(
-	{
-		coordinates: [
-			[90.4219168, 23.7517979],
-			[91.4219169, 24.751798],
-		],
-	},
-	function (err, result) {
-		if (err) throw err;
-		console.log(result.waypoints); // array of Waypoint objects representing all waypoints in order
-		console.log(result.routes); // array of Route objects ordered by descending recommendation rank
-	}
-);
+server.listen(MAP_PORT, () => {
+	logfmt.log({
+		start: "running server " + MAP_PORT,
+		address: server.address().address,
+		port: server.address().port,
+		"osrm-dataset": OSRM_GRAPH,
+	});
+});
 
 // listen
 app.listen(DB_PORT, () => {
