@@ -37,6 +37,51 @@ app.use("/uploads", express.static("uploads"));
 const { VerifyToken } = require("../api/auth_pro");
 app.use(VerifyToken);
 
+const OSRM = require("@project-osrm/osrm");
+// importing random coordinates in Bangladesh used as sources and destinations
+
+console.log(OSRM);
+
+const osrm = new OSRM("./MapData/bangladesh-latest.osrm");
+
+console.log(osrm);
+
+const coordinates = [
+	[90.4219168, 23.7517979],
+	[91.4219169, 24.751798],
+];
+
+const makeOsrmOptions = (sources, destinations) => {
+	return {
+		coordinates: coordinates,
+		sources: sources || [],
+		destinations: destinations || [],
+		annotations: ["distance", "duration"],
+	};
+};
+
+const osrmOptions = makeOsrmOptions();
+osrm.table(osrmOptions, (err, result) => {
+	if (err) {
+		console.log(err);
+	}
+	// console.table(result);
+});
+
+osrm.route(
+	{
+		coordinates: [
+			[90.4219168, 23.7517979],
+			[91.4219169, 24.751798],
+		],
+	},
+	function (err, result) {
+		if (err) throw err;
+		console.log(result.waypoints); // array of Waypoint objects representing all waypoints in order
+		console.log(result.routes); // array of Route objects ordered by descending recommendation rank
+	}
+);
+
 // listen
 app.listen(DB_PORT, () => {
 	console.log("app listening on port " + DB_PORT);
