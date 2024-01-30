@@ -3,7 +3,7 @@ import { SearchProducts, Breadcrumb } from "../../components";
 
 const Search = () => {
   return (
-    <div className="body-wrapper space-pt--70 space-pb--120">
+    <div className="body-wrapper  mt-10">
       <Breadcrumb pageTitle="Search Results" prevUrl="/home" />
       {/* search products */}
       <SearchProducts limit={20} />

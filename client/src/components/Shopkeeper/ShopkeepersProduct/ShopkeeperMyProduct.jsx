@@ -22,6 +22,8 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import Drawer from "react-modern-drawer";
 import { FaX } from "react-icons/fa6";
+import GetDateTime from "../../../helpers/GetDateTime";
+import { getDiscountPrice } from "../../../helpers/product";
 const ShopkeeperMyProduct = ({ product, index }) => {
 	const {
 		id,
@@ -32,6 +34,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		isVerified,
 		discount,
 		view,
+		shopper_id,
 	} = product;
 	console.log(product, "Product");
 	const [category, setCategory] = useState([]);
@@ -40,12 +43,16 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 	const [newDisCount, setNewDisCount] = useState(discount);
 	const [isEditingPrice, setIsEditingPrice] = useState(false);
 	const [copySuccess, setCopySuccess] = useState(null);
+	const [util, setUtil] = useState([]);
 	const increaseQuantity = () => {
 		setQuantity(quantity + 1);
 	};
 	useEffect(() => {
 		api.get(`/category/get/category`).then((response) => {
 			setCategory(response.data);
+		});
+		api.get(`/util/getUtil/product_discount`).then((response) => {
+			setUtil(response.data[0]);
 		});
 	}, []);
 
@@ -80,8 +87,10 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 	};
 	const handleProductUpdate = () => {
 		if (isVerified === "verified") {
-			toast.warning("Cannot edit price for verified products");
-			return;
+			if (price !== newPrice) {
+				toast.warning("Cannot edit price for verified products");
+				return;
+			}
 		}
 
 		api.post("/shopperproduct/updateProductDetails", {
@@ -92,6 +101,30 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		})
 			.then((res) => {
 				if (res.data.status === 200) {
+					if (newDisCount >= parseInt(util.value)) {
+						api.post(`/news/addproductnews`, {
+							shopper_product_id: id,
+							shop_id: shopper_id,
+							date: GetDateTime(),
+							discount: newDisCount,
+							duration: "",
+							location: "",
+							category: "regular",
+							post_content: `${
+								product.name
+							} TK ${getDiscountPrice(
+								newPrice,
+								newDisCount
+							)}`,
+							post_img: image,
+						})
+							.then((response) => {
+								console.log(response.status);
+							})
+							.catch((error) => {
+								console.log(error);
+							});
+					}
 					toast("Product Price Updated Successfully");
 				}
 			})
@@ -333,7 +366,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 									disabled={!isEditingPrice}
 									onChange={handleDiscountChange}
 								/>
-								<p className="absolute right-1 top-7">%</p>
+								<p className="absolute right-1 top-7">৳</p>
 							</div>
 							{isEditingPrice ? (
 								<div className="flex items-center justify-center gap-3">

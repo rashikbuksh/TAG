@@ -18,7 +18,7 @@ const HotNews = () => {
 		pagination: true,
 	};
 	useEffect(() => {
-		api.get("/news/getnews")
+		api.get("/news/getHotNews")
 			.then((res) => {
 				setPosts(res.data);
 			})
@@ -39,9 +39,9 @@ const HotNews = () => {
 		(post) => post.shopper_product_id !== null
 	);
 	// Shuffle and get the first 5 posts
-	const shuffledPosts = productPost
-		.sort(() => Math.random() - 0.5)
-		.slice(0, 5);
+	// const shuffledPosts = productPost
+	// 	.sort(() => Math.random() - 0.5)
+	// 	.slice(0, 5);
 
 	return (
 		<div className="mx-auto  max-w-7xl">
@@ -65,14 +65,14 @@ const HotNews = () => {
 					}}
 					className="mySwiper"
 				>
-					{shuffledPosts.map((postData, index) => {
+					{productPost.map((postData, index) => {
 						// Generate a random background color for each div
 						const randomColor = getRandomLightColor();
 
 						return (
 							<SwiperSlide key={index}>
 								{postData.category === "regular" ? (
-									<Link to={`/newsfeed`}>
+									<Link to={`/product/${postData.shopper_product_id}`}>
 										<div
 											className="flex h-16 w-60 items-center justify-center rounded-xl px-1"
 											style={{

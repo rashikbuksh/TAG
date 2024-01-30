@@ -63,6 +63,10 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 		}
 
 		const enteredPrice = parseFloat(e.target.value);
+		if (enteredPrice === 0) {
+			toast.warning("Enter A valid Price");
+			return;
+		}
 		setNewPrice(enteredPrice);
 	};
 	const handleDiscountChange = (e) => {
@@ -122,7 +126,12 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 	const { user } = useAuth();
 	const handleCheckboxChange = (e) => {
 		// Check if newPrice is not empty
-		if (newPrice,newQuantity) {
+		if (isNaN(newPrice) || newPrice < 0 || newPrice=== null) {
+			toast.warning("Enter a valid Price");
+			return;
+		}
+		console.log("🚀 ~ handleCheckboxChange ~ newPrice:", newPrice);
+		if ((newPrice, newQuantity)) {
 			const selectedProductInfo = {
 				name: name,
 				price: newPrice,
@@ -239,7 +248,7 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 										value={newDisCount} // Set input value to newPrice
 										onChange={handleDiscountChange}
 									/>
-									<p className="absolute right-1 top-7">%</p>
+									<p className="absolute right-1 top-7">৳</p>
 								</div>
 							</div>
 

@@ -1,8 +1,8 @@
 // get product discount price
 export const getDiscountPrice = (price, discount) => {
-	return discount && discount > 0
-		? (price - price * (discount / 100)).toFixed(2)
-		: price;
+    return discount && discount > 0
+        ? (price - discount).toFixed(2)
+        : price;
 };
 
 // get products
