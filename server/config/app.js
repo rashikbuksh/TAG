@@ -40,20 +40,20 @@ app.use("/uploads", express.static("uploads"));
 const { VerifyToken } = require("../api/auth_pro");
 app.use(VerifyToken);
 
-const index = require("../util/index");
+// const index = require("../util/index");
 
-const server = index.createServer({
-	osrmDataPath: OSRM_GRAPH,
-});
+// const server = index.createServer({
+// 	osrmDataPath: OSRM_GRAPH,
+// });
 
-server.listen(MAP_PORT, () => {
-	logfmt.log({
-		start: "running server " + MAP_PORT,
-		address: server.address().address,
-		port: server.address().port,
-		"osrm-dataset": OSRM_GRAPH,
-	});
-});
+// server.listen(MAP_PORT, () => {
+// 	logfmt.log({
+// 		start: "running server " + MAP_PORT,
+// 		address: server.address().address,
+// 		port: server.address().port,
+// 		"osrm-dataset": OSRM_GRAPH,
+// 	});
+// });
 
 // listen
 app.listen(DB_PORT, () => {
