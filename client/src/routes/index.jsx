@@ -28,7 +28,7 @@ export default function ProtectedRoutes() {
 
 	return haveAccess ? (
 		<>
-			<ShowCartIcon></ShowCartIcon>
+			{/* <ShowCartIcon></ShowCartIcon> */}
 			<Header />
 			{/* <Offcanvas /> */}
 			<Footer />

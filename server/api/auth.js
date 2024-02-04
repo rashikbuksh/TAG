@@ -6,6 +6,11 @@ const read = [
   // 	msg: "email or password is incorrect",
   // },
   {
+    uri: "/auth/userInfo/:id",
+    query: `SELECT id,name,access FROM customer_profile WHERE id= ?`,
+    param: ["id"],
+  },
+  {
     uri: "/auth/getUserInfo/:id",
     query: `SELECT profile_picture, name, user_name, active_status, review_count, access, shipping_address, address from customer_profile where id = ?`,
     param: ["id"],

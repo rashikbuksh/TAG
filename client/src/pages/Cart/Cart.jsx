@@ -582,7 +582,7 @@ const Cart = () => {
 													}}
 													className=" rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white"
 												>
-													Conform
+													Confirm
 												</button>{" "}
 											</>
 										) : (
