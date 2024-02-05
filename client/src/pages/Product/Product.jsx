@@ -106,6 +106,7 @@ const Product = () => {
 		setShowFullDescription(!showFullDescription);
 	};
 	<Helmet>
+		<title>{products[0]?.name}-TAG</title>
 		<meta
 			name="msapplication-TileImage"
 			content={`${import.meta.env.VITE_APP_IMG_URL}/products/${

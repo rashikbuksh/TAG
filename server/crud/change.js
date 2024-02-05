@@ -12,7 +12,7 @@ const { change: Util } = require("../api/util");
 const { change: Notification } = require("../api/notification");
 const { change: OrdredProduct } = require("../api/ordered_product");
 const { change: ShopperSchedule } = require("../api/shopper_schedule");
-
+const { change: shop } = require("../api/shop");
 const CHANGE_DATA = [
 	...JobEntry,
 	...Profile,
@@ -26,6 +26,7 @@ const CHANGE_DATA = [
 	...Notification,
 	...OrdredProduct,
 	...ShopperSchedule,
+	...shop
 ];
 
 CHANGE_DATA.forEach(({ uri, query, body, param, msg }) => {
