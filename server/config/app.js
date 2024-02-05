@@ -3,8 +3,8 @@ const bodyParser = require("body-parser");
 const http = require("http");
 const { DB_PORT, MAP_PORT, OSRM_GRAPH } = require("./secret");
 var cors = require("cors");
-const helmet = require("helmet");
-const logfmt = require("logfmt");
+// const helmet = require("helmet");
+// const logfmt = require("logfmt");
 const { json } = require("body-parser");
 
 const app = express();
