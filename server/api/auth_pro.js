@@ -61,7 +61,9 @@ const VerifyToken = (req, res, next) => {
     getProductRegex.test(req?.originalUrl) ||
     getShopperProductRegex.test(req?.originalUrl) ||
     CheckUSerRegex.test(req?.originalUrl) ||
-    req?.originalUrl == "/sentOtp"
+    req?.originalUrl == "/sentOtp" ||
+    req?.originalUrl == "/news/getHotNews"||
+    req?.originalUrl == "/shop/getAllShop"
   ) {
     next();
   } else {

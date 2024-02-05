@@ -106,6 +106,7 @@ const Product = () => {
 		setShowFullDescription(!showFullDescription);
 	};
 	<Helmet>
+		<title>{products[0]?.name}-TAG</title>
 		<meta
 			name="msapplication-TileImage"
 			content={`${import.meta.env.VITE_APP_IMG_URL}/products/${
@@ -144,7 +145,7 @@ const Product = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon />
-			<div className="mx-auto px-4 py-20 lg:w-[50%] ">
+			<div className="mx-auto px-4 py-8 lg:w-[50%] ">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}
 				<div className="">

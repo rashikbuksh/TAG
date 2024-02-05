@@ -19,7 +19,7 @@ const { read: Refer } = require("../api/refer");
 const { read: Util } = require("../api/util");
 const { read: OrdredProduct } = require("../api/ordered_product");
 const { read: ShopperSchedule } = require("../api/shopper_schedule");
-
+const { read: shop } = require("../api/shop");
 const GET_DATA = [
 	...JobEntry,
 	...Auth,
@@ -37,6 +37,7 @@ const GET_DATA = [
 	...Util,
 	...OrdredProduct,
 	...ShopperSchedule,
+	...shop
 ];
 
 GET_DATA.forEach(({ uri, query, param }) => {
