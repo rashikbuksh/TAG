@@ -1,7 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { DB_PORT } = require("./secret");
+const http = require("http");
+const { DB_PORT, MAP_PORT, OSRM_GRAPH } = require("./secret");
 var cors = require("cors");
+const helmet = require("helmet");
+const logfmt = require("logfmt");
 const { json } = require("body-parser");
 
 const app = express();
@@ -36,6 +39,21 @@ app.use("/uploads", express.static("uploads"));
 // Authenticate requests with JWT token
 const { VerifyToken } = require("../api/auth_pro");
 app.use(VerifyToken);
+
+// const index = require("../util/index");
+
+// const server = index.createServer({
+// 	osrmDataPath: OSRM_GRAPH,
+// });
+
+// server.listen(MAP_PORT, () => {
+// 	logfmt.log({
+// 		start: "running server " + MAP_PORT,
+// 		address: server.address().address,
+// 		port: server.address().port,
+// 		"osrm-dataset": OSRM_GRAPH,
+// 	});
+// });
 
 // listen
 app.listen(DB_PORT, () => {
