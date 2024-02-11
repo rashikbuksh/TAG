@@ -18,13 +18,22 @@ const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		async function loadCookieData() {
 			if (authCookie && userCookie) {
-				setUser(JSON.parse(userCookie));
+				try {
+					// Parse the user ID from the cookie
+					const userId = JSON.parse(userCookie);
+					// Fetch user information using the parsed user ID
+					const response = await api.get(`/auth/userInfo/${userId}`);
+					setUser(response.data[0]);
+					setLoading(false);
+				} catch (error) {
+					console.error("Error loading user data:", error);
+					setUser(null);
+				}
 			}
-			setLoading(false);
 		}
 
 		loadCookieData();
-	}, []);
+	}, [authCookie, userCookie]);
 
 	const login = async (data) => {
 		try {
@@ -46,9 +55,8 @@ const AuthProvider = ({ children }) => {
 			}
 
 			const { token, user: loginUser } = res?.data;
-
 			updateAuthCookie(token || "");
-			updateUserCookie(JSON.stringify(loginUser) || "");
+			updateUserCookie(JSON.stringify(loginUser.id) || "");
 
 			if (token && loginUser) {
 				localStorage.setItem("user-id", loginUser?.id);
@@ -58,7 +66,7 @@ const AuthProvider = ({ children }) => {
 					window.location.href = "/shopkeeperDashboard";
 				} else if (loginUser.access === "moderator") {
 					window.location.href = "/moderator/stat";
-				}else if (loginUser.access === "new_shopper") {
+				} else if (loginUser.access === "new_shopper") {
 					window.location.href = "/waitForVerify";
 				} else {
 					window.location.href = "/home";

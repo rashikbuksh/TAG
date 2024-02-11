@@ -78,7 +78,7 @@ const ShopperProduct = () => {
 						shopper_id: Number(user.id),
 					}
 				);
-
+				// console.log(discountedPrice, product.price - discountedPrice);
 				if (response.data.status === 201) {
 					if (product.discount >= parseInt(util.value)) {
 						const response1 = await api.get(
@@ -221,7 +221,7 @@ const ShopperProduct = () => {
 			</div>
 
 			{/* Weight section  */}
-			<div></div>
+
 			{/* product  */}
 			<div className="grid grid-cols-2 gap-2 rounded">
 				{filteredProductArr.map((product) => (
@@ -241,6 +241,7 @@ const ShopperProduct = () => {
 			>
 				<TikIcon></TikIcon>
 			</button>
+			<div className="h-14"></div>
 		</div>
 	);
 };

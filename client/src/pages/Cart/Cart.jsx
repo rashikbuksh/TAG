@@ -108,17 +108,17 @@ const Cart = () => {
 	const localStorageKey = "cart_timer_data";
 
 	// Load timer data from localStorage on component mount
-	useEffect(() => {
-		const timerData = JSON.parse(localStorage.getItem(localStorageKey));
-		if (timerData) {
-			setCountdown(timerData.countdown);
-			setTimerStarted(timerData.timerStarted);
-			setRunningTimerShopperId(
-				timerData.shopperId ? timerData.shopperId : "null"
-			);
-			console.log(timerData);
-		}
-	}, []);
+	// useEffect(() => {
+	// 	const timerData = JSON.parse(localStorage.getItem(localStorageKey));
+	// 	if (timerData) {
+	// 		setCountdown(timerData.countdown);
+	// 		setTimerStarted(timerData.timerStarted);
+	// 		setRunningTimerShopperId(
+	// 			timerData.shopperId ? timerData.shopperId : "null"
+	// 		);
+	// 		console.log(timerData);
+	// 	}
+	// }, []);
 	useEffect(() => {
 		if (timerStarted) {
 			localStorage.setItem(
@@ -163,17 +163,18 @@ const Cart = () => {
 		const total = calculatedTotals[shopperId] || 0;
 
 		Swal.fire({
-			title: 'Are you sure?',
-			text: 'Are you sure you want to buy?',
-			icon: 'question',
+			title: "Are you sure?",
+			text: "Are you sure you want to buy?",
+			icon: "question",
 			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes',
-			cancelButtonText: 'No'
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
 		}).then((result) => {
 			if (result.isConfirmed) {
 				// User clicked 'Yes'
+				setCountdown(120);
 				addOrderToDB(productIds, total);
 				navigate("/orderStatus");
 			} else {
@@ -242,6 +243,7 @@ const Cart = () => {
 							(response) => response.status === 201
 						);
 						console.log(isDeleteProduct);
+						handelCancel(shopperId);
 						if (isDeleteProduct) {
 							productIds.forEach((productId) => {
 								console.log(productId, "productId");
@@ -325,13 +327,14 @@ const Cart = () => {
 			[shopperId]: !prevBuyStates[shopperId],
 		}));
 		setCountdown(cart_order_timer_value);
-		const interval = setInterval(() => {
-			setCountdown((prevCountdown) => {
-				clearInterval(interval);
-				clearInterval(intervalId);
-				return prevCountdown;
-			});
-		}, 1000);
+		// const interval = setInterval(() => {
+		// 	setCountdown((prevCountdown) => {
+		// 		clearInterval(interval);
+		// 		clearInterval(intervalId);
+		// 		return prevCountdown;
+		// 	});
+		// }, 1000);
+		clearInterval(intervalId);
 		setTimerStarted(false);
 
 		// const discounts = {};
@@ -579,7 +582,7 @@ const Cart = () => {
 													}}
 													className=" rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white"
 												>
-													Conform
+													Confirm
 												</button>{" "}
 											</>
 										) : (

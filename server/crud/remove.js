@@ -8,31 +8,32 @@ const { remove: ShopperProduct } = require("../api/shopperproduct");
 const { remove: News } = require("../api/news");
 const { remove: user } = require("../api/auth");
 const { remove: OrderProduct } = require("../api/ordered_product");
-
+const { remove: shop } = require("../api/shop");
 const REMOVE_DATA = [
-	...JobEntry,
-	...HeroSlider,
-	...Newslike,
-	...Newscomment,
-	...ShopperProduct,
-	...News,
-	...user,
-	...OrderProduct,
+  ...JobEntry,
+  ...HeroSlider,
+  ...Newslike,
+  ...Newscomment,
+  ...ShopperProduct,
+  ...News,
+  ...user,
+  ...OrderProduct,
+  ...shop,
 ];
 
 REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
-	app.delete(uri, (req, res) => {
-		let paramArr = [];
-		param?.forEach((val) => {
-			paramArr.push(req?.params[val]);
-		});
+  app.delete(uri, (req, res) => {
+    let paramArr = [];
+    param?.forEach((val) => {
+      paramArr.push(req?.params[val]);
+    });
 
-		ExecuteQuery(
-			res,
-			query,
-			[...paramArr],
-			"delete",
-			`${req?.params[msg]} deleted successfully`
-		);
-	});
+    ExecuteQuery(
+      res,
+      query,
+      [...paramArr],
+      "delete",
+      `${req?.params[msg]} deleted successfully`
+    );
+  });
 });

@@ -28,6 +28,17 @@ const read = [
 		query: `SELECT * FROM news ORDER BY date desc`,
 		msg: "news",
 	},
+	{
+		uri: "/news/getHotNews",
+		query: `SELECT * 
+		FROM news 
+		WHERE (	shop_id, shopper_product_id , date) IN 
+			(SELECT shop_id, shopper_product_id, MAX(date) 
+			 FROM news 
+			 GROUP BY shop_id, shopper_product_id) 
+		ORDER BY date DESC;`,
+		msg: "news",
+	},
 ];
 const change = [
 	{

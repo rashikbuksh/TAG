@@ -17,6 +17,7 @@ import NotificationSound from "../../helpers/NotificationSound";
 import { api } from "../../lib/api";
 import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
+import AllShop from "../../components/Shop/AllShop";
 
 const Home = () => {
 	const { user, Logout } = useAuth();
@@ -91,7 +92,9 @@ const Home = () => {
 			<Footer />
 			<ShowCartIcon />
 			<div className="body-wrapper mb-20 mt-12">
-				<Helmet>{/* ... (existing Helmet content) */}</Helmet>
+				{/* <Helmet>
+					<title>Home-TAG</title>
+				</Helmet> */}
 				<HeroSlider sliderData={sliderDataTop} />
 				{user ? <Refer /> : ""}
 				<HotNews />
@@ -105,6 +108,7 @@ const Home = () => {
 						<FaArrowUp className="text-3xl text-gray-200"></FaArrowUp>
 					</button>
 				)}
+				<AllShop />
 				{dataLoaded && <FooterSection />}{" "}
 				{/* Conditionally render the FooterSection */}
 			</div>
