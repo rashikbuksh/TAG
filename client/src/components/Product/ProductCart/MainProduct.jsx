@@ -32,6 +32,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		shopper_id,
 		product_count,
 		shipping_address,
+		title
 	} = prod;
 
 	const cartItems = useSelector((state) => state.cart.cartItems);
@@ -107,9 +108,9 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		});
 		setIsLocationOpen(!isOpen);
 	};
-	const navigateProductPage = (id) => {
+	const navigateProductPage = (id,title) => {
 		api.post(`/shopperproduct/increaseView/${id}`);
-		navigate(`/product/${id}`);
+		navigate(`/product/${id}/${title}`);
 	};
 	const divStyle = {
 		borderRadius: "12px",
@@ -225,7 +226,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					<button
 						type="button"
 						onClick={() => {
-							navigateProductPage(id);
+							navigateProductPage(id,title);
 						}}
 					>
 						<div className="h-10 text-left ">

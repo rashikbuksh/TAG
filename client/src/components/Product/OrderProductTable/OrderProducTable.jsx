@@ -19,7 +19,7 @@ const OrderProducTable = ({ product }) => {
 					<Link
 						to={`${import.meta.env.VITE_API_PUBLIC_URL}/product/${
 							Orderdproduct.pid
-						}`}
+						}/${Orderdproduct.title}`}
 					>
 						<h1 className="text-sm">{Orderdproduct.name}</h1>
 					</Link>
