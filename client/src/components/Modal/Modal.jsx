@@ -9,6 +9,7 @@ const Modal = ({
 	children,
 	setcommentId,
 	showCross,
+	fullWidth,
 }) => {
 	function closeModal() {
 		setIsOpen(false);
@@ -20,7 +21,7 @@ const Modal = ({
 			<Transition appear show={isOpen} as={Fragment}>
 				<Dialog
 					as="div"
-					className="relative z-10 h-[70vh] w-full overflow-y-auto"
+					className="relative z-10 h-screen w-full overflow-y-auto"
 					onClose={closeModal}
 				>
 					<Transition.Child
@@ -36,7 +37,7 @@ const Modal = ({
 					</Transition.Child>
 
 					<div className="fixed inset-0 overflow-y-auto">
-						<div className="flex min-h-full  items-center justify-center p-4 text-center">
+						<div className="flex items-center justify-center min-h-screen">
 							<Transition.Child
 								as={Fragment}
 								enter="ease-out duration-300"
@@ -46,7 +47,11 @@ const Modal = ({
 								leaveFrom="opacity-100 scale-100"
 								leaveTo="opacity-0 scale-95"
 							>
-								<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white px-2 py-3 text-left align-middle shadow-xl transition-all">
+								<Dialog.Panel
+									className={`${
+										fullWidth ? "w-[70%] mx-auto h-80vh" : "w-full max-w-md mx-2"
+									} transform overflow-hidden rounded-2xl bg-white px-2 py-3 text-left align-middle shadow-xl transition-all`}
+								>
 									<Dialog.Title
 										as="h3"
 										className="text-lg font-medium leading-6 text-gray-900"
@@ -70,7 +75,7 @@ const Modal = ({
 													onClick={closeModal}
 													className="mr-2  rounded-full p-1"
 												>
-													<FaX className="text-[#FF4C5E]"></FaX>
+													<FaX className="text-[#FF4C5E]" />
 												</button>
 											)}
 										</div>

@@ -86,7 +86,7 @@ const BestSellerProduct = ({ limit, type }) => {
 												to={
 													import.meta.env
 														.VITE_API_PUBLIC_URL +
-													`/product/${single.id}`
+													`/product/${single.id}/${single.title}`
 												}
 											>
 												<img

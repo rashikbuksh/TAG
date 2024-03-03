@@ -35,6 +35,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		discount,
 		view,
 		shopper_id,
+		title
 	} = product;
 	console.log(product, "Product");
 	const [category, setCategory] = useState([]);
@@ -233,14 +234,14 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 									copyToClipboard(
 										`${
 											import.meta.env.VITE_API_PUBLIC_URL
-										}/product/${id}`
+										}/product/${id}/${title}`
 									)
 								}
 								className="text-md link-info link flex items-center justify-between rounded bg-gray-200 p-2"
 							>
 								{`${
 									import.meta.env.VITE_API_PUBLIC_URL
-								}/product/${id}`}{" "}
+								}/product/${id}/${title}`}{" "}
 								<FaCopy size={30} />
 							</p>
 						</div>

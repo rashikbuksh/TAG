@@ -27,6 +27,7 @@ const AddProductForm = () => {
 	const addProductSchema = yup.object({
 		name: yup.string().required("Name required"),
 		short_description: yup.string(),
+		title: yup.string().required("Title required"),
 		full_description: yup.string().required("Full description required"),
 		image: yup
 			.mixed()
@@ -80,6 +81,7 @@ const AddProductForm = () => {
 			name: "",
 			image: "",
 			short_description: "",
+			title:"",
 			full_description: "",
 			category_id: "",
 			product_varification: "",
@@ -89,13 +91,17 @@ const AddProductForm = () => {
 		resolver: yupResolver(addProductSchema),
 	});
 
-	const { register, handleSubmit, formState } = form;
+	const { register, handleSubmit, formState ,setValue} = form;
 	const { errors } = formState;
 
 	const changedCategory = (e) => {
 		form.setValue("category_id", e.target.value);
 	};
 
+	const onNameChange = (e) => {
+        const value = e.target.value;
+        setValue("title", value.replace(/\s/g, "_"));
+    };
 	const onSubmit = async (data) => {
 		const formData = new FormData();
 		formData.append("uploadFiles", Image);
@@ -123,6 +129,7 @@ const AddProductForm = () => {
 			name: data.name,
 			image: ImageName,
 			short_description: data.short_description,
+			title:data.title,
 			full_description: data.full_description,
 			category_id: Number(data.category_id),
 			isVerified: data.product_varification,
@@ -163,9 +170,24 @@ const AddProductForm = () => {
 											name="name"
 											id="name"
 											placeholder="Enter Name"
+											onChange={onNameChange}
 										/>
 										<p className="text-danger">
 											{errors.name?.message}
+										</p>
+									</div>
+									<div className="auth-form__single-field space-mb--30">
+										<label htmlFor="name">Title</label>
+										<input
+											{...register("title")}
+											type="text"
+											name="title"
+											id="title"
+											placeholder="Enter title"
+											value={formState?.values?.title}
+										/>
+										<p className="text-danger">
+											{errors.title?.message}
 										</p>
 									</div>
 
