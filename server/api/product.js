@@ -23,6 +23,14 @@ const read = [
     query: `SELECT id,name,image,price,quantity,category_id,isVerified FROM product`,
   },
   {
+    uri: "/product/getproduct/:id",
+    query: `SELECT p.id, p.name, p.image, p.price, p.quantity, p.category_id, p.isVerified
+    FROM product p
+    LEFT JOIN shopper_product sp ON p.id = sp.product_id AND sp.shopper_id = ?
+    WHERE sp.product_id IS NULL;`,
+    param:["id"]
+  },
+  {
     uri: "/product/getallproduct",
     query: `SELECT * FROM product`,
   },

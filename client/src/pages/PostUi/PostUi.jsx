@@ -27,7 +27,13 @@ import { api } from "../../lib/api";
 import CommentModal from "./CommentModal";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { FacebookIcon, InstagramIcon, Linkedin, TwitterIcon, WhatsappIcon } from "../../SvgHub/SocialIcon";
+import {
+	FacebookIcon,
+	InstagramIcon,
+	Linkedin,
+	TwitterIcon,
+	WhatsappIcon,
+} from "../../SvgHub/SocialIcon";
 const PostUi = ({ postData }) => {
 	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");
@@ -282,17 +288,22 @@ const PostUi = ({ postData }) => {
 										api.post(
 											`/news/increaseLikeCount/${id}`
 										).then((res) => {
-											api.post(
-												"/notification/addnotification",
-												{
-													notification_content: `${user.name} liked your post`,
-													notification_time:
-														GetDateTime(),
-													not_to: userid,
-													not_from: shop_id,
-													status: 0,
-												}
-											);
+											if (shop_id == userid) {
+												console.log("liked");
+												return;
+											} else {
+												api.post(
+													"/notification/addnotification",
+													{
+														notification_content: `${user.name} liked your post`,
+														notification_time:
+															GetDateTime(),
+														not_to: userid,
+														not_from: shop_id,
+														status: 0,
+													}
+												);
+											}
 										});
 									});
 								}}

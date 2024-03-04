@@ -48,15 +48,19 @@ const CommentModal = ({
 		}).then((res) => {
 			if (res.status == 201) {
 				// add comment in the notification table
-				api.post(`/notification/addnotification`, {
-					notification_content:
-						"You have a new comment in your post. commented by " +
-						user.name,
-					notification_time: GetDateTime(),
-					not_from: shop_id,
-					not_to: user.id,
-					status: 1,
-				});
+				if (shop_id == user.id) {
+					return;
+				} else {
+					api.post(`/notification/addnotification`, {
+						notification_content:
+							"You have a new comment in your post. commented by " +
+							user.name,
+						notification_time: GetDateTime(),
+						not_from: shop_id,
+						not_to: user.id,
+						status: 1,
+					});
+				}
 			}
 		});
 		api.post(`/news/increaseCommentCount/${id}`).then((res) => {});

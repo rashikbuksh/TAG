@@ -21,7 +21,7 @@ const ShopperProduct = () => {
 
 	const [filteredProductArr, setFilteredProductArr] = useState(products);
 	useEffect(() => {
-		api.get(`/product/getproduct`).then((response) => {
+		api.get(`/product/getproduct/${user.id}`).then((response) => {
 			setProducts(response.data);
 		});
 		api.get(`/category/get/category`).then((response) => {
