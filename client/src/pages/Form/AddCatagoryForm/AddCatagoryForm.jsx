@@ -48,7 +48,7 @@ const AddcategoryForm = () => {
 		});
 	}, []);
 	return (
-		<div className="  space-pt--70 space-pb--120 mt-3 rounded-md">
+		<div className="   mt-3 rounded-md">
 			{/* auth page header */}
 			<div className=" space-mb--50">
 				<div className="container">

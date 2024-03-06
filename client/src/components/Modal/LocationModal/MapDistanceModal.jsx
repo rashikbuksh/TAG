@@ -31,7 +31,7 @@ const MapDistanceModal = ({ isOpen, setIsOpen, latlong, popup }) => {
 			showCross={false}
 			title={"Location"}
 		>
-			<MapContainer
+			{/* <MapContainer
 				center={location}
 				zoom={25}
 				style={{ height: "400px", width: "100%" }}
@@ -48,7 +48,13 @@ const MapDistanceModal = ({ isOpen, setIsOpen, latlong, popup }) => {
 					minimumDistance={minimumDistance}
 					className="leaflet-routing-container"
 				/>
-			</MapContainer>
+			</MapContainer> */}
+			<div>
+				<p>
+					We are currently working on resolving the issue. Thank you
+					for your patience.
+				</p>
+			</div>
 		</Modal>
 	);
 };

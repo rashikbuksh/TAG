@@ -102,6 +102,11 @@ const AddProductForm = () => {
         const value = e.target.value;
         setValue("title", value.replace(/\s/g, "_"));
     };
+	const handleTitleChange = (e) => {
+        const value = e.target.value;
+        const updatedValue = value.replace(/\s/g, "_");
+        setValue("title", updatedValue); // Update state with the modified value
+    };
 	const onSubmit = async (data) => {
 		const formData = new FormData();
 		formData.append("uploadFiles", Image);
@@ -184,6 +189,7 @@ const AddProductForm = () => {
 											name="title"
 											id="title"
 											placeholder="Enter title"
+											onChange={handleTitleChange}
 											value={formState?.values?.title}
 										/>
 										<p className="text-danger">

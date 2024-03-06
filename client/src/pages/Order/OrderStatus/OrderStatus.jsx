@@ -9,6 +9,7 @@ import { FaCircle, FaPersonWalking } from "react-icons/fa6";
 import { ChatIcon } from "../../../SvgHub/Icons";
 import { Breadcrumb } from "../../../components";
 import chatIconImg from "../../../../public/icons/live-chat.png";
+import { addOneHour } from "../../../helpers/FormattedTime";
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
 	const [products, setProducts] = useState([]);
@@ -66,7 +67,14 @@ const OrderStatus = () => {
 				prevUrl={"/cart"}
 			></Breadcrumb>
 			{orderProducts.map(
-				({ id, shopper_name, order_status, price, products }) => (
+				({
+					id,
+					shopper_name,
+					order_status,
+					price,
+					products,
+					order_time,
+				}) => (
 					<div key={id} className=" mb-10 mt-2">
 						<div className="flex items-center justify-between">
 							<h1 className="text-xl">
@@ -151,10 +159,17 @@ const OrderStatus = () => {
 								<div className="divider my-0"></div>
 								<div className="flex justify-between px-3">
 									<div className="flex items-center gap-4 text-[#FF2A2A]">
-										<div>
-											<p>Within 1 hr Collect</p>
-											<p>Your Products</p>
-										</div>
+										{
+											<div>
+												<p>
+													Within{" "}
+													{addOneHour(order_time)}{" "},
+													Collect
+												</p>
+												<p>Your Products</p>
+											</div>
+										}
+
 										<FaPersonWalking
 											color="green"
 											size={20}

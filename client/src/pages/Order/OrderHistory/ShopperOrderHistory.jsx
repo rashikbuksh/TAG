@@ -20,7 +20,7 @@ const ShopperOrderHistory = () => {
 	}, [shopper_id]);
 
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper  ">
 			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
 			<div className="order-product-area">
 				{data?.map((single) => {

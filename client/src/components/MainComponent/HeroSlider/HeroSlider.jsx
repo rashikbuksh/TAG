@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useFetch from "../../../hooks/use-fetch";
 import { api } from "../../../lib/api";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
@@ -42,15 +43,23 @@ const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 												}}
 											>
 											</div> */}
-								<img
-									src={
-										import.meta.env.VITE_APP_IMG_URL +
-										"/heroslider/" +
-										single.image
+								<Link
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/search/" +
+										single.title
 									}
-									className="mx-auto h-[216px]  w-full md:w-auto"
-									alt=""
-								/>
+								>
+									<img
+										src={
+											import.meta.env.VITE_APP_IMG_URL +
+											"/heroslider/" +
+											single.image
+										}
+										className="mx-auto h-[216px]  w-full md:w-auto"
+										alt=""
+									/>
+								</Link>
 								{/* <div className="container">
 													<div className="row">
 														<div className="col-12">

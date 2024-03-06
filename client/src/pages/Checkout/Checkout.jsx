@@ -87,7 +87,7 @@ const Checkout = () => {
 			className={clsx(
 				"body-wrapper",
 				cartItems && cartItems.length >= 1 && "bg-color--gradient",
-				"space-pt--70 space-pb--120"
+				" "
 			)}
 		>
 			{cartItems && cartItems.length > 0 ? (

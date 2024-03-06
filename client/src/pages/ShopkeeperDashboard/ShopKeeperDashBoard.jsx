@@ -25,6 +25,8 @@ const ShopKeeperDashBoard = () => {
 
 	const [shopkeeper, setShopkeeper] = useState([]);
 	const [productCount, setProductCount] = useState(0);
+	const [pendingOrder, setPendingOrder] = useState(0);
+	const [notification, setNotification] = useState(0);
 
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`).then((res) => {
@@ -39,6 +41,19 @@ const ShopKeeperDashBoard = () => {
 				setProductCount(res.data[0].count);
 			}
 		);
+		api.get(`/order/getordershopper/${id}`)
+			.then((response) => {
+				setPendingOrder(response.data.length);
+				console.log(response.data.length);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		api.get(
+			`/notification/getUnreadNotificationForDashboard/${user.id}/${user.id}`
+		).then((res) => {
+			setNotification(res.data.length);
+		});
 	}, [id]);
 
 	// const handleOpenClockModal = () => {
@@ -75,31 +90,38 @@ const ShopKeeperDashBoard = () => {
 			title: "My Product",
 			link: `/shopkeeperProduct`,
 			content: `Total Product: ${productCountContent}`,
+			isActive: false,
 		},
 		{
 			title: "Notification",
 			content: notificationContent.toString(), // Assuming notificationCount is a variable containing the count
-			link: "/notification", // Placeholder link for notifications
+			link: "/notification",
+			isActive: notification > 0, // Placeholder link for notifications
 		},
 		{
 			title: "Add Product",
 			content: addProductContent, // Assuming addProductContent is a variable containing 'Add Product' data
 			link: "/addshopperproduct", // Placeholder link for adding a product
+			isActive: false,
 		},
 		{
 			title: "New Order",
 			content: newOrderContent, // Assuming newOrderContent is a variable containing 'New Order' data
 			link: "/orderShopper", // Placeholder link for new orders
+			isActive: pendingOrder > 0,
 		},
 		{
 			title: "Buy Product",
 			content: buyProductContent, // Assuming buyProductContent is a variable containing 'Buy Product' data
 			link: "/buy-product", // Placeholder link for buying a product
+			isActive: false,
 		},
 		{
 			title: "Order History",
 			content: orderHistoryContent, // Assuming orderHistoryContent is a variable containing 'Order History' data
-			link: `/ordersHistoryDetails/${user.id}`, // Placeholder link for order history
+			link: `/ordersHistoryDetails/${user.id}`,
+			// Placeholder link for order history
+			isActive: false,
 		},
 		// {
 		// 	title: "Shopkeeper Schedule",
@@ -109,8 +131,8 @@ const ShopKeeperDashBoard = () => {
 	];
 	return (
 		<div className="body-wrapper space-pb--120 mt-10 bg-gray-50">
-			{/* <Breadcrumb pageTitle="DashBoard" prevUrl="/home" /> */}
-			<p className="text-center font-black text-md">DashBoard</p>
+			<Breadcrumb pageTitle="DashBoard" prevUrl="/home" />
+			{/* <p className="text-md text-center font-black mt-">DashBoard</p> */}
 			<div className="mx-auto rounded-lg  px-4 md:w-[50%]">
 				<div className="flex items-center justify-between">
 					<div className=" flex flex-col items-center justify-center gap-1 ">
@@ -222,7 +244,9 @@ const ShopKeeperDashBoard = () => {
 									/>
 								) : (
 									<img
-										src={'../../../public/assets/Tag-logo-blue-get_100_100.png'}
+										src={
+											"../../../public/assets/Tag-logo-blue-get_100_100.png"
+										}
 										className="img-fluid"
 										alt=""
 									/>
@@ -260,7 +284,7 @@ const ShopKeeperDashBoard = () => {
 									<div
 										key={index}
 										// style={boxShadowStyle}
-										className={` dashboardCard flex ${
+										className={` dashboardCard flex relative ${
 											section.content ? "" : "flex-col "
 										}`}
 									>
@@ -271,6 +295,11 @@ const ShopKeeperDashBoard = () => {
 													: "text-center"
 											}`}
 										>
+											{section.isActive ? (
+												<div className="absolute right-2 top-2 h-4 w-4 rounded-full bg-red-500" />
+											) : (
+												""
+											)}
 											<h1 className="text-base font-bold text-black">
 												{section.title}
 											</h1>

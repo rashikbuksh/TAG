@@ -2,7 +2,7 @@ import React from "react";
 
 const Contact = () => {
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper  ">
 			<div className="contact-page-content">
 				<div
 					className="contact-page-content__image space-mb--80 bg-img"

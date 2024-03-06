@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const NotFound = () => {
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper  ">
 			<div className="no-items-found">
 				<div className="no-items-found__image">
 					<FaTimes />

@@ -18,6 +18,7 @@ import { api } from "../../lib/api";
 import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
 import AllShop from "../../components/Shop/AllShop";
+import TagShop from "../../components/TagShop/TagShop";
 
 const Home = () => {
 	const { user, Logout } = useAuth();
@@ -109,6 +110,7 @@ const Home = () => {
 					</button>
 				)}
 				<AllShop />
+				<TagShop />
 				{dataLoaded && <FooterSection />}{" "}
 				{/* Conditionally render the FooterSection */}
 			</div>

@@ -117,6 +117,11 @@ const read = [
 				WHERE sp.name LIKE CONCAT('%', ?, '%');`,
     param: ["keyword"],
   },
+  {
+    uri: "/adminShopperProduct/getshopperproduct",
+    query: `SELECT sp.id, sp.name, sp.price, sp.discount, sp.product_count, sp.product_id, p.isVerified, p.category_id, p.image, p.title as title, sp.shopper_id, sp.sale_count, sp.view, cp.shipping_address, cp.active_status FROM shopper_product sp JOIN product p ON sp.product_id = p.id JOIN customer_profile cp ON cp.id = sp.shopper_id WHERE sp.product_count > 0 AND cp.access = 'admin';;
+`,
+  },
 ];
 
 const change = [
@@ -124,6 +129,12 @@ const change = [
     uri: "/product/updateProductCount",
     query: `UPDATE shopper_product SET product_count = ? WHERE id = ?`,
     body: ["product_count", "id"],
+    msg: "id",
+  },
+  {
+    uri: "/product/decreaseProductCount",
+    query: `UPDATE shopper_product SET product_count = product_count - ? WHERE id = ?`,
+    body: ["product_quantity", "id"],
     msg: "id",
   },
   {

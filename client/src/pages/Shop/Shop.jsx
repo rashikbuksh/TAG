@@ -51,7 +51,7 @@ const Shop = () => {
 		<Header/>
 		<Footer/>
 		<ShowCartIcon/>
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper  space-pt--70 space-pb--120">
 			<div className="shop-header bg-color--grey">
 				<div className="space-y--15 container">
 					<div className="row align-items-center">

@@ -78,7 +78,7 @@ const ShopkeepersProduct = () => {
 					</div>
 				</div>
 
-				<div className="my-2 grid grid-cols-2  gap-10 lg:grid-cols-2">
+				<div className="my-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 rounded mx-auto w-[95%]">
 					{FilteredArr.map((product, index) => (
 						<ShopkeeperMyProduct
 							key={product.id}

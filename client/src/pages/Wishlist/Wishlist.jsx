@@ -15,7 +15,7 @@ const Wishlist = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper  ">
 			<Breadcrumb pageTitle="Wishlist" prevUrl="/home" />
 			<div className="order-product-area">
 				{wishlistItems && wishlistItems.length >= 1 ? (
