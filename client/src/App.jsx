@@ -297,7 +297,7 @@ const PUBLIC_ROUTES = [
 		element: Welcome,
 	},
 	{
-		path: "/product/:id",
+		path: "/product/:id/:name",
 		element: Product,
 	},
 	{

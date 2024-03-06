@@ -88,6 +88,7 @@ const read = [
 					op.weight,
 					po.price AS totalPrice,
 					p.image AS product_image,
+					p.title as title,
 					po.order_status AS order_status,
 					po.cancel_report as cancel_report,
 					po.order_time as order_time,
