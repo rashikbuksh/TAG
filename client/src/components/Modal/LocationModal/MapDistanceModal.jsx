@@ -11,8 +11,8 @@ const MapDistanceModal = ({ isOpen, setIsOpen }) => {
 	// });
 
 	const mapElement = useRef();
-	const [mapLongitude, setMapLongitude] = useState(-11);
-	const [mapLatitude, setMapLatitude] = useState(36);
+	const [mapLongitude, setMapLongitude] = useState(13.813948);
+	const [mapLatitude, setMapLatitude] = useState(16.60461);
 	const [mapZoom, setMapZoom] = useState(13);
 	const [map, setMap] = useState(null);
 
@@ -63,11 +63,6 @@ const MapDistanceModal = ({ isOpen, setIsOpen }) => {
 			container: mapElement.current,
 			center: [mapLongitude, mapLatitude],
 			zoom: mapZoom,
-			stylesVisibility: {
-				trafficIncidents: true,
-				trafficFlow: true,
-			},
-			visibility: true,
 		});
 
 		if (!newMap) {
@@ -79,27 +74,29 @@ const MapDistanceModal = ({ isOpen, setIsOpen }) => {
 	}, [mapElement, mapKey, mapLongitude, mapLatitude, mapZoom]);
 
 	return (
-		<Modal
-			isOpen={isOpen}
-			setIsOpen={setIsOpen}
-			showCross={false}
-			title={"Location"}
-		>
-			<div
-				id="map"
-				ref={mapElement}
-				className="mapDiv"
-				style={{
-					visibility: "visible",
-					width: "100%",
-					height: "100%",
-					position: "absolute",
-					top: 0,
-					left: 0,
-					zIndex: 0,
-				}}
-			></div>
-		</Modal>
+		<div className="relative">
+			<Modal
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				showCross={false}
+				title={"Location"}
+			>
+				<div
+					id="map"
+					ref={mapElement}
+					className="mapDiv"
+					style={{
+						visibility: "visible",
+						width: "80%",
+						height: "80%",
+						position: "absolute",
+						top: 0,
+						left: 0,
+						zIndex: 0,
+					}}
+				></div>
+			</Modal>
+		</div>
 	);
 };
 
