@@ -43,7 +43,7 @@ const read = [
 				FROM
 					customer_profile cp
 				WHERE
-					access = "shopper"`,
+					access = "shopper"||access = "admin"`,
   },
   {
     uri: "/auth/getALLUserInfo",

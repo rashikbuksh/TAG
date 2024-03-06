@@ -4,7 +4,7 @@ import { Breadcrumb } from "../../components";
 const Chat = () => {
 	const shownMessage = [1, 2, 3, 4, 5, 6, 7];
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper  ">
 			<Breadcrumb pageTitle="Chat" prevUrl="/home" />
 			<div className="chat-area py-2">
 				{shownMessage.map((msg, index) => (

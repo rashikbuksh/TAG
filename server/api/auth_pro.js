@@ -41,6 +41,8 @@ const getProductRegex = /^\/shopperproduct\/getshopperproduct\/\d+$/;
 const getShopperProductRegex =
   /^\/shopperproduct\/getshopperproductOfShopkeeper\/\d+$/;
 const CheckUSerRegex = /^\/auth\/checkUser\/\d+$/;
+const getSearchedProductRegex = /^\/shopperproduct\/get-searched-product\/[^\/]+$/;
+
 
 const VerifyToken = (req, res, next) => {
   const { authorization } = req?.headers;
@@ -57,10 +59,12 @@ const VerifyToken = (req, res, next) => {
     req?.originalUrl == "/shopperproduct/getshopperproduct" ||
     req?.originalUrl == "/shopperproduct/getPopularShopperProduct" ||
     req?.originalUrl == "/category/get/category" ||
+    req?.originalUrl == "/adminShopperProduct/getshopperproduct" ||
     getUserInfoRegex.test(req?.originalUrl) ||
     getProductRegex.test(req?.originalUrl) ||
     getShopperProductRegex.test(req?.originalUrl) ||
     CheckUSerRegex.test(req?.originalUrl) ||
+    getSearchedProductRegex.test(req?.originalUrl) ||
     req?.originalUrl == "/sentOtp" ||
     req?.originalUrl == "/news/getHotNews"||
     req?.originalUrl == "/shop/getAllShop"

@@ -223,7 +223,7 @@ const ShopperProduct = () => {
 			{/* Weight section  */}
 
 			{/* product  */}
-			<div className="grid grid-cols-2 gap-2 rounded">
+			<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 rounded mx-auto w-[95%]">
 				{filteredProductArr.map((product) => (
 					<ShopkeeperProductcart
 						key={product.id}

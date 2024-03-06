@@ -88,7 +88,7 @@ function Header() {
 	}, []);
 
 	const notificationsWithStatusOne = notification.filter(
-		(item) => item.status === 1
+		(item) => item.status == 1
 	);
 
 	useEffect(() => {
@@ -104,7 +104,8 @@ function Header() {
 		try {
 			// Update the status of notifications to 2 (played)
 			const id = userid;
-			await api.post(`/notification/readnotification/${id}`);
+			console.log(id);
+			await api.post(`/notification/readNotification/${id}`);
 			// Update the local state with updated notifications
 			setNotification((prevNotifications) =>
 				prevNotifications.map((notification) =>

@@ -81,7 +81,7 @@ const Register = () => {
 		getUserLocation();
 	}, []);
 	return (
-		<div className="space-pt--70 space-pb--120 relative">
+		<div className=" relative">
 			{/* auth page header */}
 			<div className="mx-auto flex h-screen flex-col justify-around px-[25px] lg:w-[50%]">
 				<div className="mx-auto my-5 h-[80px]">

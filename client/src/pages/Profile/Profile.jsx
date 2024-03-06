@@ -84,7 +84,7 @@ const Profile = () => {
 	}, [userdata, id]);
 
 	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
+		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 ">
 			{/* Profile header */}
 			<div className="profile-header-area space-pt--30 space-mb--40">
 				<div className="container">

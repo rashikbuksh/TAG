@@ -7,6 +7,7 @@ import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import PostUi from "../PostUi/PostUi";
 import TagNewsUi from "../PostUi/TagNewsUi";
+import { Breadcrumb } from "../../components";
 
 const NewsFeed = () => {
 	const [posts, setPosts] = useState([]);
@@ -51,8 +52,9 @@ const NewsFeed = () => {
 	return (
 		<div className="mt-10">
 			<div className="mx-auto w-[90%]">
-				<h1 className="text-center text-2xl font-bold">News Feed</h1>
-				<div className="divider my-0"></div>
+				<Breadcrumb pageTitle={"News Feed"} prevUrl={"/home"}/>
+				{/* <h1 className="text-center text-2xl font-bold">News Feed</h1> */}
+				{/* <div className="divider my-0"></div> */}
 				<div className="lg:grid lg:grid-cols-12 ">
 					<div className="lg:col-span-3"></div>
 					<div className="lg:col-span-6">

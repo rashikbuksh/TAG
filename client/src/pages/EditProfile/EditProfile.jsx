@@ -81,7 +81,7 @@ const EditProfile = () => {
 	};
 	const { user } = useAuth();
 	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120">
+		<div className="body-wrapper bg-color--gradient  ">
 			<Breadcrumb pageTitle="Edit Profile" prevUrl="/home" />
 			<div className="edit-profile-body space-mt--30">
 				<div className="container">

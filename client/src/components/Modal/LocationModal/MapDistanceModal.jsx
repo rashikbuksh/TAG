@@ -74,7 +74,7 @@ const MapDistanceModal = ({ isOpen, setIsOpen }) => {
 	}, [mapElement, mapKey, mapLongitude, mapLatitude, mapZoom]);
 
 	return (
-		<div className="relative">
+	
 			<Modal
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
@@ -95,8 +95,13 @@ const MapDistanceModal = ({ isOpen, setIsOpen }) => {
 						zIndex: 0,
 					}}
 				></div>
-			</Modal>
-		</div>
+			<div>
+				<p>
+					We are currently working on resolving the issue. Thank you
+					for your patience.
+				</p>
+			</div>
+		</Modal>
 	);
 };
 

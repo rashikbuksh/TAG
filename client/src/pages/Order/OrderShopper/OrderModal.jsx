@@ -9,6 +9,7 @@ import GetDateTime from "../../../helpers/GetDateTime";
 import { api } from "../../../lib/api";
 import { useAuth } from "../../../context/auth";
 import { toast } from "react-toastify";
+import { addOneHour } from "../../../helpers/FormattedTime";
 
 const OrderDetailsShopper = () => {
 	const { id } = useParams();
@@ -17,6 +18,7 @@ const OrderDetailsShopper = () => {
 	const [isShownReport, setIsShownReport] = useState(false);
 	const [orderStatus, setOrderStatus] = useState();
 	const [price, setPrice] = useState(null);
+	const [OrderTime, setOrderTime] = useState(null);
 	const [CustomerId, setCustomerId] = useState(null);
 	const [products, setProducts] = useState([]);
 	console.log("🚀 ~ OrderDetailsShopper ~ products:", products);
@@ -35,6 +37,7 @@ const OrderDetailsShopper = () => {
 					setPrice(response.data[0].totalPrice);
 					setCustomerId(response.data[0].customer_profile_id);
 					setOrderStatus(response.data[0].order_status); // Use console.log instead of log
+					setOrderTime(response.data[0].order_time); // Use console.log instead of log
 				})
 				.catch((error) => {
 					console.error(error);
@@ -42,7 +45,17 @@ const OrderDetailsShopper = () => {
 		}
 	}, [id, orderStatus]);
 
-	const handleAcceptOrder = (id) => {
+	const updateProductCount = (id, quantity) => {
+		api.post(`/product/decreaseProductCount`, {
+			id: id,
+			product_quantity: quantity,
+		}).then((res) => {
+			if (res.data.status === 200) {
+				console.log("updated" + id);
+			}
+		});
+	};
+	const handleAcceptOrder = (id, time) => {
 		api.post(`/order/updateorderstatus/${id}`, {
 			order_status: "accepted",
 		})
@@ -55,7 +68,11 @@ const OrderDetailsShopper = () => {
 							toast(response.data.message);
 							if (response.status === 200) {
 								api.post("/notification/addnotification", {
-									notification_content: `${user.name} accept your order. collect your products in 45 min.`,
+									notification_content: `${
+										user.name
+									} accept your order. collect your products within ${addOneHour(
+										time
+									)}.`,
 									notification_time: GetDateTime(),
 									not_to: user.id,
 									not_from: CustomerId,
@@ -102,10 +119,15 @@ const OrderDetailsShopper = () => {
 									console.log(response);
 									if (response.status === 201) {
 										setOrderStatus("completed");
+										products.forEach((product) => {
+											updateProductCount(
+												product.pid,
+												product.quantity
+											);
+										});
 										setCancelReport("");
 									}
 								});
-							
 							}
 						})
 						.catch((error) => {
@@ -193,7 +215,7 @@ const OrderDetailsShopper = () => {
 	};
 	const { user } = useAuth();
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper ">
 			<Breadcrumb
 				pageTitle={`Order Number: #${id}`}
 				prevUrl={user.access === "customer" ? "/home" : "/orderShopper"}
@@ -232,7 +254,7 @@ const OrderDetailsShopper = () => {
 						""
 					) : (
 						<button
-							onClick={() => handleAcceptOrder(id)}
+							onClick={() => handleAcceptOrder(id, OrderTime)}
 							className="action-button"
 						>
 							Accept

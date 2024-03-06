@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Breadcrumb = ({ pageTitle, prevUrl }) => {
 	return (
-		<div className="breadcrumb-area bg-color--grey space-y--15">
+		<div className="breadcrumb-area bg-color--grey space-y--15 mt-14">
 			<div className="container">
 				<div className="row align-items-center">
 					<div className="col-3">

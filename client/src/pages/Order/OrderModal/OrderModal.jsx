@@ -43,7 +43,7 @@ const OrderModal = () => {
 		pending: "text-yellow-500",
 	};
 	return (
-		<div className="body-wrapper space-pt--70 space-pb--120">
+		<div className="body-wrapper  ">
 			<Breadcrumb pageTitle={`Order Number: #${id}`} prevUrl="/order" />
 			<div>
 				<div className="overflow-x-auto">

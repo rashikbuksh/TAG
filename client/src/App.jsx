@@ -49,6 +49,7 @@ import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
 import ShopperWaitingPage from "./components/ShopperWaitngPage/ShopperWaitingPage";
 import AdminNewShopRequest from "./AdminComponents/AdminNewShopRequest/AdminNewShopRequest";
 import ShopkeeperSchedule from "./pages/ShopkeeperDashboard/ShopkeeperSchedule";
+import AdminTagShopControl from "./AdminComponents/AdminTagShopControl/AdminTagShopControl";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
@@ -125,13 +126,7 @@ const PROTECTED_ROUTES = [
 		element: Checkout,
 		access: ["admin", "customer", "shopper"],
 	},
-	{
-		id: 11,
-		name: "Search",
-		path: "/search/:keyword",
-		element: Search,
-		access: ["admin", "customer", "shopper"],
-	},
+
 	{
 		id: 12,
 		name: "Profile",
@@ -283,6 +278,10 @@ const PUBLIC_ROUTES = [
 	{
 		path: "/register",
 		element: Register,
+	},
+	{
+		path: "/search/:keyword",
+		element: Search,
 	},
 	{
 		path: "/register/:id",
@@ -446,6 +445,14 @@ const ADMIN_ROUTES = [
 		element: AdminNewShopRequest,
 		access: ["admin"],
 	},
+	{
+		id: 16,
+		name: "Tag Store",
+		path: "/tagStore",
+		element: AdminTagShopControl,
+		access: ["admin"],
+	},
+	
 ];
 const MODERATORS_ROUTES = [
 	{

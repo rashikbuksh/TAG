@@ -66,10 +66,12 @@ const HeroSlider = () => {
 		api.post(`/heroslider/addslider`, {
 			title: data.title,
 			subtitle: data.subtitle,
-			slider_position:data.slider_position,
+			slider_position: data.slider_position,
 			image: ImageName,
 		}).then((response) => {
-			if (response.data.message == title + " Added Successful") {
+			console.log("🚀 ~ onSubmit ~ response:", response);
+			if (response.data.status == 201) {
+				window.location.reload();
 				toast("Slider Added Successful");
 			}
 		});
@@ -94,7 +96,7 @@ const HeroSlider = () => {
 	}
 
 	return (
-		<div className="  space-pt--70 space-pb--120 mt-3">
+		<div className="   mt-3">
 			{/* auth page header */}
 			<div className=" space-mb--50">
 				<div className="container">
@@ -117,7 +119,9 @@ const HeroSlider = () => {
 							<div className="auth-form">
 								<form onSubmit={handleSubmit(onSubmit)}>
 									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="title">Title</label>
+										<label htmlFor="title">
+											Product Name/ keyword
+										</label>
 										<input
 											{...register("title")}
 											type="text"
@@ -157,7 +161,9 @@ const HeroSlider = () => {
 											placeholder="Enter Slider Position"
 										>
 											{/* <option>Select One</option> */}
-											<option value="top" selected>Top</option>
+											<option value="top" selected>
+												Top
+											</option>
 											<option value="middel">
 												Middel
 											</option>
@@ -205,18 +211,26 @@ const HeroSlider = () => {
 							<div className="auth-form grid grid-cols-3 gap-3">
 								{!!sliderData.length &&
 									sliderData.map((single) => (
-										<div key={single.id} className="border p-2 rounded my-2">
-											
+										<div
+											key={single.id}
+											className="my-2 rounded border p-2"
+										>
 											<div className="auth-form__single-field space-mb--30 flex gap-3">
-											<p className="text-black">Slider title: </p>
+												<p className="text-black">
+													Slider title:{" "}
+												</p>
 												{single.title}
 											</div>
 											<div className="auth-form__single-field space-mb--30 flex gap-3">
-											<p className="text-black">Slider subtitle: </p>
+												<p className="text-black">
+													Slider subtitle:{" "}
+												</p>
 												{single.subtitle}
 											</div>
 											<div className="auth-form__single-field space-mb--30 flex gap-3">
-												<p className="text-black">Slider Position: </p>
+												<p className="text-black">
+													Slider Position:{" "}
+												</p>
 												{single.slider_position}
 											</div>
 											<div className="auth-form__single-field space-mb--30">

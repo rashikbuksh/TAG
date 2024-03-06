@@ -13,25 +13,38 @@ const Notification = () => {
 
 	const userid = localStorage.getItem("user-id");
 
-	useEffect(() => {
-		api.get(`/auth/getUserInfo/${userid}`).then((res) => {
-			setUser(res.data);
-			setUserAccess(res.data.access);
-		});
-		api.get(`/notification/getnotification/${userid}/${userid}`).then(
-			(res) => {
-				setNotification(res.data);
-			}
-		);
-	}, []);
-
 	const HandleUpdateNotificationStatus = (id) => {
 		api.post(`/notification/readnotification/${id}`)
-			.then((res) => {})
+			.then((res) => {
+				console.log(res);
+			})
 			.catch((err) => {
 				console.error(err);
 			});
 	};
+	useEffect(() => {
+		const fetchNotifications = () => {
+			api.get(`/auth/getUserInfo/${userid}`).then((res) => {
+				setUser(res.data);
+				setUserAccess(res.data.access);
+			});
+
+			api.get(`/notification/getnotification/${userid}/${userid}`).then(
+				(res) => {
+					setNotification(res.data);
+				}
+			);
+		};
+
+		// Fetch notifications initially
+		fetchNotifications();
+
+		// Fetch notifications every 60 seconds
+		const intervalId = setInterval(fetchNotifications, 60000);
+
+		// Cleanup function to clear the interval
+		return () => clearInterval(intervalId);
+	}, []);
 
 	const getOrderNumberFromNotification = (notification) => {
 		const orderNumber = notification.split("#")[1].split(".")[0];
@@ -73,9 +86,7 @@ const Notification = () => {
 							>
 								<div
 									className={`${
-										notification[0].id === single.id
-											? "text-red-600"
-											: ""
+										single.status == 1 ? "text-red-600" : ""
 									}`}
 									dangerouslySetInnerHTML={{
 										__html: single.notification_content,
@@ -96,9 +107,7 @@ const Notification = () => {
 							>
 								<div
 									className={`${
-										notification[0].id === single.id
-											? "text-red-600"
-											: ""
+										single.status == 1 ? "text-red-600" : ""
 									}`}
 									dangerouslySetInnerHTML={{
 										__html: single.notification_content,
@@ -108,9 +117,7 @@ const Notification = () => {
 						) : (
 							<div
 								className={`${
-									notification[0].id === single.id
-										? "text-red-600"
-										: ""
+									single.status == 1 ? "text-red-600" : ""
 								}`}
 								dangerouslySetInnerHTML={{
 									__html: single.notification_content,
