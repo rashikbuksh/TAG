@@ -1,54 +1,100 @@
-import "leaflet-routing-machine";
-// import "lrm-google";
-import { useState } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
-import GetLocation from "../../../helpers/GetLocation";
-import { api } from "../../../lib/api";
+import * as tt from "@tomtom-international/web-sdk-maps";
+import "@tomtom-international/web-sdk-maps/dist/maps.css";
+import { useEffect, useRef, useState } from "react";
 import Modal from "../Modal";
-import RoutingMachine from "./RoutingMachine";
-import "./styles.css";
 
-const MapDistanceModal = ({ isOpen, setIsOpen, latlong, popup }) => {
-	const distanceCalculator = "map_minimum_distance_in_meter";
-	const [minimumDistance, setMinimumDistance] = useState(0);
-	api.get(`/util/getUtil/${distanceCalculator}`).then((res) => {
-		setMinimumDistance(res.data[0].value);
-	});
+const MapDistanceModal = ({ isOpen, setIsOpen }) => {
+	// const distanceCalculator = "map_minimum_distance_in_meter";
+	// const [minimumDistance, setMinimumDistance] = useState(0);
+	// api.get(`/util/getUtil/${distanceCalculator}`).then((res) => {
+	// 	setMinimumDistance(res.data[0].value);
+	// });
+
+	const mapElement = useRef();
+	const [mapLongitude, setMapLongitude] = useState(13.813948);
+	const [mapLatitude, setMapLatitude] = useState(16.60461);
+	const [mapZoom, setMapZoom] = useState(13);
+	const [map, setMap] = useState(null);
 
 	// user Location
-	const { location, loading, error } = GetLocation();
-	if (loading) return <h1>Loading...</h1>;
-	if (error) return <h1>{error}</h1>;
+	// const { location, loading, error } = GetLocation();
+	// if (loading) return <h1>Loading...</h1>;
+	// if (error) return <h1>{error}</h1>;
 
-	setTimeout(function () {
-		window.dispatchEvent(new Event("resize"));
-	}, 10);
+	const mapKey = import.meta.env.VITE_MAP_API_KEY;
+
+	console.log(
+		mapKey,
+		"mapKey",
+		mapZoom,
+		"mapZoom",
+		mapLatitude,
+		"mapLatitude",
+		mapLongitude,
+		"mapLongitude"
+	);
+
+	useEffect(() => {
+		if (!mapElement.current) {
+			console.error("mapElement.current is not defined");
+			return;
+		}
+
+		if (!mapKey) {
+			console.error("mapKey is not defined");
+			return;
+		}
+
+		if (
+			typeof mapLongitude !== "number" ||
+			typeof mapLatitude !== "number"
+		) {
+			console.error("center is not a valid array of two numbers");
+			return;
+		}
+
+		if (typeof mapZoom !== "number") {
+			console.error("zoom is not a valid number");
+			return;
+		}
+
+		const newMap = tt.map({
+			key: mapKey,
+			container: mapElement.current,
+			center: [mapLongitude, mapLatitude],
+			zoom: mapZoom,
+		});
+
+		if (!newMap) {
+			console.error("tt.map() returned null");
+			return;
+		}
+
+		setMap(newMap);
+	}, [mapElement, mapKey, mapLongitude, mapLatitude, mapZoom]);
 
 	return (
-		<Modal
-			isOpen={isOpen}
-			setIsOpen={setIsOpen}
-			showCross={false}
-			title={"Location"}
-		>
-			{/* <MapContainer
-				center={location}
-				zoom={25}
-				style={{ height: "400px", width: "100%" }}
+	
+			<Modal
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				showCross={false}
+				title={"Location"}
 			>
-				<TileLayer
-					url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-				/>
-				<RoutingMachine
-					userLocation={location} 
-					// handle for multiple shopper location
-					shopperLocation={latlong}
-					popup={popup}
-					minimumDistance={minimumDistance}
-					className="leaflet-routing-container"
-				/>
-			</MapContainer> */}
+				<div
+					id="map"
+					ref={mapElement}
+					className="mapDiv"
+					style={{
+						visibility: "visible",
+						width: "80%",
+						height: "80%",
+						position: "absolute",
+						top: 0,
+						left: 0,
+						zIndex: 0,
+					}}
+				></div>
 			<div>
 				<p>
 					We are currently working on resolving the issue. Thank you
