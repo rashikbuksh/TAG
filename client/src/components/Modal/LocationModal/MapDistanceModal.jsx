@@ -1,7 +1,10 @@
 import * as tt from "@tomtom-international/web-sdk-maps";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { useEffect, useRef, useState } from "react";
+import GetLocation from "../../../helpers/GetLocation";
 import Modal from "../Modal";
+
+import ShopperMapMarker from "../../../assets/img/map-marker-for-shopper.png";
 
 const MapDistanceModal = ({ isOpen, setIsOpen }) => {
 	// const distanceCalculator = "map_minimum_distance_in_meter";
@@ -22,17 +25,6 @@ const MapDistanceModal = ({ isOpen, setIsOpen }) => {
 	// if (error) return <h1>{error}</h1>;
 
 	const mapKey = import.meta.env.VITE_MAP_API_KEY;
-
-	console.log(
-		mapKey,
-		"mapKey",
-		mapZoom,
-		"mapZoom",
-		mapLatitude,
-		"mapLatitude",
-		mapLongitude,
-		"mapLongitude"
-	);
 
 	useEffect(() => {
 		if (!mapElement.current) {
@@ -70,37 +62,42 @@ const MapDistanceModal = ({ isOpen, setIsOpen }) => {
 			return;
 		}
 
+		const marker = new tt.Marker()
+			.setLngLat([mapLongitude, mapLatitude])
+			.addTo(newMap);
+
+		const popup = new tt.Popup({ offset: 35 }).setHTML(
+			"<h1>My Location</h1>"
+		);
+
+		marker.setPopup(popup);
+
 		setMap(newMap);
-	}, [mapElement, mapKey, mapLongitude, mapLatitude, mapZoom]);
+	}, [mapElement, mapKey, mapZoom, mapLatitude, mapLongitude]);
 
 	return (
-	
-			<Modal
-				isOpen={isOpen}
-				setIsOpen={setIsOpen}
-				showCross={false}
-				title={"Location"}
-			>
-				<div
-					id="map"
-					ref={mapElement}
-					className="mapDiv"
-					style={{
-						visibility: "visible",
-						width: "80%",
-						height: "80%",
-						position: "absolute",
-						top: 0,
-						left: 0,
-						zIndex: 0,
-					}}
-				></div>
-			<div>
-				<p>
-					We are currently working on resolving the issue. Thank you
-					for your patience.
-				</p>
-			</div>
+		<Modal
+			isOpen={isOpen}
+			setIsOpen={setIsOpen}
+			showCross={false}
+			title={"Location"}
+			fullHeight={true}
+		>
+			<div
+				id="map"
+				ref={mapElement}
+				className="mapDiv"
+				style={{
+					visibility: "visible",
+					width: "100%",
+					height: "85%",
+					position: "absolute",
+					top: 0,
+					left: 0,
+					zIndex: 0,
+					marginTop: "50px",
+				}}
+			></div>
 		</Modal>
 	);
 };

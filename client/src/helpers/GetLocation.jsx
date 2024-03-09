@@ -15,8 +15,8 @@ function GetLocation() {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				setLocation({
-					lat: position.coords.latitude,
 					lng: position.coords.longitude,
+					lat: position.coords.latitude,
 				});
 				setLoading(false);
 			},
