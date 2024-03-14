@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function GetLocation() {
-	const [location, setLocation] = useState({ lat: 0, lng: 0 });
+	const [location, setLocation] = useState({ lng: 0, lat: 0 });
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
