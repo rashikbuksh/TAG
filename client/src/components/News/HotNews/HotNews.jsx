@@ -72,7 +72,7 @@ const HotNews = () => {
 						return (
 							<SwiperSlide key={index}>
 								{postData.category === "regular" ? (
-									<Link to={`/product/${postData.shopper_product_id}`}>
+									<Link to={`/product/${postData.shopper_product_id}/${postData.post_content.replace(/\s/g, '')}`}>
 										<div
 											className="flex h-16 w-60 items-center justify-center rounded-xl px-1"
 											style={{

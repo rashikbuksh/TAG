@@ -10,6 +10,7 @@ import { api } from "../../../lib/api";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
+import { useNotification } from "../../../context/NotificationProvider";
 
 function Header() {
 	const [activateOffcanvas, setActivateOffcanvas] = useState(false);
@@ -80,44 +81,41 @@ function Header() {
 		api.get(`/auth/getShopperInfo`).then((res) => {
 			setsUser(res.data);
 		});
-		api.get(`/notification/getnotification/${userid}/${userid}`).then(
-			(res) => {
-				setNotification(res.data);
-			}
-		);
 	}, []);
 
-	const notificationsWithStatusOne = notification.filter(
+	const { notifications } = useNotification();
+
+	const notificationsWithStatusOne = notifications.filter(
 		(item) => item.status == 1
 	);
 
-	useEffect(() => {
-		// Play notification sound for new notifications
-		if (notificationsWithStatusOne.length > 0) {
-			NotificationSound();
-			// Update the status of the notifications after playing the sound
-			updateNotificationStatus();
-		}
-	}, [notificationsWithStatusOne]);
+	// useEffect(() => {
+	// 	// Play notification sound for new notifications
+	// 	if (notificationsWithStatusOne.length > 0) {
+	// 		NotificationSound();
+	// 		// Update the status of the notifications after playing the sound
+	// 		updateNotificationStatus();
+	// 	}
+	// }, [notificationsWithStatusOne]);
 
-	const updateNotificationStatus = async () => {
-		try {
-			// Update the status of notifications to 2 (played)
-			const id = userid;
-			console.log(id);
-			await api.post(`/notification/readNotification/${id}`);
-			// Update the local state with updated notifications
-			setNotification((prevNotifications) =>
-				prevNotifications.map((notification) =>
-					notification.status === 1
-						? { ...notification, status: 0 }
-						: notification
-				)
-			);
-		} catch (error) {
-			console.error("Error updating notification status:", error);
-		}
-	};
+	// const updateNotificationStatus = async () => {
+	// 	try {
+	// 		// Update the status of notifications to 2 (played)
+	// 		const id = userid;
+	// 		console.log(id);
+	// 		await api.post(`/notification/readNotification/${id}`);
+	// 		// Update the local state with updated notifications
+	// 		setNotification((prevNotifications) =>
+	// 			prevNotifications.map((notification) =>
+	// 				notification.status === 1
+	// 					? { ...notification, status: 0 }
+	// 					: notification
+	// 			)
+	// 		);
+	// 	} catch (error) {
+	// 		console.error("Error updating notification status:", error);
+	// 	}
+	// };
 
 	const HandleLocationClick = () => {
 		setLocationModal(true);

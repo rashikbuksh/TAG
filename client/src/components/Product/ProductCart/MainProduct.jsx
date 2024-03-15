@@ -16,6 +16,7 @@ import {
 	increaseQuantityofProd,
 } from "../../../store/slices/cart-slice";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
+import Modal from "../../Modal/Modal";
 
 const MainProduct = ({ shopperProduct, product, height, width }) => {
 	const navigate = useNavigate();
@@ -32,8 +33,10 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		shopper_id,
 		product_count,
 		shipping_address,
-		title
+		title,
+		access,
 	} = prod;
+	// console.log("🚀 ~ MainProduct ~ prod:", prod);
 
 	const cartItems = useSelector((state) => state.cart.cartItems);
 	const dispatch = useDispatch();
@@ -95,7 +98,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 			// You can set appropriate default values or show an error message.
 		}
 	}, [cartItems, id]);
-
+	const [isAdminShopMOdalOpen, setIsAdminShopMOdalOpen] = useState(false);
 	const handelOpenMessageModal = () => {
 		setIsOpen(!isOpen);
 	};
@@ -108,7 +111,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		});
 		setIsLocationOpen(!isOpen);
 	};
-	const navigateProductPage = (id,title) => {
+	const navigateProductPage = (id, title) => {
 		api.post(`/shopperproduct/increaseView/${id}`);
 		navigate(`/product/${id}/${title}`);
 	};
@@ -143,8 +146,11 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 			>
 				<div
 					className="relative flex flex-col items-center justify-center"
-					onMouseEnter={handleMouseEnter}
-					onMouseLeave={handleMouseLeave}
+					// onMouseEnter={handleMouseEnter}
+					// onMouseLeave={handleMouseLeave}
+					onClick={() => {
+						navigateProductPage(id, title);
+					}}
 				>
 					<img
 						className={`${height ? `h-[${height}px]` : "h-1/2"}  ${
@@ -226,7 +232,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					<button
 						type="button"
 						onClick={() => {
-							navigateProductPage(id,title);
+							navigateProductPage(id, title);
 						}}
 					>
 						<div className="h-10 text-left ">
@@ -258,7 +264,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				</div>
 
 				{/* price  */}
-				<div className="px-2">
+				<div className="flex justify-between px-2">
 					<div className="flex items-center gap-2">
 						<Takaicon></Takaicon>
 						<span className="text-sm font-semibold">{`${getDiscountPrice(
@@ -266,13 +272,80 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 							discount
 						)}`}</span>
 					</div>
+					{access === "admin" && (
+						<div className="flex items-end">
+							{user && user.access === "admin" ? (
+								""
+							) : user && user.access === "shopper" ? (
+								""
+							) : user && user.access === "new_shopper" ? (
+								""
+							) : user ? (
+								<button
+									disabled={active_status !== 1}
+									onClick={() => {
+										// prod.quantity = quantity;
+										// if (checkIfInCart(cartItems, prod)) {
+										// 	dispatch(
+										// 		increaseQuantityofProd(prod)
+										// 	);
+										// } else {
+										// 	dispatch(addToCart(prod));
+										// }
+										setIsAdminShopMOdalOpen(
+											!isAdminShopMOdalOpen
+										);
+									}}
+									className=""
+								>
+									<span onClick={showQuantitypalet}>
+										<AddToCartIcon2></AddToCartIcon2>
+									</span>
+								</button>
+							) : (
+								<Link
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/login"
+									}
+								>
+									<AddToCartIcon2></AddToCartIcon2>
+								</Link>
+							)}
+						</div>
+					)}
 				</div>
+				<Modal
+					title={"Information"}
+					isOpen={isAdminShopMOdalOpen}
+					setIsOpen={setIsAdminShopMOdalOpen}
+				>
+					<div className="p-6">
+						<p className="mb-4 text-lg">
+							We're sorry, but the product you're looking for is
+							currently not available. However, we have other
+							similar products that you might be interested in.
+						</p>
+						<p className="mb-4 text-lg">
+							Please feel free to{" "}
+							<a
+								href="/shop"
+								className="text-blue-500 hover:underline"
+							>
+								browse our products
+							</a>
+							.
+						</p>
+					</div>
+				</Modal>
 
 				<div className=" flex items-end justify-between   ">
 					<div className=" flex items-center">
 						{user && user.access === "admin" ? (
 							""
 						) : user && user.access === "shopper" ? (
+							""
+						) : access === "admin" ? (
 							""
 						) : (
 							<div className=" flex items-center p-1">
@@ -294,42 +367,45 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 							</div>
 						)}
 					</div>
-
-					<div className="flex items-end">
-						{user && user.access === "admin" ? (
-							""
-						) : user && user.access === "shopper" ? (
-							""
-						) : user && user.access === "new_shopper" ? (
-							""
-						) : user ? (
-							<button
-								disabled={active_status !== 1}
-								onClick={() => {
-									prod.quantity = quantity;
-									if (checkIfInCart(cartItems, prod)) {
-										dispatch(increaseQuantityofProd(prod));
-									} else {
-										dispatch(addToCart(prod));
+					{access !== "admin" && (
+						<div className="flex items-end">
+							{user && user.access === "admin" ? (
+								""
+							) : user && user.access === "shopper" ? (
+								""
+							) : user && user.access === "new_shopper" ? (
+								""
+							) : user ? (
+								<button
+									disabled={active_status !== 1}
+									onClick={() => {
+										prod.quantity = quantity;
+										if (checkIfInCart(cartItems, prod)) {
+											dispatch(
+												increaseQuantityofProd(prod)
+											);
+										} else {
+											dispatch(addToCart(prod));
+										}
+									}}
+									className=""
+								>
+									<span onClick={showQuantitypalet}>
+										<AddToCartIcon2></AddToCartIcon2>
+									</span>
+								</button>
+							) : (
+								<Link
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/login"
 									}
-								}}
-								className=""
-							>
-								<span onClick={showQuantitypalet}>
+								>
 									<AddToCartIcon2></AddToCartIcon2>
-								</span>
-							</button>
-						) : (
-							<Link
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/login"
-								}
-							>
-								<AddToCartIcon2></AddToCartIcon2>
-							</Link>
-						)}
-					</div>
+								</Link>
+							)}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

@@ -50,6 +50,7 @@ import ShopperWaitingPage from "./components/ShopperWaitngPage/ShopperWaitingPag
 import AdminNewShopRequest from "./AdminComponents/AdminNewShopRequest/AdminNewShopRequest";
 import ShopkeeperSchedule from "./pages/ShopkeeperDashboard/ShopkeeperSchedule";
 import AdminTagShopControl from "./AdminComponents/AdminTagShopControl/AdminTagShopControl";
+import { NotificationProvider } from "./context/NotificationProvider";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
@@ -452,7 +453,6 @@ const ADMIN_ROUTES = [
 		element: AdminTagShopControl,
 		access: ["admin"],
 	},
-	
 ];
 const MODERATORS_ROUTES = [
 	{
@@ -494,85 +494,87 @@ function App() {
 			{!isadminPage && <Header />}
 			{!isadminPage && <Offcanvas />}
 			{!isadminPage && <Footer />}
-			<OtpVerificationProvider>
-				<AuthProvider>
-					<ToastContainer />
-					<Routes>
-						<Route element={<ProtectedRoutes />}>
-							{PROTECTED_ROUTES?.map((route) => (
-								<Route
-									key={route?.path}
-									path={`${route?.path}/*`}
-									element={
-										<Suspense
-											fallback={
-												<LoadingPage></LoadingPage>
-											}
-										>
-											<route.element />
-										</Suspense>
-									}
-								/>
-							))}
-						</Route>
-						<Route element={<AdminProtactedRoutes />}>
-							{ADMIN_ROUTES?.map((route) => (
-								<Route
-									key={route?.path}
-									path={`${route?.path}/*`}
-									element={
-										<Suspense
-											fallback={
-												<div>
+			<AuthProvider>
+				<NotificationProvider>
+					<OtpVerificationProvider>
+						<ToastContainer />
+						<Routes>
+							<Route element={<ProtectedRoutes />}>
+								{PROTECTED_ROUTES?.map((route) => (
+									<Route
+										key={route?.path}
+										path={`${route?.path}/*`}
+										element={
+											<Suspense
+												fallback={
 													<LoadingPage></LoadingPage>
-												</div>
-											}
-										>
-											<route.element />
-										</Suspense>
-									}
-								/>
-							))}
-						</Route>
-						<Route element={<ModeratorProtactedRoutes />}>
-							{MODERATORS_ROUTES?.map((route) => (
-								<Route
-									key={route?.path}
-									path={`${route?.path}/*`}
-									element={
-										<Suspense
-											fallback={
-												<div>
-													<LoadingPage></LoadingPage>
-												</div>
-											}
-										>
-											<route.element />
-										</Suspense>
-									}
-								/>
-							))}
-						</Route>
-						{PUBLIC_ROUTES?.map((route) => (
-							<Route
-								key={route?.path}
-								path={`${route?.path}/*`}
-								element={
-									<Suspense
-										fallback={
-											<div>
-												<LoadingPage></LoadingPage>
-											</div>
+												}
+											>
+												<route.element />
+											</Suspense>
 										}
-									>
-										<route.element />
-									</Suspense>
-								}
-							/>
-						))}
-					</Routes>
-				</AuthProvider>
-			</OtpVerificationProvider>
+									/>
+								))}
+							</Route>
+							<Route element={<AdminProtactedRoutes />}>
+								{ADMIN_ROUTES?.map((route) => (
+									<Route
+										key={route?.path}
+										path={`${route?.path}/*`}
+										element={
+											<Suspense
+												fallback={
+													<div>
+														<LoadingPage></LoadingPage>
+													</div>
+												}
+											>
+												<route.element />
+											</Suspense>
+										}
+									/>
+								))}
+							</Route>
+							<Route element={<ModeratorProtactedRoutes />}>
+								{MODERATORS_ROUTES?.map((route) => (
+									<Route
+										key={route?.path}
+										path={`${route?.path}/*`}
+										element={
+											<Suspense
+												fallback={
+													<div>
+														<LoadingPage></LoadingPage>
+													</div>
+												}
+											>
+												<route.element />
+											</Suspense>
+										}
+									/>
+								))}
+							</Route>
+							{PUBLIC_ROUTES?.map((route) => (
+								<Route
+									key={route?.path}
+									path={`${route?.path}/*`}
+									element={
+										<Suspense
+											fallback={
+												<div>
+													<LoadingPage></LoadingPage>
+												</div>
+											}
+										>
+											<route.element />
+										</Suspense>
+									}
+								/>
+							))}
+						</Routes>
+					</OtpVerificationProvider>
+				</NotificationProvider>
+			</AuthProvider>
 		</Router>
 	);
 }
