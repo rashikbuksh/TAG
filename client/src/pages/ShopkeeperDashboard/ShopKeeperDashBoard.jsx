@@ -8,6 +8,7 @@ import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/auth";
 import { api } from "../../lib/api";
 import { TagLogo2 } from "../../SvgHub/TagLogo2";
+import { useNotification } from "../../context/NotificationProvider";
 
 const ShopKeeperDashBoard = () => {
 	const [isClockOpen, setIsClockOpen] = useState(false);
@@ -49,13 +50,9 @@ const ShopKeeperDashBoard = () => {
 			.catch((error) => {
 				console.error(error);
 			});
-		api.get(
-			`/notification/getUnreadNotificationForDashboard/${user.id}/${user.id}`
-		).then((res) => {
-			setNotification(res.data.length);
-		});
+	
 	}, [id]);
-
+	const { notifications } = useNotification();
 	// const handleOpenClockModal = () => {
 	// 	setIsClockOpen(!isClockOpen);
 	// };
@@ -96,7 +93,7 @@ const ShopKeeperDashBoard = () => {
 			title: "Notification",
 			content: notificationContent.toString(), // Assuming notificationCount is a variable containing the count
 			link: "/notification",
-			isActive: notification > 0, // Placeholder link for notifications
+			isActive: notifications > 0, // Placeholder link for notifications
 		},
 		{
 			title: "Add Product",

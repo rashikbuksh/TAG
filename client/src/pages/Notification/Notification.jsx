@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import { Breadcrumb } from "../../components";
 import NotificationSound from "../../helpers/NotificationSound";
 import { api } from "../../lib/api";
+import { useNotification } from "../../context/NotificationProvider";
 
 const Notification = () => {
-	const [notification, setNotification] = useState([]);
+	// const [notifications, setNotification] = useState([]);
+	const { notifications } = useNotification();
 	const [user, setUser] = useState(null);
 	const [userAccess, setUserAccess] = useState(null);
 
@@ -29,40 +31,32 @@ const Notification = () => {
 				setUserAccess(res.data.access);
 			});
 
-			api.get(`/notification/getnotification/${userid}/${userid}`).then(
-				(res) => {
-					setNotification(res.data);
-				}
-			);
+			
 		};
 
 		// Fetch notifications initially
-		fetchNotifications();
-
+		
 		// Fetch notifications every 60 seconds
-		const intervalId = setInterval(fetchNotifications, 60000);
-
-		// Cleanup function to clear the interval
-		return () => clearInterval(intervalId);
+		
 	}, []);
 
-	const getOrderNumberFromNotification = (notification) => {
-		const orderNumber = notification.split("#")[1].split(".")[0];
+	const getOrderNumberFromNotification = (notifications) => {
+		const orderNumber = notifications.split("#")[1].split(".")[0];
 		return orderNumber;
 	};
 	const today = new Date().toDateString();
 	const isToday = (date) => new Date(date).toDateString() === today;
 
-	const todayNotifications = notification.filter((single) =>
+	const todayNotifications = notifications.filter((single) =>
 		isToday(single.notification_time)
 	);
-	const olderNotifications = notification.filter(
+	const olderNotifications = notifications.filter(
 		(single) => !isToday(single.notification_time)
 	);
 	return (
 		<div className="body-wrapper my-10">
 			<Breadcrumb pageTitle="Notification" prevUrl="/home" />
-			<div className="notification-wrapper">
+			<div className="notifications-wrapper">
 				<p className="bg-gray-300 px-2 py-2 font-bold">
 					Todays Notification
 				</p>
@@ -169,7 +163,7 @@ const Notification = () => {
 							>
 								<div
 									className={`${
-										notification[0].id === single.id
+										notifications[0].id === single.id
 											? "text-red-600"
 											: ""
 									}`}
@@ -192,7 +186,7 @@ const Notification = () => {
 							>
 								<div
 									className={`${
-										notification[0].id === single.id
+										notifications[0].id === single.id
 											? "text-red-600"
 											: ""
 									}`}
@@ -204,7 +198,7 @@ const Notification = () => {
 						) : (
 							<div
 								className={`${
-									notification[0].id === single.id
+									notifications[0].id === single.id
 										? "text-red-600"
 										: ""
 								}`}

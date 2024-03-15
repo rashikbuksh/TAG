@@ -19,6 +19,7 @@ import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
 import AllShop from "../../components/Shop/AllShop";
 import TagShop from "../../components/TagShop/TagShop";
+import { useNotification } from "../../context/NotificationProvider";
 
 const Home = () => {
 	const { user, Logout } = useAuth();
@@ -86,7 +87,8 @@ const Home = () => {
 			Cookies.remove("auth");
 		}
 	}, []);
-
+	const { notifications } = useNotification();
+	console.log("🚀 ~ Home ~ notifications:", notifications)
 	return (
 		<div className="px-3">
 			<Header />
