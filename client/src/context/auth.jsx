@@ -1,9 +1,7 @@
-import Axios from "axios";
+import { api } from "@lib/api";
 import { createContext, useContext, useEffect, useState } from "react";
-import { PROTECTED_ROUTES } from "../App";
-import { useCookie } from "../hooks";
-import { api } from "../lib/api";
 import { toast } from "react-toastify";
+import { useCookie } from "../hooks";
 
 const AuthContext = createContext({});
 

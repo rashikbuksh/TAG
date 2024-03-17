@@ -11,8 +11,10 @@ import OtpVerificationProvider from "./context/otpVerification";
 import ProtectedRoutes from "./routes";
 
 import { ToastContainer } from "react-toastify";
+import AdminNewShopRequest from "./AdminComponents/AdminNewShopRequest/AdminNewShopRequest";
 import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
 import AdminStats from "./AdminComponents/AdminStats/AdminStats";
+import AdminTagShopControl from "./AdminComponents/AdminTagShopControl/AdminTagShopControl";
 import Allnews from "./AdminComponents/AllNews/Allnews";
 import LateOrdersPage from "./AdminComponents/LateOrdersPage/LateOrdersPage";
 import MakeModarator from "./AdminComponents/MakeModarator/MakeModarator";
@@ -22,13 +24,15 @@ import TagOrderHistory from "./AdminComponents/TagOrderHistory/TagOrderHistory";
 import TagUserOrderHistory from "./AdminComponents/TagOrderHistory/TagUserOrderHistory";
 import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
 import IndividualMessagePage from "./components/IndividualMessagePage/IndividualMessagePage";
-import LoadingPage from "./components/LodingPage/LoadingPage";
+import LoadingPage from "./components/LoadingPage/LoadingPage";
 import Footer from "./components/MainComponent/Footer";
 import Header from "./components/MainComponent/Header";
 import Offcanvas from "./components/MainComponent/Header/Offcanvas";
 import ShopkeeperProfileCV from "./components/Shopkeeper/ShopkeeperProfileCV/ShopkeeperProfileCV";
 import ShopkeepersProduct from "./components/Shopkeeper/ShopkeepersProduct/ShopkeepersProduct";
+import ShopperWaitingPage from "./components/ShopperWaitngPage/ShopperWaitingPage";
 import TagUser from "./components/TagUser/TagUser";
+import { NotificationProvider } from "./context/NotificationProvider";
 import ReferCodeGenerator from "./helpers/ReferCodeGenerator";
 import { DefaultLayout } from "./layouts";
 import AddCatagoryForm from "./pages/Form/AddCatagoryForm/AddCatagoryForm";
@@ -43,14 +47,10 @@ import OrderStatus from "./pages/Order/OrderStatus/OrderStatus";
 import Policy from "./pages/Policy/Policy";
 import RegisterShopper from "./pages/Register/RegisterShopper/RegisterShopper";
 import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
+import ShopkeeperSchedule from "./pages/ShopkeeperDashboard/ShopkeeperSchedule";
 import VerificationOTP from "./pages/VerificationOTP/Index";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
-import ShopperWaitingPage from "./components/ShopperWaitngPage/ShopperWaitingPage";
-import AdminNewShopRequest from "./AdminComponents/AdminNewShopRequest/AdminNewShopRequest";
-import ShopkeeperSchedule from "./pages/ShopkeeperDashboard/ShopkeeperSchedule";
-import AdminTagShopControl from "./AdminComponents/AdminTagShopControl/AdminTagShopControl";
-import { NotificationProvider } from "./context/NotificationProvider";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
@@ -580,4 +580,4 @@ function App() {
 }
 
 export default App;
-export { ADMIN_ROUTES, PROTECTED_ROUTES, MODERATORS_ROUTES };
+export { ADMIN_ROUTES, MODERATORS_ROUTES, PROTECTED_ROUTES };

@@ -1,22 +1,22 @@
-import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import { FaArrowUp } from "react-icons/fa";
 import {
 	AllProducts,
 	BestSellerProduct,
 	Footer,
 	Header,
 	HeroSlider,
-} from "../../components";
-import HotNews from "../../components/News/HotNews/HotNews";
-import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
-import { useAuth } from "../../context/auth";
-import { api } from "../../lib/api";
+} from "@components";
+import HotNews from "@components/News/HotNews/HotNews";
+import AllShop from "@components/Shop/AllShop";
+import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
+import TagShop from "@components/TagShop/TagShop";
+import { useNotification } from "@context/NotificationProvider";
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import { FaArrowUp } from "react-icons/fa";
 import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
-import AllShop from "../../components/Shop/AllShop";
-import TagShop from "../../components/TagShop/TagShop";
-import { useNotification } from "../../context/NotificationProvider";
 
 const Home = () => {
 	const { user, Logout } = useAuth();
@@ -85,7 +85,6 @@ const Home = () => {
 		}
 	}, []);
 	const { notifications } = useNotification();
-	console.log("🚀 ~ Home ~ notifications:", notifications);
 	return (
 		<div className="px-3">
 			<Header />

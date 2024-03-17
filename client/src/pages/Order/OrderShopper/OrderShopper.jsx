@@ -1,15 +1,14 @@
+import { Takaicon } from "@SvgHub/SocialIcon";
+import { Breadcrumb } from "@components";
+import { useAuth } from "@context/auth";
+import FormattedTime from "@helpers/FormattedTime";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Takaicon } from "../../../SvgHub/SocialIcon";
-import { Breadcrumb } from "../../../components";
-import { useAuth } from "../../../context/auth";
-import { api } from "../../../lib/api";
-import FormattedTime from "../../../helpers/FormattedTime";
 
 const OrderShopper = () => {
 	const [data, setData] = useState([]);
 
-	// Get user ID from local storage
 	const { user } = useAuth();
 
 	useEffect(() => {

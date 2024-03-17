@@ -1,7 +1,7 @@
+import { api } from "@lib/api";
+import { API } from "@lib/secret";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
-import { api } from "../lib/api";
-import { API } from "../lib/secret";
 import useAsync from "./useAsync";
 const DEFAULT_OPTIONS = {
 	headers: {

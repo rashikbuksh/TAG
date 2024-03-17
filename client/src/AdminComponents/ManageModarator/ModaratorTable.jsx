@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { api } from '../../lib/api';
-import { toast } from 'react-toastify';
+import { api } from "@lib/api";
+import React from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const ModaratorTable = ({tagModartor}) => {
-    const handleModaratorDelete=(id)=>{
+const ModaratorTable = ({ tagModartor }) => {
+	const handleModaratorDelete = (id) => {
 		const isConfirmed = window.confirm(
 			"Are you sure you want to delete this Modarator?"
 		);
@@ -29,52 +29,57 @@ const ModaratorTable = ({tagModartor}) => {
 					);
 				});
 		}
-    }
-    return (
-        <>
-        <tr>
-            <th>
-                <label>
-                    <input type="checkbox" className="checkbox" />
-                </label>
-            </th>
-            <td>
-                <div className="flex items-center space-x-3">
-                    <div className="avatar">
-                        {/* <div className="mask mask-squircle h-12 w-12">
+	};
+	return (
+		<>
+			<tr>
+				<th>
+					<label>
+						<input type="checkbox" className="checkbox" />
+					</label>
+				</th>
+				<td>
+					<div className="flex items-center space-x-3">
+						<div className="avatar">
+							{/* <div className="mask mask-squircle h-12 w-12">
                         <img
                             src={`${import.meta.env.VITE_APP_IMG_URL}/${taguser.image?taguser.image:""}`}
                             alt="Avatar Tailwind CSS Component"
                         />
                     </div> */}
-                    </div>
-                </div>
-            </td>
-            <td>{tagModartor.id}</td>
-            <td>
-                {tagModartor.name}
-                <br />
-                <span className="badge badge-ghost badge-sm">
-                    {tagModartor.user_name}
-                </span>
-            </td>
-            {/* <td>
+						</div>
+					</div>
+				</td>
+				<td>{tagModartor.id}</td>
+				<td>
+					{tagModartor.name}
+					<br />
+					<span className="badge badge-ghost badge-sm">
+						{tagModartor.user_name}
+					</span>
+				</td>
+				{/* <td>
             {product.short_description}
         </td> */}
-            {/* <td className="whitespace-nowrap px-4 py-2">
+				{/* <td className="whitespace-nowrap px-4 py-2">
       
             
         </td> */}
-            <td>{tagModartor.phone ? tagModartor.phone : "N/A"}</td>
-            <td>{tagModartor.email ? tagModartor.email : "N/A"}</td>
-            <td>{tagModartor.access ? tagModartor.access : "N/A"}</td>
-            <td>
-            {/*  */}
-            <button onClick={()=>handleModaratorDelete(tagModartor.id)} className='btn  btn-xs'>Remove</button>
-            </td>
-        </tr>
-    </>
-    );
+				<td>{tagModartor.phone ? tagModartor.phone : "N/A"}</td>
+				<td>{tagModartor.email ? tagModartor.email : "N/A"}</td>
+				<td>{tagModartor.access ? tagModartor.access : "N/A"}</td>
+				<td>
+					{/*  */}
+					<button
+						onClick={() => handleModaratorDelete(tagModartor.id)}
+						className="btn  btn-xs"
+					>
+						Remove
+					</button>
+				</td>
+			</tr>
+		</>
+	);
 };
 
 export default ModaratorTable;

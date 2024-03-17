@@ -1,18 +1,17 @@
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import Axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { toast } from "react-toastify";
-import { ErrorMessage, Preloader } from "../../components";
-import useFetch from "../../hooks/use-fetch";
-import { api } from "../../lib/api";
 
 const Profile = () => {
 	// const { data, isLoading, errorMessage } = useFetch("profile.json");
 	const [totalOrder, setTotalOrder] = useState(0);
-	const id = localStorage.getItem("user-id");
-	const [userdata, setUserdata] = useState({});
+	const { user } = useAuth();
+	const [userData, setUserData] = useState({});
 	const [image, setImage] = useState(null);
 
 	const handleImageUpload = (e) => {
@@ -52,10 +51,13 @@ const Profile = () => {
 			if (response.data.msg == "File Uploaded") {
 				const imageFileName = response.data.profileImage;
 
-				api.post(`/profile/update_profile_image/${id}`, {
+				api.post(`/profile/update_profile_image/${user?.id}`, {
 					profile_picture: imageFileName,
 				}).then((response) => {
-					if (response.data.message == `${id} updated successfully`) {
+					if (
+						response.data.message ==
+						`${user?.id} updated successfully`
+					) {
 						setImage(null);
 						toast.success("Profile image updated successfully");
 					}
@@ -70,18 +72,18 @@ const Profile = () => {
 	};
 
 	useEffect(() => {
-		api.get(`/profile/get_profile/${id}`).then((response) => {
-			setUserdata(response.data[0]);
+		api.get(`/profile/get_profile/${user?.id}`).then((response) => {
+			setUserData(response.data[0]);
 		});
 
-		api.get(`/order/get-total-order/${id}`)
+		api.get(`/order/get-total-order/${user?.id}`)
 			.then((response) => {
 				setTotalOrder(response.data[0].total_order);
 			})
 			.catch((error) => {
 				toast.error(error);
 			});
-	}, [userdata, id]);
+	}, [userData, user?.id]);
 
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 ">
@@ -110,14 +112,14 @@ const Profile = () => {
 												</button>
 											)}
 										</>
-									) : userdata.profile_picture ? (
+									) : userData.profile_picture ? (
 										<>
 											<img
 												src={`${
 													import.meta.env
 														.VITE_APP_IMG_URL
 												}/usersProfilePic/${
-													userdata.profile_picture
+													userData.profile_picture
 												}`}
 												className="h-[85px] w-[85px] rounded-full"
 												alt="Profile"
@@ -202,11 +204,11 @@ const Profile = () => {
 
 								<div className="profile-header__content space-mt--10">
 									<h3 className="name space-mb--15 text-center ">
-										{userdata.name}
+										{userData.name}
 									</h3>
 								</div>
 								<div className="profile-info-block__value text-center">
-									{userdata.phone}
+									{userData.phone}
 								</div>
 							</div>
 						</div>
@@ -226,7 +228,7 @@ const Profile = () => {
 											Full Name
 										</div>
 										<div className="profile-info-block__value">
-											{userdata.name}
+											{userData.name}
 										</div>
 									</div>
 									<div className="profile-info-block">
@@ -234,7 +236,7 @@ const Profile = () => {
 											User Id
 										</div>
 										<div className="profile-info-block__value">
-											{userdata.id}
+											{userData.id}
 										</div>
 									</div>
 									{/* <div className="profile-info-block">
@@ -242,7 +244,7 @@ const Profile = () => {
 											Phone
 										</div>
 										<div className="profile-info-block__value">
-											{userdata.phone}
+											{userData.phone}
 										</div>
 									</div> */}
 									<div className="profile-info-block">
@@ -250,19 +252,21 @@ const Profile = () => {
 											E-mail Address
 										</div>
 										<div className="profile-info-block__value">
-											{userdata.email}
+											{userData.email}
 										</div>
 									</div>
-									
+
 									<div className="profile-info-block">
 										<div className="profile-info-block__title">
 											Address
 										</div>
 										<div className="profile-info-block__value">
-											{userdata.address?userdata.address:"N/A"}
+											{userData.address
+												? userData.address
+												: "N/A"}
 										</div>
 									</div>
-									{userdata.access == "shopper" ? (
+									{userData.access == "shopper" ? (
 										""
 									) : (
 										<div className="profile-info-block">

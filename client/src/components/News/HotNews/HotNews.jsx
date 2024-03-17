@@ -1,11 +1,10 @@
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Autoplay, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-import { api } from "../../../lib/api";
-import PostUi from "../../../pages/PostUi/PostUi";
-import TagNewsUi from "../../../pages/PostUi/TagNewsUi";
+
 const HotNews = () => {
 	const [posts, setPosts] = useState([]);
 	const params = {
@@ -72,7 +71,14 @@ const HotNews = () => {
 						return (
 							<SwiperSlide key={index}>
 								{postData.category === "regular" ? (
-									<Link to={`/product/${postData.shopper_product_id}/${postData.post_content.replace(/\s/g, '')}`}>
+									<Link
+										to={`/product/${
+											postData.shopper_product_id
+										}/${postData.post_content.replace(
+											/\s/g,
+											""
+										)}`}
+									>
 										<div
 											className="flex h-16 w-60 items-center justify-center rounded-xl px-1"
 											style={{

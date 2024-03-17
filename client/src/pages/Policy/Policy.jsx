@@ -1,12 +1,12 @@
+import { Header } from "@components";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Header } from "../../components";
 
 const Policy = () => {
 	return (
 		<>
-        <Header/>
-			<div className="p-6 mt-14">
+			<Header />
+			<div className="mt-14 p-6">
 				<Link
 					to={"/home"}
 					className="flex items-center justify-start gap-4 text-xl"

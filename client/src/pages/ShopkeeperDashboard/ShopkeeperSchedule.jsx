@@ -1,7 +1,7 @@
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useAuth } from "../../context/auth";
-import { api } from "../../lib/api";
 
 export default function ShopkeeperSchedule() {
 	const [weekdays, setWeekdays] = useState([

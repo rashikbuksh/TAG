@@ -1,3 +1,10 @@
+import { AddToCartIcon1, AddToCartIcon2 } from "@SvgHub/Icons";
+import { Takaicon } from "@SvgHub/SocialIcon";
+import { useAuth } from "@context/auth";
+import { checkIfInCart, getDiscountPrice, getProducts } from "@helpers/product";
+import { api } from "@lib/api";
+import { addToCart, increaseQuantityofProd } from "@store/slices/cart-slice";
+import { addToWishlist } from "@store/slices/wishlist-slice";
 import Axios from "axios";
 import PropTypes from "prop-types";
 import React, { Fragment, useEffect, useState } from "react";
@@ -5,21 +12,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import { AddToCartIcon1, AddToCartIcon2 } from "../../../SvgHub/Icons";
-import { Takaicon } from "../../../SvgHub/SocialIcon";
-import { useAuth } from "../../../context/auth";
-import {
-	checkIfInCart,
-	getDiscountPrice,
-	getProducts,
-} from "../../../helpers/product";
-import { api } from "../../../lib/api";
-import {
-	addToCart,
-	increaseQuantityofProd,
-} from "../../../store/slices/cart-slice";
-import { addToWishlist } from "../../../store/slices/wishlist-slice";
-import LoadingPage from "../../LodingPage/LoadingPage";
+import LoadingPage from "../../LoadingPage/LoadingPage";
 
 const BestSellerProduct = ({ limit, type }) => {
 	const { cartItems } = useSelector((state) => state.cart);
@@ -41,7 +34,7 @@ const BestSellerProduct = ({ limit, type }) => {
 
 	if (!shopperProducts?.length) return <LoadingPage></LoadingPage>;
 	return (
-		<div className="featured-product-area space-mb--25 mt-2 mx-auto max-w-7xl">
+		<div className="featured-product-area space-mb--25 mx-auto mt-2 max-w-7xl">
 			<div className="">
 				<div className="">
 					<div className="">

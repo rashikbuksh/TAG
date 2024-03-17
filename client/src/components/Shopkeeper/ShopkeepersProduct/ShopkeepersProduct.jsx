@@ -1,13 +1,10 @@
-import Axios from "axios";
+import SearchFunction from "@AdminComponents/SearchFunction/Index";
+import Breadcrumb from "@components/MainComponent/Breadcrumb/Breadcrumb";
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
-import { FaArrowAltCircleLeft, FaPlusCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../../context/auth";
-import { api } from "../../../lib/api";
+import { FaPlusCircle } from "react-icons/fa";
 import ShopkeeperMyProduct from "./ShopkeeperMyProduct";
-import ShopkeeperProductcart from "./ShopkeeperProductcart";
-import Breadcrumb from "../../MainComponent/Breadcrumb/Breadcrumb";
-import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
 const ShopkeepersProduct = () => {
 	const { user } = useAuth();
 
@@ -78,7 +75,7 @@ const ShopkeepersProduct = () => {
 					</div>
 				</div>
 
-				<div className="my-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 rounded mx-auto w-[95%]">
+				<div className="mx-auto my-2 grid w-[95%] grid-cols-2 gap-2 rounded md:grid-cols-4 lg:grid-cols-6">
 					{FilteredArr.map((product, index) => (
 						<ShopkeeperMyProduct
 							key={product.id}

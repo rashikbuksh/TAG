@@ -1,10 +1,9 @@
+import { Breadcrumb } from "@components";
+import OrderProducTable from "@components/Product/OrderProductTable/OrderProducTable";
+import { api } from "@lib/api";
 import React, { useEffect, useMemo, useState } from "react";
 import { FaCircle } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
-import { Breadcrumb } from "../../../components";
-import Modal from "../../../components/Modal/Modal";
-import OrderProducTable from "../../../components/Product/OrderProductTable/OrderProducTable";
-import { api } from "../../../lib/api";
 
 const OrderModal = () => {
 	const { id } = useParams();

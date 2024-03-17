@@ -1,17 +1,5 @@
-import { Rating } from "@smastrom/react-rating";
-import "@smastrom/react-rating/style.css";
-import { map } from "leaflet";
-import { useEffect, useState } from "react";
-import { FaCopy, FaEye } from "react-icons/fa";
-import { FaX } from "react-icons/fa6";
-import { PiShareFat } from "react-icons/pi";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"; // need to keep this for map purpose
-import Drawer from "react-modern-drawer";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
-import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
-import { AddToCartIcon2 } from "../../../SvgHub/Icons";
+import SearchFunction from "@AdminComponents/SearchFunction/Index";
+import { AddToCartIcon2 } from "@SvgHub/Icons";
 import {
 	FacebookIcon,
 	InstagramIcon,
@@ -19,18 +7,24 @@ import {
 	Takaicon,
 	TwitterIcon,
 	WhatsappIcon,
-} from "../../../SvgHub/SocialIcon";
-import { useAuth } from "../../../context/auth";
-import { checkIfInCart } from "../../../helpers/product";
-import { api } from "../../../lib/api";
-import {
-	addToCart,
-	increaseQuantityofProd,
-} from "../../../store/slices/cart-slice";
-import Footer from "../../MainComponent/Footer/Footer";
-import Header from "../../MainComponent/Header/Header";
-import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
-import ShowCartIcon from "../../ShowCartIcon/ShowCartIcon";
+} from "@SvgHub/SocialIcon";
+import Footer from "@components/MainComponent/Footer/Footer";
+import Header from "@components/MainComponent/Header/Header";
+import MapDistanceModal from "@components/Modal/LocationModal/MapDistanceModal";
+import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
+import { useAuth } from "@context/auth";
+import { checkIfInCart } from "@helpers/product";
+import { api } from "@lib/api";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
+import { addToCart, increaseQuantityofProd } from "@store/slices/cart-slice";
+import { useEffect, useState } from "react";
+import { FaCopy, FaEye } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
+import { PiShareFat } from "react-icons/pi";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
@@ -44,7 +38,6 @@ const ShopkeeperProfileCV = () => {
 	const [selectedLetter, setSelectedLetter] = useState("");
 	const [mapModal, setMapModal] = useState(false);
 	const [copySuccess, setCopySuccess] = useState(null);
-	const [referCode, setReferCode] = useState(null);
 	const [latLong, setLatLong] = useState({ lat: 0, lng: 0 });
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -304,7 +297,7 @@ const ShopkeeperProfileCV = () => {
 							)}
 							<div className="">
 								{/* //show product div  */}
-								<div className="mb-20 grid h-[52vh] w-[93%] grid-cols-2  gap-1 overflow-y-auto border-t lg:mx-auto lg:grid-cols-4 px-2">
+								<div className="mb-20 grid h-[52vh] w-[93%] grid-cols-2  gap-1 overflow-y-auto border-t px-2 lg:mx-auto lg:grid-cols-4">
 									{filteredAllProducts.map((single) => {
 										return (
 											<div
@@ -419,9 +412,7 @@ const ShopkeeperProfileCV = () => {
 				</div>
 				{/* <div className="h-20"></div> */}
 			</div>
-			<div className="h-14">
-
-			</div>
+			<div className="h-14"></div>
 		</>
 	);
 };

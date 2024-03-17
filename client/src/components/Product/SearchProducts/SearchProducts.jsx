@@ -1,17 +1,13 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { ReactSVG } from "react-svg";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-import { getDiscountPrice, getProducts } from "../../../helpers/product";
-import { api } from "../../../lib/api";
-import { addToWishlist } from "../../../store/slices/wishlist-slice";
+import { getProducts } from "@helpers/product";
+import { api } from "@lib/api";
 import ProductCart from "../ProductCart/ProductCart";
 
 const SearchProducts = ({ limit }) => {
 	const [allProducts, setAllProducts] = useState([]);
-	const dispatch = useDispatch();
 	const { keyword } = useParams();
 
 	useEffect(() => {

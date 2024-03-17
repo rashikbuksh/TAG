@@ -1,9 +1,9 @@
+import Modal from "@components/Modal/Modal";
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
-import * as Yup from "yup";
-import Modal from "../../components/Modal/Modal";
-import { useAuth } from "../../context/auth";
-import { api } from "../../lib/api";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 
 const Refer = () => {
 	const [referStatus, setReferStatus] = useState("");
@@ -35,8 +35,7 @@ const Refer = () => {
 					handelModalOpen();
 				}
 			})
-			.catch((error) => {
-			});
+			.catch((error) => {});
 	};
 
 	useEffect(() => {

@@ -15,6 +15,12 @@ export default defineConfig({
 			"@lib": path.resolve(__dirname, "./src/lib"),
 			"@context": path.resolve(__dirname, "./src/context"),
 			"@routes": path.resolve(__dirname, "./src/routes"),
+			"@SvgHub": path.resolve(__dirname, "./src/SvgHub"),
+			"@store": path.resolve(__dirname, "./src/store"),
+			"@AdminComponents": path.resolve(
+				__dirname,
+				"./src/AdminComponents"
+			),
 		},
 	},
 	plugins: [react()],

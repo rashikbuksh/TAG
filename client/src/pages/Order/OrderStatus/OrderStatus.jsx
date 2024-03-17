@@ -1,15 +1,13 @@
+import { Takaicon } from "@SvgHub/SocialIcon";
+import { Breadcrumb } from "@components";
+import { useAuth } from "@context/auth";
+import { addOneHour } from "@helpers/FormattedTime";
+import { getDiscountPrice } from "@helpers/product";
+import { api } from "@lib/api";
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { Takaicon } from "../../../SvgHub/SocialIcon";
-import { useAuth } from "../../../context/auth";
-import { getDiscountPrice } from "../../../helpers/product";
-import { api } from "../../../lib/api";
-// import { FaDotCircle } from "react-icons/fa";
 import { FaCircle, FaPersonWalking } from "react-icons/fa6";
-import { ChatIcon } from "../../../SvgHub/Icons";
-import { Breadcrumb } from "../../../components";
+import { Link } from "react-router-dom";
 import chatIconImg from "../../../../public/icons/live-chat.png";
-import { addOneHour } from "../../../helpers/FormattedTime";
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
 	const [products, setProducts] = useState([]);
@@ -163,7 +161,7 @@ const OrderStatus = () => {
 											<div>
 												<p>
 													Within{" "}
-													{addOneHour(order_time)}{" "},
+													{addOneHour(order_time)} ,
 													Collect
 												</p>
 												<p>Your Products</p>

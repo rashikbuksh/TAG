@@ -1,8 +1,8 @@
+import useFetch from "@hooks/use-fetch";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import useFetch from "../../hooks/use-fetch";
 import ErrorMessage from "../ErrorMessage";
 import Preloader from "../Preloader";
 import Swiper, { SwiperSlide } from "../swiper";
@@ -45,10 +45,10 @@ const CategorySlider = () => {
 	// if (isLoading) return <Preloader />;
 	// if (errorMessage) return <ErrorMessage errorMessage={errorMessage} />;
 
-	const data=[1,2,3]
+	const data = [1, 2, 3];
 
 	return (
-		<div className=" my-12 mx-4 ">
+		<div className=" mx-4 my-12 ">
 			<div className="">
 				<div className="">
 					<div className="">
@@ -62,9 +62,7 @@ const CategorySlider = () => {
 								<Swiper options={params}>
 									{data.map((single) => (
 										<SwiperSlide key={single.id}>
-											<div className="h-12 w- bg-red-100">
-
-											</div>
+											<div className="w- h-12 bg-red-100"></div>
 										</SwiperSlide>
 									))}
 								</Swiper>
@@ -79,7 +77,8 @@ const CategorySlider = () => {
 
 export default CategorySlider;
 
-{/* <div className="category-item ">
+{
+	/* <div className="category-item ">
 												<div className="category-item__image">
 													<Link
 														to={
@@ -101,4 +100,5 @@ export default CategorySlider;
 														{single.name}
 													</Link>
 												</div>
-											</div> */}
+											</div> */
+}

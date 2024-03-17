@@ -1,11 +1,8 @@
-/* eslint-disable react/prop-types */
-import Axios from "axios";
-import { useEffect, useState } from "react";
+import { Takaicon } from "@SvgHub/SocialIcon";
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
+import { useState } from "react";
 import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
-import { FaBars } from "react-icons/fa6";
-import { Takaicon } from "../../../SvgHub/SocialIcon";
-import { useAuth } from "../../../context/auth";
-import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
 
 const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
@@ -95,42 +92,14 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 		setIsEditingPrice(false);
 	};
 
-	// const handleDeleteClick = () => {
-	// 	api.delete(`/news/deletenews/${id}/by/shopperproduct`);
-	// 	const isConfirmed = window.confirm(
-	// 		"Are you sure you want to delete this product?"
-	// 	);
-	// 	if (isConfirmed) {
-	// 		api.delete(`/shopperproduct/deleteshopperproduct/${id}`)
-	// 			.then((res) => {
-	// 				if (res.data.status === 200) {
-	// 					toast("Product Deleted Successfully");
-	// 					window.location.reload();
-	// 					// You may also want to update your UI to remove the deleted product from the list
-	// 					// Assuming you have a function to remove the product from the list, you can call it here.
-	// 				} else {
-	// 					toast(
-	// 						"Failed to delete the product. Please try again."
-	// 					);
-	// 				}
-	// 			})
-	// 			.catch((error) => {
-	// 				console.error("Error deleting product:", error);
-	// 				toast(
-	// 					"An error occurred while deleting the product. Please try again."
-	// 				);
-	// 			});
-	// 	}
-	// };
-
 	const { user } = useAuth();
 	const handleCheckboxChange = (e) => {
 		// Check if newPrice is not empty
-		if (isNaN(newPrice) || newPrice < 0 || newPrice=== null) {
+		if (isNaN(newPrice) || newPrice < 0 || newPrice === null) {
 			toast.warning("Enter a valid Price");
 			return;
 		}
-		console.log("🚀 ~ handleCheckboxChange ~ newPrice:", newPrice);
+
 		if ((newPrice, newQuantity)) {
 			const selectedProductInfo = {
 				name: name,
@@ -143,11 +112,9 @@ const ShopkeeperProductcart = ({ product, onProductSelection, isSelected }) => {
 			};
 			onProductSelection(selectedProductInfo, e.target.checked);
 		} else {
-			// Prevent selection if newPrice is empty
 			toast(
 				"Please enter a price, Discount,newQuantity before selecting."
 			);
-			// You might want to handle this scenario by showing an error message or taking appropriate action
 		}
 	};
 	return (

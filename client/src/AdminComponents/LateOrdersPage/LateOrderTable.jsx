@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { api } from "../../lib/api";
-import TagOrderDetailsModal from "../TagOrderHistory/TagOrderDetailsModal";
-
+import FormattedTime from "@helpers/FormattedTime";
+import { api } from "@lib/api";
 import moment from "moment-timezone";
-import FormattedTime from "../../helpers/FormattedTime";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import TagOrderDetailsModal from "../TagOrderHistory/TagOrderDetailsModal";
 
 const LateOrderTable = ({ order }) => {
 	const [isOpen, setIsOpen] = useState(false);

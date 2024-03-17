@@ -1,9 +1,9 @@
-import { SearchProducts, Breadcrumb, Header } from "../../components";
+import { Breadcrumb, Header, SearchProducts } from "@components";
 
 const Search = () => {
 	return (
 		<>
-		<Header/>
+			<Header />
 			<div className="body-wrapper  mt-16">
 				<Breadcrumb pageTitle="Search Results" prevUrl="/home" />
 				{/* search products */}

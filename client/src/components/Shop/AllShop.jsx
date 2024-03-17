@@ -1,12 +1,11 @@
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import { api } from "../../lib/api";
 import ShopSlider from "./ShopSlider/ShopSlider";
 
 const AllShop = () => {
 	const [shops, setShops] = useState([]);
-	console.log("🚀 ~ AllShop ~ shops:", shops)
 	useEffect(() => {
 		api.get(`/shop/getAllShop`).then((response) => {
 			setShops(response.data);

@@ -1,8 +1,8 @@
+import SearchFunction from "@AdminComponents/SearchFunction/Index";
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
-import SearchFunction from "../../AdminComponents/SearchFunction/Index";
-import { api } from "../../lib/api";
-import UserTable from "./UserTable";
 import { toast } from "react-toastify";
+import UserTable from "./UserTable";
 
 const TagUser = () => {
 	const [tagUsers, setTagUsers] = useState([]);

@@ -1,14 +1,13 @@
+import { TagLogo2 } from "@SvgHub/TagLogo2";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Axios from "axios";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import * as yup from "yup";
-import { TagLogo2 } from "../../../SvgHub/TagLogo2";
-import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
+import * as yup from "yup";
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);

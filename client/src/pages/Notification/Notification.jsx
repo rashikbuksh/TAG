@@ -1,11 +1,11 @@
+import { Breadcrumb } from "@components";
+import { useNotification } from "@context/NotificationProvider";
+import NotificationSound from "@helpers/NotificationSound";
+import { api } from "@lib/api";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Breadcrumb } from "../../components";
-import NotificationSound from "../../helpers/NotificationSound";
-import { api } from "../../lib/api";
-import { useNotification } from "../../context/NotificationProvider";
 
 const Notification = () => {
 	// const [notifications, setNotification] = useState([]);
@@ -30,14 +30,11 @@ const Notification = () => {
 				setUser(res.data);
 				setUserAccess(res.data.access);
 			});
-
-			
 		};
 
 		// Fetch notifications initially
-		
+
 		// Fetch notifications every 60 seconds
-		
 	}, []);
 
 	const getOrderNumberFromNotification = (notifications) => {

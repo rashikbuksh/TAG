@@ -1,39 +1,26 @@
-/* eslint-disable react/prop-types */
-
-import { Rating } from "@smastrom/react-rating";
-import "@smastrom/react-rating/style.css";
-import Axios from "axios";
-import React, { useEffect, useState } from "react";
-import { set } from "react-hook-form";
-import Drawer from "react-modern-drawer";
-import {
-	FaClock,
-	FaHeart,
-	FaMapMarkerAlt,
-	FaRegComment,
-	FaShare,
-	FaShoppingCart,
-	FaTrash,
-} from "react-icons/fa";
-import { FaX } from "react-icons/fa6";
-import { PiShareFat } from "react-icons/pi";
-import { Link } from "react-router-dom";
-import demoProfile from "../../../src/assets/img/Tag-logo-blue-get_50_50.png";
-import Modal from "../../components/Modal/Modal";
-import MainProduct from "../../components/Product/ProductCart/MainProduct";
-import { useAuth } from "../../context/auth";
-import GetDateTime from "../../helpers/GetDateTime";
-import { api } from "../../lib/api";
-import CommentModal from "./CommentModal";
-import { toast } from "react-toastify";
-import Swal from "sweetalert2";
 import {
 	FacebookIcon,
 	InstagramIcon,
 	Linkedin,
 	TwitterIcon,
 	WhatsappIcon,
-} from "../../SvgHub/SocialIcon";
+} from "@SvgHub/SocialIcon";
+import MainProduct from "@components/Product/ProductCart/MainProduct";
+import { useAuth } from "@context/auth";
+import GetDateTime from "@helpers/GetDateTime";
+import { api } from "@lib/api";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
+import React, { useEffect, useState } from "react";
+import { FaHeart, FaRegComment } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
+import { PiShareFat } from "react-icons/pi";
+import Drawer from "react-modern-drawer";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import demoProfile from "../../../src/assets/img/Tag-logo-blue-get_50_50.png";
+import CommentModal from "./CommentModal";
 const PostUi = ({ postData }) => {
 	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");

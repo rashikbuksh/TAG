@@ -1,17 +1,13 @@
+import { AppleIcon, FacebookIcon, GoogleIcon } from "@SvgHub/SocialIcon";
+import { Customericon, Shopericon, TagLogo2 } from "@SvgHub/TagLogo2";
+import Modal from "@components/Modal/Modal";
+import { useAuth } from "@context/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Axios from "axios";
-import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { ReactSVG } from "react-svg";
-import * as yup from "yup";
-import Modal from "../../components/Modal/Modal";
-import { useAuth } from "../../context/auth";
-import { api } from "../../lib/api";
-import { TagLogo2, Customericon, Shopericon } from "../../SvgHub/TagLogo2";
-import { AppleIcon, FacebookIcon, GoogleIcon } from "../../SvgHub/SocialIcon";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -85,7 +81,7 @@ const Login = () => {
 								htmlFor="email"
 								className="mb-1 px-4 text-base font-semibold"
 							>
-								Email / Phone 
+								Email / Phone
 							</label>
 							<input
 								type="text"
@@ -134,11 +130,9 @@ const Login = () => {
 								</a>
 							</div>
 						</div>
-						
 
 						{loginError && (
 							<div>
-								
 								<p className="text-error">{loginError}</p>
 							</div>
 						)}

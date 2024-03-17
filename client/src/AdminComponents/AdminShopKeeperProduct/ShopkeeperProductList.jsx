@@ -1,5 +1,5 @@
+import { api } from "@lib/api";
 import React, { useEffect } from "react";
-import { api } from "../../lib/api";
 import Swal from "sweetalert2";
 
 const ShopkeeperProductList = ({ product }) => {

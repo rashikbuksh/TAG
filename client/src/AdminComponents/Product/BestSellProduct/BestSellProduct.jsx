@@ -1,8 +1,6 @@
+import ProductCart from "@components/Product/ProductCart/ProductCart";
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
-import MainProduct from "../../../components/Product/ProductCart/MainProduct";
-import ProductCart from "../../../components/Product/ProductCart/ProductCart";
-import ShopkeeperProductcart from "../../../components/Shopkeeper/ShopkeepersProduct/ShopkeeperProductcart";
-import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
 
 const BestSellProduct = () => {

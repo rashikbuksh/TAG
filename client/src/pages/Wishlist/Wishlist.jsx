@@ -1,12 +1,12 @@
+import { Breadcrumb } from "@components";
+import { getDiscountPrice } from "@helpers/product";
+import { addToCart } from "@store/slices/cart-slice";
+import { deleteFromWishlist } from "@store/slices/wishlist-slice";
 import React, { Fragment } from "react";
 import { FaCog, FaRegTimesCircle, FaShoppingCart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import { Breadcrumb } from "../../components";
-import { getDiscountPrice } from "../../helpers/product";
-import { addToCart } from "../../store/slices/cart-slice";
-import { deleteFromWishlist } from "../../store/slices/wishlist-slice";
 
 const Wishlist = () => {
 	const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const Wishlist = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 
 	return (
-		<div className="body-wrapper  ">
+		<div className="body-wrapper">
 			<Breadcrumb pageTitle="Wishlist" prevUrl="/home" />
 			<div className="order-product-area">
 				{wishlistItems && wishlistItems.length >= 1 ? (

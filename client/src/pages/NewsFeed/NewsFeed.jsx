@@ -1,13 +1,10 @@
-import Axios from "axios";
+import { Breadcrumb } from "@components";
+import NewsFeedInput from "@components/News/NewsFeedInput/NewsFeedInput";
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
-import NewsFeedInput from "../../components/News/NewsFeedInput/NewsFeedInput";
-import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
-import { useAuth } from "../../context/auth";
-import { api } from "../../lib/api";
 import PostUi from "../PostUi/PostUi";
-import TagNewsUi from "../PostUi/TagNewsUi";
-import { Breadcrumb } from "../../components";
 
 const NewsFeed = () => {
 	const [posts, setPosts] = useState([]);
@@ -52,7 +49,7 @@ const NewsFeed = () => {
 	return (
 		<div className="mt-10">
 			<div className="mx-auto w-[90%]">
-				<Breadcrumb pageTitle={"News Feed"} prevUrl={"/home"}/>
+				<Breadcrumb pageTitle={"News Feed"} prevUrl={"/home"} />
 				{/* <h1 className="text-center text-2xl font-bold">News Feed</h1> */}
 				{/* <div className="divider my-0"></div> */}
 				<div className="lg:grid lg:grid-cols-12 ">

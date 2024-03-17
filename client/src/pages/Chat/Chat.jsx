@@ -1,5 +1,5 @@
+import { Breadcrumb } from "@components";
 import React from "react";
-import { Breadcrumb } from "../../components";
 
 const Chat = () => {
 	const shownMessage = [1, 2, 3, 4, 5, 6, 7];

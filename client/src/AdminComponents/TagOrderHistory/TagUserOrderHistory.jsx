@@ -1,9 +1,9 @@
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { api } from "../../lib/api";
-import TagOrderTable from "./TagOrderTable";
-import { useAuth } from "../../context/auth";
 import { toast } from "react-toastify";
+import TagOrderTable from "./TagOrderTable";
 
 const TagUserOrderHistory = () => {
 	const { user } = useAuth();
@@ -21,12 +21,13 @@ const TagUserOrderHistory = () => {
 				});
 		}
 	}, [customer_profile_id]);
-    if (orderData.length<1) {
-        return<>
-        <p>No Order</p>
-        </>
-        
-    }
+	if (orderData.length < 1) {
+		return (
+			<>
+				<p>No Order</p>
+			</>
+		);
+	}
 	return (
 		<>
 			<p className="px-10 py-3 text-3xl font-bold">
@@ -58,9 +59,9 @@ const TagUserOrderHistory = () => {
 										/>
 									</label>
 								</th>
-						
+
 								<th>Order Id</th>
-					
+
 								<th>price</th>
 								<th>Order Status</th>
 								<th>Actions</th>

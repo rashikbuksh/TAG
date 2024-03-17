@@ -1,9 +1,9 @@
+import ShopKeeperDashBoard from "@pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 import React from "react";
-import ShopKeeperDashBoard from "../../pages/ShopkeeperDashboard/ShopKeeperDashBoard";
 
 const AdminTagShopControl = () => {
 	return (
-		<div className="w-[80%] mx-auto">
+		<div className="mx-auto w-[80%]">
 			<ShopKeeperDashBoard />
 		</div>
 	);

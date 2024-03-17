@@ -1,22 +1,22 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { useEffect, useState } from "react";
-import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
-import { FaEye, FaLocationDot, FaX } from "react-icons/fa6";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { AddToCartIcon2, MapIcon } from "../../../SvgHub/Icons";
-import { Takaicon } from "../../../SvgHub/SocialIcon";
-import { useAuth } from "../../../context/auth";
-import { checkIfInCart, getDiscountPrice } from "../../../helpers/product";
-import { api } from "../../../lib/api";
+import { AddToCartIcon2, MapIcon } from "@SvgHub/Icons";
+import { Takaicon } from "@SvgHub/SocialIcon";
+import MapDistanceModal from "@components/Modal/LocationModal/MapDistanceModal";
+import Modal from "@components/Modal/Modal";
+import { useAuth } from "@context/auth";
+import { checkIfInCart, getDiscountPrice } from "@helpers/product";
+import { api } from "@lib/api";
 import {
 	addToCart,
 	decreaseQuantity,
 	increaseQuantity,
 	increaseQuantityofProd,
-} from "../../../store/slices/cart-slice";
-import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
-import Modal from "../../Modal/Modal";
+} from "@store/slices/cart-slice";
+import { useEffect, useState } from "react";
+import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
+import { FaEye, FaLocationDot, FaX } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const MainProduct = ({ shopperProduct, product, height, width }) => {
 	const navigate = useNavigate();
@@ -36,7 +36,6 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		title,
 		access,
 	} = prod;
-	// console.log("🚀 ~ MainProduct ~ prod:", prod);
 
 	const cartItems = useSelector((state) => state.cart.cartItems);
 	const dispatch = useDispatch();
@@ -146,8 +145,6 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 			>
 				<div
 					className="relative flex flex-col items-center justify-center"
-					// onMouseEnter={handleMouseEnter}
-					// onMouseLeave={handleMouseLeave}
 					onClick={() => {
 						navigateProductPage(id, title);
 					}}
@@ -284,14 +281,6 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 								<button
 									disabled={active_status !== 1}
 									onClick={() => {
-										// prod.quantity = quantity;
-										// if (checkIfInCart(cartItems, prod)) {
-										// 	dispatch(
-										// 		increaseQuantityofProd(prod)
-										// 	);
-										// } else {
-										// 	dispatch(addToCart(prod));
-										// }
 										setIsAdminShopMOdalOpen(
 											!isAdminShopMOdalOpen
 										);

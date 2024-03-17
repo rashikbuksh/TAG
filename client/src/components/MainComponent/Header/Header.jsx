@@ -1,13 +1,11 @@
+import { useNotification } from "@context/NotificationProvider";
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
-import { FaLocationDot, FaMapLocationDot, FaX } from "react-icons/fa6";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"; // need to keep this for map purpose
+import { FaLocationDot, FaX } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import { useNotification } from "../../../context/NotificationProvider";
-import { useAuth } from "../../../context/auth";
-import NotificationSound from "../../../helpers/NotificationSound";
-import { api } from "../../../lib/api";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";

@@ -1,11 +1,11 @@
+import { Breadcrumb } from "@components";
+import { useAuth } from "@context/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { Breadcrumb } from "../../components";
-import { useAuth } from "../../context/auth";
-import { api } from "../../lib/api";
 import { toast } from "react-toastify";
+import * as yup from "yup";
 
 const EditProfile = () => {
 	const id = localStorage.getItem("user-id");

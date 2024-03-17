@@ -1,4 +1,14 @@
 /* eslint-disable react/prop-types */
+import {
+	InstagramIcon,
+	Linkedin,
+	Takaicon,
+	TwitterIcon,
+	WhatsappIcon,
+} from "@SvgHub/SocialIcon";
+import GetDateTime from "@helpers/GetDateTime";
+import { getDiscountPrice } from "@helpers/product";
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import {
 	FaBars,
@@ -9,21 +19,10 @@ import {
 	FaMinus,
 	FaPlus,
 } from "react-icons/fa";
-import {
-	FacebookIcon,
-	InstagramIcon,
-	Linkedin,
-	Takaicon,
-	TwitterIcon,
-	WhatsappIcon,
-} from "../../../SvgHub/SocialIcon";
-import { api } from "../../../lib/api";
+import { FaX } from "react-icons/fa6";
+import Drawer from "react-modern-drawer";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import Drawer from "react-modern-drawer";
-import { FaX } from "react-icons/fa6";
-import GetDateTime from "../../../helpers/GetDateTime";
-import { getDiscountPrice } from "../../../helpers/product";
 const ShopkeeperMyProduct = ({ product, index }) => {
 	const {
 		id,
@@ -35,7 +34,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		discount,
 		view,
 		shopper_id,
-		title
+		title,
 	} = product;
 	console.log(product, "Product");
 	const [category, setCategory] = useState([]);
@@ -113,10 +112,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 							category: "regular",
 							post_content: `${
 								product.name
-							} TK ${getDiscountPrice(
-								newPrice,
-								newDisCount
-							)}`,
+							} TK ${getDiscountPrice(newPrice, newDisCount)}`,
 							post_img: image,
 						})
 							.then((response) => {

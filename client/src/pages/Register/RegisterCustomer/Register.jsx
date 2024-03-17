@@ -1,12 +1,12 @@
+import { TagLogo2 } from "@SvgHub/TagLogo2";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { api } from "@lib/api";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import * as yup from "yup";
-import { TagLogo2 } from "../../../SvgHub/TagLogo2";
-import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
+import * as yup from "yup";
 
 const Register = () => {
 	const navigate = useNavigate();

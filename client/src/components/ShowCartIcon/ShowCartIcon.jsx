@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { FaShoppingBag } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import cartimg from "../../assets/img/system-solid-64-shopping-bag.gif";

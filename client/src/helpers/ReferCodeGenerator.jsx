@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FaClipboardCheck } from "react-icons/fa";
-import { useAuth } from "../context/auth";
-import { api } from "../lib/api";
 
 const ReferCodeGenerator = () => {
 	const [copySuccess, setCopySuccess] = useState(null);
@@ -9,9 +7,9 @@ const ReferCodeGenerator = () => {
 
 	const id = localStorage.getItem("user-id");
 
-	const copyToClipboard = (reffer) => {
+	const copyToClipboard = (refer) => {
 		navigator.clipboard
-			.writeText(reffer)
+			.writeText(refer)
 			.then(() => {
 				setCopySuccess("Copied to clipboard!");
 				addReferCode();

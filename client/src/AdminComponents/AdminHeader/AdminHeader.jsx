@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import NewsFeedInput from "../../components/News/NewsFeedInput/NewsFeedInput";
-import { useAuth } from "../../context/auth";
+import NewsFeedInput from "@components/News/NewsFeedInput/NewsFeedInput";
+import { useAuth } from "@context/auth";
 
 const AdminHeader = () => {
 	const [isOpen, setIsOpen] = useState(false);
