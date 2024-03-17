@@ -1,16 +1,12 @@
+import { Breadcrumb } from "@components";
 
 
 
 
 const PaymentGateway = () => {
 	return (
-		<div className="mx-auto  mb-24 mt-6 flex max-w-[375px] flex-col text-black  ">
-			<div className="mx-2 my-10 flex items-center">
-				<span className="h-6 w-6 flex-none rounded-lg bg-amber-500 p-1"></span>
-				<h1 className="flex-auto text-center text-[16px] font-semibold text-[#000000]">
-					Bkash
-				</h1>
-			</div>
+		<div className="mx-auto  flex max-w-[375px] flex-col text-black  ">
+			<Breadcrumb pageTitle="Bkash" prevUrl="/cart"></Breadcrumb>
 
 			<div className="mx-2 flex h-[80px] items-center  ">
 				<span className="h-6 w-6 flex-none rounded-lg bg-amber-500 p-1"></span>

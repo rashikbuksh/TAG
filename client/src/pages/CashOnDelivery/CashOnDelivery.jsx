@@ -1,13 +1,12 @@
+import { Breadcrumb } from "@components";
+
 const CashOnDelivery = () => {
 	return (
-		<div className="mx-auto  mb-24 mt-6 max-w-[375px] text-black flex flex-col  ">
-
-			<div className="mx-2 my-10 flex items-center">
-				<span className="h-6 w-6 flex-none rounded-lg bg-amber-500 p-1"></span>
-				<h1 className="flex-auto text-center text-[16px] font-semibold text-[#000000]">
-                Cash On Delivery
-				</h1>
-			</div>
+		<div className="mx-auto   flex max-w-[375px] flex-col text-black  ">
+			<Breadcrumb
+				pageTitle="Cash On Delivery"
+				prevUrl="/cart"
+			></Breadcrumb>
 
 			<div className="mx-2 flex h-[80px] items-center gap-2 ">
 				<span className="h-6 w-6 flex-none rounded-lg bg-amber-500 p-1"></span>
@@ -44,7 +43,6 @@ const CashOnDelivery = () => {
 					Confirm Order
 				</button>
 			</div>
-
 		</div>
 	);
 };
