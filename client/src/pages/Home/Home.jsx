@@ -1,7 +1,5 @@
-import clsx from "clsx";
 import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
+import { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import {
 	AllProducts,
@@ -13,7 +11,6 @@ import {
 import HotNews from "../../components/News/HotNews/HotNews";
 import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "../../context/auth";
-import NotificationSound from "../../helpers/NotificationSound";
 import { api } from "../../lib/api";
 import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
@@ -88,7 +85,7 @@ const Home = () => {
 		}
 	}, []);
 	const { notifications } = useNotification();
-	console.log("🚀 ~ Home ~ notifications:", notifications)
+	console.log("🚀 ~ Home ~ notifications:", notifications);
 	return (
 		<div className="px-3">
 			<Header />
