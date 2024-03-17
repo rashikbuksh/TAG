@@ -360,8 +360,8 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 									<MapDistanceModal
 										isOpen={isLocationOpen}
 										setIsOpen={setIsLocationOpen}
-										popup={userInfo.name}
-										latlong={latLong}
+										latLong={latLong}
+										single={true}
 									/>
 								)}
 							</div>
