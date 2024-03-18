@@ -1,4 +1,5 @@
 import { Breadcrumb } from "@components";
+import TotalAmount from "../../components/PaymentMethod/PaymentGateway/TotalAmount";
 
 const CashOnDelivery = () => {
 	return (
@@ -16,27 +17,7 @@ const CashOnDelivery = () => {
 				</p>
 			</div>
 
-			<div className="mt-[100px]">
-				<div className="flex justify-between text-[16px] font-[300px] text-[#171F1C]">
-					<span>Total Amount</span>
-					<span>$2700</span>
-				</div>
-				<div className="flex justify-between text-[16px] font-[300px] text-[#171F1C]">
-					<span>Discount</span>
-					<span>$270</span>
-				</div>
-				<div className="flex justify-between text-[16px] font-[300px] text-[#171F1C]">
-					<span className="font-extralight text-[#469CD6]">
-						Delivery Charges{" "}
-					</span>
-					<span className="font-extralight text-[#469CD6]">Free</span>
-					<span>$27</span>
-				</div>
-				<div className="my-8 flex justify-between  text-[18px] font-bold text-[#171F1C]">
-					<span>Grand Total</span>
-					<span>$3200</span>
-				</div>
-			</div>
+			<TotalAmount></TotalAmount>
 			{/* Pay Now Button */}
 			<div className="flex justify-center justify-self-end">
 				<button className="h-[60px] w-[327px] rounded bg-[#2D8FCA] text-white ">
