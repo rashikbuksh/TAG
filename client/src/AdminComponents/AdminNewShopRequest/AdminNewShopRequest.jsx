@@ -41,7 +41,7 @@ const AdminNewShopRequest = () => {
 					id: id,
 				})
 					.then((response) => {
-						console.log(response.status);
+						// console.log(response.status);
 						// Display success message
 						if (response.status === 200) {
 							Swal.fire(

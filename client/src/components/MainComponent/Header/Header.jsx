@@ -72,8 +72,7 @@ function Header() {
 		});
 	}, []);
 
-	const [suser, setsUser] = useState(null);
-
+	const [suser, setsUser] = useState([]);
 	useEffect(() => {
 		api.get(`/auth/getShopperInfo`).then((res) => {
 			setsUser(res.data);
@@ -93,16 +92,14 @@ function Header() {
 	};
 
 	const getAllLocation = (suser) => {
-		suser.map((item) => {
-			let positionFromDb = item.shipping_address?.split(",");
-			setLatLong((prev) => [
-				...prev,
-				{
-					lat: positionFromDb[0],
-					lng: positionFromDb[1],
-				},
-			]);
+		const coordinates = suser.map((item) => {
+			const positionFromDb = item.shipping_address?.split(",");
+			return {
+				lat: parseFloat(positionFromDb[0]),
+				lng: parseFloat(positionFromDb[1]),
+			};
 		});
+		setLatLong(coordinates);
 	};
 	return (
 		<>
