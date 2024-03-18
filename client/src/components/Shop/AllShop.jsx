@@ -6,7 +6,7 @@ import ShopSlider from "./ShopSlider/ShopSlider";
 
 const AllShop = () => {
 	const [shops, setShops] = useState([]);
-	console.log("🚀 ~ AllShop ~ shops:", shops)
+	console.log("🚀 ~ AllShop ~ shops:", shops);
 	useEffect(() => {
 		api.get(`/shop/getAllShop`).then((response) => {
 			setShops(response.data);

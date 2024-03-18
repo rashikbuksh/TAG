@@ -52,6 +52,7 @@ import ShopkeeperSchedule from "./pages/ShopkeeperDashboard/ShopkeeperSchedule";
 import AdminTagShopControl from "./AdminComponents/AdminTagShopControl/AdminTagShopControl";
 import { NotificationProvider } from "./context/NotificationProvider";
 
+
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
 	import("./pages/Register/RegisterCustomer/Register")
@@ -63,7 +64,15 @@ const Product = lazy(() => import("./pages/Product"));
 const Chat = lazy(() => import("./pages/Chat"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
+
 const Checkout = lazy(() => import("./pages/Checkout"));
+
+const Checkout2 = lazy(() => import("./pages/Checkout2/Checkout2"));
+const COD = lazy(() => import("./pages/CashOnDelivery/CashOnDelivery"));
+const PaymentGateway = lazy(()=>import("./pages/PaymentGateway/PaymentGateway"))
+
+
+
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Search = lazy(() => import("./pages/Search"));
 const Profile = lazy(() => import("./pages/Profile"));
@@ -120,11 +129,12 @@ const PROTECTED_ROUTES = [
 		element: Wishlist,
 		access: ["admin", "customer", "shopper"],
 	},
+	// RUNNING
 	{
 		id: 10,
 		name: "Checkout",
 		path: "/checkout",
-		element: Checkout,
+		element: Checkout2,
 		access: ["admin", "customer", "shopper"],
 	},
 
@@ -268,6 +278,20 @@ const PROTECTED_ROUTES = [
 		path: "/shopkeeperSchedule",
 		element: ShopkeeperSchedule,
 		access: ["admin", "shopper"],
+	},
+	{
+		id: 33,
+		name: "Cash On Delivery",
+		path: "/cashOnDelivery",
+		element: COD,
+		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id: 34,
+		name: " Payment Gateway",
+		path: "/paymentGateway",
+		element: PaymentGateway,
+		access: ["admin", "customer", "shopper"],
 	},
 ];
 
