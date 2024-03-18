@@ -53,7 +53,7 @@ const MapDistanceModal = (props) => {
 					defaultCenter={[location.lat, location.lng]}
 					defaultZoom={15}
 				>
-					<Marker width={40} anchor={[location.lat, location.lng]} />
+					<Marker width={40} anchor={[location.lat, location.lng]} color="red"/>
 					{props.single == true ? (
 						<Marker
 							width={40}
@@ -61,7 +61,7 @@ const MapDistanceModal = (props) => {
 								parseFloat(props.latLong.lat),
 								parseFloat(props.latLong.lng),
 							]}
-							color="red"
+							
 						/>
 					) : (
 						props.latLong.map(
@@ -69,12 +69,13 @@ const MapDistanceModal = (props) => {
 								DistanceCalculation(item.lat, item.lng) <
 									minimumDistance && (
 									<Marker
+									key={Math.random()}
 										width={40}
 										anchor={[
 											parseFloat(item.lat),
 											parseFloat(item.lng),
 										]}
-										color="red"
+									
 									/>
 								)
 						)
