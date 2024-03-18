@@ -290,7 +290,7 @@ const ShopKeeperDashBoard = () => {
 											}`}
 										>
 											{section.isActive ? (
-												<div className="absolute right-2 top-2 h-4 w-4 rounded-full bg-red-500" />
+												<div className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
 											) : (
 												""
 											)}

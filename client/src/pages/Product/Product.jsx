@@ -138,7 +138,7 @@ const Product = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon />
-			<div className="mx-auto px-4 py-8 lg:w-[50%] ">
+			<div className="mx-auto mb-5 px-4 py-8 lg:w-[50%]">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}
 				<div className="">
@@ -378,7 +378,7 @@ const Product = () => {
 												.VITE_API_PUBLIC_URL + "/login"
 										}
 									>
-										<button className="auth-btn ">
+										<button className="auth-btn w-full">
 											Add To Cart{" "}
 										</button>
 									</Link>

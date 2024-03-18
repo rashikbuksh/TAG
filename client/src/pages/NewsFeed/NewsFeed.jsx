@@ -5,6 +5,7 @@ import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import PostUi from "../PostUi/PostUi";
+import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 
 const NewsFeed = () => {
 	const [posts, setPosts] = useState([]);
@@ -49,6 +50,7 @@ const NewsFeed = () => {
 	return (
 		<div className="mt-10">
 			<div className="mx-auto w-[90%]">
+				<ShowCartIcon/>
 				<Breadcrumb pageTitle={"News Feed"} prevUrl={"/home"} />
 				{/* <h1 className="text-center text-2xl font-bold">News Feed</h1> */}
 				{/* <div className="divider my-0"></div> */}
