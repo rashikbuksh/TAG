@@ -17,6 +17,7 @@ const MapDistanceModal = (props) => {
 
 	// user Location
 	const { location, loading, error } = GetLocation();
+	console.log("🚀 ~ MapDistanceModal ~ location:", location)
 	if (loading) return <h1>Loading...</h1>;
 	if (error) return <h1>{error}</h1>;
 
@@ -63,27 +64,26 @@ const MapDistanceModal = (props) => {
 							]}
 							
 						/>
-					) : (
-						props.latLong.map(
-							(item) =>
-								DistanceCalculation(item.lat, item.lng) <
-									minimumDistance && (
-									<Marker
+					) : Array.isArray(props.latLong) && props.latLong.map((item) => {
+						const distance = DistanceCalculation(item.lat, item.lng);
+						if (distance < minimumDistance) {
+							return (
+								<Marker
 									key={Math.random()}
-										width={40}
-										anchor={[
-											parseFloat(item.lat),
-											parseFloat(item.lng),
-										]}
-									
-									/>
-								)
-						)
-					)}
+									width={40}
+									anchor={[parseFloat(item.lat), parseFloat(item.lng)]}
+									color="green"
+								/>
+							);
+						} else {
+							<h1>No shop to see the map</h1> // Return null if the condition is not met
+						}
+					})}
 				</Map>
 			)}
 		</Modal>
 	);
 };
+
 
 export default MapDistanceModal;

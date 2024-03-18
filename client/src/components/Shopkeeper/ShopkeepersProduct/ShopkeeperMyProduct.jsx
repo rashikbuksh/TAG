@@ -36,7 +36,6 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		shopper_id,
 		title,
 	} = product;
-	console.log(product, "Product");
 	const [category, setCategory] = useState([]);
 	const [quantity, setQuantity] = useState(product_count);
 	const [newPrice, setNewPrice] = useState(price);
@@ -116,10 +115,10 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 							post_img: image,
 						})
 							.then((response) => {
-								console.log(response.status);
+								// console.log(response.status);
 							})
 							.catch((error) => {
-								console.log(error);
+								// console.log(error);
 							});
 					}
 					toast("Product Price Updated Successfully");

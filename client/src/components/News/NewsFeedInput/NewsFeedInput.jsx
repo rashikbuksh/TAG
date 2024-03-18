@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import React, { useState } from "react";
 import { FaCamera, FaFileImage } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useAuth } from "@context/auth";
 
 const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 	const [cameraError, setCameraError] = useState(null);

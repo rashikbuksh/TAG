@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaClipboardCheck } from "react-icons/fa";
+import { api } from "@lib/api";
 
 const ReferCodeGenerator = () => {
 	const [copySuccess, setCopySuccess] = useState(null);

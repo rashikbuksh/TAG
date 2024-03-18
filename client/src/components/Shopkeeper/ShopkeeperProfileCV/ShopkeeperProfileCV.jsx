@@ -25,6 +25,7 @@ import { PiShareFat } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
+import Drawer from 'react-modern-drawer';
 const ShopkeeperProfileCV = () => {
 	// get id from url
 	const { id } = useParams();
@@ -87,7 +88,6 @@ const ShopkeeperProfileCV = () => {
 			setFilteredProducts(filteredResults);
 		}
 	};
-
 	const MapModalOpener = (location) => {
 		let positionFromDb = location.split("__");
 		setLatLong({
@@ -309,7 +309,7 @@ const ShopkeeperProfileCV = () => {
 													to={
 														import.meta.env
 															.VITE_API_PUBLIC_URL +
-														`/product/${single.id}`
+														`/product/${single.id}/${single.title}`
 													}
 												>
 													<img
