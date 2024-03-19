@@ -8,6 +8,12 @@ import { ErrorMessage, Preloader } from "../../components";
 import useFetch from "../../hooks/use-fetch";
 import { api } from "../../lib/api";
 
+import ReactDOM from "react-dom";
+import QRCode from "react-qr-code";
+import { FaRegCopy } from "react-icons/fa";
+
+import { FacebookIcon, InstagramIcon, WhatsappIcon } from "@/SvgHub/SocialIcon";
+
 const Profile = () => {
 	// const { data, isLoading, errorMessage } = useFetch("profile.json");
 	const [totalOrder, setTotalOrder] = useState(0);
@@ -253,13 +259,15 @@ const Profile = () => {
 											{userdata.email}
 										</div>
 									</div>
-									
+
 									<div className="profile-info-block">
 										<div className="profile-info-block__title">
 											Address
 										</div>
 										<div className="profile-info-block__value">
-											{userdata.address?userdata.address:"N/A"}
+											{userdata.address
+												? userdata.address
+												: "N/A"}
 										</div>
 									</div>
 									{userdata.access == "shopper" ? (
@@ -302,6 +310,32 @@ const Profile = () => {
 								{/* ... (other profile info) ... */}
 							</div>
 						</div>
+					</div>
+					<div>
+						<p className="text-center">
+							Connect Your All Social Media{" "}
+						</p>
+						<div className="flex scale-110 items-center justify-center gap-4 p-2">
+							<FacebookIcon></FacebookIcon>
+							<WhatsappIcon></WhatsappIcon>
+							<InstagramIcon></InstagramIcon>
+						</div>
+					</div>
+					{/* QR code generator */}
+
+					<div className="flex h-52 flex-col items-center justify-center gap-4">
+						<QRCode value="Hello world" size={130} />
+						<p>Scan The QR Code to Visit Your Shop</p>
+					</div>
+					<div>
+						<label className="input input-bordered my-2 flex items-center gap-2 bg-gray-200">
+							<input
+								type="text"
+								className="grow bg-gray-200 text-black border-none "
+								placeholder="https://www.facebook.com/urhs"
+							/>
+							<FaRegCopy size={25}> </FaRegCopy>
+						</label>
 					</div>
 				</div>
 			</div>
