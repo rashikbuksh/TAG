@@ -311,31 +311,33 @@ const Profile = () => {
 							</div>
 						</div>
 					</div>
+					{/* QR code generator  and social media icone	*/}
 					<div>
-						<p className="text-center">
-							Connect Your All Social Media{" "}
-						</p>
-						<div className="flex scale-110 items-center justify-center gap-4 p-2">
-							<FacebookIcon></FacebookIcon>
-							<WhatsappIcon></WhatsappIcon>
-							<InstagramIcon></InstagramIcon>
+						<div>
+							<p className="text-center">
+								Connect Your All Social Media{" "}
+							</p>
+							<div className="flex scale-110 items-center justify-center gap-4 p-2">
+								<FacebookIcon></FacebookIcon>
+								<WhatsappIcon></WhatsappIcon>
+								<InstagramIcon></InstagramIcon>
+							</div>
 						</div>
-					</div>
-					{/* QR code generator */}
 
-					<div className="flex h-52 flex-col items-center justify-center gap-4">
-						<QRCode value="Hello world" size={130} />
-						<p>Scan The QR Code to Visit Your Shop</p>
-					</div>
-					<div>
-						<label className="input input-bordered my-2 flex items-center gap-2 bg-gray-200">
-							<input
-								type="text"
-								className="grow bg-gray-200 text-black border-none "
-								placeholder="https://www.facebook.com/urhs"
-							/>
-							<FaRegCopy size={25}> </FaRegCopy>
-						</label>
+						<div className="flex h-52 flex-col items-center justify-center gap-4">
+							<QRCode value="Hello world" size={130} />
+							<p>Scan The QR Code to Visit Your Shop</p>
+						</div>
+						<div>
+							<label className="input input-bordered my-2 flex items-center gap-2 bg-gray-200 ]">
+								<input
+									type="text"
+									className="grow border-none bg-gray-200 text-black "
+									placeholder="https://www.facebook.com/urhs"
+								/>
+								<FaRegCopy size={25}> </FaRegCopy>
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>

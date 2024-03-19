@@ -1,6 +1,6 @@
 import { Breadcrumb } from "@components";
 import TotalAmount from "../../components/PaymentMethod/PaymentGateway/TotalAmount";
-
+import { FcMoneyTransfer } from "react-icons/fc";
 const CashOnDelivery = () => {
 	return (
 		<div className="mx-auto   flex max-w-[375px] flex-col text-black  ">
@@ -10,7 +10,7 @@ const CashOnDelivery = () => {
 			></Breadcrumb>
 
 			<div className="mx-2 flex h-[80px] items-center gap-2 ">
-				<span className="h-6 w-6 flex-none rounded-lg bg-amber-500 p-1"></span>
+				<FcMoneyTransfer size={50}></FcMoneyTransfer>
 				<p className="flex-auto ">
 					You can pay in cash to our Courier when you Receive the
 					Goods at your doorsteps
