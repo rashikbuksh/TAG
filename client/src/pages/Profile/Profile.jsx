@@ -21,6 +21,19 @@ const Profile = () => {
 	const [userdata, setUserdata] = useState({});
 	const [image, setImage] = useState(null);
 
+	const [copySuccess, setCopySuccess] = useState(null);
+
+	const copyToClipboard = (reffer) => {
+		navigator.clipboard
+			.writeText(reffer)
+			.then(() => {
+				setCopySuccess("Copied to clipboard!");
+			})
+			.catch((err) => {
+				setCopySuccess("Copy failed: " + err);
+			});
+	};
+
 	const handleImageUpload = (e) => {
 		const file = e.target.files[0];
 		if (file) {
@@ -312,33 +325,56 @@ const Profile = () => {
 						</div>
 					</div>
 					{/* QR code generator  and social media icone	*/}
-					<div>
+					{userdata.access == "shopper" && (
 						<div>
-							<p className="text-center">
-								Connect Your All Social Media{" "}
-							</p>
-							<div className="flex scale-110 items-center justify-center gap-4 p-2">
-								<FacebookIcon></FacebookIcon>
-								<WhatsappIcon></WhatsappIcon>
-								<InstagramIcon></InstagramIcon>
+							<div>
+								<p className="text-center">
+									Connect Your All Social Media{" "}
+								</p>
+								<div className="flex scale-110 items-center justify-center gap-4 p-2">
+									<FacebookIcon></FacebookIcon>
+									<WhatsappIcon></WhatsappIcon>
+									<InstagramIcon></InstagramIcon>
+								</div>
+							</div>
+
+							<div className="flex h-52 flex-col items-center justify-center gap-4">
+								<QRCode
+									value={`${
+										import.meta.env.VITE_API_PUBLIC_URL
+									}/shopkeeperProfileCV/${id}`}
+									size={130}
+								/>
+								<p>Scan The QR Code to Visit Your Shop</p>
+							</div>
+							<div>
+								<div className=" input input-bordered my-2 flex gap-2 bg-gray-200">
+									<div
+										onClick={() =>
+											copyToClipboard(
+												`${
+													import.meta.env
+														.VITE_API_PUBLIC_URL
+												}/shopkeeperProfileCV/${id}`
+											)
+										}
+									>
+										<input
+											type="text"
+											className="w-full grow border-none bg-gray-200 text-center text-black "
+											value={`${
+												import.meta.env
+													.VITE_API_PUBLIC_URL
+											}/shopkeeperProfileCV/${id}`}
+											readOnly
+										/>
+									</div>
+
+									<FaRegCopy size={25}> </FaRegCopy>
+								</div>
 							</div>
 						</div>
-
-						<div className="flex h-52 flex-col items-center justify-center gap-4">
-							<QRCode value="Hello world" size={130} />
-							<p>Scan The QR Code to Visit Your Shop</p>
-						</div>
-						<div>
-							<label className="input input-bordered my-2 flex items-center gap-2 bg-gray-200 ]">
-								<input
-									type="text"
-									className="grow border-none bg-gray-200 text-black "
-									placeholder="https://www.facebook.com/urhs"
-								/>
-								<FaRegCopy size={25}> </FaRegCopy>
-							</label>
-						</div>
-					</div>
+					)}
 				</div>
 			</div>
 		</div>

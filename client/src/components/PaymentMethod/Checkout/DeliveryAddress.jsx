@@ -4,7 +4,7 @@ import { FaClipboardCheck } from "react-icons/fa6";
 const DeliveryAddress = () => {
 	const [edit, setEdit] = useState(false);
 	const [address, setAddress] = useState(
-		"4140 Parker Rd. Allentown,New Mexico 31134"
+		"4140 Parker Rd. Allentown,New Mexico"
 	);
 	const [contactNumber, setContactNumber] = useState("89-4639-8");
 
