@@ -2,6 +2,7 @@ import { api } from "@lib/api";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useCookie } from "../hooks";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext({});
 
@@ -76,8 +77,11 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const Logout = () => {
-		removeAuthCookie();
-		removeUserCookie();
+		localStorage.removeItem("user-id");
+		Cookies.remove("user");
+		Cookies.remove("auth");
+		window.location.href = "/home";
+		setLoading(false);
 		setUser(null);
 	};
 

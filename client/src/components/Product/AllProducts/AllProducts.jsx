@@ -1,10 +1,7 @@
-import { shuffleArray } from "@helpers/shuffleArray";
 import { api } from "@lib/api";
-import Axios from "axios";
 import PropTypes from "prop-types";
-import { Fragment, default as React, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import LoadingPage from "../../LoadingPage/LoadingPage";
@@ -12,167 +9,161 @@ import HeroSlider from "../../MainComponent/HeroSlider/HeroSlider";
 import ProductSlider from "../ProductSlider/ProductSlider";
 
 const AllProducts = ({ limit, sliderData }) => {
-	const { wishlistItems } = useSelector((state) => state.wishlist);
-	const [prods, setProds] = useState([]);
 	const [popularProducts, setPopularProducts] = useState([]);
-	const dispatch = useDispatch();
-
+	const [prods, setProds] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		api.get(`/shopperproduct/getshopperproduct`)
-			.then((response) => {
-				const shuffledProds = shuffleArray(response.data);
-				setProds(shuffledProds);
+		const fetchData = async () => {
+			try {
+				const [popularResponse, prodsResponse] = await Promise.all([
+					api.get(`/shopperproduct/getPopularShopperProduct`),
+					api.get(`/shopperproduct/getshopperproduct`),
+				]);
+				setPopularProducts(popularResponse.data);
+				setProds(prodsResponse.data);
 				setLoading(false);
-			})
-			.catch((error) => {
+			} catch (error) {
 				setError(error.message);
 				setLoading(false);
-			});
-		api.get(`/shopperproduct/getPopularShopperProduct`)
-			.then((response) => {
-				setPopularProducts(response.data);
-				setLoading(false);
-			})
-			.catch((error) => {
-				setError(error.message);
-				setLoading(false);
-			});
+			}
+		};
+
+		fetchData();
 	}, []);
 
-	const isVerifiedProduct = prods.filter(
-		(product) => product.isVerified === "verified"
+	const isVerifiedProduct = useMemo(
+		() => prods.filter((product) => product.isVerified === "verified"),
+		[prods]
 	);
-	const isOfferProduct = prods.filter(
-		(product) => product.discount > 0 || product.discount === null
+	const isOfferProduct = useMemo(
+		() =>
+			prods.filter(
+				(product) => product.discount > 0 || product.discount === null
+			),
+		[prods]
 	);
 
-	if (!prods?.length) return <LoadingPage></LoadingPage>;
-	if (loading) return <LoadingPage></LoadingPage>;
+	// if (loading) return <LoadingPage />;
 
 	return (
-		<div className=" mx-auto  max-w-7xl">
+		<div className="mx-auto max-w-7xl">
 			<div className="">
-				<div className="">
-					{/* Popular Product  */}
-					{prods && (
-						<h2 className="section-title  mb-2">
+				{/* Popular Products */}
+				{popularProducts.length > 0 && (
+					<div>
+						<h2 className="section-title mb-2">
 							<span className="text-xl font-bold">
 								Popular Product{" "}
 							</span>
-
 							<Link
 								className="primary-text"
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/shop"
-								}
+								to={`${
+									import.meta.env.VITE_API_PUBLIC_URL
+								}/shop`}
 							>
-								VIEW ALL{" "}
+								VIEW ALL
 								<span>
 									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/arrow-right.svg"
-										}
+										src={`${
+											import.meta.env.VITE_API_PUBLIC_URL
+										}/assets/img/icons/arrow-right.svg`}
 									/>
 								</span>
 							</Link>
 						</h2>
-					)}
+						<ProductSlider products={popularProducts} />
+						<div className="my-4"></div>
+					</div>
+				)}
 
-					<ProductSlider products={popularProducts}></ProductSlider>
-					<div className="my-4"></div>
-					{prods && (
+				{/* Offer Products */}
+				{isOfferProduct.length > 0 && (
+					<div>
 						<h2 className="section-title mb-2">
 							<span className="text-xl font-bold">
 								Offer Products{" "}
 							</span>
-
 							<Link
 								className="primary-text"
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/shop"
-								}
+								to={`${
+									import.meta.env.VITE_API_PUBLIC_URL
+								}/shop`}
 							>
-								VIEW ALL{" "}
+								VIEW ALL
 								<span>
 									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/arrow-right.svg"
-										}
+										src={`${
+											import.meta.env.VITE_API_PUBLIC_URL
+										}/assets/img/icons/arrow-right.svg`}
 									/>
 								</span>
 							</Link>
 						</h2>
-					)}
-					<ProductSlider products={isOfferProduct}></ProductSlider>
-					<div className="my-4"></div>
-					{prods && (
-						<h2 className="section-title mb-2 ">
-							<p className="flex items-center gap-3 text-xl font-bold">
-								<span>Verified Product</span>{" "}
-								<FaCheckCircle className=" primary-text"></FaCheckCircle>
-							</p>
+						<ProductSlider products={isOfferProduct} />
+						<div className="my-4"></div>
+					</div>
+				)}
 
+				{/* Verified Products */}
+				{isVerifiedProduct.length > 0 && (
+					<div>
+						<h2 className="section-title mb-2">
+							<span className="text-xl font-bold">
+								Verified Products{" "}
+							</span>
 							<Link
 								className="primary-text"
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/shop"
-								}
+								to={`${
+									import.meta.env.VITE_API_PUBLIC_URL
+								}/shop`}
 							>
-								VIEW ALL{" "}
+								VIEW ALL
 								<span>
 									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/arrow-right.svg"
-										}
+										src={`${
+											import.meta.env.VITE_API_PUBLIC_URL
+										}/assets/img/icons/arrow-right.svg`}
 									/>
 								</span>
 							</Link>
 						</h2>
-					)}
-					<ProductSlider products={isVerifiedProduct}></ProductSlider>
-					<div className="my-4"></div>
-					<HeroSlider sliderData={sliderData} isAutoPlay={false} />
-					<div className="my-4"></div>
-					{prods && (
+						<ProductSlider products={isVerifiedProduct} />
+						<div className="my-4"></div>
+					</div>
+				)}
+
+				{/* Hero Slider */}
+				<HeroSlider sliderData={sliderData} isAutoPlay={false} />
+				<div className="my-4"></div>
+
+				{/* All Products */}
+				{prods.length > 0 && (
+					<div>
 						<h2 className="section-title mb-2">
 							<span className="text-xl font-bold">
 								All Products{" "}
 							</span>
-
 							<Link
 								className="primary-text"
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/shop"
-								}
+								to={`${
+									import.meta.env.VITE_API_PUBLIC_URL
+								}/shop`}
 							>
-								VIEW ALL{" "}
+								VIEW ALL
 								<span>
 									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/arrow-right.svg"
-										}
+										src={`${
+											import.meta.env.VITE_API_PUBLIC_URL
+										}/assets/img/icons/arrow-right.svg`}
 									/>
 								</span>
 							</Link>
 						</h2>
-					)}
-					<ProductSlider products={prods}></ProductSlider>
-				</div>
+						<ProductSlider products={prods} />
+					</div>
+				)}
 			</div>
 		</div>
 	);
@@ -180,6 +171,7 @@ const AllProducts = ({ limit, sliderData }) => {
 
 AllProducts.propTypes = {
 	limit: PropTypes.number,
+	sliderData: PropTypes.array,
 };
 
 export default AllProducts;

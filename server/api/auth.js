@@ -7,7 +7,7 @@ const read = [
   // },
   {
     uri: "/auth/userInfo/:id",
-    query: `SELECT id,name,access FROM customer_profile WHERE id= ?`,
+    query: `SELECT id,name,access,profile_picture FROM customer_profile WHERE id= ?`,
     param: ["id"],
   },
   {
