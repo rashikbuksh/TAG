@@ -11,10 +11,13 @@ const TagShop = () => {
 		});
 	}, []);
 
-	return (
+
+    return (
 		<div className="mx-auto max-w-7xl">
 			<div className="my-4"></div>
-			<h2 className="section-title mb-2">
+			<div className="border border-red-500 p-2">
+                <h2 className="section-title mb-2">
+
 				<span className="text-xl font-bold">
 					TAG Online Store Product
 				</span>
@@ -23,11 +26,16 @@ const TagShop = () => {
 					and Cash On delivery
 				</p>
 			</h2>
-			<div className="my-4 grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
+
+			<div className="my-4 grid grid-cols-2 gap-6  p-2 md:grid-cols-4  lg:grid-cols-6">
+
+
 				{products.map((product) => (
 					<ProductCart product={product} key={product.id} />
 				))}
 			</div>
+            </div>
+
 		</div>
 	);
 };

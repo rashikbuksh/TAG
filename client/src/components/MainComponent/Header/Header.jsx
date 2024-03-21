@@ -9,6 +9,9 @@ import { ReactSVG } from "react-svg";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
+import { useNotification } from "../../../context/NotificationProvider";
+import { BellIcon } from "@/SvgHub/Icons";
+
 
 function Header() {
 	const [activateOffcanvas, setActivateOffcanvas] = useState(false);
@@ -158,8 +161,13 @@ function Header() {
 									<Link
 										to={"/notification"}
 										className="relative"
+										// todo
 									>
-										<FaBell className="text-4xl text-yellow-500" />
+										
+										<span className="w-10 h-10 scale-50">
+											<BellIcon></BellIcon>
+										</span>
+
 										{notificationsWithStatusOne.length >
 											0 && (
 											<p className="absolute -top-2 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white">
