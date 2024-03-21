@@ -101,6 +101,7 @@ const Profile = () => {
 				toast.error(error);
 			});
 	}, [userdata, id]);
+	console.log('test')
 
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 ">

@@ -143,7 +143,7 @@ const PROTECTED_ROUTES = [
 		name: "Profile",
 		path: "/profile",
 		element: Profile,
-		access: ["admin", "customer"],
+		access: ["admin", "customer","shopper"],
 	},
 	{
 		id: 13,
