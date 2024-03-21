@@ -10,22 +10,23 @@ import AllShop from "@components/Shop/AllShop";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import TagShop from "@components/TagShop/TagShop";
 import { useNotification } from "@context/NotificationProvider";
-import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
+import LoadingPage from "@components/LoadingPage/LoadingPage";
+import { useAuth } from "@context/auth";
 
 const Home = () => {
-	const { user, Logout } = useAuth();
+	const { user } = useAuth(); // Assuming useAuth hook exists and provides user data
 
 	const [showScrollButton, setShowScrollButton] = useState(false);
-	const [sliderDataTop, setSliderDataTop] = useState([]);
-	const [sliderDataMiddel, setSliderDataMiddel] = useState([]);
-	const [sliderDataBottom, setSliderDataBottom] = useState([]);
-	const [dataLoaded, setDataLoaded] = useState(false); // New state variable
+	const [sliderData, setSliderData] = useState({
+		top: [],
+		middle: [],
+	});
+	const [loading, setLoading] = useState(true);
 
 	const handleSmoothScroll = () => {
 		window.scrollTo({
@@ -36,11 +37,7 @@ const Home = () => {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			if (window.scrollY > 0) {
-				setShowScrollButton(true);
-			} else {
-				setShowScrollButton(false);
-			}
+			setShowScrollButton(window.scrollY > 0);
 		};
 
 		window.addEventListener("scroll", handleScroll);
@@ -51,66 +48,52 @@ const Home = () => {
 	}, []);
 
 	useEffect(() => {
-		api.get("/heroslider/getslider/top")
-			.then((res) => {
-				setSliderDataTop(res.data);
-			})
-			.catch((err) => {
-				// console.error(err);
-			});
-		api.get("/heroslider/getslider/middle")
-			.then((res) => {
-				setSliderDataMiddel(res.data);
-			})
-			.catch((err) => {
-				// console.error(err);
-			});
-		api.get("/heroslider/getslider/bottom")
-			.then((res) => {
-				setSliderDataBottom(res.data);
-			})
-			.catch((err) => {
-				// console.error(err);
-			});
+		const fetchData = async () => {
+			try {
+				const [topResponse, middleResponse] = await Promise.all([
+					api.get("/heroslider/getslider/top"),
+					api.get("/heroslider/getslider/middle"),
+				]);
+				setSliderData({
+					top: topResponse.data,
+					middle: middleResponse.data,
+				});
+			} catch (error) {
+				console.error("Error fetching slider data:", error);
+			} finally {
+				setLoading(false);
+			}
+		};
 
-		// Simulating the completion of data loading
-		setTimeout(() => {
-			setDataLoaded(true);
-		}, 2000); // You may replace this with your actual data loading logic
-
-		if (!user) {
-			localStorage.removeItem("user-id");
-			Cookies.remove("user");
-			Cookies.remove("auth");
-		}
+		fetchData();
 	}, []);
-	const { notifications } = useNotification();
+
+	if (loading) {
+		return <LoadingPage />; // Replace LoadingPage with your loading indicator component
+	}
+
 	return (
 		<div className="px-3">
 			<Header />
 			<Footer />
 			<ShowCartIcon />
 			<div className="body-wrapper mb-20 mt-12">
-				{/* <Helmet>
-					<title>Home-TAG</title>
-				</Helmet> */}
-				<HeroSlider sliderData={sliderDataTop} />
-				{user ? <Refer /> : ""}
+				<HeroSlider sliderData={sliderData.top} />
+				{user && <Refer />}
 				<HotNews />
 				<BestSellerProduct limit={2} type="bestSeller" />
-				<AllProducts limit={12} sliderData={sliderDataMiddel} />
+				<AllProducts limit={12} sliderData={sliderData.middle} />
 				{showScrollButton && (
 					<button
 						className="fixed bottom-24 right-5 z-20 rounded-full bg-white bg-opacity-50 p-2 shadow-lg"
 						onClick={handleSmoothScroll}
 					>
-						<FaArrowUp className="text-3xl text-gray-200"></FaArrowUp>
+						<FaArrowUp className="text-3xl text-gray-200" />
 					</button>
 				)}
 				<AllShop />
 				<TagShop />
-				{dataLoaded && <FooterSection />}{" "}
-				{/* Conditionally render the FooterSection */}
+				<FooterSection />
 			</div>
 		</div>
 	);

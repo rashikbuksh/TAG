@@ -20,7 +20,7 @@ export const NotificationProvider = ({ children }) => {
 
 			fetchNotifications();
 
-			const intervalId = setInterval(fetchNotifications, 100000);
+			const intervalId = setInterval(fetchNotifications,  3 * 60 * 1000);
 
 			return () => clearInterval(intervalId);
 		}

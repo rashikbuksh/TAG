@@ -17,7 +17,6 @@ const MapDistanceModal = (props) => {
 
 	// user Location
 	const { location, loading, error } = GetLocation();
-	console.log("🚀 ~ MapDistanceModal ~ location:", location)
 	if (loading) return <h1>Loading...</h1>;
 	if (error) return <h1>{error}</h1>;
 
@@ -41,6 +40,28 @@ const MapDistanceModal = (props) => {
 		const d = R * c; // in metres
 		return d;
 	};
+	let allDistancesBelowMinimum = true;
+
+	if (Array.isArray(props.latLong)) {
+		for (let i = 0; i < props.latLong.length; i++) {
+			const distance = DistanceCalculation(
+				props.latLong[i].lat,
+				props.latLong[i].lng
+			);
+			if (distance >= minimumDistance) {
+				allDistancesBelowMinimum = false;
+				break;
+			}
+		}
+	}
+
+	if (
+		Array.isArray(props.latLong) &&
+		props.latLong.length > 0 &&
+		allDistancesBelowMinimum
+	) {
+		return <h1>No shop to see the map</h1>;
+	}
 
 	return (
 		<Modal isOpen={props.isOpen} setIsOpen={props.setIsOpen}>
@@ -54,7 +75,11 @@ const MapDistanceModal = (props) => {
 					defaultCenter={[location.lat, location.lng]}
 					defaultZoom={15}
 				>
-					<Marker width={40} anchor={[location.lat, location.lng]} color="red"/>
+					<Marker
+						width={40}
+						anchor={[location.lat, location.lng]}
+						color="red"
+					/>
 					{props.single == true ? (
 						<Marker
 							width={40}
@@ -62,28 +87,35 @@ const MapDistanceModal = (props) => {
 								parseFloat(props.latLong.lat),
 								parseFloat(props.latLong.lng),
 							]}
-							
 						/>
-					) : Array.isArray(props.latLong) && props.latLong.map((item) => {
-						const distance = DistanceCalculation(item.lat, item.lng);
-						if (distance < minimumDistance) {
-							return (
-								<Marker
-									key={Math.random()}
-									width={40}
-									anchor={[parseFloat(item.lat), parseFloat(item.lng)]}
-									color="green"
-								/>
+					) : (
+						Array.isArray(props.latLong) &&
+						props.latLong.map((item) => {
+							const distance = DistanceCalculation(
+								item.lat,
+								item.lng
 							);
-						} else {
-							<h1>No shop to see the map</h1> // Return null if the condition is not met
-						}
-					})}
+							if (distance < minimumDistance) {
+								return (
+									<Marker
+										key={Math.random()}
+										width={40}
+										anchor={[
+											parseFloat(item.lat),
+											parseFloat(item.lng),
+										]}
+										color="green"
+									/>
+								);
+							} else {
+								<h1>No shop to see the map</h1>; // Return null if the condition is not met
+							}
+						})
+					)}
 				</Map>
 			)}
 		</Modal>
 	);
 };
-
 
 export default MapDistanceModal;

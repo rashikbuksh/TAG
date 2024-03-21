@@ -1,49 +1,166 @@
 import { ChatIcon, DashBoardIcon } from "@SvgHub/Icons";
 import { useAuth } from "@context/auth";
-import { api } from "@lib/api";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { FaHome, FaUserPlus } from "react-icons/fa";
+import {
+	FaHome,
+	FaUserPlus,
+	FaShoppingCart,
+	FaClipboardList,
+} from "react-icons/fa";
 import Drawer from "react-modern-drawer";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+
 function Offcanvas(props) {
 	const {
 		toggleDrawer,
-		mobileDrawerStyle,
-		desktopDrawerStyle,
 		isOffcanvasOpen,
 		setIsOffcanvasOpen,
-		userData,
 	} = props;
-	const userid = localStorage.getItem("user-id");
-	const [userInfo, setUserInfo] = useState([]);
-	const { user } = useAuth();
-	useEffect(() => {
-		const offcanvasNavigations = document.querySelectorAll(
-			".offcanvas-navigation > li"
-		);
-		offcanvasNavigations.forEach((single) => {
-			single.addEventListener("click", () => {
-				props.activeStatus(false);
-			});
-		});
-		if (userid) {
-			api.get(`/auth/getUserInfo/${userid}`).then((res) => {
-				setUserInfo(res.data);
-			});
-		}
-	}, [props, userid]);
 
-	const logout = () => {
-		localStorage.removeItem("user-id");
-		Cookies.remove("user");
-		Cookies.remove("auth");
-		window.location.href = "/home";
-	};
-	const handeloffDrawer = () => {
+	const { user, Logout } = useAuth();
+	const [routes, setRoutes] = useState([]);
+	const publicRoutes = [
+		{ title: "Home", path: "/home", icon: <FaHome /> },
+		{
+			title: "All Products",
+			path: "/shop",
+			icon: (
+				<ReactSVG
+					src={
+						import.meta.env.VITE_API_PUBLIC_URL +
+						"/assets/img/icons/product.svg"
+					}
+				/>
+			),
+		},
+	];
+	useEffect(() => {
+		// Define routes based on user access level
+		const userRoutes = [
+			{
+				title: "Home",
+				path: "/home",
+				access: ["customer", "shopper", "admin", "moderator"],
+				icon: <FaHome />,
+			},
+			{
+				title: "Dashboard",
+				path: "/shopkeeperDashboard",
+				access: ["shopper"],
+				icon: <DashBoardIcon />,
+			},
+			{
+				title: "My Orders",
+				path: "/order",
+				access: ["shopper"],
+				icon: <FaClipboardList />,
+			},
+			{
+				title: "All Products",
+				path: "/shop",
+				access: ["customer", "shopper"],
+				icon: (
+					<ReactSVG
+						src={
+							import.meta.env.VITE_API_PUBLIC_URL +
+							"/assets/img/icons/product.svg"
+						}
+					/>
+				),
+			},
+			{
+				title: "Order",
+				path: "/orderShopper",
+				access: ["shopper"],
+				icon: <FaShoppingCart />,
+			},
+			{
+				title: "My Order",
+				path: "/order",
+				access: ["customer"],
+				icon: <FaShoppingCart />,
+			},
+			{
+				title: "Order History",
+				path: "/ordersHistoryDetails/:userId",
+				access: ["shopper"],
+				icon: <FaClipboardList />,
+			},
+			{
+				title: "Cart",
+				path: "/cart",
+				access: ["customer", "shopper"],
+				icon: <FaShoppingCart />,
+			},
+			{
+				title: "Refer",
+				path: "/referPage",
+				access: ["customer", "shopper", "admin", "moderator"],
+				icon: <FaUserPlus className="text-xl" />,
+			},
+			{
+				title: "Admin Page",
+				path: "/admin/stat",
+				access: ["admin"],
+				icon: (
+					<img
+						width="50"
+						height="50"
+						src="https://img.icons8.com/ios-filled/50/administrator-male--v1.png"
+						alt="administrator-male--v1"
+					/>
+				),
+			},
+			{
+				title: "Moderator Page",
+				path: "/moderator/stat",
+				access: ["moderator"],
+				icon: (
+					<img
+						width="50"
+						height="50"
+						src="https://img.icons8.com/ios-filled/50/administrator-male--v1.png"
+						alt="administrator-male--v1"
+					/>
+				),
+			},
+			{
+				title: "Login",
+				path: "/login",
+				access: ["customer", "shopper", "admin", "moderator"],
+				icon: <FaUserPlus className="text-xl" />,
+			},
+		];
+
+		// Filter routes based on user's access level
+		const filteredRoutes = userRoutes.filter((route) =>
+			user ? route.access.includes(user.access) : true
+		);
+
+		setRoutes(filteredRoutes);
+	}, [user]);
+
+	const handleOffDrawer = () => {
 		setIsOffcanvasOpen(!isOffcanvasOpen);
 	};
+	const mobileDrawerStyle = {
+		width: "60%",
+		marginTop: "50px", // You can adjust the margin value as needed
+		borderRadius: "10px",
+		backgroundColor: "#EFEFEF",
+		boxShadow: "inset 0 54px 56px rgba(0, 0, 0, 0.1)", // Add border radius
+	};
+
+	const desktopDrawerStyle = {
+		width: "25%", // Adjust this value as needed for desktop
+		marginTop: "50px", // You can adjust the margin value as needed
+		borderRadius: "10px",
+		backgroundColor: "#EFEFEF",
+		boxShadow: "inset 0 54px 56px rgba(0, 0, 0, 0.1)",
+	};
+
 
 	return (
 		<div>
@@ -66,291 +183,121 @@ function Offcanvas(props) {
 				}
 			>
 				<div className="py-10 ">
-					{userid
-						? userInfo.map((item) => (
-								<div
-									key={item.id} // Use a unique property of item as the key
-									className="profile-card text-center"
-								>
-									<div>
-										<div className="avatar">
-											<div className="w-20 rounded-full ring  ring-offset-2 ring-offset-[#00AAFF]">
-												<img
-													src={
-														userData
-															? `${
-																	import.meta
-																		.env
-																		.VITE_APP_IMG_URL
-															  }/usersProfilePic/${
-																	userData.profile_picture
-															  }`
-															: `${
-																	import.meta
-																		.env
-																		.VITE_API_PUBLIC_URL +
-																	"/assets/img/profile.jpg"
-															  }`
-													}
-													className="img-fluid"
-													alt=""
-												/>
-											</div>
-										</div>
-									</div>
-									<div className="profile-card__content">
-										<p className="name text-lg">
-											{item.name ? item.name : "Guest"}{" "}
-											<span className="id">
-												ID: {user ? user.id : "Guest"}{" "}
-												{/* Assuming you want to display the user's ID */}
-											</span>
-										</p>
+					{user && (
+						<div className="profile-card text-center">
+							<div>
+								<div className="avatar">
+									<div className="w-20 rounded-full ring  ring-offset-2 ring-offset-[#00AAFF]">
+										<img
+											src={
+												user
+													? `${
+															import.meta.env
+																.VITE_APP_IMG_URL
+													  }/usersProfilePic/${
+															user.profile_picture
+													  }`
+													: `${
+															import.meta.env
+																.VITE_API_PUBLIC_URL
+													  }/assets/img/profile.jpg`
+											}
+											className="img-fluid"
+											alt=""
+										/>
 									</div>
 								</div>
-						  ))
-						: ""}
-					<div className="">
-						<ul
-							onClick={handeloffDrawer}
-							className="offcanvas-navigation overflow-y-auto"
-						>
-							<li>
-								<span className="icon">
-									<FaHome />
-								</span>
-								<Link to={"/home"}> Home</Link>
-							</li>
-
-							{userid
-								? userInfo.map((item) =>
-										item.access == "shopper" ? (
-											<li key={item.id}>
-												<span className="icon">
-													<DashBoardIcon></DashBoardIcon>
-												</span>
-												<Link
-													key={user}
-													to={
-														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														`/shopkeeperDashboard`
-													}
-												>
-													DashBoard
-												</Link>
-											</li>
-										) : (
-											""
-										)
-								  )
-								: ""}
-
-							<li>
-								<span className="icon">
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/product.svg"
-										}
-									/>
-								</span>
-								<Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"/shop"
-									}
-								>
-									All products
-								</Link>
-							</li>
-							{userid && (
-								<li>
-									<span className="icon">
-										<ReactSVG
-											src={
-												import.meta.env
-													.VITE_API_PUBLIC_URL +
-												"/assets/img/icons/cart-two.svg"
-											}
-										/>
+							</div>
+							<div className="profile-card__content">
+								<p className="name text-lg">
+									{user.name ? user.name : "Guest"}{" "}
+									<span className="id">
+										ID: {user.id ? user.id : "Guest"}
 									</span>
-									{userid
-										? userInfo.map((item) =>
-												item.access == "shopper" ? (
-													<Link
-														key={user}
-														to={
-															import.meta.env
-																.VITE_API_PUBLIC_URL +
-															`/orderShopper`
-														}
-													>
-														Order
-													</Link>
-												) : (
-													<Link
-														key={user}
-														to={
-															import.meta.env
-																.VITE_API_PUBLIC_URL +
-															`/order`
-														}
-													>
-														My Orders
-													</Link>
-												)
-										  )
-										: ""}
-								</li>
-							)}
-
-							{userid
-								? userInfo.map((item) =>
-										item.access == "shopper" ? (
-											<li key={userInfo.id}>
-												<span className="icon">
-													<ReactSVG
-														src={
-															import.meta.env
-																.VITE_API_PUBLIC_URL +
-															"/assets/img/icons/cart-two.svg"
-														}
-													/>
-												</span>
-												<Link
-													key={user}
-													to={
-														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														`/ordersHistoryDetails/${
-															user && user.id
-														}`
-													}
-												>
-													Order History
-												</Link>
-											</li>
-										) : (
-											""
-										)
-								  )
-								: ""}
-							{userid
-								? user &&
-								  user.access === "customer" && (
-										<li>
-											<span className="icon">
-												<ReactSVG
-													src={
-														import.meta.env
-															.VITE_API_PUBLIC_URL +
-														"/assets/img/icons/cart-three.svg"
-													}
-												/>
-											</span>
-											<Link
-												to={
-													import.meta.env
-														.VITE_API_PUBLIC_URL +
-													"/cart"
-												}
-											>
-												Cart
-											</Link>
-										</li>
-								  )
-								: ""}
-							{user ? (
-								<li>
-									<span className="icon">
-										<FaUserPlus className="text-xl"></FaUserPlus>
-									</span>
+								</p>
+							</div>
+						</div>
+					)}
+					{user && (
+						<div className="">
+							<ul
+								onClick={handleOffDrawer}
+								className="offcanvas-navigation overflow-y-auto"
+							>
+								{/* Render routes based on user access */}
+								{routes.map((route, index) => (
+									<li key={index}>
+										<span className="icon">
+											{route.icon}
+										</span>
+										<Link to={route.path}>
+											{route.title}
+										</Link>
+									</li>
+								))}
+								{user ? (
+									<li>
+										<span className="icon">
+											<img
+												width="24"
+												height="24"
+												src="https://img.icons8.com/material-outlined/24/exit.png"
+												alt="exit"
+											/>
+										</span>
+										<button onClick={Logout}>Logout</button>
+									</li>
+								) : (
 									<Link
-										to={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/referPage"
-										}
+										to={"/login"}
+										className="w-full rounded-lg bg-primary py-2 text-center  text-white"
 									>
-										Refer
+										Login
 									</Link>
-								</li>
-							) : (
-								""
-							)}
-							{user ? (
-								<li>
-									<span className="icon">
-										<ChatIcon />
-									</span>
-									<Link
-										to={
-											import.meta.env
-												.VITE_API_PUBLIC_URL + "/home"
-										}
-									>
-										Live Chat
-									</Link>
-								</li>
-							) : (
-								""
-							)}
-
-							{user &&
-								userInfo.map((item) =>
-									item.access === "admin" ||
-									item.access === "moderator" ? (
-										<li key={item.id}>
-											<span className="icon">
-												<img
-													width="50"
-													height="50"
-													src="https://img.icons8.com/ios-filled/50/administrator-male--v1.png"
-													alt="administrator-male--v1"
-												/>
-											</span>
-											<Link
-												to={
-													item.access === "admin"
-														? import.meta.env
-																.VITE_API_PUBLIC_URL +
-														  "/admin/stat"
-														: import.meta.env
-																.VITE_API_PUBLIC_URL +
-														  "/moderator/stat"
-												}
-											>
-												{item.access === "admin"
-													? "Admin Page"
-													: "Moderator Page"}
-											</Link>
-										</li>
-									) : null
 								)}
-							{user ? (
-								<li>
-									<span className="icon">
-										<img
-											width="24"
-											height="24"
-											src="https://img.icons8.com/material-outlined/24/exit.png"
-											alt="exit"
-										/>
-									</span>
-									<button onClick={logout}>Logout</button>
-								</li>
-							) : (
-								<Link
-									to={"/login"}
-									className="w-full rounded-lg bg-primary py-2 text-center  text-white"
-								>
-									Login
-								</Link>
-							)}
-						</ul>
-					</div>
+							</ul>
+						</div>
+					)}
+					{!user && (
+						<div className="">
+							<ul
+								onClick={handleOffDrawer}
+								className="offcanvas-navigation overflow-y-auto"
+							>
+								{/* Render routes based on user access */}
+								{publicRoutes.map((route, index) => (
+									<li key={index}>
+										<span className="icon">
+											{route.icon}
+										</span>
+										<Link to={route.path}>
+											{route.title}
+										</Link>
+									</li>
+								))}
+								{user ? (
+									<li>
+										<span className="icon">
+											<img
+												width="24"
+												height="24"
+												src="https://img.icons8.com/material-outlined/24/exit.png"
+												alt="exit"
+											/>
+										</span>
+										<button onClick={Logout}>Logout</button>
+									</li>
+								) : (
+									<Link
+										to={"/login"}
+										className="w-full rounded-lg bg-primary py-2 text-center  text-white"
+									>
+										Login
+									</Link>
+								)}
+							</ul>
+						</div>
+					)}
 				</div>
 			</Drawer>
 		</div>
