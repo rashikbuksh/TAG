@@ -48,7 +48,7 @@ const NewsFeed = () => {
 	}, [posts]);
 	const { user } = useAuth();
 	return (
-		<div className="mt-10">
+		<div className="">
 			<div className="mx-auto w-[90%]">
 				<ShowCartIcon/>
 				<Breadcrumb pageTitle={"News Feed"} prevUrl={"/home"} />
@@ -64,7 +64,7 @@ const NewsFeed = () => {
 							<>
 								<div
 									onClick={handleNewsInput}
-									className="mb-4 w-full rounded border bg-white p-4 shadow-md"
+									className="my-2 w-full rounded border bg-white p-4 shadow-md"
 								>
 									{"Write Post"}
 								</div>

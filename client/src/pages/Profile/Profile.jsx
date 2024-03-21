@@ -12,6 +12,7 @@ import QRCode from "react-qr-code";
 import { FaRegCopy } from "react-icons/fa";
 
 import { FacebookIcon, InstagramIcon, WhatsappIcon } from "@/SvgHub/SocialIcon";
+import Swal from "sweetalert2";
 
 const Profile = () => {
 	// const { data, isLoading, errorMessage } = useFetch("profile.json");
@@ -19,7 +20,7 @@ const Profile = () => {
 	const { user } = useAuth();
 	const [userData, setUserData] = useState({});
 	const [image, setImage] = useState(null);
-
+	const id = userData?.id;
 	const [copySuccess, setCopySuccess] = useState(null);
 
 	const copyToClipboard = (reffer) => {
@@ -32,6 +33,15 @@ const Profile = () => {
 				setCopySuccess("Copy failed: " + err);
 			});
 	};
+	if (copySuccess) {
+		Swal.fire({
+			position: "top-end",
+			icon: "success",
+			title: "Copied to clipboard!",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+	}
 
 	const handleImageUpload = (e) => {
 		const file = e.target.files[0];
@@ -102,7 +112,6 @@ const Profile = () => {
 			.catch((error) => {
 				toast.error(error);
 			});
-
 	}, []);
 
 	return (
@@ -281,10 +290,8 @@ const Profile = () => {
 											Address
 										</div>
 										<div className="profile-info-block__value">
-
-											{userdata.address
-												? userdata.address
-
+											{userData.address
+												? userData.address
 												: "N/A"}
 										</div>
 									</div>
@@ -329,8 +336,8 @@ const Profile = () => {
 							</div>
 						</div>
 					</div>
-					{/* QR code generator  and social media icone	*/}
-					{userdata.access == "shopper" && (
+					{/* QR code generator  and social media icon	*/}
+					{userData.access == "shopper" && (
 						<div>
 							<div>
 								<p className="text-center">
@@ -353,17 +360,8 @@ const Profile = () => {
 								<p>Scan The QR Code to Visit Your Shop</p>
 							</div>
 							<div>
-								<div className=" input input-bordered my-2 flex items-center justify-between gap-2 bg-gray-200">
-									<div
-										onClick={() =>
-											copyToClipboard(
-												`${
-													import.meta.env
-														.VITE_API_PUBLIC_URL
-												}/shopkeeperProfileCV/${id}`
-											)
-										}
-									>
+								<button className=" input input-bordered my-2 flex items-center justify-between gap-2 bg-gray-200">
+									<div>
 										<input
 											type="text"
 											className="w-[300px] grow border-none bg-gray-200 text-center text-black "
@@ -374,10 +372,19 @@ const Profile = () => {
 											readOnly
 										/>
 									</div>
-									<span >
+									<span
+										onClick={() =>
+											copyToClipboard(
+												`${
+													import.meta.env
+														.VITE_API_PUBLIC_URL
+												}/shopkeeperProfileCV/${id}`
+											)
+										}
+									>
 										<FaRegCopy size={25}> </FaRegCopy>
 									</span>
-								</div>
+								</button>
 							</div>
 						</div>
 					)}
