@@ -348,7 +348,7 @@ const Profile = () => {
 								<p>Scan The QR Code to Visit Your Shop</p>
 							</div>
 							<div>
-								<div className=" input input-bordered my-2 flex gap-2 bg-gray-200">
+								<div className=" input input-bordered my-2 flex items-center justify-between gap-2 bg-gray-200">
 									<div
 										onClick={() =>
 											copyToClipboard(
@@ -361,7 +361,7 @@ const Profile = () => {
 									>
 										<input
 											type="text"
-											className="w-full grow border-none bg-gray-200 text-center text-black "
+											className="w-[300px] grow border-none bg-gray-200 text-center text-black "
 											value={`${
 												import.meta.env
 													.VITE_API_PUBLIC_URL
@@ -369,8 +369,9 @@ const Profile = () => {
 											readOnly
 										/>
 									</div>
-
-									<FaRegCopy size={25}> </FaRegCopy>
+									<span >
+										<FaRegCopy size={25}> </FaRegCopy>
+									</span>
 								</div>
 							</div>
 						</div>
