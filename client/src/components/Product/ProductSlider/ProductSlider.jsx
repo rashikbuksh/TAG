@@ -5,7 +5,7 @@ import ProductCart from "../ProductCart/ProductCart";
 const ProductSlider = ({ products }) => {
 	return (
 		<div>
-			<div className="">
+			<div className="border border-red-500 p-2">
 				<Swiper
 					slidesPerView={2.2}
 					spaceBetween={15}

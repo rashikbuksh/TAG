@@ -41,11 +41,12 @@ const BestSellerProduct = ({ limit, type }) => {
 
 	if (!shopperProducts?.length) return <LoadingPage></LoadingPage>;
 	return (
-		<div className="featured-product-area space-mb--25 mt-2 mx-auto max-w-7xl">
+		<div className="featured-product-area space-mb--25 mx-auto mt-2 max-w-7xl">
 			<div className="">
 				<div className="">
-					<div className="">
+					<div className="border border-red-500 p-2">
 						{/* section title */}
+
 						{shopperProducts && (
 							<h2 className="section-title ">
 								<span className="text-xl font-bold">
@@ -73,13 +74,13 @@ const BestSellerProduct = ({ limit, type }) => {
 						)}
 
 						{/* featured products */}
-						<div className="featured-product-wrapper space-mb-m--15">
-							<div className="mt-1 grid grid-cols-2 gap-1 lg:grid-cols-4">
+						<div className="featured-product-wrapper  ">
+							<div className="mt-1 grid grid-cols-2 gap-1 border  border-red-500 p-2   lg:grid-cols-4 ">
 								{shopperProducts.map((single) => {
 									return (
 										<div
 											key={single.id}
-											className="bestsellCartShado w-full p-2"
+											className="bestsellCartShado w-full  p-2 border"
 										>
 											<Link
 												className="flex items-center justify-center"
@@ -94,7 +95,7 @@ const BestSellerProduct = ({ limit, type }) => {
 														import.meta.env
 															.VITE_APP_IMG_URL
 													}/products/${single.image}`}
-													className="mx-auto h-[100px] w-[150px] rounded object-cover transition duration-500 group-hover:scale-105"
+													className="mx-auto  w-[150px] rounded object-cover transition duration-500 group-hover:scale-105"
 													alt=""
 												/>
 											</Link>
