@@ -7,12 +7,31 @@ import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { toast } from "react-toastify";
 
+import ReactDOM from "react-dom";
+import QRCode from "react-qr-code";
+import { FaRegCopy } from "react-icons/fa";
+
+import { FacebookIcon, InstagramIcon, WhatsappIcon } from "@/SvgHub/SocialIcon";
+
 const Profile = () => {
 	// const { data, isLoading, errorMessage } = useFetch("profile.json");
 	const [totalOrder, setTotalOrder] = useState(0);
 	const { user } = useAuth();
 	const [userData, setUserData] = useState({});
 	const [image, setImage] = useState(null);
+
+	const [copySuccess, setCopySuccess] = useState(null);
+
+	const copyToClipboard = (reffer) => {
+		navigator.clipboard
+			.writeText(reffer)
+			.then(() => {
+				setCopySuccess("Copied to clipboard!");
+			})
+			.catch((err) => {
+				setCopySuccess("Copy failed: " + err);
+			});
+	};
 
 	const handleImageUpload = (e) => {
 		const file = e.target.files[0];
@@ -83,7 +102,8 @@ const Profile = () => {
 			.catch((error) => {
 				toast.error(error);
 			});
-	}, [userData, user?.id]);
+
+	}, []);
 
 	return (
 		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 ">
@@ -261,8 +281,10 @@ const Profile = () => {
 											Address
 										</div>
 										<div className="profile-info-block__value">
-											{userData.address
-												? userData.address
+
+											{userdata.address
+												? userdata.address
+
 												: "N/A"}
 										</div>
 									</div>
@@ -307,6 +329,58 @@ const Profile = () => {
 							</div>
 						</div>
 					</div>
+					{/* QR code generator  and social media icone	*/}
+					{userdata.access == "shopper" && (
+						<div>
+							<div>
+								<p className="text-center">
+									Connect Your All Social Media{" "}
+								</p>
+								<div className="flex scale-110 items-center justify-center gap-4 p-2">
+									<FacebookIcon></FacebookIcon>
+									<WhatsappIcon></WhatsappIcon>
+									<InstagramIcon></InstagramIcon>
+								</div>
+							</div>
+
+							<div className="flex h-52 flex-col items-center justify-center gap-4">
+								<QRCode
+									value={`${
+										import.meta.env.VITE_API_PUBLIC_URL
+									}/shopkeeperProfileCV/${id}`}
+									size={130}
+								/>
+								<p>Scan The QR Code to Visit Your Shop</p>
+							</div>
+							<div>
+								<div className=" input input-bordered my-2 flex items-center justify-between gap-2 bg-gray-200">
+									<div
+										onClick={() =>
+											copyToClipboard(
+												`${
+													import.meta.env
+														.VITE_API_PUBLIC_URL
+												}/shopkeeperProfileCV/${id}`
+											)
+										}
+									>
+										<input
+											type="text"
+											className="w-[300px] grow border-none bg-gray-200 text-center text-black "
+											value={`${
+												import.meta.env
+													.VITE_API_PUBLIC_URL
+											}/shopkeeperProfileCV/${id}`}
+											readOnly
+										/>
+									</div>
+									<span >
+										<FaRegCopy size={25}> </FaRegCopy>
+									</span>
+								</div>
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

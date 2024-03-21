@@ -29,7 +29,7 @@ const Checkout = () => {
 		api.get(`/profile/get_profile/${id}`).then((response) => {
 			setUserdata(response.data[0]);
 		});
-	}, []);
+	}, [id]);
 
 	var orderedItem = "";
 	var discountedItem = "";

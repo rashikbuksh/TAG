@@ -42,6 +42,7 @@ async function useFetchFunc(url, setData, setLoading, setError) {
 			});
 	} catch (err) {
 		if (err.name === "AbortError") {
+			
 		} else {
 			setLoading(false);
 			setError(err.message);

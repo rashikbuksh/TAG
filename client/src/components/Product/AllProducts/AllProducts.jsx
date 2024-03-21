@@ -50,120 +50,176 @@ const AllProducts = ({ limit, sliderData }) => {
 	return (
 		<div className="mx-auto max-w-7xl">
 			<div className="">
-				{/* Popular Products */}
-				{popularProducts.length > 0 && (
-					<div>
-						<h2 className="section-title mb-2">
-							<span className="text-xl font-bold">
-								Popular Product{" "}
-							</span>
-							<Link
-								className="primary-text"
-								to={`${
-									import.meta.env.VITE_API_PUBLIC_URL
-								}/shop`}
-							>
-								VIEW ALL
-								<span>
-									<ReactSVG
-										src={`${
-											import.meta.env.VITE_API_PUBLIC_URL
-										}/assets/img/icons/arrow-right.svg`}
-									/>
+					{/* Popular Product  */}
+
+					<div className="border border-red-500 p-2">
+						{prods && (
+							<h2 className="section-title  mb-2">
+								<span className="text-xl font-bold">
+									Popular Product{" "}
 								</span>
-							</Link>
-						</h2>
-						<ProductSlider products={popularProducts} />
-						<div className="my-4"></div>
+
+								<Link
+									className="primary-text "
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/shop"
+									}
+								>
+									VIEW ALL{" "}
+									<span>
+										<ReactSVG
+											src={
+												import.meta.env
+													.VITE_API_PUBLIC_URL +
+												"/assets/img/icons/arrow-right.svg"
+											}
+										/>
+									</span>
+								</Link>
+							</h2>
+						)}
+
+						<ProductSlider
+							products={popularProducts}
+						></ProductSlider>
 					</div>
-				)}
 
-				{/* Offer Products */}
-				{isOfferProduct.length > 0 && (
-					<div>
-						<h2 className="section-title mb-2">
-							<span className="text-xl font-bold">
-								Offer Products{" "}
-							</span>
-							<Link
-								className="primary-text"
-								to={`${
-									import.meta.env.VITE_API_PUBLIC_URL
-								}/shop`}
-							>
-								VIEW ALL
-								<span>
-									<ReactSVG
-										src={`${
-											import.meta.env.VITE_API_PUBLIC_URL
-										}/assets/img/icons/arrow-right.svg`}
-									/>
+					<div className="my-4"></div>
+
+					<div className="border border-red-500 p-2">
+						{prods && (
+							<h2 className="section-title mb-2">
+								<span className="text-xl font-bold">
+									Offer Products{" "}
 								</span>
-							</Link>
-						</h2>
-						<ProductSlider products={isOfferProduct} />
-						<div className="my-4"></div>
+
+								<Link
+									className="primary-text"
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/shop"
+									}
+								>
+									VIEW ALL{" "}
+									<span>
+										<ReactSVG
+											src={
+												import.meta.env
+													.VITE_API_PUBLIC_URL +
+												"/assets/img/icons/arrow-right.svg"
+											}
+										/>
+									</span>
+								</Link>
+							</h2>
+						)}
+						<ProductSlider
+							products={isOfferProduct}
+						></ProductSlider>
 					</div>
-				)}
 
-				{/* Verified Products */}
-				{isVerifiedProduct.length > 0 && (
-					<div>
-						<h2 className="section-title mb-2">
-							<span className="text-xl font-bold">
-								Verified Products{" "}
-							</span>
-							<Link
-								className="primary-text"
-								to={`${
-									import.meta.env.VITE_API_PUBLIC_URL
-								}/shop`}
-							>
-								VIEW ALL
-								<span>
-									<ReactSVG
-										src={`${
-											import.meta.env.VITE_API_PUBLIC_URL
-										}/assets/img/icons/arrow-right.svg`}
-									/>
-								</span>
-							</Link>
-						</h2>
-						<ProductSlider products={isVerifiedProduct} />
-						<div className="my-4"></div>
+					<div className="my-4"></div>
+					<div className="border border-red-500 p-2">
+						{prods && (
+							<h2 className="section-title mb-2 ">
+								<p className="flex items-center gap-3 text-xl font-bold">
+									<span>Verified Product</span>{" "}
+									<FaCheckCircle className=" primary-text"></FaCheckCircle>
+								</p>
+
+								<Link
+									className="primary-text"
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/shop"
+									}
+								>
+									VIEW ALL{" "}
+									<span>
+										<ReactSVG
+											src={
+												import.meta.env
+													.VITE_API_PUBLIC_URL +
+												"/assets/img/icons/arrow-right.svg"
+											}
+										/>
+									</span>
+								</Link>
+							</h2>
+						)}
+						<ProductSlider
+							products={isVerifiedProduct}
+						></ProductSlider>
 					</div>
-				)}
 
-				{/* Hero Slider */}
-				<HeroSlider sliderData={sliderData} isAutoPlay={false} />
-				<div className="my-4"></div>
+					<div className="my-4"></div>
+					<div className="border border-red-500 p-2">
+						<HeroSlider
+							sliderData={sliderData}
+							isAutoPlay={false}
+						/>
+					</div>
+					<div className="my-4"></div>
 
-				{/* All Products */}
-				{prods.length > 0 && (
-					<div>
-						<h2 className="section-title mb-2">
-							<span className="text-xl font-bold">
-								All Products{" "}
-							</span>
-							<Link
-								className="primary-text"
-								to={`${
-									import.meta.env.VITE_API_PUBLIC_URL
-								}/shop`}
-							>
-								VIEW ALL
-								<span>
-									<ReactSVG
-										src={`${
-											import.meta.env.VITE_API_PUBLIC_URL
-										}/assets/img/icons/arrow-right.svg`}
-									/>
-								</span>
+					<div></div>
+
+					<div className="border border-red-500 p-2">
+						{prods && (
+							<h2 className="section-title mb-2">
+								<span className="text-xl font-bold">
+									All Products{" "}	</span>
+
+
+								<Link
+									className="primary-text"
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										"/shop"
+									}
+								>
+									VIEW ALL{" "}
+									<span>
+										<ReactSVG
+											src={
+												import.meta.env
+													.VITE_API_PUBLIC_URL +
+												"/assets/img/icons/arrow-right.svg"
+											}
+										/>
+									</span>
+								</Link>
+							</h2>
+						)}
+						<ProductSlider products={prods}></ProductSlider>
+					</div>
+
+					{/* <div className="">
+						<div className="grid gap-10 lg:grid-cols-4">
+							{prods.map((single) => {
+								const wishlistItem = wishlistItems.find(
+									(wishlistItem) =>
+										wishlistItem.id === single.id
+								);
+								return (
+									//?this is product cart style
+									<ProductCart
+										product={single}
+										key={single.id}
+									>
+										{" "}
+									</ProductCart>
+								);
+							})}
+						</div>
+					</div> */}
+
 							</Link>
 						</h2>
 						<ProductSlider products={prods} />
 					</div>
 				)}
+
 			</div>
 		</div>
 	);

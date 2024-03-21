@@ -8,8 +8,9 @@ import { ReactSVG } from "react-svg";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
-import { FaLocationDot, FaX } from "react-icons/fa6";
 
+import { FaLocationDot, FaX } from "react-icons/fa6";
+import { BellIcon } from "@/SvgHub/Icons";
 function Header() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ function Header() {
               <div className="flex items-center justify-center gap-3 ">
                 {user && user.access === "shopper" ? (
                   <Link to={"/notification"} className="relative">
-                    <FaBell className="text-4xl text-yellow-500" />
+                   <BellIcon></BellIcon>
                     {notifications.length > 0 && (
                       <p className="absolute -top-2 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white">
                         {notifications.length}
@@ -162,6 +163,5 @@ function Header() {
       <SearchKeywords />
     </>
   );
-}
 
 export default Header;

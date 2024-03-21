@@ -18,7 +18,6 @@ const TagShop = () => {
                 setLoading(false);
             }
         };
-
         fetchProducts();
     }, []);
 
@@ -33,6 +32,7 @@ const TagShop = () => {
     return (
         <div className="mx-auto max-w-7xl">
             <div className="my-4"></div>
+      	<div className="border border-red-500 p-2">
             <h2 className="section-title mb-2">
                 <span className="text-xl font-bold">
                     TAG Online Store Product
@@ -46,9 +46,12 @@ const TagShop = () => {
                 {products.map((product) => (
                     <ProductCart product={product} key={product.id} />
                 ))}
+     			</div>
             </div>
-        </div>
+
+		</div>
     );
+
 };
 
 export default TagShop;

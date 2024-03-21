@@ -6,6 +6,7 @@ import ShopSlider from "./ShopSlider/ShopSlider";
 
 const AllShop = () => {
 	const [shops, setShops] = useState([]);
+  
 	useEffect(() => {
 		api.get(`/shop/getAllShop`).then((response) => {
 			setShops(response.data);
@@ -13,7 +14,7 @@ const AllShop = () => {
 	}, []);
 
 	return (
-		<div className="mx-auto  max-w-7xl">
+		<div className="mx-auto  my-4 max-w-7xl border p-2 ">
 			<div className="my-4"></div>
 			{
 				<h2 className="section-title  mb-2">
@@ -36,7 +37,9 @@ const AllShop = () => {
 				</h2>
 			}
 
-			<ShopSlider shops={shops}></ShopSlider>
+			<div className="border border-red-500 p-2">
+				<ShopSlider shops={shops}></ShopSlider>
+			</div>
 		</div>
 	);
 };
