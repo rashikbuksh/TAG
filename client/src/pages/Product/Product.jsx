@@ -1,32 +1,25 @@
-import Axios from "axios";
-import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { ReactSVG } from "react-svg";
-import Swiper, { SwiperSlide } from "../../components/swiper";
-import {
-	addToCart,
-	decreaseQuantity,
-	increaseQuantity,
-	increaseQuantityofProd,
-} from "../../store/slices/cart-slice";
-import { addToWishlist } from "../../store/slices/wishlist-slice";
-
-import { FaCheckCircle } from "react-icons/fa";
-import { FaEye, FaRegMessage } from "react-icons/fa6";
-import { StarIcon } from "../../SvgHub/Icons";
-import { Footer, Header } from "../../components";
-import MessageModal from "../../components/Modal/MessageModal/MessageModal";
-import ShowCartIcon from "../../components/ShowCartIcon/ShowCartIcon";
-import { useAuth } from "../../context/auth";
+import { StarIcon } from "@SvgHub/Icons";
+import { Footer, Header } from "@components";
+import MessageModal from "@components/Modal/MessageModal/MessageModal";
+import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
+import { useAuth } from "@context/auth";
 import {
 	cartItemStock,
 	checkIfInCart,
 	getDiscountPrice,
-	getProductCartQuantity,
-} from "../../helpers/product";
-import { api } from "../../lib/api";
+} from "@helpers/product";
+import { api } from "@lib/api";
+import {
+	addToCart,
+	decreaseQuantity,
+	increaseQuantity,
+} from "@store/slices/cart-slice";
+import React, { Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { FaCheckCircle } from "react-icons/fa";
+import { FaRegMessage } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 
 const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
@@ -145,7 +138,7 @@ const Product = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon />
-			<div className="mx-auto px-4 py-8 lg:w-[50%] ">
+			<div className="mx-auto mb-5 px-4 py-8 lg:w-[50%]">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}
 				<div className="">
@@ -385,7 +378,7 @@ const Product = () => {
 												.VITE_API_PUBLIC_URL + "/login"
 										}
 									>
-										<button className="auth-btn ">
+										<button className="auth-btn w-full">
 											Add To Cart{" "}
 										</button>
 									</Link>

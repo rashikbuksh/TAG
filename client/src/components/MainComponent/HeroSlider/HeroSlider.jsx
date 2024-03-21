@@ -1,15 +1,8 @@
+import React from "react";
 import { Link } from "react-router-dom";
-import useFetch from "../../../hooks/use-fetch";
-import { api } from "../../../lib/api";
-import ErrorMessage from "../../ErrorMessage/ErrorMessage";
-import Preloader from "../../Preloader/Preloader";
 import Swiper, { SwiperSlide } from "../../swiper";
 
-import Axios from "axios";
-import React, { useEffect, useState } from "react";
-
 const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
-	// const { data, isLoading, errorMessage } = useFetch("/heroslider/getslider");
 	const params = {
 		loop: true,
 		speed: 1000,
@@ -31,18 +24,6 @@ const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 					<Swiper options={params}>
 						{sliderData.map((single) => (
 							<SwiperSlide key={single.id}>
-								{/* <div
-												className="hero-slider-item flex bg-img"
-												style={{
-													backgroundImage: `url(${
-														import.meta.env
-															.VITE_APP_IMG_URL +
-														"/heroslider/" +
-														single.image
-													})`,
-												}}
-											>
-											</div> */}
 								<Link
 									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
@@ -60,26 +41,6 @@ const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 										alt=""
 									/>
 								</Link>
-								{/* <div className="container">
-													<div className="row">
-														<div className="col-12">
-															hero slider content
-															<div className="hero-slider-content">
-																<h2
-																	className="hero-slider-content__title space-mb--10"
-																	dangerouslySetInnerHTML={{
-																		__html: single.title,
-																	}}
-																></h2>
-																<p className="hero-slider-content__text">
-																	{
-																		single.subtitle
-																	}
-																</p>
-															</div>
-														</div>
-													</div>
-												</div> */}
 							</SwiperSlide>
 						))}
 					</Swiper>

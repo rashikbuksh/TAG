@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { api } from "@lib/api";
 import Axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
+import * as yup from "yup";
 
 const AddProductForm = () => {
 	const [categoryNames, setCategoryNames] = useState([]);
@@ -81,7 +81,7 @@ const AddProductForm = () => {
 			name: "",
 			image: "",
 			short_description: "",
-			title:"",
+			title: "",
 			full_description: "",
 			category_id: "",
 			product_varification: "",
@@ -91,7 +91,7 @@ const AddProductForm = () => {
 		resolver: yupResolver(addProductSchema),
 	});
 
-	const { register, handleSubmit, formState ,setValue} = form;
+	const { register, handleSubmit, formState, setValue } = form;
 	const { errors } = formState;
 
 	const changedCategory = (e) => {
@@ -99,14 +99,14 @@ const AddProductForm = () => {
 	};
 
 	const onNameChange = (e) => {
-        const value = e.target.value;
-        setValue("title", value.replace(/\s/g, "_"));
-    };
+		const value = e.target.value;
+		setValue("title", value.replace(/\s/g, "_"));
+	};
 	const handleTitleChange = (e) => {
-        const value = e.target.value;
-        const updatedValue = value.replace(/\s/g, "_");
-        setValue("title", updatedValue); // Update state with the modified value
-    };
+		const value = e.target.value;
+		const updatedValue = value.replace(/\s/g, "_");
+		setValue("title", updatedValue); // Update state with the modified value
+	};
 	const onSubmit = async (data) => {
 		const formData = new FormData();
 		formData.append("uploadFiles", Image);
@@ -134,7 +134,7 @@ const AddProductForm = () => {
 			name: data.name,
 			image: ImageName,
 			short_description: data.short_description,
-			title:data.title,
+			title: data.title,
 			full_description: data.full_description,
 			category_id: Number(data.category_id),
 			isVerified: data.product_varification,

@@ -1,16 +1,16 @@
+import SearchFunction from "@AdminComponents/SearchFunction/Index";
+import { TikIcon } from "@SvgHub/Icons";
+import { Breadcrumb } from "@components";
+import ShopkeeperProductcart from "@components/Shopkeeper/ShopkeepersProduct/ShopkeeperProductcart";
+import { useAuth } from "@context/auth";
+import GetDateTime from "@helpers/GetDateTime";
+import { getDiscountPrice } from "@helpers/product";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
+import { toast } from "react-toastify";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-import SearchFunction from "../../../AdminComponents/SearchFunction/Index";
-import { TikIcon } from "../../../SvgHub/Icons";
-import { Breadcrumb } from "../../../components";
-import ShopkeeperProductcart from "../../../components/Shopkeeper/ShopkeepersProduct/ShopkeeperProductcart";
-import { useAuth } from "../../../context/auth";
-import GetDateTime from "../../../helpers/GetDateTime";
-import { getDiscountPrice } from "../../../helpers/product";
-import { api } from "../../../lib/api";
-import { toast } from "react-toastify";
 
 const ShopperProduct = () => {
 	const [category, setCategory] = useState([]);
@@ -223,7 +223,7 @@ const ShopperProduct = () => {
 			{/* Weight section  */}
 
 			{/* product  */}
-			<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 rounded mx-auto w-[95%]">
+			<div className="mx-auto grid w-[95%] grid-cols-2 gap-2 rounded md:grid-cols-4 lg:grid-cols-6">
 				{filteredProductArr.map((product) => (
 					<ShopkeeperProductcart
 						key={product.id}

@@ -1,5 +1,3 @@
-
-
 const Taglogo = () => {
 	return (
 		<svg

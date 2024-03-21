@@ -10,7 +10,10 @@
 			"@helpers": ["./src/helpers"],
 			"@lib": ["./src/lib"],
 			"@context": ["./src/context"],
-			"@routes": ["./src/routes"]
+			"@routes": ["./src/routes"],
+			"@SvgHub": ["./src/SvgHub"],
+			"@store": ["./src/store"],
+			"@AdminComponents": ["./src/AdminComponents"]
 		}
 	}
 }

@@ -1,5 +1,5 @@
+import Taglogo from "@SvgHub/Taglogo";
 import React, { useEffect } from "react";
-import Taglogo from "../../SvgHub/Taglogo";
 
 const Welcome = () => {
 	useEffect(() => {
@@ -19,7 +19,9 @@ const Welcome = () => {
 				<Taglogo />
 			</div>
 			<div className="flex-grow">
-				<p className="text-sm font-semibold mt-28">Beta Version 24.1.01</p>
+				<p className="mt-28 text-sm font-semibold">
+					Beta Version 24.1.01
+				</p>
 			</div>
 		</div>
 	);

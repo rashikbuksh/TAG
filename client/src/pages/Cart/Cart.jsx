@@ -1,22 +1,22 @@
+import { Takaicon } from "@SvgHub/SocialIcon";
+import { Breadcrumb } from "@components";
+import { useAuth } from "@context/auth";
 import cogoToast from "@hasanm95/cogo-toast";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { FaTrash } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { Takaicon } from "../../SvgHub/SocialIcon";
-import { useAuth } from "../../context/auth";
-import GetDateTime from "../../helpers/GetDateTime";
-import { cartItemStock, getDiscountPrice } from "../../helpers/product";
-import NoItemInCart from "../../../public/icons/shopping_cart_remove.png";
-import { api } from "../../lib/api";
+import GetDateTime from "@helpers/GetDateTime";
+import { cartItemStock, getDiscountPrice } from "@helpers/product";
+import { api } from "@lib/api";
 import {
 	addToCart,
 	decreaseQuantity,
 	deleteFromCart,
 	increaseQuantity,
-} from "../../store/slices/cart-slice";
-import { Breadcrumb } from "../../components";
+} from "@store/slices/cart-slice";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { FaTrash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import NoItemInCart from "../../../public/icons/shopping_cart_remove.png";
 
 const Cart = () => {
 	const dispatch = useDispatch();

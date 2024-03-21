@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../context/auth";
+import { useAuth } from "@context/auth";
 import Cookies from "js-cookie";
+import React from "react";
 import { FaSignOutAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ModeratorPageSideBar = () => {
 	const { user } = useAuth();
@@ -42,7 +42,10 @@ const ModeratorPageSideBar = () => {
 					</div>
 				</div>
 				<div className=" absolute bottom-10  ">
-					<button className="btn flex items-center justify-center gap-2 hover:text-black" onClick={logout}>
+					<button
+						className="btn flex items-center justify-center gap-2 hover:text-black"
+						onClick={logout}
+					>
 						<span className="icon">
 							<FaSignOutAlt />
 						</span>

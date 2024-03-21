@@ -1,15 +1,14 @@
+import { Breadcrumb } from "@components";
+import OrderProducTable from "@components/Product/OrderProductTable/OrderProducTable";
+import SuccessOrderModal from "@components/SuccessOrderModal/SuccessOrderModal";
+import { useAuth } from "@context/auth";
+import { addOneHour } from "@helpers/FormattedTime";
+import GetDateTime from "@helpers/GetDateTime";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
-import { FaRedo, FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
-import { Breadcrumb } from "../../../components";
-import OrderProducTable from "../../../components/Product/OrderProductTable/OrderProducTable";
-import SuccessOrderModal from "../../../components/SuccessOrderModal/SuccessOrderModal";
-import GetDateTime from "../../../helpers/GetDateTime";
-import { api } from "../../../lib/api";
-import { useAuth } from "../../../context/auth";
 import { toast } from "react-toastify";
-import { addOneHour } from "../../../helpers/FormattedTime";
+import Swal from "sweetalert2";
 
 const OrderDetailsShopper = () => {
 	const { id } = useParams();

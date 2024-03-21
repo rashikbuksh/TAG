@@ -1,8 +1,8 @@
+import { Takaicon } from "@SvgHub/SocialIcon";
+import { Breadcrumb } from "@components";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Takaicon } from "../../../SvgHub/SocialIcon";
-import { Breadcrumb } from "../../../components";
-import { api } from "../../../lib/api";
+import { Link } from "react-router-dom";
 
 const ShopperOrderHistory = () => {
 	const [data, setData] = useState([]);

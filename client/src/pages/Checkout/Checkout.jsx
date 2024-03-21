@@ -1,12 +1,10 @@
-import Axios from "axios";
+import { getDiscountPrice } from "@helpers/product";
+import { api } from "@lib/api";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import { Breadcrumb } from "../../components";
-import { getDiscountPrice } from "../../helpers/product";
-import { api } from "../../lib/api";
 import { toast } from "react-toastify";
 
 const Checkout = () => {

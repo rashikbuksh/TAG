@@ -1,4 +1,5 @@
 import ShopperMapMarker from "@assets/img/map-marker-for-shopper.png";
+import { useAuth } from "@context/auth";
 import GetLocation from "@helpers/GetLocation";
 import { api } from "@lib/api";
 import { Map, Marker } from "pigeon-maps";
@@ -6,14 +7,17 @@ import { maptiler } from "pigeon-maps/providers";
 import React, { useState } from "react";
 import Modal from "../Modal";
 
-const MapDistanceModal = ({ isOpen, setIsOpen, ...props }) => {
+const MapDistanceModal = (props) => {
 	const [minimumDistance, setMinimumDistance] = useState(0);
 	api.get(`/util/getUtil/map_minimum_distance_in_meter`).then((res) => {
 		setMinimumDistance(res.data[0].value);
 	});
 
+	const { user } = useAuth();
+
 	// user Location
 	const { location, loading, error } = GetLocation();
+	console.log("🚀 ~ MapDistanceModal ~ location:", location)
 	if (loading) return <h1>Loading...</h1>;
 	if (error) return <h1>{error}</h1>;
 
@@ -38,34 +42,48 @@ const MapDistanceModal = ({ isOpen, setIsOpen, ...props }) => {
 		return d;
 	};
 
-	const waypoints = [[23.7491773, 90.4203602]];
-
 	return (
-		<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-			<Map
-				provider={maptilerProvider}
-				dprs={[1, 2]}
-				height={600}
-				defaultCenter={[location.lat, location.lng]}
-				defaultZoom={15}
-			>
-				<Marker width={40} anchor={[location.lat, location.lng]} />
-				{waypoints.map((waypoint, index) =>
-					typeof waypoint[0] === "number" &&
-					typeof waypoint[1] === "number" &&
-					DistanceCalculation(waypoint[0], waypoint[1]) <=
-						minimumDistance ? (
+		<Modal isOpen={props.isOpen} setIsOpen={props.setIsOpen}>
+			{user?.id == null ? (
+				<h1>Please login to see the map</h1>
+			) : (
+				<Map
+					provider={maptilerProvider}
+					dprs={[1, 2]}
+					height={600}
+					defaultCenter={[location.lat, location.lng]}
+					defaultZoom={15}
+				>
+					<Marker width={40} anchor={[location.lat, location.lng]} color="red"/>
+					{props.single == true ? (
 						<Marker
-							key={index}
 							width={40}
-							anchor={waypoint}
-							color={ShopperMapMarker}
+							anchor={[
+								parseFloat(props.latLong.lat),
+								parseFloat(props.latLong.lng),
+							]}
+							
 						/>
-					) : null
-				)}
-			</Map>
+					) : Array.isArray(props.latLong) && props.latLong.map((item) => {
+						const distance = DistanceCalculation(item.lat, item.lng);
+						if (distance < minimumDistance) {
+							return (
+								<Marker
+									key={Math.random()}
+									width={40}
+									anchor={[parseFloat(item.lat), parseFloat(item.lng)]}
+									color="green"
+								/>
+							);
+						} else {
+							<h1>No shop to see the map</h1> // Return null if the condition is not met
+						}
+					})}
+				</Map>
+			)}
 		</Modal>
 	);
 };
+
 
 export default MapDistanceModal;

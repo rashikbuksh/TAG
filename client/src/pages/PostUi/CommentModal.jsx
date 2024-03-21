@@ -1,10 +1,9 @@
+import Modal from "@components/Modal/Modal";
+import { useAuth } from "@context/auth";
+import GetDateTime from "@helpers/GetDateTime";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
-import { get } from "react-hook-form";
 import { FaTrash } from "react-icons/fa6";
-import Modal from "../../components/Modal/Modal";
-import { useAuth } from "../../context/auth";
-import GetDateTime from "../../helpers/GetDateTime";
-import { api } from "../../lib/api";
 
 const CommentModal = ({
 	isOpen,

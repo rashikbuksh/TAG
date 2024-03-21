@@ -1,6 +1,5 @@
-
+import { api } from "@lib/api";
 import { toast } from "react-toastify";
-import { api } from "../lib/api";
 
 async function useUpdateFunc({
 	uri,
@@ -12,7 +11,7 @@ async function useUpdateFunc({
 	extraData = {},
 }) {
 	try {
-		const response = await api.post(uri, updatedData);
+		const response = await api.put(uri, updatedData);
 
 		setItems((prev) =>
 			prev.map(({ id, ...rest }) => {

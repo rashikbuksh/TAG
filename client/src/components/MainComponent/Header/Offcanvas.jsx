@@ -1,12 +1,12 @@
+import { ChatIcon, DashBoardIcon } from "@SvgHub/Icons";
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { FaBars, FaHome, FaUserPlus } from "react-icons/fa";
+import { FaHome, FaUserPlus } from "react-icons/fa";
 import Drawer from "react-modern-drawer";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import { ChatIcon, DashBoardIcon } from "../../../SvgHub/Icons";
-import { useAuth } from "../../../context/auth";
-import { api } from "../../../lib/api";
 function Offcanvas(props) {
 	const {
 		toggleDrawer,
@@ -46,9 +46,6 @@ function Offcanvas(props) {
 	};
 
 	return (
-		// <div className={`offcanvas-menu ${props.show ? "active" : ""}`}>
-
-		// </div>
 		<div>
 			<button onClick={toggleDrawer}>
 				<ReactSVG
@@ -286,16 +283,15 @@ function Offcanvas(props) {
 							{user ? (
 								<li>
 									<span className="icon">
-										<ChatIcon/>
+										<ChatIcon />
 									</span>
 									<Link
 										to={
 											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/home"
+												.VITE_API_PUBLIC_URL + "/home"
 										}
 									>
-										Live Chat 
+										Live Chat
 									</Link>
 								</li>
 							) : (

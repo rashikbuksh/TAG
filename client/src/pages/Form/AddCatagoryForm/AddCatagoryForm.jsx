@@ -1,18 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Axios from "axios";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
+import * as yup from "yup";
 
 const AddcategoryForm = () => {
 	const [category, setCategory] = useState([]);
 	const addcategoryScema = yup.object({
 		category_name: yup.string().required("Category name required"),
-		category_url: yup
-			.string()
-			.url("Invalid URL format")
+		category_url: yup.string().url("Invalid URL format"),
 	});
 	const form = useForm({
 		defaultValues: {
@@ -111,7 +108,7 @@ const AddcategoryForm = () => {
 						</div>
 					</div>
 				</div>
-				<div className="mx-auto my-3 grid grid-cols-7 gap-3 w-[90%]  bg-gray-200 p-10">
+				<div className="mx-auto my-3 grid w-[90%] grid-cols-7 gap-3  bg-gray-200 p-10">
 					{category.map((categoryData) => (
 						<p
 							className="rounded bg-white px-4 py-2"

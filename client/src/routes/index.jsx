@@ -1,10 +1,10 @@
+import { Footer, Header } from "@components";
+import LoadingPage from "@components/LoadingPage/LoadingPage";
+import Offcanvas from "@components/MainComponent/Header/Offcanvas";
+import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
+import { useAuth } from "@context/auth";
 import { Navigate, Outlet, useParams } from "react-router-dom";
 import { PROTECTED_ROUTES } from "../App";
-import { Footer, Header } from "../components";
-import LoadingPage from "../components/LodingPage/LoadingPage";
-import Offcanvas from "../components/MainComponent/Header/Offcanvas";
-import ShowCartIcon from "../components/ShowCartIcon/ShowCartIcon";
-import { useAuth } from "../context/auth";
 
 export default function ProtectedRoutes() {
 	const { signed, loading, user } = useAuth();

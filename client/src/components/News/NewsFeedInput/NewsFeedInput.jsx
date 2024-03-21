@@ -1,10 +1,11 @@
+import Modal from "@components/Modal/Modal";
+import { api } from "@lib/api";
 import Axios from "axios";
 import Cookies from "js-cookie";
 import React, { useState } from "react";
 import { FaCamera, FaFileImage } from "react-icons/fa";
-import { api } from "../../../lib/api";
-import Modal from "../../Modal/Modal";
 import { toast } from "react-toastify";
+import { useAuth } from "@context/auth";
 
 const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 	const [cameraError, setCameraError] = useState(null);
@@ -13,7 +14,7 @@ const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 	const [isPosting, setIsPosting] = useState(false);
 	const [postError, setPostError] = useState(null);
 
-	const userID = localStorage.getItem("user-id");
+	const { user } = useAuth();
 
 	const handleCameraClick = async () => {
 		try {
@@ -74,14 +75,14 @@ const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 
 		try {
 			const response = await api.post(`/news/addnews`, {
-				shop_id: userID,
+				shop_id: user?.id,
 				date: new Date(),
 				post_content: content,
 				post_img: ImageName,
 				category: "regular",
 			});
 
-			if (response.data.message == `${userID} added successfully`) {
+			if (response.data.message == `${user?.id} added successfully`) {
 				setContent("");
 				setFile(null); // Reset the selected image
 				setIsPosting(false);

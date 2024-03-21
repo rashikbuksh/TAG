@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { api } from "../../../lib/api";
-import SearchFunction from "../../SearchFunction/Index";
-import AdminProductCart from "./AdminProductCart";
 import { toast } from "react-toastify";
+import SearchFunction from "../../SearchFunction/Index";
+import { api } from "@lib/api";
+import AdminProductCart from "./AdminProductCart";
 
 const AllProductAdmin = () => {
 	const [products, setProducts] = useState([]);
@@ -37,7 +37,7 @@ const AllProductAdmin = () => {
 	};
 	return (
 		<>
-			<div className="flex items-center justify-center w-[80%] mx-auto">
+			<div className="mx-auto flex w-[80%] items-center justify-center">
 				<SearchFunction
 					arr={products}
 					setFilteredArr={setFilteredProducts}

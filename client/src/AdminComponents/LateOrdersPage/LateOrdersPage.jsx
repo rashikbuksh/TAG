@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { api } from "../../lib/api";
-import LateOrderTable from "./LateOrderTable";
+import { api } from "@lib/api";
 import { toast } from "react-toastify";
+import LateOrderTable from "./LateOrderTable";
 
 const LateOrdersPage = () => {
 	const [taglateOrder, setTagLateOrder] = useState([]);

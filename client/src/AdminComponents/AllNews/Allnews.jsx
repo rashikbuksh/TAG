@@ -1,5 +1,5 @@
+import NewsFeed from "@pages/NewsFeed/NewsFeed";
 import React from "react";
-import NewsFeed from "../../pages/NewsFeed/NewsFeed";
 
 const Allnews = () => {
 	return (

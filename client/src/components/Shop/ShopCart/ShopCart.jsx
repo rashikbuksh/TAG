@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Modal from "../../Modal/Modal";
+import Modal from "@components/Modal/Modal";
 import logo from "../../../assets/img/Tag-logo-blue-get_100_100.png";
 import { Rating } from "@smastrom/react-rating";
 import { Link } from "react-router-dom";

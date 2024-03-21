@@ -1,27 +1,25 @@
+import { Breadcrumb } from "@components";
+import Modal from "@components/Modal/Modal";
+import { useNotification } from "@context/NotificationProvider";
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { FaAddressCard } from "react-icons/fa";
 import "react-modern-drawer/dist/index.css";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Breadcrumb } from "../../components";
-import Modal from "../../components/Modal/Modal";
-import { useAuth } from "../../context/auth";
-import { api } from "../../lib/api";
-import { TagLogo2 } from "../../SvgHub/TagLogo2";
-import { useNotification } from "../../context/NotificationProvider";
 
 const ShopKeeperDashBoard = () => {
 	const [isClockOpen, setIsClockOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState("");
-	const [activeStatus, setActiveStatus] = useState(false);
+	let [activeStatus, setActiveStatus] = useState(false);
 	const [productCountContent, setProductCountContent] = useState("");
 	const [notificationContent, setNotificationContent] = useState("");
-	const [addProductContent, setAddProductContent] = useState("");
-	const [newOrderContent, setNewOrderContent] = useState("");
-	const [buyProductContent, setBuyProductContent] = useState("");
-	const [orderHistoryContent, setOrderHistoryContent] = useState("");
-	const [shopkeeperScheduleContent, setShopkeeperScheduleContent] =
-		useState();
+	let [addProductContent, setAddProductContent] = useState("");
+	let [newOrderContent, setNewOrderContent] = useState("");
+	let [buyProductContent, setBuyProductContent] = useState("");
+	let [orderHistoryContent, setOrderHistoryContent] = useState("");
+	let [shopkeeperScheduleContent, setShopkeeperScheduleContent] = useState();
 	const id = localStorage.getItem("user-id");
 
 	const [shopkeeper, setShopkeeper] = useState([]);
@@ -50,7 +48,6 @@ const ShopKeeperDashBoard = () => {
 			.catch((error) => {
 				console.error(error);
 			});
-	
 	}, [id]);
 	const { notifications } = useNotification();
 	// const handleOpenClockModal = () => {
@@ -281,7 +278,7 @@ const ShopKeeperDashBoard = () => {
 									<div
 										key={index}
 										// style={boxShadowStyle}
-										className={` dashboardCard flex relative ${
+										className={` dashboardCard relative flex ${
 											section.content ? "" : "flex-col "
 										}`}
 									>
@@ -293,7 +290,7 @@ const ShopKeeperDashBoard = () => {
 											}`}
 										>
 											{section.isActive ? (
-												<div className="absolute right-2 top-2 h-4 w-4 rounded-full bg-red-500" />
+												<div className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
 											) : (
 												""
 											)}

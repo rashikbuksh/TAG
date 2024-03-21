@@ -1,5 +1,5 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
-import { api } from "../lib/api";
+import { api } from "@lib/api";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./auth";
 
 const NotificationContext = createContext();

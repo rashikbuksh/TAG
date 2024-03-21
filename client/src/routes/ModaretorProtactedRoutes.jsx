@@ -1,13 +1,12 @@
+import LoadingPage from "@components/LoadingPage/LoadingPage";
+import { useAuth } from "@context/auth";
+import ModeratorPage from "@pages/ModaratorPage/ModeratorPage";
 import { Navigate, Outlet } from "react-router-dom";
 import { MODERATORS_ROUTES } from "../App";
-import { useAuth } from "../context/auth";
-import LoadingPage from "../components/LodingPage/LoadingPage";
-import ModeratorPage from "../pages/ModaratorPage/ModeratorPage";
 
 export default function ModeratorProtactedRoutes() {
 	const { signed, loading, user } = useAuth();
-	if (loading)
-		return <LoadingPage></LoadingPage>;
+	if (loading) return <LoadingPage></LoadingPage>;
 
 	if (!signed) return <Navigate to="/login" replace={true} />;
 
@@ -16,7 +15,8 @@ export default function ModeratorProtactedRoutes() {
 	// console.log("ADMIN_ROUTES", ADMIN_ROUTES);
 
 	const checkPath = MODERATORS_ROUTES?.find(
-		(route) => route?.path||`${route?.path}/*` === window.location.pathname
+		(route) =>
+			route?.path || `${route?.path}/*` === window.location.pathname
 	);
 	console.log(checkPath);
 

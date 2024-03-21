@@ -1,6 +1,6 @@
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { api } from "../../lib/api";
 import ShopkeeperProductList from "./ShopkeeperProductList";
 
 const AdminShopkeeperProduct = () => {
@@ -11,8 +11,7 @@ const AdminShopkeeperProduct = () => {
 			.then((response) => {
 				setShopperProduct(response.data);
 			})
-			.catch((error) => {
-			});
+			.catch((error) => {});
 	}, [id, shoperProduct]);
 	return (
 		<>

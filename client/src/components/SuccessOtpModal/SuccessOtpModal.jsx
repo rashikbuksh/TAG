@@ -1,4 +1,4 @@
-import { SuccessIcon } from "../../SvgHub/Icons";
+import { SuccessIcon } from "@SvgHub/Icons";
 import Modal from "../Modal/Modal";
 
 const SuccessOtpModal = ({ isOpen, setIsOpen }) => {

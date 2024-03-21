@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import Axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_50_50.png";
-import { api } from "../../../lib/api";
+import { api } from "@lib/api";
 import MainProduct from "./MainProduct";
 
 const ProductCart = ({ product }) => {

@@ -1,14 +1,8 @@
-import Axios from "axios";
-import React, { Fragment, useEffect, useState } from "react";
-import { get, set } from "react-hook-form";
-import { FaRedo, FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
+import { Takaicon } from "@SvgHub/SocialIcon";
+import { Breadcrumb } from "@components";
+import { api } from "@lib/api";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Breadcrumb, ErrorMessage, Preloader } from "../../components";
-import { getDiscountPrice } from "../../helpers/product";
-import useFetch from "../../hooks/use-fetch";
-import { api } from "../../lib/api";
-import OrderModal from "./OrderModal/OrderModal";
-import { Takaicon } from "../../SvgHub/SocialIcon";
 import { toast } from "react-toastify";
 
 const Order = () => {
@@ -57,7 +51,7 @@ const Order = () => {
 									<span>2 jan 2023 </span> <span>8:30</span>
 								</div>
 							</Link>
-							
+
 							<div>
 								<div className="price">
 									{
@@ -67,7 +61,7 @@ const Order = () => {
 										</span>
 									}
 								</div>
-								
+
 								<div className="mx-auto">
 									<p className="flex items-center gap-2">
 										<span>

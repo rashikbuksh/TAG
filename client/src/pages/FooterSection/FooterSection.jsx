@@ -5,10 +5,10 @@ import {
 	TwitterIcon,
 	WhatsappIcon,
 	YoutubeIcon,
-} from "../../SvgHub/SocialIcon";
+} from "@SvgHub/SocialIcon";
+import { useEffect, useState } from "react";
 import AppStore from "../../../public/assets/img/AppStore.png";
 import PlayStore from "../../../public/assets/img/PlayStore.png";
-import { useState, useEffect } from "react";
 
 const FooterSection = () => {
 	const [currentYear, setCurrentYear] = useState("");
@@ -65,8 +65,8 @@ const FooterSection = () => {
 					<InstagramIcon />
 				</a>
 				{/* Assuming you have a Twitter account */}
-		
-					<TwitterIcon />
+
+				<TwitterIcon />
 			</div>
 			<div className="divider"></div>
 

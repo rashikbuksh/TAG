@@ -1,10 +1,10 @@
+import { TagLogo2 } from "@SvgHub/TagLogo2";
+import SuccessOtpModal from "@components/SuccessOtpModal/SuccessOtpModal";
+import { useOtpVerification } from "@context/otpVerification";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { TagLogo2 } from "../../SvgHub/TagLogo2";
-import { useOtpVerification } from "../../context/otpVerification";
-import SuccessOtpModal from "../../components/SuccessOtpModal/SuccessOtpModal";
 
 const VerificationOTP = () => {
 	const navigate = useNavigate();
@@ -38,11 +38,11 @@ const VerificationOTP = () => {
 
 	const sendOTPCode = async () => {
 		const generatedOtp = generateOTP();
-		sendOtp(generatedOtp,phone);
+		sendOtp(generatedOtp, phone);
 		handleVerificationCodeChange(generatedOtp.toString());
 		setOtpError("");
 		setOtp(new Array(numberOfDigits).fill(""));
-		setIsOtpEmpty(true)
+		setIsOtpEmpty(true);
 		// Save isCodeSent to localStorage
 		localStorage.setItem("isCodeSent", JSON.stringify(true));
 	};
@@ -120,7 +120,7 @@ const VerificationOTP = () => {
 							"Error executing the query"
 						) {
 							toast.error("Email or Phone Number already exists");
-							navigate("/login")
+							navigate("/login");
 							setOtp(new Array(numberOfDigits).fill(""));
 						}
 					});

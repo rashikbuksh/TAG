@@ -1,23 +1,24 @@
+import { useNotification } from "@context/NotificationProvider";
+import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
-import { FaLocationDot, FaMapLocationDot, FaX } from "react-icons/fa6";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"; // need to keep this for map purpose
+import { FaLocationDot, FaX } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import { useAuth } from "../../../context/auth";
-import NotificationSound from "../../../helpers/NotificationSound";
-import { api } from "../../../lib/api";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
 import { useNotification } from "../../../context/NotificationProvider";
 import { BellIcon } from "@/SvgHub/Icons";
 
+
 function Header() {
 	const [activateOffcanvas, setActivateOffcanvas] = useState(false);
 	const [activateSearch, setActivateSearch] = useState(false);
 	const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
 	const [userData, setUserdata] = useState(null);
+	const [latLong, setLatLong] = useState([]);
 	const { user } = useAuth();
 	const id = user ? user.id : null;
 
@@ -74,10 +75,7 @@ function Header() {
 		});
 	}, []);
 
-	const [notification, setNotification] = useState([]);
-	const [userAccess, setUserAccess] = useState(null);
-	const [suser, setsUser] = useState(null);
-	const userid = localStorage.getItem("user-id");
+	const [suser, setsUser] = useState([]);
 	useEffect(() => {
 		api.get(`/auth/getShopperInfo`).then((res) => {
 			setsUser(res.data);
@@ -90,36 +88,21 @@ function Header() {
 		(item) => item.status == 1
 	);
 
-	// useEffect(() => {
-	// 	// Play notification sound for new notifications
-	// 	if (notificationsWithStatusOne.length > 0) {
-	// 		NotificationSound();
-	// 		// Update the status of the notifications after playing the sound
-	// 		updateNotificationStatus();
-	// 	}
-	// }, [notificationsWithStatusOne]);
-
-	// const updateNotificationStatus = async () => {
-	// 	try {
-	// 		// Update the status of notifications to 2 (played)
-	// 		const id = userid;
-	// 		console.log(id);
-	// 		await api.post(`/notification/readNotification/${id}`);
-	// 		// Update the local state with updated notifications
-	// 		setNotification((prevNotifications) =>
-	// 			prevNotifications.map((notification) =>
-	// 				notification.status === 1
-	// 					? { ...notification, status: 0 }
-	// 					: notification
-	// 			)
-	// 		);
-	// 	} catch (error) {
-	// 		console.error("Error updating notification status:", error);
-	// 	}
-	// };
-
 	const HandleLocationClick = () => {
+		setLatLong([]);
+		getAllLocation(suser);
 		setLocationModal(true);
+	};
+
+	const getAllLocation = (suser) => {
+		const coordinates = suser.map((item) => {
+			const positionFromDb = item.shipping_address?.split(",");
+			return {
+				lat: parseFloat(positionFromDb[0]),
+				lng: parseFloat(positionFromDb[1]),
+			};
+		});
+		setLatLong(coordinates);
 	};
 	return (
 		<>
@@ -221,23 +204,10 @@ function Header() {
 																setIsOpen={
 																	setLocationModal
 																}
-																latlong={suser.map(
-																	(
-																		single
-																	) => {
-																		const splittedLoc =
-																			single.shipping_address.split(
-																				","
-																			);
-																		return {
-																			lat: splittedLoc[0],
-																			lng: splittedLoc[1],
-																		};
-																	}
-																)}
-																popup={
-																	userData.name
+																latLong={
+																	latLong
 																}
+																single={false}
 															/>
 														)}
 

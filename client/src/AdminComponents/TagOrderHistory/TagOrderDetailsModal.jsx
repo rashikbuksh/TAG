@@ -1,8 +1,8 @@
+import Modal from "@components/Modal/Modal";
+import OrderProducTable from "@components/Product/OrderProductTable/OrderProducTable";
+import FormattedTime from "@helpers/FormattedTime";
 import moment from "moment-timezone";
 import React, { useEffect, useState } from "react";
-import Modal from "../../components/Modal/Modal";
-import OrderProducTable from "../../components/Product/OrderProductTable/OrderProducTable";
-import FormattedTime from "../../helpers/FormattedTime";
 
 const TagOrderDetailsModal = ({ isOpen, setIsOpen, orderDetails }) => {
 	const [formattedDifference, setFormattedDifference] = useState("N/A");

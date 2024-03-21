@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import Modal from "../../components/Modal/Modal";
+import Modal from "@components/Modal/Modal";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { api } from "@lib/api";
+import Axios from "axios";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 import { ReactSVG } from "react-svg";
-import * as yup from "yup";
-import Select from "react-select"; // Import the react-select component
-import { api } from "../../lib/api";
-import Axios from "axios";
 import { toast } from "react-toastify";
+import * as yup from "yup";
 
 const MakeModaratorModal = ({ isOpen, setIsOpen }) => {
 	const [modaratorPassword, setModaratorPassword] = useState(null);
@@ -59,7 +59,7 @@ const MakeModaratorModal = ({ isOpen, setIsOpen }) => {
 				if (response.data.message === data.phone) {
 					setModaratorEmail(data.email);
 					setModaratorPassword(data.password);
-                    setIsOpen(false)
+					setIsOpen(false);
 					toast("Modarator Created Successful");
 				}
 			})

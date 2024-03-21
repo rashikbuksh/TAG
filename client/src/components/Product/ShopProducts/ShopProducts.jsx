@@ -1,16 +1,9 @@
-import Axios from "axios";
 import PropTypes from "prop-types";
-import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { ReactSVG } from "react-svg";
-import { getDiscountPrice } from "../../../helpers/product";
-import { addToWishlist } from "../../../store/slices/wishlist-slice";
-import ShowCartIcon from "../../ShowCartIcon/ShowCartIcon";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import ProductCart from "../ProductCart/ProductCart";
 
 const ShopProducts = ({ products }) => {
-	const dispatch = useDispatch();
 	const [gridActivate, setGridActivate] = useState(true);
 	const [listActivate, setListActivate] = useState(false);
 	const { wishlistItems } = useSelector((state) => state.wishlist);

@@ -1,11 +1,9 @@
+import MapDistanceModal from "@components/Modal/LocationModal/MapDistanceModal";
+import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
-import SearchFunction from "../SearchFunction/Index";
-import { api } from "../../lib/api";
-import ShopkeeperTable from "../TagShopkeeper/ShopkeeperTable";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import MapDistanceModal from "../../components/Modal/LocationModal/MapDistanceModal";
+import SearchFunction from "../SearchFunction/Index";
 
 const AdminNewShopRequest = () => {
 	const [tagRequestedShopKeepers, setTagRequestedShopKeepers] = useState([]);
@@ -43,7 +41,7 @@ const AdminNewShopRequest = () => {
 					id: id,
 				})
 					.then((response) => {
-						console.log(response.status);
+						// console.log(response.status);
 						// Display success message
 						if (response.status === 200) {
 							Swal.fire(
@@ -201,7 +199,9 @@ const AdminNewShopRequest = () => {
 												<MapDistanceModal
 													isOpen={mapModal}
 													setIsOpen={setMapModal}
-													popup={tagRequestedShopKeeper.name}
+													popup={
+														tagRequestedShopKeeper.name
+													}
 													latlong={latLong}
 												/>
 											</td>

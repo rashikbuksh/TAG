@@ -1,9 +1,9 @@
+import { Takaicon } from "@SvgHub/SocialIcon";
+import { getDiscountPrice } from "@helpers/product";
 import { Link } from "react-router-dom";
-import { Takaicon } from "../../../SvgHub/SocialIcon";
-import { getDiscountPrice } from "../../../helpers/product";
 
 const OrderProducTable = ({ product }) => {
-	const Orderdproduct = product;
+	const OrderedProduct = product;
 
 	return (
 		<div>
@@ -11,17 +11,17 @@ const OrderProducTable = ({ product }) => {
 				<img
 					className="absolute top-2 h-[60px] w-[60px]"
 					src={`${import.meta.env.VITE_APP_IMG_URL}/products/${
-						Orderdproduct.product_image
+						OrderedProduct.product_image
 					}`}
 					alt="Selected Product"
 				/>
 				<div className="ms-auto h-fit w-[75%]">
 					<Link
 						to={`${import.meta.env.VITE_API_PUBLIC_URL}/product/${
-							Orderdproduct.pid
-						}/${Orderdproduct.title}`}
+							OrderedProduct.pid
+						}/${OrderedProduct.title}`}
 					>
-						<h1 className="text-sm">{Orderdproduct.name}</h1>
+						<h1 className="text-sm">{OrderedProduct.name}</h1>
 					</Link>
 				</div>
 
@@ -29,10 +29,10 @@ const OrderProducTable = ({ product }) => {
 					<div>
 						<h2 className="text-xs">
 							{getDiscountPrice(
-								Orderdproduct.price,
-								Orderdproduct.discount
+								OrderedProduct.price,
+								OrderedProduct.discount
 							)}{" "}
-							X {Orderdproduct.quantity}
+							X {OrderedProduct.quantity}
 						</h2>
 					</div>
 					<div>
@@ -40,9 +40,9 @@ const OrderProducTable = ({ product }) => {
 							<Takaicon></Takaicon>{" "}
 							{parseFloat(
 								getDiscountPrice(
-									Orderdproduct.price,
-									Orderdproduct.discount
-								) * Orderdproduct.quantity
+									OrderedProduct.price,
+									OrderedProduct.discount
+								) * OrderedProduct.quantity
 							).toFixed(2)}
 						</h2>
 					</div>
