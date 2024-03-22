@@ -14,14 +14,14 @@ const AllShop = () => {
 	}, []);
 
 	return (
-		<div className="mx-auto  my-4 max-w-7xl border p-2 ">
+		<div className="mx-auto mt-2 rounded  max-w-7xl border  ">
 			<div className="my-4"></div>
 			{
-				<h2 className="section-title  mb-2">
-					<span className="text-xl font-bold">Our Best Shopper </span>
+				<h2 className="section-title  mb-2 border-b-2">
+					<span className="text-xl font-bold pl-2">Our Best Shopper </span>
 
 					<Link
-						className="primary-text"
+						className="primary-text pr-2"
 						to={import.meta.env.VITE_API_PUBLIC_URL + "/shop"}
 					>
 						VIEW ALL{" "}
@@ -37,7 +37,7 @@ const AllShop = () => {
 				</h2>
 			}
 
-			<div className="border border-red-500 p-2">
+			<div className="border ">
 				<ShopSlider shops={shops}></ShopSlider>
 			</div>
 		</div>
