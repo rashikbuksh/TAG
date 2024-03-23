@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { AiTwotoneEdit } from "react-icons/ai";
-import { FaClipboardCheck } from "react-icons/fa6";
+import { AiTwotoneEdit as EditIcon } from "react-icons/ai";
+
 import { IoMdRadioButtonOn, IoMdRadioButtonOff } from "react-icons/io";
 import { MdCall } from "react-icons/md";
 import { FaRegAddressBook } from "react-icons/fa6";
 import { GoPlusCircle } from "react-icons/go";
+import AddNewAddressModal from "@components/Modal/AddAddressModal/AddNewAddressModal";
+import EditAddressModal from "@components/Modal/EditAddressModal/EditAddressModal";
 const DeliveryAddress = () => {
-	const [edit, setEdit] = useState(true);
+	const [edit, setEdit] = useState(false);
+	const [isAddNewAddressOpen, setIsAddNewAddressOpen] = useState(false);
+
 	//Make a dummy address array ........ Which fill up from backend
 	const addressArr = [
 		{
@@ -26,10 +30,14 @@ const DeliveryAddress = () => {
 	];
 	const [allAddress, setAllAddress] = useState(addressArr);
 
-	//TODO::After adding functionality it should in component
+	//TODO::After adding functionality it should be in component
 	const Address = (item) => {
 		return (
-			<div className="my-2 rounded  border p-2 shadow-md ">
+			<div
+				className={`my-2 rounded  border border-red-500 p-2 ${
+					item.default && "bg-cyan-50"
+				}`}
+			>
 				<div className="flex items-center justify-between font-bold ">
 					<span className="flex-none">
 						{item.default ? (
@@ -43,40 +51,23 @@ const DeliveryAddress = () => {
 						)}
 					</span>
 					<span className="ml-4 flex-1">{item.place}</span>
-					<span>
-						<AiTwotoneEdit
-							onClick={() => setEdit(false)}
-							size={25}
-						></AiTwotoneEdit>
+					<span onClick={() => handleEditAddress(item.id)}>
+						<EditIcon size={25}></EditIcon>
 					</span>
 				</div>
-				<div className="ml-10 w-full leading-6 text-gray-500">
+				<div className="ml-10 w-full leading-6 ">
 					<span className="flex items-center gap-2">
 						<FaRegAddressBook />
-						<input
-							type="text"
-							name="address"
-							readOnly={edit}
-							className="w-[250px]"
-							
-							placeholder={item.address}
-						/>
+						<p>{item.address}</p>
 					</span>
 					<span className="flex items-center gap-2">
 						<MdCall />
-						<input
-							type="text"
-							name="contact"
-							readOnly={edit}
-							className="w-[300px]"
-							placeholder={item.contact}
-						/>
+						<p>{item.contact}</p>
 					</span>
 				</div>
 			</div>
 		);
 	};
-
 
 	//Change default address
 	const handleDefault = (id) => {
@@ -98,25 +89,59 @@ const DeliveryAddress = () => {
 		setAllAddress(newAddressArr);
 	};
 
+	//Edit address
+	const handleEditAddress = (id) => {
+		console.log(id)
+		setEdit(!edit);
+	};
+
+	//Set new address in address in address array function
+
+	const setAddress = (address) => {
+		const newAddress = {
+			...address,
+			id: crypto.randomUUID(),
+		};
+
+		console.log(newAddress)
+
+		setAllAddress([...allAddress, newAddress]);
+		setIsAddNewAddressOpen(false);
+	};
+
 	//Add new address
-	const handleAddNewAddress = ()=>{
-		alert('add new address')
-	}
+	const handleAddNewAddress = () => {
+		setIsAddNewAddressOpen(!isAddNewAddressOpen);
+	};
 
 	return (
-		<div className="my-2">
-			{/* Address bar mapping */}
-			{allAddress &&
-				allAddress.map((item) => (
-					<Address key={item.id} {...item}></Address>
-				))}
+		<>
+			<AddNewAddressModal
+				isOpen={isAddNewAddressOpen}
+				setIsOpen={setIsAddNewAddressOpen}
+				setAddress={setAddress}
+			></AddNewAddressModal>
+			<EditAddressModal
+				isOpen={edit}
+				setIsOpen={setEdit}
+			></EditAddressModal>
+			<div className="my-2">
+				{/* Address bar mapping */}
+				{allAddress &&
+					allAddress.map((item) => (
+						<Address key={item.id} {...item}></Address>
+					))}
 
-			{/* Add New Address button  */}
-			<div onClick={handleAddNewAddress} className="mt-2 flex h-20 cursor-pointer items-center justify-center gap-2 rounded border border-dotted p-2 text-xl font-bold shadow-md hover:text-primary" >
-				<span>Add</span>
-				<GoPlusCircle />
+				{/* Add New Address button  */}
+				<div
+					onClick={handleAddNewAddress}
+					className="mt-2 flex h-20 cursor-pointer items-center justify-center gap-2 rounded border border-dotted p-2 text-xl font-bold shadow-md hover:text-primary"
+				>
+					<span>Add</span>
+					<GoPlusCircle />
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
