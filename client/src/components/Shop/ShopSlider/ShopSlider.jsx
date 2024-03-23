@@ -4,7 +4,7 @@ import ShopCart from '../ShopCart/ShopCart';
 const ShopSlider = ({shops}) => {
     return (
         <div>
-        <div className="">
+        <div className="p-2">
             <Swiper
                 slidesPerView={2.2}
                 spaceBetween={15}

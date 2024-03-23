@@ -44,7 +44,7 @@ const TagShop = () => {
 						Bkash and Cash On delivery
 					</p>
 				</h2>
-				<div className="my-4 grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
+				<div className="my-4 grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6 p-2">
 					{products.map((product) => (
 						<ProductCart product={product} key={product.id} />
 					))}

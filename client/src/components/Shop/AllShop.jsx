@@ -17,7 +17,7 @@ const AllShop = () => {
 		<div className="mx-auto mt-2 rounded  max-w-7xl border  ">
 			<div className="my-4"></div>
 			{
-				<h2 className="section-title  mb-2 border-b-2">
+				<h2 className="section-title  mb-2 border-b-2 pb-2">
 					<span className="text-xl font-bold pl-2">Our Best Shopper </span>
 
 					<Link
@@ -37,7 +37,7 @@ const AllShop = () => {
 				</h2>
 			}
 
-			<div className="border ">
+			<div >
 				<ShopSlider shops={shops}></ShopSlider>
 			</div>
 		</div>

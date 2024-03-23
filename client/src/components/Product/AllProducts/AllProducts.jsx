@@ -54,7 +54,7 @@ const AllProducts = ({ limit, sliderData }) => {
 
 				<div className="border border-red-500 rounded ">
 					{prods && (
-						<h2 className="section-title  mb-2 border-b-2 ">
+						<h2 className="section-title  mb-2 border-b-2 py-2">
 							<span className="text-xl font-bold pl-2">
 								Popular Product{" "}
 							</span>
@@ -87,7 +87,7 @@ const AllProducts = ({ limit, sliderData }) => {
 
 				<div className="border border-red-500 rounded ">
 					{prods && (
-						<h2 className="section-title mb-2 border-b-2 ">
+						<h2 className="section-title mb-2 border-b-2 py-2">
 							<span className="text-xl font-bold pl-2">
 								Offer Products{" "}
 							</span>
@@ -118,7 +118,7 @@ const AllProducts = ({ limit, sliderData }) => {
 				<div className="my-4"></div>
 				<div className="border border-red-500 rounded">
 					{prods && (
-						<h2 className="section-title mb-2 border-b-2 ">
+						<h2 className="section-title mb-2 border-b-2 py-2 ">
 							<p className="flex items-center gap-3 text-xl font-bold pl-2">
 								<span>Verified Product</span>{" "}
 								<FaCheckCircle className=" primary-text"></FaCheckCircle>
@@ -155,7 +155,7 @@ const AllProducts = ({ limit, sliderData }) => {
 
 				<div className="border border-red-500 rounded">
 					{prods && (
-						<h2 className="section-title mb-2 border-b-2">
+						<h2 className="section-title mb-2 border-b-2 py-2">
 							<span className="text-xl font-bold pl-2">
 								All Products{" "}
 							</span>
