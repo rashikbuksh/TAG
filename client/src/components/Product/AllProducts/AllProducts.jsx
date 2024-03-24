@@ -52,15 +52,15 @@ const AllProducts = ({ limit, sliderData }) => {
 			<div className="">
 				{/* Popular Product  */}
 
-				<div className="border border-red-500 p-2">
+				<div className="border border-red-500 rounded ">
 					{prods && (
-						<h2 className="section-title  mb-2">
-							<span className="text-xl font-bold">
+						<h2 className="section-title  mb-2 border-b-2 py-2">
+							<span className="text-xl font-bold pl-2">
 								Popular Product{" "}
 							</span>
 
 							<Link
-								className="primary-text "
+								className="primary-text pr-2 "
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
 									"/shop"
@@ -85,15 +85,15 @@ const AllProducts = ({ limit, sliderData }) => {
 
 				<div className="my-4"></div>
 
-				<div className="border border-red-500 p-2">
+				<div className="border border-red-500 rounded ">
 					{prods && (
-						<h2 className="section-title mb-2">
-							<span className="text-xl font-bold">
+						<h2 className="section-title mb-2 border-b-2 py-2">
+							<span className="text-xl font-bold pl-2">
 								Offer Products{" "}
 							</span>
 
 							<Link
-								className="primary-text"
+								className="primary-text pr-2"
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
 									"/shop"
@@ -116,16 +116,16 @@ const AllProducts = ({ limit, sliderData }) => {
 				</div>
 
 				<div className="my-4"></div>
-				<div className="border border-red-500 p-2">
+				<div className="border border-red-500 rounded">
 					{prods && (
-						<h2 className="section-title mb-2 ">
-							<p className="flex items-center gap-3 text-xl font-bold">
+						<h2 className="section-title mb-2 border-b-2 py-2 ">
+							<p className="flex items-center gap-3 text-xl font-bold pl-2">
 								<span>Verified Product</span>{" "}
 								<FaCheckCircle className=" primary-text"></FaCheckCircle>
 							</p>
 
 							<Link
-								className="primary-text"
+								className="primary-text pr-2"
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
 									"/shop"
@@ -153,15 +153,15 @@ const AllProducts = ({ limit, sliderData }) => {
 				</div>
 				<div className="my-4"></div>
 
-				<div className="border border-red-500 p-2">
+				<div className="border border-red-500 rounded">
 					{prods && (
-						<h2 className="section-title mb-2">
-							<span className="text-xl font-bold">
+						<h2 className="section-title mb-2 border-b-2 py-2">
+							<span className="text-xl font-bold pl-2">
 								All Products{" "}
 							</span>
 
 							<Link
-								className="primary-text"
+								className="primary-text pr-2"
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
 									"/shop"
@@ -182,27 +182,6 @@ const AllProducts = ({ limit, sliderData }) => {
 					)}
 					<ProductSlider products={prods}></ProductSlider>
 				</div>
-
-				{prods && (
-					<h2 className="section-title mb-2">
-						<span className="text-xl font-bold">All Products </span>
-
-						<Link
-							className="primary-text"
-							to={import.meta.env.VITE_API_PUBLIC_URL + "/shop"}
-						>
-							VIEW ALL{" "}
-							<span>
-								<ReactSVG
-									src={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"/assets/img/icons/arrow-right.svg"
-									}
-								/>
-							</span>
-						</Link>
-					</h2>
-				)}
 			</div>
 		</div>
 	);

@@ -25,7 +25,7 @@ const ProductCart = ({ product }) => {
 
 	return (
 		<div
-			className="rounded border border-[#ffffffec]"
+			className="rounded border border-[#ffffffec] p-2"
 			style={{ boxShadow: "0px 8px 32px 0px rgba(184, 184, 184, 0.10)" }}
 		>
 			{shopper.map((shopper) => (

@@ -37,12 +37,12 @@ const BestSellerProduct = ({ limit, type }) => {
 		<div className="featured-product-area space-mb--25 mx-auto mt-2 max-w-7xl">
 			<div className="">
 				<div className="">
-					<div className="border border-red-500 p-2">
+					<div className="border border-red-500 rounded">
 						{/* section title */}
 
 						{shopperProducts && (
-							<h2 className="section-title ">
-								<span className="text-xl font-bold">
+							<h2 className="section-title  border-b-2 py-2">
+								<span className="text-xl font-bold mb-2 pl-2">
 									Best Sale{" "}
 								</span>
 
@@ -53,7 +53,7 @@ const BestSellerProduct = ({ limit, type }) => {
 									}
 								>
 									VIEW ALL{" "}
-									<span>
+									<span className="pr-2">
 										<ReactSVG
 											src={
 												import.meta.env
@@ -68,12 +68,12 @@ const BestSellerProduct = ({ limit, type }) => {
 
 						{/* featured products */}
 						<div className="featured-product-wrapper  ">
-							<div className="mt-1 grid grid-cols-2 gap-1 border  border-red-500 p-2   lg:grid-cols-4 ">
+							<div className="mt-1 grid grid-cols-2 gap-1  p-2  lg:grid-cols-4 ">
 								{shopperProducts.map((single) => {
 									return (
 										<div
 											key={single.id}
-											className="bestsellCartShado w-full  p-2 border"
+											className="bestsellCartShado w-full  p-2 border "
 										>
 											<Link
 												className="flex items-center justify-center"
@@ -108,8 +108,8 @@ const BestSellerProduct = ({ limit, type }) => {
 												</p>
 											</Link>
 
-											<div className="flex items-center justify-between">
-												<div className="relative flex flex-col bg-white ">
+											<div className="flex items-center justify-between ">
+												<div className="relative flex flex-col bg-white  ">
 													<div className="h-fit">
 														<h3 className="w-[80px] truncate   text-sm  text-black">
 															{" "}
