@@ -1,83 +1,52 @@
 import { useState } from "react";
-import { AiTwotoneEdit as EditIcon } from "react-icons/ai";
 
-import { IoMdRadioButtonOn, IoMdRadioButtonOff } from "react-icons/io";
-import { MdCall } from "react-icons/md";
-import { FaRegAddressBook } from "react-icons/fa6";
 import { GoPlusCircle } from "react-icons/go";
 import AddNewAddressModal from "@components/Modal/AddAddressModal/AddNewAddressModal";
 import EditAddressModal from "@components/Modal/EditAddressModal/EditAddressModal";
-const DeliveryAddress = () => {
+import AddressSection from "./AddressSection";
+import Swal from "sweetalert2";
+import { api } from "@lib/api";
+import { toast } from "react-toastify";
+const DeliveryAddress = ({
+	addressArr,
+	setSelectedAddress,
+	selectedAddress,
+}) => {
 	const [edit, setEdit] = useState(false);
 	const [isAddNewAddressOpen, setIsAddNewAddressOpen] = useState(false);
 	const [editItem, setEditItem] = useState({});
 
-	//Make a dummy address array ........ Which fill up from backend
-	const addressArr = [
-		{
-			id: 1,
-			place: "Home",
-			default: true,
-			address: "4140 Parker Rd. Allentown,New Mexico",
-			contact: "+880 01518****24",
-		},
-		{
-			id: 2,
-			place: "Office",
-			default: false,
-			address: "Dhaka wari. Allentown,New Mexico",
-			contact: "+880 01678****24",
-		},
-	];
-	const [allAddress, setAllAddress] = useState(addressArr);
-
-	//Change default address
-	const handleDefault = (id) => {
-		//set all default value false
-		const allDefaultFalseArr = allAddress.map((item) => {
-			return { ...item, default: false };
-		});
-		//dynamically change default value
-		const newAddressArr = allDefaultFalseArr.map((item) => {
-			if (item.id == id) {
-				const obj = {
-					...item,
-					default: true,
-				};
-				return obj;
-			}
-			return item;
-		});
-		setAllAddress(newAddressArr);
-	};
-
 	//Edit address //set edit address in a state   (lifted state)
 	const handleEditAddress = (id) => {
-		const item = allAddress.find((item) => item.id == id);
+		const item = addressArr.find((item) => item.id == id);
 		setEdit(!edit);
 		setEditItem(item);
 	};
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setEdit(false);
-		const updatedArray = allAddress.map((item) => {
-			if (item.id == editItem.id) {
-				return editItem;
+	const handelDeleteAddress = (id) => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				api.delete(`/remove/customers_address_details/${id}`)
+					.then((res) => {
+						Swal.fire({
+							title: "Deleted!",
+							text: "News Deleted Successfully.",
+							icon: "success",
+						});
+						window.location.reload();
+					})
+					.catch((error) => {
+						toast(error);
+					});
 			}
-			return item;
 		});
-		setAllAddress(updatedArray);
-	};
-
-	//Set new address in address in address array function
-	const setAddress = (address) => {
-		const newAddress = {
-			...address,
-			id: crypto.randomUUID(),
-		};
-
-		setAllAddress([...allAddress, newAddress]);
-		setIsAddNewAddressOpen(false);
 	};
 
 	//Add new address
@@ -85,65 +54,29 @@ const DeliveryAddress = () => {
 		setIsAddNewAddressOpen(!isAddNewAddressOpen);
 	};
 
-	//TODO::After adding functionality it should be in component
-	const Address = (item) => {
-		return (
-			<div
-				className={`my-2 rounded  border border-red-500 p-2 ${
-					item.default && "bg-cyan-50"
-				}`}
-			>
-				<div className="flex items-center justify-between font-bold ">
-					<span className="flex-none">
-						{item.default ? (
-							<IoMdRadioButtonOn color="blue" size={25} />
-						) : (
-							<IoMdRadioButtonOff
-								onClick={() => handleDefault(item.id)}
-								color="blue"
-								size={25}
-							></IoMdRadioButtonOff>
-						)}
-					</span>
-					<span className="ml-4 flex-1">{item.place}</span>
-					<span onClick={() => handleEditAddress(item.id)}>
-						<EditIcon size={25}></EditIcon>
-					</span>
-				</div>
-				<div className="ml-10 w-full leading-6 ">
-					<span className="flex items-center gap-2">
-						<FaRegAddressBook />
-						<p>{item.address}</p>
-					</span>
-					<span className="flex items-center gap-2">
-						<MdCall />
-						<p>{item.contact}</p>
-					</span>
-				</div>
-			</div>
-		);
-	};
-
 	return (
 		<>
 			<AddNewAddressModal
 				isOpen={isAddNewAddressOpen}
 				setIsOpen={setIsAddNewAddressOpen}
-				setAddress={setAddress}
 			></AddNewAddressModal>
 			<EditAddressModal
 				isOpen={edit}
 				setIsOpen={setEdit}
 				editItem={editItem}
-				setEditItem={setEditItem}
-				setEdit={setEdit}
-				handleSubmit={handleSubmit}
 			></EditAddressModal>
-			<div className="flex flex-col gap-2 ">
+			<div className="flex h-fit flex-col gap-2">
 				{/* Address bar mapping */}
-				{allAddress &&
-					allAddress.map((item) => (
-						<Address key={item.id} {...item}></Address>
+				{addressArr &&
+					addressArr.map((item) => (
+						<AddressSection
+							key={item.id}
+							handleEditAddress={handleEditAddress}
+							item={item}
+							handelDeleteAddress={handelDeleteAddress}
+							selectedAddress={selectedAddress}
+							setSelectedAddress={setSelectedAddress}
+						></AddressSection>
 					))}
 
 				{/* Add New Address button  */}

@@ -27,6 +27,7 @@ const { add: refer } = require("../api/refer");
 const { add: OrdredProduct } = require("../api/ordered_product");
 const { add: ShopperSchedule } = require("../api/shopper_schedule");
 const { add: shop } = require("../api/shop");
+const { add: customers_address_details } = require("../api/customers_address_details");
 
 const ADD_DATA = [
 	...JobEntry,
@@ -43,7 +44,8 @@ const ADD_DATA = [
 	...refer,
 	...OrdredProduct,
 	...ShopperSchedule,
-	...shop
+	...shop,
+	...customers_address_details
 ];
 
 ADD_DATA.forEach(({ uri, query, body, msg }) => {

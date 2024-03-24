@@ -274,7 +274,7 @@ const Cart = () => {
 			});
 		}
 	};
-
+	console.log("🚀 ~ calculatedTotals ~ calculatedTotals:", calculatedTotals);
 	const handleBuyClick = (shopperId) => {
 		if (
 			runningTimerShopperId !== null &&
@@ -359,6 +359,17 @@ const Cart = () => {
 		JSON.parse(localStorage.getItem("cart_timer_data")).timerStarted &&
 		JSON.parse(localStorage.getItem("cart_timer_data")).countdown > 0;
 	console.log("🚀 ~ Cart ~ isTimeRunning:", isTimeRunning);
+	const handelCheckout = (id, item) => {
+		console.log(item);
+		navigate("/checkout", {
+			state: {
+				totalPrice: calculatedTotals[id],
+				shopperId: id,
+				discount: null,
+				totalItem: cartItems.filter((it) => it.shopper_id === id),
+			},
+		});
+	};
 	return (
 		<>
 			<div className="mx-auto mt-8 h-full overflow-scroll lg:w-[50%]">
@@ -614,6 +625,16 @@ const Cart = () => {
 											calculatedTotals[shopper.id]
 										).toFixed(2)}
 									</h2>
+									{calculatedTotals[shopper.id] && (
+										<button
+											onClick={() =>
+												handelCheckout(shopper.id)
+											}
+											className="btn btn-primary btn-sm"
+										>
+											Bye Payment
+										</button>
+									)}
 								</div>
 							)}
 						</div>

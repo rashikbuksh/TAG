@@ -9,6 +9,7 @@ const { remove: News } = require("../api/news");
 const { remove: user } = require("../api/auth");
 const { remove: OrderProduct } = require("../api/ordered_product");
 const { remove: shop } = require("../api/shop");
+const { remove: customers_address_details } = require("../api/customers_address_details");
 const REMOVE_DATA = [
   ...JobEntry,
   ...HeroSlider,
@@ -19,6 +20,7 @@ const REMOVE_DATA = [
   ...user,
   ...OrderProduct,
   ...shop,
+  ...customers_address_details,
 ];
 
 REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
