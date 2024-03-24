@@ -4,6 +4,7 @@ import Modal from "@components/Modal/Modal";
 import { useAuth } from "@context/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -65,6 +66,50 @@ const Login = () => {
 
 	return (
 		<div className="relative ">
+			<Helmet>
+				<title>Login | TAG Think and Get</title>
+				<meta
+					name="description"
+					content="Provide a concise and compelling description of your login page here."
+				/>
+				{/* Meta tags for social sharing */}
+				<meta property="og:title" content="Login | TAG Think and Get" />
+				<meta
+					property="og:description"
+					content="Welcome! For top-notch service, kindly log in..."
+				/>
+				<meta
+					property="og:url"
+					content="https://tagthinkandget.com/login"
+				/>
+				<meta property="og:type" content="website" />
+				<meta property="og:site_name" content="Tag Think and Get" />
+				{/* Twitter Card meta tags */}
+				<meta
+					name="twitter:card"
+					content="Discover the simplicity of online grocery shopping on our platform! Easily order from your nearby store and choose between pickup or home delivery. Enjoy the convenience of ordering from two different shops at once with our Dual Shop Delight feature. Keep an eye out for special deals from our amazing shopkeepers, making your shopping experience even more rewarding. Experience easy and joyful shopping with us!"
+				/>
+				<meta
+					name="twitter:title"
+					content="Login | TAG Think and Get"
+				/>
+				<meta
+					name="twitter:description"
+					content="Welcome! For top-notch service, kindly log in..."
+				/>
+				<meta
+					name="twitter:image"
+					content="https://tagthinkandget.com/assets/img/Tag-logo-blue-get_100_100.png"
+				/>
+				{/* Canonical URL */}
+				<link rel="canonical" href="https://tagthinkandget.com/login" />
+				{/* Additional meta tags for SEO */}
+				<meta name="robots" content="index, follow" />
+				<meta name="author" content="TAG Think and Get" />
+				<meta name="referrer" content="origin" />
+				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+				<meta name="theme-color" content="#ffffff" />
+			</Helmet>
 			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%]  ">
 				<div className="mx-auto my-5 h-[80px] ">
 					<TagLogo2></TagLogo2>
