@@ -177,7 +177,7 @@ const Product = () => {
 				{/*====================  End of product image slider  ====================*/}
 				{products.map((prods) => {
 					return (
-						<div key={Math.random()} className="">
+						<div key={Math.random()} className="mb-6">
 							<div className="">
 								<div className="">
 									<div className="">
@@ -371,36 +371,14 @@ const Product = () => {
 								</div>
 							</div>
 							<div className="">
-								{!user ? (
-									<Link
-										to={
-											import.meta.env
-												.VITE_API_PUBLIC_URL + "/login"
-										}
-									>
-										<button className="auth-btn w-full">
-											Add To Cart{" "}
-										</button>
-									</Link>
-								) : user.access === "admin" ? (
-									""
-								) : user.access === "shopper" ? (
-									""
-								) : user && user.access === "new_shopper" ? (
-									""
-								) : products &&
-								  products[0].active_status !== 1 ? (
-									<button disabled className="auth-btn">
-										Shop Closed
-									</button>
-								) : cartItem ? (
-									<button disabled className="auth-btn">
-										Already in Cart
-									</button>
-								) : (
+								{user && user.access === "customer" ? (
 									<button
+										disabled={
+											!products ||
+											products[0].active_status !== 1 ||
+											cartItem
+										}
 										onClick={() => {
-											prods.quantity = quantity;
 											if (
 												!checkIfInCart(cartItems, prods)
 											) {
@@ -409,8 +387,22 @@ const Product = () => {
 										}}
 										className="auth-btn"
 									>
-										Add To Cart{" "}
+										{!products
+											? "Shop Closed"
+											: cartItem
+											? "Already in Cart"
+											: "Add To Cart"}
 									</button>
+								) : (
+									<Link
+										className="auth-btn text-center"
+										to={
+											import.meta.env
+												.VITE_API_PUBLIC_URL + "/login"
+										}
+									>
+										Add To Cart{" "}
+									</Link>
 								)}
 							</div>
 						</div>

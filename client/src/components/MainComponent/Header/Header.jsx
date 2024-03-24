@@ -39,7 +39,9 @@ function Header() {
 	const HandleLocationClick = useCallback(() => {
 		setLocationModal(true);
 	}, []);
-
+	const unReadNotification = notifications.filter(
+		(notification) => notification.status === 1
+	);
 	useEffect(() => {
 		if (!locationModal) return;
 
@@ -108,9 +110,9 @@ function Header() {
 										className="relative"
 									>
 										<BellIcon></BellIcon>
-										{notifications.length > 0 && (
+										{unReadNotification.length > 0 && (
 											<p className="absolute -top-2 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white">
-												{notifications.length}
+												{unReadNotification.length}
 											</p>
 										)}
 									</Link>
@@ -118,9 +120,7 @@ function Header() {
 									<div className="">
 										{isOffcanvasOpen ? (
 											<>
-												(
-												<FaX className="text-2xl   text-pink-500"></FaX>
-												){" "}
+												<FaX className="text-2xl   text-pink-500"></FaX>{" "}
 											</>
 										) : (
 											<div>

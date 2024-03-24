@@ -425,7 +425,7 @@ const Cart = () => {
 																	.VITE_API_PUBLIC_URL
 															}/product/${
 																cartItem.id
-															}`}
+															}/${cartItem.name}`}
 															className="w-full"
 														>
 															<h1 className="text-sm ">

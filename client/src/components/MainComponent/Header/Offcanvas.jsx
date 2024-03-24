@@ -91,13 +91,13 @@ function Offcanvas(props) {
 			{
 				title: "Cart",
 				path: "/cart",
-				access: ["customer", "shopper"],
+				access: ["customer"],
 				icon: <FaShoppingCart />,
 			},
 			{
 				title: "Refer",
 				path: "/referPage",
-				access: ["customer", "shopper", "admin", "moderator"],
+				access: ["customer", "shopper"],
 				icon: <FaUserPlus className="text-xl" />,
 			},
 			{
@@ -125,12 +125,6 @@ function Offcanvas(props) {
 						alt="administrator-male--v1"
 					/>
 				),
-			},
-			{
-				title: "Login",
-				path: "/login",
-				access: ["customer", "shopper", "admin", "moderator"],
-				icon: <FaUserPlus className="text-xl" />,
 			},
 		];
 
