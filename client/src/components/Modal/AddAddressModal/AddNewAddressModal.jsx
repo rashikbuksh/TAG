@@ -62,7 +62,7 @@ const AddNewAddressModal = ({
 							}
 							required
 							id="place"
-							placeholder="Wari,Dhaka"
+							placeholder="Block 5, House #2,Halishahar ,Chattogram "
 							className="w-full rounded border p-2"
 						/>
 					</div>

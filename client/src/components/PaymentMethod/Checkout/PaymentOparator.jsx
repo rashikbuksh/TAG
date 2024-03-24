@@ -3,8 +3,8 @@ import { FaArrowRight } from "react-icons/fa";
 
 const PaymentOparator = () => {
 	return (
-		<div>
-			<span className="text-[18px] font-bold text-[#171F1C]">
+		<div className="mt-4">
+			<span className="text-[18px] font-bold text-[#171F1C]  ">
 				Payment Method
 			</span>
 			<div className="mt-4 flex flex-col gap-2">

@@ -7,7 +7,7 @@ import SavedPayment from "../../../src/components/PaymentMethod/Checkout/SavedPa
 
 const Checkout2 = () => {
 	return (
-		<div className="mx-auto mb-24  max-w-[375px] text-black">
+		<div className="mx-auto mb-24 text-black ">
 			{/* Checkout Title */}
 			<Breadcrumb pageTitle="Checkout" prevUrl="/cart"></Breadcrumb>
 			{/* Delivery Address Section */}
@@ -15,7 +15,7 @@ const Checkout2 = () => {
 			{/* Payment Method Section */}
 			<PaymentOparator></PaymentOparator>
 			{/* Saved Payment Section */}
-			<SavedPayment></SavedPayment>
+			{/* <SavedPayment></SavedPayment> */}
 			{/* Order Summary Section */}
 			<OrderSummery></OrderSummery>
 			{/* Pay Now Button */}

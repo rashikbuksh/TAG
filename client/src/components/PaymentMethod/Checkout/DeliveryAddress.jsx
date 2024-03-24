@@ -139,7 +139,7 @@ const DeliveryAddress = () => {
 				setEdit={setEdit}
 				handleSubmit={handleSubmit}
 			></EditAddressModal>
-			<div className="my-2">
+			<div className="flex flex-col gap-2 ">
 				{/* Address bar mapping */}
 				{allAddress &&
 					allAddress.map((item) => (

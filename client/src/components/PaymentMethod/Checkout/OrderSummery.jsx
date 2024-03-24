@@ -2,7 +2,7 @@
 
 const OrderSummery = () => {
     return (
-		<div>
+		<div className="mt-4">
 			<span className="my-8 text-[18px] font-bold">Order Summary</span>
 			<div>
 				<div className="flex justify-between text-[16px] font-[300px] text-[#171F1C]">
