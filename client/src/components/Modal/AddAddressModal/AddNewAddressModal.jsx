@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Modal from "../Modal";
 
 // eslint-disable-next-line react/prop-types
@@ -15,7 +15,6 @@ const AddNewAddressModal = ({
 	});
 	const handleSubmit = (e) => {
 		e.preventDefault();
-        
 		setNewAddress(address);
 	};
 

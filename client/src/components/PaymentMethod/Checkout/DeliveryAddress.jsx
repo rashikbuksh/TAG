@@ -10,6 +10,7 @@ import EditAddressModal from "@components/Modal/EditAddressModal/EditAddressModa
 const DeliveryAddress = () => {
 	const [edit, setEdit] = useState(false);
 	const [isAddNewAddressOpen, setIsAddNewAddressOpen] = useState(false);
+	const [editItem, setEditItem] = useState({});
 
 	//Make a dummy address array ........ Which fill up from backend
 	const addressArr = [
@@ -24,11 +25,65 @@ const DeliveryAddress = () => {
 			id: 2,
 			place: "Office",
 			default: false,
-			address: "4140 Parker Rd. Allentown,New Mexico",
-			contact: "+880 01518****24",
+			address: "Dhaka wari. Allentown,New Mexico",
+			contact: "+880 01678****24",
 		},
 	];
 	const [allAddress, setAllAddress] = useState(addressArr);
+
+	//Change default address
+	const handleDefault = (id) => {
+		//set all default value false
+		const allDefaultFalseArr = allAddress.map((item) => {
+			return { ...item, default: false };
+		});
+		//dynamically change default value
+		const newAddressArr = allDefaultFalseArr.map((item) => {
+			if (item.id == id) {
+				const obj = {
+					...item,
+					default: true,
+				};
+				return obj;
+			}
+			return item;
+		});
+		setAllAddress(newAddressArr);
+	};
+
+	//Edit address //set edit address in a state   (lifted state)
+	const handleEditAddress = (id) => {
+		const item = allAddress.find((item) => item.id == id);
+		setEdit(!edit);
+		setEditItem(item);
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setEdit(false);
+		const updatedArray = allAddress.map((item) => {
+			if (item.id == editItem.id) {
+				return editItem;
+			}
+			return item;
+		});
+		setAllAddress(updatedArray);
+	};
+
+	//Set new address in address in address array function
+	const setAddress = (address) => {
+		const newAddress = {
+			...address,
+			id: crypto.randomUUID(),
+		};
+
+		setAllAddress([...allAddress, newAddress]);
+		setIsAddNewAddressOpen(false);
+	};
+
+	//Add new address
+	const handleAddNewAddress = () => {
+		setIsAddNewAddressOpen(!isAddNewAddressOpen);
+	};
 
 	//TODO::After adding functionality it should be in component
 	const Address = (item) => {
@@ -69,51 +124,6 @@ const DeliveryAddress = () => {
 		);
 	};
 
-	//Change default address
-	const handleDefault = (id) => {
-		//set all default value false
-		const allDefaultFalseArr = allAddress.map((item) => {
-			return { ...item, default: false };
-		});
-		//dynamically change default value
-		const newAddressArr = allDefaultFalseArr.map((item) => {
-			if (item.id == id) {
-				const obj = {
-					...item,
-					default: true,
-				};
-				return obj;
-			}
-			return item;
-		});
-		setAllAddress(newAddressArr);
-	};
-
-	//Edit address
-	const handleEditAddress = (id) => {
-		console.log(id)
-		setEdit(!edit);
-	};
-
-	//Set new address in address in address array function
-
-	const setAddress = (address) => {
-		const newAddress = {
-			...address,
-			id: crypto.randomUUID(),
-		};
-
-		console.log(newAddress)
-
-		setAllAddress([...allAddress, newAddress]);
-		setIsAddNewAddressOpen(false);
-	};
-
-	//Add new address
-	const handleAddNewAddress = () => {
-		setIsAddNewAddressOpen(!isAddNewAddressOpen);
-	};
-
 	return (
 		<>
 			<AddNewAddressModal
@@ -124,6 +134,10 @@ const DeliveryAddress = () => {
 			<EditAddressModal
 				isOpen={edit}
 				setIsOpen={setEdit}
+				editItem={editItem}
+				setEditItem={setEditItem}
+				setEdit={setEdit}
+				handleSubmit={handleSubmit}
 			></EditAddressModal>
 			<div className="my-2">
 				{/* Address bar mapping */}
