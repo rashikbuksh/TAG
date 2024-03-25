@@ -23,7 +23,8 @@ function GetLocation() {
 			(error) => {
 				setError(error.message);
 				setLoading(false);
-			}
+			},
+			{ enableHighAccuracy: true }
 		);
 	}, []);
 

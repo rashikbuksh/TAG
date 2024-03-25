@@ -25,8 +25,15 @@ import { PiShareFat } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
-import Drawer from 'react-modern-drawer';
+import Drawer from "react-modern-drawer";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { IoIosArrowBack } from "react-icons/io";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoMdShare } from "react-icons/io";
+import { IoIosLink } from "react-icons/io";
+import { toast } from "react-toastify";
 const ShopkeeperProfileCV = () => {
+	const [show, setShow] = useState(false);
 	// get id from url
 	const { id } = useParams();
 	const { user } = useAuth();
@@ -110,6 +117,12 @@ const ShopkeeperProfileCV = () => {
 				setCopySuccess("Copy failed: " + err);
 			});
 	};
+
+	const handleShowDrawer = () => {
+		setIsShareOpen(!isShareOpen);
+	};
+	
+
 	return (
 		<>
 			<Header />
@@ -118,7 +131,7 @@ const ShopkeeperProfileCV = () => {
 			<div className="relative mt-[3rem] lg:mx-auto lg:w-[50%]">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				<div className=" ">
-					<div className="mx-auto my-3">
+					<div className=" mx-auto my-3">
 						<Drawer
 							open={isShareOpen}
 							onClose={toggleDrawer}
@@ -140,7 +153,7 @@ const ShopkeeperProfileCV = () => {
 									<TwitterIcon />
 								</div>
 								<div className="divider"></div>
-								<p>Copy Link </p>
+
 								<p
 									onClick={() =>
 										copyToClipboard(
@@ -150,7 +163,7 @@ const ShopkeeperProfileCV = () => {
 											}/shopkeeperProfileCV/${id}`
 										)
 									}
-									className="text-md link-info link flex items-center justify-between rounded bg-gray-200 p-2"
+									className="text-md link-info link flex items-center justify-between rounded bg-gray-200 p-2 "
 								>
 									{`${
 										import.meta.env.VITE_API_PUBLIC_URL
@@ -159,8 +172,45 @@ const ShopkeeperProfileCV = () => {
 								</p>
 							</div>
 						</Drawer>
+						{/* Navigation and share icon */}
+						<div className="flex justify-between px-4">
+							<IoIosArrowBack size={20} />
+							<BsThreeDotsVertical
+								onClick={() => setShow(!show)}
+								size={20}
+							></BsThreeDotsVertical>
+						</div>
+						
+						<div
+							className={` absolute right-8 z-10 cursor-pointer  rounded p-2 shadow-md ${
+								!show ? "hidden" : ""
+							}`}
+						>
+							<button
+								className="flex items-center gap-2 p-1"
+								onClick={handleShowDrawer}
+							>
+								<span>Share</span>
+								<IoMdShare size={18}></IoMdShare>
+							</button>
+							<hr className="opacity-20" />
+							<button
+								className="flex items-center gap-2 p-1"
+								onClick={() =>
+									copyToClipboard(
+										`${
+											import.meta.env.VITE_API_PUBLIC_URL
+										}/shopkeeperProfileCV/${id}`
+									)
+								}
+							>
+								<span>Copy Link</span>
+								<IoIosLink size={18}></IoIosLink>
+							</button>
+						</div>
+
 						{shopkeeperInfo && (
-							<div className="relative flex flex-col items-center">
+							<div className="relative flex flex-col items-center gap-1">
 								<div
 									className={`avatar ${
 										shopkeeperInfo.active_status
@@ -188,19 +238,14 @@ const ShopkeeperProfileCV = () => {
 								<div className="flex  items-center gap-2">
 									<h1
 										title="shop Name"
-										className=" text-lg font-semibold"
+										className=" text-2xl   font-extrabold"
 									>
-										<span className="primary-text">#</span>
+										<span className="primary-text  ">
+											#
+										</span>
 										{id} {shopkeeperInfo.name}
 									</h1>
-									<button
-										className="font-xl flex h-[20px] w-[20px] items-center justify-center rounded bg-[#469CD6] text-white"
-										onClick={() =>
-											setIsShareOpen(!isShareOpen)
-										}
-									>
-										<PiShareFat className="text-lg" />
-									</button>
+								
 								</div>
 
 								<div className="mb-2">
@@ -211,9 +256,21 @@ const ShopkeeperProfileCV = () => {
 										value={shopkeeperInfo.review_count}
 									/>
 								</div>
-								<div className="my-1 flex items-center gap-4">
-									<div>33 Followers *</div>
+
+								<div className="flex items-center gap-2">
+									<FaMapMarkerAlt
+										size={18}
+										color="blue"
+									></FaMapMarkerAlt>
+									<span className="font-semibold text-gray-500">
+										{shopkeeperInfo?.address}
+									</span>
 								</div>
+								<div className="my-1 flex items-center gap-4 font-bold">
+									<div>33 Followers </div>
+
+								</div>
+
 								<div className=" flex items-center justify-center gap-4">
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white">
 										Message
@@ -241,23 +298,9 @@ const ShopkeeperProfileCV = () => {
 							</div>
 						)}
 
-						<div className="  flex items-center justify-start gap-3  border-gray-300 px-4 ">
-							<select
-								defaultValue={"0"}
-								className=" w-1/3 rounded border border-gray-300 px-3  py-2 text-gray-700 sm:text-sm"
-								onChange={selectedCategory}
-							>
-								<option value="0">Category</option>
-								{category.map((option, index) => (
-									<option
-										key={index}
-										value={option.category_id}
-									>
-										{option.category_name}
-									</option>
-								))}
-							</select>
+						<hr className="mt-4" />
 
+						<div className="  flex items-center justify-between   border-gray-300 px-3 ">
 							<div className="">
 								<div className="">
 									<SearchFunction
@@ -267,8 +310,25 @@ const ShopkeeperProfileCV = () => {
 									></SearchFunction>
 								</div>
 							</div>
+							<select
+								defaultValue={"0"}
+								className=" mr-8 w-1/4 rounded border border-gray-300 px-2  py-2 text-gray-700 shadow-md sm:text-sm"
+								onChange={selectedCategory}
+							>
+								<option value="0" className="">
+									Category
+								</option>
+								{category.map((option, index) => (
+									<option
+										key={index}
+										value={option.category_id}
+									>
+										{option.category_name}
+									</option>
+								))}
+							</select>
 						</div>
-						<div className="alphabet-list absolute bottom-24 right-0  z-10 ml-5  w-[20px] ">
+						<div className="alphabet-list absolute b right-0  z-10 ml-5  w-[20px] ">
 							{alphabet.map((letter) => (
 								<button
 									className="flex flex-col items-center justify-center text-[10px] font-bold"
@@ -297,7 +357,7 @@ const ShopkeeperProfileCV = () => {
 							)}
 							<div className="">
 								{/* //show product div  */}
-								<div className="mb-20 grid h-[52vh] w-[93%] grid-cols-2  gap-1 overflow-y-auto border-t px-2 lg:mx-auto lg:grid-cols-4">
+								<div className="mb-20 grid h-[70vh] w-[93%] grid-cols-2  gap-2 overflow-y-auto border-t px-2 lg:mx-auto lg:grid-cols-4">
 									{filteredAllProducts.map((single) => {
 										return (
 											<div

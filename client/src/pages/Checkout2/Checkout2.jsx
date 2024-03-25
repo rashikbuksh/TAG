@@ -57,7 +57,9 @@ const Checkout2 = () => {
 	};
 
 	return (
+
 		<div className="mx-auto px-4 pb-24 text-black ">
+
 			{/* Checkout Title */}
 			<Breadcrumb pageTitle="Checkout" prevUrl="/cart"></Breadcrumb>
 			{/* Delivery Address Section */}

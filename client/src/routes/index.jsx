@@ -32,7 +32,7 @@ export default function ProtectedRoutes() {
 			<Header />
 			{/* <Offcanvas /> */}
 			<Footer />
-			<div>
+        <div>
 				<Outlet />
 			</div>
 		</>
