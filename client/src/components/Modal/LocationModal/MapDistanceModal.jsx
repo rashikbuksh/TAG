@@ -1,4 +1,3 @@
-import ShopperMapMarker from "@assets/img/map-marker-for-shopper.png";
 import { useAuth } from "@context/auth";
 import GetLocation from "@helpers/GetLocation";
 import { api } from "@lib/api";
@@ -70,16 +69,10 @@ const MapDistanceModal = (props) => {
 			) : (
 				<Map
 					provider={maptilerProvider}
-					dprs={[1, 2]}
 					height={600}
 					defaultCenter={[location.lat, location.lng]}
 					defaultZoom={15}
 				>
-					<Marker
-						width={40}
-						anchor={[location.lat, location.lng]}
-						color="red"
-					/>
 					{props.single == true ? (
 						<Marker
 							width={40}
@@ -108,10 +101,18 @@ const MapDistanceModal = (props) => {
 									/>
 								);
 							} else {
-								<h1>No shop to see the map</h1>; // Return null if the condition is not met
+								return "";
 							}
 						})
 					)}
+					{typeof location.lat === "number" &&
+						typeof location.lng === "number" && (
+							<Marker
+								width={40}
+								anchor={[location.lat, location.lng]}
+								color="red"
+							></Marker>
+						)}
 				</Map>
 			)}
 		</Modal>
