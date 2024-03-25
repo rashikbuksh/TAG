@@ -110,7 +110,7 @@ const DeliveryAddress = () => {
 						<EditIcon size={25}></EditIcon>
 					</span>
 				</div>
-				<div className="ml-10 w-full leading-6 ">
+				<div className="ml-10  leading-6 ">
 					<span className="flex items-center gap-2">
 						<FaRegAddressBook />
 						<p>{item.address}</p>

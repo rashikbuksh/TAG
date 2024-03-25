@@ -13,7 +13,7 @@ const ShopCart = ({ shop }) => {
 
 	return (
 		<>
-			<div className="flex h-[230px] w-[160px] flex-col items-center rounded-lg border ">
+			<div className="flex h-[240px] w-[160px] flex-col items-center rounded-lg border ">
 				<img
 					className="h-[160px] w-[160px] cursor-pointer rounded-md object-cover p-1"
 					src={
@@ -39,13 +39,21 @@ const ShopCart = ({ shop }) => {
 				<Rating
 					style={{ maxWidth: 100 }}
 					readOnly
+					className="mb-2"
 					orientation="horizontal"
 					value={shop.review_count}
 				/>
+				<button className=" font-xl h-[45px] w-full rounded  bg-[#FF4C5E] text-white">
+					Follow
+				</button>
 			</div>
 			{showModal && (
-				<Modal isOpen={showModal} setIsOpen={setShowModal} color={"black"} >
-					<div className="flex items-center justify-center bg-black h-[60vh]">
+				<Modal
+					isOpen={showModal}
+					setIsOpen={setShowModal}
+					color={"black"}
+				>
+					<div className="flex h-[60vh] items-center justify-center bg-black">
 						<img
 							src={
 								shop.profile_picture
