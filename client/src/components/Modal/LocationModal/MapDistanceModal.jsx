@@ -62,6 +62,20 @@ const MapDistanceModal = (props) => {
 		return <h1>No shop to see the map</h1>;
 	}
 
+	const calculateZoom = (lat, lng) => {
+		const distance = DistanceCalculation(lat, lng);
+		console.log(distance);
+		if (distance < 5) {
+			return 16;
+		} else if (distance < 10) {
+			return 14;
+		} else if (distance < 50) {
+			return 10;
+		} else {
+			return 8;
+		}
+	};
+
 	return (
 		<Modal isOpen={props.isOpen} setIsOpen={props.setIsOpen}>
 			{user?.id == null ? (
@@ -70,8 +84,26 @@ const MapDistanceModal = (props) => {
 				<Map
 					provider={maptilerProvider}
 					height={600}
-					defaultCenter={[location.lat, location.lng]}
-					defaultZoom={15}
+					defaultCenter={
+						props.single == true
+							? [
+									(location.lat +
+										parseFloat(props.latLong.lat)) /
+										2,
+									(location.lng +
+										parseFloat(props.latLong.lng)) /
+										2,
+							  ]
+							: [location.lat, location.lng]
+					}
+					defaultZoom={
+						props.single == true
+							? calculateZoom(
+									props.latLong.lat,
+									props.latLong.lng
+							  )
+							: 12
+					}
 				>
 					{props.single == true ? (
 						<Marker
@@ -80,6 +112,7 @@ const MapDistanceModal = (props) => {
 								parseFloat(props.latLong.lat),
 								parseFloat(props.latLong.lng),
 							]}
+							color="red"
 						/>
 					) : (
 						Array.isArray(props.latLong) &&
@@ -97,7 +130,7 @@ const MapDistanceModal = (props) => {
 											parseFloat(item.lat),
 											parseFloat(item.lng),
 										]}
-										color="green"
+										color="red"
 									/>
 								);
 							} else {
@@ -108,9 +141,9 @@ const MapDistanceModal = (props) => {
 					{typeof location.lat === "number" &&
 						typeof location.lng === "number" && (
 							<Marker
-								width={40}
+								width={35}
 								anchor={[location.lat, location.lng]}
-								color="red"
+								color="blue"
 							></Marker>
 						)}
 				</Map>
