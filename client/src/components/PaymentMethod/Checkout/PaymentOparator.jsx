@@ -2,7 +2,12 @@ import { useState } from "react";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FaArrowRight } from "react-icons/fa";
 
-const PaymentOparator = ({ paymentOperator, setPaymentOperator }) => {
+const PaymentOparator = ({
+	paymentOperator,
+	setPaymentOperator,
+	shopperAccess,
+}) => {
+	console.log("🚀 ~ shopperAccess:", shopperAccess);
 	const [selectedOperator, setSelectedOperator] = useState(paymentOperator);
 
 	const handleSelectOperator = (operator) => {
@@ -22,30 +27,34 @@ const PaymentOparator = ({ paymentOperator, setPaymentOperator }) => {
 				Payment Method
 			</span>
 			<div className="mt-4 flex flex-col gap-2">
-				<div
-					className={`flex h-[50px] w-full cursor-pointer items-center px-2 ${
-						selectedOperator === "Cash On Delivery"
-							? "bg-gray-200"
-							: ""
-					}`}
-					onClick={() => handleSelectOperator("Cash On Delivery")}
-				>
-					<input
-						type="checkbox"
-						checked={selectedOperator === "Cash On Delivery"}
-						onChange={() =>
-							handleSelectOperator("Cash On Delivery")
-						}
-						className="mr-4 h-5 w-5"
-					/>
-					<TbTruckDelivery size={25} />
-					<span className="ml-8 flex-auto text-[16px] font-bold">
-						Cash On Delivery
-					</span>
-					{selectedOperator === "Cash On Delivery" && (
-						<FaArrowRight size={22} />
-					)}
-				</div>
+				{
+					<div
+						className={`flex h-[50px] w-full cursor-pointer items-center px-2 ${
+							selectedOperator === "Cash On Delivery"
+								? "bg-gray-200"
+								: ""
+						}`}
+						onClick={() => handleSelectOperator("Cash On Delivery")}
+					>
+						<input
+							type="checkbox"
+							checked={selectedOperator === "Cash On Delivery"}
+							onChange={() =>
+								handleSelectOperator("Cash On Delivery")
+							}
+							className="mr-4 h-5 w-5"
+						/>
+						<TbTruckDelivery size={25} />
+						<span className="ml-8 flex-auto text-[16px] font-bold">
+							{shopperAccess === "shopper" ?"Cash On Pickup":"Cash On Delivery"}
+							
+						</span>
+						{selectedOperator === "Cash On Delivery" && (
+							<FaArrowRight size={22} />
+						)}
+					</div>
+				}
+
 				<div
 					className={`flex h-[50px] w-full cursor-pointer items-center px-2 ${
 						selectedOperator === "Bkash" ? "bg-gray-200" : ""

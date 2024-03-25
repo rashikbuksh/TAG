@@ -13,6 +13,16 @@ const TagOrderDetailsModal = ({ isOpen, setIsOpen, orderDetails }) => {
 	const order_time = orderDetails.map((d) => d.order_time);
 	const accept_time = orderDetails.map((d) => d.shopper_order_accept_time);
 	const delivery_time = orderDetails.map((d) => d.delivery_time);
+
+	const addressTitle = orderDetails.map((d) => d.address_title);
+	const address = orderDetails.map((d) => d.address);
+	const contactNo = orderDetails.map((d) => d.phone_no);
+	const customers_address_summary = orderDetails.map(
+		(d) => d.customers_address_summary
+	);
+	// const [addressTitle, setAddressTitle] = useState(null);
+	// const [address, setAddress] = useState(null);
+	// const [contactNo, setContactNo] = useState(null);
 	const formattedOrderTime = FormattedTime({
 		time: order_time,
 		format: "hh:mm A DD/MM/YY",
@@ -60,10 +70,16 @@ const TagOrderDetailsModal = ({ isOpen, setIsOpen, orderDetails }) => {
 		}
 	}, [order_time, delivery_time]);
 
+	const deliveryInfoStyle = {
+		background: "#f7f7f7", // Background color
+		padding: "10px", // Padding around the delivery information
+		borderRadius: "5px", // Rounded corners
+		marginBottom: "20px", // Spacing between delivery info and total amount
+	};
 	return (
 		<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
 			<div>
-				<p>Products:</p>
+				<p className="text-xl font-black">Products Information</p>
 				<div className="overflow-x-auto">
 					<table className="min-w-full  divide-gray-200 bg-white text-sm">
 						<tbody className=" divide-gray-200">
@@ -111,6 +127,18 @@ const TagOrderDetailsModal = ({ isOpen, setIsOpen, orderDetails }) => {
 							Time Difference (Order to Delivery):
 							{formattedDifference}
 						</p>
+					</div>
+					<div className="divider my-0"></div>
+					<div style={deliveryInfoStyle}>
+						<p className="text-xl font-bold">
+							Delivery Information:
+						</p>
+						{!addressTitle[0] && !address[0] && !contactNo[0] && (
+							<p>{customers_address_summary[0]}</p>
+						)}
+						<p className="text-lg">{addressTitle[0]}</p>
+						<p className="text-md">{address[0]}</p>
+						<p>{contactNo[0]}</p>
 					</div>
 					<div className="divider my-0"></div>
 					{cancel_report && (

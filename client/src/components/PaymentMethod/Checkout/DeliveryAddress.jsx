@@ -11,6 +11,9 @@ const DeliveryAddress = ({
 	addressArr,
 	setSelectedAddress,
 	selectedAddress,
+	shopperAccess,
+	customers_address_summary,
+	setCustomers_address_summary,
 }) => {
 	const [edit, setEdit] = useState(false);
 	const [isAddNewAddressOpen, setIsAddNewAddressOpen] = useState(false);
@@ -51,7 +54,11 @@ const DeliveryAddress = ({
 
 	//Add new address
 	const handleAddNewAddress = () => {
-		setIsAddNewAddressOpen(!isAddNewAddressOpen);
+		if (addressArr.length < 3) {
+			setIsAddNewAddressOpen(!isAddNewAddressOpen);
+		} else {
+			return;
+		}
 	};
 
 	return (
@@ -59,6 +66,7 @@ const DeliveryAddress = ({
 			<AddNewAddressModal
 				isOpen={isAddNewAddressOpen}
 				setIsOpen={setIsAddNewAddressOpen}
+				addressArr={addressArr}
 			></AddNewAddressModal>
 			<EditAddressModal
 				isOpen={edit}
@@ -76,17 +84,25 @@ const DeliveryAddress = ({
 							handelDeleteAddress={handelDeleteAddress}
 							selectedAddress={selectedAddress}
 							setSelectedAddress={setSelectedAddress}
+							shopperAccess={shopperAccess}
+							customers_address_summary={
+								customers_address_summary
+							}
+							setCustomers_address_summary={
+								setCustomers_address_summary
+							}
 						></AddressSection>
 					))}
 
 				{/* Add New Address button  */}
-				<div
+				<button
 					onClick={handleAddNewAddress}
+					disabled={shopperAccess === "shopper"}
 					className="mt-2 flex h-20 cursor-pointer items-center justify-center gap-2 rounded border border-dotted p-2 text-xl font-bold shadow-md hover:text-primary"
 				>
 					<span>Add</span>
 					<GoPlusCircle />
-				</div>
+				</button>
 			</div>
 		</>
 	);

@@ -8,9 +8,19 @@ const AddressSection = ({
 	handelDeleteAddress,
 	setSelectedAddress,
 	selectedAddress,
+	shopperAccess,
+	setCustomers_address_summary,
 }) => {
 	const handleClick = () => {
-		setSelectedAddress(item.id); // Call handleSelectAddress to set the selected address
+		if (shopperAccess === "shopper") {
+			return;
+		} else {
+			setSelectedAddress(item.id);
+			setCustomers_address_summary(
+				`${item.address_title},${item.address},${item.phone_no}`
+			);
+		}
+		// Call handleSelectAddress to set the selected address
 	};
 	return (
 		<div
@@ -32,10 +42,10 @@ const AddressSection = ({
 				</span>
 				<span className=" flex-1">{item.address_title}</span>
 				<span onClick={() => handleEditAddress(item.id)}>
-					<EditIcon size={25}></EditIcon>
+					<EditIcon size={25} color="blue"></EditIcon>
 				</span>
 				<span onClick={() => handelDeleteAddress(item.id)}>
-					<FaTrash size={25}></FaTrash>
+					<FaTrash size={20} color="red"></FaTrash>
 				</span>
 			</div>
 			<div className=" mt-2 pl-5 leading-6">

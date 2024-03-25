@@ -8,7 +8,8 @@ import { useAuth } from "@context/auth";
 const AddNewAddressModal = ({
 	isOpen,
 	setIsOpen,
-	setAddress: setNewAddress,
+	// addressArr
+	// setAddress: setNewAddress,
 }) => {
 	const { user } = useAuth();
 	const {

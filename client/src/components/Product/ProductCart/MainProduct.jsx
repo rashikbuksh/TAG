@@ -97,10 +97,6 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 			// You can set appropriate default values or show an error message.
 		}
 	}, [cartItems, id]);
-	const [isAdminShopMOdalOpen, setIsAdminShopMOdalOpen] = useState(false);
-	const handelOpenMessageModal = () => {
-		setIsOpen(!isOpen);
-	};
 	const handelOpenLocationModal = () => {
 		GetUserInfo();
 		let positionFromDb = shipping_address?.split("__");
@@ -281,9 +277,14 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 								<button
 									disabled={active_status !== 1}
 									onClick={() => {
-										setIsAdminShopMOdalOpen(
-											!isAdminShopMOdalOpen
-										);
+										prod.quantity = quantity;
+										if (checkIfInCart(cartItems, prod)) {
+											dispatch(
+												increaseQuantityofProd(prod)
+											);
+										} else {
+											dispatch(addToCart(prod));
+										}
 									}}
 									className=""
 								>
@@ -304,29 +305,6 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 						</div>
 					)}
 				</div>
-				<Modal
-					title={"Information"}
-					isOpen={isAdminShopMOdalOpen}
-					setIsOpen={setIsAdminShopMOdalOpen}
-				>
-					<div className="p-6">
-						<p className="mb-4 text-lg">
-							We're sorry, but the product you're looking for is
-							currently not available. However, we have other
-							similar products that you might be interested in.
-						</p>
-						<p className="mb-4 text-lg">
-							Please feel free to{" "}
-							<a
-								href="/shop"
-								className="text-blue-500 hover:underline"
-							>
-								browse our products
-							</a>
-							.
-						</p>
-					</div>
-				</Modal>
 
 				<div className=" flex items-end justify-between   ">
 					<div className=" flex items-center">

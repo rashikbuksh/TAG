@@ -359,20 +359,20 @@ const Cart = () => {
 		JSON.parse(localStorage.getItem("cart_timer_data")).timerStarted &&
 		JSON.parse(localStorage.getItem("cart_timer_data")).countdown > 0;
 	console.log("🚀 ~ Cart ~ isTimeRunning:", isTimeRunning);
-	const handelCheckout = (id, item) => {
-		console.log(item);
+	const handelCheckout = (id, shopperAccess) => {
 		navigate("/checkout", {
 			state: {
 				totalPrice: calculatedTotals[id],
 				shopperId: id,
 				discount: null,
 				totalItem: cartItems.filter((it) => it.shopper_id === id),
+				shopperAccess: shopperAccess,
 			},
 		});
 	};
 	return (
 		<>
-			<div className="mx-auto mt-8 h-full overflow-scroll lg:w-[50%]">
+			<div className="mx-auto mt-8 h-full overflow-scroll lg:w-[50%] pb-24">
 				<Breadcrumb pageTitle={"Cart"} prevUrl={"/home"}></Breadcrumb>
 				<Link to={"/orderStatus"} className="mr-2 flex justify-end">
 					<p className="text-md link mt-2 font-bold uppercase text-green-500">
@@ -383,7 +383,7 @@ const Cart = () => {
 
 				{cartItems && cartItems.length > 0 ? (
 					shoppers.map((shopper) => (
-						<div className="" key={shopper.id}>
+						<div className="mt-4" key={shopper.id}>
 							{cartItems.some(
 								(cartItem) => cartItem.shopper_id === shopper.id
 							) && (
@@ -546,7 +546,7 @@ const Cart = () => {
 								(cartItem) => cartItem.shopper_id === shopper.id
 							) && (
 								<div className="mx-4 my-1 flex items-center justify-between p-1">
-									<div className="flex items-center gap-3">
+									{/* <div className="flex items-center gap-3">
 										{isTimeRunning &&
 										buyStates[shopper.id] ? (
 											<>
@@ -618,23 +618,23 @@ const Cart = () => {
 												Buy now
 											</button>
 										)}
-									</div>
+									</div> */}
+									{calculatedTotals[shopper.id] && (
+										<button
+											onClick={() =>
+												handelCheckout(shopper.id, shopper.access)
+											}
+											className="rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white"
+										>
+											Bye Now
+										</button>
+									)}
 									<h2 className="flex items-center justify-center gap-2 text-xs font-bold">
 										<Takaicon></Takaicon>
 										{parseFloat(
 											calculatedTotals[shopper.id]
 										).toFixed(2)}
 									</h2>
-									{calculatedTotals[shopper.id] && (
-										<button
-											onClick={() =>
-												handelCheckout(shopper.id)
-											}
-											className="btn btn-primary btn-sm"
-										>
-											Bye Payment
-										</button>
-									)}
 								</div>
 							)}
 						</div>
