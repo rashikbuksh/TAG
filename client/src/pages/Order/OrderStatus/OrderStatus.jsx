@@ -59,7 +59,7 @@ const OrderStatus = () => {
 	};
 
 	return (
-		<div className="mt-8">
+		<div className="mt-8 px-2">
 			<Breadcrumb
 				pageTitle={"Order Status"}
 				prevUrl={"/cart"}
@@ -69,6 +69,7 @@ const OrderStatus = () => {
 					id,
 					shopper_name,
 					order_status,
+					access,
 					price,
 					products,
 					order_time,
@@ -156,22 +157,35 @@ const OrderStatus = () => {
 
 								<div className="divider my-0"></div>
 								<div className="flex justify-between px-3">
-									<div className="flex items-center gap-4 text-[#FF2A2A]">
-										{
-											<div>
-												<p>
-													Within{" "}
-													{addOneHour(order_time)} ,
-													Collect
+									<div className="flex items-center gap-4 text-[#16492a] font-bold leading-7" >
+										{access === "shopper" ? (
+											<>
+												<div>
+													<p>
+														Within{" "}
+														{addOneHour(order_time)}{" "}
+														, Collect
+													</p>
+													<p>Your Products</p>
+												</div>
+												<FaPersonWalking
+													color="green"
+													size={20}
+												/>
+											</>
+										) : (
+											<div
+												style={{
+													display: "flex",
+													flexDirection: "column",
+												}}
+											>
+												<p style={{ flex: "1" }}>
+													Your product will be
+													delivered within 2 hours!
 												</p>
-												<p>Your Products</p>
 											</div>
-										}
-
-										<FaPersonWalking
-											color="green"
-											size={20}
-										/>
+										)}
 									</div>
 
 									<p className="flex items-center gap-2 ">

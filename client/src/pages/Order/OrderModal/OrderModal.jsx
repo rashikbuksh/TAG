@@ -10,6 +10,10 @@ const OrderModal = () => {
 	const [products, setProducts] = useState([]);
 	const [orderStatus, setOrderStatus] = useState("");
 	const [price, setPrice] = useState(null);
+	const [addressTitle, setAddressTitle] = useState(null);
+	const [address, setAddress] = useState(null);
+	const [contactNo, setContactNo] = useState(null);
+	const [customers_address_summary, setCustomers_address_summary] = useState(null);
 
 	const [memoizedProducts, setMemoizedProducts] = useState(products);
 	useEffect(() => {
@@ -17,8 +21,13 @@ const OrderModal = () => {
 			// let id = order_Id;
 			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
 				.then((response) => {
+					console.log("🚀 ~ .then ~ response:", response);
 					setProducts(response.data);
 					setOrderStatus(response.data[0].order_status);
+					setAddressTitle(response.data[0].address_title);
+					setAddress(response.data[0].address);
+					setContactNo(response.data[0].phone_no);
+					setCustomers_address_summary(response.data[0].customers_address_summary);
 					setPrice(response.data[0].totalPrice); // Use console.log instead of log
 				})
 				.catch((error) => {
@@ -41,8 +50,14 @@ const OrderModal = () => {
 		accepted: "text-green-500",
 		pending: "text-yellow-500",
 	};
+	const deliveryInfoStyle = {
+		background: "#f7f7f7", // Background color
+		padding: "10px", // Padding around the delivery information
+		borderRadius: "5px", // Rounded corners
+		marginBottom: "20px", // Spacing between delivery info and total amount
+	};
 	return (
-		<div className="body-wrapper  ">
+		<div className=" px-2 pb-24 ">
 			<Breadcrumb pageTitle={`Order Number: #${id}`} prevUrl="/order" />
 			<div>
 				<div className="overflow-x-auto">
@@ -70,6 +85,17 @@ const OrderModal = () => {
 			<div className=" flex items-center justify-end gap-5 text-lg">
 				<p>Total Amount :</p>
 				<p>{price}</p>
+			</div>
+			<div className="divider my-0"></div>
+
+			<div style={deliveryInfoStyle} className="">
+				<p className="text-xl font-bold">Delivery Information:</p>
+				{!addressTitle && !address && !contactNo && (
+					<p>{customers_address_summary}</p>
+				)}
+				<p className="text-lg">{addressTitle}</p>
+				<p className="text-md">{address}</p>
+				<p>{contactNo}</p>
 			</div>
 		</div>
 	);

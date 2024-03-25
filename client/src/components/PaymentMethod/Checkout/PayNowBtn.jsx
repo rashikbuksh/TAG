@@ -1,9 +1,9 @@
-
-
-const PayNowBtn = () => {
+const PayNowBtn = ({ handelGoPaymentPage }) => {
 	return (
-		<div className="flex justify-center">
-			<button className="auth-btn ">Pay Now</button>
+		<div className="flex justify-center mt-3">
+			<button onClick={handelGoPaymentPage} className="auth-btn ">
+				Pay Now
+			</button>
 		</div>
 	);
 };

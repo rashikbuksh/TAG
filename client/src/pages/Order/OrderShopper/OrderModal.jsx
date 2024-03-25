@@ -20,13 +20,23 @@ const OrderDetailsShopper = () => {
 	const [OrderTime, setOrderTime] = useState(null);
 	const [CustomerId, setCustomerId] = useState(null);
 	const [products, setProducts] = useState([]);
+	const [addressTitle, setAddressTitle] = useState(null);
+	const [address, setAddress] = useState(null);
+	const [contactNo, setContactNo] = useState(null);
 	console.log("🚀 ~ OrderDetailsShopper ~ products:", products);
+	const [customers_address_summary, setCustomers_address_summary] = useState(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const handelIsOpenModal = () => {
 		setIsOpen(!isOpen);
 		if (isOpen === false) {
 			// window.location.reload();
 		}
+	};
+	const deliveryInfoStyle = {
+		background: "#f7f7f7", // Background color
+		padding: "10px", // Padding around the delivery information
+		borderRadius: "5px", // Rounded corners
+		marginBottom: "20px", // Spacing between delivery info and total amount
 	};
 	useEffect(() => {
 		if (id) {
@@ -35,6 +45,10 @@ const OrderDetailsShopper = () => {
 					setProducts(response.data);
 					setPrice(response.data[0].totalPrice);
 					setCustomerId(response.data[0].customer_profile_id);
+					setAddressTitle(response.data[0].address_title);
+					setCustomers_address_summary(response.data[0].customers_address_summary);
+					setAddress(response.data[0].address);
+					setContactNo(response.data[0].phone_no);
 					setOrderStatus(response.data[0].order_status); // Use console.log instead of log
 					setOrderTime(response.data[0].order_time); // Use console.log instead of log
 				})
@@ -291,6 +305,16 @@ const OrderDetailsShopper = () => {
 					<p>Selected Cancel Report: {cancelReport}</p>
 				</div>
 			)}
+			<div className="divider my-0"></div>
+			<div style={deliveryInfoStyle} className="">
+				<p className="text-xl font-bold">Delivery Information:</p>
+				{!addressTitle && !address && !contactNo && (
+					<p>{customers_address_summary}</p>
+				)}
+				<p className="text-lg">{addressTitle}</p>
+				<p className="text-md">{address}</p>
+				<p>{contactNo}</p>
+			</div>
 		</div>
 	);
 };
