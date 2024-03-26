@@ -5,6 +5,7 @@ import { Map, Marker } from "pigeon-maps";
 import { maptiler } from "pigeon-maps/providers";
 import React, { useState } from "react";
 import Modal from "../Modal";
+import { FaLocationDot } from "react-icons/fa6";
 
 const MapDistanceModal = (props) => {
 	const [minimumDistance, setMinimumDistance] = useState(0);
@@ -77,76 +78,92 @@ const MapDistanceModal = (props) => {
 	};
 
 	return (
-		<Modal isOpen={props.isOpen} setIsOpen={props.setIsOpen}>
+		<Modal
+			isOpen={props.isOpen}
+			setIsOpen={props.setIsOpen}
+			title={"Location"}
+		>
 			{user?.id == null ? (
 				<h1>Please login to see the map</h1>
 			) : (
-				<Map
-					provider={maptilerProvider}
-					height={600}
-					defaultCenter={
-						props.single == true
-							? [
-									(location.lat +
-										parseFloat(props.latLong.lat)) /
-										2,
-									(location.lng +
-										parseFloat(props.latLong.lng)) /
-										2,
-							  ]
-							: [location.lat, location.lng]
-					}
-					defaultZoom={
-						props.single == true
-							? calculateZoom(
-									props.latLong.lat,
-									props.latLong.lng
-							  )
-							: 12
-					}
-				>
-					{props.single == true ? (
-						<Marker
-							width={40}
-							anchor={[
-								parseFloat(props.latLong.lat),
-								parseFloat(props.latLong.lng),
-							]}
-							color="red"
-						/>
-					) : (
-						Array.isArray(props.latLong) &&
-						props.latLong.map((item) => {
-							const distance = DistanceCalculation(
-								item.lat,
-								item.lng
-							);
-							if (distance < minimumDistance) {
-								return (
-									<Marker
-										key={Math.random()}
-										width={40}
-										anchor={[
-											parseFloat(item.lat),
-											parseFloat(item.lng),
-										]}
-										color="red"
-									/>
-								);
-							} else {
-								return "";
-							}
-						})
-					)}
-					{typeof location.lat === "number" &&
-						typeof location.lng === "number" && (
+				<>
+					<Map
+						provider={maptilerProvider}
+						height={600}
+						defaultCenter={
+							props.single == true
+								? [
+										(location.lat +
+											parseFloat(props.latLong.lat)) /
+											2,
+										(location.lng +
+											parseFloat(props.latLong.lng)) /
+											2,
+								  ]
+								: [location.lat, location.lng]
+						}
+						defaultZoom={
+							props.single == true
+								? calculateZoom(
+										props.latLong.lat,
+										props.latLong.lng
+								  )
+								: 12
+						}
+					>
+						{props.single == true ? (
 							<Marker
-								width={35}
-								anchor={[location.lat, location.lng]}
-								color="blue"
-							></Marker>
+								width={40}
+								anchor={[
+									parseFloat(props.latLong.lat),
+									parseFloat(props.latLong.lng),
+								]}
+								color="red"
+							/>
+						) : (
+							Array.isArray(props.latLong) &&
+							props.latLong.map((item) => {
+								const distance = DistanceCalculation(
+									item.lat,
+									item.lng
+								);
+								if (distance < minimumDistance) {
+									return (
+										<Marker
+											key={Math.random()}
+											width={40}
+											anchor={[
+												parseFloat(item.lat),
+												parseFloat(item.lng),
+											]}
+											color="red"
+										/>
+									);
+								} else {
+									return "";
+								}
+							})
 						)}
-				</Map>
+						{typeof location.lat === "number" &&
+							typeof location.lng === "number" && (
+								<Marker
+									width={35}
+									anchor={[location.lat, location.lng]}
+									color="blue"
+								></Marker>
+							)}
+					</Map>
+					<div className="flex items-center justify-center gap-2">
+						<span className="flex items-center">
+							<FaLocationDot size={27} color="red" /> Your
+							location
+						</span>
+						<span className="flex items-center">
+							<FaLocationDot size={27} color="blue" />  Shop
+							Location
+						</span>
+					</div>
+				</>
 			)}
 		</Modal>
 	);

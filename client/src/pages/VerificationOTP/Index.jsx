@@ -22,7 +22,8 @@ const VerificationOTP = () => {
 	const [otpError, setOtpError] = useState(null);
 	const otpBoxReference = useRef([]);
 	const [isOpen, setIsOpen] = useState(false);
-
+	const [remainingTime, setRemainingTime] = useState(60); // Initial time in seconds
+	const [timerRunning, setTimerRunning] = useState(false);
 	// Retrieve isCodeSent from localStorage or default to false
 	const [isCodeSent, setIsCodeSent] = useState(
 		JSON.parse(localStorage.getItem("isCodeSent")) || false
@@ -45,8 +46,33 @@ const VerificationOTP = () => {
 		setIsOtpEmpty(true);
 		// Save isCodeSent to localStorage
 		localStorage.setItem("isCodeSent", JSON.stringify(true));
+		// Start the timer
+		setTimerRunning(true);
 	};
+	useEffect(() => {
+		let timerInterval;
+		if (timerRunning) {
+			timerInterval = setInterval(() => {
+				setRemainingTime((prevTime) => {
+					if (prevTime === 0) {
+						setTimerRunning(false);
+						clearInterval(timerInterval);
+						return 0;
+					}
+					return prevTime - 1;
+				});
+			}, 1000); // Update every second
+		}
 
+		return () => clearInterval(timerInterval);
+	}, [timerRunning]);
+
+	// Function to format remaining time as minutes and seconds
+	const formatTime = (time) => {
+		const minutes = Math.floor(time / 60);
+		const seconds = time % 60;
+		return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+	};
 	useEffect(() => {
 		// If isCodeSent is false, send OTP
 		if (!isCodeSent) {
@@ -135,8 +161,15 @@ const VerificationOTP = () => {
 		}
 	};
 
+	const sendTryAgainOTPCode = () => {
+		if (!timerRunning) {
+			setRemainingTime(60); // Reset the timer
+			sendOTPCode(); // Initiating OTP sending process again
+		}
+	};
+
 	return (
-		<article className="mx-auto mt-28 max-w-md px-6">
+		<article className="mx-auto pt-28 max-w-md px-6">
 			<SuccessOtpModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
 			<div className="flex items-center justify-center">
@@ -183,7 +216,15 @@ const VerificationOTP = () => {
 					Verify
 				</button>
 			)}
-			<button className="link mx-auto my-10 block" onClick={sendOTPCode}>
+			<p className="mt-2 text-center text-gray-600">
+				{timerRunning
+					? `Try again in ${formatTime(remainingTime)}`
+					: ""}
+			</p>
+			<button
+				className="btn link mx-auto my-10 block"
+				onClick={sendTryAgainOTPCode}
+			>
 				Try Again
 			</button>
 		</article>

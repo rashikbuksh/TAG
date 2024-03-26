@@ -626,7 +626,7 @@ const Cart = () => {
 											}
 											className="rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white"
 										>
-											Bye Now
+											Buy Now
 										</button>
 									)}
 									<h2 className="flex items-center justify-center gap-2 text-xs font-bold">
