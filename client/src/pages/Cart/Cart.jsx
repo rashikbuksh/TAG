@@ -372,7 +372,7 @@ const Cart = () => {
 	};
 	return (
 		<>
-			<div className="mx-auto mt-8 h-full overflow-scroll lg:w-[50%] pb-24">
+			<div className="mx-auto  h-full overflow-scroll lg:w-[50%] pb-24">
 				<Breadcrumb pageTitle={"Cart"} prevUrl={"/home"}></Breadcrumb>
 				<Link to={"/orderStatus"} className="mr-2 flex justify-end">
 					<p className="text-md link mt-2 font-bold uppercase text-green-500">

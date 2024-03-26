@@ -17,6 +17,7 @@ const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 	if (window.matchMedia("(min-width: 1024px)").matches) {
 		params.slidesPerView = 2;
 	}
+
 	return (
 		<div className="hero-slider -mx-4  max-w-7xl lg:mx-auto">
 			<div className="hero-slider-wrapper">
@@ -37,9 +38,10 @@ const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 											"/heroslider/" +
 											single.image
 										}
-										className="mx-auto h-[216px]  w-full md:w-auto"
+										className="mx-auto h-[216px] w-full md:w-auto"
 										alt=""
 									/>
+								
 								</Link>
 							</SwiperSlide>
 						))}
