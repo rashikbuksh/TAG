@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2024 at 09:48 AM
+-- Generation Time: Mar 26, 2024 at 05:29 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -52,6 +52,29 @@ INSERT INTO `category` (`id`, `name`, `url`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customers_address_details`
+--
+
+CREATE TABLE `customers_address_details` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `address_title` varchar(255) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `geo_location` varchar(255) DEFAULT NULL,
+  `phone_no` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customers_address_details`
+--
+
+INSERT INTO `customers_address_details` (`id`, `customer_id`, `address_title`, `address`, `geo_location`, `phone_no`) VALUES
+(11, 36, 'Home', 'k block haishahar chittagong', '91.788587_22.3307028', '01878601610'),
+(15, 36, 'Amar basa', 'k block haishahar chittagong', '91.788587_22.3307028', '01878601610');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customer_profile`
 --
 
@@ -95,7 +118,6 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (20, 'Tag Store', NULL, NULL, NULL, NULL, '$2b$10$1R4tRAPwHpmV6EnGtAStUeJZY8aj0Dt9NR.B2fjgNiXSYkmH5rm46', NULL, 'tag@admin.com', '23.7517979__90.4219168', NULL, NULL, NULL, NULL, 'admin', 1, 'bo1ntlas7k7', 'unreferred', NULL),
 (36, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$sAtGIF2DZL.hB8LTMCQ7ZOp2Zdzln6WmbhK7pCrFhEKz46bH/6AF.', '01684545142', 'rashik@gmail.com', '22.3304379__91.7872739', NULL, NULL, NULL, NULL, 'customer', NULL, '1mwoauien49', 'referred', '1699370631335__IMG_4137.JPG'),
 (48, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$p.NA9WD2M7T/HFzL1kX.wee8biKelsaoe7qNWl/zXHfeHHG2GVErq', '01684545121', 'anik1234567@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, 'kmigen4lv1', NULL, NULL),
-(49, 'Towhidul Islam', NULL, NULL, NULL, NULL, '$2b$10$NII3Zsp1lU/4SQt9eM/vv.CufLSYICSlfRHgRceEX55hATtYA.4Pe', '01878601610', 'towhidulislam2.bd@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', 'referred', NULL),
 (52, 'Modarator', NULL, NULL, NULL, NULL, '$2b$10$KFdI.jfOFD5WbZhp.vHdTO6TJMunfxfEum7Hxza9rfnOpqxQxPsKq', '01888888888', 'modarator@tag.com', NULL, NULL, NULL, NULL, NULL, 'modarator', NULL, '', 'unreferred', NULL),
 (58, 'Towhidul Islam', NULL, NULL, NULL, NULL, '$2b$10$v6O3JpuXQQ/Ga7wJK0yld.oykAFrwfK1YHsY29FUP16QWUfF0yRsS', '01878611610', 'towhidulislam221.bd@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '68ina65jck', 'referred', NULL),
 (65, 'withrefer@gmail.com', NULL, NULL, NULL, NULL, '$2b$10$RsqL5G2UjO8jpqxXayrSgOGXcDJHVGavAE6UkdBVFdG4chKIm6w2m', '01778601610', 'withrefer@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', 'referred', NULL),
@@ -109,7 +131,10 @@ INSERT INTO `customer_profile` (`id`, `name`, `image`, `point`, `level`, `user_n
 (74, 'adasda', NULL, NULL, NULL, NULL, '$2b$10$j/EHcnuo7nTjIi84bJb5nuF4C3nmMMe2j9IdNaAT9WeNmFwVLlS7a', 'sdasd', 'asdasda@daasd', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
 (76, 'Towhidul Store', NULL, NULL, NULL, NULL, '$2b$10$BfsPyaAGL5wcR50.PNp51eHjBE6sohrTrqHUM59vrKdiUJftIzAZ6', '01601401607', 'towhidulislam2.bd@gmail.com', '22.3176576__91.7980074', NULL, NULL, NULL, NULL, 'shopper', NULL, '', 'unreferred', '1700676814695__channels4_profile.jpg'),
 (92, 'RUNA LAYLA', NULL, NULL, NULL, NULL, '$2b$10$6BDsjaH9cTvjGZPl2mV6gubkrijR.KDQvSDKzGQVPMl/LR2/5CWoi', '01534559288', 'anayet.buksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
-(93, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$qAxS76NH/gWAWrXVLuUNoOpicrI.zNll97WEKaqyUmi67X4E3WI3q', '01709305071', 'rashikbuksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL);
+(93, 'Rashik Buksh', NULL, NULL, NULL, NULL, '$2b$10$qAxS76NH/gWAWrXVLuUNoOpicrI.zNll97WEKaqyUmi67X4E3WI3q', '01709305071', 'rashikbuksh@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', NULL, NULL),
+(94, 'test shop', NULL, NULL, NULL, NULL, '$2b$10$f58g7rVQD6ePzEQOarhYYuyhKcRg0zhjecvVBuKqt6hKHlb.jhx8O', '01878601611', 'towhidulislam11.bd@gmail.com', '22.3305857__91.7971129', NULL, NULL, NULL, NULL, 'new_shopper', NULL, '', NULL, NULL),
+(95, 'test shop ', NULL, NULL, NULL, NULL, '$2b$10$zTh8HtdgC5aPeGLq.p5VC.T6PtAo/.sE2XDxBgZ9oX1GJ47W8X4Za', '01648227285', 'towhidulislam11.bd@gmail.com', '22.3305857__91.7971129', NULL, NULL, NULL, NULL, 'shopper', 1, '', 'unreferred', NULL),
+(97, 'Towhidul Islam', NULL, NULL, NULL, NULL, '$2b$10$jm6me9ESelxvrirj.j0aD.Y8m7OkRUyAn1aIlUeafWJXwijjivEaq', '01878601610', 'towhidulislam2.bd@gmail.com', NULL, NULL, NULL, NULL, NULL, 'customer', NULL, '', 'unreferred', NULL);
 
 -- --------------------------------------------------------
 
@@ -131,13 +156,8 @@ CREATE TABLE `hero_slider` (
 
 INSERT INTO `hero_slider` (`id`, `title`, `subtitle`, `image`, `slider_position`) VALUES
 (4, 'Sprite ', 'Cha Pata From Sylhet', '1693929901663__20230807_154229.jpg', 'top'),
-(6, 'Sauce', 'Sauce', '1698599927072__image.jpg', 'top'),
-(7, 'Pran', 'Pran', '1701694046146__download.jpg', 'middel'),
 (8, 'Pran', 'Pran', '1701694701108__7061506.jpg', 'middel'),
-(10, 'oliv', 'The best rice in bangladesh', '1709727015160__steak night (1).png', 'top'),
-(11, '7up', 'test', '1709727079110__347259160_1924441154578481_6345632902129066044_n.jpg', 'middel'),
-(12, '7up', 'test', '1709727100945__347259160_1924441154578481_6345632902129066044_n.jpg', 'middel'),
-(15, 'Pran', 'Pran xdfsdad', '1709738008118__DevTools - localhost_5173_ 3_27_2023 10_03_11 AM.png', 'top');
+(16, 'Promotion', 'eid-offer', '1711298519028__Handdrawn Circle Logo.jpg', 'top');
 
 -- --------------------------------------------------------
 
@@ -173,7 +193,9 @@ INSERT INTO `news` (`id`, `shopper_product_id`, `shop_id`, `date`, `discount`, `
 (74, 99, 17, '2024-01-30 21:29:36', '50', '', '', 1, 0, 0, 0, 'regular', ' Sprite (20 Fl Oz Bottle) TK 150.00', '1697265535780__sprite1.jpg'),
 (75, 91, 17, '2024-01-30 21:30:18', '91', '', '', 1, 0, 0, 0, 'regular', 'Mango Pickle TK 100.00', '1703680620299__download.jpeg'),
 (76, 90, 17, '2024-01-30 21:31:01', '40', '', '', 1, 0, 0, 0, 'regular', 'Pran Olive Pickle TK 95.00', '1703680891922__pran-olive-pickle-400-gm.jpeg'),
-(77, NULL, 20, '2024-02-08T16:59:17.471Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'hi', '');
+(77, NULL, 20, '2024-02-08T16:59:17.471Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'hi', ''),
+(78, 111, 95, '2024-03-16 22:20:58', '30', '', '', 0, 0, 0, 0, 'regular', 'Photato chips TK 68.00', '1696949827009__1678540367603.jpg'),
+(79, NULL, 20, '2024-03-16T16:40:41.881Z', NULL, NULL, NULL, 0, 0, 0, 0, 'regular', 'hi', '1710607241318___DSC7956.JPG');
 
 -- --------------------------------------------------------
 
@@ -352,7 +374,23 @@ INSERT INTO `notification` (`id`, `notification_content`, `notification_time`, `
 (120, 'Completed your order Succesfully #117', '2024-03-06 22:01:51', 36, 20, 0),
 (121, 'You have a new order. Order Number is #118.', '2024-03-12 23:34:04', 17, 36, 0),
 (122, 'You have a new order. Order Number is #119.', '2024-03-12 23:34:58', 17, 36, 0),
-(123, 'You have a new order. Order Number is #120.', '2024-03-12 23:40:19', 17, 36, 0);
+(123, 'You have a new order. Order Number is #120.', '2024-03-12 23:40:19', 17, 36, 0),
+(124, 'You have a new order. Order Number is #121.', '2024-03-16 22:27:27', 95, 36, 1),
+(125, 'test shop  accept your order. collect your products within 11:27 PM.', '2024-03-16 22:29:08', 36, 95, 0),
+(126, 'Completed your order Succesfully #121', '2024-03-16 22:31:02', 36, 95, 0),
+(127, 'You have a new order. Order Number is #122.', '2024-03-25 22:01:27', 17, 36, 1),
+(128, 'You have a new order. Order Number is #123.', '2024-03-25 22:07:28', 95, 36, 1),
+(129, 'You have a new order. Order Number is #124.', '2024-03-25 22:25:21', 17, 36, 0),
+(130, 'You have a new order. Order Number is #125.', '2024-03-25 23:21:09', 17, 36, 1),
+(131, 'You have a new order. Order Number is #126.', '2024-03-25 23:29:08', 17, 36, 1),
+(132, 'You have a new order. Order Number is #127.', '2024-03-25 23:34:17', 17, 36, 1),
+(133, 'Anik Store accept your order. collect your products within 12:34 AM.', '2024-03-25 23:35:14', 36, 17, 0),
+(134, 'Completed your order Succesfully #127', '2024-03-25 23:35:16', 36, 17, 0),
+(135, 'You have a new order. Order Number is #128.', '2024-03-26 00:49:30', 20, 36, 1),
+(136, 'You have a new order. Order Number is #129.', '2024-03-26 01:04:13', 17, 36, 1),
+(137, 'You have a new order. Order Number is #130.', '2024-03-26 01:05:17', 20, 36, 1),
+(138, 'You have a new order. Order Number is #131.', '2024-03-26 01:06:34', 17, 36, 1),
+(139, 'You have a new order. Order Number is #132.', '2024-03-26 01:08:24', 20, 36, 1);
 
 -- --------------------------------------------------------
 
@@ -369,64 +407,6 @@ CREATE TABLE `ordered_product` (
   `price` decimal(20,3) NOT NULL,
   `weight` decimal(20,3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ordered_product`
---
-
-INSERT INTO `ordered_product` (`id`, `order_id`, `product_id`, `discount`, `quantity`, `price`, `weight`) VALUES
-(19, 98, 92, 70.000, 1.000, 270.000, 0.000),
-(20, 98, 94, 0.000, 1.000, 90.000, 0.000),
-(21, 98, 98, 20.000, 1.000, 90.000, 0.000),
-(22, 99, 89, 15.000, 1.000, 100.000, 0.000),
-(23, 99, 90, 40.000, 1.000, 135.000, 0.000),
-(24, 100, 90, 40.000, 1.000, 135.000, 0.000),
-(25, 100, 91, 91.000, 1.000, 191.000, 0.000),
-(26, 101, 89, 15.000, 1.000, 100.000, 0.000),
-(27, 101, 90, 40.000, 1.000, 135.000, 0.000),
-(28, 102, 89, 15.000, 1.000, 100.000, 0.000),
-(29, 102, 90, 40.000, 1.000, 135.000, 0.000),
-(30, 103, 91, 91.000, 1.000, 191.000, 0.000),
-(31, 103, 95, 680.000, 1.000, 700.000, 0.000),
-(32, 104, 89, 15.000, 1.000, 100.000, 0.000),
-(33, 104, 90, 40.000, 1.000, 135.000, 0.000),
-(34, 105, 89, 15.000, 1.000, 100.000, 0.000),
-(35, 106, 91, 91.000, 2.000, 191.000, 0.000),
-(36, 107, 90, 40.000, 3.000, 135.000, 0.000),
-(37, 108, 93, 3.000, 1.000, 60.000, 0.000),
-(38, 108, 92, 70.000, 1.000, 270.000, 0.000),
-(39, 108, 91, 91.000, 1.000, 191.000, 0.000),
-(40, 109, 89, 15.000, 1.000, 100.000, 0.000),
-(41, 109, 90, 40.000, 2.000, 135.000, 0.000),
-(42, 109, 91, 91.000, 1.000, 191.000, 0.000),
-(43, 110, 91, 91.000, 1.000, 191.000, 0.000),
-(44, 110, 92, 70.000, 1.000, 270.000, 0.000),
-(45, 110, 93, 3.000, 1.000, 60.000, 0.000),
-(46, 111, 91, 91.000, 1.000, 191.000, 0.000),
-(47, 111, 92, 70.000, 1.000, 270.000, 0.000),
-(48, 111, 93, 3.000, 1.000, 60.000, 0.000),
-(49, 112, 89, 15.000, 1.000, 100.000, 0.000),
-(50, 112, 93, 3.000, 1.000, 60.000, 0.000),
-(51, 112, 90, 40.000, 2.000, 135.000, 0.000),
-(52, 113, 89, 15.000, 1.000, 100.000, 0.000),
-(53, 113, 90, 40.000, 1.000, 135.000, 0.000),
-(54, 113, 91, 91.000, 1.000, 191.000, 0.000),
-(55, 114, 89, 15.000, 1.000, 100.000, 0.000),
-(56, 114, 90, 40.000, 1.000, 135.000, 0.000),
-(57, 115, 89, 15.000, 3.000, 100.000, 0.000),
-(58, 116, 93, 3.000, 20.000, 60.000, 0.000),
-(59, 117, 110, 0.000, 1.000, 191.000, 0.000),
-(60, 117, 109, 0.000, 1.000, 135.000, 0.000),
-(61, 118, 92, 70.000, 4.000, 270.000, 0.000),
-(62, 118, 93, 3.000, 3.000, 60.000, 0.000),
-(63, 118, 91, 91.000, 2.000, 191.000, 0.000),
-(64, 118, 90, 40.000, 2.000, 135.000, 0.000),
-(65, 119, 92, 70.000, 1.000, 270.000, 0.000),
-(66, 119, 95, 680.000, 1.000, 700.000, 0.000),
-(67, 119, 99, 50.000, 1.000, 200.000, 0.000),
-(68, 120, 91, 91.000, 1.000, 191.000, 0.000),
-(69, 120, 92, 70.000, 1.000, 270.000, 0.000),
-(70, 120, 93, 3.000, 1.000, 60.000, 0.000);
 
 -- --------------------------------------------------------
 
@@ -486,41 +466,15 @@ CREATE TABLE `product_order` (
   `customer_profile_id` int(11) NOT NULL,
   `shopper_id` int(11) NOT NULL,
   `price` decimal(20,3) NOT NULL,
+  `customers_address_details_id` int(11) NOT NULL,
+  `payment_type` varchar(255) NOT NULL,
   `cancel_report` text DEFAULT NULL,
   `order_time` datetime NOT NULL,
   `shopper_order_accept_time` datetime DEFAULT NULL,
   `delivery_time` datetime DEFAULT NULL,
-  `order_delay_report` varchar(25) DEFAULT NULL
+  `order_delay_report` varchar(25) DEFAULT NULL,
+  `customers_address_summary` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `product_order`
---
-
-INSERT INTO `product_order` (`id`, `order_status`, `customer_profile_id`, `shopper_id`, `price`, `cancel_report`, `order_time`, `shopper_order_accept_time`, `delivery_time`, `order_delay_report`) VALUES
-(98, 'accepted', 36, 17, 360.000, NULL, '2024-01-30 21:32:20', '2024-01-30 21:33:19', NULL, NULL),
-(99, 'pending', 36, 17, 180.000, NULL, '2024-01-30 21:35:29', NULL, NULL, NULL),
-(100, 'pending', 36, 17, 195.000, NULL, '2024-01-30 21:38:36', NULL, NULL, NULL),
-(101, 'pending', 36, 17, 180.000, NULL, '2024-01-30 22:00:13', NULL, NULL, NULL),
-(102, 'pending', 36, 17, 180.000, NULL, '2024-01-30 22:04:50', NULL, NULL, NULL),
-(103, 'pending', 36, 17, 120.000, NULL, '2024-01-30 22:09:46', NULL, NULL, NULL),
-(104, 'pending', 36, 17, 180.000, NULL, '2024-01-30 22:10:03', NULL, NULL, NULL),
-(105, 'pending', 36, 17, 85.000, NULL, '2024-02-15 20:52:31', NULL, NULL, NULL),
-(106, 'pending', 36, 17, 200.000, NULL, '2024-03-06 19:09:59', NULL, NULL, NULL),
-(107, 'pending', 36, 17, 285.000, NULL, '2024-03-06 19:29:03', NULL, NULL, NULL),
-(108, 'pending', 36, 17, 357.000, NULL, '2024-03-06 19:29:48', NULL, NULL, NULL),
-(109, 'accepted', 36, 17, 375.000, NULL, '2024-03-06 19:36:13', '2024-03-06 19:36:26', NULL, NULL),
-(110, 'accepted', 36, 17, 357.000, NULL, '2024-03-06 19:42:35', '2024-03-06 19:42:55', NULL, NULL),
-(111, 'accepted', 36, 17, 357.000, NULL, '2024-03-06 19:47:04', '2024-03-06 20:43:43', NULL, NULL),
-(112, 'accepted', 36, 17, 332.000, NULL, '2024-03-06 19:47:41', '2024-03-06 20:44:23', NULL, NULL),
-(113, 'pending', 36, 17, 280.000, NULL, '2024-03-06 19:50:35', NULL, NULL, NULL),
-(114, 'completed', 36, 17, 180.000, NULL, '2024-03-06 19:56:09', '2024-03-06 20:40:33', '2024-03-06 20:41:29', NULL),
-(115, 'completed', 36, 17, 255.000, NULL, '2024-03-06 20:27:03', '2024-03-06 20:38:34', '2024-03-06 20:39:03', NULL),
-(116, 'completed', 36, 17, 1140.000, NULL, '2024-03-06 20:48:55', '2024-03-06 20:49:08', '2024-03-06 20:49:24', NULL),
-(117, 'completed', 36, 20, 326.000, NULL, '2024-03-06 22:01:32', '2024-03-06 22:01:48', '2024-03-06 22:01:51', NULL),
-(118, 'pending', 36, 17, 1361.000, NULL, '2024-03-12 23:34:04', NULL, NULL, NULL),
-(119, 'pending', 36, 17, 370.000, NULL, '2024-03-12 23:34:57', NULL, NULL, NULL),
-(120, 'pending', 36, 17, 357.000, NULL, '2024-03-12 23:40:19', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -581,28 +535,32 @@ CREATE TABLE `shopper_product` (
 --
 
 INSERT INTO `shopper_product` (`id`, `name`, `price`, `discount`, `product_count`, `sale_count`, `wishlist_count`, `rating_count`, `product_id`, `shopper_id`, `view`) VALUES
-(89, 'Pran Olive Pickle n-v', 100.000, 15.000, 98, 0, 0, 0, 49, 17, 5),
+(89, 'Pran Olive Pickle n-v', 100.000, 15.000, 96, 0, 0, 0, 49, 17, 8),
 (90, 'Pran Olive Pickle', 135.000, 40.000, 97, 0, 0, 0, 48, 17, 7),
-(91, 'Mango Pickle', 191.000, 91.000, 58, 0, 0, 0, 47, 17, 7),
+(91, 'Mango Pickle', 191.000, 91.000, 58, 0, 0, 0, 47, 17, 8),
 (92, 'Pran-Sauce-750-gm', 270.000, 70.000, 49, 0, 0, 0, 46, 17, 6),
-(93, 'Chilli Sauce', 60.000, 3.000, 108, 0, 0, 0, 45, 17, 0),
+(93, 'Chilli Sauce', 60.000, 3.000, 108, 0, 0, 0, 45, 17, 1),
 (94, ' Sprite (20 Fl Oz Bottle) varified', 90.000, 0.000, 43, 0, 0, 0, 43, 17, 0),
 (95, 'Coke Cola Original', 700.000, 680.000, 100, 0, 0, 0, 44, 17, 4),
 (96, ' Sprite (20 Fl Oz Bottle)', 400.000, 350.000, 100, 0, 0, 0, 42, 17, 0),
 (97, 'Chilli Sauce', 200.000, 50.000, 100, 0, 0, 0, 45, 17, 1),
 (98, ' Sprite (20 Fl Oz Bottle) varified', 90.000, 20.000, 43, 0, 0, 0, 43, 17, 3),
 (99, ' Sprite (20 Fl Oz Bottle)', 200.000, 50.000, 100, 0, 0, 0, 42, 17, 2),
-(100, 'Alo Potato', 70.000, 10.000, 5, 0, 0, 0, 11, 20, 0),
+(100, 'Alo Potato', 70.000, 10.000, 5, 0, 0, 0, 11, 20, 1),
 (101, 'Hand bag In Town', 100.000, 10.000, 6, 0, 0, 0, 15, 20, 2),
-(102, 'Herbs and spices', 23.000, 3.000, 160, 0, 0, 0, 51, 17, 2),
-(103, 'Yellow Rice', 98.000, 8.000, 67, 0, 0, 0, 16, 20, 0),
-(104, 'Ishan Tea ', 90.000, 10.000, 100, 0, 0, 0, 14, 20, 1),
+(102, 'Herbs and spices', 23.000, 3.000, 160, 0, 0, 0, 51, 17, 3),
+(103, 'Yellow Rice', 98.000, 8.000, 67, 0, 0, 0, 16, 20, 2),
+(104, 'Ishan Tea ', 90.000, 10.000, 100, 0, 0, 0, 14, 20, 2),
 (105, 'Photato chips', 98.000, 0.000, 100, 0, 0, 0, 17, 20, 0),
-(106, ' Sprite (20 Fl Oz Bottle) varified', 90.000, 0.000, 43, 0, 0, 0, 43, 20, 0),
+(106, ' Sprite (20 Fl Oz Bottle) varified', 90.000, 0.000, 43, 0, 0, 0, 43, 20, 1),
 (107, 'Herbs and spices', 23.000, 0.000, 160, 0, 0, 0, 51, 20, 0),
-(108, 'TOWHIDUL ISLAM', 23.000, 0.000, 60, 0, 0, 0, 50, 20, 2),
-(109, 'Pran Olive Pickle', 135.000, 0.000, 99, 0, 0, 0, 48, 20, 0),
-(110, 'Mango Pickle', 191.000, 0.000, 58, 0, 0, 0, 47, 20, 1);
+(108, 'TOWHIDUL ISLAM', 23.000, 0.000, 60, 0, 0, 0, 50, 20, 3),
+(109, 'Pran Olive Pickle', 135.000, 0.000, 99, 0, 0, 0, 48, 20, 1),
+(110, 'Mango Pickle', 191.000, 0.000, 58, 0, 0, 0, 47, 20, 2),
+(111, 'Photato chips', 98.000, 30.000, 99, 0, 0, 0, 17, 95, 0),
+(112, '7 up Verified', 90.000, 0.000, 4, 0, 0, 0, 19, 95, 1),
+(113, ' Sprite (20 Fl Oz Bottle) varified', 90.000, 0.000, 43, 0, 0, 0, 43, 95, 0),
+(114, 'Mango Pickle', 191.000, 0.000, 59, 0, 0, 0, 47, 95, 0);
 
 -- --------------------------------------------------------
 
@@ -654,6 +612,13 @@ INSERT INTO `util` (`id`, `label`, `value`) VALUES
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `customers_address_details`
+--
+ALTER TABLE `customers_address_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`customer_id`);
 
 --
 -- Indexes for table `customer_profile`
@@ -721,7 +686,8 @@ ALTER TABLE `product`
 ALTER TABLE `product_order`
   ADD PRIMARY KEY (`id`),
   ADD KEY `customer_profile_id` (`customer_profile_id`),
-  ADD KEY `shopper_id` (`shopper_id`);
+  ADD KEY `shopper_id` (`shopper_id`),
+  ADD KEY `customers_address_details_id` (`customers_address_details_id`);
 
 --
 -- Indexes for table `refer`
@@ -761,22 +727,28 @@ ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
+-- AUTO_INCREMENT for table `customers_address_details`
+--
+ALTER TABLE `customers_address_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `hero_slider`
 --
 ALTER TABLE `hero_slider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `news_comment`
@@ -794,13 +766,13 @@ ALTER TABLE `news_like`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 
 --
 -- AUTO_INCREMENT for table `ordered_product`
 --
 ALTER TABLE `ordered_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -812,7 +784,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT for table `refer`
@@ -824,7 +796,7 @@ ALTER TABLE `refer`
 -- AUTO_INCREMENT for table `shopper_product`
 --
 ALTER TABLE `shopper_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `shopper_schedule`
@@ -841,6 +813,12 @@ ALTER TABLE `util`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `customers_address_details`
+--
+ALTER TABLE `customers_address_details`
+  ADD CONSTRAINT `customers_address_details_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer_profile` (`id`);
 
 --
 -- Constraints for table `news`

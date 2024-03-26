@@ -237,7 +237,9 @@ const Register = () => {
 						By Signing up you accept the{" "}
 						<span className="primary-text">Terms of Service</span>{" "}
 						and <br />{" "}
-						<span className="primary-text">Privacy Policy</span>
+						<Link to={'/policy'}>
+							<span className="primary-text">Privacy Policy</span>
+						</Link>
 					</p>
 				</div>
 			</div>

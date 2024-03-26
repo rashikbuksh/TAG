@@ -1,4 +1,4 @@
-import LoadingPage from "@components/LoadingPage/LoadingPage";
+	import LoadingPage from "@components/LoadingPage/LoadingPage";
 import { useAuth } from "@context/auth";
 import Admin from "@pages/AdminPage/Admin";
 import { Navigate } from "react-router-dom";
