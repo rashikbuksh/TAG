@@ -15,10 +15,34 @@ const ProductSlider = ({ products }) => {
 					}}
 					className="mySwiper"
 					breakpoints={{
-						// When screen width is greater than or equal to 768px, show 4 slides per view
+                        260: {
+							slidesPerView: 1.5,
+							spaceBetween: 20,
+						},
+						320: {
+							slidesPerView: 1.5,
+							spaceBetween: 20,
+						},
+                        360: {
+							slidesPerView: 2,
+							spaceBetween: 15,
+						},
+                        410: {
+							slidesPerView: 2,
+							spaceBetween: 20,
+						},
 
+						640: {
+							slidesPerView: 2.5,
+							spaceBetween: 20,
+						},
 						768: {
-							slidesPerView: 6,
+							slidesPerView: 4,
+							spaceBetween: 30,
+						},
+						1024: {
+							slidesPerView: 5,
+							spaceBetween: 40,
 						},
 					}}
 				>

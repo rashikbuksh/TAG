@@ -45,6 +45,7 @@
 .action-button {
 	@apply h-[30px] w-[80px] rounded bg-[#2D8FCA] text-white;
 }
+
 .dashboardCard {
 	border-radius: 8px;
 	border: 1px solid #fff;

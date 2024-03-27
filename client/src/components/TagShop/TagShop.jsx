@@ -1,7 +1,7 @@
 import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import ProductCart from "../Product/ProductCart/ProductCart";
-
+import './tagShop.css'
 const TagShop = () => {
 	const [loading, setLoading] = useState(true);
 	const [products, setProducts] = useState([]);
@@ -44,7 +44,7 @@ const TagShop = () => {
 						Bkash and Cash On delivery
 					</p>
 				</h2>
-				<div className="my-4 grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6 p-2">
+				<div className=" tag-shop-responsive-card">
 					{products.map((product) => (
 						<ProductCart product={product} key={product.id} />
 					))}

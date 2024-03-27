@@ -98,9 +98,9 @@ const DeliveryAddress = ({
 				<button
 					onClick={handleAddNewAddress}
 					disabled={shopperAccess === "shopper"}
-					className="mt-2 flex h-20 cursor-pointer items-center justify-center gap-2 rounded border border-dotted p-2 text-xl font-bold shadow-md hover:text-primary"
+					className="mt-2  flex h-20 cursor-pointer items-center justify-center gap-2 rounded border border-dotted p-2  font-bold shadow-md hover:text-primary"
 				>
-					<span>Add</span>
+					<span>Add Address</span>
 					<GoPlusCircle />
 				</button>
 			</div>
