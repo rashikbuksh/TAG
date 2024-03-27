@@ -202,7 +202,7 @@ const AdminNewShopRequest = () => {
 													popup={
 														tagRequestedShopKeeper.name
 													}
-													latlong={latLong}
+													latLong={latLong}
 												/>
 											</td>
 											<td>
