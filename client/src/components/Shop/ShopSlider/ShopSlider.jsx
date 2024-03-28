@@ -24,11 +24,11 @@ const ShopSlider = ({ shops }) => {
 							spaceBetween: 20,
 						},
                         360: {
-							slidesPerView: 2,
+							slidesPerView: 2.2,
 							spaceBetween: 20,
 						},
                         410: {
-							slidesPerView: 2,
+							slidesPerView: 2.2,
 							spaceBetween: 20,
 						},
                         510: {
@@ -37,15 +37,15 @@ const ShopSlider = ({ shops }) => {
 						},
 
 						640: {
-							slidesPerView: 3,
+							slidesPerView: 3.2,
 							spaceBetween: 20,
 						},
 						768: {
-							slidesPerView: 4,
+							slidesPerView: 4.1,
 							spaceBetween: 30,
 						},
 						1024: {
-							slidesPerView: 6,
+							slidesPerView: 6.2,
 							spaceBetween: 40,
 						},
 					}}
