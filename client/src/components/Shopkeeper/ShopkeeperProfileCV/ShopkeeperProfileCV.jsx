@@ -292,7 +292,7 @@ const ShopkeeperProfileCV = () => {
 										isOpen={mapModal}
 										setIsOpen={setMapModal}
 										popup={shopkeeperInfo.name}
-										latlong={latLong}
+										latLong={latLong}
 									/>
 								</div>
 							</div>

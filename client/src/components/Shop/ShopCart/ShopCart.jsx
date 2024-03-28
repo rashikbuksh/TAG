@@ -13,7 +13,7 @@ const ShopCart = ({ shop }) => {
 
 	return (
 		<>
-			<div className="flex h-[250px] w-[160px] flex-col items-center rounded-lg border   ">
+			<div className="flex h-full w-[160px] flex-col items-center rounded-lg border   ">
 				<img
 					className="h-[160px] w-[160px] cursor-pointer rounded-md object-cover p-1"
 					src={
@@ -43,7 +43,7 @@ const ShopCart = ({ shop }) => {
 					orientation="horizontal"
 					value={shop.review_count}
 				/>
-				<button className=" font-xl h-[45px] w-full rounded  bg-[#FF4C5E] text-white">
+				<button className=" font-xl h-1/6 py-1 font-bold w-full rounded  bg-[#FF4C5E] text-white">
 					Follow
 				</button>
 			</div>

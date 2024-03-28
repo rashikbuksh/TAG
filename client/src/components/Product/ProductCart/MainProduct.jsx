@@ -221,14 +221,14 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 						)}
 				</div>
 				{/* name  */}
-				<div className="my-1 flex items-start justify-start gap-3 px-2">
+				<div className="my-1 flex items-center  h-10 justify-between gap-3 px-2">
 					<button
 						type="button"
 						onClick={() => {
 							navigateProductPage(id, title);
 						}}
 					>
-						<div className="h-10 text-left ">
+						<div className="text-left ">
 							<h1 className="text-sm ">{name}</h1>
 						</div>
 					</button>
@@ -306,7 +306,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					)}
 				</div>
 
-				<div className=" flex items-end justify-between   ">
+				<div className=" flex items-end py-2 justify-between   ">
 					<div className=" flex items-center">
 						{user && user.access === "admin" ? (
 							""
