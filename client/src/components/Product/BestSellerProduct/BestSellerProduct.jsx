@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import LoadingPage from "../../LoadingPage/LoadingPage";
-
+import './BestSellerProduct.css';
 const BestSellerProduct = ({ limit, type }) => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const { products } = useSelector((state) => state.product);
@@ -37,7 +37,7 @@ const BestSellerProduct = ({ limit, type }) => {
 		<div className="featured-product-area space-mb--25 mx-auto mt-2 max-w-7xl">
 			<div className="">
 				<div className="">
-					<div className="border border-red-500 rounded">
+					<div className="border border-red-500 rounded p-1">
 						{/* section title */}
 
 						{shopperProducts && (
@@ -68,12 +68,12 @@ const BestSellerProduct = ({ limit, type }) => {
 
 						{/* featured products */}
 						<div className="featured-product-wrapper  ">
-							<div className="mt-1 grid grid-cols-2 gap-1  p-2  lg:grid-cols-4 ">
+							<div className="mt-1 best-sell-responsive-card">
 								{shopperProducts.map((single) => {
 									return (
 										<div
 											key={single.id}
-											className="bestsellCartShado w-full  p-2 border "
+											className="best-sell-cart-shadow w-full  p-2 border "
 										>
 											<Link
 												className="flex items-center justify-center"
