@@ -66,7 +66,7 @@ const ProductCart = ({ product }) => {
 									}
 								>
 									<div className="flex">
-										<h4 className="flex h-[30px] w-full items-center text-xs font-semibold ">
+										<h4 className="flex h-[30px] w-full  items-center text-xs font-semibold ">
 											{shopper.name}
 										</h4>
 									</div>
