@@ -36,6 +36,7 @@
 		"react-leaflet": "^4.2.1",
 		"react-modern-drawer": "^1.2.2",
 		"react-qr-code": "^2.0.12",
+		"react-quill": "^2.0.0",
 		"react-redux": "^8.0.5",
 		"react-router-dom": "^6.20.0",
 		"react-select": "^5.7.7",

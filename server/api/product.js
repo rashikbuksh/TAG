@@ -1,10 +1,12 @@
 const add = [
   {
     uri: "/product/addproduct",
-    query: `INSERT INTO product( name, image, short_description,title, full_description, category_id,isVerified,price,quantity) VALUES (?, ?, ?, ?, ?,?,?,?,?)`,
+    query: `INSERT INTO product( name, image,optionalImage1,optionalImage2, short_description,title, full_description, category_id,isVerified,price,quantity) VALUES (?, ?, ?,?, ?, ?, ?,?,?,?,?)`,
     body: [
       "name",
       "image",
+      "optionalImage1",
+      "optionalImage2",
       "short_description",
       "title",
       "full_description",
@@ -28,7 +30,7 @@ const read = [
     FROM product p
     LEFT JOIN shopper_product sp ON p.id = sp.product_id AND sp.shopper_id = ?
     WHERE sp.product_id IS NULL;`,
-    param:["id"]
+    param: ["id"],
   },
   {
     uri: "/product/getallproduct",
@@ -50,7 +52,7 @@ const change = [
   {
     uri: "/product/update_product/:id",
     query: `UPDATE product SET name=?, short_description=?,full_description=?,title=? WHERE id = ?`,
-    body: ["name", "short_description", "full_description","title"],
+    body: ["name", "short_description", "full_description", "title"],
     param: ["id"],
   },
 ];

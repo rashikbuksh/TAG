@@ -5,16 +5,23 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import TextEditor from "@components/TextEditor/TextEditor";
 import * as yup from "yup";
 
 const AddProductForm = () => {
 	const [categoryNames, setCategoryNames] = useState([]);
-	const [Image, setImage] = useState(null);
-
+	const [FullDescriptionValue, setFullDescriptionValue] = useState("");
+	const [Image, setImage] = useState([]);
+	// const handleImage = (e) => {
+	// 	const file = e.target.files[0];
+	// 	if (file) {
+	// 		setImage(file);
+	// 	}
+	// };
 	const handleImage = (e) => {
-		const file = e.target.files[0];
-		if (file) {
-			setImage(file);
+		const files = e.target.files;
+		if (files.length <= 3) {
+			setImage(Array.from(files)); // Convert FileList to an array
 		}
 	};
 
@@ -28,7 +35,7 @@ const AddProductForm = () => {
 		name: yup.string().required("Name required"),
 		short_description: yup.string(),
 		title: yup.string().required("Title required"),
-		full_description: yup.string().required("Full description required"),
+		// full_description: yup.string().required("Full description required"),
 		image: yup
 			.mixed()
 			.required("Category Picture is required")
@@ -82,7 +89,7 @@ const AddProductForm = () => {
 			image: "",
 			short_description: "",
 			title: "",
-			full_description: "",
+			// full_description: "",
 			category_id: "",
 			product_varification: "",
 			price: "",
@@ -109,33 +116,57 @@ const AddProductForm = () => {
 	};
 	const onSubmit = async (data) => {
 		const formData = new FormData();
-		formData.append("uploadFiles", Image);
 
-		var ImageName = null;
+		// Append each image to the FormData object
+		for (let i = 0; i < Image.length; i++) {
+			formData.append("uploadFiles", Image[i]);
+		}
 
-		await Axios.post(
-			`${
-				import.meta.env.VITE_APP_API_URL
-			}/imageUpload/uploadproductimage`,
-			formData,
-			{
-				headers: {
-					"Content-Type": "multipart/form-data;",
-					Authorization: Cookies?.get("auth"),
-				},
-			}
-		).then((response) => {
-			if (response.data.msg === "File Uploaded") {
-				ImageName = response.data.productImage;
-			}
-		});
+		var ImageNames = [];
 
+		// Send a POST request for each image file
+		await Promise.all(
+			Image.map(async (file, index) => {
+				const formData = new FormData();
+				formData.append("uploadFiles", file);
+
+				const response = await Axios.post(
+					`${
+						import.meta.env.VITE_APP_API_URL
+					}/imageUpload/uploadproductimage`,
+					formData,
+					{
+						headers: {
+							"Content-Type": "multipart/form-data;",
+							Authorization: Cookies?.get("auth"),
+						},
+					}
+				);
+
+				if (response.data.msg === "File Uploaded") {
+					ImageNames.push(response.data.productImage);
+
+					// Save each image URL to the corresponding field in the database
+					if (index === 0) {
+						data.image = response.data.productImage;
+					} else if (index === 1) {
+						data.image1 = response.data.productImage;
+					} else if (index === 2) {
+						data.image2 = response.data.productImage;
+					}
+				}
+			})
+		);
+
+		// Once all images are uploaded and URLs are stored in the data object, send the product data to the backend
 		api.post(`/product/addproduct`, {
 			name: data.name,
-			image: ImageName,
+			image: data.image,
+			optionalImage1: data.image1,
+			optionalImage2: data.image2,
 			short_description: data.short_description,
 			title: data.title,
-			full_description: data.full_description,
+			full_description: FullDescriptionValue,
 			category_id: Number(data.category_id),
 			isVerified: data.product_varification,
 			price: data.price,
@@ -207,7 +238,7 @@ const AddProductForm = () => {
 											id="category"
 											defaultValue={"0"}
 											onChange={changedCategory}
-											className="select select-bordered w-full max-w-xs"
+											className="select select-bordered w-full "
 										>
 											<option value="0">
 												Select Category
@@ -237,6 +268,7 @@ const AddProductForm = () => {
 											id="image"
 											accept="image/*"
 											className="file-input file-input-bordered file-input-success w-full "
+											multiple
 											onChange={handleImage}
 										/>
 										<p className="text-danger">
@@ -264,19 +296,24 @@ const AddProductForm = () => {
 										<label htmlFor="full_description">
 											Full Description
 										</label>
-										<input
-											{...register("full_description")}
-											type="text"
-											name="full_description"
-											id="full_description"
-											placeholder="Enter Full Description"
+										<TextEditor
+											value={FullDescriptionValue}
+											setValue={setFullDescriptionValue}
+											placeholder={
+												"Write full description value"
+											}
+											style={{
+												height: "30vh",
+												display: "flex",
+												flexDirection: "column",
+											}}
 										/>
 										<p className="text-danger">
 											{errors.full_description?.message}
 										</p>
 									</div>
 
-									<div className="auth-form__single-field space-mb--30 my-4">
+									<div className="auth-form__single-field space-mb--30 mb-4 mt-16">
 										<label htmlFor="product_varification">
 											Product Verification
 										</label>
@@ -333,6 +370,22 @@ const AddProductForm = () => {
 										/>
 										<p className="text-danger">
 											{errors.quantity?.message}
+										</p>
+									</div>
+
+									<div className="auth-form__single-field space-mb--30">
+										<label htmlFor="Keyword">Keyword</label>
+										<textarea
+											{...register("keyword")}
+											type="text"
+											name="keyword"
+											id="keyword"
+											placeholder="Enter Keyword"
+											rows={2}
+											cols={5}
+										/>
+										<p className="text-danger">
+											{errors.keyword?.message}
 										</p>
 									</div>
 
