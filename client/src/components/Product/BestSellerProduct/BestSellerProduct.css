@@ -1,0 +1,44 @@
+.best-sell-responsive-card {
+	
+	display: grid;
+	gap: 1.5rem; /* Adjust according to your spacing preference */
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  @media (min-width: 200px) {
+	.best-sell-responsive-card{
+	  grid-template-columns: repeat(1, minmax(0, 1fr));
+	}
+  }
+  @media (min-width: 300px) {
+	.best-sell-responsive-card{
+	  grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+  }
+  @media (min-width: 400px) {
+	.best-sell-responsive-card{
+	  grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+  }
+  @media (min-width: 500px) {
+	.best-sell-responsive-card{
+	  grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+  }
+  
+  @media (min-width: 640px) {
+	.best-sell-responsive-card{
+	  grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+  }
+  
+  @media (min-width: 768px) {
+	.best-sell-responsive-card{
+	  grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+  }
+  
+  @media (min-width: 1024px) {
+	.best-sell-responsive-card{
+	  grid-template-columns: repeat(6, minmax(0, 1fr));
+	}
+  }
