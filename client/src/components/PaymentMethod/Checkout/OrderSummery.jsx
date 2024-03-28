@@ -2,7 +2,7 @@ import { Takaicon } from "@SvgHub/SocialIcon";
 
 const OrderSummary = ({ totalPrice, discount, totalItem }) => {
     return (
-        <div className="mt-4">
+        <div className="mt-4 ">
             <span className="my-8 text-xl font-semibold">Order Summary</span>
             <div className="bg-gray-100 p-4 rounded-md">
                 <div className="flex items-center justify-between text-base font-medium text-gray-800 mb-2">

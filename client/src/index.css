@@ -25,7 +25,7 @@
 .auth-btn {
 	border-radius: 100px;
 	box-shadow: 4px 8px 24px 0px rgba(159, 232, 112, 0.25);
-	@apply w-full bg-[#2F5BA9] px-5 py-5 text-white;
+	@apply w-full bg-[#2F5BA9] active:bg-[#2d497a] px-5 py-5 text-white;
 }
 .primary-text {
 	@apply text-[#2F5BA9];
@@ -34,13 +34,13 @@
 	@apply bg-[#1D3A67];
 }
 .auth-input {
-	@apply h-[57px] w-full  rounded-3xl border-none border-transparent bg-[#F2F8FD] p-[20px] pr-14 text-xl outline-none focus:border-transparent focus:ring-0;
+	@apply h-[57px] w-full   rounded-3xl border-none border-transparent bg-[#F2F8FD] p-[20px] pr-14 text-xl outline-none focus:border-transparent focus:ring-0;
 }
 .auth-social-btn {
 	@apply rounded-2xl bg-gray-100 px-8 py-4;
 }
 .quantity-button {
-	@apply flex h-[20px]   w-[20px] items-center justify-center rounded-full text-base text-white;
+	@apply flex h-[23px]   w-[23px] items-center justify-center rounded-2xl font-bold pb-[2px] text-base active:scale-105  text-white;
 }
 .action-button {
 	@apply h-[30px] w-[80px] rounded bg-[#2D8FCA] text-white;

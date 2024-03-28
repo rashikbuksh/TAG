@@ -8,6 +8,7 @@ import { ReactSVG } from "react-svg";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
+import { FaUserTie } from "react-icons/fa";
 
 import { FaLocationDot, FaX } from "react-icons/fa6";
 import { BellIcon } from "@/SvgHub/Icons";
@@ -171,7 +172,7 @@ function Header() {
 																			}`}
 																		/>
 																	) : (
-																		""
+																		<div className="flex justify-center pt-[2px]"><FaUserTie size={25} /></div>
 																	)}
 																</div>
 															</Link>

@@ -5,6 +5,7 @@ import cogoToast from "@hasanm95/cogo-toast";
 import GetDateTime from "@helpers/GetDateTime";
 import { cartItemStock, getDiscountPrice } from "@helpers/product";
 import { api } from "@lib/api";
+import { CiCirclePlus } from "react-icons/ci";
 import {
 	addToCart,
 	decreaseQuantity,
@@ -372,7 +373,7 @@ const Cart = () => {
 	};
 	return (
 		<>
-			<div className="mx-auto  h-full overflow-scroll lg:w-[50%] pb-24">
+			<div className="mx-auto  h-full overflow-scroll pb-24 lg:w-[50%]">
 				<Breadcrumb pageTitle={"Cart"} prevUrl={"/home"}></Breadcrumb>
 				<Link to={"/orderStatus"} className="mr-2 flex justify-end">
 					<p className="text-md link mt-2 font-bold uppercase text-green-500">
@@ -417,7 +418,7 @@ const Cart = () => {
 														}
 														className="absolute right-4 top-3"
 													>
-														<FaTrash className="text-red-400"></FaTrash>
+														<FaTrash className="text-red-400 "></FaTrash>
 													</button>
 													<img
 														className="absolute top-2 h-[60px]  w-[60px] "
@@ -496,6 +497,7 @@ const Cart = () => {
 																		>
 																			+
 																		</button>
+																
 																	</div>
 																</div>
 															</div>
@@ -622,9 +624,12 @@ const Cart = () => {
 									{calculatedTotals[shopper.id] && (
 										<button
 											onClick={() =>
-												handelCheckout(shopper.id, shopper.access)
+												handelCheckout(
+													shopper.id,
+													shopper.access
+												)
 											}
-											className="rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white"
+											className="rounded bg-[#2F5BA9] active:bg-[#2e4b7d] px-3 py-2 text-sm text-white"
 										>
 											Buy Now
 										</button>
@@ -640,8 +645,8 @@ const Cart = () => {
 						</div>
 					))
 				) : (
-					<div className="flex h-[40vh] flex-col items-center justify-center gap-2">
-						<img src={NoItemInCart} alt="" />
+					<div className="flex h-[40vh] scale-110 flex-col items-center justify-center gap-2">
+						<img src={NoItemInCart} alt="Cart Empty Bucket" />
 						<p className="font-bold">No items in cart</p>
 					</div>
 				)}

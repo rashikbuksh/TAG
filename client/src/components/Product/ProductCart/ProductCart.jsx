@@ -11,7 +11,7 @@ const ProductCart = ({ product }) => {
 	const divStyle = {
 		borderRadius: "6px",
 		border: "0.5px solid #E4E4E4",
-		background: "#FFF",
+		
 	};
 	const shopper_id = product.shopper_id;
 
@@ -32,7 +32,7 @@ const ProductCart = ({ product }) => {
 				<div key={shopper_id} className="">
 					<div
 						style={divStyle}
-						className="flex items-center gap-3 p-2  "
+						className="flex items-center gap-3 p-2 active:bg-[#00aaff6f]   hover:#00AAFF "
 					>
 						<div className="">
 							<Link

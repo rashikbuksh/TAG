@@ -8,13 +8,13 @@ const Breadcrumb = ({ pageTitle, prevUrl }) => {
 		<div className="breadcrumb-area bg-color--grey space-y--15 mt-16">
 			<div className="container">
 				<div className="row align-items-center">
-					<div className="col-3">
+					<div className="col-3 ">
 						<Link
 							to={import.meta.env.VITE_API_PUBLIC_URL + prevUrl}
-							className="back-link"
+							className="back-link hover:text-blue-500 active:text-blue-700"
 						>
 							{" "}
-							<FaAngleLeft /> Back
+							<FaAngleLeft  /> Back
 						</Link>
 					</div>
 					<div className="col-6">

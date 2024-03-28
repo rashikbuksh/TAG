@@ -29,7 +29,7 @@ const OrderShopper = () => {
 				{data?.map((single) => {
 					return (
 						<div
-							className="cart-product border-bottom--medium flex items-center justify-between"
+							className="cart-product border-bottom--medium flex items-center justify-between active:bg-gray-200"
 							key={single.id}
 						>
 							<Link
