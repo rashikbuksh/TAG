@@ -138,7 +138,7 @@ const Product = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon />
-			<div className="mx-auto mb-5 px-4 py-8 lg:w-[50%]">
+			<div className="mx-auto  pb-8 mb-8  px-4 py-8 lg:w-[50%]">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}
 				<div className="">
