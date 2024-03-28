@@ -19,7 +19,7 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { addToCart, increaseQuantityofProd } from "@store/slices/cart-slice";
 import { useEffect, useState } from "react";
-import { FaCopy, FaEye } from "react-icons/fa";
+import { FaAngleLeft, FaCopy, FaEye } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import { PiShareFat } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
@@ -121,7 +121,6 @@ const ShopkeeperProfileCV = () => {
 	const handleShowDrawer = () => {
 		setIsShareOpen(!isShareOpen);
 	};
-	
 
 	return (
 		<>
@@ -174,13 +173,20 @@ const ShopkeeperProfileCV = () => {
 						</Drawer>
 						{/* Navigation and share icon */}
 						<div className="flex justify-between px-4">
-							<IoIosArrowBack size={20} />
+							<Link
+								to={'/home'}
+								className="back-link"
+							>
+								{" "}
+								<FaAngleLeft size={20} /> 
+							</Link>
+
 							<BsThreeDotsVertical
 								onClick={() => setShow(!show)}
 								size={20}
 							></BsThreeDotsVertical>
 						</div>
-						
+
 						<div
 							className={` absolute right-8 z-10 cursor-pointer  rounded p-2 shadow-md ${
 								!show ? "hidden" : ""
@@ -245,7 +251,6 @@ const ShopkeeperProfileCV = () => {
 										</span>
 										{id} {shopkeeperInfo.name}
 									</h1>
-								
 								</div>
 
 								<div className="mb-2">
@@ -262,13 +267,14 @@ const ShopkeeperProfileCV = () => {
 										size={18}
 										color="blue"
 									></FaMapMarkerAlt>
-									<span className="font-semibold text-gray-500">
-										{shopkeeperInfo?.address}
+									<span className="text-xs text-gray-500">
+										{shopkeeperInfo?.addres
+											? shopkeeperInfo.address
+											: "No Address Provided"}
 									</span>
 								</div>
 								<div className="my-1 flex items-center gap-4 font-bold">
 									<div>33 Followers </div>
-
 								</div>
 
 								<div className=" flex items-center justify-center gap-4">
@@ -328,7 +334,7 @@ const ShopkeeperProfileCV = () => {
 								))}
 							</select>
 						</div>
-						<div className="alphabet-list absolute b right-0  z-10 ml-5  w-[20px] ">
+						<div className="alphabet-list b absolute right-0  z-10 ml-5  w-[20px] ">
 							{alphabet.map((letter) => (
 								<button
 									className="flex flex-col items-center justify-center text-[10px] font-bold"

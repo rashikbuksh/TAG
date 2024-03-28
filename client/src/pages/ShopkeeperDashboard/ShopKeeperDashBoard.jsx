@@ -273,17 +273,17 @@ const ShopKeeperDashBoard = () => {
 									to={`${
 										import.meta.env.VITE_API_PUBLIC_URL
 									}${section.link}`}
-									className="text-center text-black"
+									className="text-center text-black "
 								>
 									<div
 										key={index}
 										// style={boxShadowStyle}
-										className={` dashboardCard relative flex ${
+										className={` dashboardCard relative flex  ${
 											section.content ? "" : "flex-col "
 										}`}
 									>
 										<div
-											className={`flex h-[120px] w-full flex-col items-center justify-center rounded-lg bg-[#FFf] ${
+											className={`flex h-[120px] w-full flex-col items-center justify-center rounded-lg bg-[#FFf] hover:bg-cyan-300 active:primary-background  ${
 												section.content
 													? ""
 													: "text-center"

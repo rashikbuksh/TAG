@@ -43,7 +43,7 @@ const ShopCart = ({ shop }) => {
 					orientation="horizontal"
 					value={shop.review_count}
 				/>
-				<button className=" font-xl h-1/6 py-1 font-bold w-full rounded  bg-[#FF4C5E] text-white">
+				<button className=" font-xl h-1/6 py-1 font-bold w-full rounded active:bg-[#a23c46]  bg-[#FF4C5E] text-white">
 					Follow
 				</button>
 			</div>
