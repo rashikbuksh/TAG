@@ -62,6 +62,27 @@ const HotNews = () => {
 						delay: 3500,
 						disableOnInteraction: false,
 					}}
+					breakpoints={{
+                        260: {
+							slidesPerView: 1,
+							spaceBetween: 20,
+						},
+					
+                        360: {
+							slidesPerView: 1.5,
+							spaceBetween: 15,
+						},
+                     
+					
+						768: {
+							slidesPerView: 3,
+							spaceBetween: 30,
+						},
+						1024: {
+							slidesPerView: 4,
+							spaceBetween: 40,
+						},
+					}}
 					className="mySwiper"
 				>
 					{productPost.map((postData, index) => {

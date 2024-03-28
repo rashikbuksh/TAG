@@ -368,7 +368,7 @@ const ShopkeeperProfileCV = () => {
 										return (
 											<div
 												key={single.id}
-												className="bestsellCartShado w-full p-2"
+												className="best-sell-cart-shadow w-full p-2"
 											>
 												<Link
 													className="flex items-center justify-center"

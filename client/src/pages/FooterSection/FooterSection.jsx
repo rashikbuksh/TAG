@@ -73,7 +73,7 @@ const FooterSection = () => {
 			<h1 className="my-3 ml-3 mt-2 text-lg font-semibold">
 				Download App (In Process)
 			</h1>
-			<div className="flex items-center justify-center gap-5">
+			<div className="flex items-center justify-center gap-2">
 				<img src={PlayStore} alt="" />
 				<img src={AppStore} alt="" />
 			</div>
