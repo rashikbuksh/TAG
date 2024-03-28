@@ -9,15 +9,11 @@ import {
 	FaClipboardList,
 } from "react-icons/fa";
 import Drawer from "react-modern-drawer";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 
 function Offcanvas(props) {
-	const {
-		toggleDrawer,
-		isOffcanvasOpen,
-		setIsOffcanvasOpen,
-	} = props;
+	const { toggleDrawer, isOffcanvasOpen, setIsOffcanvasOpen } = props;
 
 	const { user, Logout } = useAuth();
 	const [routes, setRoutes] = useState([]);
@@ -155,7 +151,6 @@ function Offcanvas(props) {
 		boxShadow: "inset 0 54px 56px rgba(0, 0, 0, 0.1)",
 	};
 
-
 	return (
 		<div>
 			<button onClick={toggleDrawer}>
@@ -221,12 +216,26 @@ function Offcanvas(props) {
 								{/* Render routes based on user access */}
 								{routes.map((route, index) => (
 									<li key={index}>
-										<span className="icon">
-											{route.icon}
-										</span>
-										<Link to={route.path}>
-											{route.title}
-										</Link>
+										<NavLink
+											className={({
+												isActive,
+												isPending,
+											}) =>
+												isPending
+													? ""
+													: isActive
+													? "rounded-md bg-[#2fa033c1] p-2 font-semibold text-white "
+													: ""
+											}
+											to={route.path}
+										>
+											<div className="flex items-center">
+												<span className="icon">
+													{route.icon}
+												</span>
+												{route.title}
+											</div>
+										</NavLink>
 									</li>
 								))}
 								{user ? (

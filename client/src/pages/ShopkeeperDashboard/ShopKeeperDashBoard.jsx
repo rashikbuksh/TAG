@@ -283,7 +283,7 @@ const ShopKeeperDashBoard = () => {
 										}`}
 									>
 										<div
-											className={`flex h-[120px] w-full flex-col items-center justify-center rounded-lg bg-[#FFf] hover:bg-cyan-300 active:primary-background  ${
+											className={`flex h-[120px] w-full flex-col items-center justify-center rounded-lg bg-[#FFf] hover:bg-cyan-200 active:bg-cyan-500  ${
 												section.content
 													? ""
 													: "text-center"

@@ -257,7 +257,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				</div>
 
 				{/* price  */}
-				<div className="flex justify-between px-2">
+				<div className="flex justify-between px-2 ">
 					<div className="flex items-center gap-2">
 						<Takaicon></Takaicon>
 						<span className="text-sm font-semibold">{`${getDiscountPrice(
@@ -357,7 +357,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 									}}
 									className=""
 								>
-									<span onClick={showQuantitypalet}>
+									<span onClick={showQuantitypalet}  >
 										<AddToCartIcon2></AddToCartIcon2>
 									</span>
 								</button>
