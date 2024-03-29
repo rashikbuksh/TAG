@@ -7,22 +7,28 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import TextEditor from "@components/TextEditor/TextEditor";
 import * as yup from "yup";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 const AddProductForm = () => {
 	const [categoryNames, setCategoryNames] = useState([]);
 	const [FullDescriptionValue, setFullDescriptionValue] = useState("");
-	const [Image, setImage] = useState([]);
-	// const handleImage = (e) => {
-	// 	const file = e.target.files[0];
-	// 	if (file) {
-	// 		setImage(file);
-	// 	}
-	// };
+	const [imagesWithIndex, setImagesWithIndex] = useState([]);
+
 	const handleImage = (e) => {
 		const files = e.target.files;
-		if (files.length <= 3) {
-			setImage(Array.from(files)); // Convert FileList to an array
+		console.log("🚀 ~ handleImage ~ files:", files);
+		if (files.length > 3 || files.length < 3) {
+			// Show error message
+			toast.error("Please select exactly 3 images.");
+			return;
 		}
+
+		// Store the files along with their indices
+		const indexedFiles = Array.from(files).map((file, index) => ({
+			file,
+			index,
+		}));
+		setImagesWithIndex(indexedFiles);
 	};
 
 	useEffect(() => {
@@ -35,7 +41,6 @@ const AddProductForm = () => {
 		name: yup.string().required("Name required"),
 		short_description: yup.string(),
 		title: yup.string().required("Title required"),
-		// full_description: yup.string().required("Full description required"),
 		image: yup
 			.mixed()
 			.required("Category Picture is required")
@@ -50,37 +55,38 @@ const AddProductForm = () => {
 			.string()
 			.required("Product Verification required"),
 		price: yup
-			.string() // Ensure that the input is a string
+			.string()
 			.when(["product_varification"], (product_varification, schema) => {
-				return product_varification == "verified"
+				return product_varification === "verified"
 					? schema
 							.required("Price is required")
 							.test(
 								"is-number",
 								"Price must be a number",
 								(value) => {
-									if (!value) return false; // Check if the value is empty
-									return !isNaN(Number(value)); // Check if the value can be converted to a number
+									if (!value) return false;
+									return !isNaN(Number(value));
 								}
 							)
 					: schema;
 			}),
 		quantity: yup
-			.string() // Ensure that the input is a string
+			.string()
 			.when(["product_varification"], (product_varification, schema) => {
-				return product_varification == "verified"
+				return product_varification === "verified"
 					? schema
 							.required("Quantity is required")
 							.test(
 								"is-number",
 								"Quantity must be a number",
 								(value) => {
-									if (!value) return false; // Check if the value is empty
-									return !isNaN(Number(value)); // Check if the value can be converted to a number
+									if (!value) return false;
+									return !isNaN(Number(value));
 								}
 							)
 					: schema;
 			}),
+		keywords: yup.string().required("Keywords required"),
 	});
 
 	const form = useForm({
@@ -89,11 +95,11 @@ const AddProductForm = () => {
 			image: "",
 			short_description: "",
 			title: "",
-			// full_description: "",
 			category_id: "",
 			product_varification: "",
 			price: "",
 			quantity: "",
+			keywords: "",
 		},
 		resolver: yupResolver(addProductSchema),
 	});
@@ -109,24 +115,24 @@ const AddProductForm = () => {
 		const value = e.target.value;
 		setValue("title", value.replace(/\s/g, "_"));
 	};
+
 	const handleTitleChange = (e) => {
 		const value = e.target.value;
 		const updatedValue = value.replace(/\s/g, "_");
-		setValue("title", updatedValue); // Update state with the modified value
+		setValue("title", updatedValue);
 	};
+
 	const onSubmit = async (data) => {
+		console.log(data);
 		const formData = new FormData();
 
-		// Append each image to the FormData object
-		for (let i = 0; i < Image.length; i++) {
-			formData.append("uploadFiles", Image[i]);
-		}
+		// Append each image to the FormData object in the correct order
+		imagesWithIndex.forEach(({ file, index }) => {
+			formData.append(`uploadFiles[${index}]`, file);
+		});
 
-		var ImageNames = [];
-
-		// Send a POST request for each image file
-		await Promise.all(
-			Image.map(async (file, index) => {
+		const imageNames = await Promise.all(
+			imagesWithIndex.map(async ({ file }) => {
 				const formData = new FormData();
 				formData.append("uploadFiles", file);
 
@@ -143,22 +149,16 @@ const AddProductForm = () => {
 					}
 				);
 
-				if (response.data.msg === "File Uploaded") {
-					ImageNames.push(response.data.productImage);
-
-					// Save each image URL to the corresponding field in the database
-					if (index === 0) {
-						data.image = response.data.productImage;
-					} else if (index === 1) {
-						data.image1 = response.data.productImage;
-					} else if (index === 2) {
-						data.image2 = response.data.productImage;
-					}
+				if (response.data.msg === "Files Uploaded") {
+					return response.data.imageNames;
 				}
 			})
 		);
 
-		// Once all images are uploaded and URLs are stored in the data object, send the product data to the backend
+		data.image = imageNames[0] || "";
+		data.image1 = imageNames[1] || "";
+		data.image2 = imageNames[2] || "";
+
 		api.post(`/product/addproduct`, {
 			name: data.name,
 			image: data.image,
@@ -171,6 +171,7 @@ const AddProductForm = () => {
 			isVerified: data.product_varification,
 			price: data.price,
 			quantity: data.quantity,
+			keywords: data.keywords,
 		}).then((response) => {
 			if (response.data.message === data.name + " added successfully") {
 				form.reset();
@@ -178,7 +179,12 @@ const AddProductForm = () => {
 			}
 		});
 	};
-
+	const moveImage = (currentIndex, targetIndex) => {
+		const updatedImages = [...imagesWithIndex];
+		const movedImage = updatedImages.splice(currentIndex, 1)[0];
+		updatedImages.splice(targetIndex, 0, movedImage);
+		setImagesWithIndex(updatedImages);
+	};
 	return (
 		<div className=" auth-page-header my-24 mt-3 rounded-md">
 			<div className="auth-page-header space-mb--50 w-full">
@@ -271,6 +277,70 @@ const AddProductForm = () => {
 											multiple
 											onChange={handleImage}
 										/>
+										{imagesWithIndex.map(
+											({ file, index }) => (
+												<div
+													key={index}
+													className="flex items-center justify-between border-b border-gray-200 py-2"
+												>
+													<div className="flex items-center justify-between space-x-4">
+														<div className="flex items-center space-x-2">
+															<img
+																src={URL.createObjectURL(
+																	file
+																)}
+																alt={`Image ${index}`}
+																className="h-10 w-10 rounded-full"
+															/>
+															<p className="text-lg text-gray-800">
+																{index === 0
+																	? "Image"
+																	: `Optional Image ${index}`}
+															</p>
+														</div>
+														<div className="flex-grow">
+															<p className="truncate text-sm text-gray-500">
+																{file.name}
+															</p>
+														</div>
+													</div>
+													<div className="flex items-center space-x-2">
+														{/* Button to move image up */}
+														{index > 0 && (
+															<span
+																onClick={() =>
+																	moveImage(
+																		index,
+																		index -
+																			1
+																	)
+																}
+																className="cursor-pointer text-gray-500 hover:text-gray-700 focus:outline-none"
+															>
+																<FaArrowUp className="h-5 w-5" />
+															</span>
+														)}
+														{/* Button to move image down */}
+														{index <
+															imagesWithIndex.length -
+																1 && (
+															<span
+																onClick={() =>
+																	moveImage(
+																		index,
+																		index +
+																			1
+																	)
+																}
+																className="cursor-pointer text-gray-500 hover:text-gray-700 focus:outline-none"
+															>
+																<FaArrowDown className="h-5 w-5" />
+															</span>
+														)}
+													</div>
+												</div>
+											)
+										)}
 										<p className="text-danger">
 											{errors.image?.message}
 										</p>
@@ -374,18 +444,18 @@ const AddProductForm = () => {
 									</div>
 
 									<div className="auth-form__single-field space-mb--30">
-										<label htmlFor="Keyword">Keyword</label>
-										<textarea
-											{...register("keyword")}
+										<label htmlFor="keywords">
+											Keyword
+										</label>
+										<input
+											{...register("keywords")}
 											type="text"
-											name="keyword"
-											id="keyword"
-											placeholder="Enter Keyword"
-											rows={2}
-											cols={5}
+											name="keywords"
+											id="keywords"
+											placeholder="Enter keywords"
 										/>
 										<p className="text-danger">
-											{errors.keyword?.message}
+											{errors.keywords?.message}
 										</p>
 									</div>
 

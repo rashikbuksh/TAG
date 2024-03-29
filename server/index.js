@@ -8,28 +8,31 @@ var http = require("http");
 var querystring = require("querystring");
 const storage = multer.diskStorage({
   destination: (req, file, callBack) => {
-    if (file.mimetype.substring(0, 5) == "image") {
+    if (file.mimetype.substring(0, 5) === "image") {
       callBack(null, "./uploads/products");
     }
   },
   filename: (req, file, callBack) => {
-    if (file.mimetype.substring(0, 5) == "image") {
+    if (file.mimetype.substring(0, 5) === "image") {
       productImage = Date.now() + "__" + file.originalname;
       callBack(null, productImage);
     }
   },
 });
+
 const upload = multer({ storage: storage });
 
 app.post(
   "/imageUpload/uploadproductimage",
-  upload.array("uploadFiles"),
+  upload.array("uploadFiles", 3), // Limit to 3 files
   (req, res) => {
-    if (req.files === null) {
-      return res.status(400).json({ msg: "No file uploaded" });
-    } else {
-      return res.status(200).json({ msg: "File Uploaded", productImage });
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ msg: "No files uploaded" });
     }
+
+    // Process uploaded files
+    const imageNames = req.files.map(file => file.filename);
+    return res.status(200).json({ msg: "Files Uploaded", imageNames });
   }
 );
 

@@ -1,7 +1,7 @@
 const add = [
   {
     uri: "/product/addproduct",
-    query: `INSERT INTO product( name, image,optionalImage1,optionalImage2, short_description,title, full_description, category_id,isVerified,price,quantity) VALUES (?, ?, ?,?, ?, ?, ?,?,?,?,?)`,
+    query: `INSERT INTO product( name, image,optionalImage1,optionalImage2, short_description,title, full_description,keywords, category_id,isVerified,price,quantity) VALUES (?, ?, ?,?, ?, ?, ?,?,?,?,?,?)`,
     body: [
       "name",
       "image",
@@ -10,6 +10,7 @@ const add = [
       "short_description",
       "title",
       "full_description",
+      "keywords",
       "category_id",
       "isVerified",
       "price",
