@@ -24,11 +24,11 @@ const ProductSlider = ({ products }) => {
 							spaceBetween: 20,
 						},
                         360: {
-							slidesPerView: 2,
+							slidesPerView: 2.2,
 							spaceBetween: 15,
 						},
                         410: {
-							slidesPerView: 2,
+							slidesPerView: 2.2,
 							spaceBetween: 20,
 						},
 
