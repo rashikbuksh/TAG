@@ -24,7 +24,7 @@ const ShopSlider = ({ shops }) => {
 							spaceBetween: 20,
 						},
                         360: {
-							slidesPerView: 2.2,
+							slidesPerView: 2.5,
 							spaceBetween: 20,
 						},
                         410: {
