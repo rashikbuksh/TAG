@@ -23,11 +23,11 @@ const add = [
 const read = [
   {
     uri: "/product/getproduct",
-    query: `SELECT id,name,image,price,quantity,category_id,isVerified FROM product`,
+    query: `SELECT id,name,image,price,quantity,category_id,isVerified,keywords,optionalImage2,optionalImage1 FROM product`,
   },
   {
     uri: "/product/getproduct/:id",
-    query: `SELECT p.id, p.name, p.image, p.price, p.quantity, p.category_id, p.isVerified
+    query: `SELECT p.id, p.name, p.image, p.price, p.quantity, p.category_id,p.keywords,p.optionalImage2,p.optionalImage1, p.isVerified
     FROM product p
     LEFT JOIN shopper_product sp ON p.id = sp.product_id AND sp.shopper_id = ?
     WHERE sp.product_id IS NULL;`,
@@ -50,6 +50,26 @@ const change = [
     body: ["isVerified"],
     param: ["id"],
   },
+// product upload
+  {
+    uri: "/product/updateProductImage/:id",
+    query: `UPDATE product SET image = ? WHERE id = ?`,
+    body: ["image"],
+    param: ["id"],
+  },
+  {
+    uri: "/product/updateOptionalImage1/:id",
+    query: `UPDATE product SET optionalImage1 = ? WHERE id = ?`,
+    body: ["optionalImage1"],
+    param: ["id"],
+  },
+  {
+    uri: "/product/updateOptionalImage2/:id",
+    query: `UPDATE product SET optionalImage2 = ? WHERE id = ?`,
+    body: ["optionalImage2"],
+    param: ["id"],
+  },
+//? end
   {
     uri: "/product/update_product/:id",
     query: `UPDATE product SET name=?, short_description=?,full_description=?,title=? WHERE id = ?`,

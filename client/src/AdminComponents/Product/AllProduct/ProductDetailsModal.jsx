@@ -1,5 +1,7 @@
 import Modal from "@components/Modal/Modal";
 import { api } from "@lib/api";
+import Axios from "axios";
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -7,6 +9,7 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 	const [isEditActive, setIsEditActive] = useState(false);
 	const [productName, setProductName] = useState(product.name);
 	const [title, setTitle] = useState(product.title);
+
 	const [productShortDescription, setProductShortDescription] = useState(
 		product.short_description
 	);
@@ -61,19 +64,159 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 				toast.error(error);
 			});
 	};
+	const handleImageUpload = async (e, imageSlot) => {
+		const file = e.target.files[0];
+
+		if (!file) {
+			return; // No file selected
+		}
+
+		// Add your logic to handle image upload here
+		const formData = new FormData();
+		formData.append("uploadFiles", file);
+
+		try {
+			const response = await Axios.post(
+				`${
+					import.meta.env.VITE_APP_API_URL
+				}/imageUpload/uploadProductImage/update`, // Replace with your upload endpoint
+				formData,
+				{
+					headers: {
+						"Content-Type": "multipart/form-data",
+						Authorization: Cookies?.get("auth"),
+					},
+				}
+			);
+
+			if (response.data.msg === "File Uploaded") {
+				toast.success("Image uploaded successfully");
+				if (imageSlot === "image") {
+					api.post(`/product/updateProductImage/${product.id}`, {
+						image: response.data.productImage,
+					});
+				}
+				if (imageSlot === "optionalImage1") {
+					api.post(`/product/updateOptionalImage1/${product.id}`, {
+						image: response.data.productImage,
+					});
+				}
+				if (imageSlot === "image") {
+					api.post(`/product/updateOptionalImage2/${product.id}`, {
+						optionalImage2: response.data.productImage,
+					});
+				}
+			} else {
+				toast.error("Failed to upload image");
+			}
+		} catch (error) {
+			console.error("Error uploading image:", error);
+			toast.error("Failed to upload image");
+		}
+	};
 
 	return (
 		<Modal isOpen={isOpen} setIsOpen={setIsOpen} fullWidth={true}>
 			<div className="flex flex-col items-center p-4">
 				<div className="mb-4">
-					<img
-						className="h-48 w-auto  rounded object-contain"
-						src={`${import.meta.env.VITE_APP_IMG_URL}/products/${
-							product.image
-						}`}
-						alt=""
-					/>
+					{product.image ? (
+						<img
+							className="h-48 w-auto rounded object-contain"
+							src={`${
+								import.meta.env.VITE_APP_IMG_URL
+							}/products/${product.image}`}
+							alt=""
+						/>
+					) : (
+						<img
+							className="h-48 w-auto rounded object-contain"
+							src="/placeholder-image.jpg" // Provide your placeholder image URL here
+							alt="Placeholder"
+						/>
+					)}
 				</div>
+				<div className="mb-4">
+					{product.image ? (
+						<img
+							className="h-48 w-auto rounded object-contain"
+							src={`${
+								import.meta.env.VITE_APP_IMG_URL
+							}/products/${product.image}`}
+							alt=""
+						/>
+					) : (
+						<div className="flex h-48 w-auto items-center justify-center rounded border-dashed border-gray-400">
+							<label htmlFor="uploadImage">
+								<span className="cursor-pointer text-gray-500">
+									Upload Image
+								</span>
+								<input
+									id="uploadImage"
+									type="file"
+									className="hidden"
+									onChange={(e) =>
+										handleImageUpload(e, "image")
+									}
+								/>
+							</label>
+						</div>
+					)}
+				</div>
+				<div className="mb-4">
+					{product.optionalImage1 ? (
+						<img
+							className="h-48 w-auto rounded object-contain"
+							src={`${
+								import.meta.env.VITE_APP_IMG_URL
+							}/products/${product.optionalImage1}`}
+							alt=""
+						/>
+					) : (
+						<div className="flex h-48 w-auto items-center justify-center rounded border-dashed border-gray-400">
+							<label htmlFor="uploadOptionalImage1">
+								<span className="cursor-pointer text-gray-500">
+									Upload Optional Image 1
+								</span>
+								<input
+									id="uploadOptionalImage1"
+									type="file"
+									className="hidden"
+									onChange={(e) =>
+										handleImageUpload(e, "optionalImage1")
+									}
+								/>
+							</label>
+						</div>
+					)}
+				</div>
+				<div className="mb-4">
+					{product.optionalImage2 ? (
+						<img
+							className="h-48 w-auto rounded object-contain"
+							src={`${
+								import.meta.env.VITE_APP_IMG_URL
+							}/products/${product.optionalImage2}`}
+							alt=""
+						/>
+					) : (
+						<div className="flex h-48 w-auto items-center justify-center rounded border-dashed border-gray-400">
+							<label htmlFor="uploadOptionalImage2">
+								<span className="cursor-pointer text-gray-500">
+									Upload Optional Image 2
+								</span>
+								<input
+									id="uploadOptionalImage2"
+									type="file"
+									className="hidden"
+									onChange={(e) =>
+										handleImageUpload(e, "optionalImage2")
+									}
+								/>
+							</label>
+						</div>
+					)}
+				</div>
+
 				<div className="mb-4 flex items-center justify-center">
 					<div>
 						<button

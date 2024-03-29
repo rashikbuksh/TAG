@@ -6,6 +6,7 @@ const multer = require("multer");
 var productImage = null;
 var http = require("http");
 var querystring = require("querystring");
+// upload multiple image
 const storage = multer.diskStorage({
   destination: (req, file, callBack) => {
     if (file.mimetype.substring(0, 5) === "image") {
@@ -31,11 +32,38 @@ app.post(
     }
 
     // Process uploaded files
-    const imageNames = req.files.map(file => file.filename);
+    const imageNames = req.files.map((file) => file.filename);
     return res.status(200).json({ msg: "Files Uploaded", imageNames });
   }
 );
+//upload single product image
+const ProductStorage = multer.diskStorage({
+  destination: (req, file, callBack) => {
+    if (file.mimetype.substring(0, 5) == "image") {
+      callBack(null, "./uploads/products");
+    }
+  },
+  filename: (req, file, callBack) => {
+    if (file.mimetype.substring(0, 5) == "image") {
+      productImage = Date.now() + "__" + file.originalname;
+      callBack(null, productImage);
+    }
+  },
+});
+const ProductUpload = multer({ storage: ProductStorage });
 
+app.post(
+  "/imageUpload/uploadProductImage/update",
+  ProductUpload.array("uploadFiles"),
+  (req, res) => {
+    if (req.files === null) {
+      return res.status(400).json({ msg: "No file uploaded" });
+    } else {
+      return res.status(200).json({ msg: "File Uploaded", productImage });
+    }
+  }
+);
+// news upload
 const storage1 = multer.diskStorage({
   destination: (req, file, callBack) => {
     if (file.mimetype.substring(0, 5) == "image") {
