@@ -203,6 +203,7 @@ const AdminNewShopRequest = () => {
 														tagRequestedShopKeeper.name
 													}
 													latLong={latLong}
+													single={true}
 												/>
 											</td>
 											<td>
