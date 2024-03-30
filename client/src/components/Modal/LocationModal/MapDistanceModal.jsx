@@ -86,10 +86,11 @@ const MapDistanceModal = (props) => {
 			{user?.id == null ? (
 				<h1>Please login to see the map</h1>
 			) : (
-				<>
+				<div className="h-[380px]">
+					
 					<Map
 						provider={maptilerProvider}
-						height={600}
+						height={500}
 						defaultCenter={
 							props.single == true
 								? [
@@ -163,7 +164,7 @@ const MapDistanceModal = (props) => {
 							Location
 						</span>
 					</div>
-				</>
+				</div>
 			)}
 		</Modal>
 	);
