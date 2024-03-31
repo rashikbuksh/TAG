@@ -3,6 +3,7 @@ import { Footer, Header } from "@components";
 import MessageModal from "@components/Modal/MessageModal/MessageModal";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "@context/auth";
+import { MdVerifiedUser } from "react-icons/md";
 import {
 	cartItemStock,
 	checkIfInCart,
@@ -20,6 +21,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import './tooltip.css'
 
 const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
@@ -138,7 +140,7 @@ const Product = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon />
-			<div className="mx-auto  pb-8 mb-8  px-4 py-8 lg:w-[50%]">
+			<div className="mx-auto  pb-20 mb-8  px-4 py-8 lg:w-[50%]">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}
 				<div className="">
@@ -225,7 +227,20 @@ const Product = () => {
 													<div className="">
 														{prods.isVerified ===
 														"verified" ? (
-															<FaCheckCircle className=" primary-text"></FaCheckCircle>
+															<div className="vtooltip">
+																<MdVerifiedUser
+																size={20}
+																	color="#0866FF"
+																	className=" inline cursor-pointer"
+																></MdVerifiedUser>
+
+																<span className="vtooltiptext">
+																	100% Good
+																	Quality And
+																	Authentic
+																	products
+																</span>
+															</div>
 														) : (
 															""
 														)}

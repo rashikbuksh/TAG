@@ -224,7 +224,7 @@ function Offcanvas(props) {
 												isPending
 													? ""
 													: isActive
-													? "rounded-md bg-[#2fa033c1] p-2 font-semibold text-white "
+													? "rounded-md bg-primary p-2 font-semibold text-white "
 													: ""
 											}
 											to={route.path}

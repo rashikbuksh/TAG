@@ -25,7 +25,7 @@ const FooterSection = () => {
 	}, []);
 
 	return (
-		<div className="mx-auto mt-3 max-w-7xl">
+		<div className="mx-auto mt-3 max-w-7xl ">
 			<div className="divider my-0"></div>
 			<h1 className="ml-3  text-lg font-semibold">Follow Us</h1>
 			<div className="mx-auto mt-5 flex w-[80%] justify-between">

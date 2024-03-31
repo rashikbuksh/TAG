@@ -88,7 +88,7 @@ const Home = () => {
 						className="fixed bottom-24 right-5 z-20 rounded-full bg-white bg-opacity-50 p-2 shadow-lg"
 						onClick={handleSmoothScroll}
 					>
-						<FaArrowUp className="text-3xl text-gray-200" />
+						<FaArrowUp className="text-3xl " color="#90e0ef" />
 					</button>
 				)}
 				<AllShop />

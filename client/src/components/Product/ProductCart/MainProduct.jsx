@@ -17,6 +17,7 @@ import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
 import { FaEye, FaLocationDot, FaX } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { MdVerifiedUser } from "react-icons/md";
 
 const MainProduct = ({ shopperProduct, product, height, width }) => {
 	const navigate = useNavigate();
@@ -221,7 +222,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 						)}
 				</div>
 				{/* name  */}
-				<div className="my-1 flex items-center  h-10 justify-between gap-3 px-2">
+				<div className="my-1 flex h-10  items-center justify-between gap-3 px-2">
 					<button
 						type="button"
 						onClick={() => {
@@ -235,7 +236,10 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 
 					<div>
 						{isVerified === "verified" ? (
-							<FaCheckCircle className=" primary-text"></FaCheckCircle>
+							<MdVerifiedUser
+								color="#0866FF"
+								
+							></MdVerifiedUser>
 						) : (
 							""
 						)}
@@ -306,7 +310,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 					)}
 				</div>
 
-				<div className=" flex items-end py-2 justify-between   ">
+				<div className=" flex items-end justify-between py-2   ">
 					<div className=" flex items-center">
 						{user && user.access === "admin" ? (
 							""
@@ -357,7 +361,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 									}}
 									className=""
 								>
-									<span onClick={showQuantitypalet}  >
+									<span onClick={showQuantitypalet}>
 										<AddToCartIcon2></AddToCartIcon2>
 									</span>
 								</button>

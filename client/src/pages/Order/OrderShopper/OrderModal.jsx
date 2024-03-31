@@ -228,7 +228,7 @@ const OrderDetailsShopper = () => {
 	};
 	const { user } = useAuth();
 	return (
-		<div className="body-wrapper ">
+		<div className="body-wrapper px-2 ">
 			<Breadcrumb
 				pageTitle={`Order Number: #${id}`}
 				prevUrl={user.access === "customer" ? "/home" : "/orderShopper"}
@@ -237,7 +237,7 @@ const OrderDetailsShopper = () => {
 
 			<div className="">
 				<div>
-					<div className="overflow-x-auto">
+					<div className="overflow-x-auto ">
 						<div className="min-w-full  divide-gray-200 bg-white text-sm">
 							<div className=" divide-gray-200">
 								{products.map((product) => (
@@ -256,13 +256,13 @@ const OrderDetailsShopper = () => {
 					<p>{price}</p>
 				</div>
 			</div>
-			<div></div>
+
 			{orderStatus == "completed" ? (
 				""
 			) : orderStatus == "cancelled" ? (
 				""
 			) : (
-				<div className="mt-6 flex items-center justify-end gap-3">
+				<div className="mt-6 flex items-center justify-end gap-3 ">
 					{orderStatus == "accepted" ? (
 						""
 					) : (

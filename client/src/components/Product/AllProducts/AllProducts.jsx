@@ -7,6 +7,9 @@ import { ReactSVG } from "react-svg";
 import LoadingPage from "../../LoadingPage/LoadingPage";
 import HeroSlider from "../../MainComponent/HeroSlider/HeroSlider";
 import ProductSlider from "../ProductSlider/ProductSlider";
+import { MdVerifiedUser } from "react-icons/md";
+import { Tooltip } from "react-tooltip";
+import "./tooltip.css";
 
 const AllProducts = ({ limit, sliderData }) => {
 	const [popularProducts, setPopularProducts] = useState([]);
@@ -52,10 +55,10 @@ const AllProducts = ({ limit, sliderData }) => {
 			<div className="">
 				{/* Popular Product  */}
 
-				<div className="border border-red-500 rounded ">
+				<div className="rounded border border-red-500 ">
 					{prods && (
 						<h2 className="section-title  mb-2 border-b-2 py-2">
-							<span className="text-xl font-bold pl-2">
+							<span className="pl-2 text-xl font-bold">
 								Popular Product{" "}
 							</span>
 
@@ -85,10 +88,10 @@ const AllProducts = ({ limit, sliderData }) => {
 
 				<div className="my-4"></div>
 
-				<div className="border border-red-500 rounded ">
+				<div className="rounded border border-red-500 ">
 					{prods && (
 						<h2 className="section-title mb-2 border-b-2 py-2">
-							<span className="text-xl font-bold pl-2">
+							<span className="pl-2 text-xl font-bold">
 								Offer Products{" "}
 							</span>
 
@@ -116,13 +119,22 @@ const AllProducts = ({ limit, sliderData }) => {
 				</div>
 
 				<div className="my-4"></div>
-				<div className="border border-red-500 rounded">
+				<div className="rounded border border-red-500">
 					{prods && (
-						<h2 className="section-title mb-2 border-b-2 py-2 ">
-							<p className="flex items-center gap-3 text-xl font-bold pl-2">
-								<span>Verified Product</span>{" "}
-								<FaCheckCircle className=" primary-text"></FaCheckCircle>
-							</p>
+						<div className="section-title mb-2 border-b-2 py-2 ">
+							<div className="flex items-center gap-3 pl-2 text-xl font-bold">
+								<span>Verified Product</span>
+								<div className="vtooltip">
+									<MdVerifiedUser
+										color="#0866FF"
+										className=" inline cursor-pointer"
+									></MdVerifiedUser>
+
+									<span className="vtooltiptext">
+										100% Good Quality And Authentic products
+									</span>
+								</div>
+							</div>
 
 							<Link
 								className="primary-text pr-2"
@@ -142,7 +154,7 @@ const AllProducts = ({ limit, sliderData }) => {
 									/>
 								</span>
 							</Link>
-						</h2>
+						</div>
 					)}
 					<ProductSlider products={isVerifiedProduct}></ProductSlider>
 				</div>
@@ -153,10 +165,10 @@ const AllProducts = ({ limit, sliderData }) => {
 				</div>
 				<div className="my-4"></div>
 
-				<div className="border border-red-500 rounded">
+				<div className="rounded border border-red-500">
 					{prods && (
 						<h2 className="section-title mb-2 border-b-2 py-2">
-							<span className="text-xl font-bold pl-2">
+							<span className="pl-2 text-xl font-bold">
 								All Products{" "}
 							</span>
 

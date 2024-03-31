@@ -7,7 +7,7 @@ const Footer = () => {
 	const { user } = useAuth();
 	return (
 		<footer>
-			<div className="footer-nav-wrapper">
+			<div className="footer-nav-wrapper bg-[#FFFFFF] ">
 				<Link
 					to={import.meta.env.VITE_API_PUBLIC_URL + "/home"}
 					className="footer-nav-single"
