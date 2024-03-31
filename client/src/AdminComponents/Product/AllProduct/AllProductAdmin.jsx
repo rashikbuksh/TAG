@@ -36,7 +36,7 @@ const AllProductAdmin = () => {
 		}
 	};
 	return (
-		<>
+		<div className="h-[90vh]">
 			<div className="mx-auto flex w-[80%] items-center justify-center">
 				<SearchFunction
 					arr={products}
@@ -56,7 +56,7 @@ const AllProductAdmin = () => {
 				</select>
 			</div>
 
-			<div className="mx-12 h-[80vh] overflow-x-auto rounded-md">
+			<div className="mx-12 h-[100vh] overflow-x-auto rounded-md">
 				<div className="z-0 overflow-x-auto">
 					<table className="table-responsive table rounded-md">
 						{/* head */}
@@ -90,7 +90,7 @@ const AllProductAdmin = () => {
 					</table>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 
