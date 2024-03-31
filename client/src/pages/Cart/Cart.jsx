@@ -407,7 +407,7 @@ const Cart = () => {
 											className="mx-auto w-[100%] p-2"
 										>
 											<div>
-												<div className="relative  bg-gray-100 px-2 py-3">
+												<div className="relative   bg-gray-100  px-2 py-3">
 													<button
 														onClick={() =>
 															dispatch(
@@ -418,10 +418,10 @@ const Cart = () => {
 														}
 														className="absolute right-4 top-3"
 													>
-														<FaTrash className="text-red-400 "></FaTrash>
+														<FaTrash className="text-red-400 mt-1"></FaTrash>
 													</button>
 													<img
-														className="absolute top-2 h-[60px]  w-[60px] "
+														className="absolute top-2 h-[60px] object-cover  w-[60px] "
 														src={`${
 															import.meta.env
 																.VITE_APP_IMG_URL
@@ -430,7 +430,7 @@ const Cart = () => {
 														}`}
 														alt="Selected Product"
 													/>
-													<div className="ms-auto flex w-[80%] items-start gap-3">
+													<div className="ms-auto flex w-[80%] items-start  gap-3">
 														<Link
 															to={`${
 																import.meta.env
@@ -440,8 +440,8 @@ const Cart = () => {
 															}/${cartItem.name}`}
 															className="w-full"
 														>
-															<h1 className="text-sm ">
-																{cartItem.name}
+															<h1 className="text-sm  w-5/6  ">
+																{cartItem.name} 
 															</h1>
 														</Link>
 													</div>
