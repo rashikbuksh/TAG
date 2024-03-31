@@ -13,12 +13,13 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 	const [title, setTitle] = useState(product.title);
 	const [keywords, setkeywords] = useState(product.keywords);
 	const [FullDescriptionValue, setFullDescriptionValue] = useState("");
+	console.log("🚀 ~ ProductDetailsModal ~ FullDescriptionValue:", FullDescriptionValue)
 	const [productShortDescription, setProductShortDescription] = useState(
 		product.short_description
 	);
-	const [productFullDescription, setProductFullDescription] = useState(
-		product.full_description
-	);
+	// const [productFullDescription, setProductFullDescription] = useState(
+	// 	product.full_description
+	// );
 
 	useEffect(() => {
 		// Reset the input fields when the product prop changes
@@ -38,7 +39,7 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 		api.post(`/product/update_product/${id}`, {
 			name: productName,
 			short_description: productShortDescription,
-			full_description: productFullDescription,
+			full_description: FullDescriptionValue,
 			title: title,
 			keywords: keywords,
 		})

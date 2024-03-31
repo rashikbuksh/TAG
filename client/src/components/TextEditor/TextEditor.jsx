@@ -4,7 +4,7 @@ const TextEditor = ({ setValue, value, style, placeholder,readOnly }) => {
   console.log("🚀 ~ BlogEditor ~ value:", value);
   return (
     <div style={style}>
-      <ReactQuill
+      <ReactQuill 
         theme="snow"
         value={value}
         onChange={setValue}
