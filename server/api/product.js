@@ -72,8 +72,8 @@ const change = [
 //? end
   {
     uri: "/product/update_product/:id",
-    query: `UPDATE product SET name=?, short_description=?,full_description=?,title=? WHERE id = ?`,
-    body: ["name", "short_description", "full_description", "title"],
+    query: `UPDATE product SET name=?, short_description=?,full_description=?,title=?,keywords=? WHERE id = ?`,
+    body: ["name", "short_description", "full_description", "title", "keywords"],
     param: ["id"],
   },
 ];

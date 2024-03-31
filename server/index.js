@@ -6,6 +6,8 @@ const multer = require("multer");
 var productImage = null;
 var http = require("http");
 var querystring = require("querystring");
+const fs = require("fs");
+const path = require("path");
 // upload multiple image
 const storage = multer.diskStorage({
   destination: (req, file, callBack) => {
@@ -179,4 +181,19 @@ app.post("/sentOtp", async (req, res) => {
 
   req.write(postData);
   req.end();
+});
+//delete image
+app.delete("/imageUpload/deleteImage", (req, res) => {
+  const filename = req.body.filename;
+  const dirLocation = req.body.location;
+  const filePath = path.join(__dirname, dirLocation, filename);
+
+  // Delete the file
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ msg: "Error deleting file" });
+    }
+    return res.status(200).json({ msg: "File deleted successfully" });
+  });
 });
