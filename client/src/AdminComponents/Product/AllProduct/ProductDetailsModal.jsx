@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import TextEditor from "@components/TextEditor/TextEditor";
+import axios from "axios";
 
 const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 	console.log("🚀 ~ ProductDetailsModal ~ product:", product);
@@ -13,7 +14,10 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 	const [title, setTitle] = useState(product.title);
 	const [keywords, setkeywords] = useState(product.keywords);
 	const [FullDescriptionValue, setFullDescriptionValue] = useState("");
-	console.log("🚀 ~ ProductDetailsModal ~ FullDescriptionValue:", FullDescriptionValue)
+	console.log(
+		"🚀 ~ ProductDetailsModal ~ FullDescriptionValue:",
+		FullDescriptionValue
+	);
 	const [productShortDescription, setProductShortDescription] = useState(
 		product.short_description
 	);
@@ -145,20 +149,164 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 				});
 		}
 	};
+	const handleDeleteImage = (filename, imageSlot) => {
+		axios
+			.delete(
+				`${import.meta.env.VITE_APP_API_URL}/imageUpload/deleteImage`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: Cookies?.get("auth"),
+					},
+					data: {
+						filename: filename, // Use the passed filename parameter
+						location: "./uploads/products", // Use the passed location parameter
+					},
+				}
+			)
+			.then((response) => {
+				console.log(response.data.msg); // Output the response message
+				// Handle success as needed
+				if (response.data.msg == "File deleted successfully") {
+					api.post(`/product/deleteProductImage/${id}`, {
+						image: imageSlot == "image" ? null : product.image,
+						optionalImage1:
+							imageSlot == "optionalImage1"
+								? null
+								: product.optionalImage1,
+						optionalImage2:
+							imageSlot == "optionalImage2"
+								? null
+								: product.optionalImage2,
+					})
+						.then((response) => {
+							toast(response.data.message);
+							if (response.status === 200) {
+								toast("Change seccess");
+							}
+						})
+						.catch((error) => {
+							toast.error(error);
+						});
+				}
+			})
+			.catch((error) => {
+				console.error(
+					"There was a problem with the delete operation:",
+					error.message
+				);
+				// Handle errors appropriately
+			});
+	};
+	const handelDeleteProduct = () => {
+		const filenames = [];
 
+		if (product.image) {
+			filenames.push(product.image);
+		}
+
+		if (product.optionalImage1) {
+			filenames.push(product.optionalImage1);
+		}
+
+		if (product.optionalImage2) {
+			filenames.push(product.optionalImage2);
+		}
+		console.log(filenames);
+		if (filenames.length > 0) {
+			console.log("from-image delete");
+			axios
+				.delete(
+					`${
+						import.meta.env.VITE_APP_API_URL
+					}/imageUpload/deleteMultipleImages`,
+					{
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: Cookies?.get("auth"),
+						},
+						data: {
+							filenames: filenames,
+							location: "./uploads/products",
+						},
+					}
+				)
+				.then((response) => {
+					console.log(response.data.msg);
+					if (response.data.msg === "File deleted successfully") {
+						api.delete(`/remove/removeProduct/${id}`)
+							.then((res) => {
+								if (res.data.status === 200) {
+									toast("Product Deleted Successfully");
+									// window.location.reload();
+								} else {
+									toast.error(
+										"Failed to delete the product. Please try again."
+									);
+								}
+							})
+							.catch((error) => {
+								console.error("Error deleting product:", error);
+								toast.error(
+									"An error occurred while deleting the product. Please try again."
+								);
+							});
+					}
+				})
+				.catch((error) => {
+					console.error(
+						"There was a problem with the delete operation:",
+						error.message
+					);
+				});
+		} else {
+			console.log("else log ami tester");
+			api.delete(`/remove/removeProduct/${id}`)
+				.then((res) => {
+					if (res.data.status === 200) {
+						toast("Product Deleted Successfully");
+						// window.location.reload();
+					} else {
+						toast.error(
+							"Failed to delete the product. Please try again."
+						);
+					}
+				})
+				.catch((error) => {
+					console.error("Error deleting product:", error);
+					toast.error(
+						"An error occurred while deleting the product. Please try again."
+					);
+				});
+		}
+	};
+	console.log(product.image);
 	return (
 		<Modal isOpen={isOpen} setIsOpen={setIsOpen} fullWidth={true}>
 			<div className="flex flex-col  items-center p-4">
 				<div className="flex gap-3">
 					<div className="mb-4">
 						{product.image ? (
-							<img
-								className="h-64 w-auto rounded object-contain"
-								src={`${
-									import.meta.env.VITE_APP_IMG_URL
-								}/products/${product.image}`}
-								alt=""
-							/>
+							<div className="relative">
+								<img
+									className="h-64 w-auto rounded object-contain"
+									src={`${
+										import.meta.env.VITE_APP_IMG_URL
+									}/products/${product.image}`}
+									alt=""
+								/>
+								<button
+									className="absolute right-2 top-2 rounded bg-red-500 px-2 py-1 text-xs text-white"
+									onClick={() =>
+										handleDeleteImage(
+											product.image,
+											"image"
+										)
+									}
+								>
+									Delete
+								</button>
+							</div>
 						) : (
 							<div className="flex w-full items-center justify-center">
 								<label className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -197,15 +345,29 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 							</div>
 						)}
 					</div>
+
 					<div className="mb-4">
 						{product.optionalImage1 ? (
-							<img
-								className="h-64 w-auto rounded object-contain"
-								src={`${
-									import.meta.env.VITE_APP_IMG_URL
-								}/products/${product.optionalImage1}`}
-								alt=""
-							/>
+							<div className="relative">
+								<img
+									className="h-64 w-auto rounded object-contain"
+									src={`${
+										import.meta.env.VITE_APP_IMG_URL
+									}/products/${product.optionalImage1}`}
+									alt=""
+								/>
+								<button
+									className="absolute right-2 top-2 rounded bg-red-500 px-2 py-1 text-xs text-white"
+									onClick={() =>
+										handleDeleteImage(
+											product.optionalImage1,
+											"optionalImage1"
+										)
+									}
+								>
+									Delete
+								</button>
+							</div>
 						) : (
 							<div className="flex w-full items-center justify-center">
 								<label className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -247,15 +409,29 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 							</div>
 						)}
 					</div>
+
 					<div className="mb-4">
 						{product.optionalImage2 ? (
-							<img
-								className="h-64 w-auto rounded object-contain"
-								src={`${
-									import.meta.env.VITE_APP_IMG_URL
-								}/products/${product.optionalImage2}`}
-								alt=""
-							/>
+							<div className="relative">
+								<img
+									className="h-64 w-auto rounded object-contain"
+									src={`${
+										import.meta.env.VITE_APP_IMG_URL
+									}/products/${product.optionalImage2}`}
+									alt=""
+								/>
+								<button
+									className="absolute right-2 top-2 rounded bg-red-500 px-2 py-1 text-xs text-white"
+									onClick={() =>
+										handleDeleteImage(
+											product.optionalImage2,
+											"optionalImage2"
+										)
+									}
+								>
+									Delete
+								</button>
+							</div>
 						) : (
 							<div className="flex w-full items-center justify-center">
 								<label className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -315,7 +491,12 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 								Verify
 							</button>
 						)}
-						<button className="btn btn-error btn-sm">Delete</button>
+						<button
+							onClick={handelDeleteProduct}
+							className="btn btn-error btn-sm"
+						>
+							Delete
+						</button>
 					</div>
 					{isEditActive && (
 						<button

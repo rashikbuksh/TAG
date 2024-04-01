@@ -50,7 +50,7 @@ const change = [
     body: ["isVerified"],
     param: ["id"],
   },
-// product upload
+  // product upload
   {
     uri: "/product/updateProductImage/:id",
     query: `UPDATE product SET image = ? WHERE id = ?`,
@@ -69,18 +69,40 @@ const change = [
     body: ["optionalImage2"],
     param: ["id"],
   },
-//? end
+  //? end
   {
     uri: "/product/update_product/:id",
     query: `UPDATE product SET name=?, short_description=?,full_description=?,title=?,keywords=? WHERE id = ?`,
-    body: ["name", "short_description", "full_description", "title", "keywords"],
+    body: [
+      "name",
+      "short_description",
+      "full_description",
+      "title",
+      "keywords",
+    ],
+    param: ["id"],
+  },
+  {
+    uri: "/product/deleteProductImage/:id",
+    query: `UPDATE product SET image = ? ,optionalImage1 = ?,optionalImage2 = ?  WHERE id = ?`,
+    body: ["image", "optionalImage1", "optionalImage2"],
     param: ["id"],
   },
 ];
-
+const remove = [
+  {
+    uri: "/remove/removeProduct/:id",
+    query: `DELETE product, shopper_product
+    FROM product
+    LEFT JOIN shopper_product ON product.id = shopper_product.product_id
+    WHERE product.id = ?;`,
+    param: ["id"],
+  },
+];
 // Export modules
 module.exports = Object.freeze({
   add,
   read,
   change,
+  remove,
 });
