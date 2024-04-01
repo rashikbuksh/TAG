@@ -182,7 +182,7 @@ app.post("/sentOtp", async (req, res) => {
   req.write(postData);
   req.end();
 });
-//delete image
+//delete single image image
 app.delete("/imageUpload/deleteImage", (req, res) => {
   const filename = req.body.filename;
   const dirLocation = req.body.location;
@@ -196,4 +196,22 @@ app.delete("/imageUpload/deleteImage", (req, res) => {
     }
     return res.status(200).json({ msg: "File deleted successfully" });
   });
+});
+app.delete("/imageUpload/deleteMultipleImages", (req, res) => {
+  const filenames = req.body.filenames; // Assuming filenames is an array of filenames
+  const dirLocation = req.body.location;
+
+  // Iterate through each filename and delete the corresponding file
+  filenames.forEach((filename) => {
+    const filePath = path.join(__dirname, dirLocation, filename);
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ msg: "Error deleting file" });
+      }
+    });
+  });
+
+  // Respond once all files are attempted to be deleted
+  return res.status(200).json({ msg: "File deleted successfully" });
 });
