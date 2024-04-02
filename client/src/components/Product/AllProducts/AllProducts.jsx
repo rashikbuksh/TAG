@@ -124,15 +124,21 @@ const AllProducts = ({ limit, sliderData }) => {
 						<div className="section-title mb-2 border-b-2 py-2 ">
 							<div className="flex items-center gap-3 pl-2 text-xl font-bold">
 								<span>Verified Product</span>
-								<div className="vtooltip">
-									<MdVerifiedUser
-										color="#0866FF"
-										className=" inline cursor-pointer"
-									></MdVerifiedUser>
 
-									<span className="vtooltiptext">
-										100% Good Quality And Authentic products
-									</span>
+								<div
+									data-tooltip-id="my-tooltip"
+									data-tooltip-content="100% Good Quality And Authentic products"
+									className="mt-0 z-10"
+									data-tip="hello"
+								>
+									<button className="m">
+										<MdVerifiedUser
+											id="my-tooltip"
+											color="#0866FF"
+											className=" mt-1 cursor-pointer"
+										></MdVerifiedUser>
+										<Tooltip id="my-tooltip" />
+									</button>
 								</div>
 							</div>
 
