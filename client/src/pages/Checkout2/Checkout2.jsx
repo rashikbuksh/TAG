@@ -63,7 +63,7 @@ const Checkout2 = () => {
 			
 		}
 	};
-
+console.log(shopperAccess);
 	return (
 		<div className="mx-auto px-4 pb-24 text-black ">
 			{/* Checkout Title */}
@@ -94,7 +94,9 @@ const Checkout2 = () => {
 						setSelectedAddress(newAddressValue);
 						setCustomers_address_summary(newAddressValue);
 					}}
+					
 				>
+				
 					<input
 						type="checkbox"
 						checked={selectedAddress === "Pick up"}
@@ -103,7 +105,7 @@ const Checkout2 = () => {
 					/>
 					{/* <TbTruckDelivery size={25} /> */}
 					<span className="ml-8 flex-auto text-[16px] font-bold">
-						Pick up
+						Pick up from shop
 					</span>
 				</div>
 			)}

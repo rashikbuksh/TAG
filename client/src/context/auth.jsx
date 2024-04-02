@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 	const [loginError, setLoginError] = useState("");
 
+
 	const [authCookie, updateAuthCookie, removeAuthCookie] = useCookie("auth");
 	const [userCookie, updateUserCookie, removeUserCookie] = useCookie("user");
 
@@ -87,7 +88,15 @@ const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ signed: !!user, user, loading, login, Logout, loginError }}
+			value={{
+				signed: !!user,
+				user,
+				loading,
+				login,
+				Logout,
+				loginError,
+				
+			}}
 			// value={{ signed: true, user, loading, Login, Logout }}
 		>
 			{children}

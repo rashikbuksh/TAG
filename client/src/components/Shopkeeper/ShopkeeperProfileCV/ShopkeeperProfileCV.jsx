@@ -50,7 +50,10 @@ const ShopkeeperProfileCV = () => {
 	const dispatch = useDispatch();
 	// todo==============================================
 	// const { user}=useAuth()
-	// add addTo cart 
+	// add addTo cart
+
+	console.log(shopkeeperInfo);
+
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
 			.then((res) => {
@@ -176,12 +179,9 @@ const ShopkeeperProfileCV = () => {
 						</Drawer>
 						{/* Navigation and share icon */}
 						<div className="flex justify-between px-4">
-							<Link
-								to={'/home'}
-								className="back-link"
-							>
+							<Link to={"/home"} className="back-link">
 								{" "}
-								<FaAngleLeft size={20} /> 
+								<FaAngleLeft size={20} />
 							</Link>
 
 							<BsThreeDotsVertical
@@ -429,48 +429,64 @@ const ShopkeeperProfileCV = () => {
 														</div>
 													</div>
 													<div>
-														<button
-															disabled={
-																user &&
-																user.access !==
-																	"customer"
-															}
-															onClick={() => {
-																single.quantity = 0;
-																if (
-																	checkIfInCart(
-																		cartItems,
-																		single
-																	)
-																) {
-																	dispatch(
-																		increaseQuantityofProd(
-																			single
-																		)
-																	);
-																} else {
-																	dispatch(
-																		addToCart(
-																			single
-																		)
-																	);
+														{!shopkeeperInfo.active_status && (
+															<button
+																disabled={
+																	user &&
+																	user.access !==
+																		"customer"
 																}
-															}}
-															className={`${
-																user &&
-																user.access ===
-																	"customer"
-																	? ""
-																	: "btn btn-disabled border-none bg-white bg-none p-0"
-															}`}
-														>
-															<AddToCartIcon2
-																width={32}
-																height={32}
-															></AddToCartIcon2>
-														</button>
+																onClick={() => {
+																	single.quantity = 0;
+																	if (
+																		shopkeeperInfo.active_status ===
+																		1
+																	) {
+																		alert(
+																			"Shop off"
+																		);
+																		return;
+																	}
+																	if (
+																		checkIfInCart(
+																			cartItems,
+																			single
+																		)
+																	) {
+																		dispatch(
+																			increaseQuantityofProd(
+																				single
+																			)
+																		);
+																	} else {
+																		dispatch(
+																			addToCart(
+																				single
+																			)
+																		);
+																	}
+																}}
+																className={`${
+																	user &&
+																	user.access ===
+																		"customer"
+																		? ""
+																		: "btn btn-disabled border-none bg-white bg-none p-0"
+																}`}
+															>
+																<AddToCartIcon2
+																	width={32}
+																	height={32}
+																></AddToCartIcon2>
+															</button>
+														)}
 													</div>
 												</div>
+												{shopkeeperInfo.active_status && (
+													<div className="w-full rounded bg-[#469CD6] p-2  text-center text-white active:bg-[#568db3]">
+														Request for new stock
+													</div>
+												)}
 											</div>
 										);
 									})}
