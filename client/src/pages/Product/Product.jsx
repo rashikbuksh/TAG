@@ -20,10 +20,13 @@ import { Helmet } from "react-helmet";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
+import { Carousel } from "react-responsive-carousel";
 import { Link, useParams } from "react-router-dom";
+
 import "./tooltip.css";
 import { Tooltip } from "react-tooltip";
-
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Placeholder from "../../assets/img/no_product.png";
 const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const { user } = useAuth();
@@ -141,7 +144,9 @@ const Product = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon />
-			<div className="mx-auto  mb-8 px-4  py-8 pb-20 lg:w-[50%]">
+
+			<div className="mx-auto  px-4 py-8  pb-20  lg:w-[50%]">
+
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}
 				<div className="">
@@ -151,7 +156,7 @@ const Product = () => {
 								key={Math.random()}
 								className=" relative w-full  rounded p-3"
 							>
-								<img
+								{/* <img
 									src={`${
 										import.meta.env.VITE_APP_IMG_URL
 									}/products/${single.image}`}
@@ -162,7 +167,85 @@ const Product = () => {
 											: "blur-sm"
 									} mx-auto h-full w-[317px] rounded object-cover`}
 									alt="Product"
-								/>
+								/> */}
+								<Carousel
+									showArrows={true}
+									className="mx-auto sm:w-full lg:w-[40%] "
+								>
+									<div>
+										<img
+											src={
+												single.image
+													? `${
+															import.meta.env
+																.VITE_APP_IMG_URL
+													  }/products/${
+															single.image
+													  }`
+													: Placeholder
+											}
+											className={`${
+												products &&
+												products[0].active_status === 1
+													? ""
+													: "blur-sm"
+											} mx-auto h-full w-[150px] rounded object-cover`}
+										/>
+										{/* <p className="legend">{single.name}</p> */}
+									</div>
+									<div>
+										<img
+											// src={`${
+											// 	import.meta.env.VITE_APP_IMG_URL
+											// }/products/${
+											// 	single.optionalImage1
+											// }`}
+											src={
+												single.optionalImage1
+													? `${
+															import.meta.env
+																.VITE_APP_IMG_URL
+													  }/products/${
+															single.optionalImage1
+													  }`
+													: Placeholder
+											}
+											className={`${
+												products &&
+												products[0].active_status === 1
+													? ""
+													: "blur-sm"
+											} mx-auto h-full w-[150px] rounded object-cover`}
+										/>
+										{/* <p className="legend">{single.name}</p> */}
+									</div>
+									<div>
+										<img
+											// src={`${
+											// 	import.meta.env.VITE_APP_IMG_URL
+											// }/products/${
+											// 	single.optionalImage2
+											// }`}
+											src={
+												single.optionalImage2
+													? `${
+															import.meta.env
+																.VITE_APP_IMG_URL
+													  }/products/${
+															single.optionalImage2
+													  }`
+													: Placeholder
+											}
+											className={`${
+												products &&
+												products[0].active_status === 1
+													? ""
+													: "blur-sm"
+											} mx-auto h-full w-[150px] rounded object-cover`}
+										/>
+										{/* <p className="legend">{single.name}</p> */}
+									</div>
+								</Carousel>
 								{products && products[0].active_status === 1 ? (
 									""
 								) : (
@@ -356,7 +439,14 @@ const Product = () => {
 												<p className="text-xl font-bold">
 													Description
 												</p>
-												<div className="my-2 text-lg">
+												<div className="prose-lg prose">
+													<div
+														dangerouslySetInnerHTML={{
+															__html: prods.full_description,
+														}}
+													/>
+												</div>
+												{/* <div className="my-2 text-lg">
 													{showFullDescription
 														? prods.full_description
 														: prods.full_description &&
@@ -381,7 +471,7 @@ const Product = () => {
 																	: "See More"}
 															</button>
 														)}
-												</div>
+												</div> */}
 											</div>
 										</div>
 									</div>

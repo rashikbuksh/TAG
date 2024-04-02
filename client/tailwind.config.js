@@ -4,7 +4,7 @@ export default {
 		extend: {},
 	},
 	// eslint-disable-next-line no-undef
-	plugins: [require("daisyui")],
+	plugins: [require("daisyui"), require("@tailwindcss/typography")],
 	daisyui: {
 		themes: ["light", "dark"],
 		darkTheme: "light", // name of one of the included themes for dark mode

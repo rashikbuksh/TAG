@@ -6,7 +6,40 @@ const multer = require("multer");
 var productImage = null;
 var http = require("http");
 var querystring = require("querystring");
+const fs = require("fs");
+const path = require("path");
+// upload multiple image
 const storage = multer.diskStorage({
+  destination: (req, file, callBack) => {
+    if (file.mimetype.substring(0, 5) === "image") {
+      callBack(null, "./uploads/products");
+    }
+  },
+  filename: (req, file, callBack) => {
+    if (file.mimetype.substring(0, 5) === "image") {
+      productImage = Date.now() + "__" + file.originalname;
+      callBack(null, productImage);
+    }
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post(
+  "/imageUpload/uploadproductimage",
+  upload.array("uploadFiles", 3), // Limit to 3 files
+  (req, res) => {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ msg: "No files uploaded" });
+    }
+
+    // Process uploaded files
+    const imageNames = req.files.map((file) => file.filename);
+    return res.status(200).json({ msg: "Files Uploaded", imageNames });
+  }
+);
+//upload single product image
+const ProductStorage = multer.diskStorage({
   destination: (req, file, callBack) => {
     if (file.mimetype.substring(0, 5) == "image") {
       callBack(null, "./uploads/products");
@@ -19,11 +52,11 @@ const storage = multer.diskStorage({
     }
   },
 });
-const upload = multer({ storage: storage });
+const ProductUpload = multer({ storage: ProductStorage });
 
 app.post(
-  "/imageUpload/uploadproductimage",
-  upload.array("uploadFiles"),
+  "/imageUpload/uploadProductImage/update",
+  ProductUpload.array("uploadFiles"),
   (req, res) => {
     if (req.files === null) {
       return res.status(400).json({ msg: "No file uploaded" });
@@ -32,7 +65,7 @@ app.post(
     }
   }
 );
-
+// news upload
 const storage1 = multer.diskStorage({
   destination: (req, file, callBack) => {
     if (file.mimetype.substring(0, 5) == "image") {
@@ -148,4 +181,37 @@ app.post("/sentOtp", async (req, res) => {
 
   req.write(postData);
   req.end();
+});
+//delete single image image
+app.delete("/imageUpload/deleteImage", (req, res) => {
+  const filename = req.body.filename;
+  const dirLocation = req.body.location;
+  const filePath = path.join(__dirname, dirLocation, filename);
+
+  // Delete the file
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ msg: "Error deleting file" });
+    }
+    return res.status(200).json({ msg: "File deleted successfully" });
+  });
+});
+app.delete("/imageUpload/deleteMultipleImages", (req, res) => {
+  const filenames = req.body.filenames; // Assuming filenames is an array of filenames
+  const dirLocation = req.body.location;
+
+  // Iterate through each filename and delete the corresponding file
+  filenames.forEach((filename) => {
+    const filePath = path.join(__dirname, dirLocation, filename);
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ msg: "Error deleting file" });
+      }
+    });
+  });
+
+  // Respond once all files are attempted to be deleted
+  return res.status(200).json({ msg: "File deleted successfully" });
 });

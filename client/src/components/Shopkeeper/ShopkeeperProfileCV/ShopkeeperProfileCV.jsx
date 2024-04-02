@@ -19,19 +19,16 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { addToCart, increaseQuantityofProd } from "@store/slices/cart-slice";
 import { useEffect, useState } from "react";
-import { FaAngleLeft, FaCopy, FaEye } from "react-icons/fa";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaAngleLeft, FaCopy, FaEye, FaMapMarkerAlt } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
+import { IoIosArrowBack, IoIosLink, IoMdShare } from "react-icons/io";
 import { PiShareFat } from "react-icons/pi";
+import Drawer from "react-modern-drawer";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
-import Drawer from "react-modern-drawer";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { IoIosArrowBack } from "react-icons/io";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { IoMdShare } from "react-icons/io";
-import { IoIosLink } from "react-icons/io";
 import { toast } from "react-toastify";
+import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 const ShopkeeperProfileCV = () => {
 	const [show, setShow] = useState(false);
 	// get id from url
@@ -300,6 +297,7 @@ const ShopkeeperProfileCV = () => {
 										setIsOpen={setMapModal}
 										popup={shopkeeperInfo.name}
 										latLong={latLong}
+										single={true}
 									/>
 								</div>
 							</div>
