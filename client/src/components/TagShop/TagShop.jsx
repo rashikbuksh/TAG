@@ -44,7 +44,7 @@ const TagShop = () => {
 						Bkash and Cash On delivery
 					</p>
 				</h2>
-				<div className=" tag-shop-responsive-card">
+				<div className=" tag-shop-responsive-card px-1">
 					{products.map((product) => (
 						<ProductCart product={product} key={product.id} />
 					))}

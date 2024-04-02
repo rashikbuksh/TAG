@@ -148,7 +148,7 @@ const AllProducts = ({ limit, sliderData }) => {
 				</div>
 
 				<div className="my-4"></div>
-				<div className="border border-red-500 p-2">
+				<div className="">
 					<HeroSlider sliderData={sliderData} isAutoPlay={false} />
 				</div>
 				<div className="my-4"></div>
