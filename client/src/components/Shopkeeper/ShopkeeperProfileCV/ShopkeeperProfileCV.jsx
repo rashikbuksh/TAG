@@ -48,6 +48,9 @@ const ShopkeeperProfileCV = () => {
 	const [copySuccess, setCopySuccess] = useState(null);
 	const [latLong, setLatLong] = useState({ lat: 0, lng: 0 });
 	const dispatch = useDispatch();
+	// todo==============================================
+	// const { user}=useAuth()
+	// add addTo cart 
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
 			.then((res) => {
