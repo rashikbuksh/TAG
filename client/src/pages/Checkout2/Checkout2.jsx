@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useAuth } from "@context/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const Checkout2 = () => {
 	const [addressArr, setAddressArr] = useState([]);
@@ -33,6 +34,7 @@ const Checkout2 = () => {
 	const { totalPrice, shopperId, discount, totalItem, shopperAccess } =
 		location.state;
 	console.log("🚀 ~ Checkout2 ~ shopperAccess:", shopperAccess);
+	// Todo
 	const handelGoPaymentPage = () => {
 		if (
 			selectedAddress &&
@@ -52,14 +54,18 @@ const Checkout2 = () => {
 				},
 			});
 		} else {
-			console.log("Have Problem");
+			Swal.fire({
+				icon: "error",
+				title: "Oops...",
+				text: "You must have to add address ",
+				
+			});
+			
 		}
 	};
-
+console.log(shopperAccess);
 	return (
-
 		<div className="mx-auto px-4 pb-24 text-black ">
-
 			{/* Checkout Title */}
 			<Breadcrumb pageTitle="Checkout" prevUrl="/cart"></Breadcrumb>
 			{/* Delivery Address Section */}
@@ -88,7 +94,9 @@ const Checkout2 = () => {
 						setSelectedAddress(newAddressValue);
 						setCustomers_address_summary(newAddressValue);
 					}}
+					
 				>
+				
 					<input
 						type="checkbox"
 						checked={selectedAddress === "Pick up"}
@@ -97,7 +105,7 @@ const Checkout2 = () => {
 					/>
 					{/* <TbTruckDelivery size={25} /> */}
 					<span className="ml-8 flex-auto text-[16px] font-bold">
-						Pick up
+						Pick up from shop
 					</span>
 				</div>
 			)}

@@ -3,6 +3,7 @@ import { Footer, Header } from "@components";
 import MessageModal from "@components/Modal/MessageModal/MessageModal";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "@context/auth";
+import { MdVerifiedUser } from "react-icons/md";
 import {
 	cartItemStock,
 	checkIfInCart,
@@ -21,6 +22,9 @@ import { FaRegMessage } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import { Link, useParams } from "react-router-dom";
+
+import "./tooltip.css";
+import { Tooltip } from "react-tooltip";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Placeholder from "../../assets/img/no_product.png";
 const Product = () => {
@@ -140,7 +144,9 @@ const Product = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon />
+
 			<div className="mx-auto  px-4 py-8  pb-20  lg:w-[50%]">
+
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}
 				<div className="">
@@ -305,7 +311,21 @@ const Product = () => {
 													<div className="">
 														{prods.isVerified ===
 														"verified" ? (
-															<FaCheckCircle className=" primary-text"></FaCheckCircle>
+															<div
+																data-tooltip-id="my-tooltip"
+																data-tooltip-content="100% Good Quality And Authentic products"
+																className="z-10 mt-0"
+																data-tip="hello"
+															>
+																<button className="m">
+																	<MdVerifiedUser
+																		id="my-tooltip"
+																		color="#0866FF"
+																		className=" mt-1 cursor-pointer"
+																	></MdVerifiedUser>
+																	<Tooltip id="my-tooltip" />
+																</button>
+															</div>
 														) : (
 															""
 														)}

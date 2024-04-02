@@ -45,6 +45,10 @@ const ShopkeeperProfileCV = () => {
 	const [copySuccess, setCopySuccess] = useState(null);
 	const [latLong, setLatLong] = useState({ lat: 0, lng: 0 });
 	const dispatch = useDispatch();
+	// todo==============================================
+	// const { user}=useAuth()
+	// add addTo cart
+
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
 			.then((res) => {
@@ -360,11 +364,15 @@ const ShopkeeperProfileCV = () => {
 								{/* //show product div  */}
 								<div className="mb-20 grid h-[70vh] w-[93%] grid-cols-2  gap-2 overflow-y-auto border-t px-2 lg:mx-auto lg:grid-cols-4">
 									{filteredAllProducts.map((single) => {
+										console.log(single);
 										return (
 											<div
 												key={single.id}
-												className="best-sell-cart-shadow w-full p-2"
+												className="best-sell-cart-shadow w-full p-2 relative"
 											>
+												<div className="badge absolute right-2 bg-[#2D8FCA] text-white">
+													<p>{single.product_count}</p>
+												</div>
 												<Link
 													className="flex items-center justify-center"
 													to={
@@ -384,6 +392,7 @@ const ShopkeeperProfileCV = () => {
 														alt=""
 													/>
 												</Link>
+
 												{}
 												{user &&
 												user.access === "customer" ? (
@@ -421,48 +430,104 @@ const ShopkeeperProfileCV = () => {
 														</div>
 													</div>
 													<div>
-														<button
-															disabled={
-																user &&
-																user.access !==
-																	"customer"
-															}
-															onClick={() => {
-																single.quantity = 0;
-																if (
-																	checkIfInCart(
-																		cartItems,
-																		single
-																	)
-																) {
-																	dispatch(
-																		increaseQuantityofProd(
-																			single
-																		)
-																	);
-																} else {
-																	dispatch(
-																		addToCart(
-																			single
-																		)
-																	);
+														{!shopkeeperInfo.active_status && (
+															<button
+																disabled={
+																	user &&
+																	user.access !==
+																		"customer"
 																}
-															}}
-															className={`${
-																user &&
-																user.access ===
-																	"customer"
-																	? ""
-																	: "btn btn-disabled border-none bg-white bg-none p-0"
-															}`}
-														>
-															<AddToCartIcon2
-																width={32}
-																height={32}
-															></AddToCartIcon2>
-														</button>
+																onClick={() => {
+																	single.quantity = 0;
+																
+																	if (
+																		checkIfInCart(
+																			cartItems,
+																			single
+																		)
+																	) {
+																		dispatch(
+																			increaseQuantityofProd(
+																				single
+																			)
+																		);
+																	} else {
+																		dispatch(
+																			addToCart(
+																				single
+																			)
+																		);
+																	}
+																}}
+																className={`${
+																	user &&
+																	user.access ===
+																		"customer"
+																		? ""
+																		: "btn btn-disabled border-none bg-white bg-none p-0"
+																}`}
+															>
+																<AddToCartIcon2
+																	width={32}
+																	height={32}
+																></AddToCartIcon2>
+															</button>
+														)}
 													</div>
 												</div>
+												{single.product_count <= 0 ? (
+													<div className="w-full rounded bg-[#469CD6]  px-2 py-1  text-center text-white active:bg-[#568db3]">
+														Request for stock
+													</div>
+												) : (
+													<button
+														type="button"
+														disabled={
+															user &&
+															user.access !==
+																"customer"
+														}
+														onClick={() => {
+															single.quantity = 0;
+														
+															if (
+																checkIfInCart(
+																	cartItems,
+																	single
+																)
+															) {
+																dispatch(
+																	increaseQuantityofProd(
+																		single
+																	)
+																);
+															} else {
+																dispatch(
+																	addToCart(
+																		single
+																	)
+																);
+															}
+														}}
+														className={`${
+															user &&
+															user.access ===
+																"customer"
+																? ""
+																: "btn btn-disabled border-none bg-white bg-none p-0"
+														} w-full rounded  px-2 py-1  text-center text-white active:bg-[#568db3] ${
+															!shopkeeperInfo.active_status ==
+															1
+																? "bg-[#469CD6]"
+																: "btn-disabled bg-red-300"
+														}`}
+													>
+														{!shopkeeperInfo.active_status ==
+														1
+															? "Add To Cart"
+															: "Shop Close Now"}
+													</button>
+												)}
 											</div>
 										);
 									})}

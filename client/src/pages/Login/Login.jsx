@@ -111,9 +111,11 @@ const Login = () => {
 				<meta name="theme-color" content="#ffffff" />
 			</Helmet>
 			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%]  ">
-				<div className="mx-auto my-5 h-[80px] ">
-					<TagLogo2></TagLogo2>
-				</div>
+				<Link to='/home'>
+					<div className="mx-auto my-5 h-[80px] ">
+						<TagLogo2></TagLogo2>
+					</div>
+				</Link>
 
 				<div className="mt-4 flex-grow">
 					<form
@@ -175,10 +177,12 @@ const Login = () => {
 								</a>
 							</div>
 						</div>
-
+						{/* Text are hidden {Error component} */}
 						{loginError && (
 							<div>
-								<p className="text-error">{loginError}</p>
+								<p className="hidden text-center text-xl text-error">
+									{loginError}
+								</p>
 							</div>
 						)}
 
@@ -261,7 +265,7 @@ const Login = () => {
 						By Signing up you accept the{" "}
 						<span className="primary-text">Terms of Service</span>{" "}
 						and <br />{" "}
-						<Link to={'/policy'}>
+						<Link to={"/policy"}>
 							<span className="primary-text">Privacy Policy</span>
 						</Link>
 					</p>
