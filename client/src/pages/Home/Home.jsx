@@ -25,6 +25,7 @@ const Home = () => {
 	const [sliderData, setSliderData] = useState({
 		top: [],
 		middle: [],
+		bottom: [],
 	});
 	const [loading, setLoading] = useState(true);
 
@@ -50,16 +51,32 @@ const Home = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const [topResponse, middleResponse] = await Promise.all([
-					api.get("/heroslider/getslider/top"),
-					api.get("/heroslider/getslider/middle"),
-				]);
-				setSliderData({
-					top: topResponse.data,
-					middle: middleResponse.data,
-				});
+				const [topResponse, middleResponse, bottomResponse] =
+					await Promise.all([
+						api
+							.get("/heroslider/getslider/top")
+							.catch((error) => null),
+						api
+							.get("/heroslider/getslider/middle")
+							.catch((error) => null),
+						api
+							.get("/heroslider/getslider/bottom")
+							.catch((error) => null),
+					]);
+				const sliderData = {
+					top: topResponse ? topResponse.data : [],
+					middle: middleResponse ? middleResponse.data : [],
+					bottom: bottomResponse ? bottomResponse.data : [],
+				};
+
+				setSliderData(sliderData);
 			} catch (error) {
 				console.error("Error fetching slider data:", error);
+				setSliderData({
+					top: [],
+					middle: [],
+					bottom: [],
+				});
 			} finally {
 				setLoading(false);
 			}
@@ -92,6 +109,9 @@ const Home = () => {
 					</button>
 				)}
 				<AllShop />
+				<div className="my-2">
+					<HeroSlider sliderData={sliderData.bottom} />
+				</div>
 				<TagShop />
 				<FooterSection />
 			</div>

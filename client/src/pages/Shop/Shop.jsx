@@ -4,18 +4,37 @@ import { setActiveSort, toggleShopTopFilter } from "@helpers/product";
 import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { FaAngleLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Shop = () => {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [category, setCategory] = useState([]);
+	const [allProduct, SetAllProduct] = useState([]);
+	const { params } = useParams();
+
+	console.log("🚀 ~ Shop ~ params:", params);
+	useEffect(() => {
+		if (params === "verified") {
+			const isVerifiedProduct = allProduct.filter(
+				(product) => product.isVerified === "verified"
+			);
+			setProducts(isVerifiedProduct);
+		} else if (params === "offer") {
+			const isOfferProduct = allProduct.filter(
+				(product) => product.discount > 0 || product.discount === null
+			);
+			setProducts(isOfferProduct);
+		} else {
+			setProducts(allProduct);
+		}
+	}, [params,allProduct]);
 
 	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproduct`)
 			.then((response) => {
-				setProducts(response.data);
+				SetAllProduct(response.data);
 				setLoading(false);
 			})
 			.catch((error) => {

@@ -38,6 +38,7 @@ const read = [
 					cp.phone,
 					cp.email,
 					cp.access,
+					cp.active_status,
 					cp.review_count,
                     REPLACE(cp.shipping_address, '__', ',') as shipping_address
 				FROM

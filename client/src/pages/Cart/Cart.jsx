@@ -24,6 +24,7 @@ const Cart = () => {
 	const { user } = useAuth();
 	const { cartItems } = useSelector((state) => state.cart);
 	const [shoppers, setShoppers] = useState([]); // Maintain an array of shoppers
+	console.log("🚀 ~ Cart ~ shoppers:", shoppers);
 	const [buyStates, setBuyStates] = useState({}); // Initialize a separate buy state for each shop
 	const [clickedState, setClickedState] = useState(true);
 	const [countdown, setCountdown] = useState(120); // Countdown timer in seconds
@@ -418,10 +419,10 @@ const Cart = () => {
 														}
 														className="absolute right-4 top-3"
 													>
-														<FaTrash className="text-red-400 mt-1"></FaTrash>
+														<FaTrash className="mt-1 text-red-400"></FaTrash>
 													</button>
 													<img
-														className="absolute top-2 h-[60px] object-cover  w-[60px] "
+														className="absolute top-2 h-[60px] w-[60px]  object-cover "
 														src={`${
 															import.meta.env
 																.VITE_APP_IMG_URL
@@ -440,8 +441,8 @@ const Cart = () => {
 															}/${cartItem.name}`}
 															className="w-full"
 														>
-															<h1 className="text-sm  w-5/6  ">
-																{cartItem.name} 
+															<h1 className="w-5/6  text-sm  ">
+																{cartItem.name}
 															</h1>
 														</Link>
 													</div>
@@ -497,7 +498,6 @@ const Cart = () => {
 																		>
 																			+
 																		</button>
-																
 																	</div>
 																</div>
 															</div>
@@ -621,17 +621,23 @@ const Cart = () => {
 											</button>
 										)}
 									</div> */}
-									{calculatedTotals[shopper.id] && (
-										<button
-											onClick={() =>
-												handelCheckout(
-													shopper.id,
-													shopper.access
-												)
-											}
-											className="rounded bg-[#2F5BA9] active:bg-[#2e4b7d] px-3 py-2 text-sm text-white"
-										>
-											Buy Now
+									{calculatedTotals[shopper.id] &&
+										shopper.active_status == "1" && (
+											<button
+												onClick={() =>
+													handelCheckout(
+														shopper.id,
+														shopper.access
+													)
+												}
+												className="rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white active:bg-[#2e4b7d]"
+											>
+												Buy Now
+											</button>
+										)}
+									{!shopper.active_status == "1" && (
+										<button disabled className="rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white active:bg-[#2e4b7d]">
+											Shop Closed Now
 										</button>
 									)}
 									<h2 className="flex items-center justify-center gap-2 text-xs font-bold">
