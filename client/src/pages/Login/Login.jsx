@@ -111,6 +111,7 @@ const Login = () => {
 				<meta name="theme-color" content="#ffffff" />
 			</Helmet>
 			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%]  ">
+
 				<div className="mx-auto my-5 h-[80px] ">
 					<Link to="/home">
 						<TagLogo2></TagLogo2>
