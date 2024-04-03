@@ -154,7 +154,7 @@ function Offcanvas(props) {
 	return (
 		<div>
 			<button onClick={toggleDrawer}>
-				<ReactSVG
+				<ReactSVG 
 					src={
 						import.meta.env.VITE_API_PUBLIC_URL +
 						"/assets/img/icons/menu.svg"

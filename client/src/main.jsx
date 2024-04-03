@@ -17,7 +17,7 @@ const root = createRoot(container);
 root.render(
 	<Provider store={store}>
 		<PersistProvider>
-			<div className="bg-[#F0F2F5] ">
+			<div className="bg-[#FDFDFD] ">
 				<App />
 			</div>
 		</PersistProvider>

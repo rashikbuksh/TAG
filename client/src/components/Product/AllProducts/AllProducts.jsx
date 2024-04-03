@@ -99,7 +99,7 @@ const AllProducts = ({ limit, sliderData }) => {
 								className="primary-text pr-2"
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
-									"/shop"
+									"/shop/offer"
 								}
 							>
 								VIEW ALL{" "}
@@ -146,7 +146,7 @@ const AllProducts = ({ limit, sliderData }) => {
 								className="primary-text pr-2"
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
-									"/shop"
+									"/shop/verified"
 								}
 							>
 								VIEW ALL{" "}

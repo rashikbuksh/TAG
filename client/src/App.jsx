@@ -341,6 +341,10 @@ const PUBLIC_ROUTES = [
 		element: Shop,
 	},
 	{
+		path: "/shop/:params",
+		element: Shop,
+	},
+	{
 		path: "/OTPVerification",
 		element: VerificationOTP,
 	},

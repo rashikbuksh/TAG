@@ -46,7 +46,7 @@ const BestSellerProduct = ({ limit, type }) => {
 									Best Sale{" "}
 								</span>
 
-								<Link
+								{/* <Link
 									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
 										"/shop"
@@ -62,7 +62,7 @@ const BestSellerProduct = ({ limit, type }) => {
 											}
 										/>
 									</span>
-								</Link>
+								</Link> */}
 							</h2>
 						)}
 

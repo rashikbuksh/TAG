@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FaArrowRight } from "react-icons/fa";
 
@@ -9,7 +9,11 @@ const PaymentOparator = ({
 }) => {
 	console.log("🚀 ~ shopperAccess:", shopperAccess);
 	const [selectedOperator, setSelectedOperator] = useState(paymentOperator);
-
+	useEffect(() => {
+		if (shopperAccess === "shopper") {
+			setSelectedOperator("Cash On Pickup");
+		}
+	}, [shopperAccess]);
 	const handleSelectOperator = (operator) => {
 		if (selectedOperator === operator) {
 			// If the selected operator is already the same as the clicked one, deselect it
@@ -34,21 +38,31 @@ const PaymentOparator = ({
 								? "bg-gray-200"
 								: ""
 						}`}
-						onClick={() => handleSelectOperator("Cash On Delivery")}
+						onChange={() =>
+							selectedOperator !== "Cash On Pickup" &&
+							handleSelectOperator("Cash On Delivery")
+						}
 					>
 						<input
 							type="checkbox"
-							checked={selectedOperator === "Cash On Delivery"}
+							checked={
+								selectedOperator === "Cash On Delivery" ||
+								selectedOperator === "Cash On Pickup"
+							}
 							onChange={() =>
+								selectedOperator !== "Cash On Pickup" &&
 								handleSelectOperator("Cash On Delivery")
 							}
 							className="mr-4 h-5 w-5"
+							disabled={shopperAccess === "shopper"}
 						/>
-						<TbTruckDelivery size={25} />
+						
 						<span className="ml-8 flex-auto text-[16px] font-bold">
-							{shopperAccess === "shopper" ?"Cash On Pickup":"Cash On Delivery"}
-							
+							{shopperAccess === "shopper"
+								? "Cash On Pickup"
+								: "Cash On Delivery"}
 						</span>
+						<TbTruckDelivery size={25} />
 						{selectedOperator === "Cash On Delivery" && (
 							<FaArrowRight size={22} />
 						)}
