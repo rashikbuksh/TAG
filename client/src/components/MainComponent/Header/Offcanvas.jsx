@@ -18,7 +18,7 @@ function Offcanvas(props) {
 	const { user, Logout } = useAuth();
 	const [routes, setRoutes] = useState([]);
 	const publicRoutes = [
-		{ title: "Home", path: "/home", icon: <FaHome /> },
+		{ title: "Home", path: "/home", icon: <FaHome  /> },
 		{
 			title: "All Products",
 			path: "/shop",

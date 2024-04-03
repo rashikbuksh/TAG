@@ -12,6 +12,7 @@ const Shop = () => {
 	const [error, setError] = useState(null);
 	const [category, setCategory] = useState([]);
 
+
 	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproduct`)
 			.then((response) => {
