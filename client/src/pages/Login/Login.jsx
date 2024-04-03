@@ -112,7 +112,7 @@ const Login = () => {
 			</Helmet>
 			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%]  ">
 				<Link to='/home'>
-					<div className="mx-auto my-5 h-[80px] ">
+					<div className="mx-auto my-5 h-[80px]">
 						<TagLogo2></TagLogo2>
 					</div>
 				</Link>
