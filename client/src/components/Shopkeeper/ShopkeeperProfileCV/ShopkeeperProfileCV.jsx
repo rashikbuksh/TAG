@@ -128,7 +128,7 @@ const ShopkeeperProfileCV = () => {
 			<Header />
 			<Footer />
 			<ShowCartIcon />
-			<div className="relative mt-[3rem] lg:mx-auto lg:w-[50%]">
+			<div className="relative mt-[4rem] lg:mx-auto lg:w-[50%]">
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				<div className=" ">
 					<div className=" mx-auto my-3">
@@ -173,7 +173,7 @@ const ShopkeeperProfileCV = () => {
 							</div>
 						</Drawer>
 						{/* Navigation and share icon */}
-						<div className="flex justify-between px-4">
+						<div className="flex justify-between px-4 py-2">
 							<Link to={"/home"} className="back-link">
 								{" "}
 								<FaAngleLeft size={20} />
@@ -482,6 +482,12 @@ const ShopkeeperProfileCV = () => {
 													</div>
 												) : shopkeeperInfo.active_status ==
 												  1 ? (
+												) : shopkeeperInfo.active_status ==
+												  1 ? (
+													<button className="[#568db3] w-full rounded bg-[#FF4C5E] opacity-60 pointer-events-none px-2 py-1 text-center  text-sm text-white  sm:text-base">
+														Shop close now !
+													</button>
+												) : (
 													<button
 														type="button"
 														onClick={() => {

@@ -121,16 +121,12 @@ const CashOnDelivery = () => {
 	};
 	return (
 		<div className="mx-auto   flex max-w-[375px] flex-col text-black  ">
-			<Breadcrumb
-				pageTitle="Cash On Delivery"
-				prevUrl="/cart"
-			></Breadcrumb>
+			<Breadcrumb pageTitle="Cash On pickup" prevUrl="/cart"></Breadcrumb>
 
 			<div className="mx-2 flex h-[80px] items-center gap-2 ">
 				<FcMoneyTransfer size={50}></FcMoneyTransfer>
 				<p className="flex-auto ">
-					You can pay in cash to our Courier when you Receive the
-					Goods at your doorsteps
+					You have to pay at shop after received your product .
 				</p>
 			</div>
 

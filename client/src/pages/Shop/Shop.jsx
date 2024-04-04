@@ -31,6 +31,7 @@ const Shop = () => {
 		}
 	}, [params,allProduct]);
 
+
 	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproduct`)
 			.then((response) => {

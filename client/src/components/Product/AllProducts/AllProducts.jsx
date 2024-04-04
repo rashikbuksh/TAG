@@ -128,14 +128,14 @@ const AllProducts = ({ limit, sliderData }) => {
 								<div
 									data-tooltip-id="my-tooltip"
 									data-tooltip-content="100% Good Quality And Authentic products"
-									className="mt-0 z-10"
+									className="pointer-events-none md:pointer-events-auto  z-10 mt-0"
 									data-tip="hello"
 								>
-									<button className="m">
+									<button className="">
 										<MdVerifiedUser
 											id="my-tooltip"
 											color="#0866FF"
-											className=" mt-1 cursor-pointer"
+											className={`mt-1 cursor-pointer `}
 										></MdVerifiedUser>
 										<Tooltip id="my-tooltip" />
 									</button>

@@ -70,7 +70,7 @@ console.log(shopperAccess);
 			<Breadcrumb pageTitle="Checkout" prevUrl="/cart"></Breadcrumb>
 			{/* Delivery Address Section */}
 			{shopperAccess === "shopper" && (
-				<p className="my-1 text-lg font-bold text-red-500">
+				<p className="my-1  font-bold text-red-500">
 					You Must select pickup
 				</p>
 			)}

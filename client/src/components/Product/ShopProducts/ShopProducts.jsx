@@ -8,6 +8,9 @@ const ShopProducts = ({ products }) => {
 	const [listActivate, setListActivate] = useState(false);
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 
+	
+	console.log("Pdt", products);
+
 	const [category, setCategory] = useState([]);
 
 	const setGridActive = () => {
@@ -60,20 +63,22 @@ const ShopProducts = ({ products }) => {
 				<div className="container">
 					<div className="grid grid-cols-2 gap-10 lg:grid-cols-6">
 						{products &&
-							products.map((single) => {
-								const wishlistItem = wishlistItems.filter(
-									(wishlistItem) =>
-										wishlistItem.id === single.id
-								)[0];
-								return (
-									<ProductCart
-										product={single}
-										key={single.id}
-									>
-										{" "}
-									</ProductCart>
-								);
-							})}
+							products 
+							
+								.map((single) => {
+									const wishlistItem = wishlistItems.filter(
+										(wishlistItem) =>
+											wishlistItem.id === single.id
+									)[0];
+									return (
+										<ProductCart
+											product={single}
+											key={single.id}
+										>
+											{" "}
+										</ProductCart>
+									);
+								})}
 					</div>
 				</div>
 			</div>
