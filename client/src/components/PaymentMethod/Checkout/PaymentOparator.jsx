@@ -7,13 +7,15 @@ const PaymentOparator = ({
 	setPaymentOperator,
 	shopperAccess,
 }) => {
+	console.log("🚀 ~ paymentOperator:", paymentOperator)
 	console.log("🚀 ~ shopperAccess:", shopperAccess);
 	const [selectedOperator, setSelectedOperator] = useState(paymentOperator);
 	useEffect(() => {
 		if (shopperAccess === "shopper") {
 			setSelectedOperator("Cash On Pickup");
+			setPaymentOperator("Cash On Pickup");
 		}
-	}, [shopperAccess]);
+	}, [setPaymentOperator, shopperAccess]);
 	const handleSelectOperator = (operator) => {
 		if (selectedOperator === operator) {
 			// If the selected operator is already the same as the clicked one, deselect it

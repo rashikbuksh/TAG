@@ -83,21 +83,36 @@ const OrderStatus = () => {
 									Order no: {id}
 								</span>
 							</h1>
-							<div
-								data-tooltip-id="my-tooltip"
-								data-tooltip-content="If the seller accepts, it will be green"
-								data-tip="hello"
-								className="flex items-center gap-2"
-							>
-								<p>Status</p>
-								<span>
-									<FaCircle
-										id="my-tooltip"
-										className={statusColors[order_status]}
-									/>
-									<Tooltip id="my-tooltip" />
-								</span>
-							</div>
+							{order_status === "pending" ? (
+								<div
+									data-tooltip-id="my-tooltip"
+									data-tooltip-content="If the seller accepts, it will be green"
+									data-tip=""
+									className="flex items-center gap-2"
+								>
+									<p>Status</p>
+									<span>
+										<FaCircle
+											id="my-tooltip"
+											className={
+												statusColors[order_status]
+											}
+										/>
+										<Tooltip id="my-tooltip" />
+									</span>
+								</div>
+							) : (
+								<div className="flex items-center gap-2">
+									<p>Status</p>
+									<span>
+										<FaCircle
+											className={
+												statusColors[order_status]
+											}
+										/>
+									</span>
+								</div>
+							)}
 						</div>
 						<hr />
 						{products.map((productList) => (

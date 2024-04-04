@@ -24,8 +24,11 @@ const CashOnDelivery = () => {
 		customers_address_summary,
 	} = location.state;
 
-		console.log("🚀 ~ CashOnDelivery ~ customers_address_summary:", customers_address_summary)
-		
+	console.log(
+		"🚀 ~ CashOnDelivery ~ customers_address_summary:",
+		customers_address_summary
+	);
+
 	const { user } = useAuth();
 	const addOrderToDB = async (productIds, total) => {
 		try {
@@ -121,13 +124,23 @@ const CashOnDelivery = () => {
 	};
 	return (
 		<div className="mx-auto   flex max-w-[375px] flex-col text-black  ">
-			<Breadcrumb pageTitle="Cash On pickup" prevUrl="/cart"></Breadcrumb>
+			<Breadcrumb pageTitle={payment_type} prevUrl="/cart"></Breadcrumb>
 
 			<div className="mx-2 flex h-[80px] items-center gap-2 ">
 				<FcMoneyTransfer size={50}></FcMoneyTransfer>
-				<p className="flex-auto ">
-					You have to pay at shop after received your product .
-				</p>
+
+				{payment_type == "Cash On Delivery" ? (
+					<p className="flex-auto ">
+						You can pay in cash to our Courier when you Receive the
+						Goods at your doorsteps
+					</p>
+				) : (
+					<p className="flex-auto ">
+						You have to pay at shop after received your product{" "}
+					</p>
+				)}
+
+				<p className="flex-auto "></p>
 			</div>
 
 			{/* <TotalAmount></TotalAmount> */}
