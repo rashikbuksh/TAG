@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import { FaCircle, FaPersonWalking } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import chatIconImg from "../../../../public/icons/live-chat.png";
+import { Tooltip } from "react-tooltip";
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
 	const [products, setProducts] = useState([]);
@@ -82,12 +83,19 @@ const OrderStatus = () => {
 									Order no: {id}
 								</span>
 							</h1>
-							<div className="flex items-center gap-2">
+							<div
+								data-tooltip-id="my-tooltip"
+								data-tooltip-content="If the seller accepts, it will be green"
+								data-tip="hello"
+								className="flex items-center gap-2"
+							>
 								<p>Status</p>
 								<span>
 									<FaCircle
+										id="my-tooltip"
 										className={statusColors[order_status]}
 									/>
+									<Tooltip id="my-tooltip" />
 								</span>
 							</div>
 						</div>
@@ -157,7 +165,7 @@ const OrderStatus = () => {
 
 								<div className="divider my-0"></div>
 								<div className="flex justify-between px-3">
-									<div className="flex items-center gap-4 text-[#16492a] font-bold leading-7" >
+									<div className="flex items-center gap-4 font-bold leading-7 text-[#16492a]">
 										{access === "shopper" ? (
 											<>
 												<div>

@@ -17,7 +17,7 @@ import {
 } from "@store/slices/cart-slice";
 import React, { Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaAngleLeft, FaCheckCircle } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
@@ -145,8 +145,14 @@ const Product = () => {
 			<Footer />
 			<ShowCartIcon />
 
-			<div className="mx-auto  px-4 py-8 mt-4 pb-20  lg:w-[50%]">
-
+			<div className="mx-auto  mt-4 px-4 py-8 pb-20  lg:w-[50%]">
+				<div className="rounded-md  py-2 flex justify-between">
+					<Link to={"/home"} className="back-link">
+						<FaAngleLeft size={25} color="" />
+					</Link>
+					<div>Product details</div>
+					<div></div>
+				</div>
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}
 				<div className="">
@@ -402,17 +408,10 @@ const Product = () => {
 														</div>
 													)}
 												</div>
-												<div className="font-bold text-black">
+												<div className="font-bold text-black flex items-center gap-4">
 													{prods.discount &&
 													prods.discount > 0 ? (
 														<Fragment>
-															<s className="me-1 font-thin">
-																{" "}
-																<span className="primary-text">
-																	৳{" "}
-																</span>{" "}
-																{`${prods.price}`}
-															</s>
 															<span className="text-2xl font-bold text-black">
 																{" "}
 																<span className="primary-text">
@@ -423,6 +422,13 @@ const Product = () => {
 																	prods.discount
 																)}`}
 															</span>
+															<s className="me-1 font-thin">
+																{" "}
+																<span className="primary-text">
+																	৳{" "}
+																</span>{" "}
+																{`${prods.price}`}
+															</s>
 														</Fragment>
 													) : (
 														<span className="text-2xl font-bold  text-black">
@@ -439,7 +445,7 @@ const Product = () => {
 												<p className="text-xl font-bold">
 													Description
 												</p>
-												<div className="prose-lg prose">
+												<div className="prose prose-lg">
 													<div
 														dangerouslySetInnerHTML={{
 															__html: prods.full_description,
