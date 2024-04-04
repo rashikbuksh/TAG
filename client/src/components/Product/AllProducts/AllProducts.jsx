@@ -62,7 +62,7 @@ const AllProducts = ({ limit, sliderData }) => {
 								Popular Product{" "}
 							</span>
 
-							<Link
+							{/* <Link
 								className="primary-text pr-2 "
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
@@ -79,7 +79,7 @@ const AllProducts = ({ limit, sliderData }) => {
 										}
 									/>
 								</span>
-							</Link>
+							</Link> */}
 						</h2>
 					)}
 
@@ -128,7 +128,7 @@ const AllProducts = ({ limit, sliderData }) => {
 								<div
 									data-tooltip-id="my-tooltip"
 									data-tooltip-content="100% Good Quality And Authentic products"
-									className="pointer-events-none md:pointer-events-auto  z-10 mt-0"
+									className="z-10 mt-0"
 									data-tip="hello"
 								>
 									<button className="">

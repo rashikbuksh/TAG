@@ -21,7 +21,7 @@ const AllShop = () => {
 					<span className="text-xl font-bold pl-2">Our Best Shopper </span>
 
 					<Link
-						className="primary-text pr-2"
+						className="primary-text pr-2 hidden"
 						to={import.meta.env.VITE_API_PUBLIC_URL + "/shop"}
 					>
 						VIEW ALL{" "}
