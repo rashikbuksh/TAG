@@ -36,6 +36,7 @@ const Checkout2 = () => {
 	console.log("🚀 ~ Checkout2 ~ shopperAccess:", shopperAccess);
 	// Todo
 	const handelGoPaymentPage = () => {
+		console.log(paymentOperator,"paymentOperator");
 		if (
 			selectedAddress &&
 			paymentOperator &&
