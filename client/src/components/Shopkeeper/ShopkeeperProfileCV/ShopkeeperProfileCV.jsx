@@ -480,14 +480,10 @@ const ShopkeeperProfileCV = () => {
 													<div className="w-full rounded bg-[#469CD6]  px-2 py-1  text-center text-white active:bg-[#568db3]">
 														Request for stock
 													</div>
-												) : shopkeeperInfo.active_status == 1 ? (
-													<button className="[#568db3] w-full rounded text-sm sm:text-base bg-orange-800 px-2  py-1 text-center  text-white">
-														Shop close now !
-													</button>
-												) : (
+												) : shopkeeperInfo.active_status ==
+												  1 ? (
 													<button
 														type="button"
-														disabled={true}
 														onClick={() => {
 															single.quantity = 0;
 
@@ -519,6 +515,10 @@ const ShopkeeperProfileCV = () => {
 														} `}
 													>
 														Add to cart
+													</button>
+												) : (
+													<button className="[#568db3] w-full rounded bg-orange-800 px-2 py-1 text-center  text-sm text-white  sm:text-base">
+														Shop close now !
 													</button>
 												)}
 											</div>
