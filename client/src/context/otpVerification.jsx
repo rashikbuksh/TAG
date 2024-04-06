@@ -51,10 +51,10 @@ const OtpVerificationProvider = ({ children }) => {
 				}
 			)
 			.then((response) => {
-				console.log("OTP sent:", response);
+				// console.log("OTP sent:", response);
 			})
 			.catch((error) => {
-				console.log("Error sending OTP:", error);
+				console.error("Error sending OTP:", error);
 			});
 	};
 

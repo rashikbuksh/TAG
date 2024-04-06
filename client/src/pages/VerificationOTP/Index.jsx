@@ -109,18 +109,18 @@ const VerificationOTP = () => {
 	};
 
 	const handleVerificationOfOTP = async () => {
-		console.log(data);
+		// console.log(data);
 		const code = otp.join("");
 		// console.log("handleVerificationOfOTP code", code);
 		if (code.length === numberOfDigits) {
 			let verifiedOrNot = await verifyOtp(code);
-			console.log(
-				"🚀 ~ handleVerificationOfOTP ~ verifiedOrNot:",
-				verifiedOrNot
-			);
+			// console.log(
+			// 	"🚀 ~ handleVerificationOfOTP ~ verifiedOrNot:",
+			// 	verifiedOrNot
+			// );
 			if (verifiedOrNot == true) {
 				// insert user data to database
-				console.log("insert user data to database");
+				// console.log("insert user data to database");
 				axios
 					.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, {
 						name: name,
@@ -140,7 +140,7 @@ const VerificationOTP = () => {
 						}
 					})
 					.catch((error) => {
-						console.log(error, "error");
+						// console.error(error, "error");
 						if (
 							error.response.data.message ==
 							"Error executing the query"
@@ -169,7 +169,7 @@ const VerificationOTP = () => {
 	};
 
 	return (
-		<article className="mx-auto pt-28 max-w-md px-6">
+		<article className="mx-auto max-w-md px-6 pt-28">
 			<SuccessOtpModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
 			<div className="flex items-center justify-center">

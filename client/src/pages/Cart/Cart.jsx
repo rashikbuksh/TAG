@@ -24,7 +24,7 @@ const Cart = () => {
 	const { user } = useAuth();
 	const { cartItems } = useSelector((state) => state.cart);
 	const [shoppers, setShoppers] = useState([]); // Maintain an array of shoppers
-	console.log("🚀 ~ Cart ~ shoppers:", shoppers);
+	// console.log("🚀 ~ Cart ~ shoppers:", shoppers);
 	const [buyStates, setBuyStates] = useState({}); // Initialize a separate buy state for each shop
 	const [clickedState, setClickedState] = useState(true);
 	const [countdown, setCountdown] = useState(120); // Countdown timer in seconds
@@ -57,7 +57,7 @@ const Cart = () => {
 	useEffect(() => {
 		// Retrieve countdown timer data from local storage on component mount
 		const timerData = JSON.parse(localStorage.getItem("cart_timer_data"));
-		console.log("🚀 ~ useEffect ~ timerData:", timerData);
+		// console.log("🚀 ~ useEffect ~ timerData:", timerData);
 		if (timerData) {
 			setCountdown(timerData.countdown);
 		}
@@ -237,23 +237,23 @@ const Cart = () => {
 						});
 
 						const responses = await Promise.all(productPromises);
-						console.log(
-							"🚀 ~ file: Cart.jsx:201 ~ addOrderToDB ~ responses:",
-							responses
-						);
+						// console.log(
+						// 	"🚀 ~ file: Cart.jsx:201 ~ addOrderToDB ~ responses:",
+						// 	responses
+						// );
 						const isDeleteProduct = responses.every(
 							(response) => response.status === 201
 						);
-						console.log(isDeleteProduct);
+						// console.log(isDeleteProduct);
 						handelCancel(shopperId);
 						if (isDeleteProduct) {
 							productIds.forEach((productId) => {
-								console.log(productId, "productId");
+								// console.log(productId, "productId");
 								cartItems.forEach((cartItem) => {
-									console.log(
-										"🚀 ~ file: Cart.jsx:212 ~ cartItems.forEach ~ cartItem:",
-										cartItem
-									);
+									// console.log(
+									// 	"🚀 ~ file: Cart.jsx:212 ~ cartItems.forEach ~ cartItem:",
+									// 	cartItem
+									// );
 									if (cartItem.id === productId.id) {
 										dispatch(
 											deleteFromCart(cartItem, shopperId)
@@ -264,7 +264,7 @@ const Cart = () => {
 						}
 
 						// All API calls were successful
-						console.log(responses);
+						// console.log(responses);
 						// navigate("/orderStatus");
 					}
 				}
@@ -276,7 +276,7 @@ const Cart = () => {
 			});
 		}
 	};
-	console.log("🚀 ~ calculatedTotals ~ calculatedTotals:", calculatedTotals);
+	// console.log("🚀 ~ calculatedTotals ~ calculatedTotals:", calculatedTotals);
 	const handleBuyClick = (shopperId) => {
 		if (
 			runningTimerShopperId !== null &&
@@ -360,7 +360,7 @@ const Cart = () => {
 		localStorage.getItem("cart_timer_data") &&
 		JSON.parse(localStorage.getItem("cart_timer_data")).timerStarted &&
 		JSON.parse(localStorage.getItem("cart_timer_data")).countdown > 0;
-	console.log("🚀 ~ Cart ~ isTimeRunning:", isTimeRunning);
+	// console.log("🚀 ~ Cart ~ isTimeRunning:", isTimeRunning);
 	const handelCheckout = (id, shopperAccess) => {
 		navigate("/checkout", {
 			state: {

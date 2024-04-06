@@ -19,7 +19,7 @@ const OrderStatus = () => {
 			.then((response) => {
 				const newPendingOrders = response.data;
 				setPendingOrders(newPendingOrders);
-				console.log(newPendingOrders);
+				// console.log(newPendingOrders);
 			})
 			.catch((error) => {
 				console.error(error);

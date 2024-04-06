@@ -276,7 +276,7 @@ const PostUi = ({ postData }) => {
 											`/news/increaseLikeCount/${id}`
 										).then((res) => {
 											if (shop_id == userid) {
-												console.log("liked");
+												// console.log("liked");
 												return;
 											} else {
 												api.post(

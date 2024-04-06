@@ -41,7 +41,7 @@ const Checkout2 = () => {
 	} = location.state;
 	
 	const handelGoPaymentPage = () => {
-		console.log(paymentOperator,"paymentOperator");
+		// console.log(paymentOperator,"paymentOperator");
 		if (
 			selectedAddress &&
 			paymentOperator &&

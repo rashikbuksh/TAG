@@ -125,7 +125,7 @@ const ShopkeeperProfileCV = () => {
 	};
 
 	
-console.log(shopkeeperInfo);
+// console.log(shopkeeperInfo);
 		return (
 			<>
 				<Header />

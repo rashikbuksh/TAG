@@ -1,7 +1,7 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 const TextEditor = ({ setValue, value, style, placeholder,readOnly }) => {
-  console.log("🚀 ~ BlogEditor ~ value:", value);
+  // console.log("🚀 ~ BlogEditor ~ value:", value);
   return (
     <div style={style}>
       <ReactQuill 

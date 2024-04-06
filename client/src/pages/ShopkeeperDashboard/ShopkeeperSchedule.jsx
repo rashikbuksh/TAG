@@ -30,7 +30,7 @@ export default function ShopkeeperSchedule() {
 	const handleScheduleSubmit = async () => {
 		try {
 			const weekdaysJson = JSON.stringify(weekdays);
-			console.log(weekdaysJson);
+			// console.log(weekdaysJson);
 
 			api.post(`/add_schedule`, {
 				shopper_id: user.id,
@@ -50,7 +50,7 @@ export default function ShopkeeperSchedule() {
 	const handleScheduleEdit = async () => {
 		try {
 			const weekdaysJson = JSON.stringify(weekdays);
-			console.log(weekdaysJson);
+			// console.log(weekdaysJson);
 
 			api.post(`/schedule/edit_schedule/${user.id}`, {
 				shopper_id: user.id,
@@ -69,7 +69,7 @@ export default function ShopkeeperSchedule() {
 
 	const handleWeekdayChange = (index, value) => {
 		const updatedWeekdays = [...weekdays];
-		console.log(updatedWeekdays);
+		// console.log(updatedWeekdays);
 		updatedWeekdays[index] = value;
 		setWeekdays(updatedWeekdays);
 	};
@@ -92,7 +92,7 @@ export default function ShopkeeperSchedule() {
 											weekday[0],
 											event.target.value,
 										]);
-										console.log(event.target.value);
+										// console.log(event.target.value);
 									}}
 								/>
 							</div>
@@ -117,7 +117,7 @@ export default function ShopkeeperSchedule() {
 											weekday[0],
 											event.target.value,
 										]);
-										console.log(event.target.value);
+										// console.log(event.target.value);
 									}}
 								/>
 							</div>

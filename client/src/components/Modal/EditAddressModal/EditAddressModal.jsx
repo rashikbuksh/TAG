@@ -15,7 +15,7 @@ const EditAddressModal = ({ isOpen, setIsOpen, editItem }) => {
 	const { user } = useAuth();
 	const { location, loading, error } = GetLocation();
 	const onSubmit = (data) => {
-		console.log(data);
+		// console.log(data);
 		api.post(`/updateUserAddress`, {
 			address_title: data.address_title,
 			address: data.address,
@@ -24,7 +24,7 @@ const EditAddressModal = ({ isOpen, setIsOpen, editItem }) => {
 			id: editItem.id,
 		})
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 				if (response.status === 200) {
 					window.location.reload();
 					setIsOpen(false);

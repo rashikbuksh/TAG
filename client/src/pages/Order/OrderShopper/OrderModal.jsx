@@ -23,8 +23,9 @@ const OrderDetailsShopper = () => {
 	const [addressTitle, setAddressTitle] = useState(null);
 	const [address, setAddress] = useState(null);
 	const [contactNo, setContactNo] = useState(null);
-	console.log("🚀 ~ OrderDetailsShopper ~ products:", products);
-	const [customers_address_summary, setCustomers_address_summary] = useState(null);
+	// console.log("🚀 ~ OrderDetailsShopper ~ products:", products);
+	const [customers_address_summary, setCustomers_address_summary] =
+		useState(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const handelIsOpenModal = () => {
 		setIsOpen(!isOpen);
@@ -46,11 +47,13 @@ const OrderDetailsShopper = () => {
 					setPrice(response.data[0].totalPrice);
 					setCustomerId(response.data[0].customer_profile_id);
 					setAddressTitle(response.data[0].address_title);
-					setCustomers_address_summary(response.data[0].customers_address_summary);
+					setCustomers_address_summary(
+						response.data[0].customers_address_summary
+					);
 					setAddress(response.data[0].address);
 					setContactNo(response.data[0].phone_no);
-					setOrderStatus(response.data[0].order_status); // Use console.log instead of log
-					setOrderTime(response.data[0].order_time); // Use console.log instead of log
+					setOrderStatus(response.data[0].order_status);
+					setOrderTime(response.data[0].order_time);
 				})
 				.catch((error) => {
 					console.error(error);
@@ -64,7 +67,7 @@ const OrderDetailsShopper = () => {
 			product_quantity: quantity,
 		}).then((res) => {
 			if (res.data.status === 200) {
-				console.log("updated" + id);
+				// console.log("updated" + id);
 			}
 		});
 	};
@@ -91,7 +94,7 @@ const OrderDetailsShopper = () => {
 									not_from: CustomerId,
 									status: 0,
 								}).then((response) => {
-									console.log(response);
+									// console.log(response);
 									if (response.status === 201) {
 										window.location.reload();
 										setOrderStatus("accepted");
@@ -123,13 +126,13 @@ const OrderDetailsShopper = () => {
 							toast(response.data.message);
 							if (response.status === 200) {
 								api.post("/notification/addnotification", {
-									notification_content: `Completed your order Succesfully #${id}`,
+									notification_content: `Completed your order Successfully #${id}`,
 									notification_time: GetDateTime(),
 									not_to: user.id,
 									not_from: CustomerId,
 									status: 0,
 								}).then((response) => {
-									console.log(response);
+									// console.log(response);
 									if (response.status === 201) {
 										setOrderStatus("completed");
 										products.forEach((product) => {

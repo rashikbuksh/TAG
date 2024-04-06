@@ -65,7 +65,7 @@ const MapDistanceModal = (props) => {
 
 	const calculateZoom = (lat, lng) => {
 		const distance = DistanceCalculation(lat, lng);
-		console.log(distance);
+		// console.log(distance);
 		if (distance < 5) {
 			return 16;
 		} else if (distance < 10) {
