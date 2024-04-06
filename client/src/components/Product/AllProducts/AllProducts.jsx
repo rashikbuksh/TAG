@@ -128,7 +128,7 @@ const AllProducts = ({ limit, sliderData }) => {
 								<div
 									data-tooltip-id="my-tooltip"
 									data-tooltip-content="100% Good Quality And Authentic products"
-									className="pointer-events-none md:pointer-events-auto  z-10 mt-0"
+									className="  z-10 mt-0"
 									data-tip="hello"
 								>
 									<button className="">
