@@ -9,7 +9,9 @@ import { useAuth } from "@context/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFromCart } from "@store/slices/cart-slice";
 import cogoToast from "@hasanm95/cogo-toast";
+
 const CashOnDelivery = () => {
+	
 	const { cartItems } = useSelector((state) => state.cart);
 	const location = useLocation();
 	const dispatch = useDispatch();
@@ -110,7 +112,7 @@ const CashOnDelivery = () => {
 						}
 
 						// All API calls were successful
-						console.log(responses);
+						
 						navigate("/orderStatus");
 					}
 				}
@@ -148,6 +150,9 @@ const CashOnDelivery = () => {
 				totalPrice={totalPrice}
 				discount={discount}
 				totalItem={totalItem}
+				deliveryCharge={
+					customers_address_summary === "Pick up" ? 0 : 20
+				}
 			></OrderSummery>
 			{/* Pay Now Button */}
 			<div className="mt-3 flex justify-center justify-self-end">
