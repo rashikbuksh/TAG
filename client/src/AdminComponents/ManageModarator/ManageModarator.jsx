@@ -10,7 +10,7 @@ const ManageModarator = () => {
 	const [tagModarator, setTagModarator] = useState([]);
 	const [filteredtagModarator, setFilteredtagModarator] = useState([]);
 	useEffect(() => {
-		api.get(`/auth/getALLModaratorInfoForadmin`)
+		api.get(`/auth/getALLUser/moderator`)
 			.then((response) => {
 				setTagModarator(response.data);
 			})

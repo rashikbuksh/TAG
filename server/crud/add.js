@@ -2,8 +2,6 @@ const { app, ExecuteQuery } = require("../config");
 const { db } = require("../config");
 const { HashPass } = require("../api/auth_pro");
 
-const { add: JobEntry } = require("../api/job_entry");
-
 const { add: Auth } = require("../api/auth");
 
 const { add: Category } = require("../api/category");
@@ -30,7 +28,6 @@ const { add: shop } = require("../api/shop");
 const { add: customers_address_details } = require("../api/customers_address_details");
 
 const ADD_DATA = [
-	...JobEntry,
 	...Auth,
 	...Category,
 	...Product,
