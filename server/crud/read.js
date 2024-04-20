@@ -1,9 +1,6 @@
 const { app, ExecuteQuery } = require("../config");
 const { db } = require("../config");
 const { ComparePass, CreateToken } = require("../api/auth_pro");
-
-const { read: JobEntry } = require("../api/job_entry");
-const { read: RecordEntry } = require("../api/record_entry");
 const { read: Auth } = require("../api/auth");
 const { read: Profile } = require("../api/profile");
 const { read: Category } = require("../api/category");
@@ -22,7 +19,6 @@ const { read: ShopperSchedule } = require("../api/shopper_schedule");
 const { read: shop } = require("../api/shop");
 const { read: customers_address_details } = require("../api/customers_address_details");
 const GET_DATA = [
-	...JobEntry,
 	...Auth,
 	...Profile,
 	...Category,

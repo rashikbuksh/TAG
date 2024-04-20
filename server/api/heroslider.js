@@ -13,16 +13,9 @@ const read = [
 		query: `SELECT * from hero_slider`,
 	},
 	{
-		uri: "/heroslider/getslider/top",
-		query: `SELECT * from hero_slider WHERE slider_position= "top" ORDER BY id DESC`,
-	},
-	{
-		uri: "/heroslider/getslider/middle",
-		query: `SELECT * from hero_slider WHERE slider_position= "middel" ORDER BY id DESC`,
-	},
-	{
-		uri: "/heroslider/getslider/bottom",
-		query: `SELECT * from hero_slider WHERE slider_position= "bottom" ORDER BY id DESC`,
+		uri: "/heroslider/getslider/:level",
+		query: `SELECT * from hero_slider WHERE slider_position= ? ORDER BY id DESC`,
+		param: ["level"],
 	},
 ];
 

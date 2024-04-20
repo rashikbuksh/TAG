@@ -18,7 +18,7 @@ export default function ModeratorProtactedRoutes() {
 		(route) =>
 			route?.path || `${route?.path}/*` === window.location.pathname
 	);
-	console.log(checkPath);
+	// console.log(checkPath);
 
 	const haveAccess = checkPath?.access?.includes(user?.access);
 

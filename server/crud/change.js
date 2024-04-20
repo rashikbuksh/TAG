@@ -1,6 +1,4 @@
 const { app, ExecuteQuery } = require("../config");
-
-const { change: JobEntry } = require("../api/job_entry");
 const { change: Profile } = require("../api/profile");
 const { change: ShopperProduct } = require("../api/shopperproduct");
 const { change: News } = require("../api/news");
@@ -15,7 +13,6 @@ const { change: ShopperSchedule } = require("../api/shopper_schedule");
 const { change: shop } = require("../api/shop");
 const { change: customers_address_details } = require("../api/customers_address_details");
 const CHANGE_DATA = [
-	...JobEntry,
 	...Profile,
 	...ShopperProduct,
 	...News,

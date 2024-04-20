@@ -8,16 +8,11 @@ import TextEditor from "@components/TextEditor/TextEditor";
 import axios from "axios";
 
 const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
-	console.log("🚀 ~ ProductDetailsModal ~ product:", product);
 	const [isEditActive, setIsEditActive] = useState(false);
 	const [productName, setProductName] = useState(product.name);
 	const [title, setTitle] = useState(product.title);
 	const [keywords, setkeywords] = useState(product.keywords);
 	const [FullDescriptionValue, setFullDescriptionValue] = useState("");
-	console.log(
-		"🚀 ~ ProductDetailsModal ~ FullDescriptionValue:",
-		FullDescriptionValue
-	);
 	const [productShortDescription, setProductShortDescription] = useState(
 		product.short_description
 	);
@@ -99,7 +94,7 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 			);
 
 			if (response.data.msg === "File Uploaded") {
-				console.log(imageSlot);
+				// console.log(imageSlot);
 				imageName = response.data.productImage;
 			} else {
 				toast.error("Failed to upload image");
@@ -165,7 +160,7 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 				}
 			)
 			.then((response) => {
-				console.log(response.data.msg); // Output the response message
+				// console.log(response.data.msg); // Output the response message
 				// Handle success as needed
 				if (response.data.msg == "File deleted successfully") {
 					api.post(`/product/deleteProductImage/${id}`, {
@@ -212,9 +207,9 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 		if (product.optionalImage2) {
 			filenames.push(product.optionalImage2);
 		}
-		console.log(filenames);
+		// console.log(filenames);
 		if (filenames.length > 0) {
-			console.log("from-image delete");
+			// console.log("from-image delete");
 			axios
 				.delete(
 					`${
@@ -232,7 +227,7 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 					}
 				)
 				.then((response) => {
-					console.log(response.data.msg);
+					// console.log(response.data.msg);
 					if (response.data.msg === "File deleted successfully") {
 						api.delete(`/remove/removeProduct/${id}`)
 							.then((res) => {
@@ -260,7 +255,7 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 					);
 				});
 		} else {
-			console.log("else log ami tester");
+			// console.log("else log ami tester");
 			api.delete(`/remove/removeProduct/${id}`)
 				.then((res) => {
 					if (res.data.status === 200) {
@@ -280,7 +275,7 @@ const ProductDetailsModal = ({ isOpen, setIsOpen, product }) => {
 				});
 		}
 	};
-	console.log(product.image);
+	// console.log(product.image);
 	return (
 		<Modal isOpen={isOpen} setIsOpen={setIsOpen} fullWidth={true}>
 			<div className="flex flex-col  items-center p-4">

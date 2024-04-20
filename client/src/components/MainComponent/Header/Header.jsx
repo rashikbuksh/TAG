@@ -1,17 +1,16 @@
 import { useNotification } from "@context/NotificationProvider";
 import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
-import React, { useEffect, useState, useCallback } from "react";
-import { FaBell } from "react-icons/fa";
+import React, { useCallback, useEffect, useState } from "react";
+import { FaBell, FaUserTie } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import MapDistanceModal from "../../Modal/LocationModal/MapDistanceModal";
 import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
-import { FaUserTie } from "react-icons/fa";
 
-import { FaLocationDot, FaX } from "react-icons/fa6";
 import { BellIcon } from "@/SvgHub/Icons";
+import { FaLocationDot, FaX } from "react-icons/fa6";
 function Header() {
 	const { user } = useAuth();
 	const navigate = useNavigate();
@@ -49,7 +48,7 @@ function Header() {
 		api.get(`/auth/getShopperInfo`)
 			.then((res) => {
 				const coordinates = res.data.map((item) => {
-					const positionFromDb = item.shipping_address?.split(",");
+					const positionFromDb = item.shipping_address?.split("__");
 					return {
 						lat: parseFloat(positionFromDb[0]),
 						lng: parseFloat(positionFromDb[1]),
@@ -172,7 +171,13 @@ function Header() {
 																			}`}
 																		/>
 																	) : (
-																		<div className="flex justify-center pt-[2px]"><FaUserTie size={25} /></div>
+																		<div className="flex justify-center pt-[2px]">
+																			<FaUserTie
+																				size={
+																					25
+																				}
+																			/>
+																		</div>
 																	)}
 																</div>
 															</Link>

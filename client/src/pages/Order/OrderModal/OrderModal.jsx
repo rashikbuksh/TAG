@@ -21,7 +21,7 @@ const OrderModal = () => {
 			// let id = order_Id;
 			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
 				.then((response) => {
-					console.log("🚀 ~ .then ~ response:", response);
+					// console.log("🚀 ~ .then ~ response:", response);
 					setProducts(response.data);
 					setOrderStatus(response.data[0].order_status);
 					setAddressTitle(response.data[0].address_title);

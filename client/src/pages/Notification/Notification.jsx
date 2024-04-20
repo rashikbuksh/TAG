@@ -18,7 +18,7 @@ const Notification = () => {
 	const HandleUpdateNotificationStatus = (id) => {
 		api.post(`/notification/readnotification/${id}`)
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 			})
 			.catch((err) => {
 				console.error(err);

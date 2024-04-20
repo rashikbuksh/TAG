@@ -69,7 +69,7 @@ const HeroSlider = () => {
 			slider_position: data.slider_position,
 			image: ImageName,
 		}).then((response) => {
-			console.log("🚀 ~ onSubmit ~ response:", response);
+			// console.log("🚀 ~ onSubmit ~ response:", response);
 			if (response.data.status == 201) {
 				window.location.reload();
 				toast("Slider Added Successful");

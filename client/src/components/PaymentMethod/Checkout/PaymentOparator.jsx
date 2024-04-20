@@ -7,8 +7,8 @@ const PaymentOparator = ({
 	setPaymentOperator,
 	shopperAccess,
 }) => {
-	console.log("🚀 ~ paymentOperator:", paymentOperator)
-	console.log("🚀 ~ shopperAccess:", shopperAccess);
+	// console.log("🚀 ~ paymentOperator:", paymentOperator)
+	// console.log("🚀 ~ shopperAccess:", shopperAccess);
 	const [selectedOperator, setSelectedOperator] = useState(paymentOperator);
 	useEffect(() => {
 		if (shopperAccess === "shopper") {

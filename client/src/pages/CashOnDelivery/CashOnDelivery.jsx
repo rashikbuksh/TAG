@@ -9,7 +9,9 @@ import { useAuth } from "@context/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFromCart } from "@store/slices/cart-slice";
 import cogoToast from "@hasanm95/cogo-toast";
+
 const CashOnDelivery = () => {
+	
 	const { cartItems } = useSelector((state) => state.cart);
 	const location = useLocation();
 	const dispatch = useDispatch();
@@ -24,10 +26,10 @@ const CashOnDelivery = () => {
 		customers_address_summary,
 	} = location.state;
 
-	console.log(
-		"🚀 ~ CashOnDelivery ~ customers_address_summary:",
-		customers_address_summary
-	);
+	// console.log(
+	// 	"🚀 ~ CashOnDelivery ~ customers_address_summary:",
+	// 	customers_address_summary
+	// );
 
 	const { user } = useAuth();
 	const addOrderToDB = async (productIds, total) => {
@@ -83,23 +85,23 @@ const CashOnDelivery = () => {
 							);
 						});
 
-						const responses = await Promise.all(productPromises);
-						console.log(
-							"🚀 ~ file: Cart.jsx:201 ~ addOrderToDB ~ responses:",
-							responses
-						);
+						// const responses = await Promise.all(productPromises);
+						// console.log(
+						// 	"🚀 ~ file: Cart.jsx:201 ~ addOrderToDB ~ responses:",
+						// 	responses
+						// );
 						const isDeleteProduct = responses.every(
 							(response) => response.status === 201
 						);
-						console.log(isDeleteProduct);
+						// console.log(isDeleteProduct);
 						if (isDeleteProduct) {
 							productIds.forEach((productId) => {
-								console.log(productId, "productId");
+								// console.log(productId, "productId");
 								cartItems.forEach((cartItem) => {
-									console.log(
-										"🚀 ~ file: Cart.jsx:212 ~ cartItems.forEach ~ cartItem:",
-										cartItem
-									);
+									// console.log(
+									// 	"🚀 ~ file: Cart.jsx:212 ~ cartItems.forEach ~ cartItem:",
+									// 	cartItem
+									// );
 									if (cartItem.id === productId.id) {
 										dispatch(
 											deleteFromCart(cartItem, shopperId)
@@ -110,7 +112,7 @@ const CashOnDelivery = () => {
 						}
 
 						// All API calls were successful
-						console.log(responses);
+						
 						navigate("/orderStatus");
 					}
 				}
@@ -148,6 +150,9 @@ const CashOnDelivery = () => {
 				totalPrice={totalPrice}
 				discount={discount}
 				totalItem={totalItem}
+				deliveryCharge={
+					customers_address_summary === "Pick up" ? 0 : 20
+				}
 			></OrderSummery>
 			{/* Pay Now Button */}
 			<div className="mt-3 flex justify-center justify-self-end">

@@ -30,7 +30,7 @@ const AddNewAddressModal = ({
 				geo_location: location.lng + "_" + location.lat, // Use the obtained geoLocation
 				phone_no: data.phone_no,
 			});
-			console.log(response.status);
+			// console.log(response.status);
 			if (response.status === 201) {
 				toast(response.data.message);
 				window.location.reload();

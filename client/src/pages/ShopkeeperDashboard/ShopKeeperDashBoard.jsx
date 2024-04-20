@@ -43,7 +43,7 @@ const ShopKeeperDashBoard = () => {
 		api.get(`/order/getordershopper/${id}`)
 			.then((response) => {
 				setPendingOrder(response.data.length);
-				console.log(response.data.length);
+				// console.log(response.data.length);
 			})
 			.catch((error) => {
 				console.error(error);

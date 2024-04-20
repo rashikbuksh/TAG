@@ -37,11 +37,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		title,
 		access,
 	} = prod;
-
 	
-
-
-
 	const cartItems = useSelector((state) => state.cart.cartItems);
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);

@@ -38,7 +38,7 @@ const EditProfile = () => {
 	};
 
 	const handleNewDataSubmit = async () => {
-		console.log("clicked");
+		// console.log("clicked");
 		if (isEdit) {
 			try {
 				const response = await api.post(`/profile/edit_profile/${id}`, {

@@ -14,7 +14,7 @@ const Shop = () => {
 	const [allProduct, SetAllProduct] = useState([]);
 	const { params } = useParams();
 
-	console.log("🚀 ~ Shop ~ params:", params);
+	// console.log("🚀 ~ Shop ~ params:", params);
 	useEffect(() => {
 		if (params === "verified") {
 			const isVerifiedProduct = allProduct.filter(

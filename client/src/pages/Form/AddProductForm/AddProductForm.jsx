@@ -16,7 +16,7 @@ const AddProductForm = () => {
 
 	const handleImage = (e) => {
 		const files = e.target.files;
-		console.log("🚀 ~ handleImage ~ files:", files);
+		// console.log("🚀 ~ handleImage ~ files:", files);
 		if (files.length > 3 || files.length < 3) {
 			// Show error message
 			toast.error("Please select exactly 3 images.");

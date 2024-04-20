@@ -31,12 +31,17 @@ const Checkout2 = () => {
 	}, []);
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { totalPrice, shopperId, discount, totalItem, shopperAccess } =
-		location.state;
-	console.log("🚀 ~ Checkout2 ~ shopperAccess:", shopperAccess);
-	// Todo
+	const {
+		totalPrice,
+		shopperId,
+		discount,
+		totalItem,
+		shopperAccess,
+	
+	} = location.state;
+	
 	const handelGoPaymentPage = () => {
-		console.log(paymentOperator,"paymentOperator");
+		// console.log(paymentOperator,"paymentOperator");
 		if (
 			selectedAddress &&
 			paymentOperator &&
@@ -64,7 +69,7 @@ const Checkout2 = () => {
 			
 		}
 	};
-console.log(shopperAccess);
+
 	return (
 		<div className="mx-auto px-4 pb-24 text-black ">
 			{/* Checkout Title */}
@@ -95,9 +100,7 @@ console.log(shopperAccess);
 						setSelectedAddress(newAddressValue);
 						setCustomers_address_summary(newAddressValue);
 					}}
-					
 				>
-				
 					<input
 						type="checkbox"
 						checked={selectedAddress === "Pick up"}
@@ -125,6 +128,9 @@ console.log(shopperAccess);
 					totalPrice={totalPrice}
 					discount={discount}
 					totalItem={totalItem}
+					deliveryCharge={
+						customers_address_summary == "Pick up" ? 0 : 20
+					}
 				></OrderSummery>
 			) : (
 				<div className="mt-32">No total price provided!</div>

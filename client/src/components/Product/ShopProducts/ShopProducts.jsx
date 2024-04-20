@@ -9,7 +9,7 @@ const ShopProducts = ({ products }) => {
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 
 	
-	console.log("Pdt", products);
+	// console.log("Pdt", products);
 
 	const [category, setCategory] = useState([]);
 
