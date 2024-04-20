@@ -62,7 +62,7 @@ const AllProducts = ({ limit, sliderData }) => {
 								Popular Product{" "}
 							</span>
 
-							<Link
+							{/* <Link
 								className="primary-text pr-2 "
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
@@ -79,7 +79,7 @@ const AllProducts = ({ limit, sliderData }) => {
 										}
 									/>
 								</span>
-							</Link>
+							</Link> */}
 						</h2>
 					)}
 
