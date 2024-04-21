@@ -13,7 +13,7 @@ const ShopCart = ({ shop }) => {
 
 	return (
 		<>
-			<div className="flex h-full w-[160px] flex-col items-center rounded-lg border   ">
+			<div className="flex h-full  flex-col items-center rounded-lg border   ">
 				<img
 					className="h-[160px] w-[160px] cursor-pointer rounded-md object-cover p-1"
 					src={

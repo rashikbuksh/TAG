@@ -35,14 +35,11 @@ const Order = () => {
 			<div className="order-product-area">
 				{data?.map((single) => {
 					return (
-						<div
-							className="cart-product border-bottom--medium flex items-center justify-between active:bg-gray-200"
-							key={single.id}
+						<Link to={`/orderDetails/${single.id}`}
+							className="cart-product border-bottom--medium flex items-center justify-between active:bg-gray-200 hover:bg-gray-100 my-2 text-xl"
+							key={single.id} 
 						>
-							<Link
-								to={`/orderDetails/${single.id}`}
-								className="font-s text-lg"
-							>
+						
 								Order Number #{single.id}{" "}
 								<span className="category">
 									{single.productCategory}
@@ -50,7 +47,7 @@ const Order = () => {
 								<div className="text-xs">
 									<span>2 jan 2023 </span> <span>8:30</span>
 								</div>
-							</Link>
+							
 
 							<div>
 								<div className="price">
@@ -84,7 +81,7 @@ const Order = () => {
 									</p>
 								</div>
 							</div>
-						</div>
+						</Link>
 					);
 				})}
 			</div>

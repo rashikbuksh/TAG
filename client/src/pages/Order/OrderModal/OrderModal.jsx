@@ -15,6 +15,8 @@ const OrderModal = () => {
 	const [contactNo, setContactNo] = useState(null);
 	const [customers_address_summary, setCustomers_address_summary] = useState(null);
 
+
+
 	const [memoizedProducts, setMemoizedProducts] = useState(products);
 	useEffect(() => {
 		if (id) {
@@ -50,6 +52,7 @@ const OrderModal = () => {
 		accepted: "text-green-500",
 		pending: "text-yellow-500",
 	};
+
 	const deliveryInfoStyle = {
 		background: "#f7f7f7", // Background color
 		padding: "10px", // Padding around the delivery information
