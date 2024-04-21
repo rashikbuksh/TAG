@@ -11,6 +11,7 @@ import {
 import Drawer from "react-modern-drawer";
 import { Link, NavLink } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+import { CiLogout } from "react-icons/ci";
 
 function Offcanvas(props) {
 	const { toggleDrawer, isOffcanvasOpen, setIsOffcanvasOpen } = props;
@@ -95,6 +96,12 @@ function Offcanvas(props) {
 				path: "/referPage",
 				access: ["customer", "shopper"],
 				icon: <FaUserPlus className="text-xl" />,
+			},
+			{
+				title: "Live Chat",
+				path: "/",
+				access: ["customer", "shopper","admin"],
+				icon: <ChatIcon/>,
 			},
 			{
 				title: "Admin Page",
@@ -241,13 +248,8 @@ function Offcanvas(props) {
 								{user ? (
 									<li>
 										<span className="icon">
-											<img
-												width="24"
-												height="24"
-												src="https://img.icons8.com/material-outlined/24/exit.png"
-												alt="exit"
-											/>
-										</span>
+										<CiLogout size={26} color="black"></CiLogout>
+										</span> 
 										<button onClick={Logout}>Logout</button>
 									</li>
 								) : (

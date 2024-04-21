@@ -26,6 +26,12 @@ const ShopKeeperDashBoard = () => {
 	const [productCount, setProductCount] = useState(0);
 	const [pendingOrder, setPendingOrder] = useState(0);
 	const [notification, setNotification] = useState(0);
+	
+
+	const [showModal, setShowModal] = useState(false);
+	const toggleModal = () => {
+		setShowModal(!showModal);
+	};
 
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`).then((res) => {
@@ -218,6 +224,29 @@ const ShopKeeperDashBoard = () => {
 					<div></div>
 				</div>
 
+				{/* Modal */}
+				{showModal && (
+				<Modal
+					isOpen={showModal}
+					setIsOpen={setShowModal}
+					color={"black"}
+				>
+					<div className="flex h-[60vh] items-center justify-center bg-black">
+						<img
+							src={
+								shopkeeper.profile_picture
+									? `${
+											import.meta.env.VITE_APP_IMG_URL
+									  }/usersProfilePic/${shopkeeper.profile_picture}`
+									: ''
+							}
+							alt=""
+							className="max-h-full max-w-full"
+						/>
+					</div>
+				</Modal>
+			)}
+
 				<div className="">
 					<div className="flex flex-col items-center justify-center">
 						<div
@@ -225,7 +254,7 @@ const ShopKeeperDashBoard = () => {
 								activeStatus ? "online" : "offline"
 							} `}
 						>
-							<div className="w-24 rounded-full">
+							<div className="w-24 rounded-full" onClick={toggleModal}>
 								{shopkeeper.profile_picture ? (
 									<img
 										src={`${
