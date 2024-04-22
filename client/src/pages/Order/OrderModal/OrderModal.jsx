@@ -13,7 +13,10 @@ const OrderModal = () => {
 	const [addressTitle, setAddressTitle] = useState(null);
 	const [address, setAddress] = useState(null);
 	const [contactNo, setContactNo] = useState(null);
-	const [customers_address_summary, setCustomers_address_summary] = useState(null);
+	const [customer_profile_id, setCustomer_profile_id] = useState(null);
+	const [customer_profile_Name, setCustomer_profile_Name] = useState(null);
+	const [customers_address_summary, setCustomers_address_summary] =
+		useState(null);
 
 
 
@@ -29,7 +32,16 @@ const OrderModal = () => {
 					setAddressTitle(response.data[0].address_title);
 					setAddress(response.data[0].address);
 					setContactNo(response.data[0].phone_no);
-					setCustomers_address_summary(response.data[0].customers_address_summary);
+					setCustomers_address_summary(
+						response.data[0].customers_address_summary
+					);
+					setCustomer_profile_id(
+						response.data[0].customer_profile_id
+					);
+					setCustomer_profile_Name(response.data[0].customer_name);
+					setCustomers_address_summary(
+						response.data[0].customers_address_summary
+					);
 					setPrice(response.data[0].totalPrice); // Use console.log instead of log
 				})
 				.catch((error) => {
@@ -65,15 +77,34 @@ const OrderModal = () => {
 			<div>
 				<div className="overflow-x-auto">
 					<div className="min-w-full  divide-gray-200 bg-white text-sm">
-						<div className=" divide-gray-200">
-							<div className="flex items-center justify-end gap-2">
-								<p>Status</p>
+						<div style={deliveryInfoStyle} className="mt-1">
+							<p className="text-xl font-bold">
+								Customer Information:
+							</p>
+							<p className="text-lg">
+								Customer Id:{customer_profile_id}
+							</p>
+							<p className="text-md">
+								Customer Name:{" "}
+								<span className="font-bold text-red-900">
+									{customer_profile_Name}
+								</span>
+							</p>
+							<p>{contactNo}</p>
+							<div className="flex items-center justify-between ">
+								<p className="capitalize">
+									Status : {orderStatus}
+								</p>
 								<span>
 									<FaCircle
 										className={statusColors[orderStatus]}
 									/>
 								</span>
 							</div>
+						</div>
+						<div className=" divide-gray-200">
+							{/* <div className="flex items-center justify-end gap-2"></div> */}
+							<p className="text-xl font-bold">Order Details:</p>
 							{products.map((product) => (
 								<OrderProducTable
 									key={product.pid}

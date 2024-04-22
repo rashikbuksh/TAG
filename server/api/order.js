@@ -18,7 +18,11 @@ const add = [
 const read = [
 	{
 		uri: "/order/getorder/:customer_profile_id",
-		query: `SELECT * FROM product_order WHERE customer_profile_id = ? ORDER BY id DESC`,
+		query: `SELECT p.*, c.name, c.id AS customer_id, c.phone
+		FROM product_order p
+		JOIN customer_Profile c ON p.customer_profile_id = c.id
+		WHERE p.customer_profile_id = ?
+		ORDER BY p.id DESC;`,
 		param: ["customer_profile_id"],
 		msg: "product_id",
 	},
@@ -101,12 +105,14 @@ const read = [
 					po.customers_address_details_id,
 					cad.*,
 					po.shopper_order_accept_time as shopper_order_accept_time,
+					cp.name AS customer_name,
 					po.delivery_time as delivery_time
 				FROM shopper_product sp
 					JOIN ordered_product op ON op.product_id = sp.id
 					JOIN product_order po ON po.id = op.order_id
 					JOIN product p ON sp.product_id = p.id
 					LEFT JOIN customers_address_details cad ON cad.id = po.customers_address_details_id
+					LEFT JOIN customer_Profile cp ON po.customer_profile_id = cp.id
 				WHERE po.id = ?;`,
 		param: ["id"],
 		msg: "product_id",

@@ -33,6 +33,7 @@ const CashOnDelivery = () => {
 
 	const { user } = useAuth();
 	const addOrderToDB = async (productIds, total) => {
+		console.log("clicked");
 		try {
 			const orderRes = await api.post("/order/add-order", {
 				customer_profile_id: user.id,
@@ -44,86 +45,68 @@ const CashOnDelivery = () => {
 				payment_type: payment_type,
 				customers_address_summary: customers_address_summary,
 			});
-			if (orderRes.status == 201) {
-				const lastOrderRes = await api.get(
-					`/order/getLastOrder/${user.id}`
-				);
-				if (lastOrderRes.status == 200) {
-					let last_order_id = lastOrderRes.data[0].id;
-
-					const notificationRes = await api.post(
-						"/notification/addnotification",
-						{
-							notification_content:
-								"You have a new order. Order Number is #" +
-								last_order_id +
-								".",
-							notification_time: GetDateTime(),
-							not_from: shopperId,
-							not_to: user.id,
-							status: 1,
-						}
-					);
-					if (notificationRes.status == 201) {
+	
+			if (orderRes.status === 201) {
+				const lastOrderRes = await api.get(`/order/getLastOrder/${user.id}`);
+				
+				if (lastOrderRes.status === 200 && lastOrderRes.data.length > 0) {
+					const last_order_id = lastOrderRes.data[0].id;
+	
+					const notificationRes = await api.post("/notification/addnotification", {
+						notification_content: "You have a new order. Order Number is #" + last_order_id + ".",
+						notification_time: GetDateTime(),
+						not_from: shopperId,
+						not_to: user.id,
+						status: 1,
+					});
+	
+					if (notificationRes.status === 201) {
 						const productPromises = productIds.map((product) => {
-							const productid = product.id;
-							const quantity = product.quantity;
-							const discount = product.discount;
-							const price = product.price;
-							const weight = product.weight || 0;
-
-							return api.post(
-								`/ordered-product/add-ordered-product`,
-								{
-									order_id: last_order_id,
-									product_id: productid,
-									quantity: quantity,
-									discount: discount,
-									price: price,
-									weight: weight,
-								}
-							);
+							const { id: productid, quantity, discount, price, weight = 0 } = product;
+							return api.post(`/ordered-product/add-ordered-product`, {
+								order_id: last_order_id,
+								product_id: productid,
+								quantity,
+								discount,
+								price,
+								weight,
+							});
 						});
-
-						// const responses = await Promise.all(productPromises);
-						// console.log(
-						// 	"🚀 ~ file: Cart.jsx:201 ~ addOrderToDB ~ responses:",
-						// 	responses
-						// );
-						const isDeleteProduct = responses.every(
-							(response) => response.status === 201
-						);
-						// console.log(isDeleteProduct);
-						if (isDeleteProduct) {
+	
+						const responses = await Promise.all(productPromises);
+	
+						if (responses.every((response) => response.status === 201)) {
+							// Delete products from cart
 							productIds.forEach((productId) => {
-								// console.log(productId, "productId");
 								cartItems.forEach((cartItem) => {
-									// console.log(
-									// 	"🚀 ~ file: Cart.jsx:212 ~ cartItems.forEach ~ cartItem:",
-									// 	cartItem
-									// );
 									if (cartItem.id === productId.id) {
-										dispatch(
-											deleteFromCart(cartItem, shopperId)
-										);
+										dispatch(deleteFromCart(cartItem, shopperId));
 									}
 								});
 							});
+	
+							// All API calls were successful
+							navigate("/orderStatus");
+						} else {
+							throw new Error("Failed to add ordered products");
 						}
-
-						// All API calls were successful
-						
-						navigate("/orderStatus");
+					} else {
+						throw new Error("Failed to add notification");
 					}
+				} else {
+					throw new Error("Failed to get last order");
 				}
+			} else {
+				throw new Error("Failed to add order");
 			}
 		} catch (error) {
-			// At least one API call failed
+			console.error("Error adding order:", error);
 			cogoToast.error("Order failed", {
 				position: "bottom-left",
 			});
 		}
 	};
+	
 	return (
 		<div className="mx-auto   flex max-w-[375px] flex-col text-black  ">
 			<Breadcrumb pageTitle={payment_type} prevUrl="/cart"></Breadcrumb>
