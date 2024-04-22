@@ -144,7 +144,7 @@ const OrderStatus = () => {
 														to={`${
 															import.meta.env
 																.VITE_API_PUBLIC_URL
-														}/product/${pid}`}
+														}/product/${pid}/${name}`}
 													>
 														<h1 className="text-sm">
 															{name}

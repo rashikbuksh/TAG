@@ -17,67 +17,73 @@ const CommentModal = ({
 		"Excellent",
 		"Interested",
 		"Nice",
-		"cool",
+		"Cool",
 		"Not Interested",
 		"Bad",
 	];
 
 	const { user } = useAuth();
-
 	const userID = localStorage.getItem("user-id");
 
-	const [selectedComment, setSelectedComment] = useState(""); // State to store the selected comment
+	const [selectedComment, setSelectedComment] = useState("");
+	const [newsComment, setNewsComment] = useState([]);
+	const [userInfo, setUserInfo] = useState({});
+	const fetchComment = () => {
+		if (isOpen && id) {
+			api.get(`/newscomment/getnewscomment/${id}`).then((res) => {
+				// const filteredComments = res.data.filter(comment => comment.news_id === id);
+				setNewsComment(res.data);
+			});
+		}
+	};
+	useEffect(() => {
+		if (isOpen && id) {
+			api.get(`/newscomment/getnewscomment/${id}`).then((res) => {
+				// const filteredComments = res.data.filter(comment => comment.news_id === id);
+				setNewsComment(res.data);
+			});
+		}
+	}, [isOpen, id]);
 
-	// Function to handle when a fixed comment is clicked
 	const handleCommentClick = (comment) => {
 		setSelectedComment(comment);
 	};
 
-	// Function to handle submitting a new comment
 	const handleSubmitComment = (event) => {
 		event.preventDefault();
-		// Here, you can use the selectedComment state to submit the comment
-		// For example, you can send it to a server or update the UI as needed
-		const date = new Date().toLocaleString();
+		const date = GetDateTime(); // Use GetDateTime function directly
 		api.post(`/newscomment/addcomment`, {
 			comment: selectedComment,
 			news_id: id,
 			commented_by: user.id,
 			news_time: date,
 		}).then((res) => {
-			if (res.status == 201) {
-				// add comment in the notification table
-				if (shop_id == user.id) {
-					return;
-				} else {
+			if (res.status === 201) {
+				fetchComment();
+				if (shop_id !== user.id) {
 					api.post(`/notification/addnotification`, {
-						notification_content:
-							"You have a new comment in your post. commented by " +
-							user.name,
-						notification_time: GetDateTime(),
+						notification_content: `You have a new comment in your post. Commented by ${user.name}`,
+						notification_time: date,
 						not_from: shop_id,
 						not_to: user.id,
 						status: 1,
 					});
 				}
+				api.post(`/news/increaseCommentCount/${id}`);
+				setSelectedComment("");
+				setNewsComment((prevComments) => [...prevComments, res.data]);
 			}
 		});
-		api.post(`/news/increaseCommentCount/${id}`).then((res) => {});
-		setSelectedComment(""); // Reset the selected comment state
 	};
 
-	const [newsComment, setNewsComment] = useState([]);
-	const [userInfo, setUserInfo] = useState([]);
-	const [commentUser, setCommentUser] = useState([]); // State to store the selected comment
-
-	useEffect(() => {
-		api.get(`/newscomment/getnewscomment`).then((res) => {
-			setNewsComment(res.data);
+	const handleDeleteComment = (commentId) => {
+		api.delete(`/newscomment/deletecomment/${commentId}`).then(() => {
+			setNewsComment(
+				newsComment.filter((comment) => comment.id !== commentId)
+			);
+			api.post(`/news/decreaseCommentCount/${id}`);
 		});
-		api.get(`/auth/getALLUserInfo`).then((res) => {
-			setUserInfo(res.data);
-		});
-	}, [newsComment]);
+	};
 
 	return (
 		<Modal
@@ -87,73 +93,51 @@ const CommentModal = ({
 			title={title}
 		>
 			<div className="my-2">
-				{/* reuseble components  */}
-				<div className="h-52  overflow-y-auto">
-					<div className="my-1 flex w-full  flex-col justify-center rounded-xl  ">
-						{newsComment.map((comment) => {
-							return comment.news_id === id && userInfo ? (
-								<div
-									key={comment.id}
-									className="my-1 rounded bg-[#f3f3f3b7]"
-								>
-									{userInfo.map((user) => {
-										return user.id ==
-											comment.commented_by ? (
-											<div
-												key={user.id}
-												className="ml-2 mt-2  flex items-center justify-between gap-3 "
-											>
-												<div className="flex items-center gap-3">
-													<img
-														src={`${
-															import.meta.env
-																.VITE_APP_IMG_URL
-														}/usersProfilePic/${
-															user.profile_picture
-														}`}
-														className="h-8 w-8 rounded-full"
-														alt=""
-													/>
-													<div>
-														<p className="text-base font-bold">
-															{user.name}
-														</p>
-
-														<p className="text-xs font-bold">
-															{comment.news_time}
-														</p>
-													</div>
-												</div>
-
-												{comment.commented_by ==
-													userID && (
-													<div className="mr-5 flex justify-end">
-														<button
-															onClick={() => {
-																api.delete(
-																	`/newscomment/deletecomment/${comment.id}`
-																);
-																api.post(
-																	`/news/decreaseCommentCount/${id}`
-																);
-															}}
-														>
-															<FaTrash />
-														</button>
-													</div>
-												)}
-											</div>
-										) : null;
-									})}
+				<div className="h-52 overflow-y-auto">
+					{newsComment.map((comment) => (
+						<div
+							key={comment.id}
+							className="my-1 rounded bg-[#f3f3f3b7]"
+						>
+							<div className="ml-2 mt-2 flex items-center justify-between gap-3">
+								<div className="flex items-center gap-3">
+									<img
+										src={`${
+											import.meta.env.VITE_APP_IMG_URL
+										}/usersProfilePic/${
+											comment.profile_picture
+										}`}
+										className="h-8 w-8 rounded-full"
+										alt=""
+									/>
 									<div>
-										<p className=" px-14 py-2 text-xl">
-											{comment.comment}
+										<p className="text-base font-bold">
+											{comment.name}
+										</p>
+										<p className="text-xs font-bold">
+											{comment.news_time}
 										</p>
 									</div>
 								</div>
-							) : null;
-						})}
-					</div>
+								{comment.commented_by === userID && (
+									<div className="mr-5 flex justify-end">
+										<button
+											onClick={() =>
+												handleDeleteComment(comment.id)
+											}
+										>
+											<FaTrash />
+										</button>
+									</div>
+								)}
+							</div>
+							<div>
+								<p className="px-14 py-2 text-xl">
+									{comment.comment}
+								</p>
+							</div>
+						</div>
+					))}
 				</div>
 
 				<div className="mt-3 flex flex-wrap gap-1">
@@ -161,7 +145,7 @@ const CommentModal = ({
 						<div
 							key={index}
 							className="w-fit rounded bg-gray-200 p-2"
-							onClick={() => handleCommentClick(fixcom)} // Handle comment click
+							onClick={() => handleCommentClick(fixcom)}
 						>
 							<p className="text-base font-bold">{fixcom}</p>
 						</div>
@@ -171,14 +155,13 @@ const CommentModal = ({
 					<form onSubmit={handleSubmitComment} className="w-full p-2">
 						<div className="mb-2">
 							<input
-								className="h-10 w-full rounded border p-2 text-xl font-bold text-blue-600  focus:outline-none focus:ring-1 focus:ring-gray-300"
+								className="h-10 w-full rounded border p-2 text-xl font-bold text-blue-600 focus:outline-none focus:ring-1 focus:ring-gray-300"
 								name="comment"
 								placeholder="Add a comment"
-								disabled
-								value={selectedComment} // Display the selected comment in the input field
+								value={selectedComment}
 								onChange={(e) =>
 									setSelectedComment(e.target.value)
-								} // Update the selected comment state
+								}
 							></input>
 						</div>
 						<button

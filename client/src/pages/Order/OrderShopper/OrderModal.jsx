@@ -26,6 +26,8 @@ const OrderDetailsShopper = () => {
 	// console.log("🚀 ~ OrderDetailsShopper ~ products:", products);
 	const [customers_address_summary, setCustomers_address_summary] =
 		useState(null);
+	const [customer_profile_id, setCustomer_profile_id] = useState(null);
+	const [customer_profile_Name, setCustomer_profile_Name] = useState(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const handelIsOpenModal = () => {
 		setIsOpen(!isOpen);
@@ -53,6 +55,10 @@ const OrderDetailsShopper = () => {
 					setAddress(response.data[0].address);
 					setContactNo(response.data[0].phone_no);
 					setOrderStatus(response.data[0].order_status);
+					setCustomer_profile_id(
+						response.data[0].customer_profile_id
+					);
+					setCustomer_profile_Name(response.data[0].customer_name);
 					setOrderTime(response.data[0].order_time);
 				})
 				.catch((error) => {
@@ -238,11 +244,28 @@ const OrderDetailsShopper = () => {
 				// onClick={() => goToPreviousPage()}
 			/>
 
+			<div style={deliveryInfoStyle} className="mt-1">
+				<p className="text-xl font-bold">Customer Information:</p>
+				<p className="text-lg">Customer Id:{customer_profile_id}</p>
+				<p className="text-md">
+					Customer Name:{" "}
+					<span className="font-bold text-red-900">
+						{customer_profile_Name}
+					</span>
+				</p>
+				<p>{contactNo}</p>
+				<div className="flex items-center justify-between ">
+					<p className="capitalize">Status : {orderStatus}</p>
+				</div>
+			</div>
 			<div className="">
 				<div>
 					<div className="overflow-x-auto ">
 						<div className="min-w-full  divide-gray-200 bg-white text-sm">
 							<div className=" divide-gray-200">
+								<p className="text-xl font-bold">
+									Order Details:
+								</p>
 								{products.map((product) => (
 									<OrderProducTable
 										key={product.pid}

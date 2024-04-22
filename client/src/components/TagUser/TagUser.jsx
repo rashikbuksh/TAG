@@ -8,7 +8,7 @@ const TagUser = () => {
 	const [tagUsers, setTagUsers] = useState([]);
 	const [filteredtagUsers, setFilteredtagUsers] = useState([]);
 	useEffect(() => {
-		api.get(`/auth/getALLUser/admin`)
+		api.get(`/auth/getALLUser/customer`)
 			.then((response) => {
 				setTagUsers(response.data);
 			})

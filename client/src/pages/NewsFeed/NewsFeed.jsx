@@ -2,7 +2,7 @@ import { Breadcrumb } from "@components";
 import NewsFeedInput from "@components/News/NewsFeedInput/NewsFeedInput";
 import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import PostUi from "../PostUi/PostUi";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
@@ -11,56 +11,56 @@ const NewsFeed = () => {
 	const [posts, setPosts] = useState([]);
 	const [isOpen, setIsOpen] = useState(false);
 	const [showScrollButton, setShowScrollButton] = useState(false);
+	const [isDataFetched, setIsDataFetched] = useState(false); // Track whether data is fetched
+
+	const { user } = useAuth();
+
+	useEffect(() => {
+		const handleScroll = () => {
+			setShowScrollButton(window.scrollY > 0);
+		};
+
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
+
+	useEffect(() => {
+		const fetchPosts = async () => {
+			try {
+				const res = await api.get("/news/getnews");
+				setPosts(res.data);
+				setIsDataFetched(true); // Set flag indicating data is fetched
+			} catch (err) {
+				console.error(err);
+			}
+		};
+
+		// Fetch data only if not already fetched
+		if (!isDataFetched) {
+			fetchPosts();
+		}
+	}, [isDataFetched]);
 
 	const handleNewsInput = () => {
 		setIsOpen(!isOpen);
 	};
 
-	const handleSmoothScroll = () => {
+	const handleSmoothScroll = useCallback(() => {
 		window.scrollTo({
 			top: 0,
 			behavior: "smooth",
 		});
-	};
+	}, []);
 
-	useEffect(() => {
-		api.get("/news/getnews")
-			.then((res) => {
-				setPosts(res.data);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-
-		const handleScroll = () => {
-			if (window.scrollY > 0) {
-				setShowScrollButton(true);
-			} else {
-				setShowScrollButton(false);
-			}
-		};
-
-		window.addEventListener("scroll", handleScroll);
-
-		return () => {
-			window.removeEventListener("scroll", handleScroll);
-		};
-	}, [posts]);
-	const { user } = useAuth();
 	return (
 		<div className="">
 			<div className="mx-auto w-[90%]">
-				<ShowCartIcon/>
+				<ShowCartIcon />
 				<Breadcrumb pageTitle={"News Feed"} prevUrl={"/home"} />
-				{/* <h1 className="text-center text-2xl font-bold">News Feed</h1> */}
-				{/* <div className="divider my-0"></div> */}
 				<div className="lg:grid lg:grid-cols-12 ">
 					<div className="lg:col-span-3"></div>
 					<div className="lg:col-span-6">
-						{/* <ShowCartIcon></ShowCartIcon> */}
-						{user.access === "customer" ? (
-							""
-						) : (
+						{user.access !== "customer" && (
 							<>
 								<div
 									onClick={handleNewsInput}
@@ -71,7 +71,7 @@ const NewsFeed = () => {
 								<NewsFeedInput
 									isOpen={isOpen}
 									setIsOpen={setIsOpen}
-								></NewsFeedInput>
+								/>
 							</>
 						)}
 
