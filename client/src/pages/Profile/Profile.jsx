@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { toast } from "react-toastify";
+import Modal from "@components/Modal/Modal";
 
-import ReactDOM from "react-dom";
 import QRCode from "react-qr-code";
 import { FaRegCopy } from "react-icons/fa";
 
@@ -22,7 +22,10 @@ const Profile = () => {
 	const [image, setImage] = useState(null);
 	const id = userData?.id;
 	const [copySuccess, setCopySuccess] = useState(null);
-
+	const [showModal, setShowModal] = useState(false);
+	const toggleModal = () => {
+		setShowModal(!showModal);
+	};
 	const copyToClipboard = (reffer) => {
 		navigator.clipboard
 			.writeText(reffer)
@@ -152,7 +155,31 @@ const Profile = () => {
 												}`}
 												className="h-[85px] w-[85px] rounded-full"
 												alt="Profile"
+												onClick={toggleModal}
 											/>
+											<Modal
+												isOpen={showModal}
+												setIsOpen={setShowModal}
+												color={"black"}
+											>
+												<div className="flex h-[60vh] items-center justify-center bg-black">
+													<img
+														src={
+															userData.profile_picture
+																? `${
+																		import.meta
+																			.env
+																			.VITE_APP_IMG_URL
+																  }/usersProfilePic/${
+																		userData.profile_picture
+																  }`
+																: ""
+														}
+														alt=""
+														className="max-h-full max-w-full"
+													/>
+												</div>
+											</Modal>
 											<form className="absolute right-36 top-16">
 												<div className=" w-full  ">
 													<label

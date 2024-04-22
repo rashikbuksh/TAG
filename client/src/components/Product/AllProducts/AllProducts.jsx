@@ -62,24 +62,6 @@ const AllProducts = ({ limit, sliderData }) => {
 								Popular Product{" "}
 							</span>
 
-							{/* <Link
-								className="primary-text pr-2 "
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									"/shop"
-								}
-							>
-								VIEW ALL{" "}
-								<span>
-									<ReactSVG
-										src={
-											import.meta.env
-												.VITE_API_PUBLIC_URL +
-											"/assets/img/icons/arrow-right.svg"
-										}
-									/>
-								</span>
-							</Link> */}
 						</h2>
 					)}
 

@@ -8,7 +8,7 @@ const ProductSlider = ({ products }) => {
 			<div className="p-1">
 				<Swiper
 					slidesPerView={2.2}
-					spaceBetween={15}
+					spaceBetween={5}
 					grabCursor={true}
 					pagination={{
 						clickable: true,

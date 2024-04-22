@@ -1,9 +1,13 @@
-import { StarIcon } from "@SvgHub/Icons";
+
 import { Footer, Header } from "@components";
 import MessageModal from "@components/Modal/MessageModal/MessageModal";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "@context/auth";
 import { MdVerifiedUser } from "react-icons/md";
+import { IoMdShare } from "react-icons/io";
+import { BiMessageRounded } from "react-icons/bi";
+
+import { TiStar } from "react-icons/ti";
 import {
 	cartItemStock,
 	checkIfInCart,
@@ -15,10 +19,10 @@ import {
 	decreaseQuantity,
 	increaseQuantity,
 } from "@store/slices/cart-slice";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { FaAngleLeft, FaCheckCircle } from "react-icons/fa";
-import { FaRegMessage } from "react-icons/fa6";
+import { FaAngleLeft } from "react-icons/fa";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import { Link, useParams } from "react-router-dom";
@@ -27,6 +31,7 @@ import "./tooltip.css";
 import { Tooltip } from "react-tooltip";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Placeholder from "../../assets/img/no_product.png";
+
 const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const { user } = useAuth();
@@ -73,7 +78,7 @@ const Product = () => {
 		}
 	}, [cartItems, id]);
 
-	const [productStock, setProductStock] = useState(0);
+	const [ setProductStock] = useState(0);
 	const [showFullDescription, setShowFullDescription] = useState(false);
 
 	const [products, setProds] = useState([]);
@@ -85,7 +90,9 @@ const Product = () => {
 				setProds(response.data);
 				setProductStock(response.data[0]?.product_count);
 			})
-			.catch((error) => {});
+			.catch((error) => {
+				console.log(error)
+			});
 	}, [id]);
 
 	const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -95,7 +102,9 @@ const Product = () => {
 			.then((response) => {
 				setShopperName(response.data[0]?.name);
 			})
-			.catch((error) => {});
+			.catch((error) => {
+				console.log(error)
+			});
 	};
 	const handelOpenMessageModal = () => {
 		setIsOpen(!isOpen);
@@ -146,7 +155,7 @@ const Product = () => {
 			<ShowCartIcon />
 
 			<div className="mx-auto  mt-4 px-4 py-8 pb-20  lg:w-[50%]">
-				<div className="rounded-md  py-2 flex justify-between">
+				<div className="flex  justify-between rounded-md py-2">
 					<Link to={"/home"} className="back-link">
 						<FaAngleLeft size={25} color="" />
 					</Link>
@@ -201,11 +210,7 @@ const Product = () => {
 									</div>
 									<div>
 										<img
-											// src={`${
-											// 	import.meta.env.VITE_APP_IMG_URL
-											// }/products/${
-											// 	single.optionalImage1
-											// }`}
+										
 											src={
 												single.optionalImage1
 													? `${
@@ -227,11 +232,7 @@ const Product = () => {
 									</div>
 									<div>
 										<img
-											// src={`${
-											// 	import.meta.env.VITE_APP_IMG_URL
-											// }/products/${
-											// 	single.optionalImage2
-											// }`}
+										
 											src={
 												single.optionalImage2
 													? `${
@@ -275,7 +276,7 @@ const Product = () => {
 									<div className="">
 										<div className="">
 											<div className="">
-												<div className="flex items-center gap-3 ">
+												<div className="flex items-center justify-between gap-2 ">
 													{getShopperName(
 														prods.shopper_id
 													)}
@@ -287,19 +288,32 @@ const Product = () => {
 															`/shopkeeperProfileCV/${prods.shopper_id}`
 														}
 													>
-														<p className="primary-text  text-3xl  font-bold">
+														<p className="primary-text  text-2xl  font-bold">
 															{shopperName}
 														</p>
 													</Link>
 
-													<div className="">
-														<button
+													<div className="flex gap-4">
+														<div className="flex flex-col items-center">
+															<button
+																onClick={
+																	handelOpenMessageModal
+																}
+															>
+																<BiMessageRounded className="text-xl" />
+															</button>
+															<p className="text-xs">Message</p>
+														</div>
+													<div className="flex flex-col items-center">
+													<button
 															onClick={
 																handelOpenMessageModal
 															}
 														>
-															<FaRegMessage className="text-xl" />
+															<IoMdShare className="text-xl" />
 														</button>
+														<p className="text-xs">Share</p>
+													</div>
 
 														<MessageModal
 															isOpen={isOpen}
@@ -311,7 +325,7 @@ const Product = () => {
 													</div>
 												</div>
 												<div className="my-2 flex items-center gap-3">
-													<h3 className=" text-xl font-bold">
+													<h3 className=" text-[18px] font-bold">
 														{prods.name}
 													</h3>
 													<div className="">
@@ -339,7 +353,7 @@ const Product = () => {
 												</div>
 
 												<div className="relative mb-[20px] flex items-center gap-2">
-													<StarIcon />
+												<TiStar size={22} color="gold"  />
 													<p>
 														{prods.rating_count
 															? prods.rating_count
@@ -408,7 +422,7 @@ const Product = () => {
 														</div>
 													)}
 												</div>
-												<div className="font-bold text-black flex items-center gap-4">
+												<div className="flex items-center gap-4 font-bold text-black">
 													{prods.discount &&
 													prods.discount > 0 ? (
 														<Fragment>
@@ -452,38 +466,12 @@ const Product = () => {
 														}}
 													/>
 												</div>
-												{/* <div className="my-2 text-lg">
-													{showFullDescription
-														? prods.full_description
-														: prods.full_description &&
-														  prods.full_description
-																.length > 30
-														? prods.full_description.substring(
-																0,
-																80
-														  ) + "..."
-														: prods.full_description}
-													{prods.full_description &&
-														prods.full_description
-															.length > 30 && (
-															<button
-																className="ml-2 cursor-pointer text-blue-500"
-																onClick={
-																	toggleDescription
-																}
-															>
-																{showFullDescription
-																	? "See Less"
-																	: "See More"}
-															</button>
-														)}
-												</div> */}
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div className="">
+							<div className="flex flex-col gap-4">
 								{user && user.access === "customer" ? (
 									<button
 										disabled={

@@ -61,8 +61,8 @@ const Notification = () => {
 					<div
 						className={clsx(
 							"notification-item",
-							single.status == 1 && "notification-item--unread"
-						)}
+							single.status == 1 && "notification-item--unread "
+						) }
 						key={single.id}
 					>
 						{single.notification_content.includes("commented") ? (
@@ -117,7 +117,7 @@ const Notification = () => {
 						)}
 						{single.status ? <NotificationSound /> : ""}
 
-						<div className="notification-item__time">
+						<div className="notification-item__time ">
 							{" "}
 							<span>
 								<FaBell></FaBell>
@@ -143,8 +143,8 @@ const Notification = () => {
 				{olderNotifications?.map((single) => (
 					<div
 						className={clsx(
-							"notification-item",
-							single.status == 1 && "notification-item--unread"
+							"notification-item hover:bg-slate-200 cursor-pointer ",
+							single.status == 1 && "notification-item--unread "
 						)}
 						key={single.id}
 					>

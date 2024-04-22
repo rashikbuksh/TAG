@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -111,7 +112,6 @@ const Login = () => {
 				<meta name="theme-color" content="#ffffff" />
 			</Helmet>
 			<div className=" mx-auto flex flex-col justify-around px-[25px] lg:w-[50%]  ">
-
 				<div className="mx-auto my-5 h-[80px] ">
 					<Link to="/home">
 						<TagLogo2></TagLogo2>
@@ -136,7 +136,7 @@ const Login = () => {
 								id="email"
 								className="auth-input"
 								name="emailOrPhone"
-								placeholder="Enter Email"
+								placeholder="Enter Email / Phone Number"
 								{...register("emailOrPhone")}
 							/>
 							<p className="text-danger px-4">
@@ -172,8 +172,8 @@ const Login = () => {
 							<p className="text-danger px-4">
 								{errors.password?.message}
 							</p>
-							<div className="px-3">
-								<a className="link-info link">
+							<div className="pl-6">
+								<a className="text-[#2F5BA9] link font-semibold leading-8">
 									Forgot Password?
 								</a>
 							</div>
@@ -206,17 +206,14 @@ const Login = () => {
 							</span>
 						</p>
 					</div>
-					<span className="divider mt-5">- OR - </span>
+					<span className="divider mt-2">- OR - </span>
 					<div className="mt-2 flex items-center justify-between ">
-						<button className="auth-social-btn">
-							<FacebookIcon />
-						</button>
-						<button className="auth-social-btn">
-							<GoogleIcon></GoogleIcon>
-						</button>
-						<button className="auth-social-btn">
-							<AppleIcon></AppleIcon>
-						</button>
+						<div className=" mb-3 flex w-full cursor-pointer items-center justify-center rounded-full bg-[#2F5BA9] px-7 py-3 pb-2.5 text-center text-sm font-medium uppercase leading-normal text-white  gap-2">
+							<span>
+								<FcGoogle size={24} />
+							</span>
+							<p>Continue with Google</p>
+						</div>
 					</div>
 				</div>
 
