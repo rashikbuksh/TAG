@@ -58,7 +58,9 @@ const Home = () => {
 							.catch((error) => null),
 						api
 							.get("/heroslider/getslider/middle")
-							.catch((error) => null),
+							.catch((error) => {
+								console.log(error)
+							}),
 						api
 							.get("/heroslider/getslider/bottom")
 							.catch((error) => null),

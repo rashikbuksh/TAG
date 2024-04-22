@@ -1,4 +1,5 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
+import { IoCloudOffline } from "react-icons/io5";
 import {
 	Outlet,
 	Route,
@@ -52,7 +53,6 @@ import VerificationOTP from "./pages/VerificationOTP/Index";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
 
-
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
 	import("./pages/Register/RegisterCustomer/Register")
@@ -69,9 +69,9 @@ const Checkout = lazy(() => import("./pages/Checkout"));
 
 const Checkout2 = lazy(() => import("./pages/Checkout2/Checkout2"));
 const COD = lazy(() => import("./pages/CashOnDelivery/CashOnDelivery"));
-const PaymentGateway = lazy(()=>import("./pages/PaymentGateway/PaymentGateway"))
-
-
+const PaymentGateway = lazy(() =>
+	import("./pages/PaymentGateway/PaymentGateway")
+);
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Search = lazy(() => import("./pages/Search"));
@@ -143,7 +143,7 @@ const PROTECTED_ROUTES = [
 		name: "Profile",
 		path: "/profile",
 		element: Profile,
-		access: ["admin", "customer","shopper"],
+		access: ["admin", "customer", "shopper"],
 	},
 	{
 		id: 13,
@@ -514,96 +514,147 @@ const MODERATORS_ROUTES = [
 ];
 
 function App() {
+	const [isOnline, setOnline] = useState(true);
 	const isadminPage = "admin";
+	//check internet connection
+	useEffect(() => {
+		let internetConnection = window.navigator.onLine;
+	
+		if (!internetConnection) {
+			setOnline(false);
+		}
+
+		window.addEventListener("online", (connect) => {
+			console.log(connect.type);
+			if (connect.type == "online") {
+				setOnline(true);
+			}
+			console.log("Became online");
+		});
+		window.addEventListener("offline", (connect) => {
+			if (connect.type == "offline") {
+				setOnline(false);
+			}
+			console.log("Became offline");
+		});
+	}, []);
+
 	return (
 		// show header and footer
 
-		<Router>
-			{!isadminPage && <Header />}
-			{!isadminPage && <Offcanvas />}
-			{!isadminPage && <Footer />}
-			<AuthProvider>
-				<NotificationProvider>
-					<OtpVerificationProvider>
-						<ToastContainer />
-						<Routes>
-							<Route element={<ProtectedRoutes />}>
-								{PROTECTED_ROUTES?.map((route) => (
-									<Route
-										key={route?.path}
-										path={`${route?.path}/*`}
-										element={
-											<Suspense
-												fallback={
-													<LoadingPage></LoadingPage>
+		<div>
+			{isOnline ? (
+				<Router>
+					{!isadminPage && <Header />}
+					{!isadminPage && <Offcanvas />}
+					{!isadminPage && <Footer />}
+					<AuthProvider>
+						<NotificationProvider>
+							<OtpVerificationProvider>
+								<ToastContainer />
+								<Routes>
+									<Route element={<ProtectedRoutes />}>
+										{PROTECTED_ROUTES?.map((route) => (
+											<Route
+												key={route?.path}
+												path={`${route?.path}/*`}
+												element={
+													<Suspense
+														fallback={
+															<LoadingPage></LoadingPage>
+														}
+													>
+														<route.element />
+													</Suspense>
 												}
-											>
-												<route.element />
-											</Suspense>
-										}
-									/>
-								))}
-							</Route>
-							<Route element={<AdminProtactedRoutes />}>
-								{ADMIN_ROUTES?.map((route) => (
-									<Route
-										key={route?.path}
-										path={`${route?.path}/*`}
-										element={
-											<Suspense
-												fallback={
-													<div>
-														<LoadingPage></LoadingPage>
-													</div>
+											/>
+										))}
+									</Route>
+									<Route element={<AdminProtactedRoutes />}>
+										{ADMIN_ROUTES?.map((route) => (
+											<Route
+												key={route?.path}
+												path={`${route?.path}/*`}
+												element={
+													<Suspense
+														fallback={
+															<div>
+																<LoadingPage></LoadingPage>
+															</div>
+														}
+													>
+														<route.element />
+													</Suspense>
 												}
-											>
-												<route.element />
-											</Suspense>
-										}
-									/>
-								))}
-							</Route>
-							<Route element={<ModeratorProtactedRoutes />}>
-								{MODERATORS_ROUTES?.map((route) => (
+											/>
+										))}
+									</Route>
 									<Route
-										key={route?.path}
-										path={`${route?.path}/*`}
-										element={
-											<Suspense
-												fallback={
-													<div>
-														<LoadingPage></LoadingPage>
-													</div>
+										element={<ModeratorProtactedRoutes />}
+									>
+										{MODERATORS_ROUTES?.map((route) => (
+											<Route
+												key={route?.path}
+												path={`${route?.path}/*`}
+												element={
+													<Suspense
+														fallback={
+															<div>
+																<LoadingPage></LoadingPage>
+															</div>
+														}
+													>
+														<route.element />
+													</Suspense>
 												}
-											>
-												<route.element />
-											</Suspense>
-										}
-									/>
-								))}
-							</Route>
-							{PUBLIC_ROUTES?.map((route) => (
-								<Route
-									key={route?.path}
-									path={`${route?.path}/*`}
-									element={
-										<Suspense
-											fallback={
-												<div>
-													<LoadingPage></LoadingPage>
-												</div>
+											/>
+										))}
+									</Route>
+									{PUBLIC_ROUTES?.map((route) => (
+										<Route
+											key={route?.path}
+											path={`${route?.path}/*`}
+											element={
+												<Suspense
+													fallback={
+														<div>
+															<LoadingPage></LoadingPage>
+														</div>
+													}
+												>
+													<route.element />
+												</Suspense>
 											}
-										>
-											<route.element />
-										</Suspense>
-									}
-								/>
-							))}
-						</Routes>
-					</OtpVerificationProvider>
-				</NotificationProvider>
-			</AuthProvider>
-		</Router>
+										/>
+									))}
+								</Routes>
+							</OtpVerificationProvider>
+						</NotificationProvider>
+					</AuthProvider>
+				</Router>
+			) : (
+				<div className="flex min-h-screen items-center justify-center bg-gray-100">
+					<div className="max-w-md text-center">
+						<h1 className="mb-4 text-4xl font-bold text-gray-800">
+							Offline
+						</h1>
+						<p className="mb-8 text-lg text-gray-600">
+							Oops! It seems like you are offline. Please check
+							your internet connection and try again.
+						</p>
+						<div className="flex justify-center mb-4 scale-150">
+						<IoCloudOffline size={40} />
+						</div>
+						<button
+							onClick={() => window.location.reload()}
+							className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-600 focus:outline-none"
+						>
+							Refresh
+						</button>
+					</div>
+				</div>
+			)}
+		</div>
 	);
 }
 
