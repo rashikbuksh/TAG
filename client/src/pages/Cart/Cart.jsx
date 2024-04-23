@@ -1,21 +1,19 @@
 import { Takaicon } from "@SvgHub/SocialIcon";
 import { Breadcrumb } from "@components";
 import { useAuth } from "@context/auth";
-import cogoToast from "@hasanm95/cogo-toast";
 import GetDateTime from "@helpers/GetDateTime";
 import { cartItemStock, getDiscountPrice } from "@helpers/product";
 import { api } from "@lib/api";
-import { CiCirclePlus } from "react-icons/ci";
 import {
-	addToCart,
 	decreaseQuantity,
 	deleteFromCart,
 	increaseQuantity,
 } from "@store/slices/cart-slice";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import NoItemInCart from "../../../public/icons/shopping_cart_remove.png";
 
@@ -24,18 +22,12 @@ const Cart = () => {
 	const { user } = useAuth();
 	const { cartItems } = useSelector((state) => state.cart);
 	const [shoppers, setShoppers] = useState([]); // Maintain an array of shoppers
-	// console.log("🚀 ~ Cart ~ shoppers:", shoppers);
 	const [buyStates, setBuyStates] = useState({}); // Initialize a separate buy state for each shop
-	const [clickedState, setClickedState] = useState(true);
 	const [countdown, setCountdown] = useState(120); // Countdown timer in seconds
 	const [shopperId, setshopperId] = useState(null); // Countdown timer in seconds
 	const [timerStarted, setTimerStarted] = useState(false);
 	const [runningTimerShopperId, setRunningTimerShopperId] = useState(null);
 	const [intervalId, setIntervalId] = useState(null);
-	const productDiscount = useRef({});
-	const productQuantity = useRef({});
-	const productPrice = useRef({});
-
 	// cart_order_timer
 	const [cart_order_timer_value, setCart_order_timer_value] = useState();
 	const cart_order_timer = "cart_order_timer";
@@ -43,7 +35,6 @@ const Cart = () => {
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
 			setShoppers(res.data);
-			// Initialize the buy states with default values (false for each shop)
 			const initialBuyStates = {};
 			res.data.forEach((shopper) => {
 				initialBuyStates[shopper.id] = false;
@@ -55,9 +46,7 @@ const Cart = () => {
 		});
 	}, []);
 	useEffect(() => {
-		// Retrieve countdown timer data from local storage on component mount
 		const timerData = JSON.parse(localStorage.getItem("cart_timer_data"));
-		// console.log("🚀 ~ useEffect ~ timerData:", timerData);
 		if (timerData) {
 			setCountdown(timerData.countdown);
 		}
@@ -71,56 +60,12 @@ const Cart = () => {
 		};
 	}, [shopperId]);
 
-	const redirectTimer = async (shopperId) => {
-		setRunningTimerShopperId(shopperId);
-		setTimerStarted(true);
-		setCountdown(cart_order_timer_value); // Reset countdown to 120 seconds when Buy button is clicked
-
-		if (intervalId) {
-			clearInterval(intervalId);
-		}
-
-		const interval = setInterval(() => {
-			setCountdown((prevCountdown) => {
-				if (prevCountdown > 0) {
-					return prevCountdown - 1;
-				} else {
-					clearInterval(interval);
-					return prevCountdown;
-				}
-			});
-		}, 1000);
-
-		setIntervalId(interval);
-
-		setTimeout(() => {
-			if (countdown > 0 && timerStarted == true) {
-				clearInterval(interval);
-				setRunningTimerShopperId(null);
-				addOrder(shopperId); // Perform action after countdown completes
-			}
-		}, 12000);
-	};
 	useEffect(() => {
 		if (timerStarted && countdown === 0) {
 			addOrder(shopperId);
-			// Perform action after countdown completes
 		}
 	}, [countdown, timerStarted]);
-	const localStorageKey = "cart_timer_data";
 
-	// Load timer data from localStorage on component mount
-	// useEffect(() => {
-	// 	const timerData = JSON.parse(localStorage.getItem(localStorageKey));
-	// 	if (timerData) {
-	// 		setCountdown(timerData.countdown);
-	// 		setTimerStarted(timerData.timerStarted);
-	// 		setRunningTimerShopperId(
-	// 			timerData.shopperId ? timerData.shopperId : "null"
-	// 		);
-	// 		console.log(timerData);
-	// 	}
-	// }, []);
 	useEffect(() => {
 		if (timerStarted) {
 			localStorage.setItem(
@@ -237,23 +182,13 @@ const Cart = () => {
 						});
 
 						const responses = await Promise.all(productPromises);
-						// console.log(
-						// 	"🚀 ~ file: Cart.jsx:201 ~ addOrderToDB ~ responses:",
-						// 	responses
-						// );
 						const isDeleteProduct = responses.every(
 							(response) => response.status === 201
 						);
-						// console.log(isDeleteProduct);
 						handelCancel(shopperId);
 						if (isDeleteProduct) {
 							productIds.forEach((productId) => {
-								// console.log(productId, "productId");
 								cartItems.forEach((cartItem) => {
-									// console.log(
-									// 	"🚀 ~ file: Cart.jsx:212 ~ cartItems.forEach ~ cartItem:",
-									// 	cartItem
-									// );
 									if (cartItem.id === productId.id) {
 										dispatch(
 											deleteFromCart(cartItem, shopperId)
@@ -262,98 +197,25 @@ const Cart = () => {
 								});
 							});
 						}
-
-						// All API calls were successful
-						// console.log(responses);
-						// navigate("/orderStatus");
 					}
 				}
 			}
 		} catch (error) {
 			// At least one API call failed
-			cogoToast.error("Order failed", {
+			toast.error("Order failed", {
 				position: "bottom-left",
 			});
 		}
 	};
-	// console.log("🚀 ~ calculatedTotals ~ calculatedTotals:", calculatedTotals);
-	const handleBuyClick = (shopperId) => {
-		if (
-			runningTimerShopperId !== null &&
-			runningTimerShopperId !== shopperId
-		) {
-			// If a timer is already running for another shopper, return without starting a new timer
-			cogoToast.warn("Please wait for the current timer to complete", {
-				position: "bottom-left",
-			});
-			return;
-		}
-		// Toggle the buy state for the specific shop
-		setBuyStates((prevBuyStates) => ({
-			...prevBuyStates,
-			[shopperId]: !prevBuyStates[shopperId],
-		}));
 
-		const discounts = {};
-		cartItems.forEach((cartItem) => {
-			if (cartItem.shopper_id === shopperId) {
-				productDiscount[cartItem.id] = cartItem.discount;
-				productQuantity[cartItem.id] = cartItem.quantity;
-				productPrice[cartItem.id] = cartItem.price;
-				discounts[cartItem.id] = cartItem.discount;
-			}
-		});
-		const quantities = {};
-		cartItems.forEach((cartItem) => {
-			if (cartItem.shopper_id === shopperId) {
-				quantities[cartItem.id] = cartItem.quantity;
-			}
-		});
-		if (clickedState == true) {
-			redirectTimer(shopperId);
-			cogoToast.warn(
-				"Order auto-submitted after 2 mins.If you want to cancel, click 'Cancel",
-				{
-					position: "bottom-left",
-				}
-			);
-		}
-	};
-
-	const setClicked = (value) => {
-		setClickedState(value);
-	};
 	const handelCancel = (shopperId) => {
 		setBuyStates((prevBuyStates) => ({
 			...prevBuyStates,
 			[shopperId]: !prevBuyStates[shopperId],
 		}));
 		setCountdown(cart_order_timer_value);
-		// const interval = setInterval(() => {
-		// 	setCountdown((prevCountdown) => {
-		// 		clearInterval(interval);
-		// 		clearInterval(intervalId);
-		// 		return prevCountdown;
-		// 	});
-		// }, 1000);
 		clearInterval(intervalId);
 		setTimerStarted(false);
-
-		// const discounts = {};
-		// cartItems.forEach((cartItem) => {
-		// 	if (cartItem.shopper_id === shopperId) {
-		// 		productDiscount[cartItem.id] = cartItem.discount;
-		// 		productQuantity[cartItem.id] = cartItem.quantity;
-		// 		productPrice[cartItem.id] = cartItem.price;
-		// 		discounts[cartItem.id] = cartItem.discount;
-		// 	}
-		// });
-		// const quantities = {};
-		// cartItems.forEach((cartItem) => {
-		// 	if (cartItem.shopper_id === shopperId) {
-		// 		quantities[cartItem.id] = cartItem.quantity;
-		// 	}
-		// });
 		setRunningTimerShopperId(null);
 	};
 	const isTimeRunning =
@@ -548,79 +410,6 @@ const Cart = () => {
 								(cartItem) => cartItem.shopper_id === shopper.id
 							) && (
 								<div className="mx-4 my-1 flex items-center justify-between p-1">
-									{/* <div className="flex items-center gap-3">
-										{isTimeRunning &&
-										buyStates[shopper.id] ? (
-											<>
-												<button
-													onClick={() => {
-														setClicked(true);
-														handelCancel(
-															shopper.id
-														);
-													}}
-													className="rounded bg-[#a92f4e] px-3 py-2 text-xs text-white"
-												>
-													Cancel
-												</button>{" "}
-												{runningTimerShopperId ===
-													shopper.id && (
-													<div className="p-1 text-xs">
-														<div
-															style={{
-																fontSize:
-																	"15px",
-															}}
-														>
-															<span>
-																{Math.floor(
-																	countdown /
-																		60
-																)}
-																m
-															</span>
-															<span>
-																{countdown % 60}
-																s
-															</span>
-														</div>
-													</div>
-												)}
-												<button
-													onClick={() => {
-														addOrder(shopper.id);
-														setshopperId(
-															shopper.id
-														);
-													}}
-													className=" rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white"
-												>
-													Confirm
-												</button>{" "}
-											</>
-										) : (
-											<button
-												onClick={() => {
-													setClicked(false),
-														handleBuyClick(
-															shopper.id
-														),
-														setshopperId(
-															shopper.id
-														);
-												}}
-												disabled={
-													runningTimerShopperId !==
-														null &&
-													runningTimerShopperId !==
-														shopper.id
-												}
-												className="rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white"
-											>
-												Buy now
-											</button>
-										)}
-									</div> */}
 									{calculatedTotals[shopper.id] &&
 										shopper.active_status == "1" && (
 											<button
@@ -636,7 +425,10 @@ const Cart = () => {
 											</button>
 										)}
 									{!shopper.active_status == "1" && (
-										<button disabled className="rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white active:bg-[#2e4b7d]">
+										<button
+											disabled
+											className="rounded bg-[#2F5BA9] px-3 py-2 text-sm text-white active:bg-[#2e4b7d]"
+										>
 											Shop Closed Now
 										</button>
 									)}

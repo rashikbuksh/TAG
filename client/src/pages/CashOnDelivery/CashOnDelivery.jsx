@@ -1,17 +1,15 @@
+import OrderSummery from "@/components/PaymentMethod/Checkout/OrderSummery";
 import { Breadcrumb } from "@components";
-import TotalAmount from "../../components/PaymentMethod/PaymentGateway/TotalAmount";
-import { FcMoneyTransfer } from "react-icons/fc";
-import OrderSummery from "../../../src/components/PaymentMethod/Checkout/OrderSummery";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "@context/auth";
 import GetDateTime from "@helpers/GetDateTime";
 import { api } from "@lib/api";
-import { useAuth } from "@context/auth";
-import { useDispatch, useSelector } from "react-redux";
 import { deleteFromCart } from "@store/slices/cart-slice";
-import cogoToast from "@hasanm95/cogo-toast";
+import { FcMoneyTransfer } from "react-icons/fc";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CashOnDelivery = () => {
-	
 	const { cartItems } = useSelector((state) => state.cart);
 	const location = useLocation();
 	const dispatch = useDispatch();
@@ -25,11 +23,6 @@ const CashOnDelivery = () => {
 		payment_type,
 		customers_address_summary,
 	} = location.state;
-
-	// console.log(
-	// 	"🚀 ~ CashOnDelivery ~ customers_address_summary:",
-	// 	customers_address_summary
-	// );
 
 	const { user } = useAuth();
 	const addOrderToDB = async (productIds, total) => {
@@ -45,46 +38,72 @@ const CashOnDelivery = () => {
 				payment_type: payment_type,
 				customers_address_summary: customers_address_summary,
 			});
-	
+
 			if (orderRes.status === 201) {
-				const lastOrderRes = await api.get(`/order/getLastOrder/${user.id}`);
-				
-				if (lastOrderRes.status === 200 && lastOrderRes.data.length > 0) {
+				const lastOrderRes = await api.get(
+					`/order/getLastOrder/${user.id}`
+				);
+
+				if (
+					lastOrderRes.status === 200 &&
+					lastOrderRes.data.length > 0
+				) {
 					const last_order_id = lastOrderRes.data[0].id;
-	
-					const notificationRes = await api.post("/notification/addnotification", {
-						notification_content: "You have a new order. Order Number is #" + last_order_id + ".",
-						notification_time: GetDateTime(),
-						not_from: shopperId,
-						not_to: user.id,
-						status: 1,
-					});
-	
+
+					const notificationRes = await api.post(
+						"/notification/addnotification",
+						{
+							notification_content:
+								"You have a new order. Order Number is #" +
+								last_order_id +
+								".",
+							notification_time: GetDateTime(),
+							not_from: shopperId,
+							not_to: user.id,
+							status: 1,
+						}
+					);
+
 					if (notificationRes.status === 201) {
 						const productPromises = productIds.map((product) => {
-							const { id: productid, quantity, discount, price, weight = 0 } = product;
-							return api.post(`/ordered-product/add-ordered-product`, {
-								order_id: last_order_id,
-								product_id: productid,
+							const {
+								id: productid,
 								quantity,
 								discount,
 								price,
-								weight,
-							});
+								weight = 0,
+							} = product;
+							return api.post(
+								`/ordered-product/add-ordered-product`,
+								{
+									order_id: last_order_id,
+									product_id: productid,
+									quantity,
+									discount,
+									price,
+									weight,
+								}
+							);
 						});
-	
+
 						const responses = await Promise.all(productPromises);
-	
-						if (responses.every((response) => response.status === 201)) {
+
+						if (
+							responses.every(
+								(response) => response.status === 201
+							)
+						) {
 							// Delete products from cart
 							productIds.forEach((productId) => {
 								cartItems.forEach((cartItem) => {
 									if (cartItem.id === productId.id) {
-										dispatch(deleteFromCart(cartItem, shopperId));
+										dispatch(
+											deleteFromCart(cartItem, shopperId)
+										);
 									}
 								});
 							});
-	
+
 							// All API calls were successful
 							navigate("/orderStatus");
 						} else {
@@ -100,13 +119,10 @@ const CashOnDelivery = () => {
 				throw new Error("Failed to add order");
 			}
 		} catch (error) {
-			console.error("Error adding order:", error);
-			cogoToast.error("Order failed", {
-				position: "bottom-left",
-			});
+			toast.error(error.message, { position: "bottom-left" });
 		}
 	};
-	
+
 	return (
 		<div className="mx-auto   flex max-w-[375px] flex-col text-black  ">
 			<Breadcrumb pageTitle={payment_type} prevUrl="/cart"></Breadcrumb>

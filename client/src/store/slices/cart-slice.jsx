@@ -1,5 +1,5 @@
-import cogoToast from "@hasanm95/cogo-toast";
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
 const cartSlice = createSlice({
@@ -81,14 +81,14 @@ const cartSlice = createSlice({
 				}
 			}
 
-			cogoToast.success("Added To Cart", { position: "bottom-left" });
+			toast.success("Added To Cart", { position: "bottom-left" });
 		},
 		deleteFromCart(state, action) {
 			const product = action.payload;
 			state.cartItems = state.cartItems.filter(
 				(item) => item.cartItemId !== product.cartItemId
 			);
-			cogoToast.error("Removed From Cart", { position: "bottom-left" });
+			toast.error("Removed From Cart", { position: "bottom-left" });
 		},
 		decreaseQuantity(state, action) {
 			const product = action.payload;
@@ -96,18 +96,13 @@ const cartSlice = createSlice({
 				state.cartItems = state.cartItems.filter(
 					(item) => item.cartItemId !== product.cartItemId
 				);
-				cogoToast.error("Removed From Cart", {
-					position: "bottom-left",
-				});
+				toast.error("Removed From Cart", { position: "bottom-left" });
 			} else {
 				state.cartItems = state.cartItems.map((item) =>
 					item.cartItemId === product.cartItemId
 						? { ...item, quantity: item.quantity - 1 }
 						: item
 				);
-				// cogoToast.warn("Item Decremented From Cart", {
-				// 	position: "bottom-left",
-				// });
 			}
 		},
 		increaseQuantity(state, action) {
@@ -117,9 +112,6 @@ const cartSlice = createSlice({
 					? { ...item, quantity: item.quantity + 1 }
 					: item
 			);
-			// cogoToast.warn("Item Incremented From Cart", {
-			// 	position: "bottom-left",
-			// });
 		},
 		increaseQuantityofProd(state, action) {
 			const product = action.payload;
@@ -128,9 +120,6 @@ const cartSlice = createSlice({
 					? { ...item, quantity: item.quantity + 1 }
 					: item
 			);
-			// cogoToast.warn("Item Incremented in Cart", {
-			// 	position: "bottom-left",
-			// });
 		},
 		deleteAllFromCart(state) {
 			state.cartItems = [];
