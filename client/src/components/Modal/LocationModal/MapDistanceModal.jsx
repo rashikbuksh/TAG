@@ -2,10 +2,10 @@ import { useAuth } from "@context/auth";
 import GetLocation from "@helpers/GetLocation";
 import { api } from "@lib/api";
 import { Map, Marker } from "pigeon-maps";
-import { maptiler } from "pigeon-maps/providers";
+import { maptiler, osm } from "pigeon-maps/providers";
 import React, { useState } from "react";
-import Modal from "../Modal";
 import { FaLocationDot } from "react-icons/fa6";
+import Modal from "../Modal";
 
 const MapDistanceModal = (props) => {
 	const [minimumDistance, setMinimumDistance] = useState(0);
@@ -38,7 +38,7 @@ const MapDistanceModal = (props) => {
 		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
 		const d = R * c; // in metres
-		return d;
+		return d / 1000; // in KM
 	};
 	let allDistancesBelowMinimum = true;
 
@@ -65,15 +65,27 @@ const MapDistanceModal = (props) => {
 
 	const calculateZoom = (lat, lng) => {
 		const distance = DistanceCalculation(lat, lng);
-		// console.log(distance);
-		if (distance < 5) {
+		console.log(distance);
+		if (distance < 0.5) {
 			return 16;
-		} else if (distance < 10) {
+		} else if (distance < 1) {
+			return 15;
+		} else if (distance < 2) {
 			return 14;
-		} else if (distance < 50) {
+		} else if (distance < 3) {
+			return 13;
+		} else if (distance < 4) {
+			return 12;
+		} else if (distance < 5) {
+			return 11;
+		} else if (distance < 6) {
 			return 10;
-		} else {
+		} else if (distance < 7) {
+			return 9;
+		} else if (distance < 8) {
 			return 8;
+		} else {
+			return 7;
 		}
 	};
 
@@ -82,12 +94,12 @@ const MapDistanceModal = (props) => {
 			isOpen={props.isOpen}
 			setIsOpen={props.setIsOpen}
 			title={"Location"}
+			fullHeight={true}
 		>
 			{user?.id == null ? (
 				<h1>Please login to see the map</h1>
 			) : (
 				<div className="h-[380px]">
-					
 					<Map
 						provider={maptilerProvider}
 						height={500}
@@ -156,12 +168,12 @@ const MapDistanceModal = (props) => {
 					</Map>
 					<div className="flex items-center justify-center gap-2">
 						<span className="flex items-center">
-							<FaLocationDot size={27} color="red" /> Your
-							location
+							<FaLocationDot size={27} color="blue" /> Your
+							Location
 						</span>
 						<span className="flex items-center">
-							<FaLocationDot size={27} color="blue" />  Shop
-							Location
+							<FaLocationDot size={27} color="red" /> Shop
+							location
 						</span>
 					</div>
 				</div>
