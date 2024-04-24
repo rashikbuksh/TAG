@@ -112,7 +112,7 @@ const read = [
 					JOIN product_order po ON po.id = op.order_id
 					JOIN product p ON sp.product_id = p.id
 					LEFT JOIN customers_address_details cad ON cad.id = po.customers_address_details_id
-					LEFT JOIN customer_Profile cp ON po.customer_profile_id = cp.id
+					LEFT JOIN customer_profile cp ON po.customer_profile_id = cp.id
 				WHERE po.id = ?;`,
 		param: ["id"],
 		msg: "product_id",
