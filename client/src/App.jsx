@@ -329,6 +329,10 @@ const PUBLIC_ROUTES = [
 		element: ShopkeeperProfileCV,
 	},
 	{
+		path: "/shopper/:id/:name",
+		element: ShopkeeperProfileCV,
+	},
+	{
 		path: "/home",
 		element: Home,
 	},

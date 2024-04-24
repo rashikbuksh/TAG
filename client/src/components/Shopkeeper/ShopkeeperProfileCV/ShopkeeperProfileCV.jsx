@@ -167,14 +167,20 @@ const ShopkeeperProfileCV = () => {
 											`${
 												import.meta.env
 													.VITE_API_PUBLIC_URL
-											}/shopkeeperProfileCV/${id}`
+											}/shopper/${id}/${shopkeeperInfo.name.replace(
+												/\s+/g,
+												"_"
+											)}`
 										)
 									}
 									className="text-md link-info link flex items-center justify-between rounded bg-gray-200 p-2 "
 								>
 									{`${
 										import.meta.env.VITE_API_PUBLIC_URL
-									}/shopkeeperProfileCV/${id}`}{" "}
+									}/shopper/${id}/${shopkeeperInfo.name?.replace(
+										/\s+/g,
+										"_"
+									)}`}{" "}
 									<FaCopy size={30} />
 								</p>
 							</div>
@@ -211,7 +217,10 @@ const ShopkeeperProfileCV = () => {
 									copyToClipboard(
 										`${
 											import.meta.env.VITE_API_PUBLIC_URL
-										}/shopkeeperProfileCV/${id}`
+										}/shopper/${id}/${shopkeeperInfo.name?.replace(
+											/\s+/g,
+											"_"
+										)}`
 									)
 								}
 							>
@@ -234,7 +243,6 @@ const ShopkeeperProfileCV = () => {
 											className="h-6 w-6 rounded-full"
 											onClick={toggleModal}
 											src={
-												
 												shopkeeperInfo.profile_picture
 													? `${
 															import.meta.env

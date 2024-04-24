@@ -285,7 +285,7 @@ const Product = () => {
 														to={
 															import.meta.env
 																.VITE_API_PUBLIC_URL +
-															`/shopkeeperProfileCV/${prods.shopper_id}`
+															`/shopper/${prods.shopper_id}/${shopperName.replace(/\s+/g, '_')}`
 														}
 													>
 														<p className="primary-text  text-2xl  font-bold">

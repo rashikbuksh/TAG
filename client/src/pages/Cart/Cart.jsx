@@ -253,7 +253,7 @@ const Cart = () => {
 							) && (
 								<>
 									<Link
-										to={`../shopkeeperProfileCV/${shopper.id}`}
+										to={`../shopper/${shopper.id}/${shopper.name.replace(/\s+/g, '_')}`}
 									>
 										<h2 className=" px-4 text-base font-semibold">
 											{shopper.name}
