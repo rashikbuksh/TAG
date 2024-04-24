@@ -1,13 +1,16 @@
 import { DashBoardIcon } from "@SvgHub/Icons";
 import { useAuth } from "@context/auth";
-import React from "react";
+
 import { Link } from "react-router-dom";
+
+import { useNotification } from "@/context/NotificationProvider";
 
 const Footer = () => {
 	const { user } = useAuth();
+	const { notifications } = useNotification();
 	return (
 		<footer>
-			<div className="footer-nav-wrapper bg-[#FFFFFF] ">
+			<div className="footer-nav-wrapper border-t border-gray-600 bg-[#f2f2f5]  font-semibold  text-black">
 				<Link
 					to={import.meta.env.VITE_API_PUBLIC_URL + "/home"}
 					className="footer-nav-single"
@@ -252,6 +255,9 @@ const Footer = () => {
 							className="footer-nav-single"
 						>
 							<div className="menu-wrapper">
+								<span className="ml-6 pt-4 text-primary">
+									{notifications ? notifications.length : 0}
+								</span>
 								<svg
 									width="25"
 									height="24"

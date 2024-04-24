@@ -1,4 +1,3 @@
-
 import { Footer, Header } from "@components";
 import MessageModal from "@components/Modal/MessageModal/MessageModal";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
@@ -6,8 +5,17 @@ import { useAuth } from "@context/auth";
 import { MdVerifiedUser } from "react-icons/md";
 import { IoMdShare } from "react-icons/io";
 import { BiMessageRounded } from "react-icons/bi";
-
+import Drawer from "react-modern-drawer";
 import { TiStar } from "react-icons/ti";
+import {
+	FacebookIcon,
+	InstagramIcon,
+	Linkedin,
+	Takaicon,
+	TwitterIcon,
+	WhatsappIcon,
+} from "@SvgHub/SocialIcon";
+import { FaX } from "react-icons/fa6";
 import {
 	cartItemStock,
 	checkIfInCart,
@@ -21,7 +29,7 @@ import {
 } from "@store/slices/cart-slice";
 import { Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleLeft, FaCopy } from "react-icons/fa";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
@@ -36,6 +44,11 @@ const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const { user } = useAuth();
 	let { id } = useParams();
+	
+	const [isShareOpen, setIsShareOpen] = useState(false);
+	const toggleDrawer = () => {
+		setIsShareOpen((prevState) => !prevState);
+	};
 
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);
@@ -78,7 +91,7 @@ const Product = () => {
 		}
 	}, [cartItems, id]);
 
-	const [ setProductStock] = useState(0);
+	const [setProductStock] = useState(0);
 	const [showFullDescription, setShowFullDescription] = useState(false);
 
 	const [products, setProds] = useState([]);
@@ -91,7 +104,7 @@ const Product = () => {
 				setProductStock(response.data[0]?.product_count);
 			})
 			.catch((error) => {
-				console.log(error)
+				console.log(error);
 			});
 	}, [id]);
 
@@ -103,7 +116,7 @@ const Product = () => {
 				setShopperName(response.data[0]?.name);
 			})
 			.catch((error) => {
-				console.log(error)
+				console.log(error);
 			});
 	};
 	const handelOpenMessageModal = () => {
@@ -171,18 +184,6 @@ const Product = () => {
 								key={Math.random()}
 								className=" relative w-full  rounded p-3"
 							>
-								{/* <img
-									src={`${
-										import.meta.env.VITE_APP_IMG_URL
-									}/products/${single.image}`}
-									className={`${
-										products &&
-										products[0].active_status === 1
-											? ""
-											: "blur-sm"
-									} mx-auto h-full w-[317px] rounded object-cover`}
-									alt="Product"
-								/> */}
 								<Carousel
 									showArrows={true}
 									className="mx-auto sm:w-full lg:w-[40%] "
@@ -210,7 +211,6 @@ const Product = () => {
 									</div>
 									<div>
 										<img
-										
 											src={
 												single.optionalImage1
 													? `${
@@ -232,7 +232,6 @@ const Product = () => {
 									</div>
 									<div>
 										<img
-										
 											src={
 												single.optionalImage2
 													? `${
@@ -302,18 +301,65 @@ const Product = () => {
 															>
 																<BiMessageRounded className="text-xl" />
 															</button>
-															<p className="text-xs">Message</p>
+															<p className="text-xs">
+																Message
+															</p>
 														</div>
-													<div className="flex flex-col items-center">
-													<button
+														<div
 															onClick={
-																handelOpenMessageModal
+																toggleDrawer
 															}
+															className="flex flex-col items-center "
 														>
-															<IoMdShare className="text-xl" />
-														</button>
-														<p className="text-xs">Share</p>
-													</div>
+															<button>
+																<IoMdShare className="text-xl" />
+															</button>
+															<div className="text-xs ">
+																Share
+															</div>
+														</div>
+														<Drawer
+															open={isShareOpen}
+															onClose={
+																toggleDrawer
+															}
+															direction="bottom"
+														>
+															<div className="p-2">
+																<div className="mx-2 flex items-center justify-between ">
+																	<p className="text-lg font-bold">
+																		Share
+																	</p>
+																	<FaX
+																		className="text-xl"
+																		onClick={
+																			toggleDrawer
+																		}
+																	></FaX>
+																</div>
+																<div className="mx-auto mt-5 flex w-[80%] justify-between">
+																	<FacebookIcon />
+																	<Linkedin />
+																	<WhatsappIcon />
+																	<InstagramIcon />
+																	<TwitterIcon />
+																</div>
+																<div className="divider"></div>
+
+																<p className="text-md link-info link flex items-center justify-between rounded bg-gray-200 p-2 ">
+																	{`${
+																		import.meta
+																			.env
+																			.VITE_API_PUBLIC_URL
+																	}/product/${id}/${prods.title}`}{" "}
+																	<FaCopy
+																		size={
+																			30
+																		}
+																	/>
+																</p>
+															</div>
+														</Drawer>
 
 														<MessageModal
 															isOpen={isOpen}
@@ -353,7 +399,10 @@ const Product = () => {
 												</div>
 
 												<div className="relative mb-[20px] flex items-center gap-2">
-												<TiStar size={22} color="gold"  />
+													<TiStar
+														size={22}
+														color="gold"
+													/>
 													<p>
 														{prods.rating_count
 															? prods.rating_count
@@ -427,10 +476,10 @@ const Product = () => {
 													prods.discount > 0 ? (
 														<Fragment>
 															<span className="text-2xl font-bold text-black">
-																{" "}
+																
 																<span className="primary-text">
-																	৳{" "}
-																</span>{" "}
+																	৳
+																</span>
 																{`${getDiscountPrice(
 																	prods.price,
 																	prods.discount

@@ -15,8 +15,8 @@
     width: 100%;
     padding: 0 0px;
 
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
+    // border-top-left-radius: 30px;
+    // border-top-right-radius: 30px;
     background-color: $white;
     box-shadow: 0 2px 10px rgba($black, 0.16);
 }
@@ -40,8 +40,7 @@
 
     span {
         font-size: 12px;
-
-        color: $grey--four;
+        color: black;
     }
     svg,
     img {
