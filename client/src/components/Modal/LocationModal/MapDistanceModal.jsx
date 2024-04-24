@@ -94,7 +94,7 @@ const MapDistanceModal = (props) => {
 			isOpen={props.isOpen}
 			setIsOpen={props.setIsOpen}
 			title={"Location"}
-			fullHeight={true}
+			// fullHeight={true}
 		>
 			{user?.id == null ? (
 				<h1>Please login to see the map</h1>

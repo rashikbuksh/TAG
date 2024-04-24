@@ -8,6 +8,9 @@ import { useNotification } from "@/context/NotificationProvider";
 const Footer = () => {
 	const { user } = useAuth();
 	const { notifications } = useNotification();
+	const unReadNotification = notifications.filter(
+		(notification) => notification.status === 1
+	);
 	return (
 		<footer>
 			<div className="footer-nav-wrapper border-t border-gray-600 bg-[#f2f2f5]  font-semibold  text-black">
@@ -255,8 +258,8 @@ const Footer = () => {
 							className="footer-nav-single"
 						>
 							<div className="menu-wrapper">
-								<span className="ml-6 pt-4 text-primary">
-									{notifications ? notifications.length : 0}
+								<span style={{color:"red"}} className="ml-6 pt-4 text-error">
+									{unReadNotification ? unReadNotification.length : 0}
 								</span>
 								<svg
 									width="25"

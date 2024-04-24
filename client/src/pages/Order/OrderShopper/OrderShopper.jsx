@@ -73,7 +73,7 @@ const OrderShopper = () => {
 										<span>
 											{single.order_status ==
 											"completed" ? (
-												<span className="text-green-500">
+												<span className="text-blue-500">
 													{single.order_status}
 												</span>
 											) : single.order_status ==
@@ -83,7 +83,7 @@ const OrderShopper = () => {
 												</span>
 											) : single.order_status ==
 											  "accepted" ? (
-												<span className="primary-text text-lg font-bold">
+												<span className="text-green-500 text-lg font-bold">
 													{single.order_status}
 												</span>
 											) : (

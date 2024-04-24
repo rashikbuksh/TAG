@@ -248,7 +248,7 @@ function Offcanvas(props) {
 								{user ? (
 									<li>
 										<span className="icon">
-										<CiLogout size={26} color="black"></CiLogout>
+										<CiLogout size={26} color="black" ></CiLogout>
 										</span> 
 										<button onClick={Logout}>Logout</button>
 									</li>
