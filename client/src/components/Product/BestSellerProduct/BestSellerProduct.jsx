@@ -46,23 +46,6 @@ const BestSellerProduct = ({ limit, type }) => {
 									Best Sale{" "}
 								</span>
 
-								{/* <Link
-									to={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"/shop"
-									}
-								>
-									VIEW ALL{" "}
-									<span className="pr-2">
-										<ReactSVG
-											src={
-												import.meta.env
-													.VITE_API_PUBLIC_URL +
-												"/assets/img/icons/arrow-right.svg"
-											}
-										/>
-									</span>
-								</Link> */}
 							</h2>
 						)}
 
@@ -117,13 +100,29 @@ const BestSellerProduct = ({ limit, type }) => {
 														</h3>
 													</div>
 
-													<div className=" flex items-center  gap-1">
-														<Takaicon></Takaicon>
-														<span className="text-base font-semibold tracking-wider text-black">
-															{" "}
-															{single.price}{" "}
-														</span>
-													</div>
+													<div className="flex items-center gap-4 font-bold text-black">
+						{single.discount && single.discount > 0 ? (
+							<Fragment>
+								<span className=" font-bold text-black">
+									<span className="primary-text">৳</span>
+									{`${getDiscountPrice(single.price, single.discount)}`}
+								</span>
+								<s className="me-1 font-thin">
+									{" "}
+									<span className="primary-text">
+										৳{" "}
+									</span>{" "}
+									{`${single.price}`}
+								</s>
+							</Fragment>
+						) : (
+							<span className=" font-bold  text-black">
+								{" "}
+								<span className="primary-text">৳ </span>{" "}
+								{`${single.price}`}
+							</span>
+						)}
+					</div>
 												</div>
 												<div>
 													{user ? (

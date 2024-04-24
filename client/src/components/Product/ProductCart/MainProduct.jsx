@@ -12,7 +12,7 @@ import {
 	increaseQuantity,
 	increaseQuantityofProd,
 } from "@store/slices/cart-slice";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
 import { FaEye, FaLocationDot, FaX } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,7 +37,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		title,
 		access,
 	} = prod;
-	
+
 	const cartItems = useSelector((state) => state.cart.cartItems);
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(0);
@@ -173,7 +173,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 							>
 								<div className="relative mt-1 flex flex-col items-center justify-center gap-10">
 									<h4 className="flex items-center text-base text-white">
-										৳{" "}
+										<span className="">৳</span>
 										{`${(
 											parseFloat(
 												getDiscountPrice(
@@ -236,10 +236,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 
 					<div>
 						{isVerified === "verified" ? (
-							<MdVerifiedUser
-								color="#0866FF"
-								
-							></MdVerifiedUser>
+							<MdVerifiedUser color="#0866FF"></MdVerifiedUser>
 						) : (
 							""
 						)}
@@ -261,14 +258,35 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				</div>
 
 				{/* price  */}
-				<div className="flex justify-between px-2 ">
-					<div className="flex items-center gap-2">
-						<Takaicon></Takaicon>
-						<span className="text-sm font-semibold">{`${getDiscountPrice(
-							price,
-							discount
-						)}`}</span>
+				<div className="flex justify-start gap-2 ">
+			
+					<div className="flex items-center justify-start gap-2 font-bold text-black">
+						
+						{discount && discount > 0 ? (
+							
+							<>
+								<span className=" font-bold text-black">
+									<span className="primary-text">৳</span>
+									{`${getDiscountPrice(price, discount)}`}
+								</span>
+								<s className="me-1 font-thin">
+									{" "}
+									<span className="primary-text">
+										৳{" "}
+									</span>{" "}
+									{`${price}`}
+								</s>
+							</>
+						) : (
+							<span className=" font-bold  text-black">
+								{" "}
+								<span className="primary-text">৳ </span>{" "}
+								{`${price}`}
+							</span>
+						)}
+						
 					</div>
+
 					{access === "admin" && (
 						<div className="flex items-end">
 							{user && user.access === "admin" ? (

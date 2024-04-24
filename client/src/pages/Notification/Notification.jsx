@@ -32,9 +32,6 @@ const Notification = () => {
 			});
 		};
 
-		// Fetch notifications initially
-
-		// Fetch notifications every 60 seconds
 	}, []);
 
 	const getOrderNumberFromNotification = (notifications) => {
@@ -47,6 +44,7 @@ const Notification = () => {
 	const todayNotifications = notifications.filter((single) =>
 		isToday(single.notification_time)
 	);
+	
 	const olderNotifications = notifications.filter(
 		(single) => !isToday(single.notification_time)
 	);
