@@ -147,7 +147,7 @@ const PostUi = ({ postData }) => {
 									<Link
 										to={`${
 											import.meta.env.VITE_API_PUBLIC_URL
-										}/shopkeeperProfileCV/${shop_id}`}
+										}/shopper/${shop_id}/${shopperInfo[0]?.name.replace(/\s+/g, '_')}`}
 									>
 										{shopperInfo.map((shopperinfo) => (
 											<div key={shop_id} className="flex">

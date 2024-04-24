@@ -22,7 +22,6 @@ const BestSellerProduct = ({ limit, type }) => {
 	const dispatch = useDispatch();
 	const { user } = useAuth();
 	const [shopperProducts, setShopperProduct] = useState([]);
-
 	// get product
 	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproductBasedOnSaleCount`).then(
@@ -97,7 +96,7 @@ const BestSellerProduct = ({ limit, type }) => {
 												to={
 													import.meta.env
 														.VITE_API_PUBLIC_URL +
-													`/shopkeeperProfileCV/${single.shopper_id}`
+													`/shopper/${single.shopper_id}/${single.name.replace(/\s+/g, '_')}`
 												}
 											>
 												<p className="text-xs text-gray-400">

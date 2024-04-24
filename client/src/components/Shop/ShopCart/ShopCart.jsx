@@ -30,7 +30,7 @@ const ShopCart = ({ shop }) => {
 					<Link
 						to={
 							import.meta.env.VITE_API_PUBLIC_URL +
-							`/shopkeeperProfileCV/${shop.id}`
+							`/shopper/${shop.id}/${shop.name.replace(/\s+/g, '_')}`
 						}
 					>
 						<h1 className="font black text-xs">{shop.name}</h1>

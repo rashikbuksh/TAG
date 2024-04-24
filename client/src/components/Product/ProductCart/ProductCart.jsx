@@ -38,7 +38,7 @@ const ProductCart = ({ product }) => {
 							<Link
 								to={
 									import.meta.env.VITE_API_PUBLIC_URL +
-									`/shopkeeperProfileCV/${shopper_id}`
+									`/shopper/${shopper_id}/${shopper.name.replace(/\s+/g, '_')}`
 								}
 							>
 								<img
@@ -62,7 +62,7 @@ const ProductCart = ({ product }) => {
 								<Link
 									to={
 										import.meta.env.VITE_API_PUBLIC_URL +
-										`/shopkeeperProfileCV/${shopper_id}`
+										`/shopper/${shopper_id}/${shopper.name.replace(/\s+/g, '_')}`
 									}
 								>
 									<div className="flex">
