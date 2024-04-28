@@ -381,7 +381,10 @@ const Profile = () => {
 								<QRCode
 									value={`${
 										import.meta.env.VITE_API_PUBLIC_URL
-									}/shopper/${id}/${user.name.replace(/\s+/g, '_')}`}
+									}/shopper/${id}/${user.name.replace(
+										/\s+/g,
+										"_"
+									)}`}
 									size={130}
 								/>
 								<p>Scan The QR Code to Visit Your Shop</p>
@@ -391,11 +394,14 @@ const Profile = () => {
 									<div>
 										<input
 											type="text"
-											className="w-[300px] grow border-none bg-gray-200 text-center text-black "
+											className=" grow border-none bg-gray-200 text-center link text-primary  "
 											value={`${
 												import.meta.env
 													.VITE_API_PUBLIC_URL
-											}/shopper/${id}/${user.name.replace(/\s+/g, '_')}`}
+											}/shopper/${id}/${user.name.replace(
+												/\s+/g,
+												"_"
+											)}`}
 											readOnly
 										/>
 									</div>
@@ -405,7 +411,10 @@ const Profile = () => {
 												`${
 													import.meta.env
 														.VITE_API_PUBLIC_URL
-												}/shopper/${id}/${user.name.replace(/\s+/g, '_')}`
+												}/shopper/${id}/${user.name.replace(
+													/\s+/g,
+													"_"
+												)}`
 											)
 										}
 									>
