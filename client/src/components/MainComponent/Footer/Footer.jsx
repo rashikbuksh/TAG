@@ -255,8 +255,8 @@ const Footer = () => {
 							className="footer-nav-single"
 						>
 							<div className="menu-wrapper">
-								<span className="ml-6 pt-4 text-primary">
-									{notifications ? notifications.length : 0}
+								<span className="ml-6 pt-4" >
+									{notifications && notifications.length }
 								</span>
 								<svg
 									width="25"

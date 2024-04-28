@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const ShopCart = ({ shop }) => {
 	const [showModal, setShowModal] = useState(false);
+	const [isFollow, setIsFollow] = useState(false);
 
 	const toggleModal = () => {
 		setShowModal(!showModal);
@@ -30,7 +31,10 @@ const ShopCart = ({ shop }) => {
 					<Link
 						to={
 							import.meta.env.VITE_API_PUBLIC_URL +
-							`/shopper/${shop.id}/${shop.name.replace(/\s+/g, '_')}`
+							`/shopper/${shop.id}/${shop.name.replace(
+								/\s+/g,
+								"_"
+							)}`
 						}
 					>
 						<h1 className="font black text-xs">{shop.name}</h1>
@@ -43,9 +47,15 @@ const ShopCart = ({ shop }) => {
 					orientation="horizontal"
 					value={shop.review_count}
 				/>
-				<button className=" font-xl h-1/6 py-1 font-bold w-full rounded active:bg-[#a23c46]  bg-[#FF4C5E] text-white">
-					Follow
-				</button>
+				{!isFollow ? (
+					<button onClick={()=>setIsFollow(true)} className=" font-xl h-1/6 w-full rounded bg-[#FF4C5E] py-1 font-bold  text-white active:bg-[#a23c46]">
+						Follow
+					</button>
+				) : (
+					<button className=" font-xl h-1/6 w-full rounded bg-[#bc3845] py-1 font-bold  text-white opacity-80 disabled ">
+						Following
+					</button>
+				)}
 			</div>
 			{showModal && (
 				<Modal

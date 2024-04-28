@@ -111,7 +111,7 @@ const ShopKeeperDashBoard = () => {
 			isActive: pendingOrder > 0,
 		},
 		{
-			title: "Buy Product",
+			title: "Product Request",
 			content: buyProductContent, // Assuming buyProductContent is a variable containing 'Buy Product' data
 			link: "/buy-product", // Placeholder link for buying a product
 			isActive: false,
