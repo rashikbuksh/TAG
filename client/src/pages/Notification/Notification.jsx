@@ -31,7 +31,6 @@ const Notification = () => {
 				setUserAccess(res.data.access);
 			});
 		};
-
 	}, []);
 
 	const getOrderNumberFromNotification = (notifications) => {
@@ -44,7 +43,7 @@ const Notification = () => {
 	const todayNotifications = notifications.filter((single) =>
 		isToday(single.notification_time)
 	);
-	
+
 	const olderNotifications = notifications.filter(
 		(single) => !isToday(single.notification_time)
 	);
@@ -59,8 +58,8 @@ const Notification = () => {
 					<div
 						className={clsx(
 							"notification-item",
-							single.status == 1 && "notification-item--unread "
-						) }
+							single.status == 1 && "notification-item--unread  "
+						)}
 						key={single.id}
 					>
 						{single.notification_content.includes("commented") ? (
@@ -140,22 +139,72 @@ const Notification = () => {
 				</p>
 				{olderNotifications?.map((single) => (
 					<div
-						className={clsx(
-							"notification-item hover:bg-slate-200 cursor-pointer ",
+						key={single.id}
+						className={  clsx(
+							"notification-item cursor-pointer hover:bg-slate-200 flex items-center gap-2",
 							single.status == 1 && "notification-item--unread "
 						)}
-						key={single.id}
 					>
-						{single.notification_content.includes("commented") ? (
-							<Link
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									`/newsfeed`
-								}
-								onClick={() =>
-									HandleUpdateNotificationStatus(single.id)
-								}
-							>
+						<div className="avatar">
+							<div className="w-10 rounded-full">
+								{/* Todo:set data from user */}
+								<img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" /> 
+							</div>
+						</div>
+						<div>
+							{single.notification_content.includes(
+								"commented"
+							) ? (
+								<Link
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										`/newsfeed`
+									}
+									onClick={() =>
+										HandleUpdateNotificationStatus(
+											single.id
+										)
+									}
+								>
+									<div
+										className={`${
+											notifications[0].id === single.id
+												? "text-red-600"
+												: ""
+										}`}
+										dangerouslySetInnerHTML={{
+											__html: single.notification_content,
+										}}
+									/>
+								</Link>
+							) : single.notification_content.includes(
+									"Order"
+							  ) ? (
+								<Link
+									to={
+										import.meta.env.VITE_API_PUBLIC_URL +
+										`/orderShoperDetails/${getOrderNumberFromNotification(
+											single.notification_content
+										)}`
+									}
+									onClick={() =>
+										HandleUpdateNotificationStatus(
+											single.id
+										)
+									}
+								>
+									<div
+										className={`${
+											notifications[0].id === single.id
+												? "text-red-600"
+												: ""
+										}`}
+										dangerouslySetInnerHTML={{
+											__html: single.notification_content,
+										}}
+									/>
+								</Link>
+							) : (
 								<div
 									className={`${
 										notifications[0].id === single.id
@@ -166,60 +215,25 @@ const Notification = () => {
 										__html: single.notification_content,
 									}}
 								/>
-							</Link>
-						) : single.notification_content.includes("Order") ? (
-							<Link
-								to={
-									import.meta.env.VITE_API_PUBLIC_URL +
-									`/orderShoperDetails/${getOrderNumberFromNotification(
-										single.notification_content
-									)}`
-								}
-								onClick={() =>
-									HandleUpdateNotificationStatus(single.id)
-								}
-							>
-								<div
-									className={`${
-										notifications[0].id === single.id
-											? "text-red-600"
-											: ""
-									}`}
-									dangerouslySetInnerHTML={{
-										__html: single.notification_content,
-									}}
-								/>
-							</Link>
-						) : (
-							<div
-								className={`${
-									notifications[0].id === single.id
-										? "text-red-600"
-										: ""
-								}`}
-								dangerouslySetInnerHTML={{
-									__html: single.notification_content,
-								}}
-							/>
-						)}
-						{single.status ? <NotificationSound /> : ""}
+							)}
+							{single.status ? <NotificationSound /> : ""}
 
-						<div className="notification-item__time">
-							{" "}
-							<span>
-								<FaBell></FaBell>
-							</span>{" "}
-							{single.notification_time}
+							<div className="notification-item__time">
+								{" "}
+								<span>
+									<FaBell></FaBell>
+								</span>{" "}
+								{single.notification_time}
+							</div>
 						</div>
 					</div>
 				))}
 				{olderNotifications.length === 0 && (
-					<div className="notification-item">
+					<div className="notification-item ">
 						<div className="notification-item__time">
-							{" "}
 							<span>
 								<FaBell></FaBell>
-							</span>{" "}
+							</span>
 							No Notification
 						</div>
 					</div>

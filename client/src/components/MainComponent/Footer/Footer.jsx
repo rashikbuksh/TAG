@@ -260,6 +260,7 @@ const Footer = () => {
 							<div className="menu-wrapper">
 								<span style={{color:"red"}} className="ml-6 pt-4 text-error">
 									{unReadNotification ? unReadNotification.length : 0}
+
 								</span>
 								<svg
 									width="25"

@@ -39,12 +39,13 @@ import "./tooltip.css";
 import { Tooltip } from "react-tooltip";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Placeholder from "../../assets/img/no_product.png";
+import Swal from "sweetalert2";
 
 const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const { user } = useAuth();
 	let { id } = useParams();
-	
+
 	const [isShareOpen, setIsShareOpen] = useState(false);
 	const toggleDrawer = () => {
 		setIsShareOpen((prevState) => !prevState);
@@ -93,10 +94,28 @@ const Product = () => {
 
 	const [setProductStock] = useState(0);
 	const [showFullDescription, setShowFullDescription] = useState(false);
-
+	const [copySuccess, setCopySuccess] = useState(null);
 	const [products, setProds] = useState([]);
 	const [shopperName, setShopperName] = useState("");
-
+	const copyToClipboard = (reffer) => {
+		navigator.clipboard
+			.writeText(reffer)
+			.then(() => {
+				setCopySuccess("Copied to clipboard!");
+			})
+			.catch((err) => {
+				setCopySuccess("Copy failed: " + err);
+			});
+	};
+	if (copySuccess) {
+		Swal.fire({
+			position: "top",
+			icon: "success",
+			title: "Copied to clipboard!",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+	}
 	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproduct/${id}`)
 			.then((response) => {
@@ -284,7 +303,12 @@ const Product = () => {
 														to={
 															import.meta.env
 																.VITE_API_PUBLIC_URL +
-															`/shopper/${prods.shopper_id}/${shopperName.replace(/\s+/g, '_')}`
+															`/shopper/${
+																prods.shopper_id
+															}/${shopperName.replace(
+																/\s+/g,
+																"_"
+															)}`
 														}
 													>
 														<p className="primary-text  text-2xl  font-bold">
@@ -346,18 +370,37 @@ const Product = () => {
 																</div>
 																<div className="divider"></div>
 
-																<p className="text-md link-info link flex items-center justify-between rounded bg-gray-200 p-2 ">
-																	{`${
-																		import.meta
-																			.env
-																			.VITE_API_PUBLIC_URL
-																	}/product/${id}/${prods.title}`}{" "}
+																<div className="text-md  link text-primary flex items-center justify-between rounded bg-gray-200 p-2 ">
+																	<p>
+																		
+																		{
+																			import.meta
+																				.env
+																				.VITE_API_PUBLIC_URL
+																		}
+																		/product/
+																		{id}/
+																		{
+																			prods.title
+																		}
+																	</p>
 																	<FaCopy
+																		onClick={() =>
+																			copyToClipboard(
+																				`${
+																					import.meta
+																						.env
+																						.VITE_API_PUBLIC_URL
+																				}/product/${id}/${
+																					prods.title
+																				}`
+																			)
+																		}
 																		size={
 																			30
 																		}
 																	/>
-																</p>
+																</div>
 															</div>
 														</Drawer>
 
@@ -476,7 +519,6 @@ const Product = () => {
 													prods.discount > 0 ? (
 														<Fragment>
 															<span className="text-2xl font-bold text-black">
-																
 																<span className="primary-text">
 																	৳
 																</span>
