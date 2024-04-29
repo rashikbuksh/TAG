@@ -49,12 +49,6 @@ function Offcanvas(props) {
 				icon: <DashBoardIcon />,
 			},
 			{
-				title: "My Orders",
-				path: "/order",
-				access: ["shopper"],
-				icon: <FaClipboardList />,
-			},
-			{
 				title: "All Products",
 				path: "/shop",
 				access: ["customer", "shopper"],
