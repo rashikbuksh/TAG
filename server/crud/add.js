@@ -26,6 +26,7 @@ const { add: OrdredProduct } = require("../api/ordered_product");
 const { add: ShopperSchedule } = require("../api/shopper_schedule");
 const { add: shop } = require("../api/shop");
 const { add: customers_address_details } = require("../api/customers_address_details");
+const { add: shopper_follower } = require("../api/shopper_follower");
 
 const ADD_DATA = [
 	...Auth,
@@ -42,6 +43,7 @@ const ADD_DATA = [
 	...OrdredProduct,
 	...ShopperSchedule,
 	...shop,
+	...shopper_follower,
 	...customers_address_details
 ];
 

@@ -30,6 +30,8 @@ import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
 import Modal from "@components/Modal/Modal";
+import useClipboard from "@hooks/useCopyToClipBoard";
+import useFollow from "@hooks/useFollow";
 const ShopkeeperProfileCV = () => {
 	const [show, setShow] = useState(false);
 	const [shopperAddress, setShopperAddress] = useState("");
@@ -44,19 +46,28 @@ const ShopkeeperProfileCV = () => {
 	const [filteredAllProducts, setFilteredProducts] = useState([]);
 	const [selectedLetter, setSelectedLetter] = useState("");
 	const [mapModal, setMapModal] = useState(false);
-	const [copySuccess, setCopySuccess] = useState(null);
+	// const [followers, setFollowers] = useState(0);
+	// const [copySuccess, setCopySuccess] = useState(null);
 	const [latLong, setLatLong] = useState({ lat: 0, lng: 0 });
 	const dispatch = useDispatch();
 	// todo==============================================
 	// const { user}=useAuth()
 	// add addTo cart
-
+	const { copySuccess, copyToClipboard } = useClipboard();
+	console.log(user?.id);
+	const { isFollow, followShopper,followers, getFollower } = useFollow(id, user?.id);
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
 			.then((res) => {
 				setShopkeeperInfo(res.data[0]);
 			})
 			.catch((err) => {});
+
+		// api.get(`/follow/getShopperFollow/${id}`)
+		// 	.then((res) => {
+		// 		setFollowers(res.data.length);
+		// 	})
+		// 	.catch((err) => {});
 
 		api.get(
 			`${
@@ -110,16 +121,6 @@ const ShopkeeperProfileCV = () => {
 	const toggleDrawer = () => {
 		setIsShareOpen((prevState) => !prevState);
 	};
-	const copyToClipboard = (reffer) => {
-		navigator.clipboard
-			.writeText(reffer)
-			.then(() => {
-				setCopySuccess("Copied to clipboard!");
-			})
-			.catch((err) => {
-				setCopySuccess("Copy failed: " + err);
-			});
-	};
 
 	const handleShowDrawer = () => {
 		setIsShareOpen(!isShareOpen);
@@ -129,7 +130,6 @@ const ShopkeeperProfileCV = () => {
 	const toggleModal = () => {
 		setShowModal(!showModal);
 	};
-	// console.log(shopkeeperInfo);
 	return (
 		<>
 			<Header />
@@ -312,16 +312,28 @@ const ShopkeeperProfileCV = () => {
 									</span>
 								</div>
 								<div className="my-1 flex items-center gap-4 font-bold">
-									<div>33 Followers </div>
+									<div>{followers}Followers </div>
 								</div>
 
 								<div className=" flex items-center justify-center gap-4">
 									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white">
 										Message
 									</button>
-									<button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
+									{!isFollow ? (
+										<button
+											onClick={followShopper}
+											className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white"
+										>
+											Follow
+										</button>
+									) : (
+										<button className="font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
+											Following
+										</button>
+									)}
+									{/* <button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
 										Follow
-									</button>
+									</button> */}
 									<button
 										className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white"
 										onClick={() =>
@@ -578,29 +590,3 @@ const ShopkeeperProfileCV = () => {
 
 export default ShopkeeperProfileCV;
 
-{
-	/* <button
-	type="button"
-	disabled={user && user.access !== "customer"}
-	onClick={() => {
-		single.quantity = 0;
-
-		if (checkIfInCart(cartItems, single)) {
-			dispatch(increaseQuantityofProd(single));
-		} else {
-			dispatch(addToCart(single));
-		}
-	}}
-	className={`${
-		user && user.access === "customer"
-			? ""
-			: "btn btn-disabled border-none bg-white bg-none p-0"
-	} w-full rounded  bg-[#6baddb] px-2  py-1 text-center  active:bg-[#568db3] ${
-		!shopkeeperInfo.active_status == 1
-			? "bg-[#469CD6]"
-			: "btn-disabled bg-red-300"
-	}`}
->
-	{!shopkeeperInfo.active_status == 1 ? "Add To Cart" : "Shop Close Now"}
-</button>; */
-}

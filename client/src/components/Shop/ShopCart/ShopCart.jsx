@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@components/Modal/Modal";
 import logo from "../../../assets/img/Tag-logo-blue-get_100_100.png";
 import { Rating } from "@smastrom/react-rating";
 import { Link } from "react-router-dom";
 
-const ShopCart = ({ shop }) => {
-	const [showModal, setShowModal] = useState(false);
-	const [isFollow, setIsFollow] = useState(false);
+import { useAuth } from "@context/auth";
+import useFollow from "@hooks/useFollow";
 
-	const toggleModal = () => {
-		setShowModal(!showModal);
-	};
+const ShopCart = ({ shop }) => {
+	const { user } = useAuth();
+	const [showModal, setShowModal] = useState(false);
+	const { isFollow, followShopper } = useFollow(shop.id, user?.id);
 
 	return (
 		<>
@@ -25,7 +25,7 @@ const ShopCart = ({ shop }) => {
 							: logo
 					}
 					alt=""
-					onClick={toggleModal}
+					onClick={() => setShowModal(!showModal)}
 				/>
 				<div className="flex h-10 items-center justify-center">
 					<Link
@@ -48,11 +48,14 @@ const ShopCart = ({ shop }) => {
 					value={shop.review_count}
 				/>
 				{!isFollow ? (
-					<button onClick={()=>setIsFollow(true)} className=" font-xl h-1/6 w-full rounded bg-[#FF4C5E] py-1 font-bold  text-white active:bg-[#a23c46]">
+					<button
+						onClick={followShopper}
+						className=" font-xl h-1/6 w-full rounded bg-[#FF4C5E] py-1 font-bold  text-white active:bg-[#a23c46]"
+					>
 						Follow
 					</button>
 				) : (
-					<button className=" font-xl h-1/6 w-full rounded bg-[#bc3845] py-1 font-bold  text-white opacity-80 disabled ">
+					<button className=" font-xl disabled h-1/6 w-full rounded bg-[#bc3845] py-1  font-bold text-white opacity-80 ">
 						Following
 					</button>
 				)}

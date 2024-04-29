@@ -13,6 +13,7 @@ import { FaRegCopy } from "react-icons/fa";
 
 import { FacebookIcon, InstagramIcon, WhatsappIcon } from "@/SvgHub/SocialIcon";
 import Swal from "sweetalert2";
+import useClipboard from "@hooks/useCopyToClipBoard";
 
 const Profile = () => {
 	// const { data, isLoading, errorMessage } = useFetch("profile.json");
@@ -21,31 +22,12 @@ const Profile = () => {
 	const [userData, setUserData] = useState({});
 	const [image, setImage] = useState(null);
 	const id = userData?.id;
-	const [copySuccess, setCopySuccess] = useState(null);
+	// const [copySuccess, setCopySuccess] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const toggleModal = () => {
 		setShowModal(!showModal);
 	};
-	const copyToClipboard = (reffer) => {
-		navigator.clipboard
-			.writeText(reffer)
-			.then(() => {
-				setCopySuccess("Copied to clipboard!");
-			})
-			.catch((err) => {
-				setCopySuccess("Copy failed: " + err);
-			});
-	};
-	if (copySuccess) {
-		Swal.fire({
-			position: "top-end",
-			icon: "success",
-			title: "Copied to clipboard!",
-			showConfirmButton: false,
-			timer: 1500,
-		});
-	}
-
+	const { copySuccess, copyToClipboard } = useClipboard();
 	const handleImageUpload = (e) => {
 		const file = e.target.files[0];
 		if (file) {
@@ -394,7 +376,7 @@ const Profile = () => {
 									<div>
 										<input
 											type="text"
-											className=" grow border-none bg-gray-200 text-center link text-primary  "
+											className=" link grow border-none bg-gray-200 text-center text-primary  "
 											value={`${
 												import.meta.env
 													.VITE_API_PUBLIC_URL

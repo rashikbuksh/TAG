@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const useClipboard = () => {
 	const [copySuccess, setCopySuccess] = useState(null);
@@ -7,10 +8,13 @@ const useClipboard = () => {
 		navigator.clipboard
 			.writeText(text)
 			.then(() => {
-				setCopySuccess("Copied to clipboard!");
+				setCopySuccess(true);
+				if (copySuccess) {
+					toast.success("Copied to clipboard!")
+				}
 			})
 			.catch((err) => {
-				setCopySuccess("Copy failed: " + err);
+				setCopySuccess(false);
 			});
 	};
 
