@@ -253,7 +253,7 @@ const PROTECTED_ROUTES = [
 	},
 	{
 		id: 31,
-		name: "Order History Shoper",
+		name: "Order History Shopper",
 		path: "/ordersHistoryDetails/:id",
 		element: ShopperOrderHistory,
 		access: ["admin", "shopper"],
