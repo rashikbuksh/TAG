@@ -327,7 +327,7 @@ const ShopkeeperProfileCV = () => {
 											Follow
 										</button>
 									) : (
-										<button className="font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
+										<button className="font-xl h-[40px] w-[100px] rounded bg-[#ca3d4c] text-white">
 											Following
 										</button>
 									)}
