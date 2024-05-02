@@ -18,6 +18,7 @@ const { read: OrdredProduct } = require("../api/ordered_product");
 const { read: ShopperSchedule } = require("../api/shopper_schedule");
 const { read: shop } = require("../api/shop");
 const { read: customers_address_details } = require("../api/customers_address_details");
+const { read: shopper_follower } = require("../api/shopper_follower");
 const GET_DATA = [
 	...Auth,
 	...Profile,
@@ -36,6 +37,7 @@ const GET_DATA = [
 	...ShopperSchedule,
 	...shop,
 	...customers_address_details,
+	...shopper_follower,
 ];
 
 GET_DATA.forEach(({ uri, query, param }) => {
