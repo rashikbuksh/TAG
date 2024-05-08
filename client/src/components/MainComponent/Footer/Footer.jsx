@@ -1,5 +1,6 @@
-import { DashBoardIcon } from "@SvgHub/Icons";
+
 import { useAuth } from "@context/auth";
+import { FcShop } from "react-icons/fc";
 
 import { Link } from "react-router-dom";
 
@@ -133,8 +134,14 @@ const Footer = () => {
 							className="footer-nav-single"
 						>
 							<div className="menu-wrapper">
-								<DashBoardIcon></DashBoardIcon>
-								<span>Dashboard</span>
+								{/* TODO:change logo */}
+
+								{/* <DashBoardIcon></DashBoardIcon> */}
+								{/* <ColorFullDashboardIcon></ColorFullDashboardIcon> */}
+								<FcShop size={35} />
+								{/* <img src="./assets/img/file.png" alt="icone" /> */}
+
+								<span className="">Dashboard</span>
 							</div>
 						</Link>
 					) : (
@@ -255,8 +262,8 @@ const Footer = () => {
 							className="footer-nav-single"
 						>
 							<div className="menu-wrapper">
-								<span className="ml-6 pt-4 " >
-									{notifications && notifications.length }
+								<span className="ml-6 pt-4 ">
+									{notifications && notifications.length}
 								</span>
 								<svg
 									width="25"
