@@ -183,6 +183,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 											) * quantity
 										).toFixed(2)}`}
 									</h4>
+									{/* TODO:have to solve plus minus */}
 									<div className="flex items-center gap-2">
 										<button
 											type="button"
