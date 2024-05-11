@@ -138,7 +138,7 @@ const Footer = () => {
 
 								{/* <DashBoardIcon></DashBoardIcon> */}
 								{/* <ColorFullDashboardIcon></ColorFullDashboardIcon> */}
-								<FcShop size={35} />
+								<FcShop  className="text-3xl" />
 								{/* <img src="./assets/img/file.png" alt="icone" /> */}
 
 								<span className="">Dashboard</span>
