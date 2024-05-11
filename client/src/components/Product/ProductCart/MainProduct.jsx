@@ -108,8 +108,12 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 		setIsLocationOpen(!isOpen);
 	};
 	const navigateProductPage = (id, title) => {
-		api.post(`/shopperproduct/increaseView/${id}`);
-		navigate(`/product/${id}/${title}`);
+		if (display) {
+			return;
+		} else {
+			api.post(`/shopperproduct/increaseView/${id}`);
+			navigate(`/product/${id}/${title}`);
+		}
 	};
 	const divStyle = {
 		borderRadius: "12px",
