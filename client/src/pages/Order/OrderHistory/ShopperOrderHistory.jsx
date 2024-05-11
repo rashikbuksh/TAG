@@ -3,6 +3,7 @@ import { Breadcrumb } from "@components";
 import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FormatDateInBST, FormatTimeInBST } from "@helpers/GetDateTime";
 
 const ShopperOrderHistory = () => {
 	const [data, setData] = useState([]);
@@ -39,7 +40,11 @@ const ShopperOrderHistory = () => {
 									{single.productCategory}
 								</span>
 								<div className="text-xs">
-									<span>2 jan 2023 </span> <span>8:30</span>
+									<span className="text-sm">
+										{FormatDateInBST(single.order_time)}{" "}
+										<br />
+										{FormatTimeInBST(single.order_time)}
+									</span>
 								</div>
 								<div>
 									<span className="text-xs">
@@ -67,7 +72,7 @@ const ShopperOrderHistory = () => {
 										<span>
 											{single.order_status ==
 											"completed" ? (
-												<span className="text-green-500">
+												<span className="text-blue-500">
 													{single.order_status}
 												</span>
 											) : single.order_status ==
@@ -77,7 +82,7 @@ const ShopperOrderHistory = () => {
 												</span>
 											) : single.order_status ==
 											  "accepted" ? (
-												<span className="primary-text text-lg font-bold">
+												<span className="text-green-500 text-lg font-bold">
 													{single.order_status}
 												</span>
 											) : (

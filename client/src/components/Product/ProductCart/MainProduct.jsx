@@ -259,33 +259,33 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 				</div>
 
 				{/* price  */}
-				<div className="flex justify-start gap-2 ">
-			
+				<div className="flex justify-between gap-2 ">
 					<div className="flex items-center justify-start gap-2 font-bold text-black">
-						
-						{discount && discount > 0 ? (
-							
-							<>
-								<span className=" font-bold text-black">
-									<span className="primary-text">৳</span>
-									{`${getDiscountPrice(price, discount)}`}
-								</span>
-								<s className="me-1 font-thin">
+						<div>
+							{discount && discount > 0 ? (
+								<>
+									<span className=" font-bold text-black">
+										<span className="primary-text">৳</span>
+										{`${getDiscountPrice(price, discount)}`}
+									</span>
+									<s className="me-1 ml-3 font-thin">
+										{" "}
+										<span className="primary-text">
+											৳{" "}
+										</span>{" "}
+										{`${price}`}
+									</s>
+								</>
+							) : (
+								<span className=" font-bold  text-black">
 									{" "}
 									<span className="primary-text">
 										৳{" "}
 									</span>{" "}
 									{`${price}`}
-								</s>
-							</>
-						) : (
-							<span className=" font-bold  text-black">
-								{" "}
-								<span className="primary-text">৳ </span>{" "}
-								{`${price}`}
-							</span>
-						)}
-						
+								</span>
+							)}
+						</div>
 					</div>
 
 					{access === "admin" && (
@@ -358,7 +358,7 @@ const MainProduct = ({ shopperProduct, product, height, width }) => {
 						)}
 					</div>
 					{access !== "admin" && (
-						<div className="flex items-end">
+						<div className="ga flex">
 							{user && user.access === "admin" ? (
 								""
 							) : user && user.access === "shopper" ? (

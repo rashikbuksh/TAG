@@ -13,13 +13,10 @@ const OrderModal = () => {
 	const [addressTitle, setAddressTitle] = useState(null);
 	const [address, setAddress] = useState(null);
 	const [contactNo, setContactNo] = useState(null);
-	const [customer_profile_id, setCustomer_profile_id] = useState(null);
-	const [customer_profile_Name, setCustomer_profile_Name] = useState(null);
+	const [shopper_profile_id, set_Shopper_profile_id] = useState(null);
+	const [shopper_profile_Name, set_shopper_profile_Name] = useState(null);
 	const [customers_address_summary, setCustomers_address_summary] =
 		useState(null);
-
-
-
 	const [memoizedProducts, setMemoizedProducts] = useState(products);
 	useEffect(() => {
 		if (id) {
@@ -35,10 +32,10 @@ const OrderModal = () => {
 					setCustomers_address_summary(
 						response.data[0].customers_address_summary
 					);
-					setCustomer_profile_id(
-						response.data[0].customer_profile_id
+					set_Shopper_profile_id(
+						response.data[0].shopper_id
 					);
-					setCustomer_profile_Name(response.data[0].customer_name);
+					set_shopper_profile_Name(response.data[0].shopper_name);
 					setCustomers_address_summary(
 						response.data[0].customers_address_summary
 					);
@@ -82,12 +79,12 @@ const OrderModal = () => {
 								Customer Information:
 							</p>
 							<p className="text-lg">
-								Customer Id:{customer_profile_id}
+								Shopper id:{shopper_profile_id}
 							</p>
 							<p className="text-md">
-								Customer Name:{" "}
+								Shopper Name:{" "}
 								<span className="font-bold text-red-900">
-									{customer_profile_Name}
+									{shopper_profile_Name}
 								</span>
 							</p>
 							<p>{contactNo}</p>
