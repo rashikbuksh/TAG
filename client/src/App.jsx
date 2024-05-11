@@ -52,6 +52,7 @@ import ShopkeeperSchedule from "./pages/ShopkeeperDashboard/ShopkeeperSchedule";
 import VerificationOTP from "./pages/VerificationOTP/Index";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
+import ProductRequest from "./pages/ProductRequest/ProductRequest";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
@@ -87,27 +88,6 @@ const AllProductAdmin = lazy(() =>
 );
 
 const PROTECTED_ROUTES = [
-	// {
-	// 	id: 1,
-	// 	name: "Home",
-	// 	path: "/home",
-	// 	element: Home,
-	// 	access: ["admin", "customer", "shopper", "modarator"],
-	// },
-	// {
-	// 	id: 5,
-	// 	name: "Shop",
-	// 	path: "/shop",
-	// 	element: Shop,
-	// 	access: ["admin", "customer", "shopper"],
-	// },
-	// {
-	// 	id: 6,
-	// 	name: "Product",
-	// 	path: "/product/:id",
-	// 	element: Product,
-	// 	access: ["admin", "customer", "shopper"],
-	// },
 	{
 		id: 7,
 		name: "Chat",
@@ -292,6 +272,13 @@ const PROTECTED_ROUTES = [
 		path: "/paymentGateway",
 		element: PaymentGateway,
 		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id: 35,
+		name: " Product Request",
+		path: "/productRequest",
+		element: ProductRequest,
+		access: ["admin", "shopper"],
 	},
 ];
 

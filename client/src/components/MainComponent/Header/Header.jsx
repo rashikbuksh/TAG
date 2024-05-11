@@ -10,6 +10,7 @@ import Offcanvas from "./Offcanvas";
 import SearchKeywords from "./SearchKeywords";
 
 import { BellIcon } from "@/SvgHub/Icons";
+
 import { FaLocationDot, FaX } from "react-icons/fa6";
 function Header() {
 	const { user } = useAuth();
@@ -123,66 +124,71 @@ function Header() {
 												<FaX className="text-2xl   text-pink-500"></FaX>{" "}
 											</>
 										) : (
-											<div>
+											<div className="">
 												{user ? (
-													<div className="flex items-center justify-center gap-3">
-														<FaLocationDot
-															color="red"
-															size={30}
-															onClick={
-																HandleLocationClick
-															}
-														></FaLocationDot>
-														{locationModal && (
-															<MapDistanceModal
-																isOpen={
-																	locationModal
+													<>
+														{/* Hidden section */}
+														<div className="flex items-center justify-center gap-3">
+															<FaLocationDot
+																color="red"
+																size={30}
+																onClick={
+																	HandleLocationClick
 																}
-																setIsOpen={
-																	setLocationModal
-																}
-																latLong={
-																	latLong
-																}
-																single={false}
-															/>
-														)}
+															></FaLocationDot>
+															{locationModal && (
+																<MapDistanceModal
+																	isOpen={
+																		locationModal
+																	}
+																	setIsOpen={
+																		setLocationModal
+																	}
+																	latLong={
+																		latLong
+																	}
+																	single={
+																		false
+																	}
+																/>
+															)}
 
-														<div className="avatar">
-															<Link
-																to={
-																	import.meta
-																		.env
-																		.VITE_API_PUBLIC_URL +
-																	"/profile"
-																}
-															>
-																<div className="h-8 w-8 rounded-full ring ring-[#2F5BA9] ">
-																	{user.profile_picture !==
-																	null ? (
-																		<img
-																			className="rounded-full"
-																			src={`${
-																				import.meta
-																					.env
-																					.VITE_APP_IMG_URL
-																			}/usersProfilePic/${
-																				user.profile_picture
-																			}`}
-																		/>
-																	) : (
-																		<div className="flex justify-center pt-[2px]">
-																			<FaUserTie
-																				size={
-																					25
-																				}
+															<div className="avatar">
+																<Link
+																	to={
+																		import.meta
+																			.env
+																			.VITE_API_PUBLIC_URL +
+																		"/profile"
+																	}
+																>
+																	<div className="h-8 w-8 rounded-full ring ring-[#2F5BA9] ">
+																		{user.profile_picture !==
+																		null ? (
+																			<img
+																				className="rounded-full"
+																				src={`${
+																					import.meta
+																						.env
+																						.VITE_APP_IMG_URL
+																				}/usersProfilePic/${
+																					user.profile_picture
+																				}`}
 																			/>
-																		</div>
-																	)}
-																</div>
-															</Link>
+																		) : (
+																			<div className="flex justify-center pt-[2px]">
+																				<FaUserTie
+																					size={
+																						25
+																					}
+																				/>
+																			</div>
+																		)}
+																	</div>
+																</Link>
+															</div>
 														</div>
-													</div>
+													</>
 												) : (
 													<Link
 														to={"/login"}

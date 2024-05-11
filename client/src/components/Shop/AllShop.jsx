@@ -18,7 +18,7 @@ const AllShop = () => {
 			
 			{
 				<h2 className="section-title  mb-2 border-b-2 py-2">
-					<span className="text-xl font-bold pl-2">Our Best Shopper </span>
+					<span className="text-xl font-bold pl-2">Our Best Shop </span>
 
 					<Link
 						className="primary-text pr-2 hidden"

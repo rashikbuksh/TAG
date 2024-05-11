@@ -8,9 +8,12 @@ import { FcMoneyTransfer } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import SuccessOrderModal from "@components/SuccessOrderModal/SuccessOrderModal";
+import { useState } from "react";
 
 const CashOnDelivery = () => {
 	const { cartItems } = useSelector((state) => state.cart);
+	const [isOpen, setIsOpen] = useState(false);
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -103,9 +106,11 @@ const CashOnDelivery = () => {
 									}
 								});
 							});
+							// Add congratulation modal
+							setIsOpen(true)
 
 							// All API calls were successful
-							navigate("/orderStatus");
+							// navigate("/orderStatus");
 						} else {
 							throw new Error("Failed to add ordered products");
 						}
@@ -162,6 +167,12 @@ const CashOnDelivery = () => {
 					Confirm Order
 				</button>
 			</div>
+			{isOpen && (
+				<SuccessOrderModal
+					isOpen={isOpen}
+					setIsOpen={setIsOpen}
+				></SuccessOrderModal>
+			)}
 		</div>
 	);
 };

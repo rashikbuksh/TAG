@@ -230,6 +230,8 @@ export const DashBoardIcon = () => {
 		</svg>
 	);
 };
+
+
 export const TikIcon = () => {
 	return (
 		<svg
@@ -304,7 +306,7 @@ export const ChatIcon = () => {
 	);
 };
 
-export const BellIcon = ()=>{
+export const BellIcon = () => {
 	return (
 		<svg
 			width="40"
@@ -382,5 +384,4 @@ export const BellIcon = ()=>{
 			</g>
 		</svg>
 	);
-
-}
+};
