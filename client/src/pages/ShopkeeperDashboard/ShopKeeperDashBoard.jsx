@@ -113,7 +113,7 @@ const ShopKeeperDashBoard = () => {
 		{
 			title: "Product Request",
 			content: buyProductContent, // Assuming buyProductContent is a variable containing 'Buy Product' data
-			link: "/buy-product", // Placeholder link for buying a product
+			link: "/productRequest", // Placeholder link for buying a product
 			isActive: false,
 		},
 		{
@@ -280,12 +280,7 @@ const ShopKeeperDashBoard = () => {
 						<h1 className="my-1 text-base font-bold ">
 							{shopkeeper.name}
 						</h1>
-						{/* <p className="flex items-center gap-2 text-sm text-black lg:text-xl">
-							<FaMapPin></FaMapPin>{" "}
-							{shopkeeper.shipping_address
-								? shopkeeper.shipping_address
-								: "No Adress provided"}
-						</p> */}
+						
 						<p className="flex items-center gap-2 text-sm text-black lg:text-xl">
 							<FaAddressCard></FaAddressCard>{" "}
 							{shopkeeper.address

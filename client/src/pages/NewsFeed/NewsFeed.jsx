@@ -85,7 +85,6 @@ const NewsFeed = () => {
 				</div>
 			</div>
 			<div className="h-24"></div>
-
 			{showScrollButton && (
 				<button
 					className="fixed bottom-24 right-5 z-20 rounded-full bg-white bg-opacity-50 p-2 shadow-lg"

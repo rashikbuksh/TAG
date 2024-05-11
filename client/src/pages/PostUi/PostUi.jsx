@@ -12,7 +12,7 @@ import { api } from "@lib/api";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import React, { useEffect, useState } from "react";
-import { FaHeart, FaRegComment } from "react-icons/fa";
+import { FaCopy, FaHeart, FaRegComment } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import { PiShareFat } from "react-icons/pi";
 import Drawer from "react-modern-drawer";
@@ -21,11 +21,13 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import demoProfile from "../../../src/assets/img/Tag-logo-blue-get_50_50.png";
 import CommentModal from "./CommentModal";
+import useClipboard from "@hooks/useCopyToClipBoard";
 const PostUi = ({ postData }) => {
 	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");
 	const [shopperProducts, setShopperProduct] = useState([]);
 	const [shopperInfo, setShopperInfo] = useState([]);
+	const { copySuccess, copyToClipboard } = useClipboard();
 
 	const {
 		id,
@@ -61,6 +63,11 @@ const PostUi = ({ postData }) => {
 			setShopperInfo(res.data);
 		});
 	}, [postData]);
+
+	//DOING===========
+	const handleShare = () => {
+		console.log("share");
+	};
 
 	const currentDate = new Date(date);
 	const formattedTime = currentDate.toLocaleTimeString([], {
@@ -124,6 +131,21 @@ const PostUi = ({ postData }) => {
 		});
 	};
 
+	const handleCopy = () => {
+		copyToClipboard(
+			`${
+				import.meta.env.VITE_API_PUBLIC_URL
+			}/shopper/${shop_id}/${shopperInfo[0]?.name.replace(/\s+/g, "_")}`
+		);
+		Swal.fire({
+			position: "top",
+			icon: "success",
+			title: "Copied!",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+	};
+
 	return (
 		<div className="my-6">
 			<div className="rounded-lg border ">
@@ -147,7 +169,10 @@ const PostUi = ({ postData }) => {
 									<Link
 										to={`${
 											import.meta.env.VITE_API_PUBLIC_URL
-										}/shopper/${shop_id}/${shopperInfo[0]?.name.replace(/\s+/g, '_')}`}
+										}/shopper/${shop_id}/${shopperInfo[0]?.name.replace(
+											/\s+/g,
+											"_"
+										)}`}
 									>
 										{shopperInfo.map((shopperinfo) => (
 											<div key={shop_id} className="flex">
@@ -317,43 +342,49 @@ const PostUi = ({ postData }) => {
 					>
 						Hi
 					</CommentModal>
-					<div className="flex flex-col items-center justify-center">
+					<div
+						className="flex cursor-pointer flex-col items-center justify-center"
+						onClick={() => setIsShareOpen(!isShareOpen)}
+					>
 						<div className="text-xs">
-							<p className="text-sm">{share_count} share</p>
+							<p className="text-sm">{share_count} share </p>
 						</div>
-						<Drawer
-							open={isShareOpen}
-							onClose={toggleDrawer}
-							direction="bottom"
-						>
-							<div className="p-2">
-								<div className="mx-2 flex items-center justify-between ">
-									<p className="text-lg font-bold">Share</p>
-									<FaX
-										className="text-xl"
-										onClick={toggleDrawer}
-									></FaX>
-								</div>
-								<div className="mx-auto mt-5 flex w-[80%] justify-between">
-									<FacebookIcon />
-									<Linkedin />
-									<WhatsappIcon />
-									<InstagramIcon />
-									<TwitterIcon />
-								</div>
-								<div className="divider"></div>
-								<p>Copy Link</p>
-							</div>
-						</Drawer>
+
 						<button>
-							<PiShareFat
-								onClick={() => setIsShareOpen(!isShareOpen)}
-								className="text-lg"
-							/>
+							<PiShareFat className="text-lg" />
 						</button>
 					</div>
 				</div>
 			</div>
+			<Drawer
+				open={isShareOpen}
+				onClose={toggleDrawer}
+				direction="bottom"
+			>
+				<div className="p-2">
+					<div className="mx-2 flex items-center justify-between ">
+						<p className="text-lg font-bold">Share</p>
+						<FaX className="text-xl" onClick={toggleDrawer}></FaX>
+					</div>
+					<div className="mx-auto mt-5 flex w-[80%] justify-between">
+						<FacebookIcon />
+						<Linkedin />
+						<WhatsappIcon />
+						<InstagramIcon />
+						<TwitterIcon />
+					</div>
+					<div className="divider"></div>
+					<div className="text-md  link flex items-center justify-between rounded bg-gray-200 p-2 text-primary ">
+						<p>{`${
+							import.meta.env.VITE_API_PUBLIC_URL
+						}/shopper/${shop_id}/${shopperInfo[0]?.name.replace(
+							/\s+/g,
+							"_"
+						)}`}</p>
+						<FaCopy onClick={handleCopy} size={30} />
+					</div>
+				</div>
+			</Drawer>
 		</div>
 	);
 };

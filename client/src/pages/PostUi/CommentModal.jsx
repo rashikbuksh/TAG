@@ -157,7 +157,8 @@ const CommentModal = ({
 							<input
 								className="h-10 w-full rounded border p-2 text-xl font-bold text-blue-600 focus:outline-none focus:ring-1 focus:ring-gray-300"
 								name="comment"
-								placeholder="Add a comment"
+								disabled
+								placeholder="Pick your comment"
 								value={selectedComment}
 								onChange={(e) =>
 									setSelectedComment(e.target.value)

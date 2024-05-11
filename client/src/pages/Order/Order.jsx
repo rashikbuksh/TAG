@@ -105,11 +105,11 @@ const Order = () => {
 								Sorry ! Currently you have no order found
 							</p>
 							<a
-								href="/"
+								href="/home"
 								className="mt-4 inline-block rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
 							>
 								{" "}
-								Go back to Home{" "}
+								Browse Products
 							</a>
 						</div>
 					</div>

@@ -40,11 +40,13 @@ import { Tooltip } from "react-tooltip";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Placeholder from "../../assets/img/no_product.png";
 import Swal from "sweetalert2";
+import useClipboard from "@hooks/useCopyToClipBoard";
 
 const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const { user } = useAuth();
 	let { id } = useParams();
+	const {copySuccess, copyToClipboard} = useClipboard()
 
 	const [isShareOpen, setIsShareOpen] = useState(false);
 	const toggleDrawer = () => {
@@ -94,28 +96,12 @@ const Product = () => {
 
 	const [setProductStock] = useState(0);
 	const [showFullDescription, setShowFullDescription] = useState(false);
-	const [copySuccess, setCopySuccess] = useState(null);
+	
 	const [products, setProds] = useState([]);
 	const [shopperName, setShopperName] = useState("");
-	const copyToClipboard = (reffer) => {
-		navigator.clipboard
-			.writeText(reffer)
-			.then(() => {
-				setCopySuccess("Copied to clipboard!");
-			})
-			.catch((err) => {
-				setCopySuccess("Copy failed: " + err);
-			});
-	};
-	if (copySuccess) {
-		Swal.fire({
-			position: "top",
-			icon: "success",
-			title: "Copied to clipboard!",
-			showConfirmButton: false,
-			timer: 1500,
-		});
-	}
+	
+
+
 	useEffect(() => {
 		api.get(`/shopperproduct/getshopperproduct/${id}`)
 			.then((response) => {
@@ -396,6 +382,7 @@ const Product = () => {
 																				}`
 																			)
 																		}
+																		
 																		size={
 																			30
 																		}

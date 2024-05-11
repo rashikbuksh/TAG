@@ -289,7 +289,7 @@ const ShopkeeperProfileCV = () => {
 										</span>
 										{id} {shopkeeperInfo.name}
 									</h1>
-								</div>
+								</div>	
 
 								<div className="mb-2">
 									<Rating
