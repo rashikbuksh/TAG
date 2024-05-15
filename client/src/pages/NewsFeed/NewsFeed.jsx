@@ -1,11 +1,11 @@
 import { Breadcrumb } from "@components";
 import NewsFeedInput from "@components/News/NewsFeedInput/NewsFeedInput";
+import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import PostUi from "../PostUi/PostUi";
-import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 
 const NewsFeed = () => {
 	const [posts, setPosts] = useState([]);
@@ -27,7 +27,7 @@ const NewsFeed = () => {
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {
-				const res = await api.get("/news/getnews");
+				const res = await api.get("/news/get-news");
 				setPosts(res.data);
 				setIsDataFetched(true); // Set flag indicating data is fetched
 			} catch (err) {

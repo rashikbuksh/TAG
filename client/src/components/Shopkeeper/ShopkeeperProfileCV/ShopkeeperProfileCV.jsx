@@ -11,9 +11,12 @@ import {
 import Footer from "@components/MainComponent/Footer/Footer";
 import Header from "@components/MainComponent/Header/Header";
 import MapDistanceModal from "@components/Modal/LocationModal/MapDistanceModal";
+import Modal from "@components/Modal/Modal";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "@context/auth";
 import { checkIfInCart } from "@helpers/product";
+import useClipboard from "@hooks/useCopyToClipBoard";
+import useFollow from "@hooks/useFollow";
 import { api } from "@lib/api";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
@@ -29,9 +32,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
-import Modal from "@components/Modal/Modal";
-import useClipboard from "@hooks/useCopyToClipBoard";
-import useFollow from "@hooks/useFollow";
 const ShopkeeperProfileCV = () => {
 	const [show, setShow] = useState(false);
 	const [shopperAddress, setShopperAddress] = useState("");
@@ -55,7 +55,10 @@ const ShopkeeperProfileCV = () => {
 	// add addTo cart
 	const { copySuccess, copyToClipboard } = useClipboard();
 	console.log(user?.id);
-	const { isFollow, followShopper,followers, getFollower } = useFollow(id, user?.id);
+	const { isFollow, followShopper, followers, getFollower } = useFollow(
+		id,
+		user?.id
+	);
 	useEffect(() => {
 		api.get(`/auth/getUserInfo/${id}`)
 			.then((res) => {
@@ -72,7 +75,7 @@ const ShopkeeperProfileCV = () => {
 		api.get(
 			`${
 				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproductOfShopkeeper/${id}`
+			}/shopperproduct/getshopperproduct/${id}`
 		)
 			.then((res) => {
 				setShopperProduct(res.data);
@@ -289,7 +292,7 @@ const ShopkeeperProfileCV = () => {
 										</span>
 										{id} {shopkeeperInfo.name}
 									</h1>
-								</div>	
+								</div>
 
 								<div className="mb-2">
 									<Rating
@@ -589,4 +592,3 @@ const ShopkeeperProfileCV = () => {
 };
 
 export default ShopkeeperProfileCV;
-

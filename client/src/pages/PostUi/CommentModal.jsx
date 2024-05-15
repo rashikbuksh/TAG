@@ -30,7 +30,7 @@ const CommentModal = ({
 	const [userInfo, setUserInfo] = useState({});
 	const fetchComment = () => {
 		if (isOpen && id) {
-			api.get(`/newscomment/getnewscomment/${id}`).then((res) => {
+			api.get(`/news-comment/get-news-comment/${id}`).then((res) => {
 				// const filteredComments = res.data.filter(comment => comment.news_id === id);
 				setNewsComment(res.data);
 			});
@@ -38,7 +38,7 @@ const CommentModal = ({
 	};
 	useEffect(() => {
 		if (isOpen && id) {
-			api.get(`/newscomment/getnewscomment/${id}`).then((res) => {
+			api.get(`/news-comment/get-news-comment/${id}`).then((res) => {
 				// const filteredComments = res.data.filter(comment => comment.news_id === id);
 				setNewsComment(res.data);
 			});
@@ -52,7 +52,7 @@ const CommentModal = ({
 	const handleSubmitComment = (event) => {
 		event.preventDefault();
 		const date = GetDateTime(); // Use GetDateTime function directly
-		api.post(`/newscomment/addcomment`, {
+		api.post(`/news-comment/add-comment`, {
 			comment: selectedComment,
 			news_id: id,
 			commented_by: user.id,
@@ -61,7 +61,7 @@ const CommentModal = ({
 			if (res.status === 201) {
 				fetchComment();
 				if (shop_id !== user.id) {
-					api.post(`/notification/addnotification`, {
+					api.post(`/notification/add-notification`, {
 						notification_content: `You have a new comment in your post. Commented by ${user.name}`,
 						notification_time: date,
 						not_from: shop_id,
@@ -77,7 +77,7 @@ const CommentModal = ({
 	};
 
 	const handleDeleteComment = (commentId) => {
-		api.delete(`/newscomment/deletecomment/${commentId}`).then(() => {
+		api.delete(`/news-comment/delete-comment/${commentId}`).then(() => {
 			setNewsComment(
 				newsComment.filter((comment) => comment.id !== commentId)
 			);

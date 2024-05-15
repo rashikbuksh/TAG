@@ -26,7 +26,6 @@ const ShopKeeperDashBoard = () => {
 	const [productCount, setProductCount] = useState(0);
 	const [pendingOrder, setPendingOrder] = useState(0);
 	const [notification, setNotification] = useState(0);
-	
 
 	const [showModal, setShowModal] = useState(false);
 	const toggleModal = () => {
@@ -226,26 +225,28 @@ const ShopKeeperDashBoard = () => {
 
 				{/* Modal */}
 				{showModal && (
-				<Modal
-					isOpen={showModal}
-					setIsOpen={setShowModal}
-					color={"black"}
-				>
-					<div className="flex h-[60vh] items-center justify-center bg-black">
-						<img
-							src={
-								shopkeeper.profile_picture
-									? `${
-											import.meta.env.VITE_APP_IMG_URL
-									  }/usersProfilePic/${shopkeeper.profile_picture}`
-									: ''
-							}
-							alt=""
-							className="max-h-full max-w-full"
-						/>
-					</div>
-				</Modal>
-			)}
+					<Modal
+						isOpen={showModal}
+						setIsOpen={setShowModal}
+						color={"black"}
+					>
+						<div className="flex h-[60vh] items-center justify-center bg-black">
+							<img
+								src={
+									shopkeeper.profile_picture
+										? `${
+												import.meta.env.VITE_APP_IMG_URL
+										  }/usersProfilePic/${
+												shopkeeper.profile_picture
+										  }`
+										: ""
+								}
+								alt=""
+								className="max-h-full max-w-full"
+							/>
+						</div>
+					</Modal>
+				)}
 
 				<div className="">
 					<div className="flex flex-col items-center justify-center">
@@ -254,7 +255,10 @@ const ShopKeeperDashBoard = () => {
 								activeStatus ? "online" : "offline"
 							} `}
 						>
-							<div className="w-24 rounded-full" onClick={toggleModal}>
+							<div
+								className="w-24 rounded-full"
+								onClick={toggleModal}
+							>
 								{shopkeeper.profile_picture ? (
 									<img
 										src={`${
@@ -268,7 +272,7 @@ const ShopKeeperDashBoard = () => {
 								) : (
 									<img
 										src={
-											"../../../public/assets/Tag-logo-blue-get_100_100.png"
+											"../../../src/assets/img/Tag-logo-blue-get_100_100.png"
 										}
 										className="img-fluid"
 										alt=""
@@ -280,7 +284,7 @@ const ShopKeeperDashBoard = () => {
 						<h1 className="my-1 text-base font-bold ">
 							{shopkeeper.name}
 						</h1>
-						
+
 						<p className="flex items-center gap-2 text-sm text-black lg:text-xl">
 							<FaAddressCard></FaAddressCard>{" "}
 							{shopkeeper.address

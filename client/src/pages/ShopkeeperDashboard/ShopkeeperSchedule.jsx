@@ -19,7 +19,7 @@ export default function ShopkeeperSchedule() {
 
 	useEffect(() => {
 		// Check if shopper schedule is present
-		api.get(`/schedule/get_schedule/${user.id}`).then((response) => {
+		api.get(`/schedule/get-schedule/${user.id}`).then((response) => {
 			if (response.data) {
 				setIsSchedulePresent(true);
 				setWeekdays(JSON.parse(response.data[0].schedule_day));
@@ -32,7 +32,7 @@ export default function ShopkeeperSchedule() {
 			const weekdaysJson = JSON.stringify(weekdays);
 			// console.log(weekdaysJson);
 
-			api.post(`/add_schedule`, {
+			api.post(`/add-schedule`, {
 				shopper_id: user.id,
 				schedule_day: weekdaysJson,
 			}).then((response) => {
@@ -52,7 +52,7 @@ export default function ShopkeeperSchedule() {
 			const weekdaysJson = JSON.stringify(weekdays);
 			// console.log(weekdaysJson);
 
-			api.post(`/schedule/edit_schedule/${user.id}`, {
+			api.post(`/schedule/edit-schedule/${user.id}`, {
 				shopper_id: user.id,
 				schedule_day: weekdaysJson,
 			}).then((response) => {

@@ -89,7 +89,7 @@ const OrderDetailsShopper = () => {
 						.then((response) => {
 							toast(response.data.message);
 							if (response.status === 200) {
-								api.post("/notification/addnotification", {
+								api.post("/notification/add-notification", {
 									notification_content: `${
 										user.name
 									} accept your order. collect your products within ${addOneHour(
@@ -131,7 +131,7 @@ const OrderDetailsShopper = () => {
 						.then((response) => {
 							toast(response.data.message);
 							if (response.status === 200) {
-								api.post("/notification/addnotification", {
+								api.post("/notification/add-notification", {
 									notification_content: `Completed your order Successfully #${id}`,
 									notification_time: GetDateTime(),
 									not_to: user.id,

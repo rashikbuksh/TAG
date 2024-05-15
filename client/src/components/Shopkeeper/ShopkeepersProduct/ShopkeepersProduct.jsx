@@ -4,8 +4,8 @@ import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
-import ShopkeeperMyProduct from "./ShopkeeperMyProduct";
 import { Link } from "react-router-dom";
+import ShopkeeperMyProduct from "./ShopkeeperMyProduct";
 const ShopkeepersProduct = () => {
 	const { user } = useAuth();
 
@@ -14,7 +14,7 @@ const ShopkeepersProduct = () => {
 	const [category, setCategory] = useState([]);
 
 	useEffect(() => {
-		api.get(`/shopperproduct/getshopperproductOfShopkeeper/${user.id}`)
+		api.get(`/shopperproduct/getshopperproduct/${user.id}`)
 			.then((response) => {
 				setProds(response.data);
 			})

@@ -63,7 +63,7 @@ const HeroSlider = () => {
 				}
 			});
 		}
-		api.post(`/heroslider/addslider`, {
+		api.post(`/hero-slider/add-slider`, {
 			title: data.title,
 			subtitle: data.subtitle,
 			slider_position: data.slider_position,
@@ -78,7 +78,7 @@ const HeroSlider = () => {
 	};
 
 	useEffect(() => {
-		api.get(`/heroslider/getslider`)
+		api.get(`/hero-slider/get-slider`)
 			.then((res) => {
 				setSliderData(res.data);
 			})
@@ -88,11 +88,13 @@ const HeroSlider = () => {
 	}, [sliderData]);
 
 	async function deleteSlider(id) {
-		await api.delete(`/heroslider/deleteslider/${id}`).then((response) => {
-			if (response.data.message == id + " Deleted Successful") {
-				toast("Slider Deleted Successful");
-			}
-		});
+		await api
+			.delete(`/hero-slider/delete-slider/${id}`)
+			.then((response) => {
+				if (response.data.message == id + " Deleted Successful") {
+					toast("Slider Deleted Successful");
+				}
+			});
 	}
 
 	return (

@@ -1,7 +1,7 @@
+import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import SearchFunction from "../../SearchFunction/Index";
-import { api } from "@lib/api";
 import AdminProductCart from "./AdminProductCart";
 
 const AllProductAdmin = () => {
@@ -10,7 +10,7 @@ const AllProductAdmin = () => {
 	const [category, setCategory] = useState([]);
 
 	useEffect(() => {
-		api.get("/product/getallproduct")
+		api.get("/product/getproduct")
 			.then((response) => {
 				setProducts(response.data);
 			})

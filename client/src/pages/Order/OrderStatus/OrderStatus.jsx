@@ -7,7 +7,7 @@ import { api } from "@lib/api";
 import { useEffect, useMemo, useState } from "react";
 import { FaCircle, FaPersonWalking } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import chatIconImg from "../../../../public/icons/live-chat.png";
+import chatIconImg from "../../../../src/assets/icons/live-chat.png";
 import { Tooltip } from "react-tooltip";
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);

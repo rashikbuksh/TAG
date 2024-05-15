@@ -5,18 +5,18 @@ import {
 	Header,
 	HeroSlider,
 } from "@components";
+import LoadingPage from "@components/LoadingPage/LoadingPage";
 import HotNews from "@components/News/HotNews/HotNews";
 import AllShop from "@components/Shop/AllShop";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import TagShop from "@components/TagShop/TagShop";
 import { useNotification } from "@context/NotificationProvider";
+import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import FooterSection from "../FooterSection/FooterSection";
 import Refer from "../Refer/Refer";
-import LoadingPage from "@components/LoadingPage/LoadingPage";
-import { useAuth } from "@context/auth";
 
 const Home = () => {
 	const { user } = useAuth(); // Assuming useAuth hook exists and provides user data
@@ -54,15 +54,15 @@ const Home = () => {
 				const [topResponse, middleResponse, bottomResponse] =
 					await Promise.all([
 						api
-							.get("/heroslider/getslider/top")
+							.get("/hero-slider/get-slider/top")
 							.catch((error) => null),
 						api
-							.get("/heroslider/getslider/middle")
+							.get("/hero-slider/get-slider/middle")
 							.catch((error) => {
-								console.log(error)
+								console.log(error);
 							}),
 						api
-							.get("/heroslider/getslider/bottom")
+							.get("/hero-slider/get-slider/bottom")
 							.catch((error) => null),
 					]);
 				const sliderData = {

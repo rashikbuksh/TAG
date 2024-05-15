@@ -1,4 +1,4 @@
-import phoneIcon from ".../../../../../public/icons/phone.gif";
+import phoneIcon from ".../../../../../src/assets/icons/phone.gif";
 import { TagLogo2 } from "@SvgHub/TagLogo2";
 import { Link } from "react-router-dom";
 const ShopperWaitingPage = () => {

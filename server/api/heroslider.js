@@ -1,6 +1,6 @@
 const add = [
 	{
-		uri: "/heroslider/addslider",
+		uri: "/hero-slider/add-slider",
 		query: `INSERT INTO hero_slider (title, subtitle,slider_position, image) VALUES (?, ?, ?,?)`,
 		body: ["title", "subtitle", "slider_position", "image"],
 		msg: "title",
@@ -9,11 +9,11 @@ const add = [
 
 const read = [
 	{
-		uri: "/heroslider/getslider",
+		uri: "/hero-slider/get-slider",
 		query: `SELECT * from hero_slider`,
 	},
 	{
-		uri: "/heroslider/getslider/:level",
+		uri: "/hero-slider/get-slider/:level",
 		query: `SELECT * from hero_slider WHERE slider_position= ? ORDER BY id DESC`,
 		param: ["level"],
 	},
@@ -21,7 +21,7 @@ const read = [
 
 const remove = [
 	{
-		uri: "/heroslider/deleteslider/:id(*)",
+		uri: "/hero-slider/delete-slider/:id(*)",
 		query: `DELETE FROM hero_slider WHERE id = ?`,
 		param: ["id"],
 	},

@@ -7,8 +7,8 @@ import {
 	YoutubeIcon,
 } from "@SvgHub/SocialIcon";
 import { useEffect, useState } from "react";
-import AppStore from "../../../public/assets/img/AppStore.png";
-import PlayStore from "../../../public/assets/img/PlayStore.png";
+import AppStore from "../../../src/assets/img/AppStore.png";
+import PlayStore from "../../../src/assets/img/PlayStore.png";
 
 const FooterSection = () => {
 	const [currentYear, setCurrentYear] = useState("");

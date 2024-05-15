@@ -101,7 +101,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 			.then((res) => {
 				if (res.data.status === 200) {
 					if (newDisCount >= parseInt(util.value)) {
-						api.post(`/news/addproductnews`, {
+						api.post(`/news/add-product-news`, {
 							shopper_product_id: id,
 							shop_id: shopper_id,
 							date: GetDateTime(),
@@ -134,7 +134,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 		setIsEditingPrice(false);
 	};
 	const handleDeleteClick = () => {
-		api.delete(`/news/deletenews/${id}/by/shopperproduct`);
+		api.delete(`/news/delete-news/${id}/by/shopperproduct`);
 		Swal.fire({
 			title: "Are you sure you want to delete this product?",
 			text: "You won't be able to revert this!",

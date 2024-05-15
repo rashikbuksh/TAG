@@ -1,6 +1,6 @@
 const add = [
 	{
-		uri: "/newscomment/addcomment",
+		uri: "/news-comment/add-comment",
 		query: `INSERT INTO news_comment (news_id , commented_by, comment, news_time) VALUES (?, ?, ?, ?)`,
 		body: ["news_id", "commented_by", "comment", "news_time"],
 		msg: "news_id",
@@ -8,12 +8,12 @@ const add = [
 ];
 const read = [
 	{
-		uri: "/newscomment/getnewscomment",
+		uri: "/news-comment/get-news-comment",
 		query: `SELECT * FROM news_comment`,
 		msg: "news",
 	},
 	{
-		uri: "/newscomment/getnewscomment/:id",
+		uri: "/news-comment/get-news-comment/:id",
 		query: `SELECT nc.*, cp.profile_picture, cp.name
 		FROM news_comment nc
 		JOIN customer_profile cp ON nc.commented_by = cp.id
@@ -23,7 +23,7 @@ const read = [
 ];
 const remove = [
 	{
-		uri: "/newscomment/deletecomment/:id(*)",
+		uri: "/news-comment/delete-comment/:id(*)",
 		query: `DELETE FROM news_comment WHERE id = ?`,
 		param: ["id"],
 	},

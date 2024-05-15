@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import NoItemInCart from "../../../public/icons/shopping_cart_remove.png";
+import NoItemInCart from "../../../src/assets/icons/shopping_cart_remove.png";
 
 const Cart = () => {
 	const dispatch = useDispatch();
@@ -148,7 +148,7 @@ const Cart = () => {
 					let last_order_id = lastOrderRes.data[0].id;
 
 					const notificationRes = await api.post(
-						"/notification/addnotification",
+						"/notification/add-notification",
 						{
 							notification_content:
 								"You have a new order. Order Number is #" +
@@ -253,7 +253,9 @@ const Cart = () => {
 							) && (
 								<>
 									<Link
-										to={`../shopper/${shopper.id}/${shopper.name.replace(/\s+/g, '_')}`}
+										to={`../shopper/${
+											shopper.id
+										}/${shopper.name.replace(/\s+/g, "_")}`}
 									>
 										<h2 className=" px-4 text-base font-semibold">
 											{shopper.name}

@@ -23,20 +23,16 @@ const add = [
 const read = [
 	{
 		uri: "/product/getproduct",
-		query: `SELECT id,name,image,price,quantity,category_id,isVerified,keywords,optionalImage2,optionalImage1 FROM product`,
+		query: `SELECT * FROM product`,
 	},
 	{
 		uri: "/product/getproduct/:id",
 		query: `SELECT 
-              p.id, p.name, p.image, p.price, p.quantity, p.category_id,p.keywords,p.optionalImage2,p.optionalImage1, p.isVerified
-            FROM product p
-            LEFT JOIN shopper_product sp ON p.id = sp.product_id AND sp.shopper_id = ?
-            WHERE sp.product_id IS NULL;`,
+              		p.id, p.name, p.image, p.price, p.quantity, p.category_id, p.keywords, p.optionalImage2, p.optionalImage1, p.isVerified
+				FROM product p
+				LEFT JOIN shopper_product sp ON p.id = sp.product_id AND sp.shopper_id = ?
+				WHERE sp.product_id IS NULL;`,
 		param: ["id"],
-	},
-	{
-		uri: "/product/getallproduct",
-		query: `SELECT * FROM product`,
 	},
 	{
 		uri: "/product/getproductimage/:productimageid",
@@ -73,7 +69,14 @@ const change = [
 	//? end
 	{
 		uri: "/product/update_product/:id",
-		query: `UPDATE product SET name=?, short_description=?,full_description=?,title=?,keywords=? WHERE id = ?`,
+		query: `UPDATE product 
+				SET 
+					name=?, 
+					short_description=?, 
+					full_description=?, 
+					title=?, 
+					keywords=? 
+				WHERE id = ?`,
 		body: [
 			"name",
 			"short_description",
@@ -85,7 +88,12 @@ const change = [
 	},
 	{
 		uri: "/product/deleteProductImage/:id",
-		query: `UPDATE product SET image = ? ,optionalImage1 = ?,optionalImage2 = ?  WHERE id = ?`,
+		query: `UPDATE product 
+				SET 
+					image = ?, 
+					optionalImage1 = ?, 
+					optionalImage2 = ? 
+				WHERE id = ?`,
 		body: ["image", "optionalImage1", "optionalImage2"],
 		param: ["id"],
 	},
@@ -94,9 +102,9 @@ const remove = [
 	{
 		uri: "/remove/removeProduct/:id",
 		query: `DELETE product, shopper_product
-    FROM product
-    LEFT JOIN shopper_product ON product.id = shopper_product.product_id
-    WHERE product.id = ?;`,
+				FROM product
+				LEFT JOIN shopper_product ON product.id = shopper_product.product_id
+				WHERE product.id = ?;`,
 		param: ["id"],
 	},
 ];

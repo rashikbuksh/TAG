@@ -1,11 +1,11 @@
 import { Breadcrumb } from "@components";
 import { useAuth } from "@context/auth";
+import GetLocation from "@helpers/GetLocation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import GetLocation from "@helpers/GetLocation";
 import * as yup from "yup";
 
 const EditProfile = () => {
@@ -19,7 +19,7 @@ const EditProfile = () => {
 
 	useEffect(() => {
 		if (id) {
-			api.get(`/auth/getUserAllInfo/${id}`)
+			api.get(`/auth/getUserInfo/${id}`)
 				.then((res) => {
 					const userData = res.data[0];
 					setUserData(userData);

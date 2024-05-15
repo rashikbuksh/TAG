@@ -1,12 +1,12 @@
 const add = [
 	{
-		uri: "/news/addnews",
+		uri: "/news/add-news",
 		query: `INSERT INTO news (shop_id , date, post_content, post_img, category) VALUES (?, ?, ?, ?, ?)`,
 		body: ["shop_id", "date", "post_content", "post_img", "category"],
 		msg: "shop_id",
 	},
 	{
-		uri: "/news/addproductnews",
+		uri: "/news/add-product-news",
 		query: `INSERT INTO news (shopper_product_id, shop_id , date, discount, duration, location, category, post_content, post_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 		body: [
 			"shopper_product_id",
@@ -24,7 +24,7 @@ const add = [
 ];
 const read = [
 	{
-		uri: "/news/getnews",
+		uri: "/news/get-news",
 		query: `SELECT * FROM news ORDER BY date desc`,
 		msg: "news",
 	},
@@ -69,13 +69,13 @@ const change = [
 
 const remove = [
 	{
-		uri: "/news/deletenews/:id/by/shopperproduct",
+		uri: "/news/delete-news/:id/by/shopperproduct",
 		query: `DELETE FROM news WHERE shopper_product_id = ?`,
 		param: ["id"],
 		msg: "news",
 	},
 	{
-		uri: "/news/deletenews/:id",
+		uri: "/news/delete-news/:id",
 		query: `DELETE FROM news WHERE id = ?`,
 		param: ["id"],
 		msg: "news",

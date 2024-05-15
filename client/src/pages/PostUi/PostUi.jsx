@@ -8,6 +8,7 @@ import {
 import MainProduct from "@components/Product/ProductCart/MainProduct";
 import { useAuth } from "@context/auth";
 import GetDateTime from "@helpers/GetDateTime";
+import useClipboard from "@hooks/useCopyToClipBoard";
 import { api } from "@lib/api";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
@@ -21,7 +22,6 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import demoProfile from "../../../src/assets/img/Tag-logo-blue-get_50_50.png";
 import CommentModal from "./CommentModal";
-import useClipboard from "@hooks/useCopyToClipBoard";
 const PostUi = ({ postData }) => {
 	const { user } = useAuth();
 	const userid = localStorage.getItem("user-id");
@@ -115,7 +115,7 @@ const PostUi = ({ postData }) => {
 			confirmButtonText: "Yes, delete it!",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				api.delete(`/news/deletenews/${id}`)
+				api.delete(`/news/delete-news/${id}`)
 					.then((res) => {
 						Swal.fire({
 							title: "Deleted!",
@@ -305,7 +305,7 @@ const PostUi = ({ postData }) => {
 												return;
 											} else {
 												api.post(
-													"/notification/addnotification",
+													"/notification/add-notification",
 													{
 														notification_content: `${user.name} liked your post`,
 														notification_time:

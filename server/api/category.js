@@ -1,6 +1,6 @@
 const add = [
 	{
-		uri: "/category/addcategory",
+		uri: "/category/add-category",
 		query: `INSERT INTO category (name, url) VALUES (?, ?)`,
 		body: ["name", "url"],
 		msg: "name",
@@ -9,7 +9,7 @@ const add = [
 
 const read = [
 	{
-		uri: "/category/getcategory",
+		uri: "/category/get-category",
 		query: `SELECT id,name FROM category`,
 	},
 	{

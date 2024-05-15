@@ -1,10 +1,4 @@
-import useFetch from "@hooks/use-fetch";
-import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { ReactSVG } from "react-svg";
-import ErrorMessage from "../ErrorMessage";
-import Preloader from "../Preloader";
+import React from "react";
 import Swiper, { SwiperSlide } from "../swiper";
 
 const params = {
@@ -26,7 +20,7 @@ const CategorySlider = () => {
 	// const [errorMessage, setErrorMessage] = useState(null);
 
 	// useEffect(() => {
-	// 	fetch(`${import.meta.env.VITE_APP_API_URL}/category/getcategory`, {
+	// 	fetch(`${import.meta.env.VITE_APP_API_URL}/category/get-category`, {
 	// 		headers: {
 	// 			Authorization: Cookies?.get("auth"),
 	// 		},

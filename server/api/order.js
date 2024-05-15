@@ -87,44 +87,44 @@ const read = [
 	{
 		uri: "/order/getProductbyid/:id",
 		query: `SELECT
-		po.id AS order_id,
-		sp.id AS pid,
-		sp.name AS name,
-		op.quantity,
-		op.discount,
-		op.price,
-		op.weight,
-		po.price AS totalPrice,
-		p.image AS product_image,
-		p.title AS title,
-		po.order_status AS order_status,
-		po.cancel_report AS cancel_report,
-		po.customers_address_summary,
-		po.order_time AS order_time,
-		po.customer_profile_id,
-		po.shopper_id,
-		po.customers_address_details_id,
-		cad.*,
-		po.shopper_order_accept_time AS shopper_order_accept_time,
-		cp.name AS customer_name,
-		sh.name AS shopper_name,
-		po.delivery_time AS delivery_time
-	FROM 
-		shopper_product sp
-	JOIN 
-		ordered_product op ON op.product_id = sp.id
-	JOIN 
-		product_order po ON po.id = op.order_id
-	JOIN 
-		product p ON sp.product_id = p.id
-	LEFT JOIN 
-		customers_address_details cad ON cad.id = po.customers_address_details_id
-	LEFT JOIN 
-		customer_profile cp ON po.customer_profile_id = cp.id
-	LEFT JOIN 
-		customer_profile sh ON po.shopper_id = sh.id
-	WHERE 
-		po.id = ?;`,
+					po.id AS order_id,
+					sp.id AS pid,
+					sp.name AS name,
+					op.quantity,
+					op.discount,
+					op.price,
+					op.weight,
+					po.price AS totalPrice,
+					p.image AS product_image,
+					p.title AS title,
+					po.order_status AS order_status,
+					po.cancel_report AS cancel_report,
+					po.customers_address_summary,
+					po.order_time AS order_time,
+					po.customer_profile_id,
+					po.shopper_id,
+					po.customers_address_details_id,
+					cad.*,
+					po.shopper_order_accept_time AS shopper_order_accept_time,
+					cp.name AS customer_name,
+					sh.name AS shopper_name,
+					po.delivery_time AS delivery_time
+				FROM 
+					shopper_product sp
+				JOIN 
+					ordered_product op ON op.product_id = sp.id
+				JOIN 
+					product_order po ON po.id = op.order_id
+				JOIN 
+					product p ON sp.product_id = p.id
+				LEFT JOIN 
+					customers_address_details cad ON cad.id = po.customers_address_details_id
+				LEFT JOIN 
+					customer_profile cp ON po.customer_profile_id = cp.id
+				LEFT JOIN 
+					customer_profile sh ON po.shopper_id = sh.id
+				WHERE 
+					po.id = ?;`,
 		param: ["id"],
 		msg: "product_id",
 	},
@@ -143,8 +143,7 @@ const read = [
 		query: `SELECT *
             FROM product_order
             WHERE TIMEDIFF(delivery_time, order_time) > '00:45:00'
-            AND (order_delay_report != 'solved' OR order_delay_report IS NULL);
-    `,
+            	AND (order_delay_report != 'solved' OR order_delay_report IS NULL);`,
 	},
 ];
 
@@ -165,7 +164,7 @@ const change = [
 	},
 	{
 		uri: "/order/ordertimeoutStatus/:id",
-		query: `UPDATE product_order SET order_status = ? , cancel_report = ? WHERE id = ?`,
+		query: `UPDATE product_order SET order_status = ?, cancel_report = ? WHERE id = ?`,
 		body: ["order_status", "cancel_report"],
 		param: ["id"],
 		msg: "id",

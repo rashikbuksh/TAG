@@ -1,15 +1,15 @@
 import OrderSummery from "@/components/PaymentMethod/Checkout/OrderSummery";
 import { Breadcrumb } from "@components";
+import SuccessOrderModal from "@components/SuccessOrderModal/SuccessOrderModal";
 import { useAuth } from "@context/auth";
 import GetDateTime from "@helpers/GetDateTime";
 import { api } from "@lib/api";
 import { deleteFromCart } from "@store/slices/cart-slice";
+import { useState } from "react";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import SuccessOrderModal from "@components/SuccessOrderModal/SuccessOrderModal";
-import { useState } from "react";
 
 const CashOnDelivery = () => {
 	const { cartItems } = useSelector((state) => state.cart);
@@ -54,7 +54,7 @@ const CashOnDelivery = () => {
 					const last_order_id = lastOrderRes.data[0].id;
 
 					const notificationRes = await api.post(
-						"/notification/addnotification",
+						"/notification/add-notification",
 						{
 							notification_content:
 								"You have a new order. Order Number is #" +
@@ -107,7 +107,7 @@ const CashOnDelivery = () => {
 								});
 							});
 							// Add congratulation modal
-							setIsOpen(true)
+							setIsOpen(true);
 
 							// All API calls were successful
 							// navigate("/orderStatus");

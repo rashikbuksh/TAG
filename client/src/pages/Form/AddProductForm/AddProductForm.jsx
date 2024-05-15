@@ -1,13 +1,13 @@
+import TextEditor from "@components/TextEditor/TextEditor";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { api } from "@lib/api";
 import Axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import TextEditor from "@components/TextEditor/TextEditor";
-import * as yup from "yup";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { toast } from "react-toastify";
+import * as yup from "yup";
 
 const AddProductForm = () => {
 	const [categoryNames, setCategoryNames] = useState([]);
@@ -32,7 +32,7 @@ const AddProductForm = () => {
 	};
 
 	useEffect(() => {
-		api.get(`/category/getcategory`).then((response) => {
+		api.get(`/category/get-category`).then((response) => {
 			setCategoryNames(response.data);
 		});
 	}, []);

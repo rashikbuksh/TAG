@@ -89,7 +89,7 @@ const ShopperProduct = () => {
 							const productData = response1.data[0];
 
 							const response12 = await api.post(
-								`/news/addproductnews`,
+								`/news/add-product-news`,
 								{
 									shopper_product_id: productData.id,
 									shop_id: productData.shopper_id,

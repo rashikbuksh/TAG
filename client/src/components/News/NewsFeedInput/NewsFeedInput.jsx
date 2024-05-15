@@ -1,11 +1,11 @@
 import Modal from "@components/Modal/Modal";
+import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
 import Axios from "axios";
 import Cookies from "js-cookie";
 import React, { useState } from "react";
 import { FaCamera, FaFileImage } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useAuth } from "@context/auth";
 
 const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 	const [cameraError, setCameraError] = useState(null);
@@ -74,7 +74,7 @@ const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 		}
 
 		try {
-			const response = await api.post(`/news/addnews`, {
+			const response = await api.post(`/news/add-news`, {
 				shop_id: user?.id,
 				date: new Date(),
 				post_content: content,

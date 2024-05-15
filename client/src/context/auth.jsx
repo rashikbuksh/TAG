@@ -1,8 +1,8 @@
 import { api } from "@lib/api";
+import Cookies from "js-cookie";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useCookie } from "../hooks";
-import Cookies from "js-cookie";
 
 const AuthContext = createContext({});
 
@@ -10,7 +10,6 @@ const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [loginError, setLoginError] = useState("");
-
 
 	const [authCookie, updateAuthCookie, removeAuthCookie] = useCookie("auth");
 	const [userCookie, updateUserCookie, removeUserCookie] = useCookie("user");
@@ -22,7 +21,9 @@ const AuthProvider = ({ children }) => {
 					// Parse the user ID from the cookie
 					const userId = JSON.parse(userCookie);
 					// Fetch user information using the parsed user ID
-					const response = await api.get(`/auth/userInfo/${userId}`);
+					const response = await api.get(
+						`/auth/getUserInfo/${userId}`
+					);
 					setUser(response.data[0]);
 					setLoading(false);
 				} catch (error) {
@@ -95,7 +96,6 @@ const AuthProvider = ({ children }) => {
 				login,
 				Logout,
 				loginError,
-				
 			}}
 			// value={{ signed: true, user, loading, Login, Logout }}
 		>

@@ -23,7 +23,7 @@ const AddcategoryForm = () => {
 	const { errors } = formState;
 
 	const onSubmit = async (data) => {
-		api.post(`/category/addcategory`, {
+		api.post(`/category/add-category`, {
 			name: data.category_name,
 			url: data.category_url,
 		}).then((response) => {
@@ -40,7 +40,7 @@ const AddcategoryForm = () => {
 		});
 	};
 	useEffect(() => {
-		api.get(`/category/getcategory`).then((response) => {
+		api.get(`/category/get-category`).then((response) => {
 			setCategory(response.data);
 		});
 	}, []);

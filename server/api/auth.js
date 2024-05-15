@@ -1,18 +1,23 @@
 const read = [
-	// {
-	// 	uri: "/auth/verify_login",
-	// 	query: `SELECT * from customer_profile where email = ? and password = ?`,
-	// 	body: ["email", "password"],
-	// 	msg: "email or password",
-	// },
-	{
-		uri: "/auth/userInfo/:id",
-		query: `SELECT id,name,access,profile_picture FROM customer_profile WHERE id= ?`,
-		param: ["id"],
-	},
+	// /auth/verify_login   ->    in auth_pro.jsx
 	{
 		uri: "/auth/getUserInfo/:id",
-		query: `SELECT profile_picture, name, user_name, active_status, review_count, access, shipping_address, address from customer_profile where id = ?`,
+		query: `SELECT
+					id,
+					profile_picture,
+					name,
+					user_name,
+					active_status,
+					review_count,
+					access,
+					shipping_address,
+					address,
+					image,
+					refer_code
+				FROM
+					customer_profile
+				WHERE 
+					id = ?`,
 		param: ["id"],
 		msg: "id",
 	},
@@ -21,12 +26,6 @@ const read = [
 		query: `SELECT name, access from customer_profile where phone = ?`,
 		param: ["phone"],
 		msg: "phone",
-	},
-	{
-		uri: "/auth/getUserAllInfo/:id",
-		query: `SELECT name, shipping_address, address, image from customer_profile where id = ?`,
-		param: ["id"],
-		msg: "id",
 	},
 	{
 		uri: "/auth/getShopperInfo",
@@ -56,7 +55,7 @@ const read = [
 	},
 	{
 		uri: "/auth/getALLUser/:access",
-		query: `SELECT id, image, name,phone,email, user_name, access  from customer_profile where access = ?`,
+		query: `SELECT id, image, name, phone, email, user_name, access  from customer_profile where access = ?`,
 		param: ["access"],
 	},
 	{

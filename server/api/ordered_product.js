@@ -25,7 +25,13 @@ const read = [
 const change = [
 	{
 		uri: "/ordered-product/updateorderstatus/:id",
-		query: `UPDATE ordered_product SET discount=?, quantity=?, price=?, weight=? WHERE id=?`,
+		query: `UPDATE ordered_product 
+				SET 
+					discount=?, 
+					quantity=?, 
+					price=?, 
+					weight=? 
+				WHERE id=?`,
 		body: ["order_status"],
 		param: ["id"],
 		msg: "id",
