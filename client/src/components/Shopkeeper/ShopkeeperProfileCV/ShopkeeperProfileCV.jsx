@@ -75,7 +75,7 @@ const ShopkeeperProfileCV = () => {
 		api.get(
 			`${
 				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproduct/${id}`
+			}/shopperproduct/getshopperproduct/by/id/${id}`
 		)
 			.then((res) => {
 				setShopperProduct(res.data);

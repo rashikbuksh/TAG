@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
-import Modal from "../Modal";
-import { api } from "@lib/api";
-import { toast } from "react-toastify";
-import GetLocation from "@helpers/GetLocation";
 import { useAuth } from "@context/auth";
+import GetLocation from "@helpers/GetLocation";
+import { api } from "@lib/api";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import Modal from "../Modal";
 
 const AddNewAddressModal = ({
 	isOpen,
@@ -30,7 +30,6 @@ const AddNewAddressModal = ({
 				geo_location: location.lng + "_" + location.lat, // Use the obtained geoLocation
 				phone_no: data.phone_no,
 			});
-			// console.log(response.status);
 			if (response.status === 201) {
 				toast(response.data.message);
 				window.location.reload();

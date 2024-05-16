@@ -1,3 +1,4 @@
+import { useFetchFunc } from "@hooks";
 import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -7,24 +8,10 @@ import "swiper/swiper-bundle.min.css";
 
 const HotNews = () => {
 	const [posts, setPosts] = useState([]);
-	const params = {
-		loop: true,
-		speed: 1000,
-		autoplay: {
-			delay: 3500,
-			disableOnInteraction: false,
-		},
-		pagination: true,
-	};
-	useEffect(() => {
-		api.get("/news/getHotNews")
-			.then((res) => {
-				setPosts(res.data);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	}, []);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+
+	useFetchFunc("/news/getHotNews", 0, setPosts, setLoading, setError);
 
 	// Function to generate a random color
 	const getRandomLightColor = () => {
@@ -34,13 +21,10 @@ const HotNews = () => {
 		const blue = randomChannel().toString(16).padStart(2, "0");
 		return `#${red}${green}${blue}`;
 	};
+
 	const productPost = posts.filter(
 		(post) => post.shopper_product_id !== null
 	);
-	// Shuffle and get the first 5 posts
-	// const shuffledPosts = productPost
-	// 	.sort(() => Math.random() - 0.5)
-	// 	.slice(0, 5);
 
 	return (
 		<div className="mx-auto  max-w-7xl">
@@ -52,28 +36,21 @@ const HotNews = () => {
 					slidesPerView={1.5}
 					spaceBetween={10}
 					grabCursor={true}
-					// loop={true}
 					speed={1000}
-					// pagination={{
-					// 	clickable: true,
-					// }}
 					modules={[Autoplay, Pagination, Navigation]}
 					autoplay={{
 						delay: 3500,
 						disableOnInteraction: false,
 					}}
 					breakpoints={{
-                        260: {
+						260: {
 							slidesPerView: 1,
 							spaceBetween: 20,
 						},
-					
-                        360: {
+						360: {
 							slidesPerView: 1.5,
 							spaceBetween: 15,
 						},
-                     
-					
 						768: {
 							slidesPerView: 3,
 							spaceBetween: 30,

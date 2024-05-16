@@ -1,34 +1,28 @@
 import { api } from "@lib/api";
 import { toast } from "react-toastify";
 
+const updateItem = ({ prev, itemId, data, updatedData }) => {
+	const index = prev.findIndex((item) => item.id === itemId);
+	if (index !== -1) {
+		prev[index] = {
+			...data,
+			...updatedData,
+		};
+	}
+	return [...prev];
+};
+
 async function useUpdateFunc({
 	uri,
 	data,
 	itemId,
 	updatedData,
-	setItems,
+	setItems = () => {},
 	onClose = () => {},
-	extraData = {},
 }) {
 	try {
-		const response = await api.put(uri, updatedData);
-
-		setItems((prev) =>
-			prev.map(({ id, ...rest }) => {
-				return id === itemId
-					? {
-							id,
-							...data,
-							...updatedData,
-							...extraData,
-					  }
-					: {
-							id,
-							...rest,
-					  };
-			})
-		);
-
+		const response = await api.post(uri, updatedData);
+		setItems((prev) => updateItem({ prev, itemId, data, updatedData }));
 		toast(response);
 	} catch (error) {
 		toast(error?.response);

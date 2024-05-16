@@ -10,7 +10,6 @@ import HotNews from "@components/News/HotNews/HotNews";
 import AllShop from "@components/Shop/AllShop";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import TagShop from "@components/TagShop/TagShop";
-import { useNotification } from "@context/NotificationProvider";
 import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
 import { useEffect, useState } from "react";

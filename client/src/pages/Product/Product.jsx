@@ -1,26 +1,21 @@
-import { Footer, Header } from "@components";
-import MessageModal from "@components/Modal/MessageModal/MessageModal";
-import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
-import { useAuth } from "@context/auth";
-import { MdVerifiedUser } from "react-icons/md";
-import { IoMdShare } from "react-icons/io";
-import { BiMessageRounded } from "react-icons/bi";
-import Drawer from "react-modern-drawer";
-import { TiStar } from "react-icons/ti";
 import {
 	FacebookIcon,
 	InstagramIcon,
 	Linkedin,
-	Takaicon,
 	TwitterIcon,
 	WhatsappIcon,
 } from "@SvgHub/SocialIcon";
-import { FaX } from "react-icons/fa6";
+import { Footer, Header } from "@components";
+import MessageModal from "@components/Modal/MessageModal/MessageModal";
+import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
+import { useAuth } from "@context/auth";
 import {
 	cartItemStock,
 	checkIfInCart,
 	getDiscountPrice,
 } from "@helpers/product";
+import { useFetchFunc } from "@hooks";
+import useClipboard from "@hooks/useCopyToClipBoard";
 import { api } from "@lib/api";
 import {
 	addToCart,
@@ -29,24 +24,26 @@ import {
 } from "@store/slices/cart-slice";
 import { Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { BiMessageRounded } from "react-icons/bi";
 import { FaAngleLeft, FaCopy } from "react-icons/fa";
-
+import { FaX } from "react-icons/fa6";
+import { IoMdShare } from "react-icons/io";
+import { MdVerifiedUser } from "react-icons/md";
+import { TiStar } from "react-icons/ti";
+import Drawer from "react-modern-drawer";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
-import { Link, useParams } from "react-router-dom";
-
-import "./tooltip.css";
-import { Tooltip } from "react-tooltip";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Link, useParams } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 import Placeholder from "../../assets/img/no_product.png";
-import Swal from "sweetalert2";
-import useClipboard from "@hooks/useCopyToClipBoard";
+import "./tooltip.css";
 
 const Product = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const { user } = useAuth();
 	let { id } = useParams();
-	const {copySuccess, copyToClipboard} = useClipboard()
+	const { copyToClipboard } = useClipboard();
 
 	const [isShareOpen, setIsShareOpen] = useState(false);
 	const toggleDrawer = () => {
@@ -94,24 +91,21 @@ const Product = () => {
 		}
 	}, [cartItems, id]);
 
-	const [setProductStock] = useState(0);
+	const [productStock, setProductStock] = useState(0);
 	const [showFullDescription, setShowFullDescription] = useState(false);
-	
+
 	const [products, setProds] = useState([]);
 	const [shopperName, setShopperName] = useState("");
-	
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
 
-
-	useEffect(() => {
-		api.get(`/shopperproduct/getshopperproduct/${id}`)
-			.then((response) => {
-				setProds(response.data);
-				setProductStock(response.data[0]?.product_count);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, [id]);
+	useFetchFunc(
+		`/shopperproduct/getshopperproduct/by/id/${id}`,
+		id,
+		setProds,
+		setLoading,
+		setError
+	);
 
 	const { wishlistItems } = useSelector((state) => state.wishlist);
 	const [isOpen, setIsOpen] = useState(false);
@@ -356,9 +350,8 @@ const Product = () => {
 																</div>
 																<div className="divider"></div>
 
-																<div className="text-md  link text-primary flex items-center justify-between rounded bg-gray-200 p-2 ">
+																<div className="text-md  link flex items-center justify-between rounded bg-gray-200 p-2 text-primary ">
 																	<p>
-																		
 																		{
 																			import.meta
 																				.env
@@ -382,7 +375,6 @@ const Product = () => {
 																				}`
 																			)
 																		}
-																		
 																		size={
 																			30
 																		}

@@ -64,39 +64,39 @@ const read = [
               product_count > 0 AND cp.access = "shopper"`,
 	},
 	{
-		uri: "/shopperproduct/getshopperproduct/:id",
+		uri: "/shopperproduct/getshopperproduct/by/id/:id",
 		query: `SELECT
-              sp.id,
-              sp.name,
-              sp.price,
-              discount,
-              product_count,
-              product_id,
-              isVerified,
-              category_id,
-              p.image,
-              p.optionalImage1,
-              p.optionalImage2,
-              p.keywords,
-              p.title AS title,
-              sp.shopper_id,
-              sale_count,
-              sp.view,
-              p.full_description,
-              p.short_description,
-              cp.shipping_address,
-              cp.active_status,
-              cp.access
-          FROM
-              shopper_product sp
-              LEFT JOIN product p ON sp.product_id = p.id
-              LEFT JOIN customer_profile cp ON cp.id = sp.shopper_id
-          WHERE
-              sp.id = ?`,
+                    sp.id,
+                    sp.name,
+                    sp.price,
+                    discount,
+                    product_count,
+                    product_id,
+                    isVerified,
+                    category_id,
+                    p.image,
+                    p.optionalImage1,
+                    p.optionalImage2,
+                    p.keywords,
+                    p.title AS title,
+                    sp.shopper_id,
+                    sale_count,
+                    sp.view,
+                    p.full_description,
+                    p.short_description,
+                    cp.shipping_address,
+                    cp.active_status,
+                    cp.access
+                FROM
+                    shopper_product sp
+                    LEFT JOIN product p ON sp.product_id = p.id
+                    LEFT JOIN customer_profile cp ON cp.id = sp.shopper_id
+                WHERE
+                    sp.id = ?`,
 		param: ["id"],
 	},
 	{
-		uri: "/shopperproduct/getshopperproduct/:shopper_id",
+		uri: "/shopperproduct/getshopperproduct/by/shopper-id/:shopper_id",
 		query: `SELECT
               sp.id,
               sp.name,

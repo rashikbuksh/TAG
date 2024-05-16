@@ -8,6 +8,7 @@ import {
 import MainProduct from "@components/Product/ProductCart/MainProduct";
 import { useAuth } from "@context/auth";
 import GetDateTime from "@helpers/GetDateTime";
+import { useFetchFunc } from "@hooks";
 import useClipboard from "@hooks/useCopyToClipBoard";
 import { api } from "@lib/api";
 import { Rating } from "@smastrom/react-rating";
@@ -49,20 +50,25 @@ const PostUi = ({ postData }) => {
 	const toggleDrawer = () => {
 		setIsShareOpen((prevState) => !prevState);
 	};
-	useEffect(() => {
-		if (shopper_product_id == null) {
-		} else {
-			api.get(
-				`/shopperproduct/getshopperproduct/${shopper_product_id}}`
-			).then((res) => {
-				setShopperProduct(res.data);
-			});
-		}
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
 
-		api.get(`/auth/getUserInfo/${shop_id}}`).then((res) => {
-			setShopperInfo(res.data);
-		});
-	}, [postData]);
+	if (shopper_product_id != null) {
+		useFetchFunc(
+			`/shopperproduct/getshopperproduct/by/id/${shopper_product_id}}`,
+			shopper_product_id,
+			setShopperProduct,
+			setLoading,
+			setError
+		);
+	}
+	useFetchFunc(
+		`/auth/getUserInfo/${shop_id}}`,
+		shop_id,
+		setShopperInfo,
+		setLoading,
+		setError
+	);
 
 	//DOING===========
 	const handleShare = () => {

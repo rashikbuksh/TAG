@@ -14,7 +14,7 @@ const ShopkeepersProduct = () => {
 	const [category, setCategory] = useState([]);
 
 	useEffect(() => {
-		api.get(`/shopperproduct/getshopperproduct/${user.id}`)
+		api.get(`/shopperproduct/getshopperproduct/by/shopper-id/${user.id}`)
 			.then((response) => {
 				setProds(response.data);
 			})

@@ -38,7 +38,7 @@ const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 											"/heroslider/" +
 											single.image
 										}
-										className="mx-auto h-[216px] w-[100vw] lg:w-[100vw] md:w-auto"
+										className="mx-auto h-[216px] w-[100vw] md:w-auto lg:w-[100vw]"
 										alt=""
 									/>
 								</Link>

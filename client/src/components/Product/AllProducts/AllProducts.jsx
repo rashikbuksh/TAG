@@ -1,17 +1,15 @@
 import { api } from "@lib/api";
 import PropTypes from "prop-types";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { FaCheckCircle } from "react-icons/fa";
+import React, { useEffect, useMemo, useState } from "react";
+import { MdVerifiedUser } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import LoadingPage from "../../LoadingPage/LoadingPage";
+import { Tooltip } from "react-tooltip";
 import HeroSlider from "../../MainComponent/HeroSlider/HeroSlider";
 import ProductSlider from "../ProductSlider/ProductSlider";
-import { MdVerifiedUser } from "react-icons/md";
-import { Tooltip } from "react-tooltip";
 import "./tooltip.css";
 
-const AllProducts = ({ limit, sliderData }) => {
+const AllProducts = ({ sliderData }) => {
 	const [popularProducts, setPopularProducts] = useState([]);
 	const [prods, setProds] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -61,7 +59,6 @@ const AllProducts = ({ limit, sliderData }) => {
 							<span className="pl-2 text-xl font-bold">
 								Popular Product{" "}
 							</span>
-
 						</h2>
 					)}
 

@@ -7,7 +7,7 @@ const AdminShopkeeperProduct = () => {
 	const { id } = useParams();
 	const [shoperProduct, setShopperProduct] = useState([]);
 	useEffect(() => {
-		api.get(`/shopperproduct/getshopperproduct/${id}`)
+		api.get(`/shopperproduct/getshopperproduct/by/id/${id}`)
 			.then((response) => {
 				setShopperProduct(response.data);
 			})
