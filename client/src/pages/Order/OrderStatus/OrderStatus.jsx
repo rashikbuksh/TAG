@@ -34,6 +34,7 @@ const OrderStatus = () => {
 				const response = await api.get(
 					`/order/getProductbyid/${order.id}`
 				);
+				console.log(response.data);
 				return response.data;
 			} catch (error) {
 				return [];

@@ -49,33 +49,33 @@ async function useFetchFunc(url, refreshId, setData, setLoading, setError) {
 		};
 
 		fetchData();
-	}, [refreshId]);
+	}, [refreshId, setData, setError, setLoading, url]);
 }
 
-async function useFetchFuncForReport(url, setData, setLoading, setError) {
-	await defaultFetchFunc(url, setData, setLoading, setError, true);
-}
+// async function useFetchFuncForReport(url, setData, setLoading, setError) {
+// 	await defaultFetchFunc(url, setData, setLoading, setError, true);
+// }
 
-const useFetchForRhfReset = async (uri, returnId, reset) => {
-	useEffect(() => {
-		if (returnId === null) return;
+// const useFetchForRhfReset = async (uri, returnId, reset) => {
+// 	useEffect(() => {
+// 		if (returnId === null) return;
 
-		api.get(uri).then((res) => reset(res?.data[0]));
-	}, [returnId]);
-};
+// 		api.get(uri).then((res) => reset(res?.data[0]));
+// 	}, [returnId]);
+// };
 
-const useFetchForRhfResetForOrder = async (uri, returnId, reset) => {
-	useEffect(() => {
-		if (returnId === null || returnId === undefined) return;
+// const useFetchForRhfResetForOrder = async (uri, returnId, reset) => {
+// 	useEffect(() => {
+// 		if (returnId === null || returnId === undefined) return;
 
-		api.get(uri).then((res) => reset(res?.data));
-	}, [returnId]);
-};
+// 		api.get(uri).then((res) => reset(res?.data));
+// 	}, [returnId]);
+// };
 
 export {
 	useFetch,
-	useFetchForRhfReset,
-	useFetchForRhfResetForOrder,
+	// useFetchForRhfReset,
+	// useFetchForRhfResetForOrder,
 	useFetchFunc,
-	useFetchFuncForReport,
+	// useFetchFuncForReport,
 };

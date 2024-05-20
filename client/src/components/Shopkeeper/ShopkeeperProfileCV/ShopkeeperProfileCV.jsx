@@ -32,6 +32,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import logo from "../../../../src/assets/img/Tag-logo-blue-get_100_100.png";
+import { getDiscountPrice } from "@helpers/product";
+import GetDateTime from "@helpers/GetDateTime";
+import { useFetchFunc } from "@hooks";
 const ShopkeeperProfileCV = () => {
 	const [show, setShow] = useState(false);
 	const [shopperAddress, setShopperAddress] = useState("");
@@ -75,17 +78,29 @@ const ShopkeeperProfileCV = () => {
 		api.get(
 			`${
 				import.meta.env.VITE_APP_API_URL
-			}/shopperproduct/getshopperproduct/by/id/${id}`
+			}/shopperproduct/getshopperproduct/by/shopper-id/${id}`
 		)
 			.then((res) => {
 				setShopperProduct(res.data);
 				setSelectedCategoryProduct(res.data);
 			})
-			.catch((err) => {});
+			.catch((err) => {
+				console.log(err);
+			});
 		api.get(`/category/get/category`).then((response) => {
 			setCategory(response.data);
 		});
 	}, [id]);
+	const [requested_product, setRequestedProduct] = useState([]);
+	const [loading, setLoading] = useState();
+	const [error, setError] = useState();
+	useFetchFunc(
+		`/request-product-for-stock/Get-product/user/${user?.id}`,
+		user?.id,
+		setRequestedProduct,
+		setLoading,
+		setError
+	);
 	const selectedCategory = (e) => {
 		const selectedCategoryId = parseInt(e.target.value); // Convert the value to an integer if needed
 		if (selectedCategoryId === 0) {
@@ -132,6 +147,24 @@ const ShopkeeperProfileCV = () => {
 	const [showModal, setShowModal] = useState(false);
 	const toggleModal = () => {
 		setShowModal(!showModal);
+	};
+	const handelRequestForStock = (product_id) => {
+		api.post(`/request-product-for-stock/add-request-product-for-stock`, {
+			date: GetDateTime(),
+			user_id: user.id, // Ensure user_id is an integer
+			shopper_id: id, // Ensure shopper_id is an integer
+			shopper_product_id: product_id, // Ensure shopper_product_id is an integer
+		})
+			.then((response) => {
+				if (response.status === 201) {
+					toast.success("Product Request Added Successfully");
+				}
+				console.log(response);
+			})
+			.catch((error) => {
+				console.error("Error adding product request:", error);
+				toast.error("Failed to add product request");
+			});
 	};
 	return (
 		<>
@@ -478,63 +511,52 @@ const ShopkeeperProfileCV = () => {
 														<div className=" flex items-center  gap-1">
 															<Takaicon></Takaicon>
 															<span className="text-base font-semibold tracking-wider text-black">
-																{" "}
-																{
-																	single.price
-																}{" "}
+																<s>
+																	{" "}
+																	{
+																		single.price
+																	}{" "}
+																</s>{" "}
+																{`${parseFloat(
+																	getDiscountPrice(
+																		single.price,
+																		single.discount
+																	)
+																).toFixed(2)}`}
 															</span>
 														</div>
 													</div>
-													{/* <div>
-														{!shopkeeperInfo.active_status && (
-															<button
-																disabled={
-																	user &&
-																	user.access !==
-																		"customer"
-																}
-																onClick={() => {
-																	single.quantity = 0;
-																
-																	if (
-																		checkIfInCart(
-																			cartItems,
-																			single
-																		)
-																	) {
-																		dispatch(
-																			increaseQuantityofProd(
-																				single
-																			)
-																		);
-																	} else {
-																		dispatch(
-																			addToCart(
-																				single
-																			)
-																		);
-																	}
-																}}
-																className={`${
-																	user &&
-																	user.access ===
-																		"customer"
-																		? ""
-																		: "btn btn-disabled border-none bg-white bg-none p-0"
-																}`}
-															>
-																<AddToCartIcon2
-																	width={32}
-																	height={32}
-																></AddToCartIcon2>
-															</button>
-														)}
-													</div> */}
 												</div>
 												{single.product_count <= 0 ? (
-													<div className="w-full rounded bg-[#469CD6]  px-2 py-1  text-center text-white active:bg-[#568db3]">
-														Request for stock
-													</div>
+													(() => {
+														const requestForProduct =
+															requested_product.find(
+																(product) =>
+																	product.shopper_product_id ===
+																	single.id
+															);
+														return requestForProduct ? (
+															<button
+																disabled
+																className="w-full rounded bg-[#093857] px-2 py-1 text-center text-white"
+															>
+																Already
+																Requested
+															</button>
+														) : (
+															<button
+																onClick={() =>
+																	handelRequestForStock(
+																		single.id
+																	)
+																}
+																className="w-full rounded bg-[#469CD6] px-2 py-1 text-center text-white active:bg-[#568db3]"
+															>
+																Request for
+																stock
+															</button>
+														);
+													})()
 												) : !shopkeeperInfo.active_status ==
 												  1 ? (
 													<button className="[#568db3] pointer-events-none w-full rounded bg-[#FF4C5E] px-2 py-1 text-center text-sm  text-white opacity-60  sm:text-base">

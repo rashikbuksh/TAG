@@ -53,15 +53,14 @@ const PostUi = ({ postData }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
-	if (shopper_product_id != null) {
-		useFetchFunc(
-			`/shopperproduct/getshopperproduct/by/id/${shopper_product_id}}`,
-			shopper_product_id,
-			setShopperProduct,
-			setLoading,
-			setError
-		);
-	}
+	useFetchFunc(
+		`/shopperproduct/getshopperproduct/by/id/${shopper_product_id}}`,
+		shopper_product_id,
+		setShopperProduct,
+		setLoading,
+		setError
+	);
+
 	useFetchFunc(
 		`/auth/getUserInfo/${shop_id}}`,
 		shop_id,

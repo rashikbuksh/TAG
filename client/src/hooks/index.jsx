@@ -3,10 +3,10 @@ import useCookie from "./useCookie";
 import { useDeleteFunc } from "./useDelete";
 import {
 	useFetch,
-	useFetchForRhfReset,
-	useFetchForRhfResetForOrder,
+	// useFetchForRhfReset,
+	// useFetchForRhfResetForOrder,
 	useFetchFunc,
-	useFetchFuncForReport,
+	// useFetchFuncForReport,
 } from "./useFetch";
 import { usePostFunc } from "./usePost";
 import useRHF from "./useRHF";
@@ -17,10 +17,10 @@ export {
 	useCookie,
 	useDeleteFunc,
 	useFetch,
-	useFetchForRhfReset,
-	useFetchForRhfResetForOrder,
+	// useFetchForRhfReset,
+	// useFetchForRhfResetForOrder,
 	useFetchFunc,
-	useFetchFuncForReport,
+	// useFetchFuncForReport,
 	usePostFunc,
 	useRHF,
 	useUpdateFunc,
