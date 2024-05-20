@@ -65,9 +65,6 @@ const Product = lazy(() => import("./pages/Product"));
 const Chat = lazy(() => import("./pages/Chat"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
-
-const Checkout = lazy(() => import("./pages/Checkout"));
-
 const Checkout2 = lazy(() => import("./pages/Checkout2/Checkout2"));
 const COD = lazy(() => import("./pages/CashOnDelivery/CashOnDelivery"));
 const PaymentGateway = lazy(() =>
@@ -82,7 +79,6 @@ const Notification = lazy(() => import("./pages/Notification"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Order = lazy(() => import("./pages/Order"));
 const HeroSlider = lazy(() => import("./pages/hero-slider/HeroSlider"));
-const AdminPage = lazy(() => import("./pages/AdminPage/Admin"));
 const AllProductAdmin = lazy(() =>
 	import("./AdminComponents/Product/AllProduct/AllProductAdmin")
 );

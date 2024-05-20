@@ -11,35 +11,40 @@ const { remove: OrderProduct } = require("../api/ordered_product");
 const { remove: shop } = require("../api/shop");
 const { remove: shopper_follower } = require("../api/shopper_follower");
 const {
-	remove: customers_address_details,
+  remove: customers_address_details,
 } = require("../api/customers_address_details");
+const {
+  remove: requested_product_stock,
+} = require("../api/requested_product_stock");
+
 const REMOVE_DATA = [
-	...product,
-	...HeroSlider,
-	...Newslike,
-	...Newscomment,
-	...ShopperProduct,
-	...News,
-	...user,
-	...OrderProduct,
-	...shop,
-	...customers_address_details,
-	...shopper_follower,
+  ...product,
+  ...HeroSlider,
+  ...Newslike,
+  ...Newscomment,
+  ...ShopperProduct,
+  ...News,
+  ...user,
+  ...OrderProduct,
+  ...shop,
+  ...customers_address_details,
+  ...shopper_follower,
+  ...requested_product_stock,
 ];
 
 REMOVE_DATA.forEach(({ uri, query, param, msg }) => {
-	app.delete(uri, (req, res) => {
-		let paramArr = [];
-		param?.forEach((val) => {
-			paramArr.push(req?.params[val]);
-		});
+  app.delete(uri, (req, res) => {
+    let paramArr = [];
+    param?.forEach((val) => {
+      paramArr.push(req?.params[val]);
+    });
 
-		ExecuteQuery(
-			res,
-			query,
-			[...paramArr],
-			"delete",
-			`${req?.params[msg]} deleted successfully`
-		);
-	});
+    ExecuteQuery(
+      res,
+      query,
+      [...paramArr],
+      "delete",
+      `${req?.params[msg]} deleted successfully`
+    );
+  });
 });

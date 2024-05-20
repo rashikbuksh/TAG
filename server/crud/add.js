@@ -27,6 +27,7 @@ const { add: ShopperSchedule } = require("../api/shopper_schedule");
 const { add: shop } = require("../api/shop");
 const { add: customers_address_details } = require("../api/customers_address_details");
 const { add: shopper_follower } = require("../api/shopper_follower");
+const { add: requested_product_stock } = require("../api/requested_product_stock");
 
 const ADD_DATA = [
 	...Auth,
@@ -44,7 +45,8 @@ const ADD_DATA = [
 	...ShopperSchedule,
 	...shop,
 	...shopper_follower,
-	...customers_address_details
+	...customers_address_details,
+	...requested_product_stock,
 ];
 
 ADD_DATA.forEach(({ uri, query, body, msg }) => {

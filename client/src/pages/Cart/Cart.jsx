@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useMemo, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NoItemInCart from "../../../src/assets/icons/shopping_cart_remove.png";
 
 const Cart = () => {
@@ -18,7 +18,7 @@ const Cart = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const [shoppers, setShoppers] = useState([]); // Maintain an array of shoppers
 	const [buyStates, setBuyStates] = useState({}); // Initialize a separate buy state for each shop
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		api.get("/auth/getShopperInfo").then((res) => {
 			setShoppers(res.data);
@@ -29,8 +29,6 @@ const Cart = () => {
 			setBuyStates(initialBuyStates);
 		});
 	}, []);
-
-	
 
 	const calculatedTotals = useMemo(() => {
 		// Calculate and set totals when cartItems or buyStates change
@@ -49,14 +47,25 @@ const Cart = () => {
 			totals[shopper.id] = parseFloat(shopperTotal).toFixed(2);
 		});
 		return totals;
-	}, [cartItems, buyStates, shoppers]);
+	}, [cartItems, shoppers]);
+	const handelCheckout = (id, shopperAccess) => {
+		navigate("/checkout", {
+			state: {
+				totalPrice: calculatedTotals[id],
+				shopperId: id,
+				discount: null,
+				totalItem: cartItems.filter((it) => it.shopper_id === id),
+				shopperAccess: shopperAccess,
+			},
+		});
+	};
 
 	return (
 		<>
-			<div className="mx-auto  h-full overflow-scroll pb-24 lg:w-[50%]">
+			<div className="mx-auto  h-full  pb-24 lg:w-[50%]">
 				<Breadcrumb pageTitle={"Cart"} prevUrl={"/home"}></Breadcrumb>
-				<Link to={"/orderStatus"} className="mr-2 flex justify-end">
-					<p className="text-md link mt-2 font-bold uppercase text-green-500">
+				<Link to={"/orderStatus"} className="my-2  flex justify-center bg-gray-100">
+					<p className="text-md link  font-bold uppercase text-black-500">
 						{" "}
 						Order Status
 					</p>

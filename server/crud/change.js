@@ -12,6 +12,8 @@ const { change: OrdredProduct } = require("../api/ordered_product");
 const { change: ShopperSchedule } = require("../api/shopper_schedule");
 const { change: shop } = require("../api/shop");
 const { change: customers_address_details } = require("../api/customers_address_details");
+const { change: requested_product_stock } = require("../api/requested_product_stock");
+
 const CHANGE_DATA = [
 	...Profile,
 	...ShopperProduct,
@@ -25,7 +27,8 @@ const CHANGE_DATA = [
 	...OrdredProduct,
 	...ShopperSchedule,
 	...shop,
-	...customers_address_details
+	...customers_address_details,
+	...requested_product_stock,
 ];
 
 CHANGE_DATA.forEach(({ uri, query, body, param, msg }) => {
