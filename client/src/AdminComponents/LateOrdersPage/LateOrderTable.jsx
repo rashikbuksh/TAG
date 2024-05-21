@@ -10,11 +10,11 @@ const LateOrderTable = ({ order }) => {
 	const [orderDetails, setOrderDetails] = useState([]);
 	const [formattedDifference, setFormattedDifference] = useState("N/A");
 
-	const handelOpenOrderHistoryModal = (id) => {
+	const handelOpenOrderHistoryModal = (order_uuid) => {
 		setIsOpen(!isOpen);
 
-		if (id) {
-			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
+		if (order_uuid) {
+			api.get(`/ordered-product/get-ordered-product/by/${order_uuid}`) // Fix the backtick here
 				.then((response) => {
 					setOrderDetails(response.data); // Use console.log instead of log
 				})
@@ -28,7 +28,7 @@ const LateOrderTable = ({ order }) => {
 		format: "hh:mm A DD/MM/YY",
 	});
 	const formattedaccept_time = FormattedTime({
-		time: order.accept_time,
+		time: order.shopper_order_accept_time,
 		format: "hh:mm A DD/MM/YY",
 	});
 	const formatteddelivery_time = FormattedTime({
@@ -96,13 +96,6 @@ const LateOrderTable = ({ order }) => {
 					</label>
 				</th>
 				<td>{order.id}</td>
-				<td>
-					{order.product_id}
-					<br />
-					<span className="badge badge-ghost badge-sm">
-						{order.quantity}
-					</span>
-				</td>
 				<td>{order.customer_profile_id}</td>
 				<td>{order.shopper_id}</td>
 				<td>{order.price}</td>
@@ -123,7 +116,9 @@ const LateOrderTable = ({ order }) => {
 
 				<td className="grid grid-cols-2 gap-3">
 					<button
-						onClick={() => handelOpenOrderHistoryModal(order.id)}
+						onClick={() =>
+							handelOpenOrderHistoryModal(order?.order_uuid)
+						}
 						className="btn btn-accent btn-sm ml-3 text-[9px]"
 					>
 						Order Details

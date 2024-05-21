@@ -1,5 +1,5 @@
 import { Breadcrumb } from "@components";
-import OrderProducTable from "@components/Product/OrderProductTable/OrderProducTable";
+import OrderProductTable from "@components/Product/OrderProductTable/OrderProductTable";
 import SuccessOrderModal from "@components/SuccessOrderModal/SuccessOrderModal";
 import { useAuth } from "@context/auth";
 import { addOneHour } from "@helpers/FormattedTime";
@@ -45,6 +45,7 @@ const OrderDetailsShopper = () => {
 		if (id) {
 			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
 				.then((response) => {
+					console.log(response.data, "response");
 					setProducts(response.data);
 					setPrice(response.data[0].totalPrice);
 					setCustomerId(response.data[0].customer_profile_id);
@@ -267,10 +268,10 @@ const OrderDetailsShopper = () => {
 									Order Details:
 								</p>
 								{products.map((product) => (
-									<OrderProducTable
+									<OrderProductTable
 										key={product.pid}
 										product={product}
-									></OrderProducTable>
+									></OrderProductTable>
 								))}
 							</div>
 						</div>

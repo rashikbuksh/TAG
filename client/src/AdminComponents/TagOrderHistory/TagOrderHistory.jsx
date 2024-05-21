@@ -1,11 +1,9 @@
-import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TagOrderTable from "./TagOrderTable";
 
 const TagOrderHistory = () => {
-	const { user } = useAuth();
 	const [orderData, setOrderData] = useState([]);
 	const { id } = useParams();
 

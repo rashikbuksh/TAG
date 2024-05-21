@@ -14,12 +14,16 @@ const { read: Newslike } = require("../api/newslike");
 const { read: Newscomment } = require("../api/newscomment");
 const { read: Refer } = require("../api/refer");
 const { read: Util } = require("../api/util");
-const { read: OrdredProduct } = require("../api/ordered_product");
+const { read: OrderedProduct } = require("../api/ordered_product");
 const { read: ShopperSchedule } = require("../api/shopper_schedule");
 const { read: shop } = require("../api/shop");
-const { read: customers_address_details } = require("../api/customers_address_details");
+const {
+	read: customers_address_details,
+} = require("../api/customers_address_details");
 const { read: shopper_follower } = require("../api/shopper_follower");
-const { read: requested_product_stock } = require("../api/requested_product_stock");
+const {
+	read: requested_product_stock,
+} = require("../api/requested_product_stock");
 
 const GET_DATA = [
 	...Auth,
@@ -35,7 +39,7 @@ const GET_DATA = [
 	...Newscomment,
 	...Refer,
 	...Util,
-	...OrdredProduct,
+	...OrderedProduct,
 	...ShopperSchedule,
 	...shop,
 	...customers_address_details,
@@ -134,4 +138,10 @@ app.post("/auth/getUserID", (req, res) => {
 	const query = `SELECT id from customer_profile where phone=?`;
 
 	ExecuteQuery(res, query, [phone]);
+});
+
+app.post("/order/get-product-by-id/:id", async (req, res) => {
+	const { id } = req?.params;
+
+	console.log("id", id);
 });

@@ -1,5 +1,5 @@
 import { Breadcrumb } from "@components";
-import OrderProducTable from "@components/Product/OrderProductTable/OrderProducTable";
+import OrderProductTable from "@components/Product/OrderProductTable/OrderProductTable";
 import { api } from "@lib/api";
 import React, { useEffect, useMemo, useState } from "react";
 import { FaCircle } from "react-icons/fa6";
@@ -32,9 +32,7 @@ const OrderModal = () => {
 					setCustomers_address_summary(
 						response.data[0].customers_address_summary
 					);
-					set_Shopper_profile_id(
-						response.data[0].shopper_id
-					);
+					set_Shopper_profile_id(response.data[0].shopper_id);
 					set_shopper_profile_Name(response.data[0].shopper_name);
 					setCustomers_address_summary(
 						response.data[0].customers_address_summary
@@ -103,10 +101,10 @@ const OrderModal = () => {
 							{/* <div className="flex items-center justify-end gap-2"></div> */}
 							<p className="text-xl font-bold">Order Details:</p>
 							{products.map((product) => (
-								<OrderProducTable
+								<OrderProductTable
 									key={product.pid}
 									product={product}
-								></OrderProducTable>
+								></OrderProductTable>
 							))}
 						</div>
 					</div>

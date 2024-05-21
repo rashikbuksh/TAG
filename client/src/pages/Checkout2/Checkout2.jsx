@@ -1,19 +1,17 @@
 import { Breadcrumb } from "@components";
-import PayNowBtn from "../../../src/components/PaymentMethod/Checkout/PayNowBtn";
-import DeliveryAddress from "../../../src/components/PaymentMethod/Checkout/DeliveryAddress";
-import PaymentOparator from "../../../src/components/PaymentMethod/Checkout/PaymentOparator";
-import OrderSummery from "../../../src/components/PaymentMethod/Checkout/OrderSummery";
-import { useEffect, useState } from "react";
-import { api } from "@lib/api";
-import { toast } from "react-toastify";
+import DeliveryAddress from "@components/PaymentMethod/Checkout/DeliveryAddress";
+import OrderSummery from "@components/PaymentMethod/Checkout/OrderSummery";
+import PayNowBtn from "@components/PaymentMethod/Checkout/PayNowBtn";
+import PaymentOparator from "@components/PaymentMethod/Checkout/PaymentOparator";
 import { useAuth } from "@context/auth";
+import { api } from "@lib/api";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const Checkout2 = () => {
 	const [addressArr, setAddressArr] = useState([]);
-	const { cartItems } = useSelector((state) => state.cart);
 	const [selectedAddress, setSelectedAddress] = useState(null);
 	const [customers_address_summary, setCustomers_address_summary] =
 		useState(null);
@@ -21,7 +19,7 @@ const Checkout2 = () => {
 	const { user } = useAuth();
 
 	useEffect(() => {
-		api.get(`/getCustomerAddress/${user.id}`)
+		api.get(`/get-customer-address/${user.id}`)
 			.then((response) => {
 				setAddressArr(response.data);
 			})
@@ -31,17 +29,10 @@ const Checkout2 = () => {
 	}, []);
 	const navigate = useNavigate();
 	const location = useLocation();
-	const {
-		totalPrice,
-		shopperId,
-		discount,
-		totalItem,
-		shopperAccess,
-	
-	} = location.state;
-	
+	const { totalPrice, shopperId, discount, totalItem, shopperAccess } =
+		location.state;
+
 	const handelGoPaymentPage = () => {
-		// console.log(paymentOperator,"paymentOperator");
 		if (
 			selectedAddress &&
 			paymentOperator &&
@@ -64,9 +55,7 @@ const Checkout2 = () => {
 				icon: "error",
 				title: "Oops...",
 				text: "You must have to add address ",
-				
 			});
-			
 		}
 	};
 
@@ -107,22 +96,17 @@ const Checkout2 = () => {
 						onChange={() => null} // Disable checkbox interaction
 						className="mr-4 h-5 w-5"
 					/>
-					{/* <TbTruckDelivery size={25} /> */}
 					<span className="ml-8 flex-auto text-[16px] font-bold">
 						Pick up from shop
 					</span>
 				</div>
 			)}
 
-			{/* Payment Method Section */}
 			<PaymentOparator
 				paymentOperator={paymentOperator}
 				setPaymentOperator={setPaymentOperator}
 				shopperAccess={shopperAccess}
 			></PaymentOparator>
-			{/* Saved Payment Section */}
-			{/* <SavedPayment></SavedPayment> */}
-			{/* Order Summary Section */}
 			{totalPrice ? (
 				<OrderSummery
 					totalPrice={totalPrice}

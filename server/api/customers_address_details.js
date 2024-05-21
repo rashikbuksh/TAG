@@ -15,7 +15,7 @@ const add = [
 
 const read = [
 	{
-		uri: "/getCustomerAddress/:id",
+		uri: "/get-customer-address/:id",
 		query: `SELECT * FROM customers_address_details WHERE customer_id = ?`,
 		param: ["id"],
 	},

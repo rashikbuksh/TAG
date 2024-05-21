@@ -6,9 +6,8 @@ import LateOrderTable from "./LateOrderTable";
 
 const LateOrdersPage = () => {
 	const [taglateOrder, setTagLateOrder] = useState([]);
-	const [filteredtagUsers, setFilteredtagUsers] = useState([]);
 	useEffect(() => {
-		api.get(`/order/gettimeoutorder`)
+		api.get(`/order/get-timeout-order`)
 			.then((response) => {
 				setTagLateOrder(response.data);
 			})
@@ -37,7 +36,6 @@ const LateOrdersPage = () => {
 								</label>
 							</th>
 							<th>Order Id</th>
-							<th>product_id , quantity</th>
 							{/* <th>Short Decription</th> */}
 							{/* <th>Full Description</th> */}
 							<th>Customer Id</th>

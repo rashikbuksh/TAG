@@ -1,9 +1,10 @@
 const add = [
 	{
 		uri: "/order/add-order",
-		query: `INSERT INTO product_order (order_status, customer_profile_id, shopper_id, order_time, price,customers_address_details_id,payment_type,customers_address_summary) VALUES (?, ?, ?, ?, ?, ?, ?,?)`,
+		query: `INSERT INTO product_order (order_status, order_uuid, customer_profile_id, shopper_id, order_time, price,customers_address_details_id,payment_type,customers_address_summary) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)`,
 		body: [
 			"order_status",
+			"order_uuid",
 			"customer_profile_id",
 			"shopper_id",
 			"order_time",
@@ -29,18 +30,18 @@ const read = [
 	{
 		uri: "/order/getPendingorder/:customer_profile_id",
 		query: `SELECT 
-              po.*, 
-              cp.name as shopper_name,
-			        cp.access
+				po.*, 
+				cp.name as shopper_name,
+				cp.access
             FROM 
-              product_order po
+              	product_order po
             JOIN 
-              customer_profile cp ON po.shopper_id = cp.id
+              	customer_profile cp ON po.shopper_id = cp.id
             WHERE 
-              (po.order_status = 'pending' OR po.order_status = 'accepted')
-              AND po.customer_profile_id = ? 
+				(po.order_status = 'pending' OR po.order_status = 'accepted')
+				AND po.customer_profile_id = ? 
             ORDER BY 
-                id DESC`,
+                po.id DESC`,
 		param: ["customer_profile_id"],
 		msg: "product_id",
 	},
@@ -56,10 +57,11 @@ const read = [
 	},
 	{
 		uri: "/order/getallordershopper/:shopper_id",
-		query: `SELECT * 
-            FROM product_order 
-            WHERE shopper_id = ? 
-            ORDER BY id DESC;`,
+		query: `SELECT 
+					po.* 
+				FROM product_order po
+				WHERE shopper_id = ? 
+				ORDER BY id DESC;`,
 		param: ["shopper_id"],
 		msg: "product_id",
 	},
@@ -87,7 +89,8 @@ const read = [
 	{
 		uri: "/order/getProductbyid/:id",
 		query: `SELECT
-					po.id AS order_id,
+					po.id as order_id,
+					po.order_uuid AS order_uuid,
 					sp.id AS pid,
 					sp.name AS name,
 					op.quantity,
@@ -111,17 +114,17 @@ const read = [
 					po.delivery_time AS delivery_time
 				FROM 
 					shopper_product sp
-				JOIN 
+				LEFT JOIN 
 					ordered_product op ON op.product_id = sp.id
-				JOIN 
-					product_order po ON po.id = op.order_id
-				JOIN 
+				LEFT JOIN 
+					product_order po ON po.order_uuid = op.order_uuid
+				LEFT JOIN 
 					product p ON sp.product_id = p.id
-				LEFT JOIN 
+				LEFT JOIN
 					customers_address_details cad ON cad.id = po.customers_address_details_id
-				LEFT JOIN 
+				LEFT JOIN
 					customer_profile cp ON po.customer_profile_id = cp.id
-				LEFT JOIN 
+				LEFT JOIN
 					customer_profile sh ON po.shopper_id = sh.id
 				WHERE 
 					po.id = ?;`,
@@ -129,9 +132,35 @@ const read = [
 		msg: "product_id",
 	},
 	{
-		uri: "/order/getLastOrder/:customer_profile_id",
-		query: `SELECT id FROM product_order WHERE customer_profile_id = ? ORDER BY id DESC LIMIT 1`,
-		param: ["customer_profile_id"],
+		uri: "/order/get-product/by/:order_uuid",
+		query: `SELECT
+					po.id as order_id,
+					po.order_uuid AS order_uuid,
+					po.price AS totalPrice,
+					po.order_status AS order_status,
+					po.cancel_report AS cancel_report,
+					po.customers_address_summary,
+					po.order_time AS order_time,
+					po.customer_profile_id,
+					po.shopper_id,
+					po.customers_address_details_id,
+					cad.*,
+					po.shopper_order_accept_time AS shopper_order_accept_time,
+					cp.name AS customer_name,
+					sh.name AS shopper_name,
+					po.delivery_time AS delivery_time
+				FROM
+					product_order po
+				LEFT JOIN
+					customers_address_details cad ON cad.id = po.customers_address_details_id
+				LEFT JOIN
+					customer_profile cp ON po.customer_profile_id = cp.id
+				LEFT JOIN
+					customer_profile sh ON po.shopper_id = sh.id
+				WHERE 
+					po.order_uuid = ?;`,
+		param: ["order_uuid"],
+		msg: "order_id",
 	},
 	{
 		uri: "/order/get-total-order/:id",
@@ -139,11 +168,18 @@ const read = [
 		param: ["id"],
 	},
 	{
-		uri: "/order/gettimeoutorder",
-		query: `SELECT *
-            FROM product_order
+		uri: "/order/get-timeout-order",
+		query: `SELECT po.*
+            FROM product_order po
             WHERE TIMEDIFF(delivery_time, order_time) > '00:45:00'
             	AND (order_delay_report != 'solved' OR order_delay_report IS NULL);`,
+	},
+	{
+		uri: "/order/get-order-uuid/:id",
+		query: `SELECT order-uuid
+            FROM product_order
+            WHERE id = ?;`,
+		param: ["id"],
 	},
 ];
 

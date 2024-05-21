@@ -8,15 +8,19 @@ import { deleteFromCart } from "@store/slices/cart-slice";
 import { useState } from "react";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+
+import { customAlphabet } from "nanoid";
+const alphabet =
+	"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+const nanoid = customAlphabet(alphabet, 10);
 
 const CashOnDelivery = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const [isOpen, setIsOpen] = useState(false);
 	const location = useLocation();
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
 	const {
 		totalPrice,
 		shopperId,
@@ -28,11 +32,13 @@ const CashOnDelivery = () => {
 	} = location.state;
 
 	const { user } = useAuth();
+
 	const addOrderToDB = async (productIds, total) => {
-		console.log("clicked");
+		const new_order_uuid = nanoid();
 		try {
 			const orderRes = await api.post("/order/add-order", {
 				customer_profile_id: user.id,
+				order_uuid: new_order_uuid,
 				shopper_id: shopperId,
 				order_status: "pending",
 				order_time: GetDateTime(),
@@ -42,87 +48,42 @@ const CashOnDelivery = () => {
 				customers_address_summary: customers_address_summary,
 			});
 
-			if (orderRes.status === 201) {
-				const lastOrderRes = await api.get(
-					`/order/getLastOrder/${user.id}`
-				);
-
-				if (
-					lastOrderRes.status === 200 &&
-					lastOrderRes.data.length > 0
-				) {
-					const last_order_id = lastOrderRes.data[0].id;
-
-					const notificationRes = await api.post(
-						"/notification/add-notification",
-						{
-							notification_content:
-								"You have a new order. Order Number is #" +
-								last_order_id +
-								".",
-							notification_time: GetDateTime(),
-							not_from: shopperId,
-							not_to: user.id,
-							status: 1,
-						}
-					);
-
-					if (notificationRes.status === 201) {
-						const productPromises = productIds.map((product) => {
-							const {
-								id: productid,
-								quantity,
-								discount,
-								price,
-								weight = 0,
-							} = product;
-							return api.post(
-								`/ordered-product/add-ordered-product`,
-								{
-									order_id: last_order_id,
-									product_id: productid,
-									quantity,
-									discount,
-									price,
-									weight,
-								}
-							);
-						});
-
-						const responses = await Promise.all(productPromises);
-
-						if (
-							responses.every(
-								(response) => response.status === 201
-							)
-						) {
-							// Delete products from cart
-							productIds.forEach((productId) => {
-								cartItems.forEach((cartItem) => {
-									if (cartItem.id === productId.id) {
-										dispatch(
-											deleteFromCart(cartItem, shopperId)
-										);
-									}
-								});
-							});
-							// Add congratulation modal
-							setIsOpen(true);
-
-							// All API calls were successful
-							// navigate("/orderStatus");
-						} else {
-							throw new Error("Failed to add ordered products");
-						}
-					} else {
-						throw new Error("Failed to add notification");
-					}
-				} else {
-					throw new Error("Failed to get last order");
-				}
-			} else {
+			if (orderRes.status !== 201) {
 				throw new Error("Failed to add order");
 			}
+
+			const productPromises = productIds.map((product) => {
+				const {
+					id: productid,
+					quantity,
+					discount,
+					price,
+					weight = 0,
+				} = product;
+				return api.post(`/ordered-product/add-ordered-product`, {
+					order_uuid: new_order_uuid,
+					product_id: productid,
+					quantity,
+					discount,
+					price,
+					weight,
+				});
+			});
+
+			const responses = await Promise.all(productPromises);
+
+			if (!responses.every((response) => response.status === 201)) {
+				throw new Error("Failed to add ordered products");
+			}
+
+			// Delete products from cart
+			const itemsToDelete = productIds.filter((productId) =>
+				cartItems.some((cartItem) => cartItem.id === productId.id)
+			);
+			itemsToDelete.forEach((item) =>
+				dispatch(deleteFromCart(item, shopperId))
+			);
+			setIsOpen(true);
 		} catch (error) {
 			toast.error(error.message, { position: "bottom-left" });
 		}
