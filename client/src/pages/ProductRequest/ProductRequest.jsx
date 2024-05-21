@@ -47,6 +47,7 @@ const ProductRequest = () => {
 				);
 				console.log(`Item with ID ${item.id} deleted successfully.`);
 				console.log(deleteResponse);
+				
 				deletionPromises.push(deleteResponse);
 				
 			} catch (error) {
