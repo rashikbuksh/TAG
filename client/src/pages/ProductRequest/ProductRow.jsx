@@ -2,10 +2,9 @@ import { MdDeleteForever } from "react-icons/md";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
-const ProductRow = ({ product }) => {
-	console.log(product);
+const ProductRow = ({ product ,handleDelete}) => {
+
 	const totalPrice = Number(product.price) * product.items.length 
-	console.log(totalPrice)
 	return (
 		<>
 			<div className="flex justify-between gap-2 rounded bg-slate-50 p-2">
@@ -36,6 +35,7 @@ const ProductRow = ({ product }) => {
 							color="red "
 							size={22}
 							className="cursor-pointer"
+							onClick={()=>handleDelete(product.id,product.items)}
 						/>
 					</span>
 					<div className="flex items-center justify-center gap-1 ">

@@ -2,6 +2,7 @@ import { useFetchFunc } from "@hooks";
 import ProductRow from "./ProductRow";
 import { useAuth } from "@context/auth";
 import { useState } from "react";
+import { api } from "@lib/api";
 const ProductRequest = () => {
 	const { user } = useAuth();
 	const [stockProduct, setStockProduct] = useState([]);
@@ -18,7 +19,14 @@ const ProductRequest = () => {
 	const groupedByShopperProduct = stockProduct.reduce((acc, item) => {
 		let group = acc.find((g) => g.name == item.name);
 		if (!group) {
-			group = { name: item.name, items: [], id: crypto.randomUUID() ,price:item.price ,image:item.image};
+			group = {
+				name: item.name,
+				items: [],
+				randomId: crypto.randomUUID(),
+				id: item.id,
+				price: item.price,
+				image: item.image,
+			};
 			acc.push(group);
 		}
 		group.items.push(item);
@@ -27,11 +35,37 @@ const ProductRequest = () => {
 
 	console.log(groupedByShopperProduct);
 
+	const handleDelete = async (id, items) => {
+		let deletionPromises = [];
+		console.log(id);
+		console.log(items);
+
+		items.forEach(async (item) => {
+			try {
+				let deleteResponse = await api.delete(
+					`/request-product-for-stock/delete/${id}`
+				);
+				console.log(`Item with ID ${item.id} deleted successfully.`);
+				console.log(deleteResponse);
+				deletionPromises.push(deleteResponse);
+				
+			} catch (error) {
+				console.error(`Error deleting item with ID ${item.id}:`, error);
+			}
+		});
+		await Promise.all(deletionPromises);
+		console.log("All deletions completed.");
+	};
+
 	return (
 		<div className="mx-2 mt-24 flex flex-col gap-2">
 			{groupedByShopperProduct.length > 0 &&
 				groupedByShopperProduct.map((product) => (
-					<ProductRow key={product.id} product={product}></ProductRow>
+					<ProductRow
+						key={product.randomId}
+						product={product}
+						handleDelete={handleDelete}
+					></ProductRow>
 				))}
 			{/* <ProductRow></ProductRow>
 			<ProductRow></ProductRow> */}
