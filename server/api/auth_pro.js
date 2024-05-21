@@ -2,6 +2,10 @@ const { sign, verify } = require("jsonwebtoken");
 const { genSalt, hash, compare } = require("bcrypt");
 const { PRIVATE_KEY, SALT } = require("../config/secret");
 
+function generateRegex(basePath) {
+	return new RegExp(`^${basePath}/\\d+$`);
+}
+
 const HashPass = async (password) => {
 	const salt = await genSalt(Number(SALT));
 	const hashPassword = await hash(password.toString(), parseInt(salt));
@@ -36,39 +40,45 @@ const CreateToken = (user, time = "730h") => {
 		token: token,
 	};
 };
-const getUserInfoRegex = /^\/auth\/getUserInfo\/\d+$/;
-const getProductRegex = /^\/shopperproduct\/getshopperproduct\/\d+$/;
-const getShopperProductRegex =
-	/^\/shopperproduct\/getshopperproductOfShopkeeper\/\d+$/;
-const CheckUSerRegex = /^\/auth\/checkUser\/\d+$/;
+
+const getUserInfoRegex = generateRegex("/auth/getUserInfo");
+const getProductRegex = generateRegex("/shopperproduct/getshopperproduct");
+const getShopperProductRegex = generateRegex(
+	"/shopperproduct/getshopperproductOfShopkeeper"
+);
+const CheckUserRegex = generateRegex("/auth/checkUser");
+
 const getSearchedProductRegex =
 	/^\/shopperproduct\/get-searched-product\/[^\/]+$/;
 
 const VerifyToken = (req, res, next) => {
 	const { authorization } = req?.headers;
 
+	const urls = [
+		"/auth/register",
+		"/auth/registershopper",
+		"/auth/getUserID",
+		"/hero-slider/get-slider/bottom",
+		"/hero-slider/get-slider/top",
+		"/hero-slider/get-slider/middle",
+		"/news/get-news",
+		"/shopperproduct/getshopperproductBasedOnSaleCount",
+		"/shopperproduct/getshopperproduct",
+		"/shopperproduct/getPopularShopperProduct",
+		"/category/get/category",
+		"/adminShopperProduct/getshopperproduct",
+		"/sentOtp",
+		"/news/getHotNews",
+		"/shop/getAllShop",
+	];
+
 	if (
-		req?.originalUrl == "/auth/register" ||
-		req?.originalUrl == "/auth/registershopper" ||
-		req?.originalUrl == "/auth/getUserID" ||
-		req?.originalUrl == "/hero-slider/get-slider/bottom" ||
-		req?.originalUrl == "/hero-slider/get-slider/top" ||
-		req?.originalUrl == "/hero-slider/get-slider/middle" ||
-		req?.originalUrl == "/news/get-news" ||
-		req?.originalUrl ==
-			"/shopperproduct/getshopperproductBasedOnSaleCount" ||
-		req?.originalUrl == "/shopperproduct/getshopperproduct" ||
-		req?.originalUrl == "/shopperproduct/getPopularShopperProduct" ||
-		req?.originalUrl == "/category/get/category" ||
-		req?.originalUrl == "/adminShopperProduct/getshopperproduct" ||
+		urls.includes(req?.originalUrl) ||
 		getUserInfoRegex.test(req?.originalUrl) ||
 		getProductRegex.test(req?.originalUrl) ||
 		getShopperProductRegex.test(req?.originalUrl) ||
-		CheckUSerRegex.test(req?.originalUrl) ||
-		getSearchedProductRegex.test(req?.originalUrl) ||
-		req?.originalUrl == "/sentOtp" ||
-		req?.originalUrl == "/news/getHotNews" ||
-		req?.originalUrl == "/shop/getAllShop"
+		CheckUserRegex.test(req?.originalUrl) ||
+		getSearchedProductRegex.test(req?.originalUrl)
 	) {
 		next();
 	} else {
