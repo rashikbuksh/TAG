@@ -47,8 +47,9 @@ const ProductRequest = () => {
 				);
 				console.log(`Item with ID ${item.id} deleted successfully.`);
 				console.log(deleteResponse);
-				
+
 				deletionPromises.push(deleteResponse);
+				// TODO:change state
 				
 			} catch (error) {
 				console.error(`Error deleting item with ID ${item.id}:`, error);
