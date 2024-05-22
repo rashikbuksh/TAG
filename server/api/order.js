@@ -176,7 +176,7 @@ const read = [
 	},
 	{
 		uri: "/order/get-order-uuid/:id",
-		query: `SELECT order-uuid
+		query: `SELECT order_uuid
             FROM product_order
             WHERE id = ?;`,
 		param: ["id"],

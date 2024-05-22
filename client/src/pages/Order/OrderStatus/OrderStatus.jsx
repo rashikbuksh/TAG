@@ -19,7 +19,6 @@ const OrderStatus = () => {
 			.then((response) => {
 				const newPendingOrders = response.data;
 				setPendingOrders(newPendingOrders);
-				// console.log(newPendingOrders);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -34,7 +33,6 @@ const OrderStatus = () => {
 				const response = await api.get(
 					`/ordered-product/get-ordered-product/by/${order.order_uuid}`
 				);
-				console.log(response.data);
 				return response.data;
 			} catch (error) {
 				return [];

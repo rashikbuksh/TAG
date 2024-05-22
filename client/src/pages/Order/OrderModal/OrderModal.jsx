@@ -7,53 +7,27 @@ import { useParams } from "react-router-dom";
 
 const OrderModal = () => {
 	const { id } = useParams();
-	const [products, setProducts] = useState([]);
-	const [orderStatus, setOrderStatus] = useState("");
-	const [price, setPrice] = useState(null);
-	const [addressTitle, setAddressTitle] = useState(null);
-	const [address, setAddress] = useState(null);
-	const [contactNo, setContactNo] = useState(null);
-	const [shopper_profile_id, set_Shopper_profile_id] = useState(null);
-	const [shopper_profile_Name, set_shopper_profile_Name] = useState(null);
-	const [customers_address_summary, setCustomers_address_summary] =
-		useState(null);
-	const [memoizedProducts, setMemoizedProducts] = useState(products);
-	useEffect(() => {
-		if (id) {
-			// let id = order_Id;
-			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
-				.then((response) => {
-					// console.log("🚀 ~ .then ~ response:", response);
-					setProducts(response.data);
-					setOrderStatus(response.data[0].order_status);
-					setAddressTitle(response.data[0].address_title);
-					setAddress(response.data[0].address);
-					setContactNo(response.data[0].phone_no);
-					setCustomers_address_summary(
-						response.data[0].customers_address_summary
-					);
-					set_Shopper_profile_id(response.data[0].shopper_id);
-					set_shopper_profile_Name(response.data[0].shopper_name);
-					setCustomers_address_summary(
-						response.data[0].customers_address_summary
-					);
-					setPrice(response.data[0].totalPrice); // Use console.log instead of log
-				})
-				.catch((error) => {
-					console.error(error);
-				});
-		}
-	}, [id, orderStatus]);
+
+	const [order, setOrder] = useState(null);
+	const [orderedProducts, setOrderedProducts] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	const [memoizedProducts, setMemoizedProducts] = useState(order);
 
 	useEffect(() => {
-		setMemoizedProducts(products);
-	}, [products]);
-	const [showcart, setShowCart] = useState(false);
-	useMemo(() => {
-		if (JSON.stringify(products) !== JSON.stringify(memoizedProducts)) {
-			setShowCart(true);
+		if (id != null || id != undefined) {
+			api.get(`/order/get-product-by-id/${id}`).then((response) => {
+				setOrder(response.data);
+				setOrderedProducts(response.data?.ordered_product);
+			});
+		} else {
+			setLoading(false);
 		}
-	}, [products]);
+	}, [id, order?.order_status]);
+
+	useEffect(() => {
+		setMemoizedProducts(order);
+	}, [order]);
 
 	const statusColors = {
 		accepted: "text-green-500",
@@ -77,22 +51,24 @@ const OrderModal = () => {
 								Customer Information:
 							</p>
 							<p className="text-lg">
-								Shopper id:{shopper_profile_id}
+								Shopper id:{order?.shopper_id}
 							</p>
 							<p className="text-md">
 								Shopper Name:{" "}
 								<span className="font-bold text-red-900">
-									{shopper_profile_Name}
+									{order?.shopper_name}
 								</span>
 							</p>
-							<p>{contactNo}</p>
+							<p>{order?.phone_no}</p>
 							<div className="flex items-center justify-between ">
 								<p className="capitalize">
-									Status : {orderStatus}
+									Status : {order?.order_status}
 								</p>
 								<span>
 									<FaCircle
-										className={statusColors[orderStatus]}
+										className={
+											statusColors[order?.order_status]
+										}
 									/>
 								</span>
 							</div>
@@ -100,7 +76,7 @@ const OrderModal = () => {
 						<div className=" divide-gray-200">
 							{/* <div className="flex items-center justify-end gap-2"></div> */}
 							<p className="text-xl font-bold">Order Details:</p>
-							{products.map((product) => (
+							{orderedProducts.map((product) => (
 								<OrderProductTable
 									key={product.pid}
 									product={product}
@@ -113,18 +89,20 @@ const OrderModal = () => {
 			<div className="divider my-0"></div>
 			<div className=" flex items-center justify-end gap-5 text-lg">
 				<p>Total Amount :</p>
-				<p>{price}</p>
+				<p>{order?.totalPrice}</p>
 			</div>
 			<div className="divider my-0"></div>
 
 			<div style={deliveryInfoStyle} className="">
 				<p className="text-xl font-bold">Delivery Information:</p>
-				{!addressTitle && !address && !contactNo && (
-					<p>{customers_address_summary}</p>
-				)}
-				<p className="text-lg">{addressTitle}</p>
-				<p className="text-md">{address}</p>
-				<p>{contactNo}</p>
+				{!order?.address_title &&
+					!order?.address &&
+					!order?.phone_no && (
+						<p>{order?.customers_address_summary}</p>
+					)}
+				<p className="text-lg">{order?.address_title}</p>
+				<p className="text-md">{order?.address}</p>
+				<p>{order?.phone_no}</p>
 			</div>
 		</div>
 	);
