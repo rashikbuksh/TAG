@@ -2,9 +2,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
-const ProductRow = ({ product ,handleDelete}) => {
-
-	const totalPrice = Number(product.price) * product.items.length 
+const ProductRow = ({ product, handleDelete, groupedByShopperProduct }) => {
 	return (
 		<>
 			<div className="flex justify-between gap-2 rounded bg-slate-50 p-2">
@@ -17,14 +15,14 @@ const ProductRow = ({ product ,handleDelete}) => {
 						/>
 						<div>
 							<p>Product :{product.name}</p>
-							<p>Price :{product.price}</p>
-
 						</div>
 					</div>
-					<p className="absolute right-2 top-12 w-4 text-right">{product?.items?.length}x{product.price}</p>
+					<p className="absolute right-2 top-12 w-4 text-right">
+						{product?.items?.length}x
+					</p>
 					<progress
 						className="progress progress-success my-1 "
-						value={90}
+						value={product?.items?.length * 20}
 						max="100"
 					></progress>
 				</div>
@@ -35,12 +33,14 @@ const ProductRow = ({ product ,handleDelete}) => {
 							color="red "
 							size={22}
 							className="cursor-pointer"
-							onClick={()=>handleDelete(product.id,product.items)}
+							onClick={() =>
+								handleDelete(product.id, groupedByShopperProduct)
+							}
 						/>
 					</span>
 					<div className="flex items-center justify-center gap-1 ">
 						<TbCurrencyTaka />
-						<span className="font-bold">{totalPrice}</span>
+						<span className="font-bold">{product.price}</span>
 					</div>
 					<div className="mt-3 flex justify-center">
 						<Link to={"/addshopperproduct"}>

@@ -43,14 +43,15 @@ const ProductRequest = () => {
 		items.forEach(async (item) => {
 			try {
 				let deleteResponse = await api.delete(
-					`/request-product-for-stock/delete/${id}`
+					`/request-product-for-stock/delete/${item.id}`
 				);
 				console.log(`Item with ID ${item.id} deleted successfully.`);
 				console.log(deleteResponse);
 
 				deletionPromises.push(deleteResponse);
-				// TODO:change state
-				
+				if (deleteResponse.status == 200) {
+					window.location.reload();
+				}
 			} catch (error) {
 				console.error(`Error deleting item with ID ${item.id}:`, error);
 			}
@@ -67,10 +68,10 @@ const ProductRequest = () => {
 						key={product.randomId}
 						product={product}
 						handleDelete={handleDelete}
+						groupedByShopperProduct={product.items}
 					></ProductRow>
 				))}
-			{/* <ProductRow></ProductRow>
-			<ProductRow></ProductRow> */}
+		
 		</div>
 	);
 };
