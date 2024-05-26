@@ -521,7 +521,7 @@ const ShopkeeperProfileCV = () => {
 														</div>
 													</div>
 												</div>
-												{user && single.product_count <= 0 ? (
+												{user && user.access==="customer" && single.product_count <= 0 ? (
 													(() => {
 														const requestForProduct =
 															requested_product.find(

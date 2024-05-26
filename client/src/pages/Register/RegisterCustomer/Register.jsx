@@ -13,7 +13,7 @@ const Register = () => {
 	const { id } = useParams();
 	const [showPassword, setShowPassword] = useState(false);
 	const registerSchema = yup.object().shape({
-		name: yup.string().required("Name is required"),
+		name: yup.string().required("Name is required").matches(/^[a-zA-Z\s]*$/, "Name cannot contain numbers"),
 		emailAddress: yup.string().email("Please enter valid email address"),
 		password: yup
 			.string()
