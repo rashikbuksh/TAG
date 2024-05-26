@@ -22,11 +22,21 @@ const OrderShopper = () => {
 			});
 	}, [user.id]);
 
+	const statusClasses = {
+		completed: "text-blue-500",
+		cancelled: "text-red-500",
+		accepted: "text-green-500 text-lg font-bold",
+		default: "text-yellow-500",
+	};
+
 	return (
 		<div className="body-wrapper  ">
 			<Breadcrumb pageTitle="Orders" prevUrl="/shopkeeperDashboard" />
 			<div className="order-product-area">
 				{data?.map((single) => {
+					const statusClass =
+						statusClasses[single?.order_status] ||
+						statusClasses.default;
 					return (
 						<div
 							className="cart-product border-bottom--medium flex items-center justify-between active:bg-gray-200"
@@ -70,27 +80,8 @@ const OrderShopper = () => {
 
 								<div className="mx-auto">
 									<p className="flex items-center gap-2">
-										<span>
-											{single.order_status ==
-											"completed" ? (
-												<span className="text-blue-500">
-													{single.order_status}
-												</span>
-											) : single.order_status ==
-											  "cancelled" ? (
-												<span className="text-red-500">
-													{single.order_status}
-												</span>
-											) : single.order_status ==
-											  "accepted" ? (
-												<span className="text-green-500 text-lg font-bold">
-													{single.order_status}
-												</span>
-											) : (
-												<span className="text-yellow-500">
-													{single.order_status}
-												</span>
-											)}
+										<span className={statusClass}>
+											{single.order_status}
 										</span>{" "}
 									</p>
 								</div>

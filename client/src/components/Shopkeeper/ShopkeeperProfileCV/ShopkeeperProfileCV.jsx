@@ -96,12 +96,12 @@ const ShopkeeperProfileCV = () => {
 		setError
 	);
 	const selectedCategory = (e) => {
-		const selectedCategoryId = parseInt(e.target.value); // Convert the value to an integer if needed
+		const selectedCategoryId = parseInt(e.target.value); 
 		if (selectedCategoryId === 0) {
-			// If "Category" is selected, show all products
+			
 			setSelectedCategoryProduct(shopperProduct);
 		} else {
-			// Filter products based on the selected category
+		
 			const filteredProducts = shopperProduct.filter((product) => {
 				return product.category_id === selectedCategoryId;
 			});

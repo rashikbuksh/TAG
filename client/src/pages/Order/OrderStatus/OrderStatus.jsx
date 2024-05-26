@@ -7,8 +7,8 @@ import { api } from "@lib/api";
 import { useEffect, useMemo, useState } from "react";
 import { FaCircle, FaPersonWalking } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import chatIconImg from "../../../../src/assets/icons/live-chat.png";
 import { Tooltip } from "react-tooltip";
+import chatIconImg from "../../../../src/assets/icons/live-chat.png";
 const OrderStatus = () => {
 	const [pendingOrders, setPendingOrders] = useState([]);
 	const [products, setProducts] = useState([]);
@@ -19,7 +19,6 @@ const OrderStatus = () => {
 			.then((response) => {
 				const newPendingOrders = response.data;
 				setPendingOrders(newPendingOrders);
-				// console.log(newPendingOrders);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -32,9 +31,8 @@ const OrderStatus = () => {
 		const productPromises = pendingOrders.map(async (order) => {
 			try {
 				const response = await api.get(
-					`/order/getProductbyid/${order.id}`
+					`/ordered-product/get-ordered-product/by/${order.order_uuid}`
 				);
-				console.log(response.data);
 				return response.data;
 			} catch (error) {
 				return [];
@@ -50,7 +48,9 @@ const OrderStatus = () => {
 		return pendingOrders.map((order) => ({
 			...order,
 			products: products.filter((productList) =>
-				productList.some((product) => product.order_id == order.id)
+				productList.some(
+					(product) => product.order_uuid == order.order_uuid
+				)
 			),
 		}));
 	}, [products, pendingOrders]);

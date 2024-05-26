@@ -1,18 +1,16 @@
-import { getDiscountPrice } from "@helpers/product";
 import { api } from "@lib/api";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import TagOrderDetailsModal from "./TagOrderDetailsModal";
 
 const TagOrderTable = ({ order }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [orderDetails, setOrderDetails] = useState([]);
 
-	const handelOpenOrderHistoryModal = (id) => {
+	const handelOpenOrderHistoryModal = (order_uuid) => {
 		setIsOpen(!isOpen);
 
-		if (id) {
-			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
+		if (order_uuid) {
+			api.get(`/ordered-product/get-ordered-product/by/${order_uuid}`) // Fix the backtick here
 				.then((response) => {
 					setOrderDetails(response.data); // Use console.log instead of log
 				})
@@ -37,7 +35,9 @@ const TagOrderTable = ({ order }) => {
 
 				<td>
 					<button
-						onClick={() => handelOpenOrderHistoryModal(order.id)}
+						onClick={() =>
+							handelOpenOrderHistoryModal(order?.order_uuid)
+						}
 						className="btn btn-accent btn-sm ml-3"
 					>
 						Order Details

@@ -1,5 +1,5 @@
 import Modal from "@components/Modal/Modal";
-import OrderProducTable from "@components/Product/OrderProductTable/OrderProducTable";
+import OrderProductTable from "@components/Product/OrderProductTable/OrderProductTable";
 import FormattedTime from "@helpers/FormattedTime";
 import moment from "moment-timezone";
 import React, { useEffect, useState } from "react";
@@ -20,21 +20,24 @@ const TagOrderDetailsModal = ({ isOpen, setIsOpen, orderDetails }) => {
 	const customers_address_summary = orderDetails.map(
 		(d) => d.customers_address_summary
 	);
-	// const [addressTitle, setAddressTitle] = useState(null);
-	// const [address, setAddress] = useState(null);
-	// const [contactNo, setContactNo] = useState(null);
 	const formattedOrderTime = FormattedTime({
 		time: order_time,
 		format: "hh:mm A DD/MM/YY",
 	});
-	const formattedaccept_time = FormattedTime({
-		time: accept_time,
-		format: "hh:mm A DD/MM/YY",
-	});
-	const formatteddelivery_time = FormattedTime({
-		time: delivery_time,
-		format: "hh:mm A DD/MM/YY",
-	});
+	const formattedaccept_time =
+		accept_time[0] == null
+			? "N/A"
+			: FormattedTime({
+					time: accept_time,
+					format: "hh:mm A DD/MM/YY",
+			  });
+	const formatteddelivery_time =
+		delivery_time[0] == null
+			? "N/A"
+			: FormattedTime({
+					time: delivery_time,
+					format: "hh:mm A DD/MM/YY",
+			  });
 
 	useEffect(() => {
 		// Check if both delivery_time and order_time exist and are valid timestamps
@@ -87,10 +90,10 @@ const TagOrderDetailsModal = ({ isOpen, setIsOpen, orderDetails }) => {
 								orderDetails.length > 0 &&
 								orderDetails.map((Orderdproduct) => (
 									<>
-										<OrderProducTable
+										<OrderProductTable
 											key={Orderdproduct.id}
 											product={Orderdproduct}
-										></OrderProducTable>
+										></OrderProductTable>
 									</>
 								))}
 						</tbody>

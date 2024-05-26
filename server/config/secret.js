@@ -9,8 +9,7 @@ const {
 	DB_PORT,
 	PRIVATE_KEY,
 	SALT,
-	OSRM_GRAPH,
-	MAP_PORT,
+	API_URL,
 } = process.env;
 
 module.exports = Object.freeze({
@@ -21,6 +20,5 @@ module.exports = Object.freeze({
 	DB_PORT,
 	PRIVATE_KEY,
 	SALT,
-	OSRM_GRAPH,
-	MAP_PORT,
+	API_URL,
 });

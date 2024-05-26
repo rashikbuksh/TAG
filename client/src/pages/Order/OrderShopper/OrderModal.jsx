@@ -1,5 +1,5 @@
 import { Breadcrumb } from "@components";
-import OrderProducTable from "@components/Product/OrderProductTable/OrderProducTable";
+import OrderProductTable from "@components/Product/OrderProductTable/OrderProductTable";
 import SuccessOrderModal from "@components/SuccessOrderModal/SuccessOrderModal";
 import { useAuth } from "@context/auth";
 import { addOneHour } from "@helpers/FormattedTime";
@@ -12,22 +12,14 @@ import Swal from "sweetalert2";
 
 const OrderDetailsShopper = () => {
 	const { id } = useParams();
-	const selectId = `prod_status_${id}`;
+
+	const [order, setOrder] = useState([]);
+	const [orderedProducts, setOrderedProducts] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+
 	const [cancelReport, setCancelReport] = useState("");
 	const [isShownReport, setIsShownReport] = useState(false);
-	const [orderStatus, setOrderStatus] = useState();
-	const [price, setPrice] = useState(null);
-	const [OrderTime, setOrderTime] = useState(null);
-	const [CustomerId, setCustomerId] = useState(null);
-	const [products, setProducts] = useState([]);
-	const [addressTitle, setAddressTitle] = useState(null);
-	const [address, setAddress] = useState(null);
-	const [contactNo, setContactNo] = useState(null);
-	// console.log("🚀 ~ OrderDetailsShopper ~ products:", products);
-	const [customers_address_summary, setCustomers_address_summary] =
-		useState(null);
-	const [customer_profile_id, setCustomer_profile_id] = useState(null);
-	const [customer_profile_Name, setCustomer_profile_Name] = useState(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const handelIsOpenModal = () => {
 		setIsOpen(!isOpen);
@@ -41,31 +33,21 @@ const OrderDetailsShopper = () => {
 		borderRadius: "5px", // Rounded corners
 		marginBottom: "20px", // Spacing between delivery info and total amount
 	};
+
 	useEffect(() => {
-		if (id) {
-			api.get(`/order/getProductbyid/${id}`) // Fix the backtick here
-				.then((response) => {
-					setProducts(response.data);
-					setPrice(response.data[0].totalPrice);
-					setCustomerId(response.data[0].customer_profile_id);
-					setAddressTitle(response.data[0].address_title);
-					setCustomers_address_summary(
-						response.data[0].customers_address_summary
-					);
-					setAddress(response.data[0].address);
-					setContactNo(response.data[0].phone_no);
-					setOrderStatus(response.data[0].order_status);
-					setCustomer_profile_id(
-						response.data[0].customer_profile_id
-					);
-					setCustomer_profile_Name(response.data[0].customer_name);
-					setOrderTime(response.data[0].order_time);
-				})
-				.catch((error) => {
-					console.error(error);
-				});
+		if (id != null || id != undefined) {
+			api.get(`/order/get-product-by-id/${id}`).then((response) => {
+				setOrder(response.data);
+				setOrderedProducts(response.data?.ordered_product);
+			});
+		} else {
+			setLoading(false);
 		}
-	}, [id, orderStatus]);
+	}, [id]);
+
+	if (!order) return <Navigate to="/not-found" />;
+	if (loading)
+		return <span className="loading loading-dots loading-lg z-50" />;
 
 	const updateProductCount = (id, quantity) => {
 		api.post(`/product/decreaseProductCount`, {
@@ -92,18 +74,16 @@ const OrderDetailsShopper = () => {
 								api.post("/notification/add-notification", {
 									notification_content: `${
 										user.name
-									} accept your order. collect your products within ${addOneHour(
+									} accept your order. collect your order within ${addOneHour(
 										time
 									)}.`,
 									notification_time: GetDateTime(),
 									not_to: user.id,
-									not_from: CustomerId,
+									not_from: order?.customer_profile_id,
 									status: 0,
 								}).then((response) => {
-									// console.log(response);
 									if (response.status === 201) {
 										window.location.reload();
-										setOrderStatus("accepted");
 										setCancelReport("");
 									}
 								});
@@ -135,16 +115,16 @@ const OrderDetailsShopper = () => {
 									notification_content: `Completed your order Successfully #${id}`,
 									notification_time: GetDateTime(),
 									not_to: user.id,
-									not_from: CustomerId,
+									not_from: order?.customer_profile_id,
 									status: 0,
 								}).then((response) => {
-									// console.log(response);
 									if (response.status === 201) {
-										setOrderStatus("completed");
-										products.forEach((product) => {
+										order.forEach((product) => {
+											console.log(product);
 											updateProductCount(
-												product.pid,
-												product.quantity
+												product?.ordered_product?.pid,
+												product?.ordered_product
+													?.quantity
 											);
 										});
 										setCancelReport("");
@@ -177,8 +157,8 @@ const OrderDetailsShopper = () => {
 				'<label for="not-come">The customers did not come to my shop</label>' +
 				"</div>" +
 				'<div class="swal2-radio swal2-content">' +
-				'<input type="radio" id="not-enough-products" name="cancelReason" value="There are not enough Products in my store">' +
-				'<label for="not-enough-products">There are not enough Products in my store</label>' +
+				'<input type="radio" id="not-enough-order" name="cancelReason" value="There are not enough Products in my store">' +
+				'<label for="not-enough-order">There are not enough Products in my store</label>' +
 				"</div>" +
 				'<div class="swal2-radio swal2-content">' +
 				'<input type="radio" id="customer-not-taking" name="cancelReason" value="Customer is not taking the product">' +
@@ -189,8 +169,8 @@ const OrderDetailsShopper = () => {
 				'<label for="customer-not-coming-bn">কাস্টমার আমার দোকানে আসেনি</label>' +
 				"</div>" +
 				'<div class="swal2-radio swal2-content">' +
-				'<input type="radio" id="not-enough-products-bn" name="cancelReason" value="আমার দোকানে পর্যাপ্ত পন্য নেই">' +
-				'<label for="not-enough-products-bn">আমার দোকানে পর্যাপ্ত পন্য নেই</label>' +
+				'<input type="radio" id="not-enough-order-bn" name="cancelReason" value="আমার দোকানে পর্যাপ্ত পন্য নেই">' +
+				'<label for="not-enough-order-bn">আমার দোকানে পর্যাপ্ত পন্য নেই</label>' +
 				"</div>" +
 				'<div class="swal2-radio swal2-content">' +
 				'<input type="radio" id="customer-not-taking-bn" name="cancelReason" value="কাস্টমার পন্য নিচ্ছে না">' +
@@ -246,16 +226,18 @@ const OrderDetailsShopper = () => {
 
 			<div style={deliveryInfoStyle} className="mt-1">
 				<p className="text-xl font-bold">Customer Information:</p>
-				<p className="text-lg">Customer Id:{customer_profile_id}</p>
+				<p className="text-lg">
+					Customer Id:{order?.customer_profile_id}
+				</p>
 				<p className="text-md">
 					Customer Name:{" "}
 					<span className="font-bold text-red-900">
-						{customer_profile_Name}
+						{order?.customer_name}
 					</span>
 				</p>
-				<p>{contactNo}</p>
+				<p>{order?.phone_no}</p>
 				<div className="flex items-center justify-between ">
-					<p className="capitalize">Status : {orderStatus}</p>
+					<p className="capitalize">Status : {order?.order_status}</p>
 				</div>
 			</div>
 			<div className="">
@@ -266,11 +248,11 @@ const OrderDetailsShopper = () => {
 								<p className="text-xl font-bold">
 									Order Details:
 								</p>
-								{products.map((product) => (
-									<OrderProducTable
+								{orderedProducts.map((product) => (
+									<OrderProductTable
 										key={product.pid}
 										product={product}
-									></OrderProducTable>
+									></OrderProductTable>
 								))}
 							</div>
 						</div>
@@ -279,21 +261,23 @@ const OrderDetailsShopper = () => {
 				<div className="divider my-0"></div>
 				<div className=" flex items-center justify-end gap-5 text-lg">
 					<p>Total Amount :</p>
-					<p>{price}</p>
+					<p>{order?.totalPrice}</p>
 				</div>
 			</div>
 
-			{orderStatus == "completed" ? (
+			{order?.order_status == "completed" ? (
 				""
-			) : orderStatus == "cancelled" ? (
+			) : order?.order_status == "cancelled" ? (
 				""
 			) : (
 				<div className="mt-6 flex items-center justify-end gap-3 ">
-					{orderStatus == "accepted" ? (
+					{order?.order_status == "accepted" ? (
 						""
 					) : (
 						<button
-							onClick={() => handleAcceptOrder(id, OrderTime)}
+							onClick={() =>
+								handleAcceptOrder(id, order?.order_time)
+							}
 							className="action-button"
 						>
 							Accept
@@ -307,7 +291,7 @@ const OrderDetailsShopper = () => {
 						Cancel
 					</button>
 
-					{orderStatus == "accepted" ? (
+					{order?.order_status == "accepted" ? (
 						<button
 							onClick={() => handleCompleteOrder(id)}
 							className="h-[30px] w-[80px] rounded bg-green-700  text-white "
@@ -334,12 +318,14 @@ const OrderDetailsShopper = () => {
 			<div className="divider my-0"></div>
 			<div style={deliveryInfoStyle} className="">
 				<p className="text-xl font-bold">Delivery Information:</p>
-				{!addressTitle && !address && !contactNo && (
-					<p>{customers_address_summary}</p>
-				)}
-				<p className="text-lg">{addressTitle}</p>
-				<p className="text-md">{address}</p>
-				<p>{contactNo}</p>
+				{!order?.address_title &&
+					!order?.address &&
+					!order?.phone_no && (
+						<p>{order?.customers_address_summary}</p>
+					)}
+				<p className="text-lg">{order?.address_title}</p>
+				<p className="text-md">{order?.address}</p>
+				<p>{order?.phone_no}</p>
 			</div>
 		</div>
 	);

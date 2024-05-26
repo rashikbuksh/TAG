@@ -1,5 +1,6 @@
 const { app, ExecuteQuery } = require("../config");
 const { db } = require("../config");
+const { createApi } = require("../util/api");
 const { ComparePass, CreateToken } = require("../api/auth_pro");
 const { read: Auth } = require("../api/auth");
 const { read: Profile } = require("../api/profile");
@@ -14,12 +15,16 @@ const { read: Newslike } = require("../api/newslike");
 const { read: Newscomment } = require("../api/newscomment");
 const { read: Refer } = require("../api/refer");
 const { read: Util } = require("../api/util");
-const { read: OrdredProduct } = require("../api/ordered_product");
+const { read: OrderedProduct } = require("../api/ordered_product");
 const { read: ShopperSchedule } = require("../api/shopper_schedule");
 const { read: shop } = require("../api/shop");
-const { read: customers_address_details } = require("../api/customers_address_details");
+const {
+	read: customers_address_details,
+} = require("../api/customers_address_details");
 const { read: shopper_follower } = require("../api/shopper_follower");
-const { read: requested_product_stock } = require("../api/requested_product_stock");
+const {
+	read: requested_product_stock,
+} = require("../api/requested_product_stock");
 
 const GET_DATA = [
 	...Auth,
@@ -35,7 +40,7 @@ const GET_DATA = [
 	...Newscomment,
 	...Refer,
 	...Util,
-	...OrdredProduct,
+	...OrderedProduct,
 	...ShopperSchedule,
 	...shop,
 	...customers_address_details,
@@ -134,4 +139,33 @@ app.post("/auth/getUserID", (req, res) => {
 	const query = `SELECT id from customer_profile where phone=?`;
 
 	ExecuteQuery(res, query, [phone]);
+});
+
+app.get("/order/get-product-by-id/:id", async (req, res) => {
+	try {
+		const api = await createApi(req);
+		const { id } = req?.params;
+		// get Order UUID from id
+		const { data: order_uuid } = await api.get(
+			`/order/get-order-uuid/${id}`
+		);
+
+		const fetchData = async (endpoint) =>
+			await api.get(`${endpoint}/by/${order_uuid[0]?.order_uuid}`);
+
+		const [order, ordered_product] = await Promise.all([
+			fetchData("order/get-product"),
+			fetchData("ordered-product/get-ordered-product"),
+		]);
+
+		const response = {
+			...order?.data[0],
+			ordered_product: ordered_product?.data || [],
+		};
+
+		return res.status(200).json(response);
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
 });

@@ -2,7 +2,9 @@ import { MdDeleteForever } from "react-icons/md";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
-const ProductRow = () => {
+const ProductRow = ({ product ,handleDelete}) => {
+
+	const totalPrice = Number(product.price) * product.items.length 
 	return (
 		<>
 			<div className="flex justify-between gap-2 rounded bg-slate-50 p-2">
@@ -14,14 +16,15 @@ const ProductRow = () => {
 							className="h-14 w-14 rounded"
 						/>
 						<div>
-							<p>Vanaty Hand bag</p>
-							<span>1000 gm</span>
+							<p>Product :{product.name}</p>
+							<p>Price :{product.price}</p>
+
 						</div>
 					</div>
-					<p className="absolute right-2 top-12 w-4 text-right">5x</p>
+					<p className="absolute right-2 top-12 w-4 text-right">{product?.items?.length}x{product.price}</p>
 					<progress
 						className="progress progress-success my-1 "
-						value="70"
+						value={90}
 						max="100"
 					></progress>
 				</div>
@@ -32,14 +35,15 @@ const ProductRow = () => {
 							color="red "
 							size={22}
 							className="cursor-pointer"
+							onClick={()=>handleDelete(product.id,product.items)}
 						/>
 					</span>
 					<div className="flex items-center justify-center gap-1 ">
 						<TbCurrencyTaka />
-						<span className="font-bold">2500</span>
+						<span className="font-bold">{totalPrice}</span>
 					</div>
 					<div className="mt-3 flex justify-center">
-						<Link to={'/addshopperproduct'}>
+						<Link to={"/addshopperproduct"}>
 							<button
 								className="rounded bg-green-500 px-3 py-1  text-sm font-bold text-white"
 								type="button"
