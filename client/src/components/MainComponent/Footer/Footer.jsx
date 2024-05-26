@@ -14,7 +14,7 @@ const Footer = () => {
 	);
 	return (
 		<footer>
-			<div className="footer-nav-wrapper border-t border-gray-600 bg-[#f2f2f5]  font-semibold  text-black">
+			<div className="footer-nav-wrapper border-t border-gray-600 bg-[#f2f2f5]  font-semibold  text-black ">
 				<Link
 					to={import.meta.env.VITE_API_PUBLIC_URL + "/home"}
 					className="footer-nav-single"
@@ -137,13 +137,8 @@ const Footer = () => {
 							className="footer-nav-single"
 						>
 							<div className="menu-wrapper">
-								{/* TODO:change logo */}
-
-								{/* <DashBoardIcon></DashBoardIcon> */}
-								{/* <ColorFullDashboardIcon></ColorFullDashboardIcon> */}
+							
 								<FcShop  className="text-3xl" />
-								{/* <img src="./assets/img/file.png" alt="icone" /> */}
-
 								<span className="">Dashboard</span>
 							</div>
 						</Link>

@@ -3,13 +3,16 @@ import { TbCurrencyTaka } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
 const ProductRow = ({ product, handleDelete, groupedByShopperProduct }) => {
+	console.log(product);
 	return (
 		<>
 			<div className="flex justify-between gap-2 rounded bg-slate-50 p-2">
 				<div className=" relative w-9/12 gap-2">
 					<div className="flex gap-2 py-2 font-bold">
 						<img
-							src="https://picsum.photos/200/300"
+							src={`${
+								import.meta.env.VITE_APP_IMG_URL
+							}/products/${product.image}`}
 							alt="Product Image"
 							className="h-14 w-14 rounded"
 						/>
@@ -34,7 +37,10 @@ const ProductRow = ({ product, handleDelete, groupedByShopperProduct }) => {
 							size={22}
 							className="cursor-pointer"
 							onClick={() =>
-								handleDelete(product.id, groupedByShopperProduct)
+								handleDelete(
+									product.id,
+									groupedByShopperProduct
+								)
 							}
 						/>
 					</span>
