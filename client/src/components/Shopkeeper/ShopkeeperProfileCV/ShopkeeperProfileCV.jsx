@@ -96,12 +96,10 @@ const ShopkeeperProfileCV = () => {
 		setError
 	);
 	const selectedCategory = (e) => {
-		const selectedCategoryId = parseInt(e.target.value); 
+		const selectedCategoryId = parseInt(e.target.value);
 		if (selectedCategoryId === 0) {
-			
 			setSelectedCategoryProduct(shopperProduct);
 		} else {
-		
 			const filteredProducts = shopperProduct.filter((product) => {
 				return product.category_id === selectedCategoryId;
 			});
@@ -152,14 +150,20 @@ const ShopkeeperProfileCV = () => {
 			.then((response) => {
 				if (response.status === 201) {
 					toast.success("Product Request Added Successfully");
+					console.log(response);
 				}
-				console.log(response);
+				
+				// let remainList = filteredAllProducts.filter(
+				// 	(item) => item.id !== product_id
+				// );
+				
 			})
 			.catch((error) => {
 				console.error("Error adding product request:", error);
 				toast.error("Failed to add product request");
 			});
 	};
+	console.log(filteredAllProducts)
 	return (
 		<>
 			<Header />
@@ -541,7 +545,8 @@ const ShopkeeperProfileCV = () => {
 															<button
 																onClick={() =>
 																	handelRequestForStock(
-																		single.id
+																		single.id,
+																		
 																	)
 																}
 																className="w-full rounded bg-[#469CD6] px-2 py-1 text-center text-white active:bg-[#568db3]"
