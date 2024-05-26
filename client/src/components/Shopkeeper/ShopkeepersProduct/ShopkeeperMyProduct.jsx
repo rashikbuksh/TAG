@@ -23,7 +23,7 @@ import { FaX } from "react-icons/fa6";
 import Drawer from "react-modern-drawer";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-const ShopkeeperMyProduct = ({ product, index }) => {
+const ShopkeeperMyProduct = ({ product, index, clearFromStockRequest }) => {
 	const {
 		id,
 		name,
@@ -84,6 +84,29 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 	const handleDiscountChange = (e) => {
 		setNewDisCount(e.target.value);
 	};
+	const handleDelete = async (items) => {
+		let deletionPromises = [];
+		console.log(items);
+
+		items.forEach(async (item) => {
+			try {
+				let deleteResponse = await api.delete(
+					`/request-product-for-stock/delete/${item.id}`
+				);
+				console.log(`Item with ID ${item.id} deleted successfully.`);
+				console.log(deleteResponse);
+
+				deletionPromises.push(deleteResponse);
+				if (deleteResponse.status == 200) {
+					window.location.reload();
+				}
+			} catch (error) {
+				console.error(`Error deleting item with ID ${item.id}:`, error);
+			}
+		});
+		await Promise.all(deletionPromises);
+		console.log("All deletions completed.");
+	};
 	const handleProductUpdate = () => {
 		if (isVerified === "verified") {
 			if (price !== newPrice) {
@@ -122,6 +145,9 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 							});
 					}
 					toast("Product Price Updated Successfully");
+					if (clearFromStockRequest) {
+						handleDelete(clearFromStockRequest);
+					}
 				}
 			})
 			.catch((error) => {
@@ -315,7 +341,7 @@ const ShopkeeperMyProduct = ({ product, index }) => {
 										type="text"
 										value={quantity}
 										disabled={!isEditingPrice}
-										readOnly
+										// readOnly
 									/>
 									<button
 										className="flex h-[30px] w-[60px] items-center justify-center bg-[#60abe9] text-base text-white"

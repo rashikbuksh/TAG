@@ -1,8 +1,15 @@
 import { MdDeleteForever } from "react-icons/md";
 import { TbCurrencyTaka } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductRow = ({ product, handleDelete, groupedByShopperProduct }) => {
+	console.log("🚀 ~ ProductRow ~ product:", product)
+	const navigate = useNavigate();
+	const stockProduct = (product) => {
+		navigate(`/updateProductQuantity/${product.shopper_product_id}`, {
+			state: { product },
+		});
+	};
 	return (
 		<>
 			<div className="flex justify-between gap-2 rounded bg-slate-50 p-2">
@@ -34,7 +41,10 @@ const ProductRow = ({ product, handleDelete, groupedByShopperProduct }) => {
 							size={22}
 							className="cursor-pointer"
 							onClick={() =>
-								handleDelete(product.id, groupedByShopperProduct)
+								handleDelete(
+									product.id,
+									groupedByShopperProduct
+								)
 							}
 						/>
 					</span>
@@ -43,14 +53,15 @@ const ProductRow = ({ product, handleDelete, groupedByShopperProduct }) => {
 						<span className="font-bold">{product.price}</span>
 					</div>
 					<div className="mt-3 flex justify-center">
-						<Link to={"/addshopperproduct"}>
+						{/* <Link to={"/addshopperproduct"}> */}
 							<button
+								onClick={()=>stockProduct(product)}
 								className="rounded bg-green-500 px-3 py-1  text-sm font-bold text-white"
 								type="button"
 							>
 								Stock
 							</button>
-						</Link>
+						{/* </Link> */}
 					</div>
 				</div>
 			</div>

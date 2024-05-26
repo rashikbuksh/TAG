@@ -96,8 +96,6 @@ const AdminNewShopRequest = () => {
 								"New Shopper has been deleted successfully.",
 								"success"
 							);
-							// You may also want to update your UI to remove the deleted product from the list
-							// Assuming you have a function to remove the product from the list, you can call it here.
 							window.location.reload();
 						} else {
 							toast.error(

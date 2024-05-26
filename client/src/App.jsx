@@ -53,6 +53,7 @@ import VerificationOTP from "./pages/VerificationOTP/Index";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
 import ProductRequest from "./pages/ProductRequest/ProductRequest";
+import UpdateQuantity from "./pages/ProductRequest/UpdateQuantity";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
@@ -274,6 +275,13 @@ const PROTECTED_ROUTES = [
 		name: " Product Request",
 		path: "/productRequest",
 		element: ProductRequest,
+		access: ["admin", "shopper"],
+	},
+	{
+		id: 35,
+		name: " Update Quantity",
+		path: "/updateProductQuantity/:id",
+		element: UpdateQuantity,
 		access: ["admin", "shopper"],
 	},
 ];
