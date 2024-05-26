@@ -69,12 +69,6 @@ const ShopkeeperProfileCV = () => {
 			})
 			.catch((err) => {});
 
-		// api.get(`/follow/getShopperFollow/${id}`)
-		// 	.then((res) => {
-		// 		setFollowers(res.data.length);
-		// 	})
-		// 	.catch((err) => {});
-
 		api.get(
 			`${
 				import.meta.env.VITE_APP_API_URL
@@ -527,7 +521,7 @@ const ShopkeeperProfileCV = () => {
 														</div>
 													</div>
 												</div>
-												{single.product_count <= 0 ? (
+												{user && single.product_count <= 0 ? (
 													(() => {
 														const requestForProduct =
 															requested_product.find(
