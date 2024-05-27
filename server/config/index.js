@@ -41,13 +41,14 @@ const ExecuteQuery = async (res, query, val = [], operation = "", msg = "") => {
 			return;
 		}
 
-		// console.log(query, val);
+		console.log(query, val);
 
 		connection.query(query, [...val], (error, results) => {
 			connection.release(); // Release the connection
 
 			if (error) {
 				SendResponse(res, "error-query");
+				console.log(error);
 				return;
 			}
 
