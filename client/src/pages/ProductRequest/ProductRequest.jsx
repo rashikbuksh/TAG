@@ -3,6 +3,7 @@ import ProductRow from "./ProductRow";
 import { useAuth } from "@context/auth";
 import { useState } from "react";
 import { api } from "@lib/api";
+import { Breadcrumb } from "@components";
 const ProductRequest = () => {
 	const { user } = useAuth();
 	const [stockProduct, setStockProduct] = useState([]);
@@ -25,6 +26,7 @@ const ProductRequest = () => {
 				randomId: crypto.randomUUID(),
 				id: item.id,
 				price: item.price,
+				shopper_product_id: item.shopper_product_id,
 				image: item.image,
 			};
 			acc.push(group);
@@ -61,7 +63,9 @@ const ProductRequest = () => {
 	};
 
 	return (
-		<div className="mx-2 mt-24 flex flex-col gap-2">
+		<div className="mx-2 flex flex-col gap-2">
+			<Breadcrumb pageTitle="Requested Product" prevUrl="/shopkeeperDashboard" />
+			{stockProduct.length === 0 && <p>No Product for request</p>}
 			{groupedByShopperProduct.length > 0 &&
 				groupedByShopperProduct.map((product) => (
 					<ProductRow
@@ -71,7 +75,6 @@ const ProductRequest = () => {
 						groupedByShopperProduct={product.items}
 					></ProductRow>
 				))}
-		
 		</div>
 	);
 };
