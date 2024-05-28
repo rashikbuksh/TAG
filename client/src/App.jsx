@@ -58,6 +58,7 @@ import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
 
 import ProductRequest from "./pages/ProductRequest/ProductRequest";
 import UpdateQuantity from "./pages/ProductRequest/UpdateQuantity";
+import AdminProductRequest from "./pages/AdminProductReqPage/AdminProductRequest";
 
 
 const Welcome = lazy(() => import("./pages/Welcome"));
@@ -485,7 +486,7 @@ const ADMIN_ROUTES = [
 		id: 18,
 		name: "Stock product",
 		path: "/stockProduct",
-		element: ProductRequest,
+		element:AdminProductRequest,
 		access: ["admin"],
 	},
 ];
