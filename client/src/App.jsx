@@ -52,8 +52,13 @@ import ShopkeeperSchedule from "./pages/ShopkeeperDashboard/ShopkeeperSchedule";
 import VerificationOTP from "./pages/VerificationOTP/Index";
 import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
 import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
+
+
+
+
 import ProductRequest from "./pages/ProductRequest/ProductRequest";
 import UpdateQuantity from "./pages/ProductRequest/UpdateQuantity";
+
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
@@ -470,10 +475,17 @@ const ADMIN_ROUTES = [
 		access: ["admin"],
 	},
 	{
-		id: 16,
+		id: 17,
 		name: "Tag Store",
 		path: "/tagStore",
 		element: AdminTagShopControl,
+		access: ["admin"],
+	},
+	{
+		id: 18,
+		name: "Stock product",
+		path: "/stockProduct",
+		element: ProductRequest,
 		access: ["admin"],
 	},
 ];
@@ -514,7 +526,7 @@ function App() {
 	//check internet connection
 	useEffect(() => {
 		let internetConnection = window.navigator.onLine;
-	
+
 		if (!internetConnection) {
 			setOnline(false);
 		}
@@ -637,8 +649,8 @@ function App() {
 							Oops! It seems like you are offline. Please check
 							your internet connection and try again.
 						</p>
-						<div className="flex justify-center mb-4 scale-150">
-						<IoCloudOffline size={40} />
+						<div className="mb-4 flex scale-150 justify-center">
+							<IoCloudOffline size={40} />
 						</div>
 						<button
 							onClick={() => window.location.reload()}
