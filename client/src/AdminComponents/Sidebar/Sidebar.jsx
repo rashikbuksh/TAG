@@ -52,6 +52,7 @@ const Sidebar = () => {
 						<Link to="/lateorderSubmition">
 							Late Order Submission
 						</Link>
+						<Link to="/stockProduct">Product Request</Link>
 					</div>
 				</div>
 

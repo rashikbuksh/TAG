@@ -525,10 +525,17 @@ const ADMIN_ROUTES = [
 		access: ["admin"],
 	},
 	{
-		id: 16,
+		id: 17,
 		name: "Tag Store",
 		path: "/tagStore",
 		element: AdminTagShopControl,
+		access: ["admin"],
+	},
+	{
+		id: 18,
+		name: "Stock product",
+		path: "/stockProduct",
+		element:AdminProductRequest,
 		access: ["admin"],
 	},
 ];

@@ -37,6 +37,31 @@ DESC
     msg: "shopper_id",
   },
   {
+    uri: "/request-product-for-stock/Get-product/For-admin",
+    query: `SELECT
+    rp.id,
+    rp.date,
+    rp.user_id,
+    rp.shopper_id,
+    rp.shopper_product_id,
+    sp.product_id,
+    sp.price,
+    sp.discount,
+    p.name,
+    p.image
+FROM
+    requested_product_stock rp
+JOIN shopper_product sp ON
+    rp.shopper_product_id = sp.id
+JOIN product p ON
+    sp.product_id = p.id
+ORDER BY
+    rp.date
+DESC
+    ;`,
+    msg: "shopper_id",
+  },
+  {
     uri: "/request-product-for-stock/Get-product/user/:user_id",
     query: `SELECT * FROM requested_product_stock WHERE user_id = ? ORDER BY date DESC;`,
     param: ["user_id"],
