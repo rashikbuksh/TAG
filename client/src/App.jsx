@@ -6,60 +6,109 @@ import {
 	BrowserRouter as Router,
 	Routes,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./context/auth";
 import OtpVerificationProvider from "./context/otpVerification";
 import ProtectedRoutes from "./routes";
 
-import { ToastContainer } from "react-toastify";
-import AdminNewShopRequest from "./AdminComponents/AdminNewShopRequest/AdminNewShopRequest";
-import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
-import AdminStats from "./AdminComponents/AdminStats/AdminStats";
-import AdminTagShopControl from "./AdminComponents/AdminTagShopControl/AdminTagShopControl";
-import Allnews from "./AdminComponents/AllNews/Allnews";
-import LateOrdersPage from "./AdminComponents/LateOrdersPage/LateOrdersPage";
-import MakeModarator from "./AdminComponents/MakeModarator/MakeModarator";
-import ManageModarator from "./AdminComponents/ManageModarator/ManageModarator";
-import BestSellProduct from "./AdminComponents/Product/BestSellProduct/BestSellProduct";
-import TagOrderHistory from "./AdminComponents/TagOrderHistory/TagOrderHistory";
-import TagUserOrderHistory from "./AdminComponents/TagOrderHistory/TagUserOrderHistory";
-import TagShopKeeper from "./AdminComponents/TagShopkeeper/TagShopKeeper";
-import IndividualMessagePage from "./components/IndividualMessagePage/IndividualMessagePage";
-import LoadingPage from "./components/LoadingPage/LoadingPage";
-import Footer from "./components/MainComponent/Footer";
-import Header from "./components/MainComponent/Header";
-import Offcanvas from "./components/MainComponent/Header/Offcanvas";
-import ShopkeeperProfileCV from "./components/Shopkeeper/ShopkeeperProfileCV/ShopkeeperProfileCV";
-import ShopkeepersProduct from "./components/Shopkeeper/ShopkeepersProduct/ShopkeepersProduct";
-import ShopperWaitingPage from "./components/ShopperWaitngPage/ShopperWaitingPage";
-import TagUser from "./components/TagUser/TagUser";
-import { NotificationProvider } from "./context/NotificationProvider";
-import ReferCodeGenerator from "./helpers/ReferCodeGenerator";
-import { DefaultLayout } from "./layouts";
-import AddCatagoryForm from "./pages/Form/AddCatagoryForm/AddCatagoryForm";
-import AddProductForm from "./pages/Form/AddProductForm/AddProductForm";
-import AddShopperProduct from "./pages/Form/AddShopperProduct/AddShopperProduct";
-import NewsFeed from "./pages/NewsFeed/NewsFeed";
-import ShopperOrderHistory from "./pages/Order/OrderHistory/ShopperOrderHistory";
-import OrderModal from "./pages/Order/OrderModal/OrderModal";
-import OrderDetailsShopper from "./pages/Order/OrderShopper/OrderModal";
-import OrderShopper from "./pages/Order/OrderShopper/OrderShopper";
-import OrderStatus from "./pages/Order/OrderStatus/OrderStatus";
-import Policy from "./pages/Policy/Policy";
-import RegisterShopper from "./pages/Register/RegisterShopper/RegisterShopper";
-import ShopKeeperDashBoard from "./pages/ShopkeeperDashboard/ShopKeeperDashBoard";
-import ShopkeeperSchedule from "./pages/ShopkeeperDashboard/ShopkeeperSchedule";
-import VerificationOTP from "./pages/VerificationOTP/Index";
-import AdminProtactedRoutes from "./routes/AdminProtactedRoutes";
-import ModeratorProtactedRoutes from "./routes/ModaretorProtactedRoutes";
-
-
-
-
-import ProductRequest from "./pages/ProductRequest/ProductRequest";
-import UpdateQuantity from "./pages/ProductRequest/UpdateQuantity";
-import AdminProductRequest from "./pages/AdminProductReqPage/AdminProductRequest";
-
+// import AdminNewShopRequest from "./AdminComponents/AdminNewShopRequest/AdminNewShopRequest";
+// import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
+const AdminNewShopRequest = lazy(() =>
+	import("./AdminComponents/AdminNewShopRequest/AdminNewShopRequest")
+);
+const AdminShopkeeperProduct = lazy(() =>
+	import("./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct")
+);
+const Allnews = lazy(() => import("./AdminComponents/AllNews/Allnews"));
+const AdminStats = lazy(() =>
+	import("./AdminComponents/AdminStats/AdminStats")
+);
+const AdminTagShopControl = lazy(() =>
+	import("./AdminComponents/AdminTagShopControl/AdminTagShopControl")
+);
+const LateOrdersPage = lazy(() =>
+	import("./AdminComponents/LateOrdersPage/LateOrdersPage")
+);
+const MakeModarator = lazy(() =>
+	import("./AdminComponents/MakeModarator/MakeModarator")
+);
+const ManageModarator = lazy(() =>
+	import("./AdminComponents/ManageModarator/ManageModarator")
+);
+const BestSellProduct = lazy(() =>
+	import("./AdminComponents/Product/BestSellProduct/BestSellProduct")
+);
+const TagOrderHistory = lazy(() =>
+	import("./AdminComponents/TagOrderHistory/TagOrderHistory")
+);
+const TagUserOrderHistory = lazy(() =>
+	import("./AdminComponents/TagOrderHistory/TagUserOrderHistory")
+);
+const TagShopKeeper = lazy(() =>
+	import("./AdminComponents/TagShopkeeper/TagShopKeeper")
+);
+const IndividualMessagePage = lazy(() =>
+	import("./components/IndividualMessagePage/IndividualMessagePage")
+);
+const LoadingPage = lazy(() => import("./components/LoadingPage/LoadingPage"));
+const Footer = lazy(() => import("./components/MainComponent/Footer"));
+const Header = lazy(() => import("./components/MainComponent/Header"));
+const Offcanvas = lazy(() =>
+	import("./components/MainComponent/Header/Offcanvas")
+);
+const ShopkeeperProfileCV = lazy(() =>
+	import("./components/Shopkeeper/ShopkeeperProfileCV/ShopkeeperProfileCV")
+);
+const ShopperWaitingPage = lazy(() =>
+	import("./components/ShopperWaitngPage/ShopperWaitingPage")
+);
+const TagUser = lazy(() => import("./components/TagUser/TagUser"));
+const ReferCodeGenerator = lazy(() => import("./helpers/ReferCodeGenerator"));
+const AddCatagoryForm = lazy(() =>
+	import("./pages/Form/AddCatagoryForm/AddCatagoryForm")
+);
+const AddProductForm = lazy(() =>
+	import("./pages/Form/AddProductForm/AddProductForm")
+);
+const AddShopperProduct = lazy(() =>
+	import("./pages/Form/AddShopperProduct/AddShopperProduct")
+);
+const NewsFeed = lazy(() => import("./pages/NewsFeed/NewsFeed"));
+const ShopperOrderHistory = lazy(() =>
+	import("./pages/Order/OrderHistory/ShopperOrderHistory")
+);
+const OrderModal = lazy(() => import("./pages/Order/OrderModal/OrderModal"));
+const OrderDetailsShopper = lazy(() =>
+	import("./pages/Order/OrderShopper/OrderModal")
+);
+const OrderShopper = lazy(() =>
+	import("./pages/Order/OrderShopper/OrderShopper")
+);
+const OrderStatus = lazy(() => import("./pages/Order/OrderStatus/OrderStatus"));
+const Policy = lazy(() => import("./pages/Policy/Policy"));
+const ProductRequest = lazy(() =>
+	import("./pages/ProductRequest/ProductRequest")
+);
+const UpdateQuantity = lazy(() =>
+	import("./pages/ProductRequest/UpdateQuantity")
+);
+const RegisterShopper = lazy(() =>
+	import("./pages/Register/RegisterShopper/RegisterShopper")
+);
+const ShopKeeperDashBoard = lazy(() =>
+	import("./pages/ShopkeeperDashboard/ShopKeeperDashBoard")
+);
+const ShopkeeperSchedule = lazy(() =>
+	import("./pages/ShopkeeperDashboard/ShopkeeperSchedule")
+);
+const VerificationOTP = lazy(() => import("./pages/VerificationOTP/Index"));
+const AdminProtactedRoutes = lazy(() =>
+	import("./routes/AdminProtactedRoutes")
+);
+const ModeratorProtactedRoutes = lazy(() =>
+	import("./routes/ModaretorProtactedRoutes")
+);
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Register = lazy(() =>
