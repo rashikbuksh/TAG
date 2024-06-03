@@ -1,6 +1,7 @@
 import { api } from "@lib/api";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import ProductRowTable from "../ProductRequest/ProductRowTable";
 const RequestProductTable = () => {
 	const [requestProduct, setRequestProduct] = useState([]);
 	useEffect(() => {
@@ -12,6 +13,31 @@ const RequestProductTable = () => {
 				toast(error);
 			});
 	}, []);
+
+	const handleDelete = async (id, items) => {
+		let deletionPromises = [];
+		console.log(id);
+		console.log(items);
+
+		items.forEach(async (item) => {
+			try {
+				let deleteResponse = await api.delete(
+					`/request-product-for-stock/delete/${item.id}`
+				);
+				console.log(`Item with ID ${item.id} deleted successfully.`);
+				console.log(deleteResponse);
+
+				deletionPromises.push(deleteResponse);
+				if (deleteResponse.status == 200) {
+					window.location.reload();
+				}
+			} catch (error) {
+				console.error(`Error deleting item with ID ${item.id}:`, error);
+			}
+		});
+		await Promise.all(deletionPromises);
+		console.log("All deletions completed.");
+	};
 
 	const groupedByShopperProduct = requestProduct.reduce((acc, item) => {
 		let group = acc.find((g) => g.name == item.name);
@@ -39,53 +65,23 @@ const RequestProductTable = () => {
 				{/* head */}
 				<thead>
 					<tr>
-						<th>
-							<label>
-								<input type="checkbox" className="checkbox" />
-							</label>
-						</th>
+						<th>Image</th>
 						<th>Name</th>
 						<th>Quantity</th>
 						<th>Action</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody className="mx-auto text-xl">
 					{/* row 1 */}
-					<tr>
-						<th>
-							<label>
-								<input type="checkbox" className="checkbox" />
-							</label>
-						</th>
-						<td>
-							<div className="flex items-center gap-3">
-								<div className="avatar">
-									<div className="mask mask-squircle h-12 w-12">
-										<img
-											src="https://img.daisyui.com/tailwind-css-component-profile-2@56w.png"
-											alt="Avatar Tailwind CSS Component"
-										/>
-									</div>
-								</div>
-								<div>
-									<div className="font-bold">
-										Hart Hagerty
-									</div>
-									<div className="text-sm opacity-50">
-										United States
-									</div>
-								</div>
-							</div>
-						</td>
-						<td>
-							Zemlak, Daniel and Leannon
-							<br />
-							<span className="badge badge-ghost badge-sm">
-								Desktop Support Technician
-							</span>
-						</td>
-						<td>Purple</td>
-					</tr>
+					{groupedByShopperProduct.length > 0 &&
+						groupedByShopperProduct.map((product) => (
+							<ProductRowTable
+								key={product.randomId}
+								product={product}
+								handleDelete={handleDelete}
+								groupedByShopperProduct={product.items}
+							></ProductRowTable>
+						))}
 				</tbody>
 			</table>
 		</>
