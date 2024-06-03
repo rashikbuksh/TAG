@@ -8,25 +8,21 @@ import {
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminTagShopControl from "./AdminComponents/AdminTagShopControl/AdminTagShopControl";
+import { NotificationProvider } from "./context/NotificationProvider";
 import AuthProvider from "./context/auth";
-import OtpVerificationProvider from "./context/otpVerification";
 import ProtectedRoutes from "./routes";
 
-// import AdminNewShopRequest from "./AdminComponents/AdminNewShopRequest/AdminNewShopRequest";
-// import AdminShopkeeperProduct from "./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct";
 const AdminNewShopRequest = lazy(() =>
 	import("./AdminComponents/AdminNewShopRequest/AdminNewShopRequest")
 );
 const AdminShopkeeperProduct = lazy(() =>
 	import("./AdminComponents/AdminShopKeeperProduct/AdminShopkeeperProduct")
 );
-const Allnews = lazy(() => import("./AdminComponents/AllNews/Allnews"));
 const AdminStats = lazy(() =>
 	import("./AdminComponents/AdminStats/AdminStats")
 );
-const AdminTagShopControl = lazy(() =>
-	import("./AdminComponents/AdminTagShopControl/AdminTagShopControl")
-);
+const Allnews = lazy(() => import("./AdminComponents/AllNews/Allnews"));
 const LateOrdersPage = lazy(() =>
 	import("./AdminComponents/LateOrdersPage/LateOrdersPage")
 );
@@ -52,18 +48,22 @@ const IndividualMessagePage = lazy(() =>
 	import("./components/IndividualMessagePage/IndividualMessagePage")
 );
 const LoadingPage = lazy(() => import("./components/LoadingPage/LoadingPage"));
-const Footer = lazy(() => import("./components/MainComponent/Footer"));
-const Header = lazy(() => import("./components/MainComponent/Header"));
-const Offcanvas = lazy(() =>
-	import("./components/MainComponent/Header/Offcanvas")
-);
 const ShopkeeperProfileCV = lazy(() =>
 	import("./components/Shopkeeper/ShopkeeperProfileCV/ShopkeeperProfileCV")
+);
+const ShopkeepersProduct = lazy(() =>
+	import("./components/Shopkeeper/ShopkeepersProduct/ShopkeepersProduct")
 );
 const ShopperWaitingPage = lazy(() =>
 	import("./components/ShopperWaitngPage/ShopperWaitingPage")
 );
 const TagUser = lazy(() => import("./components/TagUser/TagUser"));
+const Offcanvas = lazy(() =>
+	import("./components/MainComponent/Header/Offcanvas")
+);
+const Footer = lazy(() => import("./components/MainComponent/Footer"));
+const Header = lazy(() => import("./components/MainComponent/Header"));
+const OtpVerificationProvider = lazy(() => import("./context/otpVerification"));
 const ReferCodeGenerator = lazy(() => import("./helpers/ReferCodeGenerator"));
 const AddCatagoryForm = lazy(() =>
 	import("./pages/Form/AddCatagoryForm/AddCatagoryForm")
@@ -74,11 +74,13 @@ const AddProductForm = lazy(() =>
 const AddShopperProduct = lazy(() =>
 	import("./pages/Form/AddShopperProduct/AddShopperProduct")
 );
-const NewsFeed = lazy(() => import("./pages/NewsFeed/NewsFeed"));
 const ShopperOrderHistory = lazy(() =>
 	import("./pages/Order/OrderHistory/ShopperOrderHistory")
 );
+
+// ... rest of your code
 const OrderModal = lazy(() => import("./pages/Order/OrderModal/OrderModal"));
+const NewsFeed = lazy(() => import("./pages/NewsFeed/NewsFeed"));
 const OrderDetailsShopper = lazy(() =>
 	import("./pages/Order/OrderShopper/OrderModal")
 );
@@ -87,12 +89,6 @@ const OrderShopper = lazy(() =>
 );
 const OrderStatus = lazy(() => import("./pages/Order/OrderStatus/OrderStatus"));
 const Policy = lazy(() => import("./pages/Policy/Policy"));
-const ProductRequest = lazy(() =>
-	import("./pages/ProductRequest/ProductRequest")
-);
-const UpdateQuantity = lazy(() =>
-	import("./pages/ProductRequest/UpdateQuantity")
-);
 const RegisterShopper = lazy(() =>
 	import("./pages/Register/RegisterShopper/RegisterShopper")
 );
@@ -108,6 +104,16 @@ const AdminProtactedRoutes = lazy(() =>
 );
 const ModeratorProtactedRoutes = lazy(() =>
 	import("./routes/ModaretorProtactedRoutes")
+);
+
+const AdminProductRequest = lazy(() =>
+	import("./pages/AdminProductReqPage/AdminProductRequest")
+);
+const ProductRequest = lazy(() =>
+	import("./pages/ProductRequest/ProductRequest")
+);
+const UpdateQuantity = lazy(() =>
+	import("./pages/ProductRequest/UpdateQuantity")
 );
 
 const Welcome = lazy(() => import("./pages/Welcome"));
@@ -126,7 +132,6 @@ const COD = lazy(() => import("./pages/CashOnDelivery/CashOnDelivery"));
 const PaymentGateway = lazy(() =>
 	import("./pages/PaymentGateway/PaymentGateway")
 );
-
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Search = lazy(() => import("./pages/Search"));
 const Profile = lazy(() => import("./pages/Profile"));
@@ -169,7 +174,6 @@ const PROTECTED_ROUTES = [
 		element: Checkout2,
 		access: ["admin", "customer", "shopper"],
 	},
-
 	{
 		id: 12,
 		name: "Profile",
@@ -219,7 +223,6 @@ const PROTECTED_ROUTES = [
 	// 	element: ShopkeeperProfileCV,
 	// 	access: ["admin", "customer", "shopper"],
 	// },
-
 	{
 		id: 19,
 		name: "orderStatus",
@@ -535,7 +538,7 @@ const ADMIN_ROUTES = [
 		id: 18,
 		name: "Stock product",
 		path: "/stockProduct",
-		element:AdminProductRequest,
+		element: AdminProductRequest,
 		access: ["admin"],
 	},
 ];
@@ -572,7 +575,7 @@ const MODERATORS_ROUTES = [
 
 function App() {
 	const [isOnline, setOnline] = useState(true);
-	const isadminPage = "admin";
+	const isAdminPage = "admin";
 	//check internet connection
 	useEffect(() => {
 		let internetConnection = window.navigator.onLine;
@@ -601,94 +604,100 @@ function App() {
 
 		<div>
 			{isOnline ? (
-				<Router>
-					{!isadminPage && <Header />}
-					{!isadminPage && <Offcanvas />}
-					{!isadminPage && <Footer />}
-					<AuthProvider>
-						<NotificationProvider>
-							<OtpVerificationProvider>
-								<ToastContainer />
-								<Routes>
-									<Route element={<ProtectedRoutes />}>
-										{PROTECTED_ROUTES?.map((route) => (
-											<Route
-												key={route?.path}
-												path={`${route?.path}/*`}
-												element={
-													<Suspense
-														fallback={
-															<LoadingPage></LoadingPage>
-														}
-													>
-														<route.element />
-													</Suspense>
-												}
-											/>
-										))}
-									</Route>
-									<Route element={<AdminProtactedRoutes />}>
-										{ADMIN_ROUTES?.map((route) => (
-											<Route
-												key={route?.path}
-												path={`${route?.path}/*`}
-												element={
-													<Suspense
-														fallback={
-															<div>
+				<Suspense fallback={<div>Loading...</div>}>
+					<Router>
+						{!isAdminPage && <Header />}
+						{!isAdminPage && <Offcanvas />}
+						{!isAdminPage && <Footer />}
+						<AuthProvider>
+							<NotificationProvider>
+								<OtpVerificationProvider>
+									<ToastContainer />
+									<Routes>
+										<Route element={<ProtectedRoutes />}>
+											{PROTECTED_ROUTES?.map((route) => (
+												<Route
+													key={route?.path}
+													path={`${route?.path}/*`}
+													element={
+														<Suspense
+															fallback={
 																<LoadingPage></LoadingPage>
-															</div>
-														}
-													>
-														<route.element />
-													</Suspense>
-												}
-											/>
-										))}
-									</Route>
-									<Route
-										element={<ModeratorProtactedRoutes />}
-									>
-										{MODERATORS_ROUTES?.map((route) => (
-											<Route
-												key={route?.path}
-												path={`${route?.path}/*`}
-												element={
-													<Suspense
-														fallback={
-															<div>
-																<LoadingPage></LoadingPage>
-															</div>
-														}
-													>
-														<route.element />
-													</Suspense>
-												}
-											/>
-										))}
-									</Route>
-									{PUBLIC_ROUTES?.map((route) => (
-										<Route
-											key={route?.path}
-											path={`${route?.path}/*`}
-											element={
-												<Suspense
-													fallback={
-														<div>
-															<LoadingPage></LoadingPage>
-														</div>
+															}
+														>
+															<route.element />
+														</Suspense>
 													}
-												>
-													<route.element />
-												</Suspense>
+												/>
+											))}
+										</Route>
+										<Route
+											element={<AdminProtactedRoutes />}
+										>
+											{ADMIN_ROUTES?.map((route) => (
+												<Route
+													key={route?.path}
+													path={`${route?.path}/*`}
+													element={
+														<Suspense
+															fallback={
+																<div>
+																	<LoadingPage></LoadingPage>
+																</div>
+															}
+														>
+															<route.element />
+														</Suspense>
+													}
+												/>
+											))}
+										</Route>
+										<Route
+											element={
+												<ModeratorProtactedRoutes />
 											}
-										/>
-									))}
-								</Routes>
-							</OtpVerificationProvider>
-						</NotificationProvider>
-					</AuthProvider>
-				</Router>
+										>
+											{MODERATORS_ROUTES?.map((route) => (
+												<Route
+													key={route?.path}
+													path={`${route?.path}/*`}
+													element={
+														<Suspense
+															fallback={
+																<div>
+																	<LoadingPage></LoadingPage>
+																</div>
+															}
+														>
+															<route.element />
+														</Suspense>
+													}
+												/>
+											))}
+										</Route>
+										{PUBLIC_ROUTES?.map((route) => (
+											<Route
+												key={route?.path}
+												path={`${route?.path}/*`}
+												element={
+													<Suspense
+														fallback={
+															<div>
+																<LoadingPage></LoadingPage>
+															</div>
+														}
+													>
+														<route.element />
+													</Suspense>
+												}
+											/>
+										))}
+									</Routes>
+								</OtpVerificationProvider>
+							</NotificationProvider>
+						</AuthProvider>
+					</Router>
+				</Suspense>
 			) : (
 				<div className="flex min-h-screen items-center justify-center bg-gray-100">
 					<div className="max-w-md text-center">
