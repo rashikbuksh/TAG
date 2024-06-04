@@ -38,15 +38,14 @@ const CreateToken = (user, time = "730h") => {
 };
 const getUserInfoRegex = /^\/auth\/getUserInfo\/\d+$/;
 const getProductRegex = /^\/shopperproduct\/getshopperproduct\/\d+$/;
-const getShopperProductRegex =
-	/^\/shopperproduct\/getshopperproductOfShopkeeper\/\d+$/;
 const getShopperProductUpdateRegex =
-/^\/shopperproduct\/getshopperproduct\/by\/shopper-id\/[^\/]+$/;
+	/^\/shopperproduct\/getshopperproduct\/by\/shopper-id\/[^\/]+$/;
 const CheckUSerRegex = /^\/auth\/checkUser\/\d+$/;
 const getSearchedProductRegex =
 	/^\/shopperproduct\/get-searched-product\/[^\/]+$/;
-const getFollowRegex =
-/^\/follow\/getShopperFollow\/[^\/]+$/;
+const getFollowRegex = /^\/follow\/getShopperFollow\/[^\/]+$/;
+const getShopperProductRegex =
+	/^\/shopperproduct\/getshopperproduct\/by\/id\/[^\/]+$/;
 
 const VerifyToken = (req, res, next) => {
 	const { authorization } = req?.headers;
