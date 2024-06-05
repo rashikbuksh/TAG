@@ -346,7 +346,7 @@ const ShopkeeperProfileCV = () => {
 									</span>
 								</div>
 								<div className="my-1 flex items-center gap-4 font-bold">
-									<div>{followers}Followers </div>
+									<div>{followers} Followers </div>
 								</div>
 
 								<div className=" flex items-center justify-center gap-4">
@@ -365,9 +365,7 @@ const ShopkeeperProfileCV = () => {
 											Following
 										</button>
 									)}
-									{/* <button className=" font-xl h-[40px] w-[100px] rounded bg-[#FF4C5E] text-white">
-										Follow
-									</button> */}
+									
 									<button
 										className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white"
 										onClick={() =>
@@ -377,7 +375,8 @@ const ShopkeeperProfileCV = () => {
 										}
 									>
 										Location
-									</button>
+									</button> 
+									
 									<MapDistanceModal
 										isOpen={mapModal}
 										setIsOpen={setMapModal}

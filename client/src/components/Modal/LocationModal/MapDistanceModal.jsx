@@ -17,7 +17,12 @@ const MapDistanceModal = (props) => {
 
 	// user Location
 	const { location, loading, error } = GetLocation();
-	if (loading) return <h1>Loading...</h1>;
+	if (loading)
+		return (
+			<div> 
+				
+			</div>
+		);
 	if (error) return <h1>{error}</h1>;
 
 	const maptilerProvider = maptiler(

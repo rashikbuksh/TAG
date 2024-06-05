@@ -55,7 +55,7 @@ const ShopCart = ({ shop }) => {
 						Follow
 					</button>
 				) : (
-					<button className=" font-xl disabled h-1/6 w-full rounded bg-[#bc3845] py-1  font-bold text-white opacity-80 ">
+					<button className=" font-xl disabled h-1/6 w-full rounded py-1  font-bold text-black border border-x-red-400 bg-red-100 opacity-80 ">
 						Following
 					</button>
 				)}
