@@ -137,7 +137,6 @@ const Footer = () => {
 							className="footer-nav-single"
 						>
 							<div className="menu-wrapper">
-							
 								<FcShop  className="text-3xl" />
 								<span className="">Dashboard</span>
 							</div>
