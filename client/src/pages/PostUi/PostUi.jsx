@@ -180,7 +180,7 @@ const PostUi = ({ postData }) => {
 										)}`}
 									>
 										{shopperInfo.map((shopperinfo) => (
-											<div key={shop_id} className="flex">
+											<div key={shop_id} className="flex ">
 												<h4 className="text-lg font-semibold">
 													{shopperinfo.name}
 												</h4>
@@ -329,7 +329,7 @@ const PostUi = ({ postData }) => {
 							</button>
 						)}
 					</div>
-					<div className="flex flex-col items-center justify-center">
+					<div className="flex flex-col items-center justify-center px-2">
 						<div className="text-xs">
 							<p className="text-sm">{comment_count} comments</p>
 						</div>

@@ -54,12 +54,12 @@ const NewsFeed = () => {
 
 	return (
 		<div className="">
-			<div className="mx-auto w-[90%]">
+			<div className="mx-auto w-[95%]">
 				<ShowCartIcon />
 				<Breadcrumb pageTitle={"News Feed"} prevUrl={"/home"} />
 				<div className="lg:grid lg:grid-cols-12 ">
-					<div className="lg:col-span-3"></div>
-					<div className="lg:col-span-6">
+					<div className="lg:col-span-3 "></div>
+					<div className="lg:col-span-6 ">
 						{user.access !== "customer" && (
 							<>
 								<div
