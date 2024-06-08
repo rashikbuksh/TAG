@@ -131,7 +131,9 @@ const CashOnDelivery = () => {
 			{isOpen && (
 				<SuccessOrderModal
 					isOpen={isOpen}
-					setIsOpen={setIsOpen}		
+					totalPrice={totalPrice}
+					payment_type={payment_type}
+					setIsOpen={setIsOpen}
 				></SuccessOrderModal>
 			)}
 		</div>
