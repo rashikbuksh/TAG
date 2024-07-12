@@ -30,7 +30,7 @@ const OrderShopper = () => {
 	};
 
 	return (
-		<div className="body-wrapper  ">
+		<div className="body-wrapper ">
 			<Breadcrumb pageTitle="Orders" prevUrl="/shopkeeperDashboard" />
 			<div className="order-product-area">
 				{data?.map((single) => {

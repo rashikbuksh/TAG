@@ -229,7 +229,7 @@ const PROTECTED_ROUTES = [
 		name: "orderStatus",
 		path: "/orderStatus",
 		element: OrderStatus,
-		access: ["admin", "customer", "shopper"],
+		access: ["admin", "customer"],
 	},
 	// {
 	// 	id: 20,
