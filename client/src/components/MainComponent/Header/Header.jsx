@@ -20,6 +20,7 @@ function Header() {
 	const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
 	const { notifications } = useNotification();
 	const [search, setSearch] = useState("");
+	const [showProfileMenu, setShowProfileMenu] = useState(false);
 
 	const toggleDrawer = () => {
 		setIsOffcanvasOpen((prevState) => !prevState);
@@ -61,6 +62,10 @@ function Header() {
 				console.error("Error fetching shopper info: ", error);
 			});
 	}, [locationModal]);
+
+	const handleShowProfileMenu = () => {
+		setShowProfileMenu(!showProfileMenu);
+	};
 
 	return (
 		<>
@@ -153,14 +158,60 @@ function Header() {
 																/>
 															)}
 
-															<div className="avatar">
+															<div
+																className="avatar"
+																onClick={
+																	handleShowProfileMenu
+																}
+															>
+																<div
+																	className={`absolute -ml-20 mt-10 h-36 w-28 rounded bg-slate-100  ${
+																		showProfileMenu
+																			? ""
+																			: "invisible"
+																	}`}
+																>
+																	<ul className="mx-3  mt-3 flex flex-col justify-center gap-2 font-bold ">
+																		<Link
+																			to={
+																				import.meta
+																					.env
+																					.VITE_API_PUBLIC_URL +
+																				"/profile"
+																			}
+																		>
+																			Profile
+																		</Link>
+																		<li>
+																			Scan
+																		</li>
+																		<Link to={
+																				import.meta
+																					.env
+																					.VITE_API_PUBLIC_URL +
+																				"/addContact"
+																			}>
+																			Add
+																			Contact
+																		</Link>
+																		<Link 	to={
+																				import.meta
+																					.env
+																					.VITE_API_PUBLIC_URL +
+																				"/cart"
+																			}>
+																			My
+																			Cart
+																		</Link>
+																	</ul>
+																</div>
 																<Link
-																	to={
-																		import.meta
-																			.env
-																			.VITE_API_PUBLIC_URL +
-																		"/profile"
-																	}
+																// to={
+																// 	import.meta
+																// 		.env
+																// 		.VITE_API_PUBLIC_URL +
+																// 	"/profile"
+																// }
 																>
 																	<div className="h-8 w-8 rounded-full ring ring-[#2F5BA9] ">
 																		{user.profile_picture !==

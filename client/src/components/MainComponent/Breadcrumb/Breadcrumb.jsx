@@ -4,7 +4,6 @@ import { FaAngleLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Breadcrumb = ({ pageTitle, prevUrl }) => {
-	console.log(prevUrl);
 	return (
 		<div className="breadcrumb-area bg-color--grey space-y--15 mt-16">
 			<div className="container">

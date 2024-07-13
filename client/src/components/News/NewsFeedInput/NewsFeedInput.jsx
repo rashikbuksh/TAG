@@ -154,7 +154,7 @@ const NewsFeedInput = ({ isOpen, setIsOpen }) => {
 						className={`btn btn-block my-2 ${
 							isPosting
 								? "cursor-not-allowed bg-gray-400"
-								: "hover-bg-blue-400 bg-blue-500"
+								: "hover:bg-blue-500 bg-blue-400"
 						}`}
 						onClick={handlePostClick}
 						disabled={isPosting}

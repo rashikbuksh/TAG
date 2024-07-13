@@ -152,17 +152,18 @@ const ShopkeeperProfileCV = () => {
 					toast.success("Product Request Added Successfully");
 					console.log(response);
 				}
-
+				
 				// let remainList = filteredAllProducts.filter(
 				// 	(item) => item.id !== product_id
 				// );
+				
 			})
 			.catch((error) => {
 				console.error("Error adding product request:", error);
 				toast.error("Failed to add product request");
 			});
 	};
-	console.log(filteredAllProducts);
+	console.log(filteredAllProducts)
 	return (
 		<>
 			<Header />
@@ -360,11 +361,11 @@ const ShopkeeperProfileCV = () => {
 											Follow
 										</button>
 									) : (
-										<button className="font-xl h-[40px] w-[100px] rounded border-x-red-400 bg-red-200 font-bold text-black  opacity-80">
+										<button className="font-xl h-[40px] w-[100px] rounded border-x-red-400 bg-red-200 opacity-80 text-black  font-bold">
 											Following
 										</button>
 									)}
-
+									
 									<button
 										className=" font-xl h-[40px] w-[100px] rounded bg-[#469CD6] text-white"
 										onClick={() =>
@@ -374,8 +375,8 @@ const ShopkeeperProfileCV = () => {
 										}
 									>
 										Location
-									</button>
-
+									</button> 
+									
 									<MapDistanceModal
 										isOpen={mapModal}
 										setIsOpen={setMapModal}
@@ -507,14 +508,12 @@ const ShopkeeperProfileCV = () => {
 														<div className=" flex items-center  gap-1">
 															<Takaicon></Takaicon>
 															<span className="text-base font-semibold tracking-wider text-black">
-																{single.discount >
-																	0 && (
-																	<s className="text-xs">
-																		{
-																			single.price
-																		}
-																	</s>
-																)}{" "}
+																<s>
+																	{" "}
+																	{
+																		single.price
+																	}{" "}
+																</s>{" "}
 																{`${parseFloat(
 																	getDiscountPrice(
 																		single.price,
@@ -525,9 +524,7 @@ const ShopkeeperProfileCV = () => {
 														</div>
 													</div>
 												</div>
-												{user &&
-												user.access === "customer" &&
-												single.product_count <= 0 ? (
+												{user && user.access==="customer" && single.product_count <= 0 ? (
 													(() => {
 														const requestForProduct =
 															requested_product.find(
@@ -547,7 +544,8 @@ const ShopkeeperProfileCV = () => {
 															<button
 																onClick={() =>
 																	handelRequestForStock(
-																		single.id
+																		single.id,
+																		
 																	)
 																}
 																className="w-full rounded bg-[#469CD6] px-2 py-1 text-center text-white active:bg-[#568db3]"
