@@ -121,7 +121,6 @@ const ShopperProduct = () => {
 			if (allProductsAddedSuccessfully) {
 				setSelectedProducts([]);
 				toast.success("All Products Added Successfully");
-				window.location.reload();
 			} else {
 				toast.error("Some Products Failed to Add");
 			}

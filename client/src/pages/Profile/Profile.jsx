@@ -98,11 +98,17 @@ const Profile = () => {
 				toast.error(error);
 			});
 	}, []);
-
+	const settings = [
+		"General",
+		"Earnings",
+		"Help & Support",
+		"Settings",
+		"Switch Or Logout",
+	];
 	return (
-		<div className="body-wrapper bg-color--gradient space-pt--70 space-pb--120 ">
-			{/* Profile header */}
-			<div className="profile-header-area space-pt--30 space-mb--40">
+		<div className="body-wrapper  space-pt--70 space-pb--120 ">
+			{/* Profile header ======================now it hidden===============================*/}
+			<div className="profile-header-area space-pt--30 space-mb--40 hidden">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
@@ -253,9 +259,42 @@ const Profile = () => {
 					</div>
 				</div>
 			</div>
+			{/*--------------------------------------- New profile header------------------------- */}
+			<div className="mx-2 flex items-center rounded-lg bg-white p-4 py-4 my-8">
+				<img
+					className="h-16 w-16 rounded-full"
+					src="https://via.placeholder.com/150"
+					alt="Profile"
+				/>
+				<div className="ml-4">
+					<h2 className="text-lg font-semibold">Md Tohid</h2>
+					<p className="text-sm text-gray-600">ID: 5368</p>
+					<p className="text-sm text-gray-600">+88015889468</p>
+					<div className="flex gap-4 hidden">
+						<p className="text-sm text-gray-600">Balance: 1.20</p>
+						<p className="text-sm text-gray-600">4 friends</p>
+					</div>
+				</div>
+				<button className="ml-auto text-gray-600 hover:text-gray-800">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						className="h-6 w-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M9 5l7 7-7 7"
+						/>
+					</svg>
+				</button>
+			</div>
 
-			{/* profile body */}
-			<div className="profile-body-area">
+			{/* profile body ====================now it hidden================================== */}
+			<div className="profile-body-area hidden">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
@@ -407,6 +446,17 @@ const Profile = () => {
 						</div>
 					)}
 				</div>
+			</div>
+			{/*----------------------------------------New Profile body----------------------------  */}
+			<div className="overflow-hidden rounded-lg bg-white  my-4">
+				{settings.map((setting, index) => (
+					<div
+						key={index}
+						className="border-b px-4 py-3 last:border-none"
+					>
+						<p className="text-gray-800">{setting}</p>
+					</div>
+				))}
 			</div>
 		</div>
 	);

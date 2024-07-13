@@ -19,8 +19,8 @@ const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 	}
 
 	return (
-		<div className="hero-slider -mx-4  max-w-7xl lg:mx-auto">
-			<div className="hero-slider-wrapper">
+		<div className="hero-slider -mx-4  max-w-7xl lg:mx-auto  ">
+			<div className="hero-slider-wrapper px-2 md:px-0  pt-1">
 				{!!sliderData.length && (
 					<Swiper options={params}>
 						{sliderData.map((single) => (
@@ -38,7 +38,7 @@ const HeroSlider = ({ sliderData, isAutoPlay = true }) => {
 											"/heroslider/" +
 											single.image
 										}
-										className="mx-auto h-[216px] w-[100vw] md:w-auto lg:w-[100vw]"
+										className="mx-auto h-[216px] w-[100%] md:w-auto lg:w-[100vw] rounded-sm object-cover"
 										alt=""
 									/>
 								</Link>

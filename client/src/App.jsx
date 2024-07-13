@@ -12,6 +12,14 @@ import AdminTagShopControl from "./AdminComponents/AdminTagShopControl/AdminTagS
 import { NotificationProvider } from "./context/NotificationProvider";
 import AuthProvider from "./context/auth";
 import ProtectedRoutes from "./routes";
+import HelpAndSupport from "./pages/HelpAndSupport/HelpAndSupport";
+import LiveChat from "./pages/LiveChat/LiveChat";
+import ContactSupport from "./pages/ContactAndSupport/ContactSupport";
+import AddContact from "./pages/AddContact/AddContact";
+import Settings from "./pages/Settings/Settings";
+import AccountAndSecurity from "./pages/AccountAndSecurity/AccountAndSecurity";
+import Password from "./pages/Password/Password";
+import Verification from "./pages/VerificationCode/Verification";
 //tetet
 
 const AdminNewShopRequest = lazy(() =>
@@ -229,7 +237,7 @@ const PROTECTED_ROUTES = [
 		name: "orderStatus",
 		path: "/orderStatus",
 		element: OrderStatus,
-		access: ["admin", "customer"],
+		access: ["admin", "customer", "shopper"],
 	},
 	// {
 	// 	id: 20,
@@ -342,6 +350,62 @@ const PROTECTED_ROUTES = [
 		path: "/updateProductQuantity/:id",
 		element: UpdateQuantity,
 		access: ["admin", "shopper"],
+	},
+	{
+		id: 36,
+		name: "Help and support",
+		path: "/helpAndSupport",
+		element: HelpAndSupport,
+		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id: 37,
+		name: "Live Chat",
+		path: "/liveChat",
+		element: LiveChat,
+		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id: 38,
+		name: "Contact and support",
+		path: "/contactSupport",
+		element: ContactSupport,
+		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id: 39,
+		name: "Add contact",
+		path: "/addContact",
+		element: AddContact,
+		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id: 40,
+		name: "Setting",
+		path: "/settings",
+		element: Settings,
+		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id:41,
+		name:"Account and Security",
+		path:"/accountAndSecurity",
+		element:AccountAndSecurity,
+		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id:42,
+		name:"Password",
+		path:"/password",
+		element:Password,
+		access: ["admin", "customer", "shopper"],
+	},
+	{
+		id:43,
+		name:"Verification",
+		path:"/verification",
+		element:Verification,
+		access: ["admin", "customer", "shopper"],
 	},
 ];
 
