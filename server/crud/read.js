@@ -1,7 +1,7 @@
 const { app, ExecuteQuery } = require("../config");
 const { db } = require("../config");
 const { createApi } = require("../util/api");
-const { ComparePass, CreateToken } = require("../api/auth_pro");
+const { ComparePass, CreateToken, HashPass } = require("../api/auth_pro");
 const { read: Auth } = require("../api/auth");
 const { read: Profile } = require("../api/profile");
 const { read: Category } = require("../api/category");
@@ -66,6 +66,8 @@ GET_DATA.forEach(({ uri, query, param }) => {
 
 app.post("/auth/verify_login", (req, res) => {
   const { emailOrPhone, password } = req?.body;
+
+  
 
   db.getConnection((err, connection) => {
     if (err) {
@@ -164,4 +166,76 @@ app.get("/order/get-product-by-id/:id", async (req, res) => {
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
+});
+
+app.post("/auth/changePassword", (req, res) => {
+  const { emailOrPhone, oldPassword, newPassword } = req?.body;
+
+  db.getConnection((err, connection) => {
+    if (err) {
+      console.error("Error getting MySQL connection: ", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    let queryField = "email";
+    if (/^\+?[0-9]{8,}$/.test(emailOrPhone)) {
+      // Check if input resembles a phone number
+      queryField = "phone";
+    } else {
+      queryField = "email";
+    }
+    // Call your stored procedure
+    connection.query(
+      `SELECT * FROM customer_profile WHERE ${queryField} = ?`,
+      [emailOrPhone],
+      async (err, rows) => {
+        if (err) {
+          console.error("Error getting MySQL connection: ", err);
+          return res.status(500).json({ error: "Database error" });
+        }
+
+        if (rows?.length === 0) {
+          return res.status(200).json({
+            status: 200,
+            type: "delete",
+            message: "User not found",
+          });
+        }
+
+        await ComparePass(oldPassword, rows[0].password).then(async (result) => {
+          if (!result) {
+            return res.status(200).json({
+              status: 200,
+              type: "delete",
+              message: "Email/Password combination incorrect",
+            });
+          }
+
+          const hashedNewPassword = await HashPass(newPassword);
+
+          connection.query(
+            `UPDATE customer_profile SET password = ? WHERE ${queryField} = ?`,
+            [hashedNewPassword, emailOrPhone],
+            (err, result) => {
+              if (err) {
+                console.error("Error updating password: ", err);
+                return res.status(500).json({ error: "Database error" });
+              }
+
+              const { id, name, access } = rows[0];
+
+              return res.status(200).json({
+                status: 200,
+                message: "Password updated successfully",
+                user: { id, name, access },
+              });
+            }
+          );
+
+          connection.release();
+        });
+
+        // Don't use the connection here, it has been returned to the pool.
+      }
+    );
+  });
 });
