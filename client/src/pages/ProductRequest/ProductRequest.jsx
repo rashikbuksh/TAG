@@ -64,8 +64,36 @@ const ProductRequest = () => {
 
 	return (
 		<div className="mx-2 flex flex-col gap-2">
-			<Breadcrumb pageTitle="Requested Product" prevUrl="/shopkeeperDashboard" />
-			{stockProduct.length === 0 && <p>No Product for request</p>}
+			<Breadcrumb
+				pageTitle="Requested Product"
+				prevUrl="/shopkeeperDashboard"
+			/>
+			{stockProduct.length === 0 && (
+				<div className="mt-20 flex items-center justify-center">
+					<div className="text-center">
+						<svg
+							className="mx-auto h-12 w-12 text-gray-400"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M9 14l6-6m0 6l-6-6"
+							/>
+						</svg>
+						<h3 className="mt-2 text-sm font-medium text-gray-900">
+							No Products Available
+						</h3>
+						<p className="mt-1 text-sm text-gray-500">
+							Please check back later.
+						</p>
+					</div>
+				</div>
+			)}
 			{groupedByShopperProduct.length > 0 &&
 				groupedByShopperProduct.map((product) => (
 					<ProductRow

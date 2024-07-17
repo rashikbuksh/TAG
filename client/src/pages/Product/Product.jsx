@@ -9,6 +9,7 @@ import { Footer, Header } from "@components";
 import MessageModal from "@components/Modal/MessageModal/MessageModal";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "@context/auth";
+import { HiOutlineStar } from "react-icons/hi";
 import {
 	cartItemStock,
 	checkIfInCart,
@@ -40,6 +41,7 @@ import Placeholder from "../../assets/img/no_product.png";
 import "./tooltip.css";
 
 const Product = () => {
+	const [showCommentModal, setShowCommentModal] = useState(false);
 	const { cartItems } = useSelector((state) => state.cart);
 	const { user } = useAuth();
 	let { id } = useParams();
@@ -576,60 +578,71 @@ const Product = () => {
 									</Link>
 								)}
 							</div>
+							<div className="my-2">
+								<div>
+									<h1 className="text-xl font-semibold">
+										Review this product
+									</h1>
+									<p
+										onClick={() =>
+											setShowCommentModal((d) => !d)
+										}
+										className="button mt-1 w-44 cursor-pointer rounded-xl border border-gray-500 bg-gray-100 p-1 shadow-md"
+									>
+										Write a customer review
+									</p>
+
+									{showCommentModal && (
+										<div className="flex flex-col gap-2">
+											<textarea
+												style={{ fontStyle: "italic" }}
+												rows={10}
+												cols={40}
+												className="font- mt-1 rounded  border  p-2"
+											></textarea>
+											<div className="flex justify-between">
+												<div></div>
+												<button className="btn btn-sm bg-green-400 w-16 ">
+													Submit
+												</button>
+											</div>
+										</div>
+									)}
+								</div>
+								<div className="mt-2">
+									<h1 className="text-xl font-semibold">
+										Customer Reviews
+									</h1>
+									<div>
+										<div className="mt-2 flex items-center gap-2">
+											<img
+												src="https://picsum.photos/200/300"
+												alt="Profile image"
+												className="h-8 w-8 rounded-2xl"
+											/>
+											<p className="font-semibold ">
+												Jubayer
+											</p>
+										</div>
+										<div className="my-1 flex gap-2 ">
+											<HiOutlineStar className="text-yellow-300" />
+											<HiOutlineStar className="text-yellow-300" />
+											<HiOutlineStar className="text-yellow-300" />
+											<HiOutlineStar className="text-yellow-300" />
+											<HiOutlineStar className="text-yellow-300" />
+										</div>
+										<div>
+											<p>
+												The perfect blend of premium
+												butter and high quality{" "}
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					);
 				})}
-
-				{/* product content description */}
-				{/* <div className="product-content-description border-bottom--thick space-pt--25 space-pb--25">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							<p className="space-mb--25">
-								{prods.shortDescription}
-							</p>
-							<h4 className="space-mb--5">Free Shipping</h4>
-							<p>
-								To Bangladesh from seller via china. Shipping{" "}
-								<br /> method online.
-							</p>
-						</div>
-					</div>
-				</div>
-			</div> */}
-				{/* product content safety */}
-				{/* <div className="product-content-safety border-bottom--thick space-pt--15 space-pb--15">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							<h4>
-								<ReactSVG
-									src={
-										import.meta.env.VITE_API_PUBLIC_URL +
-										"/assets/img/icons/security.svg"
-									}
-								/>{" "}
-								Secure Payment Method.
-							</h4>
-						</div>
-					</div>
-				</div>
-			</div> */}
-
-				{/* product content description */}
-				{/* <div className="product-content-description space-pt--25 space-pb--25">
-				<div className="container">
-					<div className="row">
-						<div className="col-12">
-							<h4 className="space-mb--5">Specification</h4>
-							<p>{prods.fullDescription}</p>
-						</div>
-					</div>
-				</div>
-			</div> */}
-				{/* shop product button */}
-
-				{/*====================  End of product content  ====================*/}
 			</div>
 		</>
 	);
