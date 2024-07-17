@@ -240,7 +240,7 @@ const ShopperProduct = () => {
 			{selectedProducts.length > 0 && (
 				<button
 					onClick={handelAddShoperProduct}
-					className={`fixed  bottom-24 right-5 z-20 flex h-[56px] w-[56px] items-center justify-center rounded-full bg-[#46b3f7]  p-2 shadow-lg`}
+					className={`fixed  bottom-24 right-5 z-20 flex h-[56px] w-[56px] items-center justify-center rounded-full bg-[#46b3f7]  p-2 shadow-lg `}
 				>
 					<TikIcon></TikIcon>
 				</button>
