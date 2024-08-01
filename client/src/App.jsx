@@ -21,6 +21,7 @@ import AccountAndSecurity from "./pages/AccountAndSecurity/AccountAndSecurity";
 import Password from "./pages/Password/Password";
 import Verification from "./pages/VerificationCode/Verification";
 import ProfileDetails from "./pages/ProfileDetails/ProfileDetails";
+import SendVerification from "./pages/SendVerificationCode/SendVerification";
 //tetet
 
 const AdminNewShopRequest = lazy(() =>
@@ -414,7 +415,13 @@ const PROTECTED_ROUTES = [
 		path:"/profileDetails",
 		element:ProfileDetails,
 		access: ["admin", "customer", "shopper"],
-	},
+	},{
+		id:45,
+		name:"Send verification code ",
+		path:"/sendVerificationCode",
+		element:SendVerification,
+		access:["admin","customer","shopper"]
+	}
 ];
 
 const PUBLIC_ROUTES = [
