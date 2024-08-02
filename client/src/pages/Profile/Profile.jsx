@@ -270,27 +270,29 @@ const Profile = () => {
 					<h2 className="text-lg font-semibold">Md Tohid</h2>
 					<p className="text-sm text-gray-600">ID: 5368</p>
 					<p className="text-sm text-gray-600">+88015889468</p>
-					<div className="flex gap-4 hidden">
+					<div className="flex hidden gap-4">
 						<p className="text-sm text-gray-600">Balance: 1.20</p>
 						<p className="text-sm text-gray-600">4 friends</p>
 					</div>
 				</div>
-				<button className="ml-auto text-gray-600 hover:text-gray-800">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className="h-6 w-6"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M9 5l7 7-7 7"
-						/>
-					</svg>
-				</button>
+				<Link to="/profileDetails" className="ml-auto">
+					<button className="ml-auto text-gray-600 hover:text-gray-800">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-6 w-6"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M9 5l7 7-7 7"
+							/>
+						</svg>
+					</button>
+				</Link>
 			</div>
 
 			{/* profile body ====================now it hidden================================== */}

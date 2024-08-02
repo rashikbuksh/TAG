@@ -17,6 +17,7 @@ const ShopperProduct = () => {
 	const { user } = useAuth();
 	const [products, setProducts] = useState([]);
 	const [util, setUtil] = useState([]);
+
 	const [selectedProducts, setSelectedProducts] = useState([]);
 
 	const [filteredProductArr, setFilteredProductArr] = useState(products);
@@ -133,6 +134,7 @@ const ShopperProduct = () => {
 		);
 		setSelectedProducts(updatedProducts);
 	};
+
 	return (
 		<div className="body-wrapper  relative my-10 ">
 			<Breadcrumb pageTitle="Add Product" prevUrl="/shopkeeperProduct" />
@@ -235,12 +237,15 @@ const ShopperProduct = () => {
 					/>
 				))}
 			</div>
-			<button
-				onClick={handelAddShoperProduct}
-				className="fixed bottom-24 right-5 z-20 flex h-[56px] w-[56px] items-center justify-center rounded-full bg-[#46b3f7]  p-2 shadow-lg"
-			>
-				<TikIcon></TikIcon>
-			</button>
+			{selectedProducts.length > 0 && (
+				<button
+					onClick={handelAddShoperProduct}
+					className={`fixed  bottom-24 right-5 z-20 flex h-[56px] w-[56px] items-center justify-center rounded-full bg-[#46b3f7]  p-2 shadow-lg `}
+				>
+					<TikIcon></TikIcon>
+				</button>
+			)}
+
 			<div className="h-14"></div>
 		</div>
 	);
