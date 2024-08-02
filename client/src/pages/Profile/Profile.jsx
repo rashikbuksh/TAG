@@ -108,7 +108,7 @@ const Profile = () => {
 	return (
 		<div className="body-wrapper  space-pt--70 space-pb--120 ">
 			{/* Profile header ======================now it hidden===============================*/}
-			<div className="profile-header-area space-pt--30 space-mb--40 hidden">
+			<div className="profile-header-area space-pt--30 space-mb--40 ">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
@@ -259,8 +259,8 @@ const Profile = () => {
 					</div>
 				</div>
 			</div>
-			{/*--------------------------------------- New profile header------------------------- */}
-			<div className="mx-2 flex items-center rounded-lg bg-white p-4 py-4 my-8">
+			{/*--------------------------------------- New profile header flex------------------------- */}
+			<div className="mx-2  items-center rounded-lg bg-white p-4 py-4 my-8 hidden">
 				<img
 					className="h-16 w-16 rounded-full"
 					src="https://via.placeholder.com/150"
@@ -294,7 +294,7 @@ const Profile = () => {
 			</div>
 
 			{/* profile body ====================now it hidden================================== */}
-			<div className="profile-body-area hidden">
+			<div className="profile-body-area ">
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
@@ -448,7 +448,7 @@ const Profile = () => {
 				</div>
 			</div>
 			{/*----------------------------------------New Profile body----------------------------  */}
-			<div className="overflow-hidden rounded-lg bg-white  my-4">
+			<div className="overflow-hidden rounded-lg bg-white  my-4 hidden">
 				{settings.map((setting, index) => (
 					<div
 						key={index}

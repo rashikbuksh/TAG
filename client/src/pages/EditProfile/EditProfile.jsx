@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { api } from "@lib/api";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
@@ -144,6 +145,15 @@ const EditProfile = () => {
 						</button>
 					)}
 				</div>
+
+			
+			</div>
+			<div className="flex items-center justify-center bg-white">
+				<Link to={"/password"}>
+			<button type="button" className="text-blue-500 hover:underline">
+					Change password?
+				</button>
+				</Link>
 			</div>
 		</div>
 	);

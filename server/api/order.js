@@ -21,11 +21,11 @@ const read = [
 		uri: "/order/getorder/:customer_profile_id",
 		query: `SELECT p.*, c.name, c.id AS customer_id, c.phone
 		FROM product_order p
-		JOIN customer_Profile c ON p.customer_profile_id = c.id
+		JOIN customer_profile c ON p.customer_profile_id = c.id
 		WHERE p.customer_profile_id = ?
 		ORDER BY p.id DESC;`,
 		param: ["customer_profile_id"],
-		msg: "product_id",
+		msg: "customer_profile_id",
 	},
 	{
 		uri: "/order/getPendingorder/:customer_profile_id",
