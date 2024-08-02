@@ -1,16 +1,70 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
-
+import Modal from "@components/Modal/Modal";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { api } from "@lib/api";
+import { toast } from "react-toastify";
+import { useAuth } from "@context/auth";
 const Password = () => {
 	const [isOpen, setIsOpen] = useState(false);
-
+	const { user } = useAuth();
+	console.log(user, "user");
 	const openModal = () => setIsOpen(true);
 	const closeModal = () => setIsOpen(false);
+	const forgetSchema = yup.object().shape({
+		oldPassword: yup
+			.string()
+			.min(8, "Password must be at least 8 characters")
+			.required("Password is required"),
+		newPassword: yup
+			.string()
+			.min(8, "Password must be at least 8 characters")
+			.required("Password is required"),
+		confirmPassword: yup
+			.string()
+			.min(8, "Password must be at least 8 characters")
+			.required("Password is required"),
+	});
+	const { register, handleSubmit, formState } = useForm({
+		resolver: yupResolver(forgetSchema),
+	});
 
+	const { errors } = formState;
+	const [userData, setUserData] = useState({});
+	useEffect(() => {
+		api.get(`/profile/get_profile/${user?.id}`).then((response) => {
+			setUserData(response.data[0]);
+		});
+	}, []);
+	const onSubmit = async (data) => {
+		const { oldPassword, newPassword, confirmPassword } = data;
+		if (confirmPassword === newPassword) {
+			try {
+				const response = await api.post("/auth/changePassword", {
+					emailOrPhone: userData.phone,
+					oldPassword,
+					newPassword,
+				});
+
+				toast(response.data.message);
+
+				if (response.status === 200) {
+					toast.success("Password updated successfully");
+					setIsOpen(false); // Close the modal if open
+				}
+			} catch (error) {
+				toast.error(
+					error.response?.data?.message || "Failed to update password"
+				);
+			}
+		}
+	};
 	return (
-		<div className="mt-12 bg-gray-100">
-			<div className="w-full max-w-md rounded-lg bg-white">
+		<div className="mt-12">
+			<div className="mx-auto w-full max-w-md rounded-lg bg-white ">
 				<div className="flex items-center justify-between border-b p-4">
 					<button className="text-gray-500">
 						<svg
@@ -47,12 +101,12 @@ const Password = () => {
 					</button>
 				</div>
 			</div>
-			<div className="w-full max-w-md rounded-lg bg-white p-6 ">
+			<div className="mx-auto w-full max-w-md rounded-lg bg-white p-6 ">
 				<h2 className="mb-4 text-lg font-semibold">
 					Create a new password for this account. This will replace
 					your current password.
 				</h2>
-				<form>
+				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="mb-4">
 						<label
 							className="mb-2 block font-bold text-gray-700"
@@ -65,7 +119,11 @@ const Password = () => {
 							id="oldPassword"
 							placeholder="Old Password"
 							className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700  focus:outline-none"
+							{...register("oldPassword")}
 						/>
+						<p className="text-danger px-4">
+							{errors.oldPassword?.message}
+						</p>
 					</div>
 					<div className="mb-4">
 						<label
@@ -79,7 +137,11 @@ const Password = () => {
 							id="newPassword"
 							placeholder="New Password"
 							className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700  focus:outline-none"
+							{...register("newPassword")}
 						/>
+						<p className="text-danger px-4">
+							{errors.newPassword?.message}
+						</p>
 					</div>
 					<div className="mb-4">
 						<label
@@ -93,10 +155,16 @@ const Password = () => {
 							id="confirmPassword"
 							placeholder="Confirm Password"
 							className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700  focus:outline-none"
+							{...register("confirmPassword")}
 						/>
+						<p className="text-danger px-4">
+							{errors.confirmPassword?.message}
+						</p>
 					</div>
 
-					<button type="submit" className="auth-btn mb-4">Submit</button>
+					<button type="submit" className="auth-btn mb-4">
+						Submit
+					</button>
 					<p className="mb-4 text-sm text-gray-600">
 						Password must be 8-16 characters and contain both
 						numbers and letters/special characters
@@ -110,61 +178,29 @@ const Password = () => {
 					</button>
 				</form>
 			</div>
-			<Transition show={isOpen} as={Fragment}>
-				<Dialog
-					open={isOpen}
-					onClose={closeModal}
-					className="fixed inset-0 z-10 overflow-y-auto"
-				>
-					<div className="flex min-h-screen items-center justify-center">
-						<Transition.Child
-							as={Fragment}
-							enter="transition-opacity ease-out duration-300"
-							enterFrom="opacity-0"
-							enterTo="opacity-100"
-							leave="transition-opacity ease-in duration-200"
-							leaveFrom="opacity-100"
-							leaveTo="opacity-0"
-						>
-							<Dialog.Overlay className="fixed inset-0 bg-gray-800 bg-opacity-50" />
-						</Transition.Child>
+			<Modal
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				title={"Forgot Password"}
+			>
+				<Dialog.Description className="mt-2 text-sm text-gray-600">
+					Your Tag ID has been linked to your mobile. You can reset
+					your password via an SMS verification code. Send
+					verification code to +8801599648337.
+				</Dialog.Description>
 
-						<Transition.Child
-							as={Fragment}
-							enter="transition ease-out duration-300 transform"
-							enterFrom="scale-95 opacity-0"
-							enterTo="scale-100 opacity-100"
-							leave="transition ease-in duration-200 transform"
-							leaveFrom="scale-100 opacity-100"
-							leaveTo="scale-95 opacity-0"
-						>
-							<div className="z-20 mx-auto max-w-sm rounded bg-white p-6">
-								<Dialog.Title className="text-center text-lg font-medium text-gray-900">
-									Forgot Password
-								</Dialog.Title>
-								<Dialog.Description className="mt-2 text-sm text-gray-600">
-									Your Tag ID has been linked to your mobile.
-									You can reset your password via an SMS
-									verification code. Send verification code to
-									+8801599648337.
-								</Dialog.Description>
-
-								<div className="mt-4 flex justify-end">
-									<button
-										onClick={closeModal}
-										className="mr-2 rounded bg-gray-200 px-4 py-2 text-gray-700"
-									>
-										Cancel
-									</button>
-									<button className="rounded bg-blue-500 px-4 py-2 text-white">
-										Send
-									</button>
-								</div>
-							</div>
-						</Transition.Child>
-					</div>
-				</Dialog>
-			</Transition>
+				<div className="mt-4 flex justify-end">
+					<button
+						onClick={closeModal}
+						className="mr-2 rounded bg-gray-200 px-4 py-2 text-gray-700"
+					>
+						Cancel
+					</button>
+					<button className="rounded bg-blue-500 px-4 py-2 text-white">
+						Send
+					</button>
+				</div>
+			</Modal>
 		</div>
 	);
 };
