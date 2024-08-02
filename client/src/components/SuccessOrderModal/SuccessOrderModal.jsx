@@ -3,14 +3,13 @@ import Modal from "../Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { IoCheckmarkSharp } from "react-icons/io5";
-const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice = 0 , payment_type = "COD"}) => {
+const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice , payment_type,deliveryCharge }) => {
 	const navigate = useNavigate();
-	const deliveryCharge = 30;
 	useEffect(() => {
 		return () => navigate("/orderStatus");
 	}, [navigate]);
 	return (
-		<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+		<Modal isOpen={isOpen} setIsOpen={setIsOpen} showCross={true}> 
 			<div className="flex  flex-col items-center  ">
 				{/* <SuccessIcon></SuccessIcon> */}
 				<div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-200">
@@ -41,7 +40,7 @@ const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice = 0 , payment_type = 
 					</div>
 					<div className="flex justify-between font-semibold">
 						<span className="text-left">Total Bill</span>
-						<span className="text-right">{totalPrice + deliveryCharge}</span>
+						<span className="text-right">{totalPrice + parseFloat(deliveryCharge)}</span>
 					</div>
 					<div className="flex justify-between font-semibold">
 						<span className="text-left"> Payment Option</span>

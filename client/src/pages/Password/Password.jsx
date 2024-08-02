@@ -8,6 +8,7 @@ import * as yup from "yup";
 import { api } from "@lib/api";
 import { toast } from "react-toastify";
 import { useAuth } from "@context/auth";
+import { Link } from "react-router-dom";
 const Password = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { user } = useAuth();
@@ -66,22 +67,24 @@ const Password = () => {
 		<div className="mt-12">
 			<div className="mx-auto w-full max-w-md rounded-lg bg-white ">
 				<div className="flex items-center justify-between border-b p-4">
-					<button className="text-gray-500">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M15 19l-7-7 7-7"
-							/>
-						</svg>
-					</button>
+					<Link to={"/edit-profile"}>
+						<button className="text-gray-500">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								className="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M15 19l-7-7 7-7"
+								/>
+							</svg>
+						</button>
+					</Link>
 					<h2 className="text-lg font-semibold">Change Password</h2>
 					<button className="text-gray-500">
 						<svg

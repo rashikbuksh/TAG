@@ -75,7 +75,7 @@ function Offcanvas(props) {
 			},
 			{
 				title: "Order History",
-				path: "/ordersHistoryDetails/:userId",
+				path: `/ordersHistoryDetails/${user?.id}`,
 				access: ["shopper"],
 				icon: <FaClipboardList />,
 			},
