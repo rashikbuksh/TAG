@@ -32,14 +32,14 @@ const Order = () => {
 				toast(error);
 			});
 	}, [customer_profile_id]);
-	console.log(data.length);
+	// console.log(data.length);
 	return (
 		<div className="body-wrapper">
 			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
 			<div className="order-product-area pb-16">
 				{data.length > 0 ? (
 					data?.map((single) => {
-						console.log(single);
+						// console.log(single);
 						return (
 							<Link
 								to={`/orderDetails/${single.id}`}

@@ -1,25 +1,24 @@
-import { Dialog, Transition } from "@headlessui/react";
-import React, { useEffect, useState } from "react";
-import { Fragment } from "react";
-import Modal from "@components/Modal/Modal";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { api } from "@lib/api";
 import { toast } from "react-toastify";
-import { useAuth } from "@context/auth";
-import { Link } from "react-router-dom";
-const Password = () => {
-	const [isOpen, setIsOpen] = useState(false);
-	const { user } = useAuth();
-	// console.log(user, "user");
-	const openModal = () => setIsOpen(true);
-	const closeModal = () => setIsOpen(false);
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Footer, Header } from "@components";
+import Cookies from "js-cookie";
+const ForgetPasswordChange = () => {
+	const phoneNumber = useLocation().state.phoneNumber;
+	// console.log("🚀 ~ ForgetPasswordChange ~ phoneNumber:", phoneNumber);
+	const navigate = useNavigate();
+	useEffect(() => {
+		if (phoneNumber) {
+			return;
+		} else {
+			navigate("/home");
+		}
+	}, []);
 	const forgetSchema = yup.object().shape({
-		oldPassword: yup
-			.string()
-			.min(8, "Password must be at least 8 characters")
-			.required("Password is required"),
 		newPassword: yup
 			.string()
 			.min(8, "Password must be at least 8 characters")
@@ -34,19 +33,13 @@ const Password = () => {
 	});
 
 	const { errors } = formState;
-	const [userData, setUserData] = useState({});
-	useEffect(() => {
-		api.get(`/profile/get_profile/${user?.id}`).then((response) => {
-			setUserData(response.data[0]);
-		});
-	}, []);
+
 	const onSubmit = async (data) => {
-		const { oldPassword, newPassword, confirmPassword } = data;
+		const { newPassword, confirmPassword } = data;
 		if (confirmPassword === newPassword) {
 			try {
-				const response = await api.post("/auth/changePassword", {
-					emailOrPhone: userData.phone,
-					oldPassword,
+				const response = await api.post("/auth/forgetPassword", {
+					emailOrPhone: phoneNumber,
 					newPassword,
 				});
 
@@ -54,7 +47,10 @@ const Password = () => {
 
 				if (response.status === 200) {
 					toast.success("Password updated successfully");
-					setIsOpen(false); // Close the modal if open
+                    navigate("/login")
+                    localStorage.removeItem("user-id");
+                    Cookies.remove("user");
+                    Cookies.remove("auth");
 				}
 			} catch (error) {
 				toast.error(
@@ -64,10 +60,12 @@ const Password = () => {
 		}
 	};
 	return (
-		<div className="mt-12">
+		<div className="pt-12">
+            <Header/>
+            <Footer/>
 			<div className="mx-auto w-full max-w-md rounded-lg bg-white ">
 				<div className="flex items-center justify-between border-b p-4">
-					<Link to={"/edit-profile"}>
+					<Link to={"/login"}>
 						<button className="text-gray-500">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -113,24 +111,6 @@ const Password = () => {
 					<div className="mb-4">
 						<label
 							className="mb-2 block font-bold text-gray-700"
-							htmlFor="oldPassword"
-						>
-							Old Password
-						</label>
-						<input
-							type="password"
-							id="oldPassword"
-							placeholder="Old Password"
-							className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700  focus:outline-none"
-							{...register("oldPassword")}
-						/>
-						<p className="text-danger px-4">
-							{errors.oldPassword?.message}
-						</p>
-					</div>
-					<div className="mb-4">
-						<label
-							className="mb-2 block font-bold text-gray-700"
 							htmlFor="newPassword"
 						>
 							New Password
@@ -172,40 +152,10 @@ const Password = () => {
 						Password must be 8-16 characters and contain both
 						numbers and letters/special characters
 					</p>
-					<Link
-						to={"/sendVerificationCode"}
-						type="button"
-						className="text-blue-500 hover:underline"
-					>
-						Forgot old password?
-					</Link>
 				</form>
 			</div>
-			<Modal
-				isOpen={isOpen}
-				setIsOpen={setIsOpen}
-				title={"Forgot Password"}
-			>
-				<Dialog.Description className="mt-2 text-sm text-gray-600">
-					Your Tag ID has been linked to your mobile. You can reset
-					your password via an SMS verification code. Send
-					verification code to +8801599648337.
-				</Dialog.Description>
-
-				<div className="mt-4 flex justify-end">
-					<button
-						onClick={closeModal}
-						className="mr-2 rounded bg-gray-200 px-4 py-2 text-gray-700"
-					>
-						Cancel
-					</button>
-					<button className="rounded bg-blue-500 px-4 py-2 text-white">
-						Send
-					</button>
-				</div>
-			</Modal>
 		</div>
 	);
 };
 
-export default Password;
+export default ForgetPasswordChange;

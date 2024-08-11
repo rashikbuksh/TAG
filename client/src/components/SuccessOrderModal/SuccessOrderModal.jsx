@@ -20,14 +20,14 @@ const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice , payment_type,delive
 						Congratulation!
 					</p>
 					<p className="text-center font-semibold text-gray-500">
-						Your Order is successful. Thank for using our services.
+						Your Order is successfully submitted.
 					</p>
 				</div>
 				<div className="flex w-full flex-col gap-3 rounded border p-2 ">
 					<div className="flex justify-between font-semibold">
 						<span className="text-left">Order No </span>
 						<span className="text-right text-purple-500">
-							u8sv4bdlk
+							--
 						</span>
 					</div>
 					<div className="flex justify-between font-semibold">
@@ -54,7 +54,7 @@ const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice , payment_type,delive
 						type="button"
 						className="mt-2 w-full rounded-md bg-red-500 p-2 text-white"
 					>
-						Go To Home
+						Go To Order status
 					</button>
 				</div>
 			</div>

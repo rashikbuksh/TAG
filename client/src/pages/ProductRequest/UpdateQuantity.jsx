@@ -10,7 +10,7 @@ const UpdateQuantity = () => {
 	const [error, setError] = useState();
 	const { id } = useParams();
 	const location = useLocation();
-	console.log(id);
+	// console.log(id);
 	useFetchFunc(
 		`/shopperproduct/getshopperproduct/by/id/${id}`,
 		0,
@@ -18,10 +18,10 @@ const UpdateQuantity = () => {
 		setLoading,
 		setError
 	);
-	console.log(products);
+	// console.log(products);
 	const { product } = location.state || {};
-	console.log(location);
-	console.log("🚀 ~ UpdateQuantity ~ product:", product);
+	// console.log(location);
+	// console.log("🚀 ~ UpdateQuantity ~ product:", product);
 
 	return (
 		<div className="mt-14">

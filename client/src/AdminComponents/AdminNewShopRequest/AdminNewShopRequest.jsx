@@ -57,7 +57,7 @@ const AdminNewShopRequest = () => {
 						}
 					})
 					.catch((error) => {
-						console.log(error);
+						// console.log(error);
 						// Display error message
 						Swal.fire(
 							"Error!",
