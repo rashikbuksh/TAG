@@ -9,7 +9,7 @@ const ForgetPassword = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [otpInput, setOtpInput] = useState(new Array(4).fill(""));
 	const numberOfDigits = 4;
-	console.log("🚀 ~ ForgetPassword ~ otpInput:", otpInput);
+	// console.log("🚀 ~ ForgetPassword ~ otpInput:", otpInput);
 	const [isCodeSent, setIsCodeSent] = useState(false);
 	const [isLoading, setIsLoading] = useState(false); // New state for loading
 	const otpRefs = useRef([]);
@@ -35,7 +35,7 @@ const ForgetPassword = () => {
 		try {
 			const response = await api.get(`/auth/checkUser/${phoneNumber}`);
 
-			console.log("🚀 ~ sendOTPCode ~ response:", response);
+			// console.log("🚀 ~ sendOTPCode ~ response:", response);
 			if (response.status === 200) {
 				const generatedOtp = generateOTP();
 				setIsCodeSent(true);
@@ -60,11 +60,11 @@ const ForgetPassword = () => {
 
 	const handleVerificationOfOTP = async () => {
 		const code = otpInput.join("");
-		console.log(code, "code");
+		// console.log(code, "code");
 
 		if (code.length === 4) {
 			let verifiedOrNot = await verifyOtp(code);
-			console.log(phoneNumber);
+			// console.log(phoneNumber);
 
 			if (verifiedOrNot) {
 				toast.success("OTP verified! Proceed to reset your password.");

@@ -669,17 +669,17 @@ function App() {
 		}
 
 		window.addEventListener("online", (connect) => {
-			console.log(connect.type);
+			// console.log(connect.type);
 			if (connect.type == "online") {
 				setOnline(true);
 			}
-			console.log("Became online");
+			// console.log("Became online");
 		});
 		window.addEventListener("offline", (connect) => {
 			if (connect.type == "offline") {
 				setOnline(false);
 			}
-			console.log("Became offline");
+			// console.log("Became offline");
 		});
 	}, []);
 

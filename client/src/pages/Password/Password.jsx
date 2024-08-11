@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 const Password = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { user } = useAuth();
-	console.log(user, "user");
+	// console.log(user, "user");
 	const openModal = () => setIsOpen(true);
 	const closeModal = () => setIsOpen(false);
 	const forgetSchema = yup.object().shape({

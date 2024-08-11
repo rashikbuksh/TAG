@@ -121,7 +121,7 @@ const OrderDetailsShopper = () => {
 								}).then((response) => {
 									if (response.status === 201) {
 										order.forEach((product) => {
-											console.log(product);
+											// console.log(product);
 											updateProductCount(
 												product?.ordered_product?.pid,
 												product?.ordered_product

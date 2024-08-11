@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 const ProductRow = ({ product, handleDelete, groupedByShopperProduct }) => {
 
 
-	console.log("🚀 ~ ProductRow ~ product:", product)
+	// console.log("🚀 ~ ProductRow ~ product:", product)
 	const navigate = useNavigate();
 	const stockProduct = (product) => {
 		navigate(`/updateProductQuantity/${product.shopper_product_id}`, {

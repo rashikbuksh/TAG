@@ -8,7 +8,7 @@ export const OtpVerificationContext = createContext();
 const OtpVerificationProvider = ({ children }) => {
 	// const [otpCookie, updateOtpCookie, removeOtpCookie] = useCookie("otp");
 	const [otp, setOtp] = useState("");
-console.log(otp ,"from context");
+// console.log(otp ,"from context");
 
 	// Function to handle verification code input
 	const handleVerificationCodeChange = (code) => {
@@ -21,9 +21,9 @@ console.log(otp ,"from context");
 	const verifyOtp = async (code) => {
 		if (otp && otp == code) {
 			// If the OTP is correct, remove the cookie
-			console.log("otpCookie matching", otp === code);
+			// console.log("otpCookie matching", otp === code);
 			// removeOtpCookie();
-			console.log(code, otp);
+			// console.log(code, otp);
 			
 			return true;
 		} else {
@@ -39,7 +39,7 @@ console.log(otp ,"from context");
 	const sendOtp = async (Otp, phone) => {
 		const generatedOtp = Otp;
 		const phoneNumber = phone;
-		console.log("sendOtp send code", generatedOtp, phone);
+		// console.log("sendOtp send code", generatedOtp, phone);
 		await axios
 			.post(
 				`${import.meta.env.VITE_APP_API_URL}/sentOtp`,
@@ -54,7 +54,7 @@ console.log(otp ,"from context");
 				}
 			)
 			.then((response) => {
-				console.log("OTP sent:", response);
+				// console.log("OTP sent:", response);
 			})
 			.catch((error) => {
 				console.error("Error sending OTP:", error);

@@ -57,7 +57,7 @@ const ShopkeeperProfileCV = () => {
 	// const { user}=useAuth()
 	// add addTo cart
 	const { copySuccess, copyToClipboard } = useClipboard();
-	console.log(user?.id);
+	// console.log(user?.id);
 	const { isFollow, followShopper, followers, getFollower } = useFollow(
 		id,
 		user?.id
@@ -79,7 +79,7 @@ const ShopkeeperProfileCV = () => {
 				setSelectedCategoryProduct(res.data);
 			})
 			.catch((err) => {
-				console.log(err);
+				// console.log(err);
 			});
 		api.get(`/category/get/category`).then((response) => {
 			setCategory(response.data);
@@ -150,7 +150,7 @@ const ShopkeeperProfileCV = () => {
 			.then((response) => {
 				if (response.status === 201) {
 					toast.success("Product Request Added Successfully");
-					console.log(response);
+					// console.log(response);
 				}
 
 				// let remainList = filteredAllProducts.filter(
@@ -162,7 +162,7 @@ const ShopkeeperProfileCV = () => {
 				toast.error("Failed to add product request");
 			});
 	};
-	console.log(filteredAllProducts);
+	// console.log(filteredAllProducts);
 	return (
 		<>
 			<Header />

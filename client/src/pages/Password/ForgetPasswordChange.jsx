@@ -9,7 +9,7 @@ import { Footer, Header } from "@components";
 import Cookies from "js-cookie";
 const ForgetPasswordChange = () => {
 	const phoneNumber = useLocation().state.phoneNumber;
-	console.log("🚀 ~ ForgetPasswordChange ~ phoneNumber:", phoneNumber);
+	// console.log("🚀 ~ ForgetPasswordChange ~ phoneNumber:", phoneNumber);
 	const navigate = useNavigate();
 	useEffect(() => {
 		if (phoneNumber) {

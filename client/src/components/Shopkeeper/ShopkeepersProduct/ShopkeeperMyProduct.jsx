@@ -86,15 +86,15 @@ const ShopkeeperMyProduct = ({ product, index, clearFromStockRequest }) => {
 	};
 	const handleDelete = async (items) => {
 		let deletionPromises = [];
-		console.log(items);
+		// console.log(items);
 
 		items.forEach(async (item) => {
 			try {
 				let deleteResponse = await api.delete(
 					`/request-product-for-stock/delete/${item.id}`
 				);
-				console.log(`Item with ID ${item.id} deleted successfully.`);
-				console.log(deleteResponse);
+				// console.log(`Item with ID ${item.id} deleted successfully.`);
+				// console.log(deleteResponse);
 
 				deletionPromises.push(deleteResponse);
 				if (deleteResponse.status == 200) {
@@ -105,7 +105,7 @@ const ShopkeeperMyProduct = ({ product, index, clearFromStockRequest }) => {
 			}
 		});
 		await Promise.all(deletionPromises);
-		console.log("All deletions completed.");
+		// console.log("All deletions completed.");
 	};
 	const handleProductUpdate = () => {
 		if (isVerified === "verified") {
