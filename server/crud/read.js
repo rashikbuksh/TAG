@@ -239,3 +239,65 @@ app.post("/auth/changePassword", (req, res) => {
     );
   });
 });
+app.post("/auth/forgetPassword", (req, res) => {
+  const { emailOrPhone, newPassword } = req.body;
+
+  db.getConnection((err, connection) => {
+    if (err) {
+      console.error("Error getting MySQL connection: ", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    let queryField = "email";
+    if (/^\+?[0-9]{8,}$/.test(emailOrPhone)) {
+      // Check if input resembles a phone number
+      queryField = "phone";
+    } else {
+      queryField = "email";
+    }
+
+    // Check if the user exists
+    connection.query(
+      `SELECT * FROM customer_profile WHERE ${queryField} = ?`,
+      [emailOrPhone],
+      async (err, rows) => {
+        if (err) {
+          console.error("Error getting MySQL connection: ", err);
+          return res.status(500).json({ error: "Database error" });
+        }
+
+        if (rows.length === 0) {
+          return res.status(200).json({
+            status: 200,
+            message: "User not found",
+          });
+        }
+
+        // Hash the new password
+        const hashedNewPassword = await HashPass(newPassword);
+
+        // Update the password in the database
+        connection.query(
+          `UPDATE customer_profile SET password = ? WHERE ${queryField} = ?`,
+          [hashedNewPassword, emailOrPhone],
+          (err, result) => {
+            if (err) {
+              console.error("Error updating password: ", err);
+              return res.status(500).json({ error: "Database error" });
+            }
+
+            const { id, name, access } = rows[0];
+
+            return res.status(200).json({
+              status: 200,
+              message: "Password updated successfully",
+              user: { id, name, access },
+            });
+          }
+        );
+
+        connection.release();
+      }
+    );
+  });
+});

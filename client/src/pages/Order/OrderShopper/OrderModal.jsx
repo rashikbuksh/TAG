@@ -20,13 +20,13 @@ const OrderDetailsShopper = () => {
 
 	const [cancelReport, setCancelReport] = useState("");
 	const [isShownReport, setIsShownReport] = useState(false);
-	const [isOpen, setIsOpen] = useState(false);
-	const handelIsOpenModal = () => {
-		setIsOpen(!isOpen);
-		if (isOpen === false) {
-			// window.location.reload();
-		}
-	};
+	// const [isOpen, setIsOpen] = useState(false);
+	// const handelIsOpenModal = () => {
+	// 	setIsOpen(!isOpen);
+	// 	if (isOpen === false) {
+	// 		// window.location.reload();
+	// 	}
+	// };
 	const deliveryInfoStyle = {
 		background: "#f7f7f7", // Background color
 		padding: "10px", // Padding around the delivery information
@@ -100,7 +100,7 @@ const OrderDetailsShopper = () => {
 			});
 	};
 	const handleCompleteOrder = (id) => {
-		handelIsOpenModal();
+		// handelIsOpenModal();
 		api.post(`/order/updateorderstatus/${id}`, {
 			order_status: "completed",
 		})
@@ -310,7 +310,7 @@ const OrderDetailsShopper = () => {
 			>
 				test
 			</button> */}
-			<SuccessOrderModal isOpen={isOpen} setIsOpen={setIsOpen} />
+			{/* <SuccessOrderModal isOpen={isOpen} setIsOpen={setIsOpen} /> */}
 			{isShownReport && (
 				<div>
 					<p>Selected Cancel Report: {cancelReport}</p>

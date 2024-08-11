@@ -64,6 +64,7 @@ const VerifyToken = (req, res, next) => {
 		req?.originalUrl == "/shopperproduct/getPopularShopperProduct" ||
 		req?.originalUrl == "/category/get/category" ||
 		req?.originalUrl == "/adminShopperProduct/getshopperproduct" ||
+		req?.originalUrl == "/auth/forgetPassword" ||
 		getUserInfoRegex.test(req?.originalUrl) ||
 		getProductRegex.test(req?.originalUrl) ||
 		getShopperProductRegex.test(req?.originalUrl) ||
