@@ -1,8 +1,14 @@
-const PayNowBtn = ({ handelGoPaymentPage }) => {
+const PayNowBtn = ({ handelGoPaymentPage, paymentOperator }) => {
+	const buttonText =
+		paymentOperator === "Cash On Pickup" ||
+		paymentOperator === "Cash On Delivery"
+			? "Next"
+			: "Pay Now";
+
 	return (
-		<div className="flex justify-center mt-3">
-			<button onClick={handelGoPaymentPage} className="auth-btn ">
-				Pay Now
+		<div className="mt-3 flex justify-center">
+			<button onClick={handelGoPaymentPage} className="auth-btn">
+				{buttonText}
 			</button>
 		</div>
 	);
