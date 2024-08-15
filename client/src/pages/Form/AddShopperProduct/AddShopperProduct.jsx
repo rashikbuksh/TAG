@@ -6,7 +6,7 @@ import { useAuth } from "@context/auth";
 import GetDateTime from "@helpers/GetDateTime";
 import { getDiscountPrice } from "@helpers/product";
 import { api } from "@lib/api";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { Swiper, SwiperSlide } from "swiper/react";
