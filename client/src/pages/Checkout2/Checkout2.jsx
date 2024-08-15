@@ -5,7 +5,7 @@ import PayNowBtn from "@components/PaymentMethod/Checkout/PayNowBtn";
 import PaymentOparator from "@components/PaymentMethod/Checkout/PaymentOparator";
 import { useAuth } from "@context/auth";
 import { api } from "@lib/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -32,7 +32,8 @@ const Checkout2 = () => {
 	const { totalPrice, shopperId, discount, totalItem, shopperAccess } =
 		location.state;
 
-	const handelGoPaymentPage = () => {
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const handelGoPaymentPage = useCallback(() => {
 		if (
 			selectedAddress &&
 			paymentOperator &&
@@ -57,8 +58,12 @@ const Checkout2 = () => {
 				text: "You must have to add address ",
 			});
 		}
-	};
-
+	});
+	useEffect(() => {
+		if (selectedAddress === "Pick up") {
+			handelGoPaymentPage();
+		}
+	}, [handelGoPaymentPage, selectedAddress]);
 	return (
 		<div className="mx-auto px-4 pb-24 text-black ">
 			{/* Checkout Title */}
@@ -120,7 +125,10 @@ const Checkout2 = () => {
 				<div className="mt-32">No total price provided!</div>
 			)}
 			{/* Pay Now Button */}
-			<PayNowBtn handelGoPaymentPage={handelGoPaymentPage}></PayNowBtn>
+			<PayNowBtn
+				handelGoPaymentPage={handelGoPaymentPage}
+				paymentOperator={paymentOperator}
+			></PayNowBtn>
 		</div>
 	);
 };
