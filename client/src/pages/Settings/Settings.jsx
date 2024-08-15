@@ -1,11 +1,15 @@
-
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
+	const navigate = useNavigate();
 	return (
 		<div className="mt-12 flex items-center justify-center bg-gray-100 ">
 			<div className="w-full max-w-md rounded-lg bg-white ">
 				<div className="flex items-center justify-between border-b p-4">
-					<button className="text-gray-500">
+					<button
+						className="text-gray-500"
+						onClick={() => navigate(-1)}
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className="h-6 w-6"

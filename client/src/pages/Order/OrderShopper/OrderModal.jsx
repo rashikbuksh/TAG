@@ -219,12 +219,13 @@ const OrderDetailsShopper = () => {
 	const { user } = useAuth();
 	return (
 		<div className="body-wrapper px-2 ">
-			{/* <Breadcrumb
+			<Breadcrumb
 				pageTitle={`Order Number: #${id}`}
-			/> */}
-			<div className="bg-color--grey space-y--15 mt-16">
+			/>
+			{/* <div className="bg-color--grey space-y--15 mt-16">
 				<p className="text-center">Order Number: #{id}</p>
-			</div>
+			</div> */}
+			
 			<div style={deliveryInfoStyle} className="mt-1">
 				<p className="text-xl font-bold">Customer Information:</p>
 				<p className="text-lg">

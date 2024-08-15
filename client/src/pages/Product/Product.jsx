@@ -5,7 +5,7 @@ import {
 	TwitterIcon,
 	WhatsappIcon,
 } from "@SvgHub/SocialIcon";
-import { Footer, Header } from "@components";
+import { Breadcrumb, Footer, Header } from "@components";
 import MessageModal from "@components/Modal/MessageModal/MessageModal";
 import ShowCartIcon from "@components/ShowCartIcon/ShowCartIcon";
 import { useAuth } from "@context/auth";
@@ -169,13 +169,7 @@ const Product = () => {
 			<ShowCartIcon />
 
 			<div className="mx-auto  mt-4 px-4 py-8 pb-20  lg:w-[50%]">
-				<div className="flex  justify-between rounded-md py-2">
-					<Link to={"/home"} className="back-link">
-						<FaAngleLeft size={25} color="" />
-					</Link>
-					<div>Product details</div>
-					<div></div>
-				</div>
+				<Breadcrumb pageTitle="Product Details"></Breadcrumb>
 				{/* <ShowCartIcon></ShowCartIcon> */}
 				{/*====================  product image slider ====================*/}
 				<div className="">
@@ -592,7 +586,7 @@ const Product = () => {
 											></textarea>
 											<div className="flex justify-between">
 												<div></div>
-												<button className="btn btn-sm bg-green-400 w-16 ">
+												<button className="btn btn-sm w-16 bg-green-400 ">
 													Submit
 												</button>
 											</div>
