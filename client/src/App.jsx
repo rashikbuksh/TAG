@@ -23,6 +23,7 @@ import Verification from "./pages/VerificationCode/Verification";
 import ProfileDetails from "./pages/ProfileDetails/ProfileDetails";
 import SendVerification from "./pages/SendVerificationCode/SendVerification";
 import ForgetPasswordChange from "./pages/Password/ForgetPasswordChange";
+import SwitchAndLogout from "./pages/switchORlogout/SwitchAndLogout";
 //tetet
 
 const AdminNewShopRequest = lazy(() =>
@@ -417,6 +418,13 @@ const PROTECTED_ROUTES = [
 		element: ProfileDetails,
 		access: ["admin", "customer", "shopper"],
 	},
+	{
+		id: 45,
+		name: "switchAndLogout",
+		path: "/switchAndLogout",
+		element: SwitchAndLogout,
+		access: ["admin", "customer", "shopper"],
+	},
 ];
 
 const PUBLIC_ROUTES = [
@@ -492,7 +500,7 @@ const PUBLIC_ROUTES = [
 		path: "/sendVerificationCode",
 		element: SendVerification,
 	},
-	
+
 	{
 		path: "/forgetPassword",
 		element: ForgetPasswordChange,
