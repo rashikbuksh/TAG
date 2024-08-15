@@ -182,10 +182,10 @@ function Header() {
 																		>
 																			Profile
 																		</Link>
-																		{/* <li>
+																		<li>
 																			Scan
-																		</li> */}
-																		{/* <Link to={
+																		</li>
+																		<Link to={
 																				import.meta
 																					.env
 																					.VITE_API_PUBLIC_URL +
@@ -193,7 +193,7 @@ function Header() {
 																			}>
 																			Add
 																			Contact
-																		</Link> */}
+																		</Link>
 																		<Link 	to={
 																				import.meta
 																					.env
