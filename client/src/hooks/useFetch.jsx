@@ -16,7 +16,7 @@ function useFetch(url, dependencies = []) {
 		return await fetch(`${API}${url}`, DEFAULT_OPTIONS).then(
 			async (res) => {
 				if (res.ok) {
-					console.log(res);
+					// console.log(res);
 					return res.json();
 				}
 				const json = await res.json();

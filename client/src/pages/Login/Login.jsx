@@ -173,9 +173,9 @@ const Login = () => {
 								{errors.password?.message}
 							</p>
 							<div className="pl-6">
-								<a className="text-[#2F5BA9] link font-semibold leading-8">
+								<Link to={"/sendVerificationCode"} className="text-[#2F5BA9] link font-semibold leading-8">
 									Forgot Password?
-								</a>
+								</Link>
 							</div>
 						</div>
 						{/* Text are hidden {Error component} */}

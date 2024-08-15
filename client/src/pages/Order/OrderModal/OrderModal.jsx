@@ -42,7 +42,10 @@ const OrderModal = () => {
 	};
 	return (
 		<div className=" px-2 pb-24 ">
-			<Breadcrumb pageTitle={`Order Number: #${id}`} prevUrl="/order" />
+			{/* <Breadcrumb pageTitle={`Order Number: #${id}`} prevUrl="/shopkeeperDashboard" /> */}
+			<div className="bg-color--grey space-y--15 mt-16">
+				<p className="text-center">Order Number: #{id}</p>
+			</div>
 			<div>
 				<div className="overflow-x-auto">
 					<div className="min-w-full  divide-gray-200 bg-white text-sm">

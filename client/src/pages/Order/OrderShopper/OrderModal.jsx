@@ -20,13 +20,13 @@ const OrderDetailsShopper = () => {
 
 	const [cancelReport, setCancelReport] = useState("");
 	const [isShownReport, setIsShownReport] = useState(false);
-	const [isOpen, setIsOpen] = useState(false);
-	const handelIsOpenModal = () => {
-		setIsOpen(!isOpen);
-		if (isOpen === false) {
-			// window.location.reload();
-		}
-	};
+	// const [isOpen, setIsOpen] = useState(false);
+	// const handelIsOpenModal = () => {
+	// 	setIsOpen(!isOpen);
+	// 	if (isOpen === false) {
+	// 		// window.location.reload();
+	// 	}
+	// };
 	const deliveryInfoStyle = {
 		background: "#f7f7f7", // Background color
 		padding: "10px", // Padding around the delivery information
@@ -56,6 +56,7 @@ const OrderDetailsShopper = () => {
 		}).then((res) => {
 			if (res.data.status === 200) {
 				// console.log("updated" + id);
+				window.location.reload();
 			}
 		});
 	};
@@ -99,7 +100,7 @@ const OrderDetailsShopper = () => {
 			});
 	};
 	const handleCompleteOrder = (id) => {
-		handelIsOpenModal();
+		// handelIsOpenModal();
 		api.post(`/order/updateorderstatus/${id}`, {
 			order_status: "completed",
 		})
@@ -120,7 +121,7 @@ const OrderDetailsShopper = () => {
 								}).then((response) => {
 									if (response.status === 201) {
 										order.forEach((product) => {
-											console.log(product);
+											// console.log(product);
 											updateProductCount(
 												product?.ordered_product?.pid,
 												product?.ordered_product
@@ -218,12 +219,12 @@ const OrderDetailsShopper = () => {
 	const { user } = useAuth();
 	return (
 		<div className="body-wrapper px-2 ">
-			<Breadcrumb
+			{/* <Breadcrumb
 				pageTitle={`Order Number: #${id}`}
-				prevUrl={user.access === "customer" ? "/home" : "/orderShopper"}
-				// onClick={() => goToPreviousPage()}
-			/>
-
+			/> */}
+			<div className="bg-color--grey space-y--15 mt-16">
+				<p className="text-center">Order Number: #{id}</p>
+			</div>
 			<div style={deliveryInfoStyle} className="mt-1">
 				<p className="text-xl font-bold">Customer Information:</p>
 				<p className="text-lg">
@@ -309,7 +310,7 @@ const OrderDetailsShopper = () => {
 			>
 				test
 			</button> */}
-			<SuccessOrderModal isOpen={isOpen} setIsOpen={setIsOpen} />
+			{/* <SuccessOrderModal isOpen={isOpen} setIsOpen={setIsOpen} /> */}
 			{isShownReport && (
 				<div>
 					<p>Selected Cancel Report: {cancelReport}</p>

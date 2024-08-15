@@ -8,6 +8,7 @@ export const OtpVerificationContext = createContext();
 const OtpVerificationProvider = ({ children }) => {
 	// const [otpCookie, updateOtpCookie, removeOtpCookie] = useCookie("otp");
 	const [otp, setOtp] = useState("");
+// console.log(otp ,"from context");
 
 	// Function to handle verification code input
 	const handleVerificationCodeChange = (code) => {
@@ -18,10 +19,12 @@ const OtpVerificationProvider = ({ children }) => {
 		// updateOtpCookie(hashedCode);
 	};
 	const verifyOtp = async (code) => {
-		if (otp && otp === code) {
+		if (otp && otp == code) {
 			// If the OTP is correct, remove the cookie
 			// console.log("otpCookie matching", otp === code);
 			// removeOtpCookie();
+			// console.log(code, otp);
+			
 			return true;
 		} else {
 			// If the OTP is incorrect, show an error message
@@ -36,13 +39,13 @@ const OtpVerificationProvider = ({ children }) => {
 	const sendOtp = async (Otp, phone) => {
 		const generatedOtp = Otp;
 		const phoneNumber = phone;
-		// console.log("sendOtp send code", generatedOtp);
+		// console.log("sendOtp send code", generatedOtp, phone);
 		await axios
 			.post(
 				`${import.meta.env.VITE_APP_API_URL}/sentOtp`,
 				{
 					number: phoneNumber,
-					message: `Your OTP verification is ${generatedOtp.toString()} - TAG Think and Get`,
+					message: `Your OTP verification is ${generatedOtp.toString()}`,
 				},
 				{
 					headers: {

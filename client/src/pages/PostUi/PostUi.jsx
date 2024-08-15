@@ -71,7 +71,7 @@ const PostUi = ({ postData }) => {
 
 	//DOING===========
 	const handleShare = () => {
-		console.log("share");
+		// console.log("share");
 	};
 
 	const currentDate = new Date(date);

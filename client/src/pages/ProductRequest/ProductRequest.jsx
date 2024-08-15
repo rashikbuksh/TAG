@@ -16,7 +16,7 @@ const ProductRequest = () => {
 		setLoading,
 		setError
 	);
-	console.log(stockProduct);
+	// console.log(stockProduct);
 	const groupedByShopperProduct = stockProduct.reduce((acc, item) => {
 		let group = acc.find((g) => g.name == item.name);
 		if (!group) {
@@ -35,20 +35,20 @@ const ProductRequest = () => {
 		return acc;
 	}, []);
 
-	console.log(groupedByShopperProduct);
+	// console.log(groupedByShopperProduct);
 
 	const handleDelete = async (id, items) => {
 		let deletionPromises = [];
-		console.log(id);
-		console.log(items);
+		// console.log(id);
+		// console.log(items);
 
 		items.forEach(async (item) => {
 			try {
 				let deleteResponse = await api.delete(
 					`/request-product-for-stock/delete/${item.id}`
 				);
-				console.log(`Item with ID ${item.id} deleted successfully.`);
-				console.log(deleteResponse);
+				// console.log(`Item with ID ${item.id} deleted successfully.`);
+				// console.log(deleteResponse);
 
 				deletionPromises.push(deleteResponse);
 				if (deleteResponse.status == 200) {
@@ -59,7 +59,7 @@ const ProductRequest = () => {
 			}
 		});
 		await Promise.all(deletionPromises);
-		console.log("All deletions completed.");
+		// console.log("All deletions completed.");
 	};
 
 	return (

@@ -117,7 +117,7 @@ const Product = () => {
 				setShopperName(response.data[0]?.name);
 			})
 			.catch((error) => {
-				console.log(error);
+				// console.log(error);
 			});
 	};
 	const handelOpenMessageModal = () => {

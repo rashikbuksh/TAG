@@ -3,14 +3,13 @@ import Modal from "../Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { IoCheckmarkSharp } from "react-icons/io5";
-const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice = 0 , payment_type = "COD"}) => {
+const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice , payment_type,deliveryCharge }) => {
 	const navigate = useNavigate();
-	const deliveryCharge = 30;
 	useEffect(() => {
 		return () => navigate("/orderStatus");
 	}, [navigate]);
 	return (
-		<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+		<Modal isOpen={isOpen} setIsOpen={setIsOpen} showCross={true}> 
 			<div className="flex  flex-col items-center  ">
 				{/* <SuccessIcon></SuccessIcon> */}
 				<div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-200">
@@ -21,14 +20,14 @@ const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice = 0 , payment_type = 
 						Congratulation!
 					</p>
 					<p className="text-center font-semibold text-gray-500">
-						Your Order is successful. Thank for using our services.
+						Your Order is successfully submitted.
 					</p>
 				</div>
 				<div className="flex w-full flex-col gap-3 rounded border p-2 ">
 					<div className="flex justify-between font-semibold">
 						<span className="text-left">Order No </span>
 						<span className="text-right text-purple-500">
-							u8sv4bdlk
+							--
 						</span>
 					</div>
 					<div className="flex justify-between font-semibold">
@@ -41,7 +40,7 @@ const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice = 0 , payment_type = 
 					</div>
 					<div className="flex justify-between font-semibold">
 						<span className="text-left">Total Bill</span>
-						<span className="text-right">{totalPrice + deliveryCharge}</span>
+						<span className="text-right">{totalPrice + parseFloat(deliveryCharge)}</span>
 					</div>
 					<div className="flex justify-between font-semibold">
 						<span className="text-left"> Payment Option</span>
@@ -55,7 +54,7 @@ const SuccessOrderModal = ({ isOpen, setIsOpen, totalPrice = 0 , payment_type = 
 						type="button"
 						className="mt-2 w-full rounded-md bg-red-500 p-2 text-white"
 					>
-						Go To Home
+						Go To Order status
 					</button>
 				</div>
 			</div>

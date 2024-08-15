@@ -134,6 +134,9 @@ const CashOnDelivery = () => {
 					totalPrice={totalPrice}
 					payment_type={payment_type}
 					setIsOpen={setIsOpen}
+					deliveryCharge={
+						customers_address_summary === "Pick up" ? 0 : 20
+					}
 				></SuccessOrderModal>
 			)}
 		</div>

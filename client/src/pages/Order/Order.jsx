@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { FormatDateInBST, FormatTimeInBST } from "@helpers/GetDateTime";
+import { useAuth } from "@context/auth";
 
 const Order = () => {
 	const [data, setData] = useState([]);
@@ -17,12 +18,13 @@ const Order = () => {
 		set_Order_id(single.id);
 		setIsOpen(!isOpen);
 	};
+	const { user } = useAuth();
 
 	// get userid from local storage
 	const customer_profile_id = localStorage.getItem("user-id");
 
 	useEffect(() => {
-		api.get(`/order/getorder/${customer_profile_id}`)
+		api.get(`/order/getorder/${user?.id}`)
 			.then((response) => {
 				setData(response.data);
 			})
@@ -30,15 +32,14 @@ const Order = () => {
 				toast(error);
 			});
 	}, [customer_profile_id]);
-	console.log(data.length)
+	// console.log(data.length);
 	return (
 		<div className="body-wrapper">
 			<Breadcrumb pageTitle="Orders" prevUrl="/home" />
 			<div className="order-product-area pb-16">
 				{data.length > 0 ? (
-					
 					data?.map((single) => {
-						console.log(single);
+						// console.log(single);
 						return (
 							<Link
 								to={`/orderDetails/${single.id}`}
