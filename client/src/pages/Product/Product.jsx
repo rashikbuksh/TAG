@@ -566,17 +566,7 @@ const Product = () => {
 											? "Already in Cart"
 											: "Add To Cart"}
 									</button>
-								) : (
-									<Link
-										className="auth-btn text-center"
-										to={
-											import.meta.env
-												.VITE_API_PUBLIC_URL + "/login"
-										}
-									>
-										Add To Cart{" "}
-									</Link>
-								)}
+								) :""}
 							</div>
 							<div className="my-2">
 								<div>
