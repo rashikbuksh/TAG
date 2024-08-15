@@ -7,13 +7,16 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
 	const navigate = useNavigate();
+	const { pathname } = useLocation();
+
 	const { user, login, signed, loginError } = useAuth();
+
 	const [isOpen, setIsOpen] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const loginSchema = yup.object().shape({
@@ -52,7 +55,10 @@ const Login = () => {
 			localStorage.setItem("user-id", user?.id);
 			navigate(NAVIGATE_TO[user?.access]);
 		}
-	}, [signed, user, navigate]);
+		if (user && pathname == "/login") {
+			navigate("/home");
+		}
+	}, [signed, user, navigate, pathname, NAVIGATE_TO]);
 
 	const onSubmit = (data) => {
 		login(data);
@@ -173,7 +179,10 @@ const Login = () => {
 								{errors.password?.message}
 							</p>
 							<div className="pl-6">
-								<Link to={"/sendVerificationCode"} className="text-[#2F5BA9] link font-semibold leading-8">
+								<Link
+									to={"/sendVerificationCode"}
+									className="link font-semibold leading-8 text-[#2F5BA9]"
+								>
 									Forgot Password?
 								</Link>
 							</div>
@@ -208,7 +217,7 @@ const Login = () => {
 					</div>
 					<span className="divider mt-2">- OR - </span>
 					<div className="mt-2 flex items-center justify-between ">
-						<div className=" mb-3 flex w-full cursor-pointer items-center justify-center rounded-full bg-[#2F5BA9] px-7 py-3 pb-2.5 text-center text-sm font-medium uppercase leading-normal text-white  gap-2">
+						<div className=" mb-3 flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#2F5BA9] px-7 py-3 pb-2.5 text-center text-sm font-medium uppercase leading-normal  text-white">
 							<span>
 								<FcGoogle size={24} />
 							</span>
